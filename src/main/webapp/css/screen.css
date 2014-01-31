@@ -1,0 +1,443 @@
+@CHARSET "UTF-8";
+/*** The Essential Code ***/
+/*** 공통 시작***/
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: "돋움", dotum, sans-serif; 
+}
+
+table {
+	border-collapse: collapse;
+}
+
+div, input, select, textarea, td {
+	color: #646464; 
+	font-size: 12px;
+	font-family: "돋움", dotum, sans-serif; 
+}
+
+img {
+	border: 0; 
+}
+
+form { 
+	margin: 0;
+	padding: 0; 
+}
+/*** 공통 끝***/
+
+#wrap {
+	margin: 0 auto;
+	padding: 0;
+	width: 1000px;
+}
+
+#header {
+	width: 1000px;
+	height: 48px;
+}
+
+#header h1 {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	top: 9px;
+}
+
+#main-menu {
+	width: 1000px;
+	height: 35px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	background: #92B91C;	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+ul#nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	position: relative;
+	top: 9px;
+	left: 17px;
+}	
+
+ul#nav li {
+	float: left;
+	padding: 0 17px 0 8px;
+	background: url('../images/bull_circle.gif') no-repeat 0 70%;
+}
+
+ul#nav li a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+ul#nav li a:hover {
+	text-decoration: underline;
+	background: none;
+	color: #FFF;
+}
+
+#container {
+	float: left;
+	width: 100%;
+	border-top: 1px solid #DAEAAA;
+}
+
+#content {
+	margin-left: 180px;
+	margin-right: 210px;
+	padding-left: 9px;
+	padding-right: 9px;
+	border-left: 1px solid #DAEAAA;
+	border-right: 1px solid #DAEAAA;
+	font-size: 13px;
+	line-height: 19px;
+}
+
+#url-navi {
+	margin: 0;
+	padding-top: 10px;
+	padding-bottom: 8px;
+	font-size: 11px;
+	color: #666;
+	border-bottom: 1px solid #DAEAAA;
+}
+
+#content h1 {
+	margin: 9px 0 9px 0;
+	padding: 7px 0 7px 12px;
+	font-size: 15px;
+	background: #fff url('../images/menu_icon.gif') no-repeat center left; 
+}
+
+#sidebar {
+	float: left;
+	width: 173px;
+	margin-left: -1000px;
+	border: 1px solid #DAEAAA;
+	font-family: Verdana, sans-serif;
+	position: relative;
+	top: 7px;
+}
+
+#sidebar h1 {
+	margin: 0;
+	padding: 14px;
+	background: #92B91C;
+	color: #FFF;
+	font-size: 16px;
+}
+
+#sidebar ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#sidebar a {
+	display: block;
+	padding: 6px 10px 6px 10px;
+	color: #64615D;
+	background: #DAEAAA;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#sidebar a:hover {
+	background-color: #EDFEBA;
+	color: #64615D;
+}
+
+#sidebar li li a {
+	display: block;
+	color: #64615D;
+	padding: 5px 3px 4px 17px;
+	text-decoration: none;
+	border-bottom: 1px solid #FFF;
+	font-weight: normal;
+	background: #FFF url('../images/circle.gif') no-repeat 5% 50%;
+}
+
+#extra {
+	float: left;
+	width: 205px;
+	margin-left: -205px;
+	position: relative;
+	top: 7px;
+}
+
+#extra h1 {
+	margin: 0;
+	padding: 7px;
+	background: #92B91C;
+	color: #FFF;
+	font-size: 14px;
+}
+
+#footer {
+	clear: both;
+	width: 1000px;
+	height: 70px;
+	font-size: 11px;
+	color: #8d8d8d;
+	letter-spacing:-1px;
+	border-top: 1px solid #DAEAAA;	
+}
+
+#footer ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;	
+	position: relative;
+	left: 8px;
+}
+
+#footer ul li {
+	float: left;
+	padding: 6px 12px 6px 8px;
+	background: url('../images/circle.gif') no-repeat 0 50%;
+}
+
+#footer a {
+	color: #8D8D8D;
+	text-decoration: none;
+}
+
+#footer a:hover {
+	text-decoration: underline;
+}
+
+#footer ul li#company-info {
+	margin-left: 350px;
+	letter-spacing: 0;
+	background: none;
+}
+
+/*** 게시판 관련 ***/
+#bbs table {
+	margin: 5px 0 5px 0;
+	width: 100%;
+	color: #555;
+}
+
+#bbs th {
+	color: #92B91C;
+	border-top: 1px solid #92B91C;
+	border-bottom: 2px solid #92B91C;
+}
+
+
+#bbs td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: silver 1px solid;
+}
+
+#bbs td a {
+	color: #555;
+	text-decoration: none;
+}
+
+#bbs td a:hover {
+	color:#555;
+	text-decoration: underline;
+}
+
+.bbs-strong {
+	color: #FFA500;
+	font-weight: bold;
+}
+
+#paging a {
+	color: #555;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#paging a:hover {
+	color: #555;
+	text-decoration: underline;
+}
+
+#search {
+	padding-bottom: 15px;
+}
+
+#gul-content {
+	border-bottom: 1px solid #ebebeb;
+}
+
+#gul-content h6 {
+	margin: 0;
+	padding: 0;
+	font-size: 11px;
+	color: #555;
+	text-align: right;
+}
+
+#gul-content p {
+	margin: 0 0 15px 0;
+	padding: 0;
+	color: #333;
+}
+
+.comments {
+	border-right: 1px solid #ebebeb;
+	border-left: 1px solid #ebebeb;
+	border-bottom: 1px solid #ebebeb;
+}
+
+.comments h4 {
+	float: left;
+	margin: 3px 3px 3px 3px;
+	padding: 0;
+	font-size: 12px;
+	color: #555;
+}
+
+.comments h5 {
+	float: left;
+	margin: 3px 3px 3px 3px;
+	padding: 0;
+	font-size: 12px;
+	font-weight: normal;
+	color: #555;
+}
+
+.comments h6 {
+	float: right;
+	margin: 3px 3px 3px 3px;
+	padding: 0;
+	font-size: 12px;
+	font-weight: normal;
+	color: #555;
+}
+
+.comments a {
+	color: #555;
+	text-decoration: none;
+	font-size: 11px;
+}
+
+.comments a:hover {
+	color: #555;
+	text-decoration: underline;
+}
+
+.comments p {
+	clear: both;
+	margin: 0;
+	padding: 0 3px 3px 3px;
+	color: #555;
+	font-size: 11px;
+}
+
+.modify-comment {
+	clear: both; 
+	padding-top: 0.22em;
+	padding-right: 2.22em; 
+	padding-bottom: 0.22em; 
+	padding-left: 3.22em; 
+}
+
+.modify-comment-ta {
+	border: 1px solid silver;
+	padding: 3px;
+	ime-mode: active; 
+	width: 99%;
+	color:#555;
+	background-color: #eee;
+	font-size: 11px; 
+}
+
+#addComment {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	border-top: #eee 1px solid;
+	border-right: #eee 1px solid;
+	border-bottom: #eee 1px solid;
+	border-left: #eee 1px solid; 
+	padding-top: 0.22em;
+	padding-right: 0.22em;
+	padding-bottom: 0.22em; 
+	padding-left: 0.22em;
+	background-color: #fafbf7;
+}
+
+#addComment textarea {
+	border-top: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+	border-left: 0px;
+	padding-top: 3px;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-bottom: 3px; 
+	ime-mode: active;
+	width: 99%;
+	color:#555;	
+}
+
+#next-prev {
+	margin-top: 7px;
+	margin-bottom: 7px;
+	border-top: 1px solid #e1e1e1;
+}
+
+#next-prev p {
+	margin: 0;
+	padding: 5px;
+	border-bottom: 1px solid #e1e1e1;
+	font-size: 12px;
+	color: #333;
+}
+#next-prev a {
+	color: #333;
+	text-decoration: none;
+}
+#next-prev a:hover {
+	color: #333;
+	text-decoration: underline;
+}
+
+#view-menu {
+	height: 22px;
+	margin-bottom: 47px;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+/*** 글쓰기 화면 디자인 ***/
+#content h2 {
+	margin: 9px 0 0 0;
+	padding: 0;
+	font-size: 13px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+#write-form td {
+	border: none;
+}
+#write-form textarea {
+	width: 99%;
+}
+
+#form-group {
+	display: none;
+}	
+
+/*** 게시판 관련 끝 ***/
