@@ -61,6 +61,7 @@ public class ListController implements Controller {
 		model.put("lastPage", lastPage);
 		model.put("pageLinks", pageLinks);
 		model.put("curPage", curPage);
+		model.put("boardCd", boardCd);
 		
 		//반환값인 ModelAndView 인스턴스 생성
 		ModelAndView modelAndView = new ModelAndView();
