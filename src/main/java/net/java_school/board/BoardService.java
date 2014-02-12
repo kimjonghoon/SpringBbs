@@ -1,212 +1,125 @@
 package net.java_school.board;
 
-import java.util.*;
+import java.util.List;
 
 import net.java_school.commons.PagingHelper;
 
-public class BoardService {
-	private BoardDao boardDao;
-	private PagingHelper pagingHelper; //페이징 처리 유틸리티 클래스
+public interface BoardService {
 	
-	public BoardService() {}
-	
-	public void setBoardDao(BoardDao boardDao) {
-		this.boardDao = boardDao;
-	}
-
 	/*
 	 * 게시판 목록
 	 */
-	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
-		Integer startRownum = start;
-		Integer endRownum = end;
-		HashMap<String, String> hashmap = new HashMap<String, String>();
-		hashmap.put("boardCd", boardCd);
-		hashmap.put("searchWord", searchWord);
-		hashmap.put("start", startRownum.toString());
-		hashmap.put("end", endRownum.toString());
-		
-		return boardDao.getArticleList(hashmap);
-	}
+	public List<Article> getArticleList(String boardCd, String searchWord, int start, int end);
 	
 	/*
 	 * 특정 게시판의 총 게시물 갯수 구하기
 	 */
-	public int getTotalRecord(String boardCd, String searchWord) {
-		HashMap<String,String> hashmap = new HashMap<String,String>();
-		hashmap.put("boardCd", boardCd);
-		hashmap.put("searchWord", searchWord);
-		return boardDao.getTotalRecord(hashmap);
-	}
+	public int getTotalRecord(String boardCd, String searchWord);
 
 	/*
 	 * 새로운 게시글  추가
 	 */
-	public int insert(Article article) {
-		return boardDao.insert(article);
-	}
+	public int insert(Article article);
 
 	/*
 	 * 첨부파일
 	 */
-	public AttachFile getAttachFile(int attachFileNo) {
-		return boardDao.getAttachFile(attachFileNo);
-	}
+	public AttachFile getAttachFile(int attachFileNo);
 
 	/*
 	 * 새로운 첨부파일 추가 
 	 */
-	public void insertAttachFile(AttachFile attachFile) {
-		boardDao.insertAttachFile(attachFile);
-	}
+	public void insertAttachFile(AttachFile attachFile);
 	
 	/*
 	 * 게시글 수정
 	 */
-	public void update(Article article) {
-		boardDao.update(article);
-	}
+	public void update(Article article);
 	
 	/*
 	 * 게시글 삭제
 	 */
-	public void delete(int articleNo) {
-		boardDao.delete(articleNo);
-	}
+	public void delete(int articleNo);
 	
 	/*
 	 * 조회수 증가
 	 */
-	public void increaseHit(int articleNo) {
-		boardDao.increaseHit(articleNo);
-	}
+	public void increaseHit(int articleNo);
 	
 	/*
 	 * 게시글 상세보기
 	 */
-	public Article getArticle(int articleNo) {
-		return boardDao.getArticle(articleNo);
-	}
+	public Article getArticle(int articleNo);
 	
 	/*
 	 * 다음글 보기
 	 */
-	public Article getNextArticle(int articleNo, String boardCd, String searchWord) {
-		HashMap<String, String> hashmap = new HashMap<String, String>();
-		Integer no = articleNo;
-		hashmap.put("articleNo", no.toString());
-		hashmap.put("boardCd", boardCd);
-		hashmap.put("searchWord", searchWord);
-		
-		return boardDao.getNextArticle(hashmap);
-	}
+	public Article getNextArticle(int articleNo, String boardCd, String searchWord);
 	
 	/*
 	 * 이전글 보기
 	 */
-	public Article getPrevArticle(int articleNo, String boardCd, String searchWord) {
-		HashMap<String, String> hashmap = new HashMap<String, String>();
-		Integer no = articleNo;
-		hashmap.put("articleNo", no.toString());
-		hashmap.put("boardCd", boardCd);
-		hashmap.put("searchWord", searchWord);
-		
-		return boardDao.getPrevArticle(hashmap);
-	}
+	public Article getPrevArticle(int articleNo, String boardCd, String searchWord);
 	
 	/*
 	 * 게시글의 첨부파일 리스트
 	 */
-	public ArrayList<AttachFile> getAttachFileList(int articleNo) {
-		return boardDao.getAttachFileList(articleNo);
-	}
+	public List<AttachFile> getAttachFileList(int articleNo);
 	
 	/*
 	 * 첨부파일 삭제
 	 */
-	public void deleteFile(int attachFileNo) {
-		boardDao.deleteFile(attachFileNo);
-	}
+	public void deleteFile(int attachFileNo);
 	
 	/*
 	 * 게시판이름 구하기
 	 */
-	public String getBoardNm(String boardCd) {
-		return boardDao.getBoardNm(boardCd);
-	}
+	public String getBoardNm(String boardCd);
 	
 	/*
 	 * 게시판종류 리스트 구하기
 	 */
-	public ArrayList<Board> getBoardList() {
-		return boardDao.getBoardList();
-	}
+	public List<Board> getBoardList();
 	
 	/*
 	 * 덧글쓰기
 	 */
-	public void insertComment(Comment comment) {
-		boardDao.insertComment(comment);
-	}
+	public void insertComment(Comment comment);
 	
 	/*
 	 * 덧글수정
 	 */
-	public void updateComment(Comment comment) {
-		boardDao.updateComment(comment);
-	}
+	public void updateComment(Comment comment);
 	
 	/*
 	 * 덧글삭제
 	 */
-	public void deleteComment(int commentNo) {
-		boardDao.deleteComment(commentNo);
-	}
+	public void deleteComment(int commentNo);
 	
 	/*
 	 * 덧글가져오기
 	 */
-	public Comment getComment(int commentNo) {
-		return boardDao.getComment(commentNo);
-	}
+	public Comment getComment(int commentNo);
 	
 	/*
 	 * 게시글의 덧글리스트 구하기
 	 */
-	public ArrayList<Comment> getCommentList(int articleNo) {
-		return boardDao.getCommentList(articleNo);
-	}
+	public List<Comment> getCommentList(int articleNo);
 
-	public int getListNo() {
-		return pagingHelper.getListNo(); 
-	}
+	public int getListNo();
 	
-	public int getPrevLink() {
-		return pagingHelper.getPrevLink();
-	}
+	public int getPrevLink();
 	
-	public int getFirstPage() {
-		return pagingHelper.getFirstPage();
-	}
+	public int getFirstPage();
 	
-	public int getLastPage() {
-		return pagingHelper.getLastPage();
-	}
+	public int getLastPage();
 	
-	public int getNextLink() {
-		return pagingHelper.getNextLink();
-	}
+	public int getNextLink();
 
-	public int[] getPageLinks() {
-		return pagingHelper.getPageLinks();
-	}
+	public int[] getPageLinks();
 
-	public PagingHelper getPagingHelper() {
-		return pagingHelper;
-	}
+	public PagingHelper getPagingHelper();
 
-	public void setPagingHelper(PagingHelper pagingHelper) {
-		this.pagingHelper = pagingHelper;
-	}
+	public void setPagingHelper(PagingHelper pagingHelper);
 	
 }

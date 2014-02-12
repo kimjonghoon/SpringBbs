@@ -1,7 +1,7 @@
 package net.java_school.board.spring;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,6 @@ public class ListController implements Controller {
 	
 	public ModelAndView handleRequest(HttpServletRequest req,
 			HttpServletResponse res) throws Exception {
-		
 		//req.setCharacterEncoding("UTF-8");
 		String boardCd = req.getParameter("boardCd");
 		if (boardCd == null) boardCd = "free";
@@ -41,7 +40,7 @@ public class ListController implements Controller {
 		int start = pagingHelper.getStartRecord();
 		int end = pagingHelper.getEndRecord();
 
-		ArrayList<Article> list = boardService.getArticleList(boardCd, searchWord, start, end);
+		List<Article> list = boardService.getArticleList(boardCd, searchWord, start, end);
 		String boardNm = boardService.getBoardNm(boardCd);
 		Integer no = boardService.getListNo();
 		Integer prevLink = boardService.getPrevLink();
