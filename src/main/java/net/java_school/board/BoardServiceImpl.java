@@ -1,7 +1,6 @@
 package net.java_school.board;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import net.java_school.commons.PagingHelper;
 import net.java_school.mybatis.BoardMapper;
@@ -13,11 +12,11 @@ public class BoardServiceImpl implements BoardService {
 	public void setBoardMapper(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
-
+	
 	/*
 	 * 게시판 목록
 	 */
-	public List<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
+	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
 		Integer startRownum = start;
 		Integer endRownum = end;
 		HashMap<String, String> hashmap = new HashMap<String, String>();
@@ -117,7 +116,7 @@ public class BoardServiceImpl implements BoardService {
 	/*
 	 * 게시글의 첨부파일 리스트
 	 */
-	public List<AttachFile> getAttachFileList(int articleNo) {
+	public ArrayList<AttachFile> getAttachFileList(int articleNo) {
 		return boardMapper.getAttachFileList(articleNo);
 	}
 	
@@ -138,7 +137,7 @@ public class BoardServiceImpl implements BoardService {
 	/*
 	 * 게시판종류 리스트 구하기
 	 */
-	public List<Board> getBoardList() {
+	public ArrayList<Board> getBoardList() {
 		return boardMapper.getBoardList();
 	}
 	
@@ -173,7 +172,7 @@ public class BoardServiceImpl implements BoardService {
 	/*
 	 * 게시글의 덧글리스트 구하기
 	 */
-	public List<Comment> getCommentList(int articleNo) {
+	public ArrayList<Comment> getCommentList(int articleNo) {
 		return boardMapper.getCommentList(articleNo);
 	}
 

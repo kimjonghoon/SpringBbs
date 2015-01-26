@@ -43,7 +43,7 @@
 	<insert id="insert" parameterType="Article">
 		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
 		VALUES
-		(seq_article_no.nextval, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
+		(seq_article.nextval, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
 	</insert>
 
 	<select id="getAttachFile" parameterType="int" resultType="AttachFile">

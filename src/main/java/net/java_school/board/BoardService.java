@@ -1,15 +1,15 @@
 package net.java_school.board;
 
-import java.util.List;
+import java.util.*;
 
 import net.java_school.commons.PagingHelper;
 
 public interface BoardService {
-	
+
 	/*
 	 * 게시판 목록
 	 */
-	public List<Article> getArticleList(String boardCd, String searchWord, int start, int end);
+	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end);
 	
 	/*
 	 * 특정 게시판의 총 게시물 갯수 구하기
@@ -64,7 +64,7 @@ public interface BoardService {
 	/*
 	 * 게시글의 첨부파일 리스트
 	 */
-	public List<AttachFile> getAttachFileList(int articleNo);
+	public ArrayList<AttachFile> getAttachFileList(int articleNo);
 	
 	/*
 	 * 첨부파일 삭제
@@ -79,7 +79,7 @@ public interface BoardService {
 	/*
 	 * 게시판종류 리스트 구하기
 	 */
-	public List<Board> getBoardList();
+	public ArrayList<Board> getBoardList();
 	
 	/*
 	 * 덧글쓰기
@@ -104,7 +104,7 @@ public interface BoardService {
 	/*
 	 * 게시글의 덧글리스트 구하기
 	 */
-	public List<Comment> getCommentList(int articleNo);
+	public ArrayList<Comment> getCommentList(int articleNo);
 
 	public int getListNo();
 	
@@ -117,8 +117,6 @@ public interface BoardService {
 	public int getNextLink();
 
 	public int[] getPageLinks();
-
-	public PagingHelper getPagingHelper();
 
 	public void setPagingHelper(PagingHelper pagingHelper);
 	
