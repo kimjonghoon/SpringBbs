@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ page isELIgnored="false" %> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -9,31 +8,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="Keywords" content="게시판 목록" />
 <meta name="Description" content="게시판 목록" />
-<link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen" />
-<title>${boardNm }</title>
+<link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<title>BBS</title>
 <script type="text/javascript">
 //<![CDATA[
-	function goList(page) {
-		var form = document.getElementById("listForm");
-		form.curPage.value = page;
-		form.submit();
-	}
 
-	function goView(articleNo) {
-		var form = document.getElementById("viewForm");
-		form.articleNo.value = articleNo;
-		form.submit();
-	}
+function goList(curPage) {
+	var form = document.getElementById("listForm");
+	form.curPage.value = curPage;
+	form.submit();
+}
 
-	function goWrite() {
-		var form = document.getElementById("writeForm");
-		form.submit();
-	}
+function goView(articleNo) {
+	var form = document.getElementById("viewForm");
+	form.articleNo.value = articleNo;
+	form.submit();
+}
 
-	function search() {
-		var form = document.getElementById("searchForm");
-		form.submit();
-	}	
+function goWrite() {
+	var form = document.getElementById("writeForm");
+	form.submit();
+}
+
 //]]>
 </script>           
 </head>
@@ -51,11 +47,13 @@
 
 	<div id="container">
 		<div id="content" style="height: 800px;">
-			<div id="url-navi">BBS</div>
 
 <!-- 본문 시작 -->			
+<div id="url-navi">BBS</div>
+
 <h1>${boardNm }</h1>
 <div id="bbs">
+	<!-- 게시판 목록 머릿말 -->
 	<table>
 	<tr>
 		<th style="width: 60px;">NO</th>
@@ -66,7 +64,7 @@
 	<!--  반복 구간 시작 -->
 	<c:forEach var="article" items="${list }" varStatus="status">	
 	<tr>
-		<td style="text-align: center;">${no - status.index}</td>
+		<td style="text-align: center;">${listItemNo - status.index}</td>
 		<td>
 			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 			<c:if test="${article.attachFileNum > 0 }">
@@ -76,22 +74,22 @@
 				<span class="bbs-strong">[${article.commentNum }]</span>
 			</c:if>
 		</td>
-		<td style="text-align: center;">${article.writeDate }</td>
+		<td style="text-align: center;">${article.regdateForList }</td>
 		<td style="text-align: center;">${article.hit }</td>
 	</tr>
 	</c:forEach>
 	<!--  반복 구간 끝 -->
 	</table>
 		
-	<div id="paging" style="text-align: center;">
+	<div id="paging">
 		
-		<c:if test="${prevLink > 0 }">
+		<c:if test="${prevPage > 0 }">
 			<a href="javascript:goList('${prevPage }')">[이전]</a>
 		</c:if>
 
-		<c:forEach var="i" items="${pageLinks }" varStatus="stat">
+		<c:forEach var="i" begin="${firstPage }" end="${lastPage }" varStatus="stat">
 			<c:choose>
-			<c:when test="${curPage == i}">
+			<c:when test="${param.curPage == i}">
 				<span class="bbs-strong">${i }</span>
 			</c:when>
 			<c:otherwise>
@@ -100,22 +98,23 @@
 			</c:choose>
 		</c:forEach>
 		
-		<c:if test="${nextLink > 0 }">
+		<c:if test="${nextPage > 0 }">
 			<a href="javascript:goList('${nextPage }')">[다음]</a>
 		</c:if>
 		
 	</div>
 
-	<div id="list-menu" style="text-align:  right;">
+	<div id="list-menu">
 		<input type="button" value="새글쓰기" onclick="goWrite()" />
 	</div>
 
-	<div id="search" style="text-align: center;">
-		<form id="searchForm" action="./list" method="get" style="margin: 0;padding: 0;">
+	<div id="search">
+		<form id="searchForm" action="./list" method="get">
 			<p style="margin: 0;padding: 0;">
 				<input type="hidden" name="boardCd" value="${boardCd }" />
+				<input type="hidden" name="curPage" value="1" />
 				<input type="text" name="searchWord" size="15" maxlength="30" />
-				<input type="submit" value="검색" style="height: 25px;line-height: 25px;" />
+				<input type="submit" value="검색" />
 			</p>	
 		</form>
 	</div>

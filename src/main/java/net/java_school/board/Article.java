@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Article {
+	private static final SimpleDateFormat LIST_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
+	private static final SimpleDateFormat VIEW_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	
 	private int articleNo;
 	private String boardCd;
 	private String title;
@@ -76,13 +79,11 @@ public class Article {
 	public void setCommentNum(int commentNum) {
 		this.commentNum = commentNum;
 	}
-	public String getWriteDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		return sdf.format(regdate);
+	public String getRegdateForList() {
+		return Article.LIST_DATE_FORMAT.format(this.regdate);
 	}
-	public String getWriteDateTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		return sdf.format(regdate);
+	public String getRegdateForView() {
+		return Article.VIEW_DATE_FORMAT.format(this.regdate);
 	}
 	
 }

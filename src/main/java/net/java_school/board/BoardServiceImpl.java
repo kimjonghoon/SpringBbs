@@ -1,6 +1,7 @@
 package net.java_school.board;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 import net.java_school.commons.PagingHelper;
 import net.java_school.mybatis.BoardMapper;
@@ -12,11 +13,9 @@ public class BoardServiceImpl implements BoardService {
 	public void setBoardMapper(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
-	
-	/*
-	 * 게시판 목록
-	 */
-	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
+
+	//목록
+	public List<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
 		Integer startRownum = start;
 		Integer endRownum = end;
 		HashMap<String, String> hashmap = new HashMap<String, String>();
@@ -28,9 +27,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getArticleList(hashmap);
 	}
 	
-	/*
-	 * 특정 게시판의 총 게시물 갯수 구하기
-	 */
+	//총 레코드수
 	public int getTotalRecord(String boardCd, String searchWord) {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
 		hashmap.put("boardCd", boardCd);
@@ -38,58 +35,32 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getTotalRecord(hashmap);
 	}
 
-	/*
-	 * 새로운 게시글  추가
-	 */
-	public int insert(Article article) {
+	//글쓰기
+	public int addArticle(Article article) {
 		return boardMapper.insert(article);
 	}
 
-	/*
-	 * 첨부파일
-	 */
-	public AttachFile getAttachFile(int attachFileNo) {
-		return boardMapper.getAttachFile(attachFileNo);
-	}
-
-	/*
-	 * 새로운 첨부파일 추가 
-	 */
-	public void insertAttachFile(AttachFile attachFile) {
-		boardMapper.insertAttachFile(attachFile);
-	}
-	
-	/*
-	 * 게시글 수정
-	 */
-	public void update(Article article) {
+	//글수정
+	public void modifyArticle(Article article) {
 		boardMapper.update(article);
 	}
-	
-	/*
-	 * 게시글 삭제
-	 */
-	public void delete(int articleNo) {
+
+	//글삭제
+	public void removeArticle(int articleNo) {
 		boardMapper.delete(articleNo);
 	}
-	
-	/*
-	 * 조회수 증가
-	 */
+
+	//조회수 증가
 	public void increaseHit(int articleNo) {
 		boardMapper.increaseHit(articleNo);
 	}
-	
-	/*
-	 * 게시글 상세보기
-	 */
+
+	//게시글 조회
 	public Article getArticle(int articleNo) {
 		return boardMapper.getArticle(articleNo);
 	}
-	
-	/*
-	 * 다음글 보기
-	 */
+
+	//다음글
 	public Article getNextArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
@@ -100,9 +71,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getNextArticle(hashmap);
 	}
 	
-	/*
-	 * 이전글 보기
-	 */
+	//이전글
 	public Article getPrevArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
@@ -112,76 +81,63 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardMapper.getPrevArticle(hashmap);
 	}
-	
-	/*
-	 * 게시글의 첨부파일 리스트
-	 */
-	public ArrayList<AttachFile> getAttachFileList(int articleNo) {
+
+	//첨부파일 리스트
+	public List<AttachFile> getAttachFileList(int articleNo) {
 		return boardMapper.getAttachFileList(articleNo);
 	}
-	
-	/*
-	 * 첨부파일 삭제
-	 */
-	public void deleteFile(int attachFileNo) {
-		boardMapper.deleteFile(attachFileNo);
+
+	//첨부파일 조회
+	public AttachFile getAttachFile(int attachFileNo) {
+		return boardMapper.getAttachFile(attachFileNo);
+	}
+
+	//첨부파일 추가
+	public void addAttachFile(AttachFile attachFile) {
+		boardMapper.insertAttachFile(attachFile);
 	}
 	
-	/*
-	 * 게시판이름 구하기
-	 */
+	//첨부파일 삭제
+	public void removeAttachFile(int attachFileNo) {
+		boardMapper.deleteFile(attachFileNo);
+	}
+
+	//게시판 이름
 	public String getBoardNm(String boardCd) {
 		return boardMapper.getBoardNm(boardCd);
 	}
-	
-	/*
-	 * 게시판종류 리스트 구하기
-	 */
-	public ArrayList<Board> getBoardList() {
-		return boardMapper.getBoardList();
+
+	//댓글 리스트
+	public List<Comment> getCommentList(int articleNo) {
+		return boardMapper.getCommentList(articleNo);
 	}
 	
-	/*
-	 * 덧글쓰기
-	 */
-	public void insertComment(Comment comment) {
-		boardMapper.insertComment(comment);
-	}
-	
-	/*
-	 * 덧글수정
-	 */
-	public void updateComment(Comment comment) {
-		boardMapper.updateComment(comment);
-	}
-	
-	/*
-	 * 덧글삭제
-	 */
-	public void deleteComment(int commentNo) {
-		boardMapper.deleteComment(commentNo);
-	}
-	
-	/*
-	 * 덧글가져오기
-	 */
+	//댓글 조회
 	public Comment getComment(int commentNo) {
 		return boardMapper.getComment(commentNo);
 	}
 	
-	/*
-	 * 게시글의 덧글리스트 구하기
-	 */
-	public ArrayList<Comment> getCommentList(int articleNo) {
-		return boardMapper.getCommentList(articleNo);
-	}
-
-	public int getListNo() {
-		return pagingHelper.getListNo(); 
+	//댓글 쓰기
+	public void addComment(Comment comment) {
+		boardMapper.insertComment(comment);
 	}
 	
-	public int getPrevLink() {
-		return pagingHelper.getPrevLink();
+	//댓글 수정
+	public void modifyComment(Comment comment) {
+		boardMapper.updateComment(comment);
+	}
+	
+	//댓글 삭제
+	public void removeComment(int commentNo) {
+		boardMapper.deleteComment(commentNo);
+	}
+
+	public int getListItemNo() {
+		return pagingHelper.getListItemNo(); 
+	}
+	
+	public int getPrevPage() {
+		return pagingHelper.getPrevPage();
 	}
 	
 	public int getFirstPage() {
@@ -192,20 +148,12 @@ public class BoardServiceImpl implements BoardService {
 		return pagingHelper.getLastPage();
 	}
 	
-	public int getNextLink() {
-		return pagingHelper.getNextLink();
-	}
-
-	public int[] getPageLinks() {
-		return pagingHelper.getPageLinks();
-	}
-
-	public PagingHelper getPagingHelper() {
-		return pagingHelper;
+	public int getNextPage() {
+		return pagingHelper.getNextPage();
 	}
 
 	public void setPagingHelper(PagingHelper pagingHelper) {
 		this.pagingHelper = pagingHelper;
 	}
-	
+
 }
