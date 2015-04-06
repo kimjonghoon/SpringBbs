@@ -3,6 +3,7 @@ package net.java_school.board;
 import java.util.HashMap;
 import java.util.List;
 
+
 import net.java_school.commons.PagingHelper;
 import net.java_school.mybatis.BoardMapper;
 
