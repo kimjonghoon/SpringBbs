@@ -45,7 +45,7 @@ public interface BoardMapper {
 	public void deleteFile(int attachFileNo);	
 	
 	//게시판 이름
-	public String getBoardNm(String boardCd);
+	public String selectOneBoardName(String boardCd);
 
 	//댓글 쓰기
 	public void insertComment(Comment comment);	
@@ -57,12 +57,12 @@ public interface BoardMapper {
 	public void deleteComment(int commentNo);
 
 	//댓글 리스트
-	public ArrayList<Comment> selectListOfComment(int articleNo);
+	public ArrayList<Comment> selectListOfComments(int articleNo);
 	
 	//첨부파일 찾기
-	public AttachFile selectOneOfAttachFile(int attachFileNo);
+	public AttachFile selectOneAttachFile(int attachFileNo);
 
 	//댓글 찾기
-	public Comment selectOneOfComments(int commentNo);
+	public Comment selectOneComment(int commentNo);
 
 }

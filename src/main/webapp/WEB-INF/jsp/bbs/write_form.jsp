@@ -52,7 +52,7 @@ function goView() {
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2>글쓰기</h2>
-<form id="writeForm" action="write_proc.do" method="post" enctype="multipart/form-data" onsubmit="return check();">
+<form id="writeForm" action="write" method="post" enctype="multipart/form-data" onsubmit="return check();">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 </p>
@@ -100,7 +100,7 @@ function goView() {
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="view.do" method="get">
+    <form id="viewForm" action="view" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -108,7 +108,7 @@ function goView() {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="listForm" action="list.do" method="get">
+    <form id="listForm" action="list" method="get">
     <p>
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />

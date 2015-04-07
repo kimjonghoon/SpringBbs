@@ -46,7 +46,7 @@ function check() {
 <h1>비밀번호 변경</h1>
 ${user.name }<br />
 ${user.mobile }<br />
-<form id="changePassworddForm" action="changePasswd_proc.do" method="post" onsubmit="return check()">
+<form id="changePassworddForm" action="changePasswd" method="post" onsubmit="return check()">
 <table>
 <tr>
 	<td>현재 비밀번호</td>

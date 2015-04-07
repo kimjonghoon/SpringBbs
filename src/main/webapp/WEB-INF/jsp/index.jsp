@@ -22,13 +22,13 @@
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %>
-			<input type="button" value="로그인" onclick="location.href='./users/login.jsp'" />
-			<input type="button" value="회원가입" onclick="location.href='./users/signUp.jsp'" />
+			<input type="button" value="로그인" onclick="location.href='./users/login'" />
+			<input type="button" value="회원가입" onclick="location.href='./users/signUp'" />
 <%
 } else {
 %>
-			<input type="button" value="로그아웃" onclick="location.href='./users/logout.jsp'" />
-			<input type="button" value="내정보수정" onclick="location.href='./users/editAccount.jsp'" />
+			<input type="button" value="로그아웃" onclick="location.href='./users/logout'" />
+			<input type="button" value="내정보수정" onclick="location.href='./users/editAccount'" />
 <%
 }
 %>
@@ -75,21 +75,13 @@ if (loginUser == null) {
 		<a href="http://www.twitter.com"><img src="images/twitter.png" alt="twitter.com" /></a>
 		<a href="http://www.facebook.com"><img src="images/facebook.png" alt="facebook.com" /></a>
 		<a href="http://www.gmail.com"><img src="images/gmail.png" alt="gmail.com" /></a>
-		<a href="http://www.java-school.net"><img src="images/java-school.png" alt="java-school.net" /></a>    
+		<a href="http://www.java-school.net"><img src="images/java-school.png" alt="java-school.net" /></a>
 	</div>
     
     <div id="footer">
-		<ul>
-			<li><a href="#">이용약관</a></li>
-			<li><a href="#">개인정보보호정책</a></li>
-			<li><a href="#">이메일무단수집거부</a></li>
-			<li id="company-info">전화 : 02-123-5678, FAX : 02-123-5678<br />
-			people@ggmail.org<br />
-			Copyright java-school.net All Rights Reserved.</li>
-			<li><a href="#">찾아오시는 길</a></li>
-    	</ul>    
+		<%@ include file="inc/footer.jsp" %>
     </div>
-        
+
 </div>
 
 </body>

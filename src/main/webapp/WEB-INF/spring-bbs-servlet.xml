@@ -22,12 +22,12 @@
 	
 	<context:component-scan
 		base-package="net.java_school.board.spring,
+ 			net.java_school.user.spring,
+ 			net.java_school.home.spring,
  			net.java_school.java.spring,
 			net.java_school.javascript.spring,
 			net.java_school.board,
-			net.java_school.board.spring,
-			net.java_school.user,
-			net.java_school.user.spring" />
+			net.java_school.user" />
 
 	<mybatis:scan base-package="net.java_school.mybatis" />
 
@@ -67,7 +67,7 @@
 		</property>
 	</bean>
 	
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+<!-- 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 	  <property name="defaultErrorView" value="error" />
 	  <property name="exceptionMappings">
 	    <props>
@@ -76,6 +76,6 @@
 	      </prop>
 	    </props>
 	  </property>
-	</bean>
+	</bean> -->
   	
 </beans>

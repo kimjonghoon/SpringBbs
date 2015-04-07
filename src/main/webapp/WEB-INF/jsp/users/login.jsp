@@ -44,7 +44,7 @@ function check() {
 	<p style="color: red;">로그인에 실패했습니다.</p>
 </c:if>
 
-<form id="loginForm" action="login_proc.do" method="post" onsubmit="return check()">
+<form id="loginForm" action="login" method="post" onsubmit="return check()">
 <p style="margin: 0; padding: 0;">
 <input type="hidden" name="url" value="${param.url }" />
 </p>
@@ -60,7 +60,7 @@ function check() {
 </table>
 <div style="text-align: center;padding: 15px 0;">
     <input type="submit" value="확인" />
-    <input type="button" value="회원가입" onclick="location.href='signUp.do'" />
+    <input type="button" value="회원가입" onclick="location.href='signUp'" />
 </div>
 </form>
 <!-- 본문 끝 -->

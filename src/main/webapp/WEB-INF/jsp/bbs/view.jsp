@@ -83,6 +83,12 @@ function deleteComment(commentNo) {
     }
 }
 
+function download(filename) {
+    var form = document.getElementById("downForm");
+    form.filename.value = filename;
+    form.submit();
+}
+
 //]]>
 </script>
 </head>
@@ -116,7 +122,7 @@ function deleteComment(commentNo) {
     <p>${content }</p>
     <p id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
-	    	<a href="${uploadPath }${file.filename }">${file.filename }</a>
+    	   <a href="javascript:download('${file.filename }')">${file.filename }</a>
 			<c:if test="${user.email == file.email }">
 	    	<a href="javascript:deleteAttachFile('${file.attachFileNo }')">x</a>
 			</c:if>
@@ -138,7 +144,7 @@ function deleteComment(commentNo) {
 	</c:if>    
     <p id="comment${comment.commentNo }">${comment.memo }</p>
     <div class="modify-comment">
-        <form id="modifyCommentForm${comment.commentNo }" action="updateComments_proc.do" method="post" style="display: none;">
+        <form id="modifyCommentForm${comment.commentNo }" action="updateComment" method="post" style="display: none;">
         <p>
             <input type="hidden" name="commentNo" value="${comment.commentNo }" />
             <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -159,7 +165,7 @@ function deleteComment(commentNo) {
 </c:forEach>
 <!--  덧글 반복 끝 -->
 
-<form id="addCommentForm" action="addComments_proc.do" method="post">
+<form id="addCommentForm" action="addComment" method="post">
 	<p style="margin: 0;padding: 0">
 		<input type="hidden" name="articleNo" value="${param.articleNo }" />
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -232,7 +238,7 @@ function deleteComment(commentNo) {
 		<span class="bbs-strong">[${article.commentNum }]</span>
 		</c:if>		
 	</td>
-	<td style="text-align: center;">${article.regdate }</td>
+	<td style="text-align: center;">${article.regdateForList }</td>
 	<td style="text-align: center;">${article.hit }</td>
 </tr>
 </c:forEach>
@@ -264,7 +270,7 @@ function deleteComment(commentNo) {
 </div>
 
 <div id="search">
-	<form action="list.do" method="get">
+	<form action="list" method="get">
 	<p style="margin: 0;padding: 0;">
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
 		<input type="hidden" name="curPage" value="1" />
@@ -295,14 +301,14 @@ function deleteComment(commentNo) {
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="listForm" action="list.do" method="get">
+    <form id="listForm" action="list" method="get">
     <p>
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="viewForm" action="view.do" method="get">
+    <form id="viewForm" action="view" method="get">
     <p>
         <input type="hidden" name="articleNo" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -310,7 +316,7 @@ function deleteComment(commentNo) {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="writeForm" action="write_form.do" method="get">
+    <form id="writeForm" action="write_form" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -318,7 +324,7 @@ function deleteComment(commentNo) {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="modifyForm" action="modify_form.do" method="get">
+    <form id="modifyForm" action="modify_form" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -326,7 +332,7 @@ function deleteComment(commentNo) {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="delForm" action="del_proc.do" method="post">
+    <form id="delForm" action="del" method="post">
     <p>
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -334,7 +340,7 @@ function deleteComment(commentNo) {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="deleteCommentForm" action="deleteComments_proc.do" method="post">
+    <form id="deleteCommentForm" action="deleteComment" method="post">
     <p>
         <input type="hidden" name="commentNo" />
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
@@ -343,7 +349,7 @@ function deleteComment(commentNo) {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>   
-    <form id="deleteAttachFileForm" action="deleteAttachFile_proc.do" method="post">
+    <form id="deleteAttachFileForm" action="deleteAttachFile" method="post">
     <p>
         <input type="hidden" name="attachFileNo" />
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
@@ -351,7 +357,12 @@ function deleteComment(commentNo) {
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
-    </form>       
+    </form>
+    <form id="downForm" action="download" method="post">
+    <p>
+        <input type="hidden" name="filename" />
+    </p>
+    </form>
 </div>
 
 </body>

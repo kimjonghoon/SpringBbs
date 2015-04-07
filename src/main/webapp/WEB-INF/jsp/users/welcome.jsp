@@ -29,7 +29,7 @@
 <div id="url-navi">회원</div>
 <h1>환영합니다.</h1>
 회원가입시 입력한 Email이 아이디로 사용됩니다.<br />
-<input type="button" value="로그인" onclick="javascript:location.href='login.do'" />
+<input type="button" value="로그인" onclick="javascript:location.href='login'" />
 <!-- 본문 끝 -->
 		
 		</div>

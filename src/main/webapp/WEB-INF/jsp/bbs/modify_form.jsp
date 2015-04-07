@@ -46,7 +46,7 @@ function goView() {
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2>수정</h2>
-<form id="modifyForm" action="modify_proc.do" method="post" enctype="multipart/form-data" onsubmit="return check()">
+<form id="modifyForm" action="modify" method="post" enctype="multipart/form-data" onsubmit="return check()">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -94,7 +94,7 @@ function goView() {
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="view.do" method="get">
+    <form id="viewForm" action="view" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />

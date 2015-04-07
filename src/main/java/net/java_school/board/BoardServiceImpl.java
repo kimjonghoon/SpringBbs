@@ -3,18 +3,18 @@ package net.java_school.board;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import net.java_school.commons.PagingHelper;
 import net.java_school.mybatis.BoardMapper;
 
+@Service
 public class BoardServiceImpl implements BoardService {
+	@Autowired
 	private BoardMapper boardMapper;
 	private PagingHelper pagingHelper; //페이징 처리 유틸리티 클래스
 	
-	public void setBoardMapper(BoardMapper boardMapper) {
-		this.boardMapper = boardMapper;
-	}
-
 	//목록
 	@Override
 	public List<Article> getArticleList(String boardCd, String searchWord) {
@@ -35,6 +35,7 @@ public class BoardServiceImpl implements BoardService {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
+		
 		return boardMapper.selectCountOfArticles(hashmap);
 	}
 
@@ -113,7 +114,7 @@ public class BoardServiceImpl implements BoardService {
 	//게시판 이름
 	@Override
 	public String getBoardNm(String boardCd) {
-		return boardMapper.getBoardNm(boardCd);
+		return boardMapper.selectOneBoardName(boardCd);
 	}
 
 	//댓글 쓰기
@@ -137,19 +138,19 @@ public class BoardServiceImpl implements BoardService {
 	//댓글 리스트
 	@Override
 	public List<Comment> getCommentList(int articleNo) {
-		return boardMapper.selectListOfComment(articleNo);
+		return boardMapper.selectListOfComments(articleNo);
 	}
 
 	//첨부파일 찾기
 	@Override
 	public AttachFile getAttachFile(int attachFileNo) {
-		return boardMapper.selectOneOfAttachFile(attachFileNo);
+		return boardMapper.selectOneAttachFile(attachFileNo);
 	}
 
 	//댓글 찾기
 	@Override
 	public Comment getComment(int commentNo) {
-		return boardMapper.selectOneOfComments(commentNo);
+		return boardMapper.selectOneComment(commentNo);
 	}
 	
 	@Override

@@ -5,15 +5,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="회원가입" />
-<meta name="Description" content="회원가입" />
-<title>회원가입</title>
+<meta name="Keywords" content="내 정보 수정" />
+<meta name="Description" content="내 정보 수정" />
+<title>내 정보 수정</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[ 
 
 function check() {
-    //var form = document.getElementById("signUpForm");
+    //var form = document.getElementById("editAccountForm");
     //TODO 유효성 검사 
     return true;
 }
@@ -35,40 +35,32 @@ function check() {
     
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
+		
 <!-- 본문 시작 -->
 <div id="url-navi">회원</div>
-<h1>회원가입</h1>
-<form id="signUpForm" action="signUp" method="post" onsubmit="return check()">
+<h1>내 정보 수정</h1>
+<p>
+비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.<br />
+비밀번호는 <a href="changePasswd.do">비밀번호 변경</a>메뉴를 이용하세요.<br />
+</p>
+<form id="editAccountForm" action="editAccount" method="post" onsubmit="return check()">
 <table>
 <tr>
-	<td style="width: 200px;">이름(Full Name)</td>
-	<td style="width: 390px;"><input type="text" name="name" /></td>
+	<td>이름</td>
+	<td><input type="text" name="name" value="${user.name }" /></td>
 </tr>
 <tr>
-	<td>비밀번호(Password)</td>
+	<td>손전화</td>
+	<td><input type="text" name="mobile" value="${user.mobile }" /></td>
+</tr>
+<tr>
+	<td>현재 비밀번호</td>
 	<td><input type="password" name="passwd" /></td>
 </tr>
 <tr>
-	<td colspan="2" style="text-align: center;font-weight: bold;">
-		Email이 아이디로 쓰이므로 비밀번호는 Email계정 비밀번호와 같게 하지 마세요.
-	</td>
-</tr>
-<tr>
-	<td>비밀번호 확인(Confirm)</td>
-	<td><input type="password" name="confirm" /></td>
-</tr>
-<tr>
-	<td>Email</td>
-	<td><input type="text" name="email" /></td>
-</tr>
-<tr>
-	<td>손전화(Mobile)</td>
-	<td><input type="text" name="mobile" /></td>
+	<td colspan="2"><input type="submit" value="전송" /></td>
 </tr>
 </table>
-<div style="text-align: center;padding-bottom: 15px;">
-	<input type="submit" value="확인" />
-</div>
 </form>
 <!-- 본문 끝 -->
 		
@@ -76,7 +68,7 @@ function check() {
     </div>
     
     <div id="sidebar">
-		<%@ include file="notLoginUsers-menu.jsp" %>
+		<%@ include file="loginUsers-menu.jsp" %>
     </div>
     
     <div id="extra">

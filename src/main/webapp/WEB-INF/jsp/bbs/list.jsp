@@ -111,7 +111,7 @@ function goWrite() {
 	<div id="search">
 		<form id="searchForm" action="./list" method="get">
 			<p style="margin: 0;padding: 0;">
-				<input type="hidden" name="boardCd" value="${boardCd }" />
+				<input type="hidden" name="boardCd" value="${param.boardCd }" />
 				<input type="hidden" name="curPage" value="1" />
 				<input type="text" name="searchWord" size="15" maxlength="30" />
 				<input type="submit" value="검색" />
@@ -140,25 +140,25 @@ function goWrite() {
 </div>
 
 <div id="form-group">
-	<form id="listForm" action="./list" method="get">
+	<form id="listForm" action="list" method="get">
 		<p>
-			<input type="hidden" name="boardCd" value="${boardCd }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
 			<input type="hidden" name="curPage" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
 		</form>
-		<form id="viewForm" action="./view" method="get">
+		<form id="viewForm" action="view" method="get">
 		<p>
 			<input type="hidden" name="articleNo" />
-			<input type="hidden" name="boardCd" value="${boardCd }" />
-			<input type="hidden" name="curPage" value="${curPage }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" value="${param.curPage }" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
 		</form>
-		<form id="writeForm" action="./write" method="get">
+		<form id="writeForm" action="write_form" method="get">
 		<p>
-			<input type="hidden" name="boardCd" value="${boardCd }" />
-			<input type="hidden" name="curPage" value="${curPage }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" value="${param.curPage }" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
 	</form>

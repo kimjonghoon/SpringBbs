@@ -81,8 +81,8 @@ public class BbsController {
         
     }
 
-    @RequestMapping(value="/write", method=RequestMethod.GET)
-    public String write(String boardCd,
+    @RequestMapping(value="/write_form", method=RequestMethod.GET)
+    public String write_form(String boardCd,
             HttpServletRequest req,
             HttpSession session,
             Model model) throws Exception {
@@ -240,8 +240,8 @@ public class BbsController {
         return "bbs/view";
     }
     
-    @RequestMapping(value="/addComments", method=RequestMethod.POST)
-    public String commentAdd(Integer articleNo, 
+    @RequestMapping(value="/addComment", method=RequestMethod.POST)
+    public String addComment(Integer articleNo, 
             String boardCd, 
             Integer curPage, 
             String searchWord,
@@ -270,8 +270,8 @@ public class BbsController {
 
     }
 
-    @RequestMapping(value="/updateComments", method=RequestMethod.POST)
-    public String updateComments(
+    @RequestMapping(value="/updateComment", method=RequestMethod.POST)
+    public String updateComment(
             Integer commentNo, 
             Integer articleNo, 
             String boardCd, 
@@ -302,8 +302,8 @@ public class BbsController {
 
     }
 
-    @RequestMapping(value="/deleteComments", method=RequestMethod.POST)
-    public String deleteComments(
+    @RequestMapping(value="/deleteComment", method=RequestMethod.POST)
+    public String deleteComment(
             Integer commentNo, 
             Integer articleNo, 
             String boardCd, 
@@ -331,8 +331,8 @@ public class BbsController {
 
     }
 
-    @RequestMapping(value="/modify", method=RequestMethod.GET)
-    public String modify(
+    @RequestMapping(value="/modify_form", method=RequestMethod.GET)
+    public String modify_form(
             Integer articleNo, 
             String boardCd,
             HttpSession session,

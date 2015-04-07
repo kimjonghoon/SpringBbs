@@ -51,7 +51,7 @@ public class UsersController {
       return "redirect:/users/login?url=" + url + "&msg=Login-Failed";
     } else {
       session.setAttribute(WebContants.USER_KEY, user);
-      if (url != null) {
+      if (!url.equals("")) {
         return "redirect:" + url;
       }
       
@@ -65,13 +65,14 @@ public class UsersController {
     User user = (User) session.getAttribute(WebContants.USER_KEY);
 
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
+       //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
+       //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
-      return "redirect/users/login?url=" + url;
+      
+      return "redirect:/users/login?url=" + url;
     }
 
     return "users/editAccount";
@@ -105,13 +106,14 @@ public class UsersController {
     User user = (User) session.getAttribute(WebContants.USER_KEY);
         
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
+       //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
+       //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
-      return "redirect/users/login?url=" + url;     
+      
+      return "redirect:/users/login?url=" + url;     
     }
         
     return "users/changePasswd";
@@ -119,7 +121,7 @@ public class UsersController {
     
   @RequestMapping(value="/changePasswd", method=RequestMethod.POST)
   public String changePasswd(String currentPasswd, String newPasswd, HttpSession session) {
-    String email = ((User)session.getAttribute("user")).getEmail();
+    String email = ((User)session.getAttribute(WebContants.USER_KEY)).getEmail();
         
     int check = userService.changePasswd(currentPasswd, newPasswd, email);
     if (check > 0) {
@@ -137,40 +139,41 @@ public class UsersController {
     
   @RequestMapping(value="/bye", method=RequestMethod.GET)
   public String bye(HttpServletRequest req, HttpSession session) throws Exception {
-    User user = (User)session.getAttribute("user");
+    User user = (User)session.getAttribute(WebContants.USER_KEY);
         
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
+       //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
+       //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
-      return "redirect/users/login?url=" + url;     
+      
+      return "redirect:/users/login?url=" + url;     
     }
         
     return "users/bye";
   }
 
   @RequestMapping(value="/bye", method=RequestMethod.POST)
-  public String bye(String email, String passwd, HttpServletRequest req, HttpSession session) {
+  public String bye(String email, String passwd, HttpSession session) {
     User user = (User)session.getAttribute(WebContants.USER_KEY);
 
-    if (user == null) {
-      throw new AuthenticationException(WebContants.NOT_LOGIN);
+    if (user == null || !user.getEmail().equals(email)) {
+    	throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
     }
-        
-    int check = userService.bye(email, passwd);
-        
-    if (check > 0) {
-      session.removeAttribute(WebContants.USER_KEY);
-      return "redirect:/users/bye_confirm";
-    } else {
-      throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-    }
-        
-  }
     
+    userService.bye(email, passwd);
+    session.removeAttribute(WebContants.USER_KEY);
+    
+    return "redirect:/users/bye_confirm";
+  }
+
+  @RequestMapping(value="/bye_confirm", method=RequestMethod.GET)
+  public String bye_confirm() {
+    return "users/bye_confirm";	  
+  }
+  
   @RequestMapping(value="/logout", method=RequestMethod.GET)
   public String logout(HttpSession session) {
     session.removeAttribute(WebContants.USER_KEY);

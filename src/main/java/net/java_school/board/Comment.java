@@ -6,6 +6,7 @@ public class Comment {
 	private int commentNo;
 	private int articleNo;
 	private String email;
+	private String name;
 	private String memo;
 	private Date regdate;
 	
@@ -26,6 +27,12 @@ public class Comment {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getMemo() {
 		return memo;
