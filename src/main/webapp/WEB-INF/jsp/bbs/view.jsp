@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>title</title>
-<meta name="Keywords" content="keywords" />
-<meta name="Description" content="description" />
-<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+<meta name="Keywords" content="게시판 상세보기" />
+<meta name="Description" content="게시판 상세보기" />
+<title>BBS</title>
+<link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[
-function modifyComment(no) {
-	var p_id = "comment" + no;
+
+function modifyCommentToggle(articleNo) {
+	var p_id = "comment" + articleNo;
 	var p = document.getElementById(p_id);
 	
-	var form_id = "modifyCommentForm" + no;
+	var form_id = "modifyCommentForm" + articleNo;
 	var form = document.getElementById(form_id);
 
 	var p_display;
@@ -33,6 +34,55 @@ function modifyComment(no) {
 	p.style.display = p_display;
 	form.style.display = form_display;
 }
+
+function goList(curPage) {
+    var form = document.getElementById("listForm");
+    form.curPage.value = curPage;
+    form.submit();
+}
+
+function goView(articleNo) {
+    var form = document.getElementById("viewForm");
+    form.articleNo.value = articleNo;
+    form.submit();
+}
+
+function goWrite() {
+    var form = document.getElementById("writeForm");
+    form.submit();
+}
+
+function goModify() {
+    var form = document.getElementById("modifyForm");
+    form.submit();
+}
+
+function goDelete() {
+    var check = confirm("정말로 삭제하시겠습니까?");
+    if (check) {
+        var form = document.getElementById("delForm");
+        form.submit();
+    }
+}
+
+function deleteAttachFile(attachFileNo) {
+    var check = confirm("첨부파일을 정말로 삭제하시겠습니까?");
+    if (check) {
+        var form = document.getElementById("deleteAttachFileForm");
+        form.attachFileNo.value = attachFileNo;
+        form.submit();
+    }
+}
+
+function deleteComment(commentNo) {
+    var check = confirm("댓글을 정말로 삭제하시겠습니까?");
+    if (check) {
+        var form = document.getElementById("deleteCommentForm");
+        form.commentNo.value = commentNo;
+        form.submit();
+    }
+}
+
 //]]>
 </script>
 </head>
@@ -41,212 +91,267 @@ function modifyComment(no) {
 <div id="wrap">
 
     <div id="header">
-	<h1><a href="#"><img src="images/ci.gif" alt="java-school logo" /></a></h1>
+		<%@ include file="../inc/header.jsp" %>
     </div>
     
     <div id="main-menu">
-        <ul id="nav">
-            <li><a href="#">Java</a></li>
-            <li><a href="#">JDBC</a></li>
-            <li><a href="#">JSP</a></li>
-            <li><a href="#">Eclipse</a></li>
-            <li><a href="#">Struts2</a></li>
-            <li><a href="#">Ajax</a></li>
-            <li><a href="#">Android</a></li>
-        </ul>
+		<%@ include file="../inc/main-menu.jsp" %>
     </div>
     
     <div id="container">
-            <div id="content">
+            <div id="content" style="min-height: 800px;">
 
-<!--  게시판 코드 시작 -->
-<div id="url-navi">Eclipse &gt; Eclipse Tutorial</div>
-<h1>Eclipse 설치</h1>
-
+<!-- 본문 시작 -->
+<div id="url-navi">BBS</div>
+<h1>${boardNm }</h1>
 <div id="bbs">
-<!--  게시글 상세보기 시작 -->
 <table>
 <tr>
     <th style="width: 37px;text-align: left;vertical-align: top;">TITLE</th>
-    <th style="text-align: left;color: #555;">무궁화꽃이피었습니다</th>
+    <th style="text-align: left;color: #555;">${title }</th>
 </tr>
 </table>
 <div id="gul-content">
-    <span id="date-writer-hit">2014 10-09 17:50:30 by 홍길동 hit 1330</span>
-    <p>
-    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다<br />
-    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다<br />
+    <span id="date-writer-hit">edited ${regdate } by ${name } hit ${hit }</span>
+    <p>${content }</p>
+    <p id="file-list" style="text-align: right">
+    	<c:forEach var="file" items="${attachFileList }" varStatus="status">
+	    	<a href="${uploadPath }${file.filename }">${file.filename }</a>
+			<c:if test="${user.email == file.email }">
+	    	<a href="javascript:deleteAttachFile('${file.attachFileNo }')">x</a>
+			</c:if>
+			<br />    	
+		</c:forEach>
     </p>
 </div>
 
 <!--  덧글 반복 시작 -->
+<c:forEach var="comment" items="${commentList }" varStatus="status">
 <div class="comments">
-    <span class="writer">xman</span>
-    <span class="date">2011.12.11 12:14:32</span>
+    <span class="writer">${comment.name }</span>
+    <span class="date">${comment.regdate }</span>
+	<c:if test="${user.email == comment.email }">    
     <span class="modify-del">
-        <a href="javascript:modifyComment('5')">수정</a>
-         | <a href="javascript:goCommentDelete('5')">삭제</a>
+        <a href="javascript:modifyCommentToggle('${comment.commentNo }')">수정</a>
+         | <a href="javascript:deleteComment('${comment.commentNo }')">삭제</a>
     </span>
-    <p id="comment5">무궁화꽃이피었습니다</p>
+	</c:if>    
+    <p id="comment${comment.commentNo }">${comment.memo }</p>
     <div class="modify-comment">
-        <form id="modifyCommentForm5" action="updateComments.jsp" method="post" style="display: none;">
+        <form id="modifyCommentForm${comment.commentNo }" action="updateComments_proc.do" method="post" style="display: none;">
         <p>
-            <input type="hidden" name="commentNo" value="5" />
-            <input type="hidden" name="boardCd" value="free" />
-            <input type="hidden" name="no" value="12" />
-            <input type="hidden" name="curPage" value="1" />
-            <input type="hidden" name="searchWord" value="무궁화꽃" />
+            <input type="hidden" name="commentNo" value="${comment.commentNo }" />
+            <input type="hidden" name="boardCd" value="${param.boardCd }" />
+            <input type="hidden" name="articleNo" value="${param.articleNo }" />
+            <input type="hidden" name="curPage" value="${param.curPage }" />
+            <input type="hidden" name="searchWord" value="${param.searchWord }" />
         </p>
         <div class="fr">
-                <a href="javascript:document.forms.modifyCommentForm5.submit()">수정하기</a>
-                | <a href="javascript:modifyComment('5')">취소</a>
+                <a href="javascript:document.forms.modifyCommentForm${comment.commentNo }.submit()">수정하기</a>
+                | <a href="javascript:modifyCommentToggle('${comment.commentNo }')">취소</a>
         </div>
         <div>
-            <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">무궁화꽃이 피었습니다.</textarea>
+            <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
         </div>
         </form>
     </div>
 </div>
+</c:forEach>
 <!--  덧글 반복 끝 -->
 
-<!--  덧글 반복 시작 -->
-<div class="comments">
-    <span class="writer">xman</span>
-    <span class="date">2011.12.11 12:14:32</span>
-    <span class="modify-del">
-        <a href="javascript:modifyComment('4')">수정</a>
-         | <a href="javascript:goCommentDelete('4')">삭제</a>
-    </span>
-    <p id="comment4">무궁화꽃이피었습니다</p>
-    <div class="modify-comment">
-        <form id="modifyCommentForm4" action="updateComments.jsp" method="post" style="display: none;">
-        <p>
-            <input type="hidden" name="commentNo" value="4" />
-            <input type="hidden" name="boardCd" value="free" />
-            <input type="hidden" name="no" value="12" />
-            <input type="hidden" name="curPage" value="1" />
-            <input type="hidden" name="searchWord" value="무궁화꽃" />
-        </p>
-        <div class="fr">
-            <a href="javascript:document.forms.modifyCommentForm4.submit()">수정하기</a>
-            | <a href="javascript:modifyComment('4')">취소</a>
-        </div>
-        <div>
-            <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">무궁화꽃이 피었습니다.</textarea>
-        </div>
-        </form>
-    </div>
-</div>
-<!--  덧글 반복 끝 -->
-
-<form id="addCommentForm" action="addComment.jsp">
+<form id="addCommentForm" action="addComments_proc.do" method="post">
+	<p style="margin: 0;padding: 0">
+		<input type="hidden" name="articleNo" value="${param.articleNo }" />
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
     <div id="addComment">
-        <textarea rows="7" cols="50"></textarea>
+        <textarea name="memo" rows="7" cols="50"></textarea>
     </div>
     <div style="text-align: right;">
-        <input type="button" value="덧글남기기" />
+        <input type="submit" value="덧글남기기" />
     </div>
 </form>
 
 <div id="next-prev">
-    <p>다음글 : <a href="#">무궁화꽃이 피었습니다.</a></p>
-    <p>이전글 : <a href="#">무궁화꽃이 피었습니다.</a></p>
+    <c:if test="${nextArticle != null }">
+    <p>다음글 : <a href="javascript:goView('${nextArticle.articleNo }')">${nextArticle.title }</a></p>
+    </c:if>
+    <c:if test="${prevArticle != null }">
+    <p>이전글 : <a href="javascript:goView('${prevArticle.articleNo }')">${prevArticle.title }</a></p>
+    </c:if>
 </div>
 
 <div id="view-menu">
+    <c:if test="${user.email == email }">
     <div class="fl">
-        <input type="button" value="수정" />
-        <input type="button" value="삭제" />
+        <input type="button" value="수정" onclick="goModify()" />
+        <input type="button" value="삭제" onclick="goDelete()" />
     </div>
-    
+    </c:if>        
     <div class="fr">
-        <input type="button" value="다음글" />
-        <input type="button" value="이전글" />
-        <input type="button" value="목록" />
-        <input type="button" value="새글쓰기" />
+		<c:if test="${nextArticle != null }">    
+        <input type="button" value="다음글" onclick="goView('${nextArticle.articleNo }')" />
+		</c:if>
+		<c:if test="${prevArticle != null }">        
+        <input type="button" value="이전글" onclick="goView('${prevArticle.articleNo}')" />
+		</c:if>        
+        <input type="button" value="목록" onclick="goList('${param.curPage }')" />
+        <input type="button" value="새글쓰기" onclick="goWrite()" />
     </div>
 </div>
-<!--  게시글 상세보기 끝 -->
 
-        <table>
-        <!--  게시판 목록 머리말 -->
-        <tr>
-                <th style="width: 60px;">NO</th>
-                <th>TITLE</th>
-                <th style="width: 84px;">DATE</th>
-                <th style="width: 60px;">HIT</th>
-        </tr>
-        
-        <!--  반복 구간 시작 -->
-        <tr>
-                <td style="text-align: center;">11</td> <!--번호-->
-                <td>
-                        <a href="#">제목</a>
-                        <!--첨부파일이 있으면 표시-->
-                        <img src="images/attach.png" alt="첨부파일" />
-                        <!--덧글갯수표시-->
-                        <span class="bbs-strong">[5]</span>
-                </td>
-                <td style="text-align: center;">2011.11.15</td> <!--등록일-->
-                <td style="text-align: center;">4555</td> <!--조회수-->
-        </tr>
-        <!--  반복 구간 끝 -->
-        </table>
+<!-- 목록 -->
+<table>
+<tr>
+	<th style="width: 60px;">NO</th>
+	<th>TITLE</th>
+	<th style="width: 84px;">DATE</th>
+	<th style="width: 60px;">HIT</th>
+</tr>
+
+<c:forEach var="article" items="${list }" varStatus="status">        
+<tr>
+	<td style="text-align: center;">
+	<c:choose>
+		<c:when test="${param.articleNo == article.articleNo }">	
+		<img src="../images/arrow.gif" alt="현재글" />
+		</c:when>
+		<c:otherwise>
+		${listItemNo - status.index }
+		</c:otherwise>
+	</c:choose>	
+	</td>
+	<td>
+		<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
+		<c:if test="${article.attachFileNum > 0 }">		
+		<img src="../images/attach.png" alt="첨부파일" />
+		</c:if>
+		<c:if test="${article.commentNum > 0 }">		
+		<span class="bbs-strong">[${article.commentNum }]</span>
+		</c:if>		
+	</td>
+	<td style="text-align: center;">${article.regdate }</td>
+	<td style="text-align: center;">${article.hit }</td>
+</tr>
+</c:forEach>
+</table>
                 
-        <div id="paging">
-                <span class="bbs-strong">1</span>
-                <a href="#">[2]</a>
-                <a href="#">[3]</a>
-                <a href="#">[4]</a>
-                <a href="#">[5]</a>
-        </div>
-
-        <div id="list-menu">
-                <input type="button" value="새글쓰기" />
-        </div>
-
-        <div id="search">
-                <form id="searchForm" action="list.jsp" method="post">
-                        <p style="margin: 0;padding: 0;" >
-                                <input type="hidden" name="boardCd" value="eclipse" />
-                                <input type="text" name="searchWord" size="15" maxlength="30" />
-                                <input type="submit" value="검색" />
-                        </p>
-                </form>
-        </div>
-
+<div id="paging">
+	<c:if test="${prevPage > 0 }">
+		<a href="javascript:golist('${prevPage }')">[이전]</a>
+	</c:if>
+	
+	<c:forEach var="i" begin="${firstPage }" end="${lastPage }">
+		<c:choose>
+			<c:when test="${param.curPage == i }">
+				<span class="bbs-strong">${i }</span>
+			</c:when>	
+			<c:otherwise>	
+				<a href="javascript:goList('${i }')">${i }</a>
+			</c:otherwise>
+		</c:choose>			
+	</c:forEach>
+	
+	<c:if test="${nextPage > 0 }">	
+		<a href="javascript:goList('${nextPage }')">[다음]</a>
+	</c:if>
 </div>
-<!--  게시판 코드 끝 -->
 
+<div id="list-menu">
+	<input type="button" value="새글쓰기" onclick="goWrite()" />
+</div>
+
+<div id="search">
+	<form action="list.do" method="get">
+	<p style="margin: 0;padding: 0;">
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="1" />
+		<input type="text" name="searchWord" size="15" maxlength="30" />
+		<input type="submit" value="검색" />
+	</p>
+	</form>
+</div>
+
+</div><!-- bbs 끝 -->
+<!-- 본문 끝 -->
+
+		</div><!-- content 끝 -->
+	</div><!-- container 끝 -->
+    
+	<div id="sidebar">
+		<%@ include file="bbs-menu.jsp" %>
 	</div>
-    </div>
     
-    <div id="sidebar">
-	    <h1>Eclipse</h1>
-	    <ul>
-		<li><a href="#">Eclipse Tutorial</a>
-		    <ul>
-		        <li><a href="#">Eclipse 설치</a></li>
-		        <li><a href="#">WTP 설치</a></li>
-		    </ul>
-		</li>
-	    </ul>
+    <div id="extra">
+    	<%@ include file="../inc/extra.jsp" %>
     </div>
-    
-    <div id="extra"></div>
     
     <div id="footer">
-	<ul>
-		<li><a href="#">이용약관</a></li>
-		<li><a href="#">개인정보보호정책</a></li>
-		<li><a href="#">이메일무단수집거부</a></li>
-		<li id="company-info">전화 : 02-123-5678, FAX : 02-123-5678<br />
-		people@ggmail.org<br />
-		Copyright java-school.net All Rights Reserved.</li>
-		<li><a href="#">찾아오시는 길</a></li>
-    	</ul>    
+		<%@ include file="../inc/footer.jsp" %>
     </div>
         
+</div>
+
+<div id="form-group" style="display: none">
+    <form id="listForm" action="list.do" method="get">
+    <p>
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>
+    <form id="viewForm" action="view.do" method="get">
+    <p>
+        <input type="hidden" name="articleNo" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>
+    <form id="writeForm" action="write_form.do" method="get">
+    <p>
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>
+    <form id="modifyForm" action="modify_form.do" method="get">
+    <p>
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>
+    <form id="delForm" action="del_proc.do" method="post">
+    <p>
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>
+    <form id="deleteCommentForm" action="deleteComments_proc.do" method="post">
+    <p>
+        <input type="hidden" name="commentNo" />
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>   
+    <form id="deleteAttachFileForm" action="deleteAttachFile_proc.do" method="post">
+    <p>
+        <input type="hidden" name="attachFileNo" />
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    </form>       
 </div>
 
 </body>

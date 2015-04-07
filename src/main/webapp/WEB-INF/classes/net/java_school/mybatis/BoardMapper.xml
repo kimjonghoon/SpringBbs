@@ -12,102 +12,136 @@
 		SELECT rownum r,a.* 
 			FROM (
 				SELECT 
-					a.articleno articleno, a.title, a.regdate, a.hit, 
+					a.articleno, a.title, a.regdate, a.hit, m.name 
 					count(distinct(f.attachfileno)) attachfileNum, 
 					count(distinct(c.commentno)) commentNum
 				FROM 
-					article a, attachfile f, comments c
+					article a, attachfile f, comments c, member m
 				WHERE
-					a.articleno = f.articleno(+) AND
-					a.articleno = c.articleno(+) AND
-					a.boardcd = #{boardCd}
-					<if test="searchWord != null">
-					AND (title LIKE '%${searchWord}%' OR
-					content LIKE '%${searchWord}%')
+					a.articleno = f.articleno(+) 
+					AND a.articleno = c.articleno(+) 
+					AND a.email = m.email(+)
+					AND a.boardcd = #{boardCd}
+					<if test="not empty searchWord">
+					AND (title LIKE '%${searchWord}%' 
+						OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
 					</if>
-				GROUP BY a.articleno, title, a.regdate, hit
+				GROUP BY a.articleno, title, a.regdate, hit, m.name
 				ORDER BY articleno DESC
 				) a
 		)
 	WHERE r BETWEEN #{start} AND #{end}
 	</select>
 
-	<select id="getTotalRecord" parameterType="hashmap" resultType="int">
-		SELECT count(*) FROM article WHERE boardcd = #{boardCd}
-			<if test="searchWord != null">
-			AND (title LIKE '%${searchWord}%' OR
-			content LIKE '%${searchWord}%')
+	<select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM article 
+		WHERE 
+			boardcd = #{boardCd}
+			<if test="not empty searchWord">
+			AND (title LIKE '%${searchWord}%' 
+				OR 	DBMS_LOB.INSTR(content, '${searchWord}') > 0)
 			</if>
 	</select>
 
-	<insert id="insert" parameterType="Article">
+	<insert id="insert" parameterType="Article" useGeneratedKeys="true">
+		<selectKey keyProperty="articleNo" resultType="int" order="BEFORE">
+			SELECT seq_article.nextval FROM dual
+		</selectKey>
 		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
 		VALUES
-		(seq_article_no.nextval, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
+		(#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
+	</insert>
+	
+	<insert id="insertAttachFile" parameterType="AttachFile">
+		INSERT INTO attachFile (attachfileno, filename, filetype, filesize, articleno, email)
+		VALUES
+		(seq_attachfile.nextval, #{filename}, #{filetype}, #{filesize}, #{articleno}, #{email})
 	</insert>
 
+	<update id="update" parameterType="Article">
+		UPDATE article 
+		SET title = #{title}, content = #{content} 
+		WHERE articleno = #{articleNo}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM article WHERE articleno = #{articleNo}
+	</delete>
+
+	<update id="updateHitPlusOne" parameterType="int">
+		UPDATE article SET hit = hit + 1 WHERE articleno = #{articleNo}
+	</update>
+
+
+
+	
 	<select id="getAttachFile" parameterType="int" resultType="AttachFile">
 		SELECT attachfileno, filename, filetype, filesize, articleno
 		FROM attachfile
 		WHERE attachfileno = #{attachFileNo}
 	</select>
 
-	<insert id="insertAttachFile" parameterType="AttachFile">
-		INSERT INTO attachfile (attachfileno, filename, filetype, filesize, articleno)
-		VALUES
-		(seq_attachfile.nextval, #{filename}, #{filetype}, #{filesize}, #{articleNo})
-	</insert>
-	
-	<update id="update" parameterType="Article">
-		UPDATE article 
-		SET title=#{title},content=#{content} 
-		WHERE articleno=#{articleNo}
-	</update>
-	
-	<delete id="delete" parameterType="int">
-		DELETE FROM article WHERE articleno = #{articleNo}
-	</delete>
-	
-	<update id="increaseHit" parameterType="int">
-		UPDATE article SET hit=hit+1 WHERE articleno=#{articleNo}
-	</update>
-	
-	<select id="getArticle" parameterType="int" resultType="Article">
-		SELECT articleno, title, content, email, hit, regdate
-		FROM article
-		WHERE articleno = #{articleNo}
+	<select id="selectOne" parameterType="int" resultType="Article">
+		SELECT 
+			articleno,
+			title,
+			content,
+			a.email,
+			NVL(name, 'Anonymous') name,
+			hit,
+			regdate
+		FROM article a, member m
+		WHERE 
+			a.email = m.email(+)
+			AND articleno = #{articleNo}
 	</select>
 	
-	<select id="getNextArticle" parameterType="hashmap" resultType="Article">
+	<select id="selectNextOne" parameterType="hashmap" resultType="Article">
 		SELECT articleno, title
 		FROM
-		(SELECT rownum r,a.*
-		FROM
-		(SELECT articleno, title FROM article WHERE boardCd = #{boardCd} AND articleno &gt; #{articleNo}
-		<if test="searchWord != null">
-			AND (title LIKE '%${searchWord}%' OR
-			content LIKE '%${searchWord}%')
-		</if> 
-		ORDER BY articleno) a)
+			(SELECT rownum r,a.*
+			FROM
+				(SELECT articleno, title 
+				FROM article 
+				WHERE 
+					boardCd = #{boardCd} 
+					AND articleno &gt; #{articleNo}
+				<if test="not empty searchWord">
+					AND (title LIKE '%${searchWord}%' 
+						OR 	DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+				</if> 
+				ORDER BY articleno) 
+			a)
 		WHERE r = 1
 	</select>
 	
-	<select id="getPrevArticle" parameterType="hashmap" resultType="Article">
+	<select id="selectPrevOne" parameterType="hashmap" resultType="Article">
 		SELECT articleno, title
 		FROM
-		(SELECT rownum r,a.*
-		FROM
-		(SELECT articleno, title FROM article WHERE boardCd = #{boardCd} AND articleno &lt; #{articleNo}
-		<if test="searchWord != null">
-			AND (title LIKE '%${searchWord}%' OR
-			content LIKE '%${searchWord}%')
-		</if> 
-		ORDER BY articleno DESC) a)
+			(SELECT rownum r,a.*
+			FROM
+				(SELECT articleno, title 
+				FROM article 
+				WHERE 
+					boardCd = #{boardCd} 
+					AND articleno &lt; #{articleNo}
+				<if test="not empty searchWord">
+					AND (title LIKE '%${searchWord}%' 
+					OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+				</if> 
+				ORDER BY articleno DESC)
+				a)
 		WHERE r = 1
 	</select>
 	
-	<select id="getAttachFileList" parameterType="int" resultType="AttachFile">
-		SELECT attachfileno, filename, filetype, filesize,articleno 
+	<select id="selectListOfAttachFiles" parameterType="int" resultType="AttachFile">
+		SELECT 
+			attachfileno,
+			filename,
+			filetype,
+			filesize,
+			articleno,
+			email 
 		FROM attachfile 
 		WHERE articleno = #{articleNo} 
 		ORDER BY attachfileno
@@ -117,19 +151,15 @@
 		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
 	</delete>
 	
-	<select id="getBoardNm" parameterType="string" resultType="string">
+	<select id="selectOneOfBoardName" parameterType="string" resultType="string">
 		SELECT boardNm FROM board WHERE boardcd = #{boardCd}
 	</select>
-	
-	<select id="getBoardList" resultType="Board">
-		SELECT boardcd,boardnm FROM board ORDER BY boardnm
-	</select>
-	
+
 	<insert id="insertComment" parameterType="Comment">
 		INSERT INTO comments (commentno, articleno, email, memo, regdate)
 		VALUES (seq_comments.nextval, #{articleNo}, #{email}, #{memo}, sysdate)
 	</insert>
-	
+
 	<update id="updateComment" parameterType="Comment">
 		UPDATE comments SET memo = #{memo} WHERE commentno = #{commentNo}
 	</update>
@@ -138,17 +168,46 @@
 		DELETE FROM comments WHERE commentno = #{commentNo}
 	</delete>
 	
-	<select id="getComment" parameterType="int" resultType="Comment">
-		SELECT commentno,articleno,email,memo,regdate 
-		FROM comments 
-		WHERE commentno = #{commentNo}
+	
+	<select id="selectListOfComment" parameterType="int" resultType="Comment">
+		SELECT 
+			commentno, 
+			articleno, 
+			c.email, 
+			NVL(name, 'Anonymous') name,
+			memo, 
+			regdate
+		FROM comments c, member m
+		WHERE 
+			c.email = m.email(+)
+			AND articleno = #{articleNo}
+		ORDER BY commentno DESC
+	</select>
+
+	<select id="selectOneOfAttachFiles" parameterType="int" resultType="AttachFile">
+		SELECT
+			attachfileno,
+			filename,
+			filetype,
+			filesize,
+			articleno,
+			email
+		FROM
+			attachfile
+		WHERE
+			attachfileno = #{attachfileno}
 	</select>
 	
-	<select id="getCommentList" parameterType="int" resultType="Comment">
-		SELECT commentno, articleno, email, memo, regdate
-		FROM comments
-		WHERE articleno = #{articleNo}
-		ORDER BY commentno DESC
+	<select id="selectOneOfComment" parameterType="int" resultType="Comment">
+		SELECT 
+			commentno,
+			articleno,
+			email,
+			memo,
+			regdate 
+		FROM comments 
+		WHERE
+			AND commentno = #{commentNo}
 	</select>
 	
  </mapper>

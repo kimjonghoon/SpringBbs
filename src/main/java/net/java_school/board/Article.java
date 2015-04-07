@@ -4,14 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Article {
-	private static final SimpleDateFormat LIST_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
-	private static final SimpleDateFormat VIEW_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	private static final SimpleDateFormat LIST_DATE_FORMAT = 
+			new SimpleDateFormat("yyyy.MM.dd");
+	private static final SimpleDateFormat VIEW_DATE_FORMAT = 
+			new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	
 	private int articleNo;
 	private String boardCd;
 	private String title;
 	private String content;
 	private String email;
+	private String name;
 	private int hit;
 	private Date regdate;
 	private int attachFileNum;
@@ -54,6 +57,12 @@ public class Article {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getHit() {
 		return hit;

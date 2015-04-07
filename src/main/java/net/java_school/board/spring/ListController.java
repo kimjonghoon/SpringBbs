@@ -36,10 +36,7 @@ public class ListController implements Controller {
 		PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
 		boardService.setPagingHelper(pagingHelper);
 
-		int start = pagingHelper.getStartRecord();
-		int end = pagingHelper.getEndRecord();
-
-		List<Article> list = boardService.getArticleList(boardCd, searchWord, start, end);
+		List<Article> list = boardService.getArticleList(boardCd, searchWord);
 		String boardNm = boardService.getBoardNm(boardCd);
 		Integer listItemNo = boardService.getListItemNo();
 		Integer prevPage = boardService.getPrevPage();

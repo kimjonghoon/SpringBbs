@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.java_school.mybatis.UserMapper">
+    
+  <insert id="addUser" parameterType="User">
+    INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
+  </insert>
+
+  <select id="login" resultType="User">
+    SELECT email, passwd, name, mobile FROM member 
+    WHERE email = #{email} AND passwd = #{passwd}
+  </select>
+
+  <update id="editAccount" parameterType="User">
+    UPDATE member SET name = #{name}, mobile = #{mobile} 
+    WHERE email = #{email} AND passwd = #{passwd}
+  </update>
+
+  <update id="changePasswd">
+    UPDATE member SET passwd = #{newPasswd} 
+    WHERE passwd = #{currentPasswd} AND email = #{email}
+  </update>
+
+  <delete id="bye">
+    DELETE FROM member 
+    WHERE email = #{email} AND passwd = #{passwd}
+  </delete>
+
+  <select id="getUser" parameterType="string" resultType="User">
+    SELECT email, passwd, name, mobile 
+    FROM member 
+    WHERE email = #{email}
+  </select>
+    
+</mapper>

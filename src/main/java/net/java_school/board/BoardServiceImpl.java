@@ -16,52 +16,66 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	//목록
-	public List<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
-		Integer startRownum = start;
-		Integer endRownum = end;
+	@Override
+	public List<Article> getArticleList(String boardCd, String searchWord) {
+		Integer startRownum = pagingHelper.getStartRecord();
+		Integer endRownum = pagingHelper.getEndRecord();
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
 		hashmap.put("start", startRownum.toString());
 		hashmap.put("end", endRownum.toString());
 		
-		return boardMapper.getArticleList(hashmap);
+		return boardMapper.selectListOfArticles(hashmap);
 	}
 	
 	//총 레코드수
+	@Override
 	public int getTotalRecord(String boardCd, String searchWord) {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
-		return boardMapper.getTotalRecord(hashmap);
+		return boardMapper.selectCountOfArticles(hashmap);
 	}
 
 	//글쓰기
+	@Override
 	public int addArticle(Article article) {
 		return boardMapper.insert(article);
 	}
 
+	//첨부파일 추가
+	@Override
+	public void addAttachFile(AttachFile attachFile) {
+		boardMapper.insertAttachFile(attachFile);
+	}
+	
 	//글수정
+	@Override
 	public void modifyArticle(Article article) {
 		boardMapper.update(article);
 	}
 
 	//글삭제
+	@Override
 	public void removeArticle(int articleNo) {
 		boardMapper.delete(articleNo);
 	}
 
 	//조회수 증가
+	@Override
 	public void increaseHit(int articleNo) {
-		boardMapper.increaseHit(articleNo);
+		boardMapper.updateHitPlusOne(articleNo);
 	}
 
-	//게시글 조회
+	//상세보기
+	@Override
 	public Article getArticle(int articleNo) {
-		return boardMapper.getArticle(articleNo);
+		return boardMapper.selectOne(articleNo);
 	}
 
 	//다음글
+	@Override
 	public Article getNextArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
@@ -69,10 +83,11 @@ public class BoardServiceImpl implements BoardService {
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
 		
-		return boardMapper.getNextArticle(hashmap);
+		return boardMapper.selectNextOne(hashmap);
 	}
 	
 	//이전글
+	@Override
 	public Article getPrevArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
@@ -80,79 +95,89 @@ public class BoardServiceImpl implements BoardService {
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
 		
-		return boardMapper.getPrevArticle(hashmap);
+		return boardMapper.selectPrevOne(hashmap);
 	}
 
 	//첨부파일 리스트
+	@Override
 	public List<AttachFile> getAttachFileList(int articleNo) {
-		return boardMapper.getAttachFileList(articleNo);
+		return boardMapper.selectListOfAttachFiles(articleNo);
 	}
 
-	//첨부파일 조회
-	public AttachFile getAttachFile(int attachFileNo) {
-		return boardMapper.getAttachFile(attachFileNo);
-	}
-
-	//첨부파일 추가
-	public void addAttachFile(AttachFile attachFile) {
-		boardMapper.insertAttachFile(attachFile);
-	}
-	
 	//첨부파일 삭제
+	@Override
 	public void removeAttachFile(int attachFileNo) {
 		boardMapper.deleteFile(attachFileNo);
 	}
 
 	//게시판 이름
+	@Override
 	public String getBoardNm(String boardCd) {
 		return boardMapper.getBoardNm(boardCd);
 	}
 
-	//댓글 리스트
-	public List<Comment> getCommentList(int articleNo) {
-		return boardMapper.getCommentList(articleNo);
-	}
-	
-	//댓글 조회
-	public Comment getComment(int commentNo) {
-		return boardMapper.getComment(commentNo);
-	}
-	
 	//댓글 쓰기
+	@Override
 	public void addComment(Comment comment) {
 		boardMapper.insertComment(comment);
 	}
 	
 	//댓글 수정
+	@Override
 	public void modifyComment(Comment comment) {
 		boardMapper.updateComment(comment);
 	}
 	
 	//댓글 삭제
+	@Override
 	public void removeComment(int commentNo) {
 		boardMapper.deleteComment(commentNo);
 	}
+	
+	//댓글 리스트
+	@Override
+	public List<Comment> getCommentList(int articleNo) {
+		return boardMapper.selectListOfComment(articleNo);
+	}
 
-	public int getListItemNo() {
-		return pagingHelper.getListItemNo(); 
+	//첨부파일 찾기
+	@Override
+	public AttachFile getAttachFile(int attachFileNo) {
+		return boardMapper.selectOneOfAttachFile(attachFileNo);
+	}
+
+	//댓글 찾기
+	@Override
+	public Comment getComment(int commentNo) {
+		return boardMapper.selectOneOfComments(commentNo);
 	}
 	
+	@Override
+	public int getListItemNo() {
+		return pagingHelper.getListItemNo();
+	}
+	
+	@Override
 	public int getPrevPage() {
 		return pagingHelper.getPrevPage();
 	}
 	
+	@Override
 	public int getFirstPage() {
 		return pagingHelper.getFirstPage();
 	}
 	
+	@Override
 	public int getLastPage() {
 		return pagingHelper.getLastPage();
 	}
 	
+	@Override
 	public int getNextPage() {
 		return pagingHelper.getNextPage();
 	}
 
+	@Override
 	public void setPagingHelper(PagingHelper pagingHelper) {
 		this.pagingHelper = pagingHelper;
 	}

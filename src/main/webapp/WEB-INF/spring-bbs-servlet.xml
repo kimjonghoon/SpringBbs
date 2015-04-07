@@ -4,12 +4,15 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring 
+    	http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다.  -->
 	<mvc:resources location="/images/" mapping="/images/**" />
@@ -18,35 +21,16 @@
 	<mvc:annotation-driven />
 	
 	<context:component-scan
-		base-package="net.java_school.board.spring" />
-			
-	<!-- HandlerMapping -->
-	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="mappings">
-			<value>
-				/bbs/list=listController
-			</value>
-		</property>
-	</bean>
-		
-	<bean id="listController"
-		class="net.java_school.board.spring.ListController"
-			p:boardService-ref="boardService" />
-	
-	<!-- ViewResolver -->
-	<bean id="internalResourceViewResolver" 
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass">
-			<value>org.springframework.web.servlet.view.JstlView</value>
-		</property>
-		<property name="prefix">
-			<value>/WEB-INF/jsp/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
-	
+		base-package="net.java_school.board.spring,
+ 			net.java_school.java.spring,
+			net.java_school.javascript.spring,
+			net.java_school.board,
+			net.java_school.board.spring,
+			net.java_school.user,
+			net.java_school.user.spring" />
+
+	<mybatis:scan base-package="net.java_school.mybatis" />
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@192.168.0.2:1521:XE"/>
@@ -63,15 +47,35 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
 	</bean>
-	
-	<bean id="boardMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="net.java_school.mybatis.BoardMapper" />
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-	
-	<!-- BoardService -->
-	<bean id="boardService" class="net.java_school.board.BoardServiceImpl">
-		<property name="boardMapper" ref="boardMapper" />
-	</bean>
 
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="104857600"
+		p:maxInMemorySize="10485760" />
+      			
+	<!-- ViewResolver -->
+	<bean id="internalResourceViewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	  <property name="defaultErrorView" value="error" />
+	  <property name="exceptionMappings">
+	    <props>
+	      <prop key="net.java_school.exception.AuthenticationException">
+	        error
+	      </prop>
+	    </props>
+	  </property>
+	</bean>
+  	
 </beans>
