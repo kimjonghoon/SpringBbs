@@ -6,23 +6,23 @@ import net.java_school.user.User;
 
 public interface UserMapper {
     
-  public void addUser(User user);
+  public void insert(User user);
 
   public User login(
     @Param("email") String email, 
     @Param("passwd") String passwd);
 
-  public int editAccount(User user);
+  public int update(User user);
 
-  public int changePasswd(
+  public int updatePasswd(
     @Param("currentPasswd") String currentPasswd, 
     @Param("newPasswd") String newPasswd, 
     @Param("email") String email);
 
-  public int bye(
+  public int delete(
     @Param("email") String email, 
     @Param("passwd") String passwd);
 
-  public User getUser(String email);
+  public User selectOne(String email);
     
 }

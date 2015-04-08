@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
   private UserMapper userMapper;
     
   public void addUser(User user) {
-    userMapper.addUser(user);
+    userMapper.insert(user);
   }
 
   public User login(String email, String passwd) {
@@ -20,19 +20,19 @@ public class UserServiceImpl implements UserService {
   }
 
   public int editAccount(User user) {
-    return userMapper.editAccount(user);
+    return userMapper.update(user);
   }
 
   public int changePasswd(String currentPasswd, String newPasswd, String email) {
-    return userMapper.changePasswd(currentPasswd, newPasswd, email);
+    return userMapper.updatePasswd(currentPasswd, newPasswd, email);
   }
 
   public int bye(String email, String passwd) {
-    return userMapper.bye(email, passwd);
+    return userMapper.delete(email, passwd);
   }
 
   public User getUser(String email) {
-    return userMapper.getUser(email);
+    return userMapper.selectOne(email);
   }
     
 }

@@ -71,7 +71,6 @@ public class UsersController {
       if (query != null) url += "?" + query;
        //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
-      
       return "redirect:/users/login?url=" + url;
     }
 

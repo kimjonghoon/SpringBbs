@@ -82,7 +82,7 @@ public class BbsController {
     }
 
     @RequestMapping(value="/write_form", method=RequestMethod.GET)
-    public String write_form(String boardCd,
+    public String writeForm(String boardCd,
             HttpServletRequest req,
             HttpSession session,
             Model model) throws Exception {
@@ -332,7 +332,7 @@ public class BbsController {
     }
 
     @RequestMapping(value="/modify_form", method=RequestMethod.GET)
-    public String modify_form(
+    public String modifyForm(
             Integer articleNo, 
             String boardCd,
             HttpSession session,

@@ -1,7 +1,7 @@
 package net.java_school.mybatis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
@@ -9,7 +9,7 @@ import net.java_school.board.Comment;
 
 public interface BoardMapper {
 	//목록
-	public ArrayList<Article> selectListOfArticles(HashMap<String, String> hashmap);	
+	public List<Article> selectListOfArticles(HashMap<String, String> hashmap);	
 	
 	//총 레코드
 	public int selectCountOfArticles(HashMap<String, String> hashmap);
@@ -21,7 +21,7 @@ public interface BoardMapper {
 	public void insertAttachFile(AttachFile attachFile);
 
 	//글수정
-	public void update(Article article);	
+	public void update(Article article);
 	
 	//글삭제
 	public void delete(int articleNo);
@@ -39,7 +39,7 @@ public interface BoardMapper {
 	public Article selectPrevOne(HashMap<String, String> hashmap);
 
 	//첨부파일 리스트
-	public ArrayList<AttachFile> selectListOfAttachFiles(int articleNo);	
+	public List<AttachFile> selectListOfAttachFiles(int articleNo);	
 
 	//첨부파일 삭제
 	public void deleteFile(int attachFileNo);	
@@ -57,7 +57,7 @@ public interface BoardMapper {
 	public void deleteComment(int commentNo);
 
 	//댓글 리스트
-	public ArrayList<Comment> selectListOfComments(int articleNo);
+	public List<Comment> selectListOfComments(int articleNo);
 	
 	//첨부파일 찾기
 	public AttachFile selectOneAttachFile(int attachFileNo);
