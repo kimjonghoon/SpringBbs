@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+  <http auto-config="true" use-expressions="true">
+    <intercept-url pattern="/users/bye_confirm" access="permitAll" />
+    <intercept-url pattern="/users/welcome" access="permitAll" />
+    <intercept-url pattern="/users/signUp" access="permitAll" />
+    <intercept-url pattern="/users/login" access="permitAll" />
+    <intercept-url pattern="/images/**" access="permitAll" />
+    <intercept-url pattern="/css/**" access="permitAll" />
+    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/users/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
+    <intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+
+    <form-login
+      login-page="/users/login"
+      authentication-failure-url="/users/login?msg=Login-Failed"
+      default-target-url="/bbs/list?boardCd=free&amp;curPage=1" />
+        
+    <logout
+      logout-success-url="/"
+      invalidate-session="true" />
+  </http>
+
+  <authentication-manager>
+    <authentication-provider>
+      <jdbc-user-service
+        data-source-ref="dataSource"
+        users-by-username-query="select email as username,passwd as password,1 as enabled
+        from MEMBER where email = ?"
+        authorities-by-username-query="select email as username,authority
+        from AUTHORITIES where email = ?" />
+    </authentication-provider>
+  </authentication-manager>
+    
+</beans:beans>

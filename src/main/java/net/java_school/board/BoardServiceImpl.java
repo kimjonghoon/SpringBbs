@@ -59,8 +59,8 @@ public class BoardServiceImpl implements BoardService {
 
 	//글삭제
 	@Override
-	public void removeArticle(int articleNo) {
-		boardMapper.delete(articleNo);
+	public void removeArticle(Article article) {
+		boardMapper.delete(article.getArticleNo());
 	}
 
 	//조회수 증가
@@ -107,8 +107,8 @@ public class BoardServiceImpl implements BoardService {
 
 	//첨부파일 삭제
 	@Override
-	public void removeAttachFile(int attachFileNo) {
-		boardMapper.deleteFile(attachFileNo);
+	public void removeAttachFile(AttachFile attachFile) {
+		boardMapper.deleteFile(attachFile.getAttachFileNo());
 	}
 
 	//게시판 이름
@@ -131,8 +131,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	//댓글 삭제
 	@Override
-	public void removeComment(int commentNo) {
-		boardMapper.deleteComment(commentNo);
+	public void removeComment(Comment comment) {
+		boardMapper.deleteComment(comment.getCommentNo());
 	}
 	
 	//댓글 리스트

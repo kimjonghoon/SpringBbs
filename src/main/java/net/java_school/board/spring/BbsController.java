@@ -2,11 +2,11 @@ package net.java_school.board.spring;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.java_school.board.Article;
@@ -15,8 +15,6 @@ import net.java_school.board.BoardService;
 import net.java_school.board.Comment;
 import net.java_school.commons.PagingHelper;
 import net.java_school.commons.WebContants;
-import net.java_school.exception.AuthenticationException;
-import net.java_school.user.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,28 +35,15 @@ public class BbsController {
     public String list(String boardCd, 
             Integer curPage, 
             String searchWord,
-            HttpServletRequest req,
-            HttpSession session,
             Model model) throws Exception {
-        
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            //로그인 후 되돌아갈 URL를 구한다.
-            String url = req.getServletPath();
-            String query = req.getQueryString();
-            if (query != null) url += "?" + query;
-            //로그인 페이지로 리다이렉트
-            url = URLEncoder.encode(url, "UTF-8");
-            return "redirect:/users/login?url=" + url;
-        }
         
         int numPerPage = 10;
         int pagePerBlock = 10;
         
         int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
         
-        PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+        PagingHelper pagingHelper = 
+        		new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
         boardService.setPagingHelper(pagingHelper);
 
         List<Article> list = boardService.getArticleList(boardCd, searchWord);
@@ -82,23 +67,7 @@ public class BbsController {
     }
 
     @RequestMapping(value="/write_form", method=RequestMethod.GET)
-    public String writeForm(String boardCd,
-            HttpServletRequest req,
-            HttpSession session,
-            Model model) throws Exception {
-        
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            //로그인 후 되돌아갈 URL를 구한다.
-            String url = req.getServletPath();
-            String query = req.getQueryString();
-            if (query != null) url += "?" + query;
-            //로그인 페이지로 리다이렉트
-            url = URLEncoder.encode(url, "UTF-8");
-            return "redirect:/users/login?url=" + url;
-        }
-
+    public String writeForm(String boardCd, Model model) throws Exception {
         //게시판 이름
         String boardNm = boardService.getBoardNm(boardCd);
         model.addAttribute("boardNm", boardNm);
@@ -108,13 +77,7 @@ public class BbsController {
 
     @RequestMapping(value="/write", method=RequestMethod.POST)
     public String write(MultipartHttpServletRequest mpRequest,
-            HttpSession session) throws Exception {
-        
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            throw new AuthenticationException(WebContants.NOT_LOGIN);
-        }
+            Principal principal) throws Exception {
         
         String boardCd = mpRequest.getParameter("boardCd");
         String title = mpRequest.getParameter("title");
@@ -124,7 +87,7 @@ public class BbsController {
         article.setBoardCd(boardCd);
         article.setTitle(title);
         article.setContent(content);
-        article.setEmail(user.getEmail());
+        article.setEmail(principal.getName());
         
         boardService.addArticle(article);
 
@@ -150,11 +113,11 @@ public class BbsController {
             attachFile.setFiletype(mpFile.getContentType());
             attachFile.setFilesize(mpFile.getSize());
             attachFile.setArticleNo(article.getArticleNo());
-            attachFile.setEmail(user.getEmail());
+            attachFile.setEmail(article.getEmail());
             boardService.addAttachFile(attachFile);
         }
         
-        return "redirect:/bbs/list?curPage=1&boardCd=" + article.getBoardCd();
+        return "redirect:/bbs/list?curPage=1&boardCd=" + boardCd;
     }
 
     @RequestMapping(value="/view", method=RequestMethod.GET)
@@ -162,28 +125,8 @@ public class BbsController {
             String boardCd, 
             Integer curPage,
             String searchWord,
-            HttpServletRequest req,
-            HttpSession session,
             Model model) throws Exception {
 
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            //로그인 후 되돌아갈 URL를 구한다.
-            String url = req.getServletPath();
-            String query = req.getQueryString();
-            if (query != null) url += "?" + query;
-            //로그인 페이지로 리다이렉트
-            url = URLEncoder.encode(url, "UTF-8");
-            return "redirect:/users/login?url=" + url;
-        }
-        
-        /*
-        상세보기를 할때마다 조회수를 1 증가
-        하단에 목록에서 조회수를 제대로 보기위해서는
-        목록 레코드를 페치하기 전에 조회수를 먼저 증가시켜야 한다.
-        TODO : 사용자 IP 와 시간을 고려해서 조회수를 증가하도록
-        */
         boardService.increaseHit(articleNo);
         
         Article article = boardService.getArticle(articleNo);//상세보기에서 볼 게시글
@@ -246,17 +189,11 @@ public class BbsController {
             Integer curPage, 
             String searchWord,
             String memo,
-            HttpSession session) throws Exception {
+            Principal principal) throws Exception {
         
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            throw new AuthenticationException(WebContants.NOT_LOGIN);
-        }
-
         Comment comment = new Comment();
         comment.setArticleNo(articleNo);
-        comment.setEmail(user.getEmail());
+        comment.setEmail(principal.getName());
         comment.setMemo(memo);
         
         boardService.addComment(comment);
@@ -278,18 +215,9 @@ public class BbsController {
             Integer curPage, 
             String searchWord, 
             String memo,
-            HttpSession session) throws Exception {
-        
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
+            Principal principal) throws Exception {
         
         Comment comment = boardService.getComment(commentNo);
-        
-        //로그인 사용자가 댓글 소유자인지를  검사
-        if (user == null || !user.getEmail().equals(comment.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
-        
-        //생성되어 있는 Comment 객체를 재사용한다.
         comment.setMemo(memo);
         boardService.modifyComment(comment);
         
@@ -309,18 +237,10 @@ public class BbsController {
             String boardCd, 
             Integer curPage, 
             String searchWord,
-            HttpSession session) throws Exception {
-        
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
+            Principal principal) throws Exception {
         
         Comment comment = boardService.getComment(commentNo);
-        
-        //로그인 사용자가 댓글의 소유자인지 검사
-        if (user == null || !user.getEmail().equals(comment.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
-        
-        boardService.removeComment(commentNo);
+        boardService.removeComment(comment);
         
         searchWord = URLEncoder.encode(searchWord,"UTF-8");
         
@@ -332,20 +252,11 @@ public class BbsController {
     }
 
     @RequestMapping(value="/modify_form", method=RequestMethod.GET)
-    public String modifyForm(
-            Integer articleNo, 
+    public String modifyForm(Integer articleNo, 
             String boardCd,
-            HttpSession session,
             Model model) {
         
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        
         Article article = boardService.getArticle(articleNo);
-        
-        //로그인 사용자가 글 작성자인지 검사
-        if (user == null || !user.getEmail().equals(article.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
         
         //수정페이지에서의 보일 게시글 정보
         String title = article.getTitle();
@@ -360,19 +271,11 @@ public class BbsController {
     }
     
     @RequestMapping(value="/modify", method=RequestMethod.POST)
-    public String modify(
-            MultipartHttpServletRequest mpRequest,
-            HttpSession session) throws Exception {
-        
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
+    public String modify(MultipartHttpServletRequest mpRequest,
+            Principal principal) throws Exception {
         
         int articleNo = Integer.parseInt(mpRequest.getParameter("articleNo"));
         Article article = boardService.getArticle(articleNo);
-        
-        //로그인 사용자가 글 작성자인지 검사
-        if (!article.getEmail().equals(user.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
         
         String boardCd = mpRequest.getParameter("boardCd");
         int curPage = Integer.parseInt(mpRequest.getParameter("curPage"));
@@ -409,11 +312,12 @@ public class BbsController {
             attachFile.setFiletype(mpFile.getContentType());
             attachFile.setFilesize(mpFile.getSize());
             attachFile.setArticleNo(articleNo);
-            attachFile.setEmail(user.getEmail());
+            attachFile.setEmail(principal.getName());
             boardService.addAttachFile(attachFile);
         }
         
         searchWord = URLEncoder.encode(searchWord,"UTF-8");
+        
         return "redirect:/bbs/view?articleNo=" + articleNo 
             + "&boardCd=" + boardCd 
             + "&curPage=" + curPage 
@@ -422,16 +326,10 @@ public class BbsController {
     }
 
     @RequestMapping(value="/download", method=RequestMethod.POST)
-    public String download(String filename, HttpSession session, Model model) {
-        //로그인 체크
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
-        if (user == null) {
-            throw new AuthenticationException(WebContants.NOT_LOGIN);
-        }
-
+    public String download(String filename, Model model) {
         model.addAttribute("filename", filename);
-        return "inc/download";
 
+        return "inc/download";
     }
 
     @RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
@@ -443,15 +341,8 @@ public class BbsController {
             String searchWord,
             HttpSession session) throws Exception {
         
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
         AttachFile attachFile = boardService.getAttachFile(attachFileNo);
-        
-        //로그인 사용자가 첨부파일 소유자인지 검사
-        if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
-        
-        boardService.removeAttachFile(attachFileNo);
+        boardService.removeAttachFile(attachFile);
         
         searchWord = URLEncoder.encode(searchWord,"UTF-8");
         
@@ -470,15 +361,8 @@ public class BbsController {
             String searchWord,
             HttpSession session) throws Exception {
         
-        User user = (User) session.getAttribute(WebContants.USER_KEY);
         Article article = boardService.getArticle(articleNo);
-        
-        //로그인 사용자가 글 작성자인지 검사
-        if (user == null || !user.getEmail().equals(article.getEmail())) {
-            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-        }
-        
-        boardService.removeArticle(articleNo);
+        boardService.removeArticle(article);
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
         

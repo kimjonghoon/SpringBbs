@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"  
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -7,13 +8,17 @@
 	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring 
     	http://mybatis.org/schema/mybatis-spring.xsd">
-	
+
+	<security:global-method-security pre-post-annotations="enabled" />
+    	
 	<!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다.  -->
 	<mvc:resources location="/images/" mapping="/images/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
@@ -31,28 +36,6 @@
 
 	<mybatis:scan base-package="net.java_school.mybatis" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.0.2:1521:XE"/>
-		<property name="username" value="java"/>
-		<property name="password" value="school"/>
-		<property name="maxActive" value="100"/>
-		<property name="maxWait" value="1000"/>
-		<property name="poolPreparedStatements" value="true"/>
-		<property name="defaultAutoCommit" value="true"/>
-		<property name="validationQuery" value=" SELECT 1 FROM DUAL" />
-	</bean>
-    	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
-	</bean>
-
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		p:maxUploadSize="104857600"
-		p:maxInMemorySize="10485760" />
-      			
 	<!-- ViewResolver -->
 	<bean id="internalResourceViewResolver" 
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -66,8 +49,8 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
-	
-<!-- 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+<!-- 	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 	  <property name="defaultErrorView" value="error" />
 	  <property name="exceptionMappings">
 	    <props>
@@ -76,6 +59,6 @@
 	      </prop>
 	    </props>
 	  </property>
-	</bean> -->
-  	
+	</bean> 
+-->
 </beans>

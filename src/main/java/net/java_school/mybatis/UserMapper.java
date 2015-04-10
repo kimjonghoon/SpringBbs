@@ -8,6 +8,10 @@ public interface UserMapper {
     
   public void insert(User user);
 
+  public void insertAuthority(
+		  @Param("email") String email, 
+		  @Param("authority") String authority);
+  
   public User login(
     @Param("email") String email, 
     @Param("passwd") String passwd);
@@ -23,6 +27,8 @@ public interface UserMapper {
     @Param("email") String email, 
     @Param("passwd") String passwd);
 
+  public void deleteAuthority(@Param("email") String email);
+  
   public User selectOne(String email);
     
 }

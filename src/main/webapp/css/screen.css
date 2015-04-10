@@ -280,7 +280,7 @@ ul#nav li a:hover {
 }
 
 #gul-content {
-	border-bottom: 1px solid #ebebeb;
+/* 	border-bottom: 1px solid #ebebeb; */
 }
 
 #gul-content p {
@@ -290,9 +290,10 @@ ul#nav li a:hover {
 }
 
 .comments {
+	border-top: 1px solid #ebebeb;
 	border-right: 1px solid #ebebeb;
 	border-left: 1px solid #ebebeb;
-	border-bottom: 1px solid #ebebeb;
+/* 	border-bottom: 1px solid #ebebeb; */
 }
 
 .comments span.writer {
@@ -357,7 +358,7 @@ ul#nav li a:hover {
 }
 
 #addComment {
-    margin-top: 10px;
+ /*    margin-top: 10px; */
     margin-bottom: 5px;
     padding: 0.22em;
     border: 1px solid #eee;

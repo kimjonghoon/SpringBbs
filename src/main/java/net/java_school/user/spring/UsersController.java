@@ -1,17 +1,18 @@
 package net.java_school.user.spring;
 
-import java.net.URLEncoder;
+import java.security.Principal;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.java_school.commons.WebContants;
-import net.java_school.exception.AuthenticationException;
 import net.java_school.user.User;
 import net.java_school.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,7 +30,11 @@ public class UsersController {
 
   @RequestMapping(value="/signUp", method=RequestMethod.POST)
   public String signUp(User user) {
+    String authority = "ROLE_USER";
+    
     userService.addUser(user);
+    userService.addAuthority(user.getEmail(), authority);
+    
     return "redirect:/users/welcome";
   }
 
@@ -43,91 +48,59 @@ public class UsersController {
     return "users/login";
   }
     
-  @RequestMapping(value="/login", method=RequestMethod.POST)
-  public String login(String email, String passwd, String url, HttpSession session) {
-    User user = userService.login(email, passwd);
-        
-    if (user == null) {
-      return "redirect:/users/login?url=" + url + "&msg=Login-Failed";
-    } else {
-      session.setAttribute(WebContants.USER_KEY, user);
-      if (!url.equals("")) {
-        return "redirect:" + url;
-      }
-      
-      return "redirect:/";
-    }
-        
-  }
-        
   @RequestMapping(value="/editAccount", method=RequestMethod.GET)
-  public String editAccount(HttpServletRequest req, HttpSession session) throws Exception {
-    User user = (User) session.getAttribute(WebContants.USER_KEY);
-
-    if (user == null) {
-       //로그인 후 다시 돌아오기 위해
-      String url = req.getServletPath();
-      String query = req.getQueryString();
-      if (query != null) url += "?" + query;
-       //로그인 페이지로 리다이렉트
-      url = URLEncoder.encode(url, "UTF-8");
-      return "redirect:/users/login?url=" + url;
-    }
-
+  public String editAccount(Principal principal, Model model) {
+    User user = userService.getUser(principal.getName());
+    model.addAttribute(WebContants.USER_KEY, user);
+    
     return "users/editAccount";
   }
     
   @RequestMapping(value="/editAccount", method=RequestMethod.POST)
-  public String editAccount(User user, HttpSession session) {
-    User loginUser = (User) session.getAttribute(WebContants.USER_KEY);
+  public String editAccount(User user, Principal principal) {
+    
+     //내 정보 수정 폼 페이지에서 입력한 비밀번호와 신원 객체로 사용자 객체 생성
+    User loginUser = userService.login(principal.getName(), user.getPasswd());
+    
     if (loginUser == null) {
-      throw new AuthenticationException(WebContants.NOT_LOGIN);
+      throw new AccessDeniedException("비밀번호가 틀립니다.");
     }
 
-    if (userService.login(loginUser.getEmail(), user.getPasswd()) == null) {
-      throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+    //이름을 입력하지 않았다면 현재값으로
+    if (user.getName() == null || user.getName().equals("")) {
+    	user.setName(loginUser.getName());
     }
-
+    //모바일을 입력하지 않았다면 현재값으로
+    if (user.getMobile() == null || user.getMobile().equals("")) {
+    	user.setMobile(loginUser.getMobile());
+    }
+    //이메일은 전달되지 않으므로 현재값으로
     user.setEmail(loginUser.getEmail());
         
-    int check = userService.editAccount(user);
-    if (check > 0) {
-      session.setAttribute(WebContants.USER_KEY, user);
-      return "users/changePasswd";
-    } else {
-      throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-    }
+    userService.editAccount(user);
+    
+    return "users/changePasswd";
         
   }
     
   @RequestMapping(value="/changePasswd", method=RequestMethod.GET)
-  public String changePasswd(HttpServletRequest req, HttpSession session) throws Exception {
-    User user = (User) session.getAttribute(WebContants.USER_KEY);
-        
-    if (user == null) {
-       //로그인 후 다시 돌아오기 위해
-      String url = req.getServletPath();
-      String query = req.getQueryString();
-      if (query != null) url += "?" + query;
-       //로그인 페이지로 리다이렉트
-      url = URLEncoder.encode(url, "UTF-8");
-      
-      return "redirect:/users/login?url=" + url;     
-    }
+  public String changePasswd(Principal principal, Model model) {
+    User user = userService.getUser(principal.getName());
+    
+    model.addAttribute(WebContants.USER_KEY, user);
         
     return "users/changePasswd";
   }
     
   @RequestMapping(value="/changePasswd", method=RequestMethod.POST)
-  public String changePasswd(String currentPasswd, String newPasswd, HttpSession session) {
-    String email = ((User)session.getAttribute(WebContants.USER_KEY)).getEmail();
-        
-    int check = userService.changePasswd(currentPasswd, newPasswd, email);
-    if (check > 0) {
-      return "redirect:/users/changePasswd_confirm";
-    } else {
-      return "redirect:/users/changePasswd?msg=fail";
-    }
+  public String changePasswd(String currentPasswd, String newPasswd, Principal principal) {
+    int check = userService.changePasswd(currentPasswd, newPasswd, principal.getName());
+    
+    if (check < 1) {
+        throw new AccessDeniedException("현재 비밀번호가 틀립니다.");  
+    } 
+    
+    return "redirect:/users/changePasswd_confirm";
         
   }
     
@@ -137,33 +110,20 @@ public class UsersController {
   }
     
   @RequestMapping(value="/bye", method=RequestMethod.GET)
-  public String bye(HttpServletRequest req, HttpSession session) throws Exception {
-    User user = (User)session.getAttribute(WebContants.USER_KEY);
-        
-    if (user == null) {
-       //로그인 후 다시 돌아오기 위해
-      String url = req.getServletPath();
-      String query = req.getQueryString();
-      if (query != null) url += "?" + query;
-       //로그인 페이지로 리다이렉트
-      url = URLEncoder.encode(url, "UTF-8");
-      
-      return "redirect:/users/login?url=" + url;     
-    }
-        
+  public String bye() {
     return "users/bye";
   }
 
   @RequestMapping(value="/bye", method=RequestMethod.POST)
-  public String bye(String email, String passwd, HttpSession session) {
-    User user = (User)session.getAttribute(WebContants.USER_KEY);
+  public String bye(String email, String passwd, Principal principal, HttpServletRequest req) 
+		throws ServletException {
 
-    if (user == null || !user.getEmail().equals(email)) {
-    	throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+    if (!principal.getName().equals(email)) {
+    	throw new AccessDeniedException(WebContants.AUTHENTICATION_FAILED);
     }
     
     userService.bye(email, passwd);
-    session.removeAttribute(WebContants.USER_KEY);
+    req.logout();
     
     return "redirect:/users/bye_confirm";
   }
@@ -173,12 +133,4 @@ public class UsersController {
     return "users/bye_confirm";	  
   }
   
-  @RequestMapping(value="/logout", method=RequestMethod.GET)
-  public String logout(HttpSession session) {
-    session.removeAttribute(WebContants.USER_KEY);
-
-    return "redirect:/";
-
-  }
-
 }

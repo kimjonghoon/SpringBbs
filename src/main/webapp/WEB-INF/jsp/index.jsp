@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="net.java_school.user.User" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,20 +19,19 @@
     <div id="header">
     	<h1 style="float: left; width:150px;"><a href="./"><img src="images/ci.gif" alt="java-school logo" /></a></h1>
     	<div id="memberMenu" style="float: right;position: relative; top: 7px;">
-<%
-User loginUser = (User) session.getAttribute("user");
-if (loginUser == null) {
-%>
-			<input type="button" value="로그인" onclick="location.href='./users/login'" />
-			<input type="button" value="회원가입" onclick="location.href='./users/signUp'" />
-<%
-} else {
-%>
-			<input type="button" value="로그아웃" onclick="location.href='./users/logout'" />
-			<input type="button" value="내정보수정" onclick="location.href='./users/editAccount'" />
-<%
-}
-%>
+		<security:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+			<security:authentication property="principal.username" var="check" />
+		</security:authorize>
+		<c:choose>
+			<c:when test="${empty check}">
+				<input type="button" value="로그인" onclick="location.href='./users/login'" />
+				<input type="button" value="회원가입" onclick="location.href='./users/signUp'" />
+			</c:when>
+			<c:otherwise>
+				<input type="button" value="로그아웃" onclick="location.href='./j_spring_security_logout'" />
+				<input type="button" value="내정보수정" onclick="location.href='./users/editAccount'" />
+			</c:otherwise>
+		</c:choose>	
     	</div>
     </div>
     
@@ -50,9 +50,9 @@ if (loginUser == null) {
     
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
-			<div id="url-navi">Main</div>
 
 <!-- 본문 시작 -->
+<div id="url-navi">Main</div>
 <h1>수정</h1>
 <h2>JSP Project 전반적인 내용 수정 2014.9.26</h2>
 프로토타입을 만든 후에 진행하는 것으로 내용 수정<br />

@@ -41,21 +41,17 @@ function check() {
 <div id="url-navi">회원</div>
 <h1>로그인</h1>
 <c:if test="${not empty param.msg }">
-	<p style="color: red;">로그인에 실패했습니다.</p>
+	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>
 </c:if>
-
-<form id="loginForm" action="login" method="post" onsubmit="return check()">
-<p style="margin: 0; padding: 0;">
-<input type="hidden" name="url" value="${param.url }" />
-</p>
+<form id="loginForm" action="../j_spring_security_check" method="post" onsubmit="return check()">
 <table>
 <tr>
     <td style="width: 200px;">Email</td>
-    <td style="width: 390px"><input type="text" name="email" style="width: 99%;" /></td>
+    <td style="width: 390px"><input type="text" name="j_username" style="width: 99%;" /></td>
 </tr>
 <tr>
     <td>비밀번호(Password)</td>
-    <td><input type="password" name="passwd" style="width: 99%;" /></td>
+    <td><input type="password" name="j_password" style="width: 99%;" /></td>
 </tr>
 </table>
 <div style="text-align: center;padding: 15px 0;">

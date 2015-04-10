@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -123,9 +124,9 @@ function download(filename) {
     <p id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
     	   <a href="javascript:download('${file.filename }')">${file.filename }</a>
-			<c:if test="${user.email == file.email }">
+			<security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
 	    	<a href="javascript:deleteAttachFile('${file.attachFileNo }')">x</a>
-			</c:if>
+			</security:authorize>
 			<br />    	
 		</c:forEach>
     </p>
@@ -134,14 +135,16 @@ function download(filename) {
 <!--  덧글 반복 시작 -->
 <c:forEach var="comment" items="${commentList }" varStatus="status">
 <div class="comments">
+	<div class="comments-meta">
     <span class="writer">${comment.name }</span>
     <span class="date">${comment.regdate }</span>
-	<c:if test="${user.email == comment.email }">    
+	<security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')">
     <span class="modify-del">
         <a href="javascript:modifyCommentToggle('${comment.commentNo }')">수정</a>
          | <a href="javascript:deleteComment('${comment.commentNo }')">삭제</a>
     </span>
-	</c:if>    
+	</security:authorize>
+	</div>
     <p id="comment${comment.commentNo }">${comment.memo }</p>
     <div class="modify-comment">
         <form id="modifyCommentForm${comment.commentNo }" action="updateComment" method="post" style="display: none;">
@@ -190,12 +193,12 @@ function download(filename) {
 </div>
 
 <div id="view-menu">
-    <c:if test="${user.email == email }">
+    <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
     <div class="fl">
         <input type="button" value="수정" onclick="goModify()" />
         <input type="button" value="삭제" onclick="goDelete()" />
     </div>
-    </c:if>        
+    </security:authorize>        
     <div class="fr">
 		<c:if test="${nextArticle != null }">    
         <input type="button" value="다음글" onclick="goView('${nextArticle.articleNo }')" />

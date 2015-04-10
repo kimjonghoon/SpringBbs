@@ -10,6 +10,10 @@
     INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
   </insert>
 
+  <insert id="insertAuthority">
+    INSERT INTO authorities VALUES (#{email}, #{authority})
+  </insert>
+  
   <select id="login" resultType="User">
     SELECT email, passwd, name, mobile FROM member 
     WHERE email = #{email} AND passwd = #{passwd}
@@ -28,6 +32,11 @@
   <delete id="delete">
     DELETE FROM member 
     WHERE email = #{email} AND passwd = #{passwd}
+  </delete>
+  
+  <delete id="deleteAuthority">
+    DELETE FROM authorities
+    WHERE email = #{email}	
   </delete>
 
   <select id="selectOne" parameterType="string" resultType="User">
