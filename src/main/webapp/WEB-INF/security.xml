@@ -27,6 +27,13 @@
     <logout
       logout-success-url="/"
       invalidate-session="true" />
+    
+    <session-management>
+    	<concurrency-control
+    		max-sessions="1"
+    		error-if-maximum-exceeded="true" />
+    </session-management>
+      
   </http>
 
   <authentication-manager>

@@ -31,7 +31,7 @@
 
   <delete id="delete">
     DELETE FROM member 
-    WHERE email = #{email} AND passwd = #{passwd}
+    WHERE email = #{email}
   </delete>
   
   <delete id="deleteAuthority">

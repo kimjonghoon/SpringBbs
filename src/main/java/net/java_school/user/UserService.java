@@ -18,15 +18,15 @@ public interface UserService {
   public int editAccount(User user);
 
   //비밀번호 변경
-  @PreAuthorize("#email == principal.username or hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
   public int changePasswd(String currentPasswd, String newPasswd, String email);
 
   //탈퇴
-  @PreAuthorize("#email == principal.username or hasRole('ROLE_ADMIN')")
-  public void bye(String email, String passwd);
+  @PreAuthorize("#user.email == principal.username")
+  public void bye(User user);
 
   //회원찾기
-  @PreAuthorize("#email == principal.username or hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
   public User getUser(String email);
     
 }

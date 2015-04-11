@@ -49,12 +49,13 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
-<!-- 	
+	
+<!-- 최종 테스트 전까지 주석을 풀지 않는다. 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 	  <property name="defaultErrorView" value="error" />
 	  <property name="exceptionMappings">
 	    <props>
-	      <prop key="net.java_school.exception.AuthenticationException">
+	      <prop key="AccessDeniedException">
 	        error
 	      </prop>
 	    </props>

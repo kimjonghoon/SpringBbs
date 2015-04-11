@@ -23,9 +23,7 @@ public interface UserMapper {
     @Param("newPasswd") String newPasswd, 
     @Param("email") String email);
 
-  public int delete(
-    @Param("email") String email, 
-    @Param("passwd") String passwd);
+  public int delete(User user);
 
   public void deleteAuthority(@Param("email") String email);
   

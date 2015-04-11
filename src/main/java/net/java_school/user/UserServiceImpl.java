@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addAuthority(String email, String authority) {
-    userMapper.insertAuthority(email, authority);  	
+    userMapper.insertAuthority(email, authority);
   }
   
   @Override
@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void bye(String email, String passwd) {
-    userMapper.deleteAuthority(email);  
-    userMapper.delete(email, passwd);
+  public void bye(User user) {
+    userMapper.deleteAuthority(user.getEmail());
+    userMapper.delete(user);
   }
 
   @Override

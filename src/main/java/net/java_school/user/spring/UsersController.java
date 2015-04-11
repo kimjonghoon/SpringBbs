@@ -58,28 +58,14 @@ public class UsersController {
     
   @RequestMapping(value="/editAccount", method=RequestMethod.POST)
   public String editAccount(User user, Principal principal) {
-    
-     //내 정보 수정 폼 페이지에서 입력한 비밀번호와 신원 객체로 사용자 객체 생성
-    User loginUser = userService.login(principal.getName(), user.getPasswd());
-    
-    if (loginUser == null) {
-      throw new AccessDeniedException("비밀번호가 틀립니다.");
-    }
+    user.setEmail(principal.getName());
 
-    //이름을 입력하지 않았다면 현재값으로
-    if (user.getName() == null || user.getName().equals("")) {
-    	user.setName(loginUser.getName());
+    int check = userService.editAccount(user);
+    if (check < 1) {
+    	throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
     }
-    //모바일을 입력하지 않았다면 현재값으로
-    if (user.getMobile() == null || user.getMobile().equals("")) {
-    	user.setMobile(loginUser.getMobile());
-    }
-    //이메일은 전달되지 않으므로 현재값으로
-    user.setEmail(loginUser.getEmail());
-        
-    userService.editAccount(user);
     
-    return "users/changePasswd";
+    return "redirect:/users/changePasswd";
         
   }
     
@@ -97,7 +83,7 @@ public class UsersController {
     int check = userService.changePasswd(currentPasswd, newPasswd, principal.getName());
     
     if (check < 1) {
-        throw new AccessDeniedException("현재 비밀번호가 틀립니다.");  
+        throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
     } 
     
     return "redirect:/users/changePasswd_confirm";
@@ -115,14 +101,11 @@ public class UsersController {
   }
 
   @RequestMapping(value="/bye", method=RequestMethod.POST)
-  public String bye(String email, String passwd, Principal principal, HttpServletRequest req) 
+  public String bye(String email, String passwd, HttpServletRequest req) 
 		throws ServletException {
-
-    if (!principal.getName().equals(email)) {
-    	throw new AccessDeniedException(WebContants.AUTHENTICATION_FAILED);
-    }
     
-    userService.bye(email, passwd);
+    User user = userService.login(email, passwd);
+    userService.bye(user);
     req.logout();
     
     return "redirect:/users/bye_confirm";
