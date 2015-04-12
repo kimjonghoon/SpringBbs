@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
 import net.java_school.board.BoardService;
@@ -68,7 +66,6 @@ public class BbsController {
 
     @RequestMapping(value="/write_form", method=RequestMethod.GET)
     public String writeForm(String boardCd, Model model) throws Exception {
-        //게시판 이름
         String boardNm = boardService.getBoardNm(boardCd);
         model.addAttribute("boardNm", boardNm);
         
@@ -113,7 +110,7 @@ public class BbsController {
             attachFile.setFiletype(mpFile.getContentType());
             attachFile.setFilesize(mpFile.getSize());
             attachFile.setArticleNo(article.getArticleNo());
-            attachFile.setEmail(article.getEmail());
+            attachFile.setEmail(principal.getName());
             boardService.addAttachFile(attachFile);
         }
         
@@ -208,14 +205,12 @@ public class BbsController {
     }
 
     @RequestMapping(value="/updateComment", method=RequestMethod.POST)
-    public String updateComment(
-            Integer commentNo, 
+    public String updateComment(Integer commentNo, 
             Integer articleNo, 
             String boardCd, 
             Integer curPage, 
             String searchWord, 
-            String memo,
-            Principal principal) throws Exception {
+            String memo) throws Exception {
         
         Comment comment = boardService.getComment(commentNo);
         comment.setMemo(memo);
@@ -231,13 +226,11 @@ public class BbsController {
     }
 
     @RequestMapping(value="/deleteComment", method=RequestMethod.POST)
-    public String deleteComment(
-            Integer commentNo, 
+    public String deleteComment(Integer commentNo, 
             Integer articleNo, 
             String boardCd, 
             Integer curPage, 
-            String searchWord,
-            Principal principal) throws Exception {
+            String searchWord) throws Exception {
         
         Comment comment = boardService.getComment(commentNo);
         boardService.removeComment(comment);
@@ -271,8 +264,7 @@ public class BbsController {
     }
     
     @RequestMapping(value="/modify", method=RequestMethod.POST)
-    public String modify(MultipartHttpServletRequest mpRequest,
-            Principal principal) throws Exception {
+    public String modify(MultipartHttpServletRequest mpRequest) throws Exception {
         
         int articleNo = Integer.parseInt(mpRequest.getParameter("articleNo"));
         Article article = boardService.getArticle(articleNo);
@@ -287,7 +279,7 @@ public class BbsController {
         //게시글 수정
         article.setTitle(title);
         article.setContent(content);
-        article.setBoardCd(boardCd);//게시판 종류 변경
+        article.setBoardCd(boardCd);
         boardService.modifyArticle(article);
 
         //파일업로드
@@ -312,7 +304,7 @@ public class BbsController {
             attachFile.setFiletype(mpFile.getContentType());
             attachFile.setFilesize(mpFile.getSize());
             attachFile.setArticleNo(articleNo);
-            attachFile.setEmail(principal.getName());
+            attachFile.setEmail(article.getEmail());//첨부파일 소유자는 원글 소유자가 되도록
             boardService.addAttachFile(attachFile);
         }
         
@@ -333,13 +325,11 @@ public class BbsController {
     }
 
     @RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
-    public String deleteAttachFile(
-            Integer attachFileNo, 
+    public String deleteAttachFile(Integer attachFileNo, 
             Integer articleNo, 
             String boardCd, 
             Integer curPage, 
-            String searchWord,
-            HttpSession session) throws Exception {
+            String searchWord) throws Exception {
         
         AttachFile attachFile = boardService.getAttachFile(attachFileNo);
         boardService.removeAttachFile(attachFile);
@@ -354,12 +344,10 @@ public class BbsController {
     }
 
     @RequestMapping(value="/del", method=RequestMethod.POST)
-    public String del(
-            Integer articleNo, 
+    public String del(Integer articleNo, 
             String boardCd, 
             Integer curPage, 
-            String searchWord,
-            HttpSession session) throws Exception {
+            String searchWord) throws Exception {
         
         Article article = boardService.getArticle(articleNo);
         boardService.removeArticle(article);

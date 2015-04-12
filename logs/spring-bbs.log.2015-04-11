@@ -1,0 +1,1052 @@
+[2015-04-11 08:23:30,034] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:30,084] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:23:30,139] - ==> Parameters: free(String)
+[2015-04-11 08:23:30,230] - <==      Total: 1
+[2015-04-11 08:23:30,366] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:30,367] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:23:30,368] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:23:30,455] - <==      Total: 10
+[2015-04-11 08:23:30,462] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:30,463] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:23:30,466] - ==> Parameters: free(String)
+[2015-04-11 08:23:30,473] - <==      Total: 1
+[2015-04-11 08:23:33,134] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,135] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 08:23:33,138] - ==> Parameters: 716(Integer)
+[2015-04-11 08:23:33,178] - <==    Updates: 1
+[2015-04-11 08:23:33,198] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,199] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 08:23:33,200] - ==> Parameters: 716(Integer)
+[2015-04-11 08:23:33,240] - <==      Total: 1
+[2015-04-11 08:23:33,260] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,261] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 08:23:33,262] - ==> Parameters: 716(Integer)
+[2015-04-11 08:23:33,271] - <==      Total: 0
+[2015-04-11 08:23:33,283] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,283] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 08:23:33,284] - ==> Parameters: free(String), 716(String)
+[2015-04-11 08:23:33,291] - <==      Total: 0
+[2015-04-11 08:23:33,300] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,300] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 08:23:33,301] - ==> Parameters: free(String), 716(String)
+[2015-04-11 08:23:33,310] - <==      Total: 1
+[2015-04-11 08:23:33,319] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,319] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 08:23:33,328] - ==> Parameters: 716(Integer)
+[2015-04-11 08:23:33,338] - <==      Total: 1
+[2015-04-11 08:23:33,356] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,356] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:23:33,357] - ==> Parameters: free(String)
+[2015-04-11 08:23:33,362] - <==      Total: 1
+[2015-04-11 08:23:33,405] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,406] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:23:33,407] - ==> Parameters: free(String)
+[2015-04-11 08:23:33,432] - <==      Total: 1
+[2015-04-11 08:23:33,436] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:23:33,437] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:23:33,438] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:23:33,560] - <==      Total: 10
+[2015-04-11 08:41:18,189] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:18,191] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:41:18,193] - ==> Parameters: free(String)
+[2015-04-11 08:41:18,199] - <==      Total: 1
+[2015-04-11 08:41:18,206] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:18,207] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:41:18,210] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:41:18,298] - <==      Total: 10
+[2015-04-11 08:41:18,310] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:18,311] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:41:18,312] - ==> Parameters: free(String)
+[2015-04-11 08:41:18,320] - <==      Total: 1
+[2015-04-11 08:41:43,859] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:43,861] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:41:43,865] - ==> Parameters: free(String)
+[2015-04-11 08:41:43,871] - <==      Total: 1
+[2015-04-11 08:41:43,877] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:43,878] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:41:43,879] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:41:43,960] - <==      Total: 10
+[2015-04-11 08:41:43,969] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:41:43,969] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:41:43,970] - ==> Parameters: free(String)
+[2015-04-11 08:41:43,975] - <==      Total: 1
+[2015-04-11 08:47:10,694] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:47:10,695] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 08:47:10,696] - ==> Parameters: captain@heist.com(String)
+[2015-04-11 08:47:10,713] - <==      Total: 1
+[2015-04-11 08:48:14,225] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:14,225] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? AND passwd = ? 
+[2015-04-11 08:48:14,226] - ==> Parameters: captain@heist.com(String), 1111(String)
+[2015-04-11 08:48:14,235] - <==      Total: 1
+[2015-04-11 08:48:14,239] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:14,240] - ==>  Preparing: UPDATE member SET name = ?, mobile = ? WHERE email = ? AND passwd = ? 
+[2015-04-11 08:48:14,241] - ==> Parameters: Jack Sparrow(String), 0513432432023(String), captain@heist.com(String), 1111(String)
+[2015-04-11 08:48:14,264] - <==    Updates: 1
+[2015-04-11 08:48:22,339] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:22,339] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:48:22,340] - ==> Parameters: free(String)
+[2015-04-11 08:48:22,346] - <==      Total: 1
+[2015-04-11 08:48:22,353] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:22,354] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:48:22,355] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:48:22,593] - <==      Total: 10
+[2015-04-11 08:48:22,598] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:22,599] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:48:22,599] - ==> Parameters: free(String)
+[2015-04-11 08:48:22,602] - <==      Total: 1
+[2015-04-11 08:48:24,810] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:24,811] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 08:48:24,812] - ==> Parameters: 716(Integer)
+[2015-04-11 08:48:24,823] - <==    Updates: 1
+[2015-04-11 08:48:24,830] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:24,831] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 08:48:24,832] - ==> Parameters: 716(Integer)
+[2015-04-11 08:48:24,850] - <==      Total: 1
+[2015-04-11 08:48:24,856] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:24,857] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 08:48:24,857] - ==> Parameters: 716(Integer)
+[2015-04-11 08:48:24,861] - <==      Total: 0
+[2015-04-11 08:48:24,866] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:24,867] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 08:48:24,868] - ==> Parameters: free(String), 716(String)
+[2015-04-11 08:48:24,875] - <==      Total: 0
+[2015-04-11 08:48:25,308] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:25,310] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 08:48:25,310] - ==> Parameters: free(String), 716(String)
+[2015-04-11 08:48:25,316] - <==      Total: 1
+[2015-04-11 08:48:25,322] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:25,323] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 08:48:25,324] - ==> Parameters: 716(Integer)
+[2015-04-11 08:48:25,329] - <==      Total: 1
+[2015-04-11 08:48:25,336] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:25,336] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 08:48:25,337] - ==> Parameters: free(String)
+[2015-04-11 08:48:25,828] - <==      Total: 1
+[2015-04-11 08:48:25,833] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:25,834] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 08:48:25,834] - ==> Parameters: free(String)
+[2015-04-11 08:48:25,839] - <==      Total: 1
+[2015-04-11 08:48:25,848] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 08:48:25,848] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 08:48:25,849] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 08:48:25,935] - <==      Total: 10
+[2015-04-11 09:01:02,246] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:01:02,247] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:01:02,248] - ==> Parameters: free(String)
+[2015-04-11 09:01:02,260] - <==      Total: 1
+[2015-04-11 09:01:02,265] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:01:02,266] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:01:02,267] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:01:02,358] - <==      Total: 10
+[2015-04-11 09:01:02,364] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:01:02,364] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:01:02,365] - ==> Parameters: free(String)
+[2015-04-11 09:01:02,376] - <==      Total: 1
+[2015-04-11 09:06:13,689] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:13,690] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:06:13,691] - ==> Parameters: free(String)
+[2015-04-11 09:06:13,698] - <==      Total: 1
+[2015-04-11 09:06:13,707] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:13,708] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:06:13,709] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:06:13,801] - <==      Total: 10
+[2015-04-11 09:06:13,811] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:13,811] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:06:13,812] - ==> Parameters: free(String)
+[2015-04-11 09:06:13,817] - <==      Total: 1
+[2015-04-11 09:06:24,382] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:24,385] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:06:24,386] - ==> Parameters: 622(Integer)
+[2015-04-11 09:06:24,407] - <==    Updates: 1
+[2015-04-11 09:06:24,413] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:24,413] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:06:24,414] - ==> Parameters: 622(Integer)
+[2015-04-11 09:06:24,418] - <==      Total: 1
+[2015-04-11 09:06:24,423] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:24,423] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:06:24,424] - ==> Parameters: 622(Integer)
+[2015-04-11 09:06:24,426] - <==      Total: 0
+[2015-04-11 09:06:26,108] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,109] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:06:26,109] - ==> Parameters: free(String), 622(String)
+[2015-04-11 09:06:26,112] - <==      Total: 1
+[2015-04-11 09:06:26,118] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,118] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:06:26,119] - ==> Parameters: free(String), 622(String)
+[2015-04-11 09:06:26,125] - <==      Total: 1
+[2015-04-11 09:06:26,133] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,134] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:06:26,135] - ==> Parameters: 622(Integer)
+[2015-04-11 09:06:26,139] - <==      Total: 2
+[2015-04-11 09:06:26,143] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,143] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:06:26,144] - ==> Parameters: free(String)
+[2015-04-11 09:06:26,150] - <==      Total: 1
+[2015-04-11 09:06:26,154] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,155] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:06:26,155] - ==> Parameters: free(String)
+[2015-04-11 09:06:26,158] - <==      Total: 1
+[2015-04-11 09:06:26,163] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:26,166] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:06:26,166] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:06:26,236] - <==      Total: 10
+[2015-04-11 09:06:30,715] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:30,716] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:06:30,716] - ==> Parameters: 709(Integer)
+[2015-04-11 09:06:30,731] - <==    Updates: 1
+[2015-04-11 09:06:30,735] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:30,736] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:06:30,736] - ==> Parameters: 709(Integer)
+[2015-04-11 09:06:30,743] - <==      Total: 1
+[2015-04-11 09:06:30,750] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:30,750] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:06:30,751] - ==> Parameters: 709(Integer)
+[2015-04-11 09:06:30,753] - <==      Total: 0
+[2015-04-11 09:06:30,760] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:30,760] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:06:30,761] - ==> Parameters: free(String), 709(String)
+[2015-04-11 09:06:30,765] - <==      Total: 1
+[2015-04-11 09:06:30,772] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:30,772] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:06:30,773] - ==> Parameters: free(String), 709(String)
+[2015-04-11 09:06:30,776] - <==      Total: 1
+[2015-04-11 09:06:31,617] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:31,617] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:06:31,621] - ==> Parameters: 709(Integer)
+[2015-04-11 09:06:31,625] - <==      Total: 0
+[2015-04-11 09:06:31,630] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:31,630] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:06:31,631] - ==> Parameters: free(String)
+[2015-04-11 09:06:31,636] - <==      Total: 1
+[2015-04-11 09:06:31,641] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:31,641] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:06:31,642] - ==> Parameters: free(String)
+[2015-04-11 09:06:31,647] - <==      Total: 1
+[2015-04-11 09:06:31,652] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:31,653] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:06:31,654] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:06:31,755] - <==      Total: 10
+[2015-04-11 09:06:35,527] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:35,527] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:06:35,528] - ==> Parameters: 716(Integer)
+[2015-04-11 09:06:35,564] - <==    Updates: 1
+[2015-04-11 09:06:35,573] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:35,573] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:06:35,574] - ==> Parameters: 716(Integer)
+[2015-04-11 09:06:35,577] - <==      Total: 1
+[2015-04-11 09:06:35,585] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:35,586] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:06:35,587] - ==> Parameters: 716(Integer)
+[2015-04-11 09:06:35,590] - <==      Total: 0
+[2015-04-11 09:06:35,594] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:35,595] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:06:35,595] - ==> Parameters: free(String), 716(String)
+[2015-04-11 09:06:35,598] - <==      Total: 0
+[2015-04-11 09:06:36,434] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:36,434] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:06:36,435] - ==> Parameters: free(String), 716(String)
+[2015-04-11 09:06:36,762] - <==      Total: 1
+[2015-04-11 09:06:36,766] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:36,767] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:06:36,767] - ==> Parameters: 716(Integer)
+[2015-04-11 09:06:36,771] - <==      Total: 1
+[2015-04-11 09:06:36,776] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:36,776] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:06:36,777] - ==> Parameters: free(String)
+[2015-04-11 09:06:36,784] - <==      Total: 1
+[2015-04-11 09:06:36,788] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:36,788] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:06:36,789] - ==> Parameters: free(String)
+[2015-04-11 09:06:36,792] - <==      Total: 1
+[2015-04-11 09:06:38,101] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:38,101] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:06:38,105] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:06:38,524] - <==      Total: 10
+[2015-04-11 09:06:59,987] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:06:59,988] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:06:59,989] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:00,005] - <==    Updates: 1
+[2015-04-11 09:07:00,010] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,012] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:07:00,013] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:00,022] - <==      Total: 1
+[2015-04-11 09:07:00,031] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,032] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:07:00,032] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:00,036] - <==      Total: 0
+[2015-04-11 09:07:00,041] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,041] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:07:00,042] - ==> Parameters: free(String), 481(String)
+[2015-04-11 09:07:00,046] - <==      Total: 1
+[2015-04-11 09:07:00,051] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,051] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:07:00,052] - ==> Parameters: free(String), 481(String)
+[2015-04-11 09:07:00,055] - <==      Total: 1
+[2015-04-11 09:07:00,058] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,059] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:07:00,059] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:00,062] - <==      Total: 0
+[2015-04-11 09:07:00,065] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,066] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:07:00,066] - ==> Parameters: free(String)
+[2015-04-11 09:07:00,070] - <==      Total: 1
+[2015-04-11 09:07:00,943] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:00,943] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:07:00,944] - ==> Parameters: free(String)
+[2015-04-11 09:07:02,169] - <==      Total: 1
+[2015-04-11 09:07:02,982] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:02,983] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:07:02,984] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:07:03,069] - <==      Total: 10
+[2015-04-11 09:07:07,388] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:07,389] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:07:07,389] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:07,395] - <==      Total: 1
+[2015-04-11 09:07:07,414] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:07,414] - ==>  Preparing: DELETE FROM article WHERE articleno = ? 
+[2015-04-11 09:07:07,415] - ==> Parameters: 481(Integer)
+[2015-04-11 09:07:07,428] - <==    Updates: 1
+[2015-04-11 09:07:07,592] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:07,593] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:07:07,594] - ==> Parameters: free(String)
+[2015-04-11 09:07:07,599] - <==      Total: 1
+[2015-04-11 09:07:07,609] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:07,610] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:07:07,610] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:07:07,682] - <==      Total: 10
+[2015-04-11 09:07:07,687] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:07,687] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:07:07,688] - ==> Parameters: free(String)
+[2015-04-11 09:07:07,703] - <==      Total: 1
+[2015-04-11 09:07:11,426] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,426] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:07:11,427] - ==> Parameters: 622(Integer)
+[2015-04-11 09:07:11,451] - <==    Updates: 1
+[2015-04-11 09:07:11,456] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,456] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:07:11,457] - ==> Parameters: 622(Integer)
+[2015-04-11 09:07:11,477] - <==      Total: 1
+[2015-04-11 09:07:11,484] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,485] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:07:11,485] - ==> Parameters: 622(Integer)
+[2015-04-11 09:07:11,488] - <==      Total: 0
+[2015-04-11 09:07:11,498] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,498] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:07:11,499] - ==> Parameters: free(String), 622(String)
+[2015-04-11 09:07:11,507] - <==      Total: 1
+[2015-04-11 09:07:11,515] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,516] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:07:11,517] - ==> Parameters: free(String), 622(String)
+[2015-04-11 09:07:11,521] - <==      Total: 1
+[2015-04-11 09:07:11,528] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,529] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:07:11,530] - ==> Parameters: 622(Integer)
+[2015-04-11 09:07:11,535] - <==      Total: 2
+[2015-04-11 09:07:11,540] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,540] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:07:11,541] - ==> Parameters: free(String)
+[2015-04-11 09:07:11,548] - <==      Total: 1
+[2015-04-11 09:07:11,557] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,557] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:07:11,558] - ==> Parameters: free(String)
+[2015-04-11 09:07:11,569] - <==      Total: 1
+[2015-04-11 09:07:11,573] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:07:11,574] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:07:11,575] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:07:12,069] - <==      Total: 10
+[2015-04-11 09:10:49,745] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:10:49,755] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:10:49,773] - ==> Parameters: data(String)
+[2015-04-11 09:10:49,788] - <==      Total: 1
+[2015-04-11 09:10:49,854] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:10:49,854] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:10:49,855] - ==> Parameters: data(String), 1(String), 10(String)
+[2015-04-11 09:10:49,894] - <==      Total: 10
+[2015-04-11 09:10:49,901] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:10:49,901] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:10:49,905] - ==> Parameters: data(String)
+[2015-04-11 09:10:49,910] - <==      Total: 1
+[2015-04-11 09:11:55,483] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:11:55,507] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:11:55,590] - ==> Parameters: free(String)
+[2015-04-11 09:11:55,647] - <==      Total: 1
+[2015-04-11 09:11:55,687] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:11:55,687] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:11:55,689] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:11:55,742] - <==      Total: 10
+[2015-04-11 09:11:55,856] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:11:55,856] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:11:55,860] - ==> Parameters: free(String)
+[2015-04-11 09:11:55,867] - <==      Total: 1
+[2015-04-11 09:13:37,708] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:37,711] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:13:37,712] - ==> Parameters: free(String)
+[2015-04-11 09:13:37,716] - <==      Total: 1
+[2015-04-11 09:13:37,730] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:37,731] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:13:37,732] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:13:37,832] - <==      Total: 10
+[2015-04-11 09:13:37,838] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:37,839] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:13:37,840] - ==> Parameters: free(String)
+[2015-04-11 09:13:37,844] - <==      Total: 1
+[2015-04-11 09:13:55,103] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:55,106] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:13:55,107] - ==> Parameters: free(String)
+[2015-04-11 09:13:55,119] - <==      Total: 1
+[2015-04-11 09:13:55,130] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:55,130] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:13:55,131] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:13:55,221] - <==      Total: 10
+[2015-04-11 09:13:55,225] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:13:55,226] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:13:55,226] - ==> Parameters: free(String)
+[2015-04-11 09:13:55,233] - <==      Total: 1
+[2015-04-11 09:14:09,439] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:09,440] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:14:09,442] - ==> Parameters: free(String)
+[2015-04-11 09:14:09,456] - <==      Total: 1
+[2015-04-11 09:14:09,463] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:09,463] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:14:09,464] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:14:09,581] - <==      Total: 10
+[2015-04-11 09:14:09,597] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:09,598] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:14:09,599] - ==> Parameters: free(String)
+[2015-04-11 09:14:09,602] - <==      Total: 1
+[2015-04-11 09:14:20,534] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:20,536] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:14:20,536] - ==> Parameters: free(String)
+[2015-04-11 09:14:20,539] - <==      Total: 1
+[2015-04-11 09:14:20,545] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:20,546] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:14:20,547] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:14:20,634] - <==      Total: 10
+[2015-04-11 09:14:20,639] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:20,640] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:14:20,640] - ==> Parameters: free(String)
+[2015-04-11 09:14:20,643] - <==      Total: 1
+[2015-04-11 09:14:28,296] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:28,299] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 09:14:28,302] - ==> Parameters: hong@gmail.org(String)
+[2015-04-11 09:14:28,315] - <==      Total: 1
+[2015-04-11 09:14:31,623] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:14:31,624] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 09:14:31,625] - ==> Parameters: hong@gmail.org(String)
+[2015-04-11 09:14:31,628] - <==      Total: 1
+[2015-04-11 09:15:02,035] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:02,035] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:15:02,036] - ==> Parameters: free(String)
+[2015-04-11 09:15:02,038] - <==      Total: 1
+[2015-04-11 09:15:02,047] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:02,048] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:15:02,048] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:15:02,115] - <==      Total: 10
+[2015-04-11 09:15:02,119] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:02,119] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:15:02,120] - ==> Parameters: free(String)
+[2015-04-11 09:15:02,123] - <==      Total: 1
+[2015-04-11 09:15:09,441] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:09,443] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:15:09,443] - ==> Parameters: free(String)
+[2015-04-11 09:15:09,879] - <==      Total: 1
+[2015-04-11 09:15:09,883] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:09,884] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:15:09,885] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:15:09,971] - <==      Total: 10
+[2015-04-11 09:15:09,976] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:09,976] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:15:09,977] - ==> Parameters: free(String)
+[2015-04-11 09:15:09,992] - <==      Total: 1
+[2015-04-11 09:15:59,823] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:59,831] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:15:59,835] - ==> Parameters: free(String)
+[2015-04-11 09:15:59,852] - <==      Total: 1
+[2015-04-11 09:15:59,882] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:59,883] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:15:59,884] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:15:59,920] - <==      Total: 10
+[2015-04-11 09:15:59,929] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:15:59,930] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:15:59,933] - ==> Parameters: free(String)
+[2015-04-11 09:15:59,943] - <==      Total: 1
+[2015-04-11 09:16:06,893] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:16:06,896] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:16:06,896] - ==> Parameters: free(String)
+[2015-04-11 09:16:07,307] - <==      Total: 1
+[2015-04-11 09:16:07,316] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:16:07,317] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:16:07,317] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:16:07,409] - <==      Total: 10
+[2015-04-11 09:16:07,419] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:16:07,420] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:16:07,421] - ==> Parameters: free(String)
+[2015-04-11 09:16:07,424] - <==      Total: 1
+[2015-04-11 09:17:31,190] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:31,214] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:17:31,296] - ==> Parameters: free(String)
+[2015-04-11 09:17:31,452] - <==      Total: 1
+[2015-04-11 09:17:31,489] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:31,490] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:17:31,491] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:17:31,529] - <==      Total: 10
+[2015-04-11 09:17:31,538] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:31,538] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:17:31,541] - ==> Parameters: free(String)
+[2015-04-11 09:17:31,545] - <==      Total: 1
+[2015-04-11 09:17:46,280] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:46,281] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:17:46,282] - ==> Parameters: free(String)
+[2015-04-11 09:17:46,286] - <==      Total: 1
+[2015-04-11 09:17:47,080] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:47,081] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:17:47,082] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:17:47,196] - <==      Total: 10
+[2015-04-11 09:17:47,202] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:17:47,203] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:17:47,204] - ==> Parameters: free(String)
+[2015-04-11 09:17:47,208] - <==      Total: 1
+[2015-04-11 09:18:00,356] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:00,357] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:18:00,358] - ==> Parameters: free(String)
+[2015-04-11 09:18:00,365] - <==      Total: 1
+[2015-04-11 09:18:00,371] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:00,371] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:18:00,372] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:18:01,336] - <==      Total: 10
+[2015-04-11 09:18:01,341] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:01,341] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:18:01,342] - ==> Parameters: free(String)
+[2015-04-11 09:18:01,348] - <==      Total: 1
+[2015-04-11 09:18:09,364] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:09,365] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:18:09,368] - ==> Parameters: free(String)
+[2015-04-11 09:18:10,873] - <==      Total: 1
+[2015-04-11 09:18:10,878] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:10,879] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:18:10,880] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:18:10,975] - <==      Total: 10
+[2015-04-11 09:18:10,981] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:18:10,981] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:18:10,983] - ==> Parameters: free(String)
+[2015-04-11 09:18:10,987] - <==      Total: 1
+[2015-04-11 09:25:03,076] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:03,078] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:25:03,078] - ==> Parameters: free(String)
+[2015-04-11 09:25:03,081] - <==      Total: 1
+[2015-04-11 09:25:03,089] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:03,090] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:25:03,091] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:25:03,196] - <==      Total: 10
+[2015-04-11 09:25:03,201] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:03,201] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:25:03,202] - ==> Parameters: free(String)
+[2015-04-11 09:25:03,205] - <==      Total: 1
+[2015-04-11 09:25:08,798] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:08,800] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:25:08,803] - ==> Parameters: free(String)
+[2015-04-11 09:25:08,812] - <==      Total: 1
+[2015-04-11 09:25:08,834] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:08,834] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:25:08,835] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:25:08,935] - <==      Total: 10
+[2015-04-11 09:25:08,940] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:25:08,940] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:25:08,941] - ==> Parameters: free(String)
+[2015-04-11 09:25:08,943] - <==      Total: 1
+[2015-04-11 09:26:01,172] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,184] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,224] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:26:01,229] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 09:26:01,495] - ==> Parameters: free(String)
+[2015-04-11 09:26:01,499] - ==> Parameters: 716(Integer)
+[2015-04-11 09:26:01,513] - <==    Updates: 1
+[2015-04-11 09:26:01,525] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,526] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 09:26:01,527] - ==> Parameters: 716(Integer)
+[2015-04-11 09:26:01,583] - <==      Total: 1
+[2015-04-11 09:26:01,614] - <==      Total: 1
+[2015-04-11 09:26:01,623] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,623] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,624] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:26:01,624] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 09:26:01,625] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:26:01,625] - ==> Parameters: 716(Integer)
+[2015-04-11 09:26:01,634] - <==      Total: 0
+[2015-04-11 09:26:01,687] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,688] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 09:26:01,689] - ==> Parameters: free(String), 716(String)
+[2015-04-11 09:26:01,726] - <==      Total: 10
+[2015-04-11 09:26:01,727] - <==      Total: 0
+[2015-04-11 09:26:01,746] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,747] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:26:01,751] - ==> Parameters: free(String)
+[2015-04-11 09:26:01,784] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:01,784] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 09:26:01,787] - <==      Total: 1
+[2015-04-11 09:26:01,788] - ==> Parameters: free(String), 716(String)
+[2015-04-11 09:26:02,016] - <==      Total: 1
+[2015-04-11 09:26:02,025] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:02,026] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 09:26:02,027] - ==> Parameters: 716(Integer)
+[2015-04-11 09:26:02,044] - <==      Total: 1
+[2015-04-11 09:26:02,056] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:02,057] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:26:02,058] - ==> Parameters: free(String)
+[2015-04-11 09:26:02,068] - <==      Total: 1
+[2015-04-11 09:26:02,075] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:02,076] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:26:02,077] - ==> Parameters: free(String)
+[2015-04-11 09:26:02,084] - <==      Total: 1
+[2015-04-11 09:26:02,089] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:02,090] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:26:02,098] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:26:02,213] - <==      Total: 10
+[2015-04-11 09:26:12,806] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:12,807] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 09:26:12,808] - ==> Parameters: free(String)
+[2015-04-11 09:26:12,818] - <==      Total: 1
+[2015-04-11 09:26:12,824] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:12,824] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 09:26:12,827] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 09:26:12,931] - <==      Total: 10
+[2015-04-11 09:26:12,937] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 09:26:12,937] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 09:26:12,938] - ==> Parameters: free(String)
+[2015-04-11 09:26:12,942] - <==      Total: 1
+[2015-04-11 11:47:36,944] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:47:36,967] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 11:47:37,022] - ==> Parameters: free(String)
+[2015-04-11 11:47:37,111] - <==      Total: 1
+[2015-04-11 11:47:37,143] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:47:37,143] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 11:47:37,144] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 11:47:37,187] - <==      Total: 10
+[2015-04-11 11:47:37,192] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:47:37,192] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 11:47:37,195] - ==> Parameters: free(String)
+[2015-04-11 11:47:37,198] - <==      Total: 1
+[2015-04-11 11:47:39,475] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:47:39,475] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 11:47:39,476] - ==> Parameters: captain@heist.com(String)
+[2015-04-11 11:47:39,481] - <==      Total: 1
+[2015-04-11 11:48:17,358] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:17,359] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 11:48:17,360] - ==> Parameters: free(String)
+[2015-04-11 11:48:17,363] - <==      Total: 1
+[2015-04-11 11:48:17,372] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:17,373] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 11:48:17,375] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 11:48:18,113] - <==      Total: 10
+[2015-04-11 11:48:18,126] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:18,127] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 11:48:18,127] - ==> Parameters: free(String)
+[2015-04-11 11:48:18,130] - <==      Total: 1
+[2015-04-11 11:48:20,512] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:20,513] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 11:48:20,516] - ==> Parameters: 716(Integer)
+[2015-04-11 11:48:20,527] - <==    Updates: 1
+[2015-04-11 11:48:20,535] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:20,535] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 11:48:20,536] - ==> Parameters: 716(Integer)
+[2015-04-11 11:48:20,549] - <==      Total: 1
+[2015-04-11 11:48:20,559] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:20,560] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 11:48:20,561] - ==> Parameters: 716(Integer)
+[2015-04-11 11:48:20,564] - <==      Total: 0
+[2015-04-11 11:48:20,584] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:20,585] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 11:48:20,586] - ==> Parameters: free(String), 716(String)
+[2015-04-11 11:48:20,588] - <==      Total: 0
+[2015-04-11 11:48:21,558] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:21,558] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 11:48:21,559] - ==> Parameters: free(String), 716(String)
+[2015-04-11 11:48:21,563] - <==      Total: 1
+[2015-04-11 11:48:21,571] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:21,572] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 11:48:21,573] - ==> Parameters: 716(Integer)
+[2015-04-11 11:48:21,584] - <==      Total: 1
+[2015-04-11 11:48:21,589] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:21,591] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 11:48:21,593] - ==> Parameters: free(String)
+[2015-04-11 11:48:21,598] - <==      Total: 1
+[2015-04-11 11:48:22,255] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:22,256] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 11:48:22,256] - ==> Parameters: free(String)
+[2015-04-11 11:48:22,259] - <==      Total: 1
+[2015-04-11 11:48:22,268] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:48:22,269] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 11:48:22,273] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 11:48:22,376] - <==      Total: 10
+[2015-04-11 11:53:34,977] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:34,978] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 11:53:34,979] - ==> Parameters: data(String)
+[2015-04-11 11:53:35,201] - <==      Total: 1
+[2015-04-11 11:53:35,211] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:35,212] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 11:53:35,212] - ==> Parameters: data(String), 1(String), 10(String)
+[2015-04-11 11:53:35,308] - <==      Total: 10
+[2015-04-11 11:53:35,313] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:35,314] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 11:53:35,314] - ==> Parameters: data(String)
+[2015-04-11 11:53:35,317] - <==      Total: 1
+[2015-04-11 11:53:40,057] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,058] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 11:53:40,059] - ==> Parameters: 657(Integer)
+[2015-04-11 11:53:40,073] - <==    Updates: 1
+[2015-04-11 11:53:40,079] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,081] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 11:53:40,084] - ==> Parameters: 657(Integer)
+[2015-04-11 11:53:40,093] - <==      Total: 1
+[2015-04-11 11:53:40,106] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,107] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 11:53:40,108] - ==> Parameters: 657(Integer)
+[2015-04-11 11:53:40,113] - <==      Total: 0
+[2015-04-11 11:53:40,127] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,128] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 11:53:40,130] - ==> Parameters: data(String), 657(String)
+[2015-04-11 11:53:40,135] - <==      Total: 0
+[2015-04-11 11:53:40,211] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,212] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 11:53:40,212] - ==> Parameters: data(String), 657(String)
+[2015-04-11 11:53:40,219] - <==      Total: 1
+[2015-04-11 11:53:40,228] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,229] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 11:53:40,229] - ==> Parameters: 657(Integer)
+[2015-04-11 11:53:40,232] - <==      Total: 0
+[2015-04-11 11:53:40,238] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,238] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 11:53:40,242] - ==> Parameters: data(String)
+[2015-04-11 11:53:40,246] - <==      Total: 1
+[2015-04-11 11:53:40,255] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,255] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 11:53:40,256] - ==> Parameters: data(String)
+[2015-04-11 11:53:40,262] - <==      Total: 1
+[2015-04-11 11:53:40,267] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 11:53:40,267] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 11:53:40,268] - ==> Parameters: data(String), 1(String), 10(String)
+[2015-04-11 11:53:40,368] - <==      Total: 10
+[2015-04-11 15:58:04,368] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 15:58:04,375] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 15:58:04,375] - ==> Parameters: captain@heist.com(String)
+[2015-04-11 15:58:05,207] - <==      Total: 1
+[2015-04-11 18:16:33,772] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:33,780] - ==>  Preparing: INSERT INTO member VALUES (?, ?, ?, ?) 
+[2015-04-11 18:16:33,802] - ==> Parameters: gura@gura.com(String), 1111(String), 김구라(String), 1234567890(String)
+[2015-04-11 18:16:34,065] - <==    Updates: 1
+[2015-04-11 18:16:34,087] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:34,087] - ==>  Preparing: INSERT INTO authorities VALUES (?, ?) 
+[2015-04-11 18:16:34,089] - ==> Parameters: gura@gura.com(String), ROLE_USER(String)
+[2015-04-11 18:16:34,321] - <==    Updates: 1
+[2015-04-11 18:16:45,106] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:45,108] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:16:45,109] - ==> Parameters: free(String)
+[2015-04-11 18:16:45,203] - <==      Total: 1
+[2015-04-11 18:16:45,885] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:45,885] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:16:45,886] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:16:45,975] - <==      Total: 10
+[2015-04-11 18:16:45,999] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:45,999] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:16:46,003] - ==> Parameters: free(String)
+[2015-04-11 18:16:46,444] - <==      Total: 1
+[2015-04-11 18:16:51,320] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:51,321] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 18:16:51,323] - ==> Parameters: 716(Integer)
+[2015-04-11 18:16:51,998] - <==    Updates: 1
+[2015-04-11 18:16:52,007] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,008] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 18:16:52,009] - ==> Parameters: 716(Integer)
+[2015-04-11 18:16:52,097] - <==      Total: 1
+[2015-04-11 18:16:52,106] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,106] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 18:16:52,107] - ==> Parameters: 716(Integer)
+[2015-04-11 18:16:52,115] - <==      Total: 0
+[2015-04-11 18:16:52,122] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,123] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 18:16:52,124] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:16:52,129] - <==      Total: 0
+[2015-04-11 18:16:52,137] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,138] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 18:16:52,139] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:16:52,836] - <==      Total: 1
+[2015-04-11 18:16:52,844] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,844] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 18:16:52,845] - ==> Parameters: 716(Integer)
+[2015-04-11 18:16:52,870] - <==      Total: 1
+[2015-04-11 18:16:52,875] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,876] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:16:52,877] - ==> Parameters: free(String)
+[2015-04-11 18:16:52,882] - <==      Total: 1
+[2015-04-11 18:16:52,891] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,891] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:16:52,892] - ==> Parameters: free(String)
+[2015-04-11 18:16:52,896] - <==      Total: 1
+[2015-04-11 18:16:52,903] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:16:52,903] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:16:52,904] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:16:52,997] - <==      Total: 10
+[2015-04-11 18:17:10,682] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:10,683] - ==>  Preparing: INSERT INTO comments (commentno, articleno, email, memo, regdate) VALUES (seq_comments.nextval, ?, ?, ?, sysdate) 
+[2015-04-11 18:17:10,684] - ==> Parameters: 716(Integer), gura@gura.com(String), 이건 뭐야?(String)
+[2015-04-11 18:17:10,877] - <==    Updates: 1
+[2015-04-11 18:17:10,897] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:10,900] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 18:17:10,903] - ==> Parameters: 716(Integer)
+[2015-04-11 18:17:10,924] - <==    Updates: 1
+[2015-04-11 18:17:10,938] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:10,939] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 18:17:10,940] - ==> Parameters: 716(Integer)
+[2015-04-11 18:17:10,970] - <==      Total: 1
+[2015-04-11 18:17:10,979] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:10,980] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 18:17:10,983] - ==> Parameters: 716(Integer)
+[2015-04-11 18:17:11,007] - <==      Total: 0
+[2015-04-11 18:17:11,025] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,026] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 18:17:11,027] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:17:11,032] - <==      Total: 0
+[2015-04-11 18:17:11,038] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,040] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 18:17:11,040] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:17:11,043] - <==      Total: 1
+[2015-04-11 18:17:11,081] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,083] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 18:17:11,083] - ==> Parameters: 716(Integer)
+[2015-04-11 18:17:11,095] - <==      Total: 2
+[2015-04-11 18:17:11,100] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,101] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:17:11,102] - ==> Parameters: free(String)
+[2015-04-11 18:17:11,104] - <==      Total: 1
+[2015-04-11 18:17:11,109] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,111] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:17:11,111] - ==> Parameters: free(String)
+[2015-04-11 18:17:11,114] - <==      Total: 1
+[2015-04-11 18:17:11,157] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:11,158] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:17:11,159] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:17:11,281] - <==      Total: 10
+[2015-04-11 18:17:23,563] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:23,565] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 18:17:23,566] - ==> Parameters: gura@gura.com(String)
+[2015-04-11 18:17:23,580] - <==      Total: 1
+[2015-04-11 18:17:34,494] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:34,495] - ==>  Preparing: UPDATE member SET name = ?, mobile = ? WHERE email = ? AND passwd = ? 
+[2015-04-11 18:17:34,495] - ==> Parameters: 김구라(String), 3456234(String), gura@gura.com(String), 1134234(String)
+[2015-04-11 18:17:34,558] - <==    Updates: 0
+[2015-04-11 18:17:44,715] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:44,716] - ==>  Preparing: UPDATE member SET name = ?, mobile = ? WHERE email = ? AND passwd = ? 
+[2015-04-11 18:17:44,716] - ==> Parameters: 김구라(String), 3456234(String), gura@gura.com(String), 1111(String)
+[2015-04-11 18:17:44,752] - <==    Updates: 1
+[2015-04-11 18:17:55,202] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:17:55,203] - ==>  Preparing: UPDATE member SET passwd = ? WHERE passwd = ? AND email = ? 
+[2015-04-11 18:17:55,203] - ==> Parameters: 1111(String), 111134234(String), gura@gura.com(String)
+[2015-04-11 18:17:55,350] - <==    Updates: 0
+[2015-04-11 18:18:06,025] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:18:06,026] - ==>  Preparing: UPDATE member SET passwd = ? WHERE passwd = ? AND email = ? 
+[2015-04-11 18:18:06,027] - ==> Parameters: 1111(String), 1111(String), gura@gura.com(String)
+[2015-04-11 18:18:06,098] - <==    Updates: 1
+[2015-04-11 18:18:21,221] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:18:21,221] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:18:21,222] - ==> Parameters: free(String)
+[2015-04-11 18:18:21,227] - <==      Total: 1
+[2015-04-11 18:18:21,231] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:18:21,232] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:18:21,232] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:18:21,305] - <==      Total: 10
+[2015-04-11 18:18:21,309] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:18:21,310] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:18:21,311] - ==> Parameters: free(String)
+[2015-04-11 18:18:21,314] - <==      Total: 1
+[2015-04-11 18:19:06,889] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:06,890] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 18:19:06,891] - ==> Parameters: gura@gura.com(String)
+[2015-04-11 18:19:06,899] - <==      Total: 1
+[2015-04-11 18:19:17,362] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:17,362] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? AND passwd = ? 
+[2015-04-11 18:19:17,363] - ==> Parameters: hong@gmail.org(String), 1111(String)
+[2015-04-11 18:19:17,370] - <==      Total: 1
+[2015-04-11 18:19:31,756] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:31,757] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? AND passwd = ? 
+[2015-04-11 18:19:31,757] - ==> Parameters: gura@gura.com(String), 1111(String)
+[2015-04-11 18:19:31,766] - <==      Total: 1
+[2015-04-11 18:19:31,775] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:31,776] - ==>  Preparing: DELETE FROM authorities WHERE email = ? 
+[2015-04-11 18:19:31,777] - ==> Parameters: gura@gura.com(String)
+[2015-04-11 18:19:32,442] - <==    Updates: 1
+[2015-04-11 18:19:32,446] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:32,446] - ==>  Preparing: DELETE FROM member WHERE email = ? AND passwd = ? 
+[2015-04-11 18:19:32,447] - ==> Parameters: gura@gura.com(String), 1111(String)
+[2015-04-11 18:19:32,481] - <==    Updates: 1
+[2015-04-11 18:19:52,623] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:52,624] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:19:52,624] - ==> Parameters: free(String)
+[2015-04-11 18:19:52,628] - <==      Total: 1
+[2015-04-11 18:19:52,632] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:52,633] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:19:52,634] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:19:52,722] - <==      Total: 10
+[2015-04-11 18:19:52,726] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:52,727] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:19:52,727] - ==> Parameters: free(String)
+[2015-04-11 18:19:52,732] - <==      Total: 1
+[2015-04-11 18:19:54,887] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,888] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 18:19:54,889] - ==> Parameters: 716(Integer)
+[2015-04-11 18:19:54,918] - <==    Updates: 1
+[2015-04-11 18:19:54,926] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,927] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 18:19:54,927] - ==> Parameters: 716(Integer)
+[2015-04-11 18:19:54,932] - <==      Total: 1
+[2015-04-11 18:19:54,941] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,942] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 18:19:54,942] - ==> Parameters: 716(Integer)
+[2015-04-11 18:19:54,947] - <==      Total: 0
+[2015-04-11 18:19:54,954] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,954] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 18:19:54,955] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:19:54,968] - <==      Total: 0
+[2015-04-11 18:19:54,976] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,976] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 18:19:54,977] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:19:54,984] - <==      Total: 1
+[2015-04-11 18:19:54,994] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:54,995] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 18:19:54,995] - ==> Parameters: 716(Integer)
+[2015-04-11 18:19:55,003] - <==      Total: 2
+[2015-04-11 18:19:55,008] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:55,008] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:19:55,009] - ==> Parameters: free(String)
+[2015-04-11 18:19:55,022] - <==      Total: 1
+[2015-04-11 18:19:55,029] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:55,029] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:19:55,030] - ==> Parameters: free(String)
+[2015-04-11 18:19:55,034] - <==      Total: 1
+[2015-04-11 18:19:55,041] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:19:55,041] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:19:55,042] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:19:55,143] - <==      Total: 10
+[2015-04-11 18:20:11,719] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,721] - ==>  Preparing: SELECT commentno, articleno, email, memo, regdate FROM comments WHERE commentno = ? 
+[2015-04-11 18:20:11,722] - ==> Parameters: 208(Integer)
+[2015-04-11 18:20:11,762] - <==      Total: 1
+[2015-04-11 18:20:11,770] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,771] - ==>  Preparing: DELETE FROM comments WHERE commentno = ? 
+[2015-04-11 18:20:11,772] - ==> Parameters: 208(Integer)
+[2015-04-11 18:20:11,807] - <==    Updates: 1
+[2015-04-11 18:20:11,824] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,824] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 18:20:11,825] - ==> Parameters: 716(Integer)
+[2015-04-11 18:20:11,850] - <==    Updates: 1
+[2015-04-11 18:20:11,854] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,855] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 18:20:11,855] - ==> Parameters: 716(Integer)
+[2015-04-11 18:20:11,861] - <==      Total: 1
+[2015-04-11 18:20:11,866] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,866] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 18:20:11,867] - ==> Parameters: 716(Integer)
+[2015-04-11 18:20:11,869] - <==      Total: 0
+[2015-04-11 18:20:11,874] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,874] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 18:20:11,875] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:20:11,879] - <==      Total: 0
+[2015-04-11 18:20:11,883] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,884] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 18:20:11,885] - ==> Parameters: free(String), 716(String)
+[2015-04-11 18:20:11,892] - <==      Total: 1
+[2015-04-11 18:20:11,897] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,898] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 18:20:11,898] - ==> Parameters: 716(Integer)
+[2015-04-11 18:20:11,902] - <==      Total: 1
+[2015-04-11 18:20:11,906] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,907] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 18:20:11,907] - ==> Parameters: free(String)
+[2015-04-11 18:20:11,911] - <==      Total: 1
+[2015-04-11 18:20:11,917] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,917] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 18:20:11,918] - ==> Parameters: free(String)
+[2015-04-11 18:20:11,920] - <==      Total: 1
+[2015-04-11 18:20:11,927] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 18:20:11,928] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 18:20:11,928] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 18:20:12,003] - <==      Total: 10
+[2015-04-11 19:29:52,844] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:29:52,850] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 19:29:52,854] - ==> Parameters: free(String)
+[2015-04-11 19:29:52,873] - <==      Total: 1
+[2015-04-11 19:29:52,907] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:29:52,907] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 19:29:52,908] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 19:29:52,952] - <==      Total: 10
+[2015-04-11 19:29:52,957] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:29:52,958] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 19:29:52,961] - ==> Parameters: free(String)
+[2015-04-11 19:29:52,964] - <==      Total: 1
+[2015-04-11 19:29:54,745] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:29:54,745] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 19:29:54,747] - ==> Parameters: captain@heist.com(String)
+[2015-04-11 19:29:54,768] - <==      Total: 1
+[2015-04-11 19:30:04,942] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:04,943] - ==>  Preparing: UPDATE member SET name = ?, mobile = ? WHERE email = ? AND passwd = ? 
+[2015-04-11 19:30:04,945] - ==> Parameters: Jack Sparrow(String), 352(String), captain@heist.com(String), 1111(String)
+[2015-04-11 19:30:04,984] - <==    Updates: 1
+[2015-04-11 19:30:05,057] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:05,058] - ==>  Preparing: SELECT email, passwd, name, mobile FROM member WHERE email = ? 
+[2015-04-11 19:30:05,059] - ==> Parameters: captain@heist.com(String)
+[2015-04-11 19:30:05,064] - <==      Total: 1
+[2015-04-11 19:30:15,741] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:15,742] - ==>  Preparing: UPDATE member SET passwd = ? WHERE passwd = ? AND email = ? 
+[2015-04-11 19:30:15,743] - ==> Parameters: 2222(String), 11112(String), captain@heist.com(String)
+[2015-04-11 19:30:15,752] - <==    Updates: 0
+[2015-04-11 19:30:24,119] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:24,120] - ==>  Preparing: UPDATE member SET passwd = ? WHERE passwd = ? AND email = ? 
+[2015-04-11 19:30:24,121] - ==> Parameters: 1111(String), 1111(String), captain@heist.com(String)
+[2015-04-11 19:30:24,133] - <==    Updates: 1
+[2015-04-11 19:30:29,267] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:29,268] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 19:30:29,269] - ==> Parameters: free(String)
+[2015-04-11 19:30:29,275] - <==      Total: 1
+[2015-04-11 19:30:29,280] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:29,281] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 19:30:29,282] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 19:30:29,401] - <==      Total: 10
+[2015-04-11 19:30:29,406] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:29,407] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 19:30:29,407] - ==> Parameters: free(String)
+[2015-04-11 19:30:29,410] - <==      Total: 1
+[2015-04-11 19:30:48,575] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,576] - ==>  Preparing: UPDATE article SET hit = hit + 1 WHERE articleno = ? 
+[2015-04-11 19:30:48,579] - ==> Parameters: 716(Integer)
+[2015-04-11 19:30:48,617] - <==    Updates: 1
+[2015-04-11 19:30:48,628] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,628] - ==>  Preparing: SELECT articleno, title, content, a.email, NVL(name, 'Anonymous') name, hit, regdate FROM article a, member m WHERE a.email = m.email(+) AND articleno = ? 
+[2015-04-11 19:30:48,629] - ==> Parameters: 716(Integer)
+[2015-04-11 19:30:48,714] - <==      Total: 1
+[2015-04-11 19:30:48,721] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,721] - ==>  Preparing: SELECT attachfileno, filename, filetype, filesize, articleno, email FROM attachfile WHERE articleno = ? ORDER BY attachfileno 
+[2015-04-11 19:30:48,722] - ==> Parameters: 716(Integer)
+[2015-04-11 19:30:48,732] - <==      Total: 0
+[2015-04-11 19:30:48,749] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,749] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno > ? ORDER BY articleno) a) WHERE r = 1 
+[2015-04-11 19:30:48,750] - ==> Parameters: free(String), 716(String)
+[2015-04-11 19:30:48,762] - <==      Total: 0
+[2015-04-11 19:30:48,772] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,773] - ==>  Preparing: SELECT articleno, title FROM (SELECT rownum r,a.* FROM (SELECT articleno, title FROM article WHERE boardCd = ? AND articleno < ? ORDER BY articleno DESC) a) WHERE r = 1 
+[2015-04-11 19:30:48,776] - ==> Parameters: free(String), 716(String)
+[2015-04-11 19:30:48,779] - <==      Total: 1
+[2015-04-11 19:30:48,788] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,788] - ==>  Preparing: SELECT commentno, articleno, c.email, NVL(name, 'Anonymous') name, memo, regdate FROM comments c, member m WHERE c.email = m.email(+) AND articleno = ? ORDER BY commentno DESC 
+[2015-04-11 19:30:48,789] - ==> Parameters: 716(Integer)
+[2015-04-11 19:30:48,800] - <==      Total: 1
+[2015-04-11 19:30:48,812] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,812] - ==>  Preparing: SELECT boardNm FROM board WHERE boardcd = ? 
+[2015-04-11 19:30:48,813] - ==> Parameters: free(String)
+[2015-04-11 19:30:48,816] - <==      Total: 1
+[2015-04-11 19:30:48,823] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,824] - ==>  Preparing: SELECT count(*) FROM article WHERE boardcd = ? 
+[2015-04-11 19:30:48,824] - ==> Parameters: free(String)
+[2015-04-11 19:30:48,834] - <==      Total: 1
+[2015-04-11 19:30:48,839] - ooo Using Connection [jdbc:oracle:thin:@192.168.0.2:1521:XE, UserName=JAVA, Oracle JDBC driver]
+[2015-04-11 19:30:48,839] - ==>  Preparing: SELECT articleno, title, regdate, hit, attachfileNum, commentNum FROM ( SELECT rownum r,a.* FROM ( SELECT a.articleno, a.title, a.regdate, a.hit, m.name, count(distinct(f.attachfileno)) attachfileNum, count(distinct(c.commentno)) commentNum FROM article a, attachfile f, comments c, member m WHERE a.articleno = f.articleno(+) AND a.articleno = c.articleno(+) AND a.email = m.email(+) AND a.boardcd = ? GROUP BY a.articleno, title, a.regdate, hit, m.name ORDER BY articleno DESC ) a ) WHERE r BETWEEN ? AND ? 
+[2015-04-11 19:30:48,840] - ==> Parameters: free(String), 1(String), 10(String)
+[2015-04-11 19:30:48,947] - <==      Total: 10

@@ -10,17 +10,6 @@
 <meta name="Description" content="로그인" />
 <title>로그인</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<script type="text/javascript">
-//<![CDATA[
-
-function check() {
-	//var form = document.getElementById("loginForm");
-	//TODO 유효성 검사 
-	return true;
-}
-
-//]]>
-</script>
 </head>
 <body>
 
@@ -43,7 +32,7 @@ function check() {
 <c:if test="${not empty param.msg }">
 	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>
 </c:if>
-<form id="loginForm" action="../j_spring_security_check" method="post" onsubmit="return check()">
+<form id="loginForm" action="../j_spring_security_check" method="post">
 <table>
 <tr>
     <td style="width: 200px;">Email</td>

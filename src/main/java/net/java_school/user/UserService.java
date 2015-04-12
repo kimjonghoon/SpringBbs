@@ -22,7 +22,7 @@ public interface UserService {
   public int changePasswd(String currentPasswd, String newPasswd, String email);
 
   //탈퇴
-  @PreAuthorize("#user.email == principal.username")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER') and #user.email == principal.username")
   public void bye(User user);
 
   //회원찾기
