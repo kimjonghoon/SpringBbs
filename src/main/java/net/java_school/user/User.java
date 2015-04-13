@@ -3,8 +3,10 @@ package net.java_school.user;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class User {
+	@NotBlank(message="이메일 형식이 아닙니다.")
 	@Email(message="이메일 형식이 아닙니다.")
 	private String email;
 	@Size(min=4, message="패스워드는 4자 이상이어야 합니다.")

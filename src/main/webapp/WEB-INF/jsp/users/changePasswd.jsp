@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,12 +11,17 @@
 <meta name="Description" content="비밀번호 변경" />
 <title>비밀번호 변경</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<style type="text/css">
+.error {
+	color: red;
+}
+</style>
 <script type="text/javascript">
 //<![CDATA[ 
 
 function check() {
     var form = document.getElementById("changePassworddForm");
-    if (form.passwd.value == form.confirm.value) {
+    if (form.newPasswd.value == form.confirm.value) {
     	return true;
     } else {
     	alert("[변경 비밀번호]와 [변경 비밀번호 확인]값이 같지 않습니다.");
@@ -46,15 +52,22 @@ function check() {
 <h1>비밀번호 변경</h1>
 ${user.name }<br />
 ${user.mobile }<br />
-<form id="changePassworddForm" action="changePasswd" method="post" onsubmit="return check()">
+<sf:form id="changePassworddForm" action="changePasswd" method="post" 
+	commandName="password" onsubmit="return check()">
 <table>
 <tr>
 	<td>현재 비밀번호</td>
-	<td><input type="password" name="currentPasswd" /></td>
+	<td>
+		<sf:password path="currentPasswd" /><br />
+		<sf:errors path="currentPasswd" cssClass="error" />
+	</td>
 </tr>
 <tr>
 	<td>변경 비밀번호</td>
-	<td><input type="password" name="newPasswd" /></td>
+	<td>
+		<sf:password path="newPasswd" /><br />
+		<sf:errors path="newPasswd" cssClass="error" />
+	</td>
 </tr>
 <tr>
 	<td>변경 비밀번호 확인</td>
@@ -64,7 +77,7 @@ ${user.mobile }<br />
 	<td colspan="2"><input type="submit" value="확인" /></td>
 </tr>
 </table>
-</form>
+</sf:form>
 <!-- 본문 끝 -->
 		
 		</div>

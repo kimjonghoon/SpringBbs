@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,6 +10,11 @@
 <meta name="Description" content="회원가입" />
 <title>회원가입</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<style type="text/css">
+.error {
+	color: red;
+}
+</style>
 <script type="text/javascript">
 //<![CDATA[ 
 
@@ -38,15 +44,22 @@ function check() {
 <!-- 본문 시작 -->
 <div id="url-navi">회원</div>
 <h1>회원가입</h1>
-<form id="signUpForm" action="signUp" method="post" onsubmit="return check()">
+<sf:form id="signUpForm" action="signUp" method="post" commandName="user" onsubmit="return check();">
+<sf:errors path="*" cssClass="error" />
 <table>
 <tr>
 	<td style="width: 200px;">이름(Full Name)</td>
-	<td style="width: 390px;"><input type="text" name="name" /></td>
+	<td style="width: 390px;">
+		<sf:input path="name" /><br />
+		<sf:errors path="name" cssClass="error" />
+	</td>
 </tr>
 <tr>
 	<td>비밀번호(Password)</td>
-	<td><input type="password" name="passwd" /></td>
+	<td>
+		<sf:password path="passwd" /><br />
+		<sf:errors path="passwd" cssClass="error" />
+	</td>
 </tr>
 <tr>
 	<td colspan="2" style="text-align: center;font-weight: bold;">
@@ -59,17 +72,23 @@ function check() {
 </tr>
 <tr>
 	<td>Email</td>
-	<td><input type="text" name="email" /></td>
+	<td>
+		<sf:input path="email" /><br />
+		<sf:errors path="email" cssClass="error" />
+	</td>
 </tr>
 <tr>
 	<td>손전화(Mobile)</td>
-	<td><input type="text" name="mobile" /></td>
+	<td>
+		<sf:input path="mobile" /><br />
+		<sf:errors path="mobile" cssClass="error" />
+	</td>
 </tr>
 </table>
 <div style="text-align: center;padding-bottom: 15px;">
 	<input type="submit" value="확인" />
 </div>
-</form>
+</sf:form>
 <!-- 본문 끝 -->
 		
 		</div>

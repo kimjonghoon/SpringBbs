@@ -90,6 +90,35 @@ function download(filename) {
     form.submit();
 }
 
+function addComment() {
+	var form = document.getElementById("addCommentForm");
+	var memo = form.memo.value;
+	memo = trim(memo);
+	if (memo.length == 0) {
+		alert("유효하지 않는 댓글입니다.");
+		return false;
+	}
+	return true;
+}
+
+function trim(str) {
+	//문자열 끝에 있는 공백문자를 제거한다.
+	for (var i = str.length - 1; i >= 0; i--) {
+		if (str[i] == " ") {
+			str = str.substring(0, i);
+		} else {
+			break;
+		}
+	}
+	//문자열 앞에 있는 공백을 제거한다.
+	for (var i = 0; i < str.length; i++) {
+		if (str[i] == " ") {
+			str = str.substring(i+1, str.length);
+		}	
+	}
+	return str;
+}
+
 //]]>
 </script>
 </head>
@@ -168,7 +197,7 @@ function download(filename) {
 </c:forEach>
 <!--  덧글 반복 끝 -->
 
-<form id="addCommentForm" action="addComment" method="post">
+<form id="addCommentForm" action="addComment" method="post" onsubmit="return addComment()">
 	<p style="margin: 0;padding: 0">
 		<input type="hidden" name="articleNo" value="${param.articleNo }" />
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />

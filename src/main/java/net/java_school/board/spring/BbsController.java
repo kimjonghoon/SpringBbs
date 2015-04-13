@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
 import net.java_school.board.BoardService;
@@ -17,6 +19,7 @@ import net.java_school.commons.WebContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,25 +68,28 @@ public class BbsController {
     }
 
     @RequestMapping(value="/write_form", method=RequestMethod.GET)
-    public String writeForm(String boardCd, Model model) throws Exception {
+    public String writeForm(String boardCd, Model model) {
         String boardNm = boardService.getBoardNm(boardCd);
         model.addAttribute("boardNm", boardNm);
+        model.addAttribute("article", new Article());
         
         return "bbs/write_form";
     }
 
     @RequestMapping(value="/write", method=RequestMethod.POST)
-    public String write(MultipartHttpServletRequest mpRequest,
-            Principal principal) throws Exception {
-        
-        String boardCd = mpRequest.getParameter("boardCd");
-        String title = mpRequest.getParameter("title");
-        String content = mpRequest.getParameter("content");
-        
-        Article article = new Article();
-        article.setBoardCd(boardCd);
-        article.setTitle(title);
-        article.setContent(content);
+    public String write(@Valid Article article,
+    		BindingResult bindingResult,
+    		Model model,
+    		MultipartHttpServletRequest mpRequest,
+    		Principal principal) throws Exception {
+         
+    	 if (bindingResult.hasErrors()) {
+    		 String boardNm = boardService.getBoardNm(article.getBoardCd());
+    		 model.addAttribute("boardNm", boardNm);
+    		 
+    		 return "bbs/write_form";
+    	 }
+    	 
         article.setEmail(principal.getName());
         
         boardService.addArticle(article);
@@ -114,7 +120,7 @@ public class BbsController {
             boardService.addAttachFile(attachFile);
         }
         
-        return "redirect:/bbs/list?curPage=1&boardCd=" + boardCd;
+        return "redirect:/bbs/list?curPage=1&boardCd=" + article.getBoardCd();
     }
 
     @RequestMapping(value="/view", method=RequestMethod.GET)
@@ -250,39 +256,38 @@ public class BbsController {
             Model model) {
         
         Article article = boardService.getArticle(articleNo);
-        
-        //수정페이지에서의 보일 게시글 정보
-        String title = article.getTitle();
-        String content = article.getContent();
         String boardNm = boardService.getBoardNm(boardCd);
         
-        model.addAttribute("title", title);
-        model.addAttribute("content", content);
+         //수정페이지에서의 보일 게시글 정보
+        model.addAttribute("article", article);
         model.addAttribute("boardNm", boardNm);
         
         return "bbs/modify_form";
     }
     
     @RequestMapping(value="/modify", method=RequestMethod.POST)
-    public String modify(MultipartHttpServletRequest mpRequest) throws Exception {
-        
-        int articleNo = Integer.parseInt(mpRequest.getParameter("articleNo"));
-        Article article = boardService.getArticle(articleNo);
-        
-        String boardCd = mpRequest.getParameter("boardCd");
-        int curPage = Integer.parseInt(mpRequest.getParameter("curPage"));
-        String searchWord = mpRequest.getParameter("searchWord");
-        
-        String title = mpRequest.getParameter("title");
-        String content = mpRequest.getParameter("content");
-        
-        //게시글 수정
-        article.setTitle(title);
-        article.setContent(content);
-        article.setBoardCd(boardCd);
+    public String modify(@Valid Article article,
+    		BindingResult bindingResult,
+    		Integer curPage,
+    		String searchWord,
+    		Model model,
+    		MultipartHttpServletRequest mpRequest) throws Exception {
+         
+    	 if (bindingResult.hasErrors()) {
+    		 String boardNm = boardService.getBoardNm(article.getBoardCd());
+    		 model.addAttribute("boardNm", boardNm);
+    		 
+    		 return "bbs/modify_form";
+    	 }
+    	 
+     	 //관리자가 수정하더라도 원글 소유자를 그대로 유지하기 위해서 
+        String email = boardService.getArticle(article.getArticleNo()).getEmail();
+        article.setEmail(email);
+         
+         //게시글 수정
         boardService.modifyArticle(article);
 
-        //파일업로드
+         //파일업로드
         Iterator<String> it = mpRequest.getFileNames();
         List<MultipartFile> fileList = new ArrayList<MultipartFile>();
         while (it.hasNext()) {
@@ -294,7 +299,9 @@ public class BbsController {
             }
         }
         
-        //파일데이터 삽입
+ 
+   	    
+         //파일데이터 삽입
         int size = fileList.size();
         for (int i = 0; i < size; i++) {
             MultipartFile mpFile = fileList.get(i);
@@ -303,15 +310,15 @@ public class BbsController {
             attachFile.setFilename(filename);
             attachFile.setFiletype(mpFile.getContentType());
             attachFile.setFilesize(mpFile.getSize());
-            attachFile.setArticleNo(articleNo);
+            attachFile.setArticleNo(article.getArticleNo());
             attachFile.setEmail(article.getEmail());//첨부파일 소유자는 원글 소유자가 되도록
             boardService.addAttachFile(attachFile);
         }
         
         searchWord = URLEncoder.encode(searchWord,"UTF-8");
         
-        return "redirect:/bbs/view?articleNo=" + articleNo 
-            + "&boardCd=" + boardCd 
+        return "redirect:/bbs/view?articleNo=" + article.getArticleNo() 
+            + "&boardCd=" + article.getBoardCd() 
             + "&curPage=" + curPage 
             + "&searchWord=" + searchWord;
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,6 +11,11 @@
 <meta name="Description" content="글쓰기 화면" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<style type="text/css">
+.error {
+	color: red;
+}
+</style>
 <script type="text/javascript">
 //<![CDATA[
            
@@ -52,18 +58,24 @@ function goView() {
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2>글쓰기</h2>
-<form id="writeForm" action="write" method="post" enctype="multipart/form-data" onsubmit="return check();">
+<sf:form id="writeForm" action="write" method="post" commandName="article" 
+	enctype="multipart/form-data" onsubmit="return check();">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 </p>
+<sf:errors path="*" cssClass="error" />
 <table id="write-form">
 <tr>
     <td>제목</td>
-    <td><input type="text" name="title" style="width: 90%"/></td>
+    <td>
+    	<sf:input path="title" style="width: 90%" /><br />
+    	<sf:errors path="title" cssClass="error" />
+    </td>
 </tr>
 <tr>
     <td colspan="2">
-        <textarea name="content" rows="17" cols="50"></textarea>
+        <textarea name="content" rows="17" cols="50"></textarea><br />
+        <sf:errors path="content" cssClass="error" />
     </td>
 </tr>
 <tr>
@@ -74,11 +86,11 @@ function goView() {
 <div style="text-align: center;padding-bottom: 15px;">
     <input type="submit" value="전송" />
     <input type="button" value="목록" onclick="goList()" />
-	<c:if test="${not empty param.articleNo }">    
+    <c:if test="${not empty param.articleNo }">    
     <input type="button" value="상세보기" onclick="goView()" />
-	</c:if>
+    </c:if>
 </div>
-</form>
+</sf:form>
 </div>
 <!-- 본문 끝 -->
 		
