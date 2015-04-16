@@ -10,11 +10,6 @@
 <meta name="Description" content="내 정보 수정" />
 <title>내 정보 수정</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<style type="text/css">
-.error {
-	color: red;
-}
-</style>
 <script type="text/javascript">
 //<![CDATA[ 
 

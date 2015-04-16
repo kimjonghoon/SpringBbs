@@ -11,11 +11,6 @@
 <meta name="Description" content="게시판 수정하기 폼" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<style type="text/css">
-.error {
-	color: red;
-}
-</style>
 <script type="text/javascript">
 //<![CDATA[
            

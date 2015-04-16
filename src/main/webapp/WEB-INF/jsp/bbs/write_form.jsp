@@ -11,11 +11,6 @@
 <meta name="Description" content="글쓰기 화면" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<style type="text/css">
-.error {
-	color: red;
-}
-</style>
 <script type="text/javascript">
 //<![CDATA[
            
@@ -62,6 +57,10 @@ function goView() {
 	enctype="multipart/form-data" onsubmit="return check();">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
+<input type="hidden" name="articleNo" value="${param.articleNo }" />
+<input type="hidden" name="curPage" value="${param.curPage }" />
+<input type="hidden" name="searchWord" value="${param.searchWord }" />
+
 </p>
 <sf:errors path="*" cssClass="error" />
 <table id="write-form">

@@ -432,3 +432,7 @@ ul#nav li a:hover {
 #extra a:hover {
 	border: 1px solid red;
 }
+
+.error {
+	color: red;
+}

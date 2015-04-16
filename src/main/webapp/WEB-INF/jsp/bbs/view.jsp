@@ -11,116 +11,8 @@
 <meta name="Description" content="게시판 상세보기" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<script type="text/javascript">
-//<![CDATA[
-
-function modifyCommentToggle(articleNo) {
-	var p_id = "comment" + articleNo;
-	var p = document.getElementById(p_id);
-	
-	var form_id = "modifyCommentForm" + articleNo;
-	var form = document.getElementById(form_id);
-
-	var p_display;
-	var form_display;
-	
-	if (p.style.display) {
-		p_display = '';
-		form_display = 'none';
-	} else {
-		p_display = 'none';
-		form_display = '';
-	}
-
-	p.style.display = p_display;
-	form.style.display = form_display;
-}
-
-function goList(curPage) {
-    var form = document.getElementById("listForm");
-    form.curPage.value = curPage;
-    form.submit();
-}
-
-function goView(articleNo) {
-    var form = document.getElementById("viewForm");
-    form.articleNo.value = articleNo;
-    form.submit();
-}
-
-function goWrite() {
-    var form = document.getElementById("writeForm");
-    form.submit();
-}
-
-function goModify() {
-    var form = document.getElementById("modifyForm");
-    form.submit();
-}
-
-function goDelete() {
-    var check = confirm("정말로 삭제하시겠습니까?");
-    if (check) {
-        var form = document.getElementById("delForm");
-        form.submit();
-    }
-}
-
-function deleteAttachFile(attachFileNo) {
-    var check = confirm("첨부파일을 정말로 삭제하시겠습니까?");
-    if (check) {
-        var form = document.getElementById("deleteAttachFileForm");
-        form.attachFileNo.value = attachFileNo;
-        form.submit();
-    }
-}
-
-function deleteComment(commentNo) {
-    var check = confirm("댓글을 정말로 삭제하시겠습니까?");
-    if (check) {
-        var form = document.getElementById("deleteCommentForm");
-        form.commentNo.value = commentNo;
-        form.submit();
-    }
-}
-
-function download(filename) {
-    var form = document.getElementById("downForm");
-    form.filename.value = filename;
-    form.submit();
-}
-
-function addComment() {
-	var form = document.getElementById("addCommentForm");
-	var memo = form.memo.value;
-	memo = trim(memo);
-	if (memo.length == 0) {
-		alert("유효하지 않는 댓글입니다.");
-		return false;
-	}
-	return true;
-}
-
-function trim(str) {
-	//문자열 끝에 있는 공백문자를 제거한다.
-	for (var i = str.length - 1; i >= 0; i--) {
-		if (str[i] == " ") {
-			str = str.substring(0, i);
-		} else {
-			break;
-		}
-	}
-	//문자열 앞에 있는 공백을 제거한다.
-	for (var i = 0; i < str.length; i++) {
-		if (str[i] == " ") {
-			str = str.substring(i+1, str.length);
-		}	
-	}
-	return str;
-}
-
-//]]>
-</script>
+<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../js/bbs-view.js"></script>
 </head>
 <body>
 
@@ -152,9 +44,9 @@ function trim(str) {
     <p>${content }</p>
     <p id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
-    	   <a href="javascript:download('${file.filename }')">${file.filename }</a>
+    	   <a href="#" title="${file.filename }" class="download">${file.filename }</a>
 			<security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
-	    	<a href="javascript:deleteAttachFile('${file.attachFileNo }')">x</a>
+	    	<a href="#" title="${file.attachFileNo }">x</a>
 			</security:authorize>
 			<br />    	
 		</c:forEach>
@@ -164,35 +56,29 @@ function trim(str) {
 <!--  덧글 반복 시작 -->
 <c:forEach var="comment" items="${commentList }" varStatus="status">
 <div class="comments">
-	<div class="comments-meta">
     <span class="writer">${comment.name }</span>
     <span class="date">${comment.regdate }</span>
 	<security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')">
     <span class="modify-del">
-        <a href="javascript:modifyCommentToggle('${comment.commentNo }')">수정</a>
-         | <a href="javascript:deleteComment('${comment.commentNo }')">삭제</a>
+        <a href="#" class="comment-toggle">수정</a> | <a href="#" class="comment-delete" title="${comment.commentNo }">삭제</a>
     </span>
 	</security:authorize>
-	</div>
-    <p id="comment${comment.commentNo }">${comment.memo }</p>
-    <div class="modify-comment">
-        <form id="modifyCommentForm${comment.commentNo }" action="updateComment" method="post" style="display: none;">
-        <p>
-            <input type="hidden" name="commentNo" value="${comment.commentNo }" />
-            <input type="hidden" name="boardCd" value="${param.boardCd }" />
-            <input type="hidden" name="articleNo" value="${param.articleNo }" />
-            <input type="hidden" name="curPage" value="${param.curPage }" />
-            <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        </p>
-        <div class="fr">
-                <a href="javascript:document.forms.modifyCommentForm${comment.commentNo }.submit()">수정하기</a>
-                | <a href="javascript:modifyCommentToggle('${comment.commentNo }')">취소</a>
-        </div>
-        <div>
-            <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
-        </div>
-        </form>
+    <p class="view-comment">${comment.memo }</p>
+    <form class="modify-comment" action="updateComment" method="post" style="display: none;">
+    <p>
+        <input type="hidden" name="commentNo" value="${comment.commentNo }" />
+        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </p>
+    <div style="text-align: right;">
+            <a href="#">수정하기</a> | <a href="#">취소</a>
     </div>
+    <div>
+        <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
+    </div>
+    </form>
 </div>
 </c:forEach>
 <!--  덧글 반복 끝 -->
@@ -214,34 +100,34 @@ function trim(str) {
 
 <div id="next-prev">
     <c:if test="${nextArticle != null }">
-    <p>다음글 : <a href="javascript:goView('${nextArticle.articleNo }')">${nextArticle.title }</a></p>
+    <p>다음글 : <a href="#" title="${nextArticle.articleNo }">${nextArticle.title }</a></p>
     </c:if>
     <c:if test="${prevArticle != null }">
-    <p>이전글 : <a href="javascript:goView('${prevArticle.articleNo }')">${prevArticle.title }</a></p>
+    <p>이전글 : <a href="#" title="${prevArticle.articleNo }">${prevArticle.title }</a></p>
     </c:if>
 </div>
 
 <div id="view-menu">
     <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
     <div class="fl">
-        <input type="button" value="수정" onclick="goModify()" />
-        <input type="button" value="삭제" onclick="goDelete()" />
+        <input type="button" value="수정" id="goModify" />
+        <input type="button" value="삭제" id="goDelete" />
     </div>
     </security:authorize>        
     <div class="fr">
 		<c:if test="${nextArticle != null }">    
-        <input type="button" value="다음글" onclick="goView('${nextArticle.articleNo }')" />
+        <input type="button" value="다음글" title="${nextArticle.articleNo }" id="next-article" />
 		</c:if>
 		<c:if test="${prevArticle != null }">        
-        <input type="button" value="이전글" onclick="goView('${prevArticle.articleNo}')" />
+        <input type="button" value="이전글" title="${prevArticle.articleNo}" id="prev-article" />
 		</c:if>        
-        <input type="button" value="목록" onclick="goList('${param.curPage }')" />
-        <input type="button" value="새글쓰기" onclick="goWrite()" />
+        <input type="button" value="목록" id="goList" />
+        <input type="button" value="새글쓰기" id="goWrite" />
     </div>
 </div>
 
 <!-- 목록 -->
-<table>
+<table id="list-table">
 <tr>
 	<th style="width: 60px;">NO</th>
 	<th>TITLE</th>
@@ -262,7 +148,7 @@ function trim(str) {
 	</c:choose>	
 	</td>
 	<td>
-		<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
+		<a href="#" title="${article.articleNo }">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">		
 		<img src="../images/attach.png" alt="첨부파일" />
 		</c:if>
@@ -278,7 +164,7 @@ function trim(str) {
                 
 <div id="paging">
 	<c:if test="${prevPage > 0 }">
-		<a href="javascript:golist('${prevPage }')">[이전]</a>
+		<a href="#" title="${prevPage }">[이전]</a>
 	</c:if>
 	
 	<c:forEach var="i" begin="${firstPage }" end="${lastPage }">
@@ -287,18 +173,18 @@ function trim(str) {
 				<span class="bbs-strong">${i }</span>
 			</c:when>	
 			<c:otherwise>	
-				<a href="javascript:goList('${i }')">${i }</a>
+				<a href="#" title="${i }">${i }</a>
 			</c:otherwise>
 		</c:choose>			
 	</c:forEach>
 	
 	<c:if test="${nextPage > 0 }">	
-		<a href="javascript:goList('${nextPage }')">[다음]</a>
+		<a href="#" title="${nextPage }">[다음]</a>
 	</c:if>
 </div>
 
 <div id="list-menu">
-	<input type="button" value="새글쓰기" onclick="goWrite()" />
+	<input type="button" value="새글쓰기" />
 </div>
 
 <div id="search">
@@ -336,7 +222,7 @@ function trim(str) {
     <form id="listForm" action="list" method="get">
     <p>
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
-        <input type="hidden" name="curPage" />
+        <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
