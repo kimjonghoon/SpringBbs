@@ -307,7 +307,7 @@ $(document).ready(function() {
   $('#goDelete').click(function() {
     var chk = confirm('정말로 삭제하시겠습니까?');
     if (chk == true) {
-      $('#deleteForm').submit();
+      $('#delForm').submit();
     }
   });
 
