@@ -3,9 +3,13 @@ SpringBbs
 
 BBS using Spring MVC
 
-http://www.java-school.net/spring/list1.php
+have to edit 
+1. net.java_school.commons.WebContants.java
+UPLOAD_PATH
 
-test
-http://localhost:port/ContextPath/bbs/list?boardCd=free&curPage=1
+2. /src/main/resources/log4j.xml 
+<param name="File"  value="?????.log" />
+
+
 
 
