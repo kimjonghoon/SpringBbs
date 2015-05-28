@@ -42,7 +42,7 @@ function check() {
 <h1>내 정보 수정</h1>
 <p>
 비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.<br />
-비밀번호는 <a href="changePasswd">비밀번호 변경</a>메뉴를 이용하세요.<br />
+비밀번호는 <a href="changePasswd">비밀번호 변경</a> 메뉴를 이용하세요.<br />
 </p>
 <sf:form id="editAccountForm" action="editAccount" method="post" commandName="user" onsubmit="return check();">
 <sf:hidden path="email" value="abc@def.ghi" />

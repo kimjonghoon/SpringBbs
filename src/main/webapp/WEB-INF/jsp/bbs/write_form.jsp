@@ -60,7 +60,6 @@ function goView() {
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="curPage" value="${param.curPage }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
-
 </p>
 <sf:errors path="*" cssClass="error" />
 <table id="write-form">

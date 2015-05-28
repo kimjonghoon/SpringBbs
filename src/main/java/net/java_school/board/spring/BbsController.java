@@ -32,11 +32,8 @@ public class BbsController {
     @Autowired
     private BoardService boardService;
     
-    @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-    public String list(String boardCd, 
-            Integer curPage, 
-            String searchWord,
-            Model model) throws Exception {
+    @RequestMapping(value="/list", method=RequestMethod.GET)
+    public String list(String boardCd, Integer curPage, String searchWord, Model model) {
         
         int numPerPage = 10;
         int pagePerBlock = 10;
@@ -128,7 +125,7 @@ public class BbsController {
             String boardCd, 
             Integer curPage,
             String searchWord,
-            Model model) throws Exception {
+            Model model) {
 
         boardService.increaseHit(articleNo);
         

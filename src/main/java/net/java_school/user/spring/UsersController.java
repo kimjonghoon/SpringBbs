@@ -139,7 +139,7 @@ public class UsersController {
   }
 
   @RequestMapping(value="/bye_confirm", method=RequestMethod.GET)
-  public String bye_confirm() {
+  public String byeConfirm() {
     return "users/bye_confirm";	  
   }
   

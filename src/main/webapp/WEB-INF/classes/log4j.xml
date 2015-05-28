@@ -8,7 +8,7 @@
 	
     <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" 
-          value="/home/kim/Lab/spring-bbs.log" />
+          value="/home/kim/upload/SpringBbs.log" />
         <param name="datePattern" value="'.'yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"

@@ -11,7 +11,7 @@
 <meta name="Description" content="게시판 상세보기" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/bbs-view.js"></script>
 </head>
 <body>
@@ -83,7 +83,7 @@
 </c:forEach>
 <!--  덧글 반복 끝 -->
 
-<form id="addCommentForm" action="addComment" method="post" onsubmit="return addComment()">
+<form id="addCommentForm" action="addComment" method="post">
 	<p style="margin: 0;padding: 0">
 		<input type="hidden" name="articleNo" value="${param.articleNo }" />
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />

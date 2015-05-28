@@ -30,8 +30,7 @@
   </update>
 
   <delete id="delete">
-    DELETE FROM member 
-    WHERE email = #{email}
+    DELETE FROM member WHERE email = #{email}
   </delete>
   
   <delete id="deleteAuthority">

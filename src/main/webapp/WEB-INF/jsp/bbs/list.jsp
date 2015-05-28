@@ -46,7 +46,7 @@ function goWrite() {
 	</div>
 
 	<div id="container">
-		<div id="content" style="height: 800px;">
+		<div id="content" style="min-height: 800px;">
 
 <!-- 본문 시작 -->			
 <div id="url-navi">BBS</div>
