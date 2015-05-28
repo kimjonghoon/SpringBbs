@@ -9,7 +9,7 @@ have to edit
 UPLOAD_PATH
 
 2. /src/main/resources/log4j.xml 
-<param name="File"  value="Full path of log file " />
+&lt;param name="File"  value="Full path of log file " /&gt;
 
 
 
