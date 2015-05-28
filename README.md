@@ -3,12 +3,13 @@ SpringBbs
 
 BBS using Spring MVC
 
-have to edit 
+have to edit
+ 
 1. net.java_school.commons.WebContants.java
 UPLOAD_PATH
 
 2. /src/main/resources/log4j.xml 
-<param name="File"  value="?????.log" />
+<param name="File"  value="Full path of log file " />
 
 
 
