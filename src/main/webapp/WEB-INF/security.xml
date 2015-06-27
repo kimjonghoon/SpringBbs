@@ -18,6 +18,7 @@
     <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/users/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
     <intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+    <intercept-url pattern="/file/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
 
     <form-login
       login-page="/users/login"

@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="글쓰기 화면" />
-<meta name="Description" content="글쓰기 화면" />
+<meta name="Keywords" content="<spring:message code="bbs.write.keywords" />" />
+<meta name="Description" content="<spring:message code="bbs.write.description" />" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
@@ -16,7 +17,7 @@
            
 function check() {
     //var form = document.getElementById("writeForm");
-    //유효성 검사로직 추가 
+    //TODO Validation login add 
     return true;
 }
 
@@ -48,11 +49,11 @@ function goView() {
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
 
-<!--  본문 시작 -->
+<!--  contents begin -->
 <div id="url-navi">BBS</div>
-<h1>${boardNm }</h1>
+<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
 <div id="bbs">
-<h2>글쓰기</h2>
+<h2><spring:message code="bbs.new.article" /></h2>
 <sf:form id="writeForm" action="write" method="post" commandName="article" 
 	enctype="multipart/form-data" onsubmit="return check();">
 <p style="margin: 0;padding: 0;">
@@ -64,7 +65,7 @@ function goView() {
 <sf:errors path="*" cssClass="error" />
 <table id="write-form">
 <tr>
-    <td>제목</td>
+    <td><spring:message code="global.title" /></td>
     <td>
     	<sf:input path="title" style="width: 90%" /><br />
     	<sf:errors path="title" cssClass="error" />
@@ -77,20 +78,20 @@ function goView() {
     </td>
 </tr>
 <tr>
-    <td>파일첨부</td>
+    <td><spring:message code="global.attach.file" /></td>
     <td><input type="file" name="attachFile" /></td>
 </tr>
 </table>
 <div style="text-align: center;padding-bottom: 15px;">
-    <input type="submit" value="전송" />
-    <input type="button" value="목록" onclick="goList()" />
+    <input type="submit" value="<spring:message code="global.submit" />" />
+    <input type="button" value="<spring:message code="global.list" />" onclick="goList()" />
     <c:if test="${not empty param.articleNo }">    
-    <input type="button" value="상세보기" onclick="goView()" />
+    <input type="button" value="<spring:message code="bbs.back.to.article" />" onclick="goView()" />
     </c:if>
 </div>
 </sf:form>
 </div>
-<!-- 본문 끝 -->
+<!-- contents end -->
 		
 		</div>
     </div>

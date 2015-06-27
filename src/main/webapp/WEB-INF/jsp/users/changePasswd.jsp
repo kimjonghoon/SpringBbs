@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -7,9 +8,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="비밀번호 변경" />
-<meta name="Description" content="비밀번호 변경" />
-<title>비밀번호 변경</title>
+<meta name="Keywords" content="<spring:message code="user.changepasswd.keywords" />" />
+<meta name="Description" content="<spring:message code="user.changepasswd.description" />" />
+<title><spring:message code="user.changepasswd.title" /></title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[ 
@@ -19,7 +20,7 @@ function check() {
     if (form.newPasswd.value == form.confirm.value) {
     	return true;
     } else {
-    	alert("[변경 비밀번호]와 [변경 비밀번호 확인]값이 같지 않습니다.");
+    	alert('<spring:message code="user.changepasswd.passwd.validation" />');
     	return false;
     }
 }
@@ -42,30 +43,30 @@ function check() {
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
 		
-<!-- 본문 시작 -->
-<div id="url-navi">회원</div>
-<h1>비밀번호 변경</h1>
+<!-- contents begin -->
+<div id="url-navi"><spring:message code="user.membership" /></div>
+<h1><spring:message code="user.changepasswd.heading" /></h1>
 ${user.name }<br />
 ${user.mobile }<br />
 <sf:form id="changePassworddForm" action="changePasswd" method="post" 
 	commandName="password" onsubmit="return check()">
 <table>
 <tr>
-	<td>현재 비밀번호</td>
+	<td><spring:message code="user.changepasswd.current.passwd" /></td>
 	<td>
 		<sf:password path="currentPasswd" /><br />
 		<sf:errors path="currentPasswd" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>변경 비밀번호</td>
+	<td><spring:message code="user.changepasswd.new.passwd" /></td>
 	<td>
 		<sf:password path="newPasswd" /><br />
 		<sf:errors path="newPasswd" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>변경 비밀번호 확인</td>
+	<td><spring:message code="user.changepasswd.new.passwd.confirm" /></td>
 	<td><input type="password" name="confirm" /></td>
 </tr>
 <tr>
@@ -73,7 +74,7 @@ ${user.mobile }<br />
 </tr>
 </table>
 </sf:form>
-<!-- 본문 끝 -->
+<!-- contents end -->
 		
 		</div>
     </div>

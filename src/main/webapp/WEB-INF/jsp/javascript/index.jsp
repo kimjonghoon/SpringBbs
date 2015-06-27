@@ -6,9 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="<spring:message code="java.keywords" />" />
-<meta name="Description" content="<spring:message code="java.description" />" />
-<title><spring:message code="java.title" /></title>
+<meta name="Keywords" content="<spring:message code="javascript.keywords" />" />
+<meta name="Description" content="<spring:message code="javascript.description" />" />
+<title><spring:message code="javascript.title" /></title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 </head>
 <body>
@@ -25,32 +25,17 @@
     
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
-			<div id="url-navi"><spring:message code="java.title" /></div>
+			<div id="url-navi">JavaScript Home</div>
 
 <!-- contents begin -->
-<h1>JDK Install</h1>
-
-<pre>
-public class Test {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}
-</pre>
-
-<pre>
-C:\&gt;javac Test.java
-
-C:\&gt;java Test
-Hello World!
-</pre>
+<h1>JavaScript</h1>
 <!-- contents end -->
 		
 		</div>
     </div>
     
 	<div id="sidebar">
-		<h1>Java</h1>
+		<h1>JavaScript</h1>
 	</div>
     
 	<div id="extra">

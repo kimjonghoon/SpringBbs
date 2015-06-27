@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="비밀번호 변경 확인" />
-<meta name="Description" content="비밀번호 변경 확인" />
-<title>비밀번호 변경 확인</title>
+<meta name="Keywords" content="<spring:message code="user.changepasswd.confirm.keywords" />" />
+<meta name="Description" content="<spring:message code="user.changepasswd.confirm.description" />" />
+<title><spring:message code="user.changepasswd.confirm.title" /></title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 </head>
 <body>
@@ -25,12 +26,12 @@
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
 		
-<!-- 본문 시작 -->
-<div id="url-navi">회원</div>
-<h1>비밀번호가 변경되었습니다.</h1>
-변경된 비밀번호로 다시 로그인하실 수 있습니다.<br />
-<input type="button" value="로그인" onclick="javascript:location.href='login'" />
-<!-- 본문 끝 -->
+<!-- contents begin -->
+<div id="url-navi"><spring:message code="user.membership" /></div>
+<h1><spring:message code="user.changepasswd.confirm.heading" /></h1>
+<spring:message code="user.changepasswd.confirm.login.again" />
+<input type="button" value="<spring:message code="user.login" />" onclick="javascript:location.href='login'" />
+<!-- contents end -->
 		
 		</div>
     </div>

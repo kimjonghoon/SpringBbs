@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="게시판 상세보기" />
-<meta name="Description" content="게시판 상세보기" />
+<meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
+<meta name="Description" content="<spring:message code="bbs.view.description" />" />
 <title>BBS</title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
@@ -29,9 +30,9 @@
     <div id="container">
             <div id="content" style="min-height: 800px;">
 
-<!-- 본문 시작 -->
+<!-- contents begin -->
 <div id="url-navi">BBS</div>
-<h1>${boardNm }</h1>
+<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
 <div id="bbs">
 <table>
 <tr>
@@ -53,14 +54,30 @@
     </p>
 </div>
 
-<!--  덧글 반복 시작 -->
+<form id="addCommentForm" action="addComment" method="post" style="margin-bottom: 10px;">
+	<p style="margin: 0;padding: 0">
+		<input type="hidden" name="articleNo" value="${param.articleNo }" />
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
+    <div id="addComment">
+        <textarea name="memo" rows="7" cols="50"></textarea>
+    </div>
+    <div style="text-align: right;">
+        <input type="submit" value="<spring:message code="bbs.new.comments" />" />
+    </div>
+</form>
+
+<!--  comments begin -->
 <c:forEach var="comment" items="${commentList }" varStatus="status">
 <div class="comments">
     <span class="writer">${comment.name }</span>
     <span class="date">${comment.regdate }</span>
 	<security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')">
     <span class="modify-del">
-        <a href="#" class="comment-toggle">수정</a> | <a href="#" class="comment-delete" title="${comment.commentNo }">삭제</a>
+        <a href="#" class="comment-toggle"><spring:message code="global.modify" /></a> | 
+        <a href="#" class="comment-delete" title="${comment.commentNo }"><spring:message code="global.delete" /></a>
     </span>
 	</security:authorize>
     <p class="view-comment">${comment.memo }</p>
@@ -73,7 +90,7 @@
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     <div style="text-align: right;">
-            <a href="#">수정하기</a> | <a href="#">취소</a>
+            <a href="#"><spring:message code="global.submit" /></a> | <a href="#"><spring:message code="global.cancel" /></a>
     </div>
     <div>
         <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
@@ -81,52 +98,38 @@
     </form>
 </div>
 </c:forEach>
-<!--  덧글 반복 끝 -->
+<!--  comments end -->
 
-<form id="addCommentForm" action="addComment" method="post">
-	<p style="margin: 0;padding: 0">
-		<input type="hidden" name="articleNo" value="${param.articleNo }" />
-		<input type="hidden" name="boardCd" value="${param.boardCd }" />
-		<input type="hidden" name="curPage" value="${param.curPage }" />
-		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-	</p>
-    <div id="addComment">
-        <textarea name="memo" rows="7" cols="50"></textarea>
-    </div>
-    <div style="text-align: right;">
-        <input type="submit" value="덧글남기기" />
-    </div>
-</form>
 
 <div id="next-prev">
     <c:if test="${nextArticle != null }">
-    <p>다음글 : <a href="#" title="${nextArticle.articleNo }">${nextArticle.title }</a></p>
+    <p><spring:message code="bbs.next.article" /> : <a href="#" title="${nextArticle.articleNo }">${nextArticle.title }</a></p>
     </c:if>
     <c:if test="${prevArticle != null }">
-    <p>이전글 : <a href="#" title="${prevArticle.articleNo }">${prevArticle.title }</a></p>
+    <p><spring:message code="bbs.prev.article" /> : <a href="#" title="${prevArticle.articleNo }">${prevArticle.title }</a></p>
     </c:if>
 </div>
 
 <div id="view-menu">
     <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
     <div class="fl">
-        <input type="button" value="수정" id="goModify" />
-        <input type="button" value="삭제" id="goDelete" />
+        <input type="button" value="<spring:message code="global.modify" />" id="goModify" />
+        <input type="button" value="<spring:message code="global.delete" />" id="goDelete" />
     </div>
     </security:authorize>        
     <div class="fr">
 		<c:if test="${nextArticle != null }">    
-        <input type="button" value="다음글" title="${nextArticle.articleNo }" id="next-article" />
+        <input type="button" value="<spring:message code="bbs.next.article" />" title="${nextArticle.articleNo }" id="next-article" />
 		</c:if>
 		<c:if test="${prevArticle != null }">        
-        <input type="button" value="이전글" title="${prevArticle.articleNo}" id="prev-article" />
+        <input type="button" value="<spring:message code="bbs.prev.article" />" title="${prevArticle.articleNo}" id="prev-article" />
 		</c:if>        
-        <input type="button" value="목록" id="goList" />
-        <input type="button" value="새글쓰기" id="goWrite" />
+        <input type="button" value="<spring:message code="global.list" />" id="goList" />
+        <input type="button" value="<spring:message code="bbs.new.article" />" id="goWrite" />
     </div>
 </div>
 
-<!-- 목록 -->
+<!--  BBS list in detailed Article -->
 <table id="list-table">
 <tr>
 	<th style="width: 60px;">NO</th>
@@ -140,7 +143,7 @@
 	<td style="text-align: center;">
 	<c:choose>
 		<c:when test="${param.articleNo == article.articleNo }">	
-		<img src="../images/arrow.gif" alt="현재글" />
+		<img src="../images/arrow.gif" alt="<spring:message code="global.here" />" />
 		</c:when>
 		<c:otherwise>
 		${listItemNo - status.index }
@@ -150,7 +153,7 @@
 	<td>
 		<a href="#" title="${article.articleNo }">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">		
-		<img src="../images/attach.png" alt="첨부파일" />
+		<img src="../images/attach.png" alt="<spring:message code="global.attach.file" />" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">		
 		<span class="bbs-strong">[${article.commentNum }]</span>
@@ -164,7 +167,7 @@
                 
 <div id="paging">
 	<c:if test="${prevPage > 0 }">
-		<a href="#" title="${prevPage }">[이전]</a>
+		<a href="#" title="${prevPage }">[<spring:message code="global.prev" />]</a>
 	</c:if>
 	
 	<c:forEach var="i" begin="${firstPage }" end="${lastPage }">
@@ -179,12 +182,12 @@
 	</c:forEach>
 	
 	<c:if test="${nextPage > 0 }">	
-		<a href="#" title="${nextPage }">[다음]</a>
+		<a href="#" title="${nextPage }">[<spring:message code="global.next" />]</a>
 	</c:if>
 </div>
 
 <div id="list-menu">
-	<input type="button" value="새글쓰기" />
+	<input type="button" value="<spring:message code="bbs.new.article" />" />
 </div>
 
 <div id="search">
@@ -193,16 +196,16 @@
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
 		<input type="hidden" name="curPage" value="1" />
 		<input type="text" name="searchWord" size="15" maxlength="30" />
-		<input type="submit" value="검색" />
+		<input type="submit" value="<spring:message code="global.search" />" />
 	</p>
 	</form>
 </div>
 
-</div><!-- bbs 끝 -->
-<!-- 본문 끝 -->
+</div><!-- #bbs end -->
+<!-- contents end -->
 
-		</div><!-- content 끝 -->
-	</div><!-- container 끝 -->
+		</div><!-- #content end -->
+	</div><!-- #container end -->
     
 	<div id="sidebar">
 		<%@ include file="bbs-menu.jsp" %>
@@ -276,7 +279,7 @@
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="downForm" action="download" method="post">
+    <form id="downForm" action="../file/download" method="post">
     <p>
         <input type="hidden" name="filename" />
     </p>

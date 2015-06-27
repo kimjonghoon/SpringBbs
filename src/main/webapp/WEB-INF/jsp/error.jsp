@@ -56,7 +56,7 @@ if (requestUri == null) {
 		<div id="content" style="min-height: 800px;">
 			<div id="url-navi">Error</div>
 
-<!-- 본문 시작 -->
+<!-- contents begin -->
 <h1>Error Page</h1>
 <%
 if(statusCode != 500){
@@ -73,13 +73,13 @@ if (throwable != null) {
     out.write("</ul>");
 }
 %>
-<!--  본문 끝 -->
+<!--  contents end -->
 		
 		</div>
     </div>
     
 	<div id="sidebar">
-		<h1>Main</h1>
+		<h1>Error</h1>
 	</div>
     
 	<div id="extra">

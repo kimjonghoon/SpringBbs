@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>    
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="회원가입" />
-<meta name="Description" content="회원가입" />
-<title>회원가입</title>
+<meta name="Keywords" content="<spring:message code="user.signup.keywords" />" />
+<meta name="Description" content="<spring:message code="user.signup.description" />" />
+<title><spring:message code="user.signup.title" /></title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[ 
 
 function check() {
     //var form = document.getElementById("signUpForm");
-    //TODO 유효성 검사 
+    //TODO Validation 
     return true;
 }
 
@@ -36,21 +37,21 @@ function check() {
     
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
-<!-- 본문 시작 -->
-<div id="url-navi">회원</div>
-<h1>회원가입</h1>
+<!-- contents begin -->
+<div id="url-navi"><spring:message code="user.membership" /></div>
+<h1><spring:message code="user.signup.heading" /></h1>
 <sf:form id="signUpForm" action="signUp" method="post" commandName="user" onsubmit="return check();">
 <sf:errors path="*" cssClass="error" />
 <table>
 <tr>
-	<td style="width: 200px;">이름(Full Name)</td>
+	<td style="width: 200px;"><spring:message code="user.full.name" /></td>
 	<td style="width: 390px;">
 		<sf:input path="name" /><br />
 		<sf:errors path="name" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>비밀번호(Password)</td>
+	<td><spring:message code="user.password" /></td>
 	<td>
 		<sf:password path="passwd" /><br />
 		<sf:errors path="passwd" cssClass="error" />
@@ -58,22 +59,22 @@ function check() {
 </tr>
 <tr>
 	<td colspan="2" style="text-align: center;font-weight: bold;">
-		Email이 아이디로 쓰이므로 비밀번호는 Email계정 비밀번호와 같게 하지 마세요.
+		<spring:message code="user.signup.warning" />
 	</td>
 </tr>
 <tr>
-	<td>비밀번호 확인(Confirm)</td>
+	<td><spring:message code="global.confirm" /></td>
 	<td><input type="password" name="confirm" /></td>
 </tr>
 <tr>
-	<td>Email</td>
+	<td><spring:message code="user.email" /></td>
 	<td>
 		<sf:input path="email" /><br />
 		<sf:errors path="email" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>손전화(Mobile)</td>
+	<td><spring:message code="user.mobile" /></td>
 	<td>
 		<sf:input path="mobile" /><br />
 		<sf:errors path="mobile" cssClass="error" />
@@ -81,10 +82,10 @@ function check() {
 </tr>
 </table>
 <div style="text-align: center;padding-bottom: 15px;">
-	<input type="submit" value="확인" />
+	<input type="submit" value="<spring:message code="global.submit" />" />
 </div>
 </sf:form>
-<!-- 본문 끝 -->
+<!-- contents end -->
 		
 		</div>
     </div>

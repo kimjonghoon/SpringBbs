@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="Keywords" content="내 정보 수정" />
-<meta name="Description" content="내 정보 수정" />
-<title>내 정보 수정</title>
+<meta name="Keywords" content="<spring:message code="user.editaccount.keywords" />" />
+<meta name="Description" content="<spring:message code="user.editaccount.description" />" />
+<title><spring:message code="user.editaccount.title" /></title>
 <link rel="stylesheet" href="../css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[ 
 
 function check() {
     //var form = document.getElementById("editAccountForm");
-    //TODO 유효성 검사 
+    //TODO Validation 
     return true;
 }
 
@@ -37,33 +38,33 @@ function check() {
 	<div id="container">
 		<div id="content" style="min-height: 800px;">
 		
-<!-- 본문 시작 -->
-<div id="url-navi">회원</div>
-<h1>내 정보 수정</h1>
+<!-- contents begin -->
+<div id="url-navi"><spring:message code="user.membership" /></div>
+<h1><spring:message code="user.editaccount.heading" /></h1>
 <p>
-비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.<br />
-비밀번호는 <a href="changePasswd">비밀번호 변경</a> 메뉴를 이용하세요.<br />
+<spring:message code="user.editaccount.content" />
+<a href="changePasswd"><spring:message code="user.change.password" /></a><br />
 </p>
 <sf:form id="editAccountForm" action="editAccount" method="post" commandName="user" onsubmit="return check();">
 <sf:hidden path="email" value="abc@def.ghi" />
 <sf:errors path="*" cssClass="error" />
 <table>
 <tr>
-	<td>이름</td>
+	<td><spring:message code="user.full.name" /></td>
 	<td>
 		<sf:input path="name" value="${user.name }" /><br />
 		<sf:errors path="name" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>손전화</td>
+	<td><spring:message code="user.mobile" /></td>
 	<td>
 		<sf:input path="mobile" value="${user.mobile }" /><br />
 		<sf:errors path="mobile" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td>현재 비밀번호</td>
+	<td><spring:message code="user.password" /></td>
 	<td>
 		<sf:password path="passwd" /><br />
 		<sf:errors path="passwd" cssClass="error" />
@@ -74,7 +75,7 @@ function check() {
 </tr>
 </table>
 </sf:form>
-<!-- 본문 끝 -->
+<!-- contents end -->
 		
 		</div>
     </div>

@@ -321,13 +321,13 @@ public class BbsController {
 
     }
 
-    @RequestMapping(value="/download", method=RequestMethod.POST)
+/*    @RequestMapping(value="/download", method=RequestMethod.POST)
     public String download(String filename, Model model) {
         model.addAttribute("filename", filename);
 
         return "inc/download";
     }
-
+*/
     @RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
     public String deleteAttachFile(Integer attachFileNo, 
             Integer articleNo, 

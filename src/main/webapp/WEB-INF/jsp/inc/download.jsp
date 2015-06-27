@@ -8,7 +8,7 @@
 <%@ page import="org.springframework.util.FileCopyUtils" %>
 <%@ page import="net.java_school.commons.WebContants" %>
 <%
-//request.setCharacterEncoding("UTF-8");//이 작업은 필터가 한다.
+//request.setCharacterEncoding("UTF-8");//Filter doing
 String filename = request.getParameter("filename");
 
 File file = new File(WebContants.UPLOAD_PATH + filename);
