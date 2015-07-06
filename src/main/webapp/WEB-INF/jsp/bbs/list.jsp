@@ -52,7 +52,7 @@ function goWrite() {
 <!-- contents begin -->			
 <div id="url-navi">BBS</div>
 
-<h1>${boardNm }</h1>
+<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
 <div id="bbs">
 	<!-- BBS Headings -->
 	<table>
