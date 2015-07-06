@@ -292,19 +292,19 @@ $(document).ready(function() {
     
   });
   
-  $('#next-prev a').click(function() {
+  $('.next-prev a').click(function() {
 	  var $articleNo = this.title;
 	  goView($articleNo);
 	  return false;
 	});
 
 //수정 버튼
-  $('#goModify').click(function() {
+  $('.goModify').click(function() {
     $('#modifyForm').submit();
   });
 
   //삭제 버튼
-  $('#goDelete').click(function() {
+  $('.goDelete').click(function() {
     var chk = confirm('정말로 삭제하시겠습니까?');
     if (chk == true) {
       $('#delForm').submit();
@@ -312,24 +312,24 @@ $(document).ready(function() {
   });
 
   //다음글 버튼
-  $('#next-article').click(function() {
+  $('.next-article').click(function() {
     var $articleNo = this.title;
     goView($articleNo);
   });
 
   //이전글 버튼
-  $('#prev-article').click(function() {
+  $('.prev-article').click(function() {
     var $articleNo = this.title;
     goView($articleNo);
   });
 
   //목록버튼
-  $('#goList').click(function() {
+  $('.goList').click(function() {
     $('#listForm').submit();
   });
 
   //새글쓰기 버튼
-  $('#goWrite').click(function() {
+  $('.goWrite').click(function() {
     $('#writeForm').submit();
   });
 

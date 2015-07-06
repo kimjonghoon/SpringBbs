@@ -373,12 +373,12 @@ ul#nav li a:hover {
     color: #555;    
 }
 
-#next-prev {
+.next-prev {
 	margin: 7px 0;
 	border-top: 1px solid #e1e1e1;
 }
 
-#next-prev p {
+.next-prev > p {
 	margin: 0;
 	padding: 5px;
 	border-bottom: 1px solid #e1e1e1;
@@ -386,19 +386,18 @@ ul#nav li a:hover {
 	color: #333;
 }
 
-#next-prev a {
+.next-prev a {
 	color: #333;
 	text-decoration: none;
 }
 
-#next-prev a:hover {
+.next-prev a:hover {
 	color: #333;
 	text-decoration: underline;
 }
 
-#view-menu {
+.view-menu {
 	height: 22px;
-	margin-bottom: 47px;
 }
 
 .fl {

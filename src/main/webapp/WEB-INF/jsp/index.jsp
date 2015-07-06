@@ -60,7 +60,7 @@
     </div>
     
 	<div id="sidebar">
-		<h1>Main</h1>
+		<h1>HomePage</h1>
 	</div>
     
 	<div id="extra">

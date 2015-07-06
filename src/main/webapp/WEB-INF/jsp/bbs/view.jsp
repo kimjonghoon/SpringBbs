@@ -34,6 +34,26 @@
 <div id="url-navi">BBS</div>
 <h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
 <div id="bbs">
+
+<div class="view-menu" style="margin-bottom: 5px;">
+    <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
+    <div class="fl">
+        <input type="button" value="<spring:message code="global.modify" />" class="goModify" />
+        <input type="button" value="<spring:message code="global.delete" />" class="goDelete" />
+    </div>
+    </security:authorize>        
+    <div class="fr">
+		<c:if test="${nextArticle != null }">    
+        <input type="button" value="<spring:message code="bbs.next.article" />" title="${nextArticle.articleNo }" class="next-article" />
+		</c:if>
+		<c:if test="${prevArticle != null }">        
+        <input type="button" value="<spring:message code="bbs.prev.article" />" title="${prevArticle.articleNo}" class="prev-article" />
+		</c:if>        
+        <input type="button" value="<spring:message code="global.list" />" class="goList" />
+        <input type="button" value="<spring:message code="bbs.new.article" />" class="goWrite" />
+    </div>
+</div>
+
 <table>
 <tr>
     <th style="width: 37px;text-align: left;vertical-align: top;">TITLE</th>
@@ -101,7 +121,7 @@
 <!--  comments end -->
 
 
-<div id="next-prev">
+<div class="next-prev">
     <c:if test="${nextArticle != null }">
     <p><spring:message code="bbs.next.article" /> : <a href="#" title="${nextArticle.articleNo }">${nextArticle.title }</a></p>
     </c:if>
@@ -110,22 +130,22 @@
     </c:if>
 </div>
 
-<div id="view-menu">
+<div class="view-menu" style="margin-bottom: 47px;">
     <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
     <div class="fl">
-        <input type="button" value="<spring:message code="global.modify" />" id="goModify" />
-        <input type="button" value="<spring:message code="global.delete" />" id="goDelete" />
+        <input type="button" value="<spring:message code="global.modify" />" class="goModify" />
+        <input type="button" value="<spring:message code="global.delete" />" class="goDelete" />
     </div>
     </security:authorize>        
     <div class="fr">
 		<c:if test="${nextArticle != null }">    
-        <input type="button" value="<spring:message code="bbs.next.article" />" title="${nextArticle.articleNo }" id="next-article" />
+        <input type="button" value="<spring:message code="bbs.next.article" />" title="${nextArticle.articleNo }" class="next-article" />
 		</c:if>
 		<c:if test="${prevArticle != null }">        
-        <input type="button" value="<spring:message code="bbs.prev.article" />" title="${prevArticle.articleNo}" id="prev-article" />
+        <input type="button" value="<spring:message code="bbs.prev.article" />" title="${prevArticle.articleNo}" class="prev-article" />
 		</c:if>        
-        <input type="button" value="<spring:message code="global.list" />" id="goList" />
-        <input type="button" value="<spring:message code="bbs.new.article" />" id="goWrite" />
+        <input type="button" value="<spring:message code="global.list" />" class="goList" />
+        <input type="button" value="<spring:message code="bbs.new.article" />" class="goWrite" />
     </div>
 </div>
 
