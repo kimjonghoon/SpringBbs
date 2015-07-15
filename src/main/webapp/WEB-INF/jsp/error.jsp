@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="net.java_school.user.User" %>
 <%
 String contextPath = request.getContextPath();
@@ -34,22 +35,14 @@ if (requestUri == null) {
 <div id="wrap">
 
     <div id="header">
-    	<h1 style="float: left; width:150px;"><a href="<%=contextPath %>/"><img src="<%=contextPath %>/images/ci.gif" alt="java-school logo" /></a></h1>
+     	<h1 style="float: left; width:150px;"><a href="<%=contextPath %>/"><img src="<%=contextPath %>/images/ci.gif" alt="java-school logo" /></a></h1>
     	<div id="memberMenu" style="float: right;position: relative; top: 7px;">
+    	<!-- 뷰 레벨 인증을 에러 페이지에 쓸 수 없다. -->
     	</div>
     </div>
     
     <div id="main-menu">
-        <ul id="nav">
-            <li><a href="<%=contextPath %>/java/">Java</a></li>
-            <li><a href="<%=contextPath %>/jdbc/">JDBC</a></li>
-            <li><a href="<%=contextPath %>/jsp/">JSP</a></li>
-            <li><a href="<%=contextPath %>/css-layout/">CSS Layout</a></li>
-            <li><a href="<%=contextPath %>/jsp-project/">JSP Project</a></li>
-            <li><a href="<%=contextPath %>/spring/">Spring</a></li>
-            <li><a href="<%=contextPath %>/javascript/">JavaScript</a></li>
-            <li><a href="<%=contextPath %>/bbs/list?boardCd=free&amp;curPage=1">BBS</a></li>
-        </ul>
+    	<%@ include file="inc/main-menu.jsp" %>
     </div>
     
 	<div id="container">
@@ -83,15 +76,11 @@ if (throwable != null) {
 	</div>
     
 	<div id="extra">
-		<a href="http://www.youtube.com"><img src="<%=contextPath %>/images/youtube.png" alt="youtube.com" /></a>
-		<a href="http://www.twitter.com"><img src="<%=contextPath %>/images/twitter.png" alt="twitter.com" /></a>
-		<a href="http://www.facebook.com"><img src="<%=contextPath %>/images/facebook.png" alt="facebook.com" /></a>
-		<a href="http://www.gmail.com"><img src="<%=contextPath %>/images/gmail.png" alt="gmail.com" /></a>
-		<a href="http://www.java-school.net"><img src="<%=contextPath %>/images/java-school.png" alt="java-school.net" /></a>    
+		<%@ include file="inc/extra.jsp" %>    
 	</div>
     
     <div id="footer">
-		<%@ include file="inc/footer.jsp" %>
+    	<%@ include file="inc/footer.jsp" %>
     </div>
         
 </div>

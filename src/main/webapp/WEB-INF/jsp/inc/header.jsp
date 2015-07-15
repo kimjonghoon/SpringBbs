@@ -10,12 +10,12 @@
 </security:authorize>
 <c:choose>
 	<c:when test="${empty check}">
-		<input type="button" value="<spring:message code="user.login" />" onclick="location.href='../users/login'" />
-		<input type="button" value="<spring:message code="user.signup" />" onclick="location.href='../users/signUp'" />
+		<input type="button" value="<spring:message code="user.login" />" onclick="location.href='${pageContext.request.contextPath}/users/login'" />
+		<input type="button" value="<spring:message code="user.signup" />" onclick="location.href='${pageContext.request.contextPath}/users/signUp'" />
 	</c:when>
 	<c:otherwise>
-		<input type="button" value="<spring:message code="user.logout" />" onclick="location.href='../j_spring_security_logout'" />
-		<input type="button" value="<spring:message code="user.modify.account" />" onclick="location.href='../users/editAccount'" />
+		<input type="button" value="<spring:message code="user.logout" />" onclick="location.href='${pageContext.request.contextPath}/j_spring_security_logout'" />
+		<input type="button" value="<spring:message code="user.modify.account" />" onclick="location.href='${pageContext.request.contextPath}/users/editAccount'" />
 	</c:otherwise>
 </c:choose>
 </div>
