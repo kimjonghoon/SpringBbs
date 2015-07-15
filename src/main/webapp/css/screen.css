@@ -423,14 +423,18 @@ ul#nav li a:hover {
 	width: 99%;
 }
 
+#extra img {
+	width: 203px;
+}
+
 #extra a {
 	display: block;
-	margin-bottom: 20px;
 	border: 1px solid #DAEAAA;
+	margin-bottom: 7px;
 }
 
 #extra a:hover {
-	border: 1px solid red;
+	opacity: 0.7;
 }
 
 .error {
