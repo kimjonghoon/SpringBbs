@@ -57,7 +57,7 @@ function goView() {
 <input type="hidden" name="curPage" value="${param.curPage }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 </p>
-<sf:errors path="*" cssClass="error" />
+<sf:errors path="*" cssClass="error"/>
 <table id="write-form">
 <tr>
     <td><spring:message code="global.title" /></td>

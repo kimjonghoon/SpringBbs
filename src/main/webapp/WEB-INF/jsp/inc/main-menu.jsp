@@ -9,4 +9,5 @@
 	<li><a href="../spring/">Spring</a></li>
 	<li><a href="../javascript/">JavaScript</a></li>
 	<li><a href="../bbs/list?boardCd=free&amp;curPage=1">BBS</a></li>
+	<li><a href="https://cloud.google.com">Google Cloud</a></li>
 </ul>
