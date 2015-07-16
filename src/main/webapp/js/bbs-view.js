@@ -270,7 +270,7 @@ $(document).ready(function() {
   });
 
   //form 안의 수정하기 링크
-  $('.modify-comment a:contains("수정하기")').click(function(e) {
+  $('.modify-comment a.comments-modify-submit').click(function(e) {
     $(e.target).parent().parent().submit();
     return false;
   });

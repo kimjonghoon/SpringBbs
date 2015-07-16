@@ -110,7 +110,7 @@
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     <div style="text-align: right;">
-            <a href="#"><spring:message code="global.submit" /></a> | <a href="#"><spring:message code="global.cancel" /></a>
+            <a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#"><spring:message code="global.cancel" /></a>
     </div>
     <div>
         <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
