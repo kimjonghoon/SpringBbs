@@ -43,11 +43,11 @@ function check() {
 <form id="byeForm" action="bye" method="post" onsubmit="return check()">
 <table>
 <tr>
-	<td><spring:message code="global.email" /></td>
+	<td><spring:message code="user.email" /></td>
 	<td><input type="text" name="email" /></td>
 </tr>
 <tr>
-	<td><spring:message code="global.password" /></td>
+	<td><spring:message code="user.password" /></td>
 	<td><input type="password" name="passwd" /></td>
 </tr>
 <tr>
