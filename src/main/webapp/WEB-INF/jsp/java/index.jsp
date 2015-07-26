@@ -9,7 +9,7 @@
 <meta name="Keywords" content="<spring:message code="java.keywords" />" />
 <meta name="Description" content="<spring:message code="java.description" />" />
 <title><spring:message code="java.title" /></title>
-<link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
 </head>
 <body>
 

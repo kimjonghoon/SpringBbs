@@ -11,7 +11,7 @@
 <meta name="Keywords" content="<spring:message code="user.changepasswd.keywords" />" />
 <meta name="Description" content="<spring:message code="user.changepasswd.description" />" />
 <title><spring:message code="user.changepasswd.title" /></title>
-<link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
 <script type="text/javascript">
 //<![CDATA[ 
 

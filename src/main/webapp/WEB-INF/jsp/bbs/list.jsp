@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="Keywords" content="<spring:message code="bbs.list.keywords" />" />
 <meta name="Description" content="<spring:message code="bbs.list.description" />" />
-<link rel="stylesheet" href="../css/screen.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
 <title>BBS</title>
 <script type="text/javascript">
 //<![CDATA[

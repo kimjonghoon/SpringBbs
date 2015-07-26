@@ -11,9 +11,9 @@
 <meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
 <meta name="Description" content="<spring:message code="bbs.view.description" />" />
 <title>BBS</title>
-<link rel="stylesheet" href="../css/screen.css" type="text/css" />
-<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="../js/bbs-view.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bbs-view.js"></script>
 </head>
 <body>
 
