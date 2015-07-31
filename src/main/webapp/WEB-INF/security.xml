@@ -8,7 +8,7 @@
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security.xsd">
 
-  <http auto-config="true" use-expressions="true">
+  <http use-expressions="true">
     <intercept-url pattern="/users/bye_confirm" access="permitAll" />
     <intercept-url pattern="/users/welcome" access="permitAll" />
     <intercept-url pattern="/users/signUp" access="permitAll" />
@@ -21,31 +21,32 @@
     <intercept-url pattern="/file/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
 
     <form-login
-      login-page="/users/login"
-      authentication-failure-url="/users/login?msg=Login-Failed"
-      default-target-url="/bbs/list?boardCd=free&amp;curPage=1" />
+        login-page="/users/login"
+        authentication-failure-url="/users/login?error=1"
+        default-target-url="/bbs/list?boardCd=free&amp;curPage=1" />
         
-    <logout
-      logout-success-url="/"
-      invalidate-session="true" />
+    <logout 
+        logout-success-url="/"
+        invalidate-session="true" />
     
     <session-management>
-    	<concurrency-control
-    		max-sessions="1"
-    		error-if-maximum-exceeded="true" />
+        <concurrency-control
+            max-sessions="1"
+            error-if-maximum-exceeded="true" />
     </session-management>
-      
   </http>
 
   <authentication-manager>
     <authentication-provider>
       <jdbc-user-service
-        data-source-ref="dataSource"
-        users-by-username-query="select email as username,passwd as password,1 as enabled
-        from MEMBER where email = ?"
-        authorities-by-username-query="select email as username,authority
-        from AUTHORITIES where email = ?" />
+          data-source-ref="dataSource"
+          users-by-username-query="select email as username,passwd as password,1 as enabled
+          from MEMBER where email = ?"
+          authorities-by-username-query="select email as username,authority
+          from AUTHORITIES where email = ?" />
     </authentication-provider>
   </authentication-manager>
-    
+
+
+        
 </beans:beans>

@@ -13,6 +13,7 @@ String contextPath = request.getContextPath();
 <meta name="Description" content="Error" />
 <title>Error</title>
 <link rel="stylesheet" href="<%=contextPath %>/css/screen.css" type="text/css" />
+<script type="text/javascript" src="<%=contextPath %>/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <%

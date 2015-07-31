@@ -11,6 +11,7 @@
 <meta name="Description" content="<spring:message code="bbs.list.description" />" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
 <title>BBS</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -32,7 +33,7 @@ function goWrite() {
 }
 
 //]]>
-</script>           
+</script>
 </head>
 <body>
 

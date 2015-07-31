@@ -10,6 +10,7 @@
 <meta name="Description" content="<spring:message code="user.changepasswd.confirm.description" />" />
 <title><spring:message code="user.changepasswd.confirm.title" /></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 

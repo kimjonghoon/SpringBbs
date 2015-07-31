@@ -80,6 +80,7 @@
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
 		<input type="hidden" name="curPage" value="${param.curPage }" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+		<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</p>
     <div id="addComment">
         <textarea name="memo" rows="7" cols="50"></textarea>
@@ -108,6 +109,7 @@
         <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
+        <input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     <div style="text-align: right;">
             <a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#"><spring:message code="global.cancel" /></a>
@@ -288,6 +290,7 @@
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>   
     <form id="deleteAttachFileForm" action="deleteAttachFile" method="post">
@@ -297,11 +300,13 @@
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>
     <form id="downForm" action="../file/download" method="post">
     <p>
         <input type="hidden" name="filename" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>
 </div>

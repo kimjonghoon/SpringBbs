@@ -10,6 +10,7 @@
 <meta name="Description" content="<spring:message code="user.bye.description" />" />
 <title><spring:message code="user.bye.title" /></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[ 
 
@@ -41,6 +42,9 @@ function check() {
 <div id="url-navi"><spring:message code="user.membership" /></div>
 <h1><spring:message code="user.bye.heading" /></h1>
 <form id="byeForm" action="bye" method="post" onsubmit="return check()">
+<p style="margin: 0;padding: 0;">
+<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
+</p>
 <table>
 <tr>
 	<td><spring:message code="user.email" /></td>

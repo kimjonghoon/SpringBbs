@@ -12,6 +12,7 @@
 <meta name="Description" content="<spring:message code="bbs.write.description" />" />
 <title>BBS</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
            
@@ -54,12 +55,11 @@ function goView() {
 <h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
 <div id="bbs">
 <h2><spring:message code="bbs.new.article" /></h2>
-<sf:form id="writeForm" action="write" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
+<sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="curPage" value="${param.curPage }" />
-<input type="hidden" name="searchWord" value="${param.searchWord }" />
 </p>
 <sf:errors path="*" cssClass="error" />
 <table id="write-form">
