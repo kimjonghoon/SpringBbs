@@ -5,9 +5,9 @@
 <ul>
 	<li>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/list?boardCd=free&curPage=1"><spring:message code="bbs.board.free" /></a></li>
-			<li><a href="${pageContext.request.contextPath}/list?boardCd=qna&curPage=1"><spring:message code="bbs.board.qna" /></a></li>
-			<li><a href="${pageContext.request.contextPath}/list?boardCd=data&curPage=1"><spring:message code="bbs.board.data" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/bbs/list?boardCd=free&curPage=1"><spring:message code="bbs.board.free" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/bbs/list?boardCd=qna&curPage=1"><spring:message code="bbs.board.qna" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/bbs/list?boardCd=data&curPage=1"><spring:message code="bbs.board.data" /></a></li>
 		</ul>
 	</li>
 </ul>
