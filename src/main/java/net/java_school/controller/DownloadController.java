@@ -1,4 +1,4 @@
-package net.java_school.commons.controller;
+package net.java_school.controller;
 
 import java.io.File;
 import java.io.FileInputStream;

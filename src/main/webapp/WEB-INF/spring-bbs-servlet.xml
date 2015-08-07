@@ -27,12 +27,7 @@
 	<mvc:annotation-driven />
 	
 	<context:component-scan
-		base-package="net.java_school.board.spring,
- 			net.java_school.user.spring,
- 			net.java_school.home.spring,
- 			net.java_school.java.spring,
-			net.java_school.javascript.spring,
-			net.java_school.commons.controller,
+		base-package="net.java_school.controller,
 			net.java_school.board,
 			net.java_school.user" />
 

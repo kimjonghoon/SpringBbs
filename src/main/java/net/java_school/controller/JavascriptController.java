@@ -1,21 +1,16 @@
-package net.java_school.java.spring;
+package net.java_school.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/java")
-public class JavaController {
+@RequestMapping("/javascript")
+public class JavascriptController {
 
     @RequestMapping(method=RequestMethod.GET)
     public String index() {
-        return "java/index";
+        return "javascript/index";
     }
     
-    @RequestMapping(value="/jdk-install", method=RequestMethod.GET)
-    public String basic() {
-        return "java/jdk-install";
-    }
-
 }

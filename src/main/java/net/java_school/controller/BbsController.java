@@ -1,4 +1,4 @@
-package net.java_school.board.spring;
+package net.java_school.controller;
 
 import java.io.File;
 import java.net.URLEncoder;

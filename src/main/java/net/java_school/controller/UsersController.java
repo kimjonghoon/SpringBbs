@@ -1,4 +1,4 @@
-package net.java_school.user.spring;
+package net.java_school.controller;
 
 import java.security.Principal;
 

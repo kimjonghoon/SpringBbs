@@ -5,8 +5,8 @@
 <ul>
 	<li>
 		<ul>
-			<li><a href="login"><spring:message code="user.login" /></a></li>
-			<li><a href="signUp"><spring:message code="user.signup" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/login"><spring:message code="user.login" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/signUp"><spring:message code="user.signup" /></a></li>
 			<li><a href="#"><spring:message code="user.forgot.id" /></a></li>
 			<li><a href="#"><spring:message code="user.forgot.pw" /></a></li>
 		</ul>

@@ -8,7 +8,7 @@
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security.xsd">
 
-  <http use-expressions="true">
+  <http>
     <intercept-url pattern="/users/bye_confirm" access="permitAll" />
     <intercept-url pattern="/users/welcome" access="permitAll" />
     <intercept-url pattern="/users/signUp" access="permitAll" />
@@ -30,9 +30,7 @@
         invalidate-session="true" />
     
     <session-management>
-        <concurrency-control
-            max-sessions="1"
-            error-if-maximum-exceeded="true" />
+        <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
     </session-management>
   </http>
 
