@@ -48,18 +48,18 @@
 	</bean>
 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-	  <property name="defaultErrorView" value="error" />
+	  <property name="defaultErrorView" value="d-error" />
 	  <property name="exceptionMappings">
 	    <props>
 	      <prop key="AccessDeniedException">
-	        error
+	        403
 	      </prop>
 	    </props>
 	  </property>
 	</bean>
 	 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basename" value="WEB-INF/classes/messages" />
+	    <property name="basename" value="classpath:messages" />
 	    <property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
