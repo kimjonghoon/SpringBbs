@@ -281,6 +281,7 @@
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>
     <form id="deleteCommentForm" action="deleteComment" method="post">

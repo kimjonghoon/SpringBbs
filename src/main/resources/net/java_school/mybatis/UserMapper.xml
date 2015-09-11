@@ -14,10 +14,10 @@
     INSERT INTO authorities VALUES (#{email}, #{authority})
   </insert>
   
-  <select id="login" resultType="User">
+<!--   <select id="login" resultType="User">
     SELECT email, passwd, name, mobile FROM member 
     WHERE email = #{email} AND passwd = #{passwd}
-  </select>
+  </select> -->
 
   <update id="update" parameterType="User">
     UPDATE member SET name = #{name}, mobile = #{mobile} 

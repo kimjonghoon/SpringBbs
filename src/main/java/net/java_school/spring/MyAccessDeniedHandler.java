@@ -11,17 +11,17 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
-	private String path;
+	private String errorPage;
 	
-	public void setPath(String path) {
-		this.path = path;
+	public void setErrorPage(String errorPage) {
+		this.errorPage = errorPage;
 	}
 
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse resp, AccessDeniedException e)
 			throws IOException, ServletException {
 		
-		 req.getRequestDispatcher(path).forward(req, resp);
+		 req.getRequestDispatcher(errorPage).forward(req, resp);
 		
 	}
 

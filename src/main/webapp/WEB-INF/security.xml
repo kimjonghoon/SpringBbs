@@ -20,9 +20,9 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
 
-		<form-login 
+		<form-login
 			login-page="/users/login"
-			authentication-failure-url="/users/login?error=1" 
+			authentication-failure-url="/users/login?error=1"
 			default-target-url="/bbs/list?boardCd=free&amp;curPage=1" />
 
 		<logout logout-success-url="/" invalidate-session="true" />
@@ -33,11 +33,15 @@
 		</session-management>
 
 	</http>
-
+	
+	<!-- http에 access-denied-handler ref="my403"와 같이 설정했다면 다음이 필요	-->
 	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
-		<beans:property name="path" value="403" />
+		<beans:property name="errorPage" value="403" />
 	</beans:bean>
-
+	
+	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</beans:bean>
+	
 	<authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
@@ -45,6 +49,7 @@
           from MEMBER where email = ?"
 				authorities-by-username-query="select email as username,authority
           from AUTHORITIES where email = ?" />
+			<password-encoder ref="bcryptPasswordEncoder" />          
 		</authentication-provider>
 	</authentication-manager>
 

@@ -22,125 +22,123 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    
-  @Autowired
-  private UserService userService;
 
-  @RequestMapping(value="/signUp", method=RequestMethod.GET)
-  public String signUp(Model model) {
-    model.addAttribute(WebContants.USER_KEY, new User());	  
-    
-    return "users/signUp";
-  }
+	@Autowired
+	private UserService userService;
 
-  @RequestMapping(value="/signUp", method=RequestMethod.POST)
-  public String signUp(@Valid User user, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return "users/signUp";	
-    }
-    
-    String authority = "ROLE_USER";
-    
-    userService.addUser(user);
-    userService.addAuthority(user.getEmail(), authority);
-    
-    return "redirect:/users/welcome";
-  }
+	@RequestMapping(value="/signUp", method=RequestMethod.GET)
+	public String signUp(Model model) {
+		model.addAttribute(WebContants.USER_KEY, new User());	  
 
-  @RequestMapping(value="/welcome", method=RequestMethod.GET)
-  public String welcome() {
-    return "users/welcome";
-  }
+		return "users/signUp";
+	}
 
-  @RequestMapping(value="/login", method=RequestMethod.GET)
-  public String login() {
-    return "users/login";
-  }
-    
-  @RequestMapping(value="/editAccount", method=RequestMethod.GET)
-  public String editAccount(Principal principal, Model model) {
-    User user = userService.getUser(principal.getName());
-    model.addAttribute(WebContants.USER_KEY, user);
-    
-    return "users/editAccount";
-  }
-    
-  @RequestMapping(value="/editAccount", method=RequestMethod.POST)
-  public String editAccount(@Valid User user, BindingResult bindingResult, Principal principal) {
-    
-    if (bindingResult.hasErrors()) {
-    	return "users/editAccount";
-    }
-    
-    user.setEmail(principal.getName());
+	@RequestMapping(value="/signUp", method=RequestMethod.POST)
+	public String signUp(@Valid User user, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "users/signUp";	
+		}
 
-    int check = userService.editAccount(user);
-    if (check < 1) {
-    	throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
-    }
-    
-    return "redirect:/users/changePasswd";
-        
-  }
-    
-  @RequestMapping(value="/changePasswd", method=RequestMethod.GET)
-  public String changePasswd(Principal principal, Model model) {
-    User user = userService.getUser(principal.getName());
-    
-    model.addAttribute(WebContants.USER_KEY, user);
-    model.addAttribute("password", new Password());
-        
-    return "users/changePasswd";
-  }
-    
-  @RequestMapping(value="/changePasswd", method=RequestMethod.POST)
-  public String changePasswd(@Valid Password password, 
-		  BindingResult bindingResult, 
-		  Model model,
-		  Principal principal) {
-	  
-    if (bindingResult.hasErrors()) {
-    	User user = userService.getUser(principal.getName());
-    	model.addAttribute(WebContants.USER_KEY, user);
-    	
-    	return "users/changePasswd";
-    }
-    
-    int check = userService.changePasswd(password.getCurrentPasswd(), 
-    		password.getNewPasswd(), principal.getName());
-    
-    if (check < 1) {
-      throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
-    } 
-    
-    return "redirect:/users/changePasswd_confirm";
-        
-  }
-    
-  @RequestMapping(value="/changePasswd_confirm", method=RequestMethod.GET)
-  public String changePasswd_confirm() {
-    return "users/changePasswd_confirm";
-  }
-    
-  @RequestMapping(value="/bye", method=RequestMethod.GET)
-  public String bye() {
-    return "users/bye";
-  }
+		String authority = "ROLE_USER";
+		userService.addUser(user);
+		userService.addAuthority(user.getEmail(), authority);
 
-  @RequestMapping(value="/bye", method=RequestMethod.POST)
-  public String bye(String email, String passwd, HttpServletRequest req) 
-		throws ServletException {
-    
-    User user = userService.login(email, passwd);
-    userService.bye(user);
-    req.logout();
-    
-    return "redirect:/users/bye_confirm";
-  }
+		return "redirect:/users/welcome";
+	}
 
-  @RequestMapping(value="/bye_confirm", method=RequestMethod.GET)
-  public String byeConfirm() {
-    return "users/bye_confirm";	  
-  }
-  
+	@RequestMapping(value="/welcome", method=RequestMethod.GET)
+	public String welcome() {
+		return "users/welcome";
+	}
+
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "users/login";
+	}
+
+	@RequestMapping(value="/editAccount", method=RequestMethod.GET)
+	public String editAccount(Principal principal, Model model) {
+		User user = userService.getUser(principal.getName());
+		model.addAttribute(WebContants.USER_KEY, user);
+
+		return "users/editAccount";
+	}
+
+	@RequestMapping(value="/editAccount", method=RequestMethod.POST)
+	public String editAccount(@Valid User user, BindingResult bindingResult, Principal principal) {
+
+		if (bindingResult.hasErrors()) {
+			return "users/editAccount";
+		}
+
+		user.setEmail(principal.getName());
+		userService.editAccount(user);
+
+		return "redirect:/users/changePasswd";
+
+	}
+
+	@RequestMapping(value="/changePasswd", method=RequestMethod.GET)
+	public String changePasswd(Principal principal, Model model) {
+		User user = userService.getUser(principal.getName());
+
+		model.addAttribute(WebContants.USER_KEY, user);
+		model.addAttribute("password", new Password());
+
+		return "users/changePasswd";
+	}
+
+	@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
+	public String changePasswd(@Valid Password password, 
+			BindingResult bindingResult, 
+			Model model,
+			Principal principal) {
+
+		if (bindingResult.hasErrors()) {
+			User user = userService.getUser(principal.getName());
+			model.addAttribute(WebContants.USER_KEY, user);
+
+			return "users/changePasswd";
+		}
+		
+		int check = userService.changePasswd(password.getCurrentPasswd(), 
+				password.getNewPasswd(), principal.getName());
+
+		if (check < 1) {
+			throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
+		} 
+
+		return "redirect:/users/changePasswd_confirm";
+
+	}
+
+	@RequestMapping(value="/changePasswd_confirm", method=RequestMethod.GET)
+	public String changePasswd_confirm() {
+		return "users/changePasswd_confirm";
+	}
+
+	@RequestMapping(value="/bye", method=RequestMethod.GET)
+	public String bye() {
+		return "users/bye";
+	}
+
+	@RequestMapping(value="/bye", method=RequestMethod.POST)
+	public String bye(String email, String passwd, HttpServletRequest req) 
+			throws ServletException {
+
+		User user = new User();
+		user.setEmail(email);
+		user.setPasswd(passwd);
+		userService.bye(user);
+		
+		req.logout();
+
+		return "redirect:/users/bye_confirm";
+	}
+
+	@RequestMapping(value="/bye_confirm", method=RequestMethod.GET)
+	public String byeConfirm() {
+		return "users/bye_confirm";	  
+	}
+
 }

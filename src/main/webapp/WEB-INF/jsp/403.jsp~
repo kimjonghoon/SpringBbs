@@ -17,7 +17,10 @@ String contextPath = request.getContextPath();
 <div id="wrap">
 
     <div id="header">
-    	<%@ include file="inc/header.jsp" %>
+     	<h1 style="float: left; width:150px;"><a href="<%=contextPath %>/"><img src="<%=contextPath %>/images/ci.gif" alt="java-school logo" /></a></h1>
+    	<div id="memberMenu" style="float: right;position: relative; top: 7px;">
+    	<!-- 뷰 레벨 인증을 에러 페이지에 쓸 수 없다. -->
+    	</div>
     </div>
     
     <div id="main-menu">

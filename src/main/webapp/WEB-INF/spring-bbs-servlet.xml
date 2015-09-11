@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:security="http://www.springframework.org/schema/security"  
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -17,15 +15,16 @@
 		http://mybatis.org/schema/mybatis-spring 
     	http://mybatis.org/schema/mybatis-spring.xsd">
 
-	<security:global-method-security pre-post-annotations="enabled" />
-    	
-	<!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다.  -->
+	<security:global-method-security
+		pre-post-annotations="enabled" />
+
+	<!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다. -->
 	<mvc:resources location="/images/" mapping="/images/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
-	
+
 	<mvc:annotation-driven />
-	
+
 	<context:component-scan
 		base-package="net.java_school.controller,
 			net.java_school.board,
@@ -34,7 +33,7 @@
 	<mybatis:scan base-package="net.java_school.mybatis" />
 
 	<!-- ViewResolver -->
-	<bean id="internalResourceViewResolver" 
+	<bean id="internalResourceViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass">
 			<value>org.springframework.web.servlet.view.JstlView</value>
@@ -46,21 +45,23 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
-	
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-	  <property name="defaultErrorView" value="d-error" />
-	  <property name="exceptionMappings">
-	    <props>
-	      <prop key="AccessDeniedException">
-	        403
-	      </prop>
-	    </props>
-	  </property>
+
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="d-error" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="AccessDeniedException">
+					403
+				</prop>
+			</props>
+		</property>
 	</bean>
-	 
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basename" value="classpath:messages" />
-	    <property name="defaultEncoding" value="UTF-8" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
 </beans>

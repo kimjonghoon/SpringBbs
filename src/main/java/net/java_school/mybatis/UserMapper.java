@@ -12,9 +12,9 @@ public interface UserMapper {
 		  @Param("email") String email, 
 		  @Param("authority") String authority);
   
-  public User login(
+/*  public User login(
     @Param("email") String email, 
-    @Param("passwd") String passwd);
+    @Param("passwd") String passwd);*/
 
   public int update(User user);
 
