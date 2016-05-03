@@ -9,6 +9,7 @@
 
 	<http>
 		<access-denied-handler error-page="/403" />
+		<intercept-url pattern="/favicon.ico" access="permitAll" />
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/users/bye_confirm" access="permitAll" />
 		<intercept-url pattern="/users/welcome" access="permitAll" />
@@ -18,7 +19,7 @@
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" requires-channel="https" />
 
 		<form-login
 			login-page="/users/login"

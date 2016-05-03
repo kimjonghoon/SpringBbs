@@ -86,7 +86,7 @@ function goWrite() {
 	<div id="paging">
 		
 		<c:if test="${prevPage > 0 }">
-			<a href="javascript:goList('${prevPage }')">[<spring:message code="global.prev" />]</a>
+			<a href="javascript:goList('${prevPage }')">[ <spring:message code="global.prev" /> ]</a>
 		</c:if>
 
 		<c:forEach var="i" begin="${firstPage }" end="${lastPage }" varStatus="stat">
@@ -95,13 +95,13 @@ function goWrite() {
 				<span class="bbs-strong">${i }</span>
 			</c:when>
 			<c:otherwise>
-				<a href="javascript:goList('${i }')">${i }</a>
+				<a href="javascript:goList('${i }')">[ ${i } ]</a>
 			</c:otherwise>
 			</c:choose>
 		</c:forEach>
 		
 		<c:if test="${nextPage > 0 }">
-			<a href="javascript:goList('${nextPage }')">[<spring:message code="global.next" />]</a>
+			<a href="javascript:goList('${nextPage }')">[ <spring:message code="global.next" /> ]</a>
 		</c:if>
 		
 	</div>
