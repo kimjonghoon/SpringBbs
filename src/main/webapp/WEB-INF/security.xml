@@ -19,8 +19,7 @@
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" requires-channel="https" />
-
+<!--	<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" requires-channel="https"/> -->
 		<form-login
 			login-page="/users/login"
 			authentication-failure-url="/users/login?error=1"
