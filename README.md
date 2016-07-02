@@ -14,6 +14,8 @@ have to edit
 
 3. database design
    refer to http://www.java-school.net/jsp-pjt/database-design
+   
+4. ojdbc6.jar -> {TOMCAT_HOME}/lib   
 
 
 
