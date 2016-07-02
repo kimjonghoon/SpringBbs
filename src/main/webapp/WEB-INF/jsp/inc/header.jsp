@@ -23,6 +23,7 @@
 <form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="post" style="display:none">
 	<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 
 <script>
 $(document).ready(function() {
