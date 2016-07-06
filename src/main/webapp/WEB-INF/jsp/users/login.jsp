@@ -25,7 +25,7 @@
     </div>
     
 	<div id="container">
-		<div id="content" style="min-height: 800px;">
+		<div id="content">
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 <h1><spring:message code="user.login.heading" /></h1>

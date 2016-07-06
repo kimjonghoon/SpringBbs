@@ -42,7 +42,7 @@ function goWrite() {
 	</div>
 
 	<div id="container">
-		<div id="content" style="min-height: 800px;">
+		<div id="content">
 
 <!-- contents begin -->			
 <div id="url-navi">BBS</div>

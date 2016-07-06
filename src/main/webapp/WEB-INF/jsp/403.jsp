@@ -25,7 +25,7 @@ String contextPath = request.getContextPath();
     </div>
     
 	<div id="container">
-		<div id="content" style="min-height: 800px;">
+		<div id="content">
 			<div id="url-navi">Error</div>
 <!-- contents begin -->
 <h1>403</h1>
