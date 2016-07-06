@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8" />
 <meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
 <meta name="Description" content="<spring:message code="bbs.view.description" />" />
 <title>BBS</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bbs-view.js"></script>
 </head>
 <body>
@@ -61,7 +61,9 @@
 </tr>
 </table>
 <div id="gul-content">
-    <span id="date-writer-hit">edited ${regdate } by ${name } hit ${hit }</span>
+    <span id="date-writer-hit">
+    	edited <fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${regdate }" />
+		by ${name } hit ${hit }</span>
     <p>${content }</p>
     <p id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
@@ -69,7 +71,7 @@
 			<security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
 	    	<a href="#" title="${file.attachFileNo }">x</a>
 			</security:authorize>
-			<br />    	
+			<br />
 		</c:forEach>
     </p>
 </div>
@@ -181,7 +183,7 @@
 		<span class="bbs-strong">[${article.commentNum }]</span>
 		</c:if>		
 	</td>
-	<td style="text-align: center;">${article.regdateForList }</td>
+	<td style="text-align: center;"><fmt:formatDate pattern="yyyy.MM.dd" value="${article.regdate }" /></td>
 	<td style="text-align: center;">${article.hit }</td>
 </tr>
 </c:forEach>

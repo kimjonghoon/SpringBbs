@@ -1,16 +1,10 @@
 package net.java_school.board;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.constraints.Size;
 
 public class Article {
-	private static final SimpleDateFormat LIST_DATE_FORMAT = 
-			new SimpleDateFormat("yyyy.MM.dd");
-	private static final SimpleDateFormat VIEW_DATE_FORMAT = 
-			new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-	
 	private Integer articleNo;
 	@Size(min=2,max=10,message="게시판코드는 2자에서 10자 사이이어야 합니다.")
 	private String boardCd;
@@ -52,7 +46,7 @@ public class Article {
 		if (content != null) {
 			return content.replaceAll(ENTER, "<br />");
 		} 
-		return null;  
+		return null;
 	}
 	public void setContent(String content) {
 		this.content = content;
@@ -93,11 +87,4 @@ public class Article {
 	public void setCommentNum(int commentNum) {
 		this.commentNum = commentNum;
 	}
-	public String getRegdateForList() {
-		return Article.LIST_DATE_FORMAT.format(this.regdate);
-	}
-	public String getRegdateForView() {
-		return Article.VIEW_DATE_FORMAT.format(this.regdate);
-	}
-	
 }

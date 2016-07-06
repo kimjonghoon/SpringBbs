@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -143,7 +144,7 @@ public class BbsController {
         int hit = article.getHit();//조회수
         String name = article.getName();//작성자 이름
         String email = article.getEmail();//작성자 ID
-        String regdate = article.getRegdateForView();//작성일
+        Date regdate = article.getRegdate();//작성일
 
         model.addAttribute("title", title);
         model.addAttribute("content", content);
