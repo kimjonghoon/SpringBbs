@@ -11,9 +11,9 @@
 <meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
 <meta name="Description" content="<spring:message code="bbs.view.description" />" />
 <title>BBS</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bbs-view.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script src="/js/jquery-3.0.0.min.js"></script>
+<script src="/js/bbs-view.js"></script>
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 <div id="bbs">
 
 <div class="view-menu" style="margin-bottom: 5px;">
-    <security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
+    <security:authorize access="#email == principal.username or hasAuthority('ROLE_ADMIN')">
     <div class="fl">
         <input type="button" value="<spring:message code="global.modify" />" class="goModify" />
         <input type="button" value="<spring:message code="global.delete" />" class="goDelete" />
