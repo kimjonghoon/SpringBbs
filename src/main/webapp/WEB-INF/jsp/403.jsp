@@ -2,16 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="net.java_school.user.User" %>
-<%
-String contextPath = request.getContextPath();
-%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
 <title>403</title>
-<link rel="stylesheet" href="<%=contextPath %>/css/screen.css" type="text/css" />
-<script type="text/javascript" src="<%=contextPath %>/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 </head>
 <body>
 <div id="wrap">
@@ -26,11 +23,9 @@ String contextPath = request.getContextPath();
     
 	<div id="container">
 		<div id="content">
-			<div id="url-navi">Error</div>
-<!-- contents begin -->
-<h1>403</h1>
-Access is Denied.
-<!--  contents end -->
+			<div id="url-navi">403</div>
+			<h1>403</h1>
+			Access is Denied.
 		</div>
     </div>
     

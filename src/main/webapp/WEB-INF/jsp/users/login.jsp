@@ -9,8 +9,8 @@
 <meta name="Keywords" content="<spring:message code="user.login.keywords" />" />
 <meta name="Description" content="<spring:message code="user.login.description" />" />
 <title><spring:message code="user.login.title" /></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 </head>
 <body>
 
@@ -29,8 +29,8 @@
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 <h1><spring:message code="user.login.heading" /></h1>
-<c:if test="${param.error != null }">
-	<h2>Username Password not corrrent</h2>
+<c:if test="${not empty param.error }">
+	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>
 </c:if>
 <c:url var="loginUrl" value="/login" />
 <form action="${loginUrl }" method="post">

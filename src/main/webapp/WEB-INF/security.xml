@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -35,9 +36,9 @@
 	</http>
 	
 	<!-- http에 access-denied-handler ref="my403"와 같이 설정했다면 다음이 필요	-->
-	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
+<!-- 	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
 		<beans:property name="errorPage" value="403" />
-	</beans:bean>
+	</beans:bean> -->
 	
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	</beans:bean>
