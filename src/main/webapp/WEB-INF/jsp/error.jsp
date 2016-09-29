@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="net.java_school.user.User" %>
-<%
-String contextPath = request.getContextPath();
-%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,8 +9,8 @@ String contextPath = request.getContextPath();
 <meta name="Keywords" content="Error" />
 <meta name="Description" content="Error" />
 <title>Error</title>
-<link rel="stylesheet" href="<%=contextPath %>/css/screen.css" type="text/css" />
-<script type="text/javascript" src="<%=contextPath %>/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 </head>
 <body>
 <%
@@ -35,10 +32,7 @@ if (requestUri == null) {
 <div id="wrap">
 
     <div id="header">
-     	<h1 style="float: left; width:150px;"><a href="<%=contextPath %>/"><img src="<%=contextPath %>/images/ci.gif" alt="java-school logo" /></a></h1>
-    	<div id="memberMenu" style="float: right;position: relative; top: 7px;">
-    	<!-- 뷰 레벨 인증을 에러 페이지에 쓸 수 없다. -->
-    	</div>
+		<%@ include file="inc/header.jsp" %>
     </div>
     
     <div id="main-menu">
@@ -48,11 +42,8 @@ if (requestUri == null) {
 	<div id="container">
 		<div id="content">
 			<div id="url-navi">Error</div>
-
-<!-- contents begin -->
-<h1>Error Page</h1>
+				<h1>Error Page</h1>
 <%
-
 if(statusCode != null && statusCode != 500){
     out.write("<h3>Error Details</h3>");
     out.write("<strong>Status Code</strong>:" + statusCode + "<br>");
@@ -67,8 +58,6 @@ if (throwable != null) {
     out.write("</ul>");
 }
 %>
-<!--  contents end -->
-		
 		</div>
     </div>
     

@@ -53,7 +53,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="AccessDeniedException">
-					403
+					error-403
 				</prop>
 			</props>
 		</property>

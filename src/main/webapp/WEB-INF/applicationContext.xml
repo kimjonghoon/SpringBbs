@@ -23,9 +23,8 @@
     <property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
   </bean>
     
-  <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-    p:maxUploadSize="104857600"
-    p:maxInMemorySize="10485760" />
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="1000000" />
+  </bean>
   
 </beans>

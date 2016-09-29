@@ -49,11 +49,10 @@ function goView() {
 <div id="bbs">
 <h2><spring:message code="bbs.new.article" /></h2>
 <sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
-<p style="margin: 0;padding: 0;">
-<input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
+<input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="curPage" value="${param.curPage }" />
-</p>
+<input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error" />
 <table id="write-form">
 <tr>

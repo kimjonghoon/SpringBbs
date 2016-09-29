@@ -12,7 +12,6 @@ import net.java_school.user.User;
 import net.java_school.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,12 +100,8 @@ public class UsersController {
 			return "users/changePasswd";
 		}
 		
-		int check = userService.changePasswd(password.getCurrentPasswd(), 
+		userService.changePasswd(password.getCurrentPasswd(), 
 				password.getNewPasswd(), principal.getName());
-
-		if (check < 1) {
-			throw new AccessDeniedException("현재 비밀번호가 틀립니다.");
-		} 
 
 		return "redirect:/users/changePasswd_confirm";
 
