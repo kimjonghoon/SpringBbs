@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import net.java_school.commons.PagingHelper;
-
 public interface BoardService {
 	
 	//목록
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public List<Article> getArticleList(String boardCd, String searchWord);
+	public List<Article> getArticleList(String boardCd, String searchWord, Integer startRecord, Integer endRecord);
 	
 	//총 레코드 수
 	public int getTotalRecord(String boardCd, String searchWord);
@@ -84,17 +82,5 @@ public interface BoardService {
 	//댓글 찾기
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	public Comment getComment(int commentNo);
-	
-	public int getListItemNo();
-	
-	public int getPrevPage();
-	
-	public int getFirstPage();
-	
-	public int getLastPage();
-	
-	public int getNextPage();
-
-	public void setPagingHelper(PagingHelper pagingHelper);
 	
 }

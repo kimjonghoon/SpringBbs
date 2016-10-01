@@ -6,25 +6,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.java_school.commons.PagingHelper;
 import net.java_school.mybatis.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
-	private PagingHelper pagingHelper; //페이징 처리 유틸리티 클래스
 	
 	//목록
 	@Override
-	public List<Article> getArticleList(String boardCd, String searchWord) {
-		Integer startRownum = pagingHelper.getStartRecord();
-		Integer endRownum = pagingHelper.getEndRecord();
+	public List<Article> getArticleList(String boardCd, String searchWord, Integer startRecord, Integer endRecord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
-		hashmap.put("start", startRownum.toString());
-		hashmap.put("end", endRownum.toString());
+		hashmap.put("start", startRecord.toString());
+		hashmap.put("end", endRecord.toString());
 		
 		return boardMapper.selectListOfArticles(hashmap);
 	}
@@ -151,36 +147,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Comment getComment(int commentNo) {
 		return boardMapper.selectOneComment(commentNo);
-	}
-	
-	@Override
-	public int getListItemNo() {
-		return pagingHelper.getListItemNo();
-	}
-	
-	@Override
-	public int getPrevPage() {
-		return pagingHelper.getPrevPage();
-	}
-	
-	@Override
-	public int getFirstPage() {
-		return pagingHelper.getFirstPage();
-	}
-	
-	@Override
-	public int getLastPage() {
-		return pagingHelper.getLastPage();
-	}
-	
-	@Override
-	public int getNextPage() {
-		return pagingHelper.getNextPage();
-	}
-
-	@Override
-	public void setPagingHelper(PagingHelper pagingHelper) {
-		this.pagingHelper = pagingHelper;
 	}
 
 }
