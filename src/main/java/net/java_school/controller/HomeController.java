@@ -13,7 +13,7 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value="/403", method=RequestMethod.GET)
+	@RequestMapping(value="/403", method={RequestMethod.GET,RequestMethod.POST})
 	public String error403() {
 		return "403";
 	}
