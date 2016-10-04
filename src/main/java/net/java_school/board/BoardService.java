@@ -5,6 +5,13 @@ import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface BoardService {
+	//게시판 목록
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public List<Board> getListOfBoardCodeAndBoardName();
+
+	//게시판 목록
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public List<Board> getListOfBoardCodeAndBoardKoreanName();
 	
 	//목록
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

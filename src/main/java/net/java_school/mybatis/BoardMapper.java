@@ -5,9 +5,16 @@ import java.util.List;
 
 import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
+import net.java_school.board.Board;
 import net.java_school.board.Comment;
 
 public interface BoardMapper {
+	//게시판 목록
+	public List<Board> selectListOfBoardCodeBoardName();
+	
+	//게시판 목록
+	public List<Board> selectListOfBoardCodeBoardKoreanName();
+	
 	//목록
 	public List<Article> selectListOfArticles(HashMap<String, String> hashmap);	
 	

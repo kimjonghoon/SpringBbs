@@ -19,6 +19,31 @@
 	</c:otherwise>
 </c:choose>
 </div>
+<%
+String url = "";
+String english = "";
+String korean = "";
+
+if (request.getQueryString() != null) {
+    String decodedQueryString = java.net.URLDecoder.decode(request.getQueryString(), "UTF-8");
+    url = "?" + decodedQueryString;
+    if (url.indexOf("&lang=") != -1) {
+        url = url.substring(0, url.indexOf("&lang="));
+    } 
+    english = url + "&lang=en";
+    korean = url + "&lang=ko";
+} else {
+    english = url + "?lang=en";
+    korean = url = "?lang=ko";
+}
+
+pageContext.setAttribute("english", english);
+pageContext.setAttribute("korean", korean);
+%>
+<div id="localeChangeMenu" style="float: right;position: relative;top: 7px;margin-right: 10px;">
+    <input type="button" value="English" onclick="location.href='${english}'" />
+    <input type="button" value="Korean" onclick="location.href='${korean }'" />
+</div>
 
 <form id="logoutForm" action="/logout" method="post" style="display:none">
 	<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />

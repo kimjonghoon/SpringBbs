@@ -13,6 +13,18 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	//게시판 목록
+	@Override
+	public List<Board> getListOfBoardCodeAndBoardName() {
+		return boardMapper.selectListOfBoardCodeBoardName();
+	}
+
+	//게시판 목록
+	@Override
+	public List<Board> getListOfBoardCodeAndBoardKoreanName() {
+		return boardMapper.selectListOfBoardCodeBoardKoreanName();
+	}
+	
 	//목록
 	@Override
 	public List<Article> getArticleList(String boardCd, String searchWord, Integer startRecord, Integer endRecord) {

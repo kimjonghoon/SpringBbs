@@ -6,6 +6,14 @@
 
 <mapper namespace="net.java_school.mybatis.BoardMapper">
 
+    <select id="selectListOfBoardCodeBoardName" resultType="Board">
+        SELECT boardcd,boardnm FROM board
+    </select>
+    
+    <select id="selectListOfBoardCodeBoardKoreanName" resultType="Board">
+        SELECT boardcd,boardnm_ko boardnm FROM board
+    </select>
+	
 	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
 	SELECT articleno, title, regdate, hit, attachfileNum, commentNum 
 	FROM (

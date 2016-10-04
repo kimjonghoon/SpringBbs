@@ -8,12 +8,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
+import net.java_school.board.Board;
 import net.java_school.board.BoardService;
 import net.java_school.board.Comment;
 import net.java_school.commons.WebContants;
@@ -33,7 +35,18 @@ public class BbsController {
 
 	@Autowired
 	private BoardService boardService;
-
+	
+	private List<Board> getBoards(String lang) {
+	    switch (lang) {
+	    case "en":
+	        return boardService.getListOfBoardCodeAndBoardName();
+	    case "ko":
+	        return boardService.getListOfBoardCodeAndBoardName();
+	    default:
+	        return boardService.getListOfBoardCodeAndBoardName();//설정에서 로케일 디폴트를 영어로 설정했으므로 
+	    }
+	}
+	
 	private Map<String,Integer> getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		int totalPage = totalRecord / numPerPage;
@@ -72,17 +85,13 @@ public class BbsController {
 	}
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(String boardCd, Integer curPage, String searchWord, Model model) {
+	public String list(String boardCd, Integer curPage, String searchWord, Locale locale, Model model) {
 
 		int numPerPage = 10;
 		int pagePerBlock = 10;
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 
-		//PagingHelper pagingHelper =  new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
-		//boardService.setPagingHelper(pagingHelper);
-		//List<Article> list = boardService.getArticleList(boardCd, searchWord);
-		
 		Map<String, Integer> map = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
 		Integer startRecord = map.get("startRecord");
 		Integer endRecord = map.get("endRecord");
@@ -101,16 +110,23 @@ public class BbsController {
 		model.addAttribute("nextPage", nextPage);
 		model.addAttribute("firstPage", firstPage);
 		model.addAttribute("lastPage", lastPage);
-
+		
+		String lang = locale.getLanguage();
+		List<Board> boards = this.getBoards(lang);
+		model.addAttribute("boards", boards);
+		
 		return "bbs/list";
 
 	}
 
 	@RequestMapping(value="/write_form", method=RequestMethod.GET)
-	public String writeForm(String boardCd, Model model) {
+	public String writeForm(String boardCd, Locale locale, Model model) {
 		String boardNm = boardService.getBoardNm(boardCd);
 		model.addAttribute("boardNm", boardNm);
 		model.addAttribute("article", new Article());
+		String lang = locale.getLanguage();
+		List<Board> boards = this.getBoards(lang);
+		model.addAttribute("boards", boards);
 
 		return "bbs/write_form";
 	}
@@ -167,6 +183,7 @@ public class BbsController {
 			String boardCd, 
 			Integer curPage,
 			String searchWord,
+			Locale locale,
 			Model model) {
 
 		boardService.increaseHit(articleNo);
@@ -203,10 +220,6 @@ public class BbsController {
 		int pagePerBlock = 10;//블록당 페이지 링크수
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
-		//PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
-		//boardService.setPagingHelper(pagingHelper);
-
-		//List<Article> list = boardService.getArticleList(boardCd, searchWord);
 		
 		Map<String, Integer> map = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
 		Integer startRecord = map.get("startRecord");
@@ -226,6 +239,10 @@ public class BbsController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("nextPage", nextPage);
 		model.addAttribute("boardNm", boardNm);
+
+		String lang = locale.getLanguage();
+		List<Board> boards = this.getBoards(lang);
+		model.addAttribute("boards", boards);
 
 		return "bbs/view";
 	}
@@ -297,6 +314,7 @@ public class BbsController {
 	@RequestMapping(value="/modify_form", method=RequestMethod.GET)
 	public String modifyForm(Integer articleNo, 
 			String boardCd,
+			Locale locale,
 			Model model) {
 
 		Article article = boardService.getArticle(articleNo);
@@ -306,6 +324,10 @@ public class BbsController {
 		model.addAttribute("article", article);
 		model.addAttribute("boardNm", boardNm);
 
+		String lang = locale.getLanguage();
+		List<Board> boards = this.getBoards(lang);
+		model.addAttribute("boards", boards);
+		
 		return "bbs/modify_form";
 	}
 
@@ -342,8 +364,6 @@ public class BbsController {
 				fileList.add(multiFile);
 			}
 		}
-
-
 
 		//파일데이터 삽입
 		int size = fileList.size();
