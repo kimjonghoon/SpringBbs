@@ -41,7 +41,7 @@ function goView() {
 
 <!--  contents begin -->
 <div id="url-navi">BBS</div>
-<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
+<h1>${boardNm }</h1>
 <div id="bbs">
 <h2><spring:message code="global.modify" /></h2>
 <sf:form id="modifyForm" action="modify?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -10,7 +11,7 @@
 <meta charset="UTF-8" />
 <meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
 <meta name="Description" content="<spring:message code="bbs.view.description" />" />
-<title>BBS</title>
+<title>${title }</title>
 <link rel="stylesheet" href="/css/screen.css" type="text/css" />
 <script src="/js/jquery-3.0.0.min.js"></script>
 <script src="/js/bbs-view.js"></script>
@@ -32,7 +33,7 @@
 
 <!-- contents begin -->
 <div id="url-navi">BBS</div>
-<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
+<h1>${boardNm }</h1>
 <div id="bbs">
 
 <div class="view-menu" style="margin-bottom: 5px;">
@@ -263,7 +264,7 @@
     </form>
     <form id="writeForm" action="write_form" method="get">
     <p>
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
@@ -271,25 +272,21 @@
     </form>
     <form id="modifyForm" action="modify_form" method="get">
     <p>
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="delForm" action="del" method="post">
-    <p>
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+    <sf:form id="delForm" action="${articleNo }" method="delete">
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </p>
-    </form>
+    </sf:form>
     <form id="deleteCommentForm" action="deleteComment" method="post">
     <p>
         <input type="hidden" name="commentNo" />
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />

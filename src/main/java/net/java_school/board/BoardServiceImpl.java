@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시판 이름
 	@Override
-	public String getBoardNm(String boardCd) {
+	public Board getBoardNm(String boardCd) {
 		return boardMapper.selectOneBoardName(boardCd);
 	}
 

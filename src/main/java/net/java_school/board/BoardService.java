@@ -64,7 +64,7 @@ public interface BoardService {
 
 	//게시판 이름
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public String getBoardNm(String boardCd);
+	public Board getBoardNm(String boardCd);
 
 	//댓글 쓰기
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

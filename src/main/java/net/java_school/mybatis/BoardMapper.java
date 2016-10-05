@@ -52,7 +52,7 @@ public interface BoardMapper {
 	public void deleteFile(int attachFileNo);	
 	
 	//게시판 이름
-	public String selectOneBoardName(String boardCd);
+	public Board selectOneBoardName(String boardCd);
 
 	//댓글 쓰기
 	public void insertComment(Comment comment);	

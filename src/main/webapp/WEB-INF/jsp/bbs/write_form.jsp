@@ -45,7 +45,7 @@ function goView() {
 
 <!--  contents begin -->
 <div id="url-navi">BBS</div>
-<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
+<h1>${boardNm }</h1>
 <div id="bbs">
 <h2><spring:message code="bbs.new.article" /></h2>
 <sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
@@ -102,15 +102,14 @@ function goView() {
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="view" method="get">
+    <form id="viewForm" action="${param.articleNo }" method="get">
     <p>
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="listForm" action="list" method="get">
+    <form id="listForm" action="/bbs/" method="get">
     <p>
         <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />

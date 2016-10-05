@@ -47,7 +47,7 @@ function goWrite() {
 <!-- contents begin -->			
 <div id="url-navi">BBS</div>
 
-<h1><spring:message code="bbs.board.${param.boardCd }" /></h1>
+<h1>${boardNm }</h1>
 <div id="bbs">
 	<!-- BBS Headings -->
 	<table>
@@ -62,7 +62,7 @@ function goWrite() {
 	<tr>
 		<td style="text-align: center;">${listItemNo - status.index}</td>
 		<td>
-			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
+			<a href="${article.articleNo }?boardCd=${param.boardCd }&curPage=${param.curPage }&searchWord=${param.seachWord }">${article.title }</a>
 			<c:if test="${article.attachFileNum > 0 }">
 				<img src="../images/attach.png" alt="<spring:message code="global.attach.file" />" />
 			</c:if>
@@ -107,7 +107,7 @@ function goWrite() {
 	</div>
 
 	<div id="search">
-		<form id="searchForm" action="./list" method="get">
+		<form id="searchForm" method="get">
 			<p style="margin: 0;padding: 0;">
 				<input type="hidden" name="boardCd" value="${param.boardCd }" />
 				<input type="hidden" name="curPage" value="1" />
@@ -138,18 +138,10 @@ function goWrite() {
 </div>
 
 <div id="form-group">
-	<form id="listForm" action="list" method="get">
+	<form id="listForm" method="get">
 		<p>
 			<input type="hidden" name="boardCd" value="${param.boardCd }" />
 			<input type="hidden" name="curPage" />
-			<input type="hidden" name="searchWord" value="${param.searchWord }" />
-		</p>
-		</form>
-		<form id="viewForm" action="view" method="get">
-		<p>
-			<input type="hidden" name="articleNo" />
-			<input type="hidden" name="boardCd" value="${param.boardCd }" />
-			<input type="hidden" name="curPage" value="${param.curPage }" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
 		</form>
