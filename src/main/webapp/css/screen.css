@@ -270,7 +270,7 @@ ul#nav li a:hover {
 	padding-bottom: 15px;
 }
 
-#gul-content span#date-writer-hit {
+#detail span#date-writer-hit {
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -279,11 +279,11 @@ ul#nav li a:hover {
 	text-align: right;
 }
 
-#gul-content {
+#detail {
 /* 	border-bottom: 1px solid #ebebeb; */
 }
 
-#gul-content p {
+#detail p {
 	margin: 0 0 15px 0;
 	padding: 0;
 	color: #333;

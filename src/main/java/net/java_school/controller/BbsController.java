@@ -143,7 +143,7 @@ public class BbsController {
 	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
 	public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
 			Integer curPage, String searchWord, Locale locale, Model model) {
-		
+		if(curPage == null) curPage = 1;
 		String lang = locale.getLanguage();
 		boardService.increaseHit(articleNo);
 

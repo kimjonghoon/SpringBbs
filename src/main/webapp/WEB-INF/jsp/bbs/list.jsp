@@ -138,24 +138,23 @@ function goWrite() {
 
 <div id="form-group">
 	<form id="listForm" method="get">
-		<p>
-			<input type="hidden" name="boardCd" value="${param.boardCd }" />
-			<input type="hidden" name="curPage" />
-			<input type="hidden" name="searchWord" value="${param.searchWord }" />
-		</p>
-		</form>
-        <form id="viewForm" action="/bbs/${boardCd }/" method="get">
-        <p>
-            <input type="hidden" name="curPage" value="${param.curPage }" />
-            <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        </p>
-        </form>
-		<form id="writeForm" action="/bbs/write_form" method="get">
-		<p>
-			<input type="hidden" name="boardCd" value="${boardCd }" />
-			<input type="hidden" name="curPage" value="${param.curPage }" />
-			<input type="hidden" name="searchWord" value="${param.searchWord }" />
-		</p>
+	<p>
+		<input type="hidden" name="curPage" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
+	</form>
+       <form id="viewForm" action="/bbs/${boardCd }/" method="get">
+       <p>
+           <input type="hidden" name="curPage" value="${param.curPage }" />
+           <input type="hidden" name="searchWord" value="${param.searchWord }" />
+       </p>
+       </form>
+	<form id="writeForm" action="/bbs/write_form" method="get">
+	<p>
+		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
 	</form>
 </div>
 

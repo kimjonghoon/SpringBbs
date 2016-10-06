@@ -61,7 +61,7 @@
     <th style="text-align: left;color: #555;">${title }</th>
 </tr>
 </table>
-<div id="gul-content">
+<div id="detail">
     <span id="date-writer-hit">
     	edited <fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${regdate }" />
 		by ${name } hit ${hit }</span>
@@ -76,6 +76,14 @@
 		</c:forEach>
     </p>
 </div>
+<form id="modifyForm" action="/bbs/modify_form" method="get">
+<p>
+    <input type="hidden" name="articleNo" value="${articleNo }" />
+    <input type="hidden" name="boardCd" value="${boardCd }" />
+    <input type="hidden" name="curPage" value="${param.curPage }" />
+    <input type="hidden" name="searchWord" value="${param.searchWord }" />
+</p>
+</form>
 
 <form id="addCommentForm" action="/bbs/addComment" method="post" style="margin-bottom: 10px;">
 <p style="margin: 0;padding: 0">
@@ -259,14 +267,6 @@
     </p>
     </form>
     <form id="writeForm" action="/bbs/write_form" method="get">
-    <p>
-        <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
-        <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
-    </form>
-    <form id="modifyForm" action="/bbs/modify_form" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />
