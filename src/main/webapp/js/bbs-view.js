@@ -129,8 +129,9 @@ $(document).ready(function() {
 });
 
 function goView(articleNo) {
-	$('#viewForm input[name*=articleNo]').val(articleNo);
-	$('#viewForm').submit();
+	var form = document.getElementById("viewForm");
+	form.action += articleNo;
+	form.submit();
 }
 
 function goList(curPage) {

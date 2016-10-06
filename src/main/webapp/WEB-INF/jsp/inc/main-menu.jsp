@@ -8,5 +8,5 @@
 	<li><a href="/jsp-project/">JSP Project</a></li>
 	<li><a href="/spring/">Spring</a></li>
 	<li><a href="/javascript/">JavaScript</a></li>
-	<li><a href="/bbs/?boardCd=free&curPage=1">BBS</a></li>
+	<li><a href="/bbs/free/?curPage=1">BBS</a></li>
 </ul>

@@ -77,20 +77,20 @@
     </p>
 </div>
 
-<form id="addCommentForm" action="addComment" method="post" style="margin-bottom: 10px;">
-	<p style="margin: 0;padding: 0">
-		<input type="hidden" name="articleNo" value="${param.articleNo }" />
-		<input type="hidden" name="boardCd" value="${param.boardCd }" />
-		<input type="hidden" name="curPage" value="${param.curPage }" />
-		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-		<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
-	</p>
-    <div id="addComment">
-        <textarea name="memo" rows="7" cols="50"></textarea>
-    </div>
-    <div style="text-align: right;">
-        <input type="submit" value="<spring:message code="bbs.new.comments" />" />
-    </div>
+<form id="addCommentForm" action="/bbs/addComment" method="post" style="margin-bottom: 10px;">
+<p style="margin: 0;padding: 0">
+	<input type="hidden" name="articleNo" value="${articleNo }" />
+	<input type="hidden" name="boardCd" value="${boardCd }" />
+	<input type="hidden" name="curPage" value="${param.curPage }" />
+	<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
+</p>
+<div id="addComment">
+	<textarea name="memo" rows="7" cols="50"></textarea>
+</div>
+<div style="text-align: right;">
+	<input type="submit" value="<spring:message code="bbs.new.comments" />" />
+</div>
 </form>
 
 <!--  comments begin -->
@@ -105,11 +105,11 @@
     </span>
 	</security:authorize>
     <p class="view-comment">${comment.memo }</p>
-    <form class="modify-comment" action="updateComment" method="post" style="display: none;">
+    <form class="modify-comment" action="/bbs/updateComment" method="post" style="display: none;">
     <p>
         <input type="hidden" name="commentNo" value="${comment.commentNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
+        <input type="hidden" name="boardCd" value="${boardCd }" />
+        <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -216,13 +216,12 @@
 </div>
 
 <div id="search">
-	<form action="list" method="get">
-	<p style="margin: 0;padding: 0;">
-		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+	<form action="/bbs/${boardCd }/" method="get">
+	<div>
 		<input type="hidden" name="curPage" value="1" />
 		<input type="text" name="searchWord" size="15" maxlength="30" />
 		<input type="submit" value="<spring:message code="global.search" />" />
-	</p>
+	</div>
 	</form>
 </div>
 
@@ -247,63 +246,59 @@
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="listForm" action="list" method="get">
+    <form id="listForm" action="/bbs/${boardCd }/" method="get">
     <p>
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="viewForm" action="view" method="get">
+    <form id="viewForm" action="/bbs/${boardCd }/" method="get">
     <p>
-        <input type="hidden" name="articleNo" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="writeForm" action="write_form" method="get">
+    <form id="writeForm" action="/bbs/write_form" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="modifyForm" action="modify_form" method="get">
+    <form id="modifyForm" action="/bbs/modify_form" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <sf:form id="delForm" action="${articleNo }" method="delete">
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+    <sf:form id="delForm" action="/bbs/${boardCd }/${articleNo }" method="delete">
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </sf:form>
-    <form id="deleteCommentForm" action="deleteComment" method="post">
+    <form id="deleteCommentForm" action="/bbs/deleteComment" method="post">
     <p>
         <input type="hidden" name="commentNo" />
         <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>   
-    <form id="deleteAttachFileForm" action="deleteAttachFile" method="post">
+    <form id="deleteAttachFileForm" action="/bbs/deleteAttachFile" method="post">
     <p>
         <input type="hidden" name="attachFileNo" />
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+        <input type="hidden" name="articleNo" value="${articleNo }" />
+        <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>
-    <form id="downForm" action="../file/download" method="post">
+    <form id="downForm" action="/file/download" method="post">
     <p>
         <input type="hidden" name="filename" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

@@ -8,7 +8,7 @@
 	<li>
 		<ul>
 			<c:forEach var="board" items="${boards }" varStatus="status">
-				<li><a href="/bbs/?boardCd=${board.boardCd }&curPage=1">${board.boardNm }</a></li>
+				<li><a href="/bbs/${board.boardCd }/?curPage=1">${board.boardNm }</a></li>
 			</c:forEach>
 		</ul>
 	</li>

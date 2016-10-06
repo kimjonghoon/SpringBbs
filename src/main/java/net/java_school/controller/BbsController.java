@@ -98,10 +98,11 @@ public class BbsController {
 		return map;
 	}
 	
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public String list(String boardCd, Integer curPage, String searchWord, Locale locale, Model model) {
-
+	//목록
+	@RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
+	public String list(@PathVariable String boardCd, Integer curPage, String searchWord, Locale locale, Model model) {
+		if (curPage == null) curPage = 1;
+		
 		int numPerPage = 10;
 		int pagePerBlock = 10;
 
@@ -131,12 +132,16 @@ public class BbsController {
 		model.addAttribute("boards", boards);
 		model.addAttribute("boardNm", boardNm);
 		
+		//파라미터로 전달되지 않는다.
+		model.addAttribute("boardCd", boardCd);
+		
 		return "bbs/list";
 
 	}
 
-	@RequestMapping(value="/{articleNo}", method=RequestMethod.GET)
-	public String view(@PathVariable Integer articleNo, String boardCd,  
+	//상세보기
+	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
+	public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
 			Integer curPage, String searchWord, Locale locale, Model model) {
 		
 		String lang = locale.getLanguage();
@@ -194,15 +199,17 @@ public class BbsController {
 		model.addAttribute("nextPage", nextPage);
 		model.addAttribute("boardNm", boardNm);
 
-		
 		List<Board> boards = this.getBoards(lang);
 		model.addAttribute("boards", boards);
 		
+		//파라미터로 전달되지 않기에
 		model.addAttribute("articleNo", articleNo);
-
+		model.addAttribute("boardCd", boardCd);
+		
 		return "bbs/view";
 	}
 	
+	//글쓰기 양식
 	@RequestMapping(value="/write_form", method=RequestMethod.GET)
 	public String writeForm(String boardCd, Locale locale, Model model) {
 		String lang = locale.getLanguage();
@@ -214,10 +221,14 @@ public class BbsController {
 		model.addAttribute("boards", boards);
 
 		return "bbs/write_form";
+		
 	}
 
+	//글쓰기
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write(@Valid Article article,
+			Integer curPage,
+			String searchWord,
 			BindingResult bindingResult,
 			Model model,
 			Locale locale,
@@ -260,7 +271,8 @@ public class BbsController {
 			boardService.addAttachFile(attachFile);
 		}
 
-		return "redirect:/bbs/?curPage=1&boardCd=" + article.getBoardCd();
+		return "redirect:/bbs/" + article.getBoardCd() + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		
 	}
 
 
@@ -281,10 +293,7 @@ public class BbsController {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/view?articleNo=" + articleNo + 
-				"&boardCd=" + boardCd + 
-				"&curPage=" + curPage + 
-				"&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
 
 	}
 
@@ -302,10 +311,7 @@ public class BbsController {
 
 		searchWord = URLEncoder.encode(searchWord, "UTF-8");
 
-		return "redirect:/bbs/view?articleNo=" + articleNo + 
-				"&boardCd=" + boardCd + 
-				"&curPage=" + curPage + 
-				"&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
 
 	}
 
@@ -321,13 +327,11 @@ public class BbsController {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/view?articleNo=" + articleNo + 
-				"&boardCd=" + boardCd + 
-				"&curPage=" + curPage + 
-				"&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
 
 	}
 
+	//수정 양식
 	@RequestMapping(value="/modify_form", method=RequestMethod.GET)
 	public String modifyForm(Integer articleNo, 
 			String boardCd,
@@ -348,6 +352,7 @@ public class BbsController {
 		return "bbs/modify_form";
 	}
 
+	//수정
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
 	public String modify(@Valid Article article,
 			BindingResult bindingResult,
@@ -398,20 +403,10 @@ public class BbsController {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/view?articleNo=" + article.getArticleNo() 
-				+ "&boardCd=" + article.getBoardCd() 
-				+ "&curPage=" + curPage 
-				+ "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + article.getBoardCd() + "/" + article.getArticleNo() + "?curPage=" + curPage	+ "&searchWord=" + searchWord;
 
 	}
 
-	/*    @RequestMapping(value="/download", method=RequestMethod.POST)
-    public String download(String filename, Model model) {
-        model.addAttribute("filename", filename);
-
-        return "inc/download";
-    }
-	 */
 	@RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
 	public String deleteAttachFile(Integer attachFileNo, 
 			Integer articleNo, 
@@ -424,19 +419,16 @@ public class BbsController {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/view?articleNo=" + articleNo + 
-				"&boardCd=" + boardCd + 
-				"&curPage=" + curPage + 
-				"&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "?&curPage=" + curPage + "&searchWord=" + searchWord;
 
 	}
 
-	@RequestMapping(value="/{articleNo}", method=RequestMethod.DELETE)
-	public String deleteArticle(@PathVariable Integer articleNo, String boardCd, Integer curPage, String searchWord) {
+	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.DELETE)
+	public String deleteArticle(@PathVariable String boardCd, @PathVariable Integer articleNo, Integer curPage, String searchWord) {
 		Article article = boardService.getArticle(articleNo);
 		boardService.removeArticle(article);
 		
-		return "redirect:/bbs/?boardCd=" + boardCd + "&curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/?curPage=" + curPage + "&searchWord=" + searchWord;
 
 	}
 

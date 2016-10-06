@@ -19,8 +19,8 @@ function goList(curPage) {
 	form.submit();
 }
 function goView(articleNo) {
-	var form = document.getElementById("viewForm");
-	form.articleNo.value = articleNo;
+ 	var form = document.getElementById("viewForm");
+ 	form.action += articleNo;
 	form.submit();
 }
 function goWrite() {
@@ -62,7 +62,7 @@ function goWrite() {
 	<tr>
 		<td style="text-align: center;">${listItemNo - status.index}</td>
 		<td>
-			<a href="${article.articleNo }?boardCd=${param.boardCd }&curPage=${param.curPage }&searchWord=${param.seachWord }">${article.title }</a>
+			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 			<c:if test="${article.attachFileNum > 0 }">
 				<img src="../images/attach.png" alt="<spring:message code="global.attach.file" />" />
 			</c:if>
@@ -108,12 +108,11 @@ function goWrite() {
 
 	<div id="search">
 		<form id="searchForm" method="get">
-			<p style="margin: 0;padding: 0;">
-				<input type="hidden" name="boardCd" value="${param.boardCd }" />
-				<input type="hidden" name="curPage" value="1" />
-				<input type="text" name="searchWord" size="15" maxlength="30" />
-				<input type="submit" value="<spring:message code="global.search" />" />
-			</p>	
+		<div>
+			<input type="hidden" name="curPage" value="1" />
+			<input type="text" name="searchWord" size="15" maxlength="30" />
+			<input type="submit" value="<spring:message code="global.search" />" />
+		</div>	
 		</form>
 	</div>
 	
@@ -145,9 +144,15 @@ function goWrite() {
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
 		</form>
-		<form id="writeForm" action="write_form" method="get">
+        <form id="viewForm" action="/bbs/${boardCd }/" method="get">
+        <p>
+            <input type="hidden" name="curPage" value="${param.curPage }" />
+            <input type="hidden" name="searchWord" value="${param.searchWord }" />
+        </p>
+        </form>
+		<form id="writeForm" action="/bbs/write_form" method="get">
 		<p>
-			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="boardCd" value="${boardCd }" />
 			<input type="hidden" name="curPage" value="${param.curPage }" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
