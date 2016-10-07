@@ -7,11 +7,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="bbs.write.keywords" />" />
-<meta name="Description" content="<spring:message code="bbs.write.description" />" />
+<meta name="Keywords" content="새 글쓰기" />
+<meta name="Description" content="새 글쓰기" />
 <title>BBS</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript">
 function check() {
     //var form = document.getElementById("writeForm");
@@ -44,7 +44,7 @@ function goView() {
 		<div id="content">
 
 <!--  contents begin -->
-<div id="url-navi">BBS</div>
+<div id="url-navi"><spring:message code="global.bbs" /></div>
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2><spring:message code="bbs.new.article" /></h2>

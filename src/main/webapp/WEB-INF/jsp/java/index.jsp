@@ -5,11 +5,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="java.keywords" />" />
-<meta name="Description" content="<spring:message code="java.description" />" />
+<meta name="Keywords" content="자바 설치" />
+<meta name="Description" content="자바 설치" />
 <title><spring:message code="java.title" /></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 </head>
 <body>
 
@@ -25,27 +25,10 @@
     
 	<div id="container">
 		<div id="content">
-			<div id="url-navi"><spring:message code="java.title" /></div>
-
-<!-- contents begin -->
-<h1>JDK Install</h1>
-
-<pre>
-public class Test {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}
-</pre>
-
-<pre>
-C:\&gt;javac Test.java
-
-C:\&gt;java Test
-Hello World!
-</pre>
-<!-- contents end -->
-		
+			<div id="url-navi">Java</div>
+<!-- 본문 시작 -->
+<h1>자바 설치</h1>
+<!-- 본문 끝 -->
 		</div>
     </div>
     

@@ -7,11 +7,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="bbs.list.keywords" />" />
-<meta name="Description" content="<spring:message code="bbs.list.description" />" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<title>BBS</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+<meta name="Keywords" content="게시판 목록" />
+<meta name="Description" content="게시판 목록" />
+<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+<title>${boardNm }</title>
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript">
 function goList(curPage) {
 	var form = document.getElementById("listForm");
@@ -45,7 +45,7 @@ function goWrite() {
 		<div id="content">
 
 <!-- contents begin -->			
-<div id="url-navi">BBS</div>
+<div id="url-navi"><spring:message code="global.bbs" /></div>
 
 <h1>${boardNm }</h1>
 <div id="bbs">
@@ -64,7 +64,7 @@ function goWrite() {
 		<td>
 			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 			<c:if test="${article.attachFileNum > 0 }">
-				<img src="../images/attach.png" alt="<spring:message code="global.attach.file" />" />
+				<img src="/images/attach.png" alt="<spring:message code="global.attach.file" />" />
 			</c:if>
 			<c:if test="${article.commentNum > 0 }">
 				<span class="bbs-strong">[${article.commentNum }]</span>

@@ -9,8 +9,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="bbs.view.keywords" />" />
-<meta name="Description" content="<spring:message code="bbs.view.description" />" />
+<meta name="Keywords" content="게시글 상세정보" />
+<meta name="Description" content="게시글 상세정보" />
 <title>${title }</title>
 <link rel="stylesheet" href="/css/screen.css" type="text/css" />
 <script src="/js/jquery-3.0.0.min.js"></script>
@@ -175,8 +175,8 @@
 <tr>
 	<td style="text-align: center;">
 	<c:choose>
-		<c:when test="${param.articleNo == article.articleNo }">	
-		<img src="../images/arrow.gif" alt="<spring:message code="global.here" />" />
+		<c:when test="${articleNo == article.articleNo }">	
+		<img src="/images/arrow.gif" alt="<spring:message code="global.here" />" />
 		</c:when>
 		<c:otherwise>
 		${listItemNo - status.index }
@@ -186,7 +186,7 @@
 	<td>
 		<a href="#" title="${article.articleNo }">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">		
-		<img src="../images/attach.png" alt="<spring:message code="global.attach.file" />" />
+		<img src="/images/attach.png" alt="<spring:message code="global.attach.file" />" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">		
 		<span class="bbs-strong">[${article.commentNum }]</span>

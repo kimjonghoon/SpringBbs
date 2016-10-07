@@ -7,8 +7,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="bbs.modify.keywords" />" />
-<meta name="Description" content="<spring:message code="bbs.modify.description" />" />
+<meta name="Keywords" content="게시글 수정 양식" />
+<meta name="Description" content="게시글 수정 양식" />
 <title>BBS</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
@@ -40,7 +40,7 @@ function goView() {
 		<div id="content">
 
 <!--  contents begin -->
-<div id="url-navi">BBS</div>
+<div id="url-navi"><spring:message code="global.bbs" /></div>
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2><spring:message code="global.modify" /></h2>
