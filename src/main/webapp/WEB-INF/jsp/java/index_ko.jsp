@@ -23,8 +23,7 @@ $(document).ready(function() {
 
 <div id="url-navi">Java</div>
 
-<h1>Java Posts's Index</h1>
-
+<h1>자바 포스트 색인</h1>
 
 <article>
 <pre class="prettyprint">

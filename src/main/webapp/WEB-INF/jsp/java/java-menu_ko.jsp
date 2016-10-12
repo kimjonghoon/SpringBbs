@@ -7,8 +7,8 @@
 <ul>
 	<li>
 		<ul>
-			<li id="jdk-install"><a href="#">JDK Install</a></li>
-			<li id="Features"><a href="/java/Features">Features</a></li>
+			<li id="jdk-install"><a href="#">JDK 설치</a></li>
+			<li id="Features"><a href="/java/Features">자바 특징</a></li>
 		</ul>
 	</li>
 </ul>

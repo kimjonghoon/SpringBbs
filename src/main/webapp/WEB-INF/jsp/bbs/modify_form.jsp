@@ -3,15 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="게시글 수정 양식" />
-<meta name="Description" content="게시글 수정 양식" />
-<title>BBS</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+
 <script type="text/javascript">
 function check() {
     //var form = document.getElementById("modifyForm");
@@ -23,25 +15,11 @@ function goView() {
     form.submit();
 }
 </script>
-</head>
-<body>
 
-<div id="wrap">
-
-    <div id="header">
-		<%@ include file="../inc/header.jsp" %>
-    </div>
-    
-    <div id="main-menu">
-		<%@ include file="../inc/main-menu.jsp" %>
-    </div>
-    
-	<div id="container">
-		<div id="content">
-
-<!--  contents begin -->
 <div id="url-navi"><spring:message code="global.bbs" /></div>
+
 <h1>${boardNm }</h1>
+
 <div id="bbs">
 <h2><spring:message code="global.modify" /></h2>
 <sf:form id="modifyForm" action="modify?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">
@@ -75,25 +53,7 @@ function goView() {
 </div>
 </sf:form>
 </div>
-<!-- contents end -->
 		
-		</div>
-    </div>
-    
-	<div id="sidebar">
-		<%@ include file="bbs-menu.jsp" %>	
-	</div>
-    
-	<div id="extra">
-		<%@ include file="../inc/extra.jsp" %>
-	</div>
-    
-	<div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-	</div>
-        
-</div>
-
 <div id="form-group" style="display: none">
     <form id="viewForm" action="view" method="get">
     <p>
@@ -104,6 +64,3 @@ function goView() {
     </p>
     </form>
 </div>
-
-</body>
-</html>

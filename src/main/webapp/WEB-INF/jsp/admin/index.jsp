@@ -8,11 +8,5 @@
 </head>
 <body>
 Hello, Admin
-<%
-int a = 1;
-if (a < 10) {
-	throw new NullPointerException("일부러 내는 익셉션!");
-}
-%>
 </body>
 </html>

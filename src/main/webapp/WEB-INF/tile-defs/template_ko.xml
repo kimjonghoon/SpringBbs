@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="defaultTemplate" template="/WEB-INF/jsp/template/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/inc/header.jsp" />
+        <put-attribute name="main-menu" value="/WEB-INF/jsp/inc/main-menu.jsp" />
+        <put-attribute name="extra" value="/WEB-INF/jsp/inc/extra.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/inc/footer.jsp" />
+    </definition>
+    <!-- 홈페이지 -->
+	<definition name="index" extends="defaultTemplate">
+		<put-attribute name="title" value="홈페이지" />
+		<put-attribute name="keywords" value="자바스쿨,홈페이지" />
+		<put-attribute name="description" value="자바스쿨에 오신 걸 환영합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/index.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/index-menu.jsp" />
+	</definition>
+	<!-- 에러 페이지 -->
+	<definition name="403" extends="defaultTemplate">
+		<put-attribute name="title" value="403 에러" />
+		<put-attribute name="keywords" value="403 에러" />
+		<put-attribute name="description" value="스프링 시큐리티 필터 설정에 의한 403" />
+		<put-attribute name="content" value="/WEB-INF/jsp/403.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/error-menu.jsp" />
+	</definition>
+	<definition name="error-403" extends="defaultTemplate">
+		<put-attribute name="title" value="403 에러" />
+		<put-attribute name="keywords" value="403 에러" />
+		<put-attribute name="description" value="스프링 MVC에서 발생한 403" />
+		<put-attribute name="content" value="/WEB-INF/jsp/error-403.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/error-menu.jsp" />
+	</definition>
+	<definition name="error" extends="defaultTemplate">
+		<put-attribute name="title" value="에러" />
+		<put-attribute name="keywords" value="에러" />
+		<put-attribute name="description" value="스프링 MVC에서 발생한 에러" />
+		<put-attribute name="content" value="/WEB-INF/jsp/error.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/error-menu.jsp" />
+	</definition>
+	<!-- 회원 -->		
+	<definition name="users/*" extends="defaultTemplate">
+		<put-attribute name="title" value="회원" />
+		<put-attribute name="keywords" value="회원" />
+		<put-attribute name="description" value="회원" />
+		<put-attribute name="content" value="/WEB-INF/jsp/users/{1}.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/user-menu.jsp" />
+	</definition>
+	<!-- 게시판 -->		
+	<definition name="bbs/*" extends="defaultTemplate">
+		<put-attribute name="title" value="게시판" />
+		<put-attribute name="keywords" value="게시판" />
+		<put-attribute name="description" value="게시판" />
+		<put-attribute name="content" value="/WEB-INF/jsp/bbs/{1}.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/bbs/bbs-menu.jsp" />
+	</definition>
+	<!-- 블로그 포스트 -->
+	<!-- Java -->
+	<definition name="java/index" extends="defaultTemplate">
+		<put-attribute name="title" value="자바 관련 포스트 색인" />
+		<put-attribute name="keywords" value="자바 관련 포스트 색인" />
+		<put-attribute name="description" value="자바 관련 포스트 색인" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/index_ko.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-menu_ko.jsp" />
+	</definition>			
+	<definition name="java/Features" extends="defaultTemplate">
+		<put-attribute name="title" value="자바의 특징" />
+		<put-attribute name="keywords" value="자바,객체지향 프로그래밍,자바 버추얼 머신,플랫폼 독립적" />
+		<put-attribute name="description" value="자바 특징을 설명합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Features_ko.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-menu_ko.jsp" />
+	</definition>
+	<!-- JavaScript -->		
+	<definition name="javascript/index" extends="defaultTemplate">
+		<put-attribute name="title" value="자바스크립트 소개" />
+		<put-attribute name="keywords" value="자바스크립트 소개" />
+		<put-attribute name="description" value="자바스크립트 소개" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/index_ko.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-menu_ko.jsp" />
+	</definition>
+	
+<!-- 	<definition name="user/welcome" extends="defaultTemplate">
+		<put-attribute name="title" value="회원가입을 환영합니다." />
+		<put-attribute name="keywords" value="회원가입을 환영합니다." />
+		<put-attribute name="description" value="회원가입을 환영합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/welcome.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>
+	<definition name="user/editAccount" extends="defaultTemplate">
+		<put-attribute name="title" value="내 정보 수정" />
+		<put-attribute name="keywords" value="내 정보 수정" />
+		<put-attribute name="description" value="내 정보 수정" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/editAccount.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>
+	<definition name="user/changePasswd" extends="defaultTemplate">
+		<put-attribute name="title" value="비밀번호 변경" />
+		<put-attribute name="keywords" value="비밀번호 변경" />
+		<put-attribute name="description" value="비밀번호 변경" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/changePasswd.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>
+	<definition name="user/changePasswd_confirm" extends="defaultTemplate">
+		<put-attribute name="title" value="비밀번호가 변경되었습니다." />
+		<put-attribute name="keywords" value="비밀번호가 변경되었습니다." />
+		<put-attribute name="description" value="비밀번호가 변경되었습니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/changePasswd_confirm.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>
+	<definition name="user/bye" extends="defaultTemplate">
+		<put-attribute name="title" value="탈퇴" />
+		<put-attribute name="keywords" value="탈퇴" />
+		<put-attribute name="description" value="탈퇴" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/bye.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>
+	<definition name="user/bye_confirm" extends="defaultTemplate">
+		<put-attribute name="title" value="탈퇴 확인" />
+		<put-attribute name="keywords" value="탈퇴 확인" />
+		<put-attribute name="description" value="탈퇴 확인" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/bye_confirm.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	</definition>						
+ --><!--
+	<definition name="users/signUp" extends="defaultTemplate">
+		<put-attribute name="title" value="회원가입" />
+		<put-attribute name="keywords" value="회원가입" />
+		<put-attribute name="description" value="회원가입" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/signUp.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/notLoginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/welcome" extends="defaultTemplate">
+		<put-attribute name="title" value="가입을 환영합니다." />
+		<put-attribute name="keywords" value="환영합니다." />
+		<put-attribute name="description" value="환영합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/welcome.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/notLoginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/editAccount" extends="defaultTemplate">
+		<put-attribute name="title" value="내 정보 수정" />
+		<put-attribute name="keywords" value="내 정보 수정" />
+		<put-attribute name="description" value="내 정보 수정" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/editAccount.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/changePasswd" extends="defaultTemplate">
+		<put-attribute name="title" value="비밀번호 변경하기" />
+		<put-attribute name="keywords" value="비밀번호 변경하기" />
+		<put-attribute name="description" value="비밀번호 변경하기" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/changePasswd.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/changePasswd_confirm" extends="defaultTemplate">
+		<put-attribute name="title" value="비밀번호가 변경되었습니다." />
+		<put-attribute name="keywords" value="비빌번호 변경 확인" />
+		<put-attribute name="description" value="비밀번호 변경 확인" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/changePasswd_confirm.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/bye" extends="defaultTemplate">
+		<put-attribute name="title" value="탈퇴" />
+		<put-attribute name="keywords" value="탈퇴" />
+		<put-attribute name="description" value="탈퇴" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/bye.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
+	</definition>
+	<definition name="users/bye_confirm" extends="defaultTemplate">
+		<put-attribute name="title" value="탈퇴 완료" />
+		<put-attribute name="keywords" value="탈퇴 완료" />
+		<put-attribute name="description" value="탈퇴 완료" />
+		<put-attribute name="content" value="/WEB-INF/jsp//users/bye_confirm.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
+	</definition>
+-->			
+</tiles-definitions>

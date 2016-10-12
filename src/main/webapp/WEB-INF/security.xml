@@ -10,15 +10,15 @@
 
 	<http>
 		<access-denied-handler error-page="/403" />
-		<intercept-url pattern="/users/bye_confirm" access="permitAll" />
-		<intercept-url pattern="/users/welcome" access="permitAll" />
-		<intercept-url pattern="/users/signUp" access="permitAll" />
-		<intercept-url pattern="/users/login" access="permitAll" />
+		<intercept-url pattern="/user/bye_confirm" access="permitAll" />
+		<intercept-url pattern="/user/welcome" access="permitAll" />
+		<intercept-url pattern="/user/signUp" access="permitAll" />
+		<intercept-url pattern="/user/login" access="permitAll" />
 		<intercept-url pattern="/images/**" access="permitAll" />
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/users/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 <!--	<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" requires-channel="https"/> -->
 
@@ -27,7 +27,7 @@
 			authentication-failure-url="/users/login?error=1"
 			default-target-url="/bbs/free/?curPage=1" />
 
-		<logout logout-success-url="/" invalidate-session="true" />
+		<logout logout-success-url="/" invalidate-session="false" />
 
 		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />

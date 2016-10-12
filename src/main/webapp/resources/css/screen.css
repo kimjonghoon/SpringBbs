@@ -69,8 +69,6 @@ form {
 	margin-right: 210px;
 	padding-left: 9px;
 	padding-right: 9px;
-	border-left: 1px solid #DAEAAA;
-	border-right: 1px solid #DAEAAA;
 	font-size: 13px;
 	line-height: 19px;
 }
@@ -102,7 +100,9 @@ form {
 	font-size: 11px;
 	color: #8d8d8d;
 	letter-spacing:-1px;
-	border-top: 1px solid #DAEAAA;	
+	border-top: 1px solid #DAEAAA;
+	position: relative;
+	top: 7px;	
 }
 
 ul#nav {

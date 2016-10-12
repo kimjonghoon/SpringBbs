@@ -1,16 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="user.editaccount.keywords" />" />
-<meta name="Description" content="<spring:message code="user.editaccount.description" />" />
-<title><spring:message code="user.editaccount.title" /></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+
 <script type="text/javascript">
 function check() {
     //var form = document.getElementById("editAccountForm");
@@ -18,29 +8,16 @@ function check() {
     return true;
 }
 </script>
-</head>
-<body>
-
-<div id="wrap">
-
-    <div id="header">
-		<%@ include file="../inc/header.jsp" %>
-    </div>
-    
-    <div id="main-menu">
- 		<%@ include file="../inc/main-menu.jsp" %>
-    </div>
-    
-	<div id="container">
-		<div id="content">
 		
-<!-- contents begin -->
 <div id="url-navi"><spring:message code="user.membership" /></div>
-<h1><spring:message code="user.editaccount.heading" /></h1>
+
+<h1><spring:message code="user.editAccount.heading" /></h1>
+
 <p>
-<spring:message code="user.editaccount.content" />
+<spring:message code="user.editAccount.content" />
 <a href="changePasswd"><spring:message code="user.change.password" /></a><br />
 </p>
+
 <sf:form id="editAccountForm" action="editAccount" method="post" commandName="user" onsubmit="return check();">
 <sf:hidden path="email" value="abc@def.ghi" />
 <sf:errors path="*" cssClass="error" />
@@ -55,7 +32,7 @@ function check() {
 <tr>
 	<td><spring:message code="user.mobile" /></td>
 	<td>
-		<sf:input path="mobile" value="${user.mobile }" /><br />
+		<sf:input path="mobile" value="${users.mobile }" /><br />
 		<sf:errors path="mobile" cssClass="error" />
 	</td>
 </tr>
@@ -71,24 +48,3 @@ function check() {
 </tr>
 </table>
 </sf:form>
-<!-- contents end -->
-		
-		</div>
-    </div>
-    
-    <div id="sidebar">
-		<%@ include file="loginUsers-menu.jsp" %>
-    </div>
-    
-    <div id="extra">
-		<%@ include file="../inc/extra.jsp" %>
-    </div>
-    
-    <div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-    </div>
-        
-</div>
-
-</body>
-</html>

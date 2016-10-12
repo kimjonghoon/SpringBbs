@@ -18,10 +18,7 @@
 	<security:global-method-security
 		pre-post-annotations="enabled" />
 
-	<!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다. -->
-	<mvc:resources location="/images/" mapping="/images/**" />
-	<mvc:resources location="/css/" mapping="/css/**" />
-	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<mvc:annotation-driven />
 
@@ -33,16 +30,15 @@
 	<mybatis:scan base-package="net.java_school.mybatis" />
 
 	<!-- ViewResolver -->
-	<bean id="internalResourceViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass">
-			<value>org.springframework.web.servlet.view.JstlView</value>
-		</property>
-		<property name="prefix">
-			<value>/WEB-INF/jsp/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tile-defs/template.xml</value>
+			</list>
 		</property>
 	</bean>
 

@@ -5,37 +5,13 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="게시글 상세정보" />
-<meta name="Description" content="게시글 상세정보" />
-<title>${title }</title>
-<link rel="stylesheet" href="/css/screen.css" type="text/css" />
-<script src="/js/jquery-3.0.0.min.js"></script>
 <script src="/js/bbs-view.js"></script>
-</head>
-<body>
 
-<div id="wrap">
-
-    <div id="header">
-		<%@ include file="../inc/header.jsp" %>
-    </div>
-    
-    <div id="main-menu">
-		<%@ include file="../inc/main-menu.jsp" %>
-    </div>
-    
-    <div id="container">
-            <div id="content">
-
-<!-- contents begin -->
 <div id="url-navi">BBS</div>
-<h1>${boardNm }</h1>
-<div id="bbs">
 
+<h1>${boardNm }</h1>
+
+<div id="bbs">
 <div class="view-menu" style="margin-bottom: 5px;">
     <security:authorize access="#email == principal.username or hasAuthority('ROLE_ADMIN')">
     <div class="fl">
@@ -234,24 +210,6 @@
 </div>
 
 </div><!-- #bbs end -->
-<!-- contents end -->
-
-		</div><!-- #content end -->
-	</div><!-- #container end -->
-    
-	<div id="sidebar">
-		<%@ include file="bbs-menu.jsp" %>
-	</div>
-    
-    <div id="extra">
-    	<%@ include file="../inc/extra.jsp" %>
-    </div>
-    
-    <div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-    </div>
-        
-</div>
 
 <div id="form-group" style="display: none">
     <form id="listForm" action="/bbs/${boardCd }/" method="get">
@@ -305,6 +263,3 @@
     </p>
     </form>
 </div>
-
-</body>
-</html>

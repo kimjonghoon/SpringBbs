@@ -77,6 +77,17 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+    <session-config>
+        <session-timeout>-1</session-timeout>
+    </session-config>
+
+	<jsp-config>
+			<jsp-property-group>
+				<url-pattern>*.jsp</url-pattern>
+				<page-encoding>UTF-8</page-encoding>
+			</jsp-property-group>
+	</jsp-config>
+    
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/jsp/404.jsp</location>

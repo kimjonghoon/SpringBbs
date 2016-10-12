@@ -2,15 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>    
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="user.signup.keywords" />" />
-<meta name="Description" content="<spring:message code="user.signup.description" />" />
-<title><spring:message code="user.signup.title" /></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/screen.css" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript">
 function check() {
     //var form = document.getElementById("signUpForm");
@@ -18,24 +9,11 @@ function check() {
     return true;
 }
 </script>
-</head>
-<body>
 
-<div id="wrap">
-
-    <div id="header">
-		<%@ include file="../inc/header.jsp" %>
-    </div>
-    
-    <div id="main-menu">
- 		<%@ include file="../inc/main-menu.jsp" %>
-    </div>
-    
-	<div id="container">
-		<div id="content">
-<!-- contents begin -->
 <div id="url-navi"><spring:message code="user.membership" /></div>
+
 <h1><spring:message code="user.signup.heading" /></h1>
+
 <sf:form id="signUpForm" action="signUp" method="post" commandName="user" onsubmit="return check();">
 <sf:errors path="*" cssClass="error" />
 <table>
@@ -81,24 +59,3 @@ function check() {
 	<input type="submit" value="<spring:message code="global.submit" />" />
 </div>
 </sf:form>
-<!-- contents end -->
-		
-		</div>
-    </div>
-    
-    <div id="sidebar">
-		<%@ include file="notLoginUsers-menu.jsp" %>
-    </div>
-    
-    <div id="extra">
-		<%@ include file="../inc/extra.jsp" %>
-    </div>
-    
-    <div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-    </div>
-        
-</div>
-
-</body>
-</html>

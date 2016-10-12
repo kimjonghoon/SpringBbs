@@ -1,34 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="<spring:message code="user.login.keywords" />" />
-<meta name="Description" content="<spring:message code="user.login.description" />" />
-<title><spring:message code="user.login.title" /></title>
-<link rel="stylesheet" href="/css/screen.css" type="text/css" />
-<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
-</head>
-<body>
-
-<div id="wrap">
-
-    <div id="header">
-		<%@ include file="../inc/header.jsp" %>
-    </div>
-    
-    <div id="main-menu">
-		<%@ include file="../inc/main-menu.jsp" %>
-    </div>
-    
-	<div id="container">
-		<div id="content">
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
+
 <h1><spring:message code="user.login.heading" /></h1>
+
 <c:if test="${not empty param.error }">
 	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>
 </c:if>
@@ -52,23 +28,3 @@
     <input type="button" value="<spring:message code="user.signup" />" onclick="location.href='signUp'" />
 </div>
 </form>
-		
-		</div>
-    </div>
-    
-	<div id="sidebar">
-		<%@ include file="notLoginUsers-menu.jsp" %>
-	</div>
-    
-	<div id="extra">
-		<%@ include file="../inc/extra.jsp" %>
-	</div>
-    
-    <div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-    </div>
-        
-</div>
-
-</body>
-</html>

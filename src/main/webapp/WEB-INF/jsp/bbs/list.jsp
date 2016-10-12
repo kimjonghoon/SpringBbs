@@ -3,15 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="Keywords" content="게시판 목록" />
-<meta name="Description" content="게시판 목록" />
-<link rel="stylesheet" href="/css/screen.css" type="text/css" />
-<title>${boardNm }</title>
-<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
+
 <script type="text/javascript">
 function goList(curPage) {
 	var form = document.getElementById("listForm");
@@ -28,23 +20,7 @@ function goWrite() {
 	form.submit();
 }
 </script>
-</head>
-<body>
 
-<div id="wrap">
-
-	<div id="header">
-		<%@ include file="../inc/header.jsp" %>
-	</div>
-
-	<div id="main-menu">
-		<%@ include file="../inc/main-menu.jsp" %>
-	</div>
-
-	<div id="container">
-		<div id="content">
-
-<!-- contents begin -->			
 <div id="url-navi"><spring:message code="global.bbs" /></div>
 
 <h1>${boardNm }</h1>
@@ -117,24 +93,6 @@ function goWrite() {
 	</div>
 	
 </div>
-<!--  contents end -->
-
-		</div><!-- #content end -->
-	</div><!--  #container end -->
-	
-	<div id="sidebar">
-		<%@ include file="bbs-menu.jsp" %>
-	</div>
-	
-	<div id="extra">
-		<%@ include file="../inc/extra.jsp" %>
-	</div>
-
-	<div id="footer">
-		<%@ include file="../inc/footer.jsp" %>
-	</div>
-
-</div>
 
 <div id="form-group">
 	<form id="listForm" method="get">
@@ -157,6 +115,3 @@ function goWrite() {
 	</p>
 	</form>
 </div>
-
-</body>
-</html>
