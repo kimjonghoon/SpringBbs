@@ -79,98 +79,12 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/javascript/index.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-menu.jsp" />
 	</definition>
-	
-<!-- 	<definition name="user/welcome" extends="defaultTemplate">
-		<put-attribute name="title" value="Welcome" />
-		<put-attribute name="keywords" value="Welcome" />
-		<put-attribute name="description" value="Welcome" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/welcome.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
+	<!-- admin -->		
+	<definition name="admin/index" extends="defaultTemplate">
+		<put-attribute name="title" value="Admin" />
+		<put-attribute name="keywords" value="Admin" />
+		<put-attribute name="description" value="Admin" />
+		<put-attribute name="content" value="/WEB-INF/jsp/admin/index.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/admin/admin-menu.jsp" />
 	</definition>
-	<definition name="user/editAccount" extends="defaultTemplate">
-		<put-attribute name="title" value="Edit My Account" />
-		<put-attribute name="keywords" value="Edit My Account" />
-		<put-attribute name="description" value="Edit My Account" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/editAccount.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
-	</definition>
-	<definition name="user/changePasswd" extends="defaultTemplate">
-		<put-attribute name="title" value="Change Password" />
-		<put-attribute name="keywords" value="Change Password" />
-		<put-attribute name="description" value="Change Password" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/changePasswd.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
-	</definition>
-	<definition name="user/changePasswd_confirm" extends="defaultTemplate">
-		<put-attribute name="title" value="Change Password Confirm" />
-		<put-attribute name="keywords" value="Change Password Confirm" />
-		<put-attribute name="description" value="Change Password Confirm" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/changePasswd_confirm.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
-	</definition>
-	<definition name="user/bye" extends="defaultTemplate">
-		<put-attribute name="title" value="Bye" />
-		<put-attribute name="keywords" value="Bye" />
-		<put-attribute name="description" value="Bye" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/bye.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
-	</definition>
-	<definition name="user/bye_confirm" extends="defaultTemplate">
-		<put-attribute name="title" value="Goodbye" />
-		<put-attribute name="keywords" value="Goodbye" />
-		<put-attribute name="description" value="Goodbye" />
-		<put-attribute name="content" value="/WEB-INF/jsp/user/bye_confirm.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/user/user-menu.jsp" />
-	</definition>						
- -->	
-<!-- 	<definition name="users/signUp" extends="defaultTemplate">
-		<put-attribute name="title" value="Sign Up" />
-		<put-attribute name="keywords" value="Sign Up" />
-		<put-attribute name="description" value="Sign Up" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/signUp.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/notLoginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/welcome" extends="defaultTemplate">
-		<put-attribute name="title" value="Welcome" />
-		<put-attribute name="keywords" value="Welcome" />
-		<put-attribute name="description" value="Welcome" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/welcome.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/notLoginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/editAccount" extends="defaultTemplate">
-		<put-attribute name="title" value="Edit My Account" />
-		<put-attribute name="keywords" value="Edit My Account" />
-		<put-attribute name="description" value="Edit My Account" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/editAccount.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/changePasswd" extends="defaultTemplate">
-		<put-attribute name="title" value="Change Password" />
-		<put-attribute name="keywords" value="Change Password" />
-		<put-attribute name="description" value="Change Password" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/changePasswd.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/changePasswd_confirm" extends="defaultTemplate">
-		<put-attribute name="title" value="Change Password Confirm" />
-		<put-attribute name="keywords" value="Change Password Confirm" />
-		<put-attribute name="description" value="Change Password confirm" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/changePasswd_confirm.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/bye" extends="defaultTemplate">
-		<put-attribute name="title" value="Bye" />
-		<put-attribute name="keywords" value="Bye" />
-		<put-attribute name="description" value="Bye" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/bye.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
-	</definition>
-	<definition name="users/bye_confirm" extends="defaultTemplate">
-		<put-attribute name="title" value="Bye Confirm" />
-		<put-attribute name="keywords" value="Bye Confirm" />
-		<put-attribute name="description" value="Bye Confirm" />
-		<put-attribute name="content" value="/WEB-INF/jsp//users/bye_confirm.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/users/loginUsers-menu.jsp" />
-	</definition>								
- -->
  </tiles-definitions>
