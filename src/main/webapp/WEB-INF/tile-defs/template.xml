@@ -80,11 +80,11 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-menu.jsp" />
 	</definition>
 	<!-- admin -->		
-	<definition name="admin/index" extends="defaultTemplate">
+	<definition name="admin/*" extends="defaultTemplate">
 		<put-attribute name="title" value="Admin" />
 		<put-attribute name="keywords" value="Admin" />
 		<put-attribute name="description" value="Admin" />
-		<put-attribute name="content" value="/WEB-INF/jsp/admin/index.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/admin/{1}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/admin/admin-menu.jsp" />
 	</definition>
  </tiles-definitions>

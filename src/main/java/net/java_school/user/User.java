@@ -15,6 +15,7 @@ public class User {
 	private String name;
 	@Size(min=6, message="모바일폰 번호형식이 아닙니다.")
 	private String mobile;
+	private String authority;
 	
 	public User() {}
 	
@@ -23,11 +24,12 @@ public class User {
 		this.passwd = passwd;
 	}
 	
-	public User(String email, String passwd, String name, String mobile) {
+	public User(String email, String passwd, String name, String mobile, String authority) {
 		this.email = email;
 		this.passwd = passwd;
 		this.name = name;
 		this.mobile = mobile;
+		this.authority = authority;
 	}
 
 	public String getEmail() {
@@ -53,6 +55,14 @@ public class User {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 	
 	

@@ -5,11 +5,9 @@ import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -18,6 +16,8 @@ import net.java_school.board.AttachFile;
 import net.java_school.board.Board;
 import net.java_school.board.BoardService;
 import net.java_school.board.Comment;
+import net.java_school.commons.NumbersForPagingProcess;
+import net.java_school.commons.Paginator;
 import net.java_school.commons.WebContants;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @RequestMapping("/bbs")
-public class BbsController {
+public class BbsController extends Paginator {
 
 	@Autowired
 	private BoardService boardService;
@@ -61,43 +61,6 @@ public class BbsController {
 		}
 	}
 	
-	private Map<String,Integer> getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
-		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		int totalPage = totalRecord / numPerPage;
-		
-		int totalBlock = totalPage / pagePerBlock;
-		if (totalPage % pagePerBlock != 0) totalBlock++;
-		int block = curPage / pagePerBlock;
-		if (curPage % pagePerBlock != 0) block++;
-		int firstPage = (block - 1) * pagePerBlock + 1;
-		int lastPage = block * pagePerBlock;
-		int prevPage = 0;
-		if (block > 1) {
-			prevPage = firstPage - 1;
-		}
-		int nextPage = 0;
-		if (block < totalBlock) {
-			nextPage = lastPage + 1;
-		}
-		if (block >= totalBlock) {
-			lastPage = totalPage;
-		}
-		int listItemNo = totalRecord - (curPage - 1) * numPerPage;
-		int startRecord = (curPage - 1) * numPerPage + 1;
-		int endRecord = curPage * numPerPage;
-		
-		map.put("totalPage", totalPage);
-		map.put("firstPage", firstPage);
-		map.put("lastPage", lastPage);
-		map.put("prevPage", prevPage);
-		map.put("nextPage", nextPage);
-		map.put("listItemNo", listItemNo);
-		map.put("startRecord", startRecord);
-		map.put("endRecord", endRecord);
-		
-		return map;
-	}
-	
 	//목록
 	@RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
 	public String list(@PathVariable String boardCd, Integer curPage, String searchWord, Locale locale, Model model) {
@@ -108,16 +71,16 @@ public class BbsController {
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 
-		Map<String, Integer> map = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
-		Integer startRecord = map.get("startRecord");
-		Integer endRecord = map.get("endRecord");
+		NumbersForPagingProcess numbers = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
+		Integer startRecord = numbers.getStartRecord();
+		Integer endRecord = numbers.getEndRecord();
 		List<Article> list = boardService.getArticleList(boardCd, searchWord, startRecord, endRecord);
 
-		Integer listItemNo = map.get("listItemNo");
-		Integer prevPage = map.get("prevPage");
-		Integer nextPage = map.get("nextPage");
-		Integer firstPage = map.get("firstPage");
-		Integer lastPage = map.get("lastPage");
+		Integer listItemNo = numbers.getListItemNo();
+		Integer prevPage = numbers.getPrevBlock();
+		Integer nextPage = numbers.getNextBlock();
+		Integer firstPage = numbers.getFirstPage();
+		Integer lastPage = numbers.getLastPage();
 
 		model.addAttribute("list", list);
 		model.addAttribute("listItemNo", listItemNo);
@@ -180,16 +143,16 @@ public class BbsController {
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 		
-		Map<String, Integer> map = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
-		Integer startRecord = map.get("startRecord");
-		Integer endRecord = map.get("endRecord");
+		NumbersForPagingProcess numbers = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
+		Integer startRecord = numbers.getStartRecord();
+		Integer endRecord = numbers.getEndRecord();
 		List<Article> list = boardService.getArticleList(boardCd, searchWord, startRecord, endRecord);
 
-		int listItemNo = map.get("listItemNo");
-		int prevPage = map.get("prevPage");
-		int nextPage = map.get("nextPage");
-		int firstPage = map.get("firstPage");
-		int lastPage = map.get("lastPage");
+		int listItemNo = numbers.getListItemNo();
+		int prevPage = numbers.getPrevBlock();
+		int nextPage = numbers.getNextBlock();
+		int firstPage = numbers.getFirstPage();
+		int lastPage = numbers.getLastPage();
 
 		model.addAttribute("list", list);
 		model.addAttribute("listItemNo", listItemNo);

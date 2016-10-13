@@ -1,5 +1,7 @@
 package net.java_school.user;
 
+import java.util.List;
+
 import net.java_school.mybatis.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +79,16 @@ public class UserServiceImpl implements UserService {
 	public User getUser(String email) {
 		return userMapper.selectOne(email);
 	}
+
+	@Override
+	public List<User> getAllUser(String search, Integer startRecord, Integer endRecord) {
+		return userMapper.selectAll(search, startRecord, endRecord);
+	}
+	
+	@Override
+	public int getTotalCount(String search) {
+		return userMapper.selectTotalCount(search);
+	}
+	
 
 }

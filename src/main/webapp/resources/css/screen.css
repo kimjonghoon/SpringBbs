@@ -440,3 +440,19 @@ ul#nav li a:hover {
 .error {
 	color: red;
 }
+
+.table-in-article {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+.table-in-article td {
+	padding: 5px 6px 3px 6px;
+	border: silver 1px solid;
+}
+.table-in-article th {
+	padding: 5px 6px 3px 6px;
+	border: silver 1px solid;
+	text-align: left;
+	border: silver 1px solid;
+}

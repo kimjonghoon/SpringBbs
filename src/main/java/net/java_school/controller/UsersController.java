@@ -135,5 +135,6 @@ public class UsersController {
 	public String byeConfirm() {
 		return "users/bye_confirm";	  
 	}
+	
 
 }

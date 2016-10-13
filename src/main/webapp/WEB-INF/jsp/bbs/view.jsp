@@ -152,7 +152,7 @@
 	<td style="text-align: center;">
 	<c:choose>
 		<c:when test="${articleNo == article.articleNo }">	
-		<img src="/images/arrow.gif" alt="<spring:message code="global.here" />" />
+		<img src="/resources/images/arrow.gif" alt="<spring:message code="global.here" />" />
 		</c:when>
 		<c:otherwise>
 		${listItemNo - status.index }
@@ -162,7 +162,7 @@
 	<td>
 		<a href="#" title="${article.articleNo }">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">		
-		<img src="/images/attach.png" alt="<spring:message code="global.attach.file" />" />
+		<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">		
 		<span class="bbs-strong">[${article.commentNum }]</span>
