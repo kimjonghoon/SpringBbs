@@ -2,3 +2,10 @@
 	pageEncoding="UTF-8"%>
 	
 <h1>Admin</h1>
+<ul>
+	<li>
+		<ul>
+			<li><a href="/admin?page=1">회원목록</a></li>
+		</ul>
+	</li>
+</ul>

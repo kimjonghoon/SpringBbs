@@ -34,5 +34,10 @@ public interface UserMapper {
 	public List<User> selectAll(@Param("search") String search, @Param("startRecord") Integer startRecord, @Param("endRecord") Integer endRecord);
 	
 	public int selectTotalCount(@Param("search") String search);
-
+	
+	public String selectOneAuthority(String email);
+	
+	public void updatePasswdByAdmin(User user);
+	
+	public void updateAuthority(User user);
 }

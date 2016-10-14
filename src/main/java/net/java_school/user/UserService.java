@@ -38,5 +38,26 @@ public interface UserService {
 	//회원수
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public int getTotalCount(String search);
+	
+	//권한구하기
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String getAuthority(String email);
+	
+	//사용자 정보 수정
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void editAccountByAdmin(User user);
+	
+	//비밀번호 변경 by 관리자
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void changePasswdByAdmin(User user);
 
+	//권한 변경
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void changeAuthority(User user);
+	
+	//사용자 삭제
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void delUser(User user);
+	
+	
 }

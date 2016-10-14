@@ -90,5 +90,35 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectTotalCount(search);
 	}
 	
+	@Override
+	public String getAuthority(String email) {
+		return userMapper.selectOneAuthority(email);
+	}
+	
+	@Override
+	public void editAccountByAdmin(User user) {
+		userMapper.update(user);
+	}
+	
+	@Override
+	public void changePasswdByAdmin(User user) {
+		String encodedPassword = this.bcryptPasswordEncoder.encode(user.getPasswd());
+		user.setPasswd(encodedPassword);
+		
+		userMapper.updatePasswdByAdmin(user);
+	}
+	
+	@Override
+	public void changeAuthority(User user) {
+		userMapper.updateAuthority(user);
+	}
+
+	@Override
+	public void delUser(User user) {
+		System.out.println(user.getEmail());
+		userMapper.deleteAuthority(user.getEmail());
+		System.out.println(user.getEmail());
+		userMapper.delete(user);
+	}
 
 }

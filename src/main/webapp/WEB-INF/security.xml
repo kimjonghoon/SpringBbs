@@ -27,7 +27,7 @@
 			authentication-failure-url="/users/login?error=1"
 			default-target-url="/bbs/free/?curPage=1" />
 
-		<logout logout-success-url="/" invalidate-session="false" />
+		<logout logout-success-url="/" invalidate-session="true" />
 
 		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />

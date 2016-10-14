@@ -1,9 +1,11 @@
 package net.java_school.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import net.java_school.commons.NumbersForPagingProcess;
 import net.java_school.commons.Paginator;
+import net.java_school.commons.WebContants;
 import net.java_school.user.User;
 import net.java_school.user.UserService;
 
@@ -48,6 +50,47 @@ public class AdminController extends Paginator {
 		
 		return "admin/index";
 	}
+	
+	@RequestMapping(value="/editAccount", method=RequestMethod.GET)
+	public String editAccountForm(String email, Model model) {
+		User user = userService.getUser(email);
+		String authority = userService.getAuthority(email);
+		user.setAuthority(authority);
+		model.addAttribute(WebContants.USER_KEY, user);
+		
+		return "admin/editAccount";
+	}
+	
+	@RequestMapping(value="/editAccount", method=RequestMethod.POST)
+	public String editAccount(User user, String page, String search) throws Exception {
+		userService.editAccountByAdmin(user);
+		
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
+	}
 
+	@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
+	public String changePasswd(User user, String page, String search) throws Exception {
+		userService.changePasswdByAdmin(user);
+		
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
+	}
 
+	@RequestMapping(value="/changeAuthority", method=RequestMethod.POST)
+	public String changeAuthority(User user, String page, String search) throws Exception {
+		userService.changeAuthority(user);
+		
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
+	}
+
+	@RequestMapping(value="/delUser", method=RequestMethod.POST)
+	public String delUser(User user, String page, String search) throws Exception {
+		userService.delUser(user);
+		
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
+	}
+	
 }

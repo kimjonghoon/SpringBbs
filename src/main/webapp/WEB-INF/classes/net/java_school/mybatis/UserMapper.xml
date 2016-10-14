@@ -19,7 +19,7 @@
 
 	<update id="update" parameterType="User">
 		UPDATE member SET name = #{name}, mobile = #{mobile}
-		WHERE email = #{email} AND passwd = #{passwd}
+		WHERE email = #{email}
 	</update>
 
 	<update id="updatePasswd">
@@ -77,5 +77,21 @@
 			)
 		</if>
 	</select>
+
+	<select id="selectOneAuthority" parameterType="string" resultType="string">
+		SELECT authority
+		FROM authorities
+		WHERE email = #{email}
+	</select>
+
+	<update id="updatePasswdByAdmin" parameterType="User">
+		UPDATE member SET passwd = #{passwd}
+		WHERE email = #{email}
+	</update>
+	
+	<update id="updateAuthority" parameterType="User">
+		UPDATE authorities SET authority = #{authority}
+		WHERE email = #{email}
+	</update>
 
 </mapper>
