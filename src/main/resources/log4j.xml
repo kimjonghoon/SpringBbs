@@ -19,6 +19,16 @@
 		<appender-ref ref="file" />
 	</logger>
 
+	<logger name="net.java_school.mybatis.BoardMapper">
+		<level value="DEBUG" />
+		<appender-ref ref="file" />
+	</logger>
+
+	<logger name="net.java_school.mybatis.UserMapper">
+		<level value="DEBUG" />
+		<appender-ref ref="file" />
+	</logger>
+
 	<root>
 		<level value="INFO" />
 		<appender-ref ref="console" />

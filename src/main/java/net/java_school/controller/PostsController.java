@@ -12,8 +12,4 @@ public class PostsController {
 	public String getPosts(@PathVariable String category, @PathVariable String posts) {
 		return category + "/" + posts;
 	}
-	@RequestMapping(value="{category}", method=RequestMethod.GET)
-	public String getIndex(@PathVariable String category) {
-		return category + "/index";
-	}
 }

@@ -4,7 +4,10 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	
+	<settings>
+    	<setting name="logImpl" value="LOG4J"/>
+  	</settings>
+  	
 	<typeAliases>
 		<typeAlias type="net.java_school.board.AttachFile" alias="AttachFile" />
 		<typeAlias type="net.java_school.board.Comment" alias="Comment" />
