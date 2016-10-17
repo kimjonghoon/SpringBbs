@@ -4,10 +4,3 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <h1><spring:message code="home.heading" /></h1>
-<!-- <ul>
-	<li>
-		<ul>
-				<li><a href="#">Test</a></li>
-		</ul>
-	</li>
-</ul> -->

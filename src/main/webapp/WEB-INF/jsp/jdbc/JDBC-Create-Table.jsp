@@ -1,0 +1,215 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+    
+<div id="last-modified">Last Modified : 2014.5.22</div>
+
+<h1>테이블 생성</h1>
+
+GetEmp.java 파일 테스트가 성공했다면 이제부터 본격적인 JDBC 프로그래밍 예제를 실습하자.<br />
+준비한 예제는 명함관리 프로그램이다.<br />
+이번 장에서는 관련 테이블과 시퀀스를 JDBC를 이용해서 생성한다.<br />
+
+<pre class="prettyprint">
+CREATE TABLE NAMECARD (
+    NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY,  -- 고유번호
+    NAME    VARCHAR2(20) NOT NULL,    -- 이름
+    MOBILE  VARCHAR2(20) NOT NULL,    -- 손전화
+    EMAIL   VARCHAR2(40),   -- 이메일
+    COMPANY VARCHAR2(60)    -- 회사
+);
+ 
+CREATE SEQUENCE SEQ_NAMECARD_NO
+INCREMENT BY 1
+START WITH 1;
+
+</pre>
+
+JDBC 프로그래밍 순서를 다시 한번 기억해 보자.<br />
+
+<ol>
+	<li>JDBC 드라이버 로딩</li>
+	<li>Connection 맺기</li>
+	<li>SQL 실행</li>
+	<li>[SQL문이 select문이었다면 ResultSet을 이용한 처리]</li>
+	<li>자원 반환</li>
+</ol>
+
+Package Explorer 뷰에서 jdbc 프로젝트에 팩키지는 net.java_school.jdbc.test로 하여
+NamecardDDL.java 를 만든다. 모든 코드는 메인 메소드에 구현하도록 하겠다.<br />
+
+<h3>1. JDBC 드라이버 로딩</h3>
+Class.forName() 메소드를 이용해서 오라클 JDBC 드라이버의 시작 클래스를 메모리에 로딩한다.<br />
+forName() 메소드의 인자값인 문자열 oracle.jdbc.driver.OracleDriver 는 GetEmp.java 에서 참고한다.<br />
+
+<img src="https://lh3.googleusercontent.com/-n6rE9zhYBQ8/VYFYSc8N-KI/AAAAAAAACSE/fNrbmt8rNM0q9QWnxw2RG9CCtFsVmR-sQCCo/s590-Ic42/load-oracle-jdbc-driver-01.gif" alt="JDBC 드라이버 로딩" /><br />
+
+Class 클래스의 forName()메소드는 ClassNotFoundException 을 핸들링 해주어야 하는 메소드이기 때문에 위와 같이 컴파일 에러가 
+보인다.<br />
+이클립스의 코드 어시스트 도움을 받아서 (도움을 받을려면 마우스로 컴파일 에러가 발생하는 코드에 위치시키면 된다)
+그림과 같이 두번째 해결책을 선택하여 try ~ catch 문이 삽입되도록 한다.<br />
+
+<img src="https://lh3.googleusercontent.com/-sHbmlQZnRZI/VYFYS179a0I/AAAAAAAACSU/9QTapUDaiI46N8X0GK5oacIbtwh00FhegCCo/s590-Ic42/load-oracle-jdbc-driver-02.gif" alt="JDBC 드라이버 로딩 ClassNotFoundException 익셉션 핸들링" /><br />
+
+<h3>2. Connection 맺기</h3>
+커넥션은 DriverManager 클래스의 getConnection(,,) 메소드를 이용한다.<br />
+
+<img src="https://lh3.googleusercontent.com/-02QVTXr0ILA/VYFYRCr35dI/AAAAAAAACRo/A10c9ajp8_0_OLo8taIVpCmGTJ_3wl9VQCCo/s590-Ic42/get-connection-03.gif" alt="커넥션 맺기" /><br />
+
+Connection 과 DriverManager 는 JDBC 관련 인터페이스와 클래스로 java.sql 팩키지에 있다.<br />
+위 그림과 같은 컴파일 에러는 코드 어시스트에서 첫번째 해결책을 선택하여 import 문장을 추가하도록 한다.<br />
+
+<img src="https://lh3.googleusercontent.com/-mhsOdT8Q6VI/VYFYRoMD5gI/AAAAAAAACR8/VoQsZdFPEI4pVjaNQhnOmEJOmnC3CWxEgCCo/s590-Ic42/get-connection-04.gif" alt="커넥션 맺기 import java.sql.*; 추가" /><br />
+
+DriverManager.getConnection(,,) 메소드의 첫번째 인자는 url 값이다.<br />
+이 값 역시 GetEmp.java 소스를 참고한다.<br />
+두번째 인자는 사용자 계정이고 세번째 인자는 계정 비밀번호이다.<br />
+scott 계정에 테이블과 시퀀스를 만들기로 했으므로 두번째와 세번째 인자값은 각각 scott과 tiger이다.<br /> 
+
+<img src="https://lh3.googleusercontent.com/--dKwIKV2V1U/VYFYR0SAMII/AAAAAAAACRw/zJl9RLyfRY8qgPvbDPFwkyx1X9dHHtu5gCCo/s930-Ic42/get-connection-05.png" alt="커넥션 맺기 DriverManager.getConnection(String,String,String)메소드 완성 " style="width: 850px;" /><br />
+
+DriverManager.getConnection(,,) 메소드는 SQLException 익셉션을 핸들링 해주어야 한다.<br />
+위 그림처럼 코드 어시스트의 두번째 해결책을 선택해서 try ~ catch 문으로 익셉션을 핸들링 하도록 한다.<br />
+ 
+<img src="https://lh3.googleusercontent.com/-uBOvG8UyKzM/VYFYR3LBcVI/AAAAAAAACSQ/nKCTqh0ldfgRVeoDGZNkyzS20PfcsDtTQCCo/s590-Ic42/get-connection-06.gif" alt="커넥션 맺기 SQLException 익셉션 핸들링 " /><br />
+
+이후부터 나오는 메소드는 SQLException 익셉션을 핸들링 해주어야 하므로 이후부터는 코드는 try 블록에 구현한다.<br />
+그리고 Connection 타입의 con 의  변수 선언부는 try 블록 밖에 두어야 한다.<br />
+왜냐하면 finally 블록에서 con.close(); 코드로 자원 반납 할 때 finally 블록도 con 이 해석될 수 있는 영역이어야 하기 때문이다.<br />
+
+<img src="https://lh3.googleusercontent.com/-RZuwZr7HGvk/VYFYSH9QfVI/AAAAAAAACSA/9lSKf6Xh3pMqIE5Cz6XIN1VlLGHq_7B_QCCo/s590-Ic42/get-connection-07.gif" alt="커넥션 맺기 con 변수 선언을 try 블록밖으로" /><br />
+
+<h3>3. Statement 얻기</h3>
+Statement 타입의 stmt 의  변수 선언부 역시 나중에 자원 반납을 위한 코드구현을 고려해서 try 블록 밖에 둔다.<br />
+Statement 가 해석되지 않는 타입이라는 컴파일 에러를 만나면 코드 어시스트 도움을 받아<br />
+import java.sql.Statement; 문이 삽입되도록 한다.<br />
+
+<img src="https://lh3.googleusercontent.com/--gpG2olXCOo/VYFYROuMdZI/AAAAAAAACRg/tVY0Z8JkzugUT4bfwm2WQNzGPN3pWVNaQCCo/s512-Ic42/createStatement-08.gif" alt="Statement 얻기, stmt 변수 선언을 try 블록밖으로, import java.sql.Statement; 추가" /><br />
+
+<h3>4. SQL 실행</h3>
+다음은 SQL문을 실행하는 단계이다.<br />
+먼저 실행시킬 SQL문을 문자열로 만든다.<br />
+<em>아래 코드처럼 --로 시작하는 SQL 주석을 지운 SQL문으로 자바 문자열를 만든다.</em><br />
+
+<pre class="prettyprint">
+Connection con = null;
+Statement stmt = null;
+<strong>String sql = null;</strong>
+try {
+	// Connection 맺기
+	con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:XE", "scott", "tiger");
+	// Statement 얻기
+	stmt = con.createStatement();
+	sql = <strong>"CREATE TABLE NAMECARD ( " +
+		"NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY, " +
+		"NAME    VARCHAR2(20) NOT NULL, " +
+		"MOBILE  VARCHAR2(20) NOT NULL, " +
+		"EMAIL   VARCHAR2(40), " +
+		"COMPANY VARCHAR2(60))"</strong>;
+	<strong>stmt.executeUpdate(sql);</strong>
+	
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+</pre>
+
+테이블을 생성하는 자바문자열을 인자값으로 Statement 의 executeUpdate() 호출하여 SQL문을 실행한다.<br />   
+이어서 시퀀스를 생성하는 SQL문을 자바 문자열로 만든다.<br />
+시퀀스를 생성하는 자바문자열을 인자값으로 Statement 의 executeUpdate() 호출하여 SQL문을 실행한다.<br />
+
+<pre class="prettyprint">
+Connection con = null;
+Statement stmt = null;
+String sql = null;
+try {
+	// Connection 맺기
+	con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:XE", "scott", "tiger");
+	// Statement 얻기
+	stmt = con.createStatement();
+	sql = "CREATE TABLE NAMECARD ( " +
+		"NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY, " +
+		"NAME    VARCHAR2(20) NOT NULL, " +
+		"MOBILE  VARCHAR2(20) NOT NULL, " +
+		"EMAIL   VARCHAR2(40), " +
+		"COMPANY VARCHAR2(60))";
+	stmt.executeUpdate(sql);
+	sql = "<strong>CREATE SEQUENCE SEQ_NAMECARD_NO " +
+		"INCREMENT BY 1 " +
+		"START WITH 1</strong>";
+	<strong>stmt.executeUpdate(sql);</strong>
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+</pre>
+
+<h3>5. 자원 반납</h3>
+finally 블록을 만들고 finally 블록안에 자원 반납 코드를 삽입한다.<br />
+생성되는 순서의 역순으로 자원을 반납해야 하므로 stmt.close(); 가 먼저 나와야 한다.<br />
+
+<img src="https://lh3.googleusercontent.com/-jpoxCcT--4o/VYFYTaKNRII/AAAAAAAACSY/lNqcqLejT2E4NucAhB2rJG6Bw3MwlXqSgCCo/s553-Ic42/stmt-close-11.gif" alt="자원 반납 코드 SQLException 관련 컴파일 에러" /><br />
+
+Statement 의 close() 메소드는 SQLException 익셉션을 핸들링 해주어야 하는 메소드이므로 위처럼 처럼 컴파일 에러가 발생한다.<br />
+이때는 코드 어시스트 도움을 받아서 try ~ catch 블록이 삽입되도록 한다.<br />
+Connection 의 close() 메소드도 마찬가지로 SQLException 익셉션을 핸들링 해주어야 하는 메소드이므로 
+con.close(); 역시 try ~ catch 블록안에 위치하도록 코드 어시스트의 도움을 받는다.<br />
+
+<img src="https://lh3.googleusercontent.com/-xcPqDZqis0I/VYFYRAYVryI/AAAAAAAACRk/cQB0K_kHNBk99Ea1FwgExxvMRynu7jGaACCo/s550-Ic42/close-12.gif" alt="자원 반납 코드 완성" /><br />
+
+자원반납은 JDBC 코드에서 가장 중요하다. 꼭 잊지 말고 빠지지 않게 해야 한다.<br />
+NamecardDDL.java 를 실행한다.<br />
+익셉션이 발생하지 않으면<br />
+SQL*PLUS 로 scott 계정에 접속하여 테이블과 시퀀스가 생성되었는지 확인한다.<br />
+익셉션이 발생한다면 catch블록에 SQL문을 출력해본다.<br />
+JDBC단점 중 하나는 SQL문을 자바 문자열로 바꿔야 한다는 것이다.<br />
+SQL문을 자바문자열로 바꾸는 과정에서 띄어쓰기가 잘못되는 실수가 많이 나온다.<br />
+
+<strong class="screen-header"><b>C:\</b> <spring:message code="command.prompt" /></strong>
+<pre class="screen">
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.
+
+C:\Documents and Settings\kim&gt;<span class="emphasis">sqlplus scott/tiger</span>
+
+SQL*Plus: Release 10.2.0.1.0 - Production on 토 1월 8 21:11:20 2011
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+다음에 접속됨:
+Oracle Database 10g Release 10.2.0.1.0 - Production
+
+SQL&gt; <span class="emphasis">select tname from tab;</span>
+
+TNAME
+------------------------------------------------------------
+DEPT
+EMP
+BONUS
+SALGRADE
+<span class="emphasis">NAMECARD</span>
+
+5 개의 행이 선택되었습니다.
+
+SQL&gt; <span class="emphasis">select sequence_name from user_sequences;</span>
+
+SEQUENCE_NAME
+------------------------------------------------------------
+<span class="emphasis">SEQ_NAMECARD_NO</span>
+
+SQL&gt;
+</pre>	
+		
+NamecardDDL.java 를 다시 실행하면 익셉션이 발생한다.<br />
+똑같은 이름의 테이블과 시퀀스가 이미 scott 계정에 존재하기 때문이다.<br />
+이것으로 JDBC로 테이블과 시퀀스를 생성하는 예제를 해보았다.<br /> 
+하지만 이와같이 JDBC를 이용한 DDL 문장을 실행하는 경우는 드물다.<br />
+
+<dl class="note">
+<dt>executeUpdate</dt>
+<dd>
+Statement의 executeUpdate()메소드는 create table.. 과 같은 DDL문이나 
+DML문(INSERT, UPDATE, DELETE)을 실행할 때 사용한다.
+</dd>
+</dl>

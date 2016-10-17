@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>float이 적용된 엘리먼트 다음에 나오는 엘리먼트의 행동 이해</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="Keywords" content="float" />
+<meta name="Description" content="float이 적용된 엘리먼트 다음에 나오는 엘리먼트의 행동 이해" />
+<style type="text/css">
+	#A {
+		float: left;
+		background-color: red;
+		width: 300px;
+	}
+	#B {
+		background-color: green;
+		width: 1000px;
+	}
+</style>
+</head>
+<body>
+<div id="A">A<br />float:left</div>
+<div id="B">
+B<br />
+float 이 적용된 엘리먼트 다음에 이어지는 정상적인 엘리먼트(B)는 A 의 존재를 인지하지 못하고 A의 위치를
+차지하려 한다. 하지만 A 영역은 침범하지는 않는다.<br />
+B 의 width를 1000px 로 수정하고 테스트한다.<br />
+B 의 width를 500px 로 수정하고 테스트한다.<br />
+B 의 width를 300px 로 수정하고 테스트한다.<br />
+</div>
+</body>
+</html>

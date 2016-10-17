@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
 <div id="last-modified">Last Modified : 2014.3.3</div>
 	
 <h1>JDBC 소개</h1>

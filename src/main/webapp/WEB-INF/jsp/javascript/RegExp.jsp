@@ -1,0 +1,229 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script type="text/javascript" src="/resources/js/script-result-display.js"></script>
+<div id="last-modified">Last Modified : 2014.1.16</div>
+
+<h1>정규 표현식</h1>
+
+RegExp는 정규 표현식 객체이다.<br />
+/ ~ /로 표현된다. ("/ ~ /"이나 '/ ~ /'이 아니다.)<br />
+정규 표현식 객체에는 test()와 exec() 메서드가 있다.<br />
+test()는 인자로 들어온 문자열이 정규 표현식에 부합한지를 판단하여 불린 값을 리턴한다.<br />
+exec()는 인자로 들어온 문자열에서 정규 표현식에 부합된 문자열을 찾아 리턴한다.<br />
+
+<pre class="prettyprint">
+var regExp = /Java/;
+var testStr = "www.java-school.net is the best site to learn Java";
+var retArr = regExp.exec(testStr);
+alert(retArr[0]);
+</pre>
+
+<h3>i flag</h3>
+정규 표현식 객체의 끝의 / 다음에 오는 문자열은 플래그다.<br />
+i 플래그가 붙으면 대소문자를 가리지 않는다.<br />
+
+<pre class="prettyprint">
+var regExp = /Java/i;
+var testStr = "www.java-school.net is the best site to learn Java";
+var retArr = regExp.exec(testStr);
+alert(retArr[0]);
+</pre>
+
+<h3>g flag</h3>
+g 플래그를 사용하면 마지막으로 매칭 된 위치를 기억하고 있다가 
+다음번의 exec()를 호출되면 그다음 위치부터 매칭 되는 곳을 찾게 된다.<br />
+
+<pre class="prettyprint">
+var regExp = new RegExp('Java', 'gi'); // /Java/gi
+var testStr = "www.java-school.net is the best site to learn Java";
+var retArr = regExp.exec(testStr);
+retArr = regExp.exec(testStr);
+alert(retArr[0]);
+</pre>
+
+<h3>/../ 사이의 문자</h3>
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" colspan="2">횟수</th>
+</tr>
+<tr>
+	<th class="table-in-article-th" style="width: 90px;">*</th>
+	<td class="table-in-article-td">0회 이상</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">+</th>
+	<td class="table-in-article-td">1회 이상</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">?</th>
+	<td class="table-in-article-td">0 또는 1회</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">.</th>
+	<td class="table-in-article-td">정확히 1회</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">{}</th>
+	<td class="table-in-article-td">
+	중괄호는 문자의 반복 횟수를 지정할 때 사용한다.<br />
+	s{2} s의 두 번 반복 즉, ss를 의미한다.<br />
+	</td>
+</tr>	
+</table>
+
+<pre class="prettyprint">
+var regExp = /Java-*/gi;
+var testStr = "www.java-school.net is the best site to learn Java";
+var retArr = regExp.exec(testStr);
+retArr = regExp.exec(testStr);
+alert(retArr[0]);
+</pre>
+
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" colspan="2">
+	<em class="path">\</em> 다음 일반 문자는 약속된 특수 문자로 취급<br />
+	<em class="path">\</em> 다음 특수 문자는 문자 그 자체로 취급<br />
+	</th>
+</tr>
+<tr>
+	<th class="table-in-article-th" style="width: 90px;"><em class="path">\w</em></th>
+	<td class="table-in-article-td">낱말, 정확히는 알파벳과 숫자와 _를 의미한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-th"><em class="path">\W</em></th>
+	<td class="table-in-article-td"><em class="path">\w</em> 반대</td>
+</tr>
+<tr>
+	<th class="table-in-article-th"><em class="path">\d</em></th>
+	<td class="table-in-article-td">숫자</td>
+</tr>
+<tr>
+	<th class="table-in-article-th"><em class="path">\D</em></th>
+	<td class="table-in-article-td"><em class="path">\d</em>와 반대, <em class="path">\D*</em>는 문자 0회 이상을 의미한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-th"><em class="path">\s</em></th>
+	<td class="table-in-article-td">공백문자</td>
+</tr>
+</table>
+
+<pre class="prettyprint">
+var regExp = /\s\*/g;
+var testStr = "www.java-school.net *is *the *best *site *to *learn *JAVA";
+var retStr = testStr.replace(regExp,'-');
+alert(retStr);
+</pre>
+
+다음은 회원가입을 위한 폼이다.<br />
+
+<pre class="syntax">
+&lt;form id="signUp" action="signUp" method="post" onsubmit="return check()"&gt;
+    이름 &lt;input type="text" name="name" /&gt;
+	
+    &lt;!-- 중간 생략 --&gt;
+
+&lt;/form&gt;
+</pre>
+
+이름에 해당하는 파라미터의 값이 공백문자로만 이루어졌는지 검사하는 자바스크립트 코드를 작성한다.<br />
+
+<pre class="syntax">
+function check() {
+	var regExp = /\s/g;
+	var form = document.getElementById("signUp");
+	var name = form.name.value;
+	name = name.replace(regExp,"");
+	if (name.length == 0) {
+		alert("이름이 유효하지 않습니다.");
+		return false;
+	}
+	return true;
+}
+</pre>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" colspan="2">시작(^)과 끝($)</th>
+</tr>
+<tr>
+	<th class="table-in-article-th" style="width: 90px;">^</th>
+	<td class="table-in-article-td">시작를 의미, /^JAVA/는 시작부에서 JAVA를 찾는다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">$</th>
+	<td class="table-in-article-td">끝을 의미, /school$/은 끝에서 school를 찾는다.</td>
+</tr>
+</table>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" colspan="2">여러 문자를 매칭하고 싶다면 [] 안에 나열한다.</th>
+</tr>
+<tr>
+	<th class="table-in-article-th" style="width: 90px;">[a-zA-Z]</th>
+	<td class="table-in-article-td">알파벳을 찾는다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">[0-9]</th>
+	<td class="table-in-article-td">숫자를 찾는다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">[] 안의 ^</th>
+	<td class="table-in-article-td">^ 가 [ ] 안에서 쓰이면 ~을 제외한다는 의미이다. [^0-9]는 <em class="path">\D</em>와 같다.</td>
+</tr>
+</table>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 90px;">()</th>
+	<td class="table-in-article-td">
+	괄호로 묶은 패턴은 매칭 된 다음 그 부분을 기억하고 그 값을 배열과 같이 저장된다.<br />
+	기억되는 부분 문자열은 $1, $2, ...에 저장된다.
+	</td>
+</tr>
+<tr>
+	<th class="table-in-article-th">|</th>
+	<td class="table-in-article-td">"또는"를 의미한다. a|b는 a 또는 b, a|b|c는 a 또는 b 또는 c
+	</td>
+</tr>
+</table>
+
+<h3>필요한 정규 표현식 얻기</h3>
+다음 사이트에서 이메일에 대한 정규 표현식을 얻을 수 있다.<br />
+<a href="http://regexlib.com">http://regexlib.com</a><br />
+
+이를 이용해서 사용자가 입력한 이메일과 날짜가 유효한 값인지 체크하는 자바스크립트 함수를 만들어 본다.<br />
+
+<pre class="prettyprint">
+var emailRegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+var dateRegExp = /^\d{4}\/\d{2}\/\d{2}/;
+
+//테스트 데이터
+var email = "hong@gmail.org";
+var signUpDate = "2015/1/16";
+
+var check = emailRegExp.test(email);
+
+if (check) {
+	alert("유효한 이메일");
+} else {
+	alert("유효하지 않은 이메일");
+}
+
+check = dateRegExp.test(signUpDate);
+
+if (check) {
+	alert("유효한 등록일");
+} else {
+	alert("유효하지 않은 등록일");
+}
+</pre>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.w3schools.com/jsref/jsref_obj_regexp.asp">http://www.w3schools.com/jsref/jsref_obj_regexp.asp</a></li>
+	<li><a href="http://regexlib.com">http://regexlib.com</a></li>
+</ul>

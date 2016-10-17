@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,21 @@
 <meta name="Description" content="<tiles:insertAttribute name="description" />" />
 <title><tiles:insertAttribute name="title" /></title>
 <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
-<script type="text/javascript" src="/resources/js/jquery-3.0.0.min.js"></script>
+<link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
+<script src="/resources/js/jquery-3.0.0.min.js"></script>
+<script src="/resources/js/prettify.js"></script>
+<script src="/resources/js/commons.js"></script>
+<script>
+$(document).ready(function() {
+	prettyPrint();
+	$('pre.prettyprint').html(function() {
+		return this.innerHTML.replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+	});
+	$('pre.prettyprint').dblclick(function() {
+		selectRange(this);
+	});
+});
+</script>
 </head>
 <body>
 

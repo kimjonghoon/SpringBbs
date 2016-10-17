@@ -24,6 +24,22 @@ form {
 	margin: 0;
 	padding: 0; 
 }
+a:link {
+	color: #2C80D0;
+	text-decoration: none;
+}
+a:visited {
+	color: #2C80D0;
+	text-decoration: none;
+}
+a:active {
+	color: #2C80D0;
+	text-decoration: none;
+}
+a:hover {
+	color: #2C80D0;
+	text-decoration: underline;
+}
 /*** 공통 끝***/
 
 #wrap {
@@ -131,21 +147,20 @@ ul#nav li a:hover {
 	color: #FFF;
 }
 
-#sidebar h1 {
+#sidebar > h1 {
 	margin: 0;
 	padding: 14px;
 	background: #92B91C;
 	color: #FFF;
 	font-size: 16px;
 }
-
-#sidebar ul {
+#sidebar > ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-#sidebar a {
+#sidebar > ul > li.sub-heading {
 	display: block;
 	padding: 6px 10px 6px 10px;
 	color: #64615D;
@@ -154,12 +169,12 @@ ul#nav li a:hover {
 	font-weight: bold;
 }
 
-#sidebar a:hover {
+#sidebar > ul > li > a:hover {
 	background-color: #EDFEBA;
 	color: #64615D;
 }
 
-#sidebar li li a {
+#sidebar > ul > li > a {
 	display: block;
 	color: #64615D;
 	padding: 5px 3px 4px 17px;
@@ -408,13 +423,6 @@ ul#nav li a:hover {
 	float: right;
 }
 
-#content h2 {
-	margin: 9px 0 0 0;
-	padding: 0;
-	font-size: 13px;
-	border-bottom: 1px solid #ebebeb;
-}
-
 #write-form td {
 	border: none;
 }
@@ -455,4 +463,119 @@ ul#nav li a:hover {
 	border: silver 1px solid;
 	text-align: left;
 	border: silver 1px solid;
+}
+#content > h1 {
+	margin: 0;
+	font-size: 1.4em;
+	clear: both;
+}
+#content > h2 {
+	margin-top: 15px;
+	margin-bottom: 0;
+	font-size: 1.3em;
+}
+#content > h3 {
+	margin-top: 10px;
+	margin-bottom: 0;
+	font-size: 1.2em;
+}
+#content > h4 {
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-size: 1.1em;
+}
+#content > h5 {
+	margin-top: 3px;
+	margin-bottom: 0;
+	font-size: 1em;
+}
+#last-modified {
+	float: right;
+}
+#next-prev {
+	margin-top: 10px;
+	padding: 1em 1em 1em 0;
+	border: silver 1px solid;
+	background-color: #FAF9F4;
+	line-height: 1.6;
+	font-size: 0.9em;
+}
+#refer {
+	display: block;
+	margin-top: 15px;
+	padding-bottom: 3px;
+	color: #236CAC;
+	font-weight: bold;
+	line-height: 1;
+	border-bottom: 2px solid #236CAC;
+}
+#comments {
+	display: block;
+	margin-top: 15px;
+	padding-bottom: 3px;
+	color: #666;
+	font-weight: bold;
+	line-height: 1;
+	border-bottom: 1px solid #999;
+}
+#references {
+	margin-top: 5px;
+	padding: 0;
+	list-style-type: none;
+}
+.screen-header {
+	padding-left: 5px;
+	display: block;
+	color: black;
+	border-top: 2px solid silver;
+	border-right: 2px solid silver;
+	border-left: 2px solid silver;
+}
+.screen-header > b {
+	background: #000;
+	color: #FFF;
+}
+.screen {
+	margin: 0;
+	padding: 0.2em;
+	color: #C0C0C0;
+	border: 2px solid silver;
+	background: #000;
+	font-weight: bold;
+}
+.shell-prompt {
+	padding: 5px;
+	color: #FFF;
+	background-color: #300a24;
+}
+.note {
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 0.95em;
+}
+.note > dt {
+	margin: 0;
+	padding-top: 4px;
+	padding-right: 3px;
+	padding-left: 43px;
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+	color: #000;
+	background: #efefef url('../images/ref.png') no-repeat center left;
+}
+.filename {
+	display: block;
+	font-style: normal;
+	position: relative;
+	top: 1em;
+}
+#last-modified {
+	padding-top: 3px;
+	text-align: right;
+	font-family: tahoma, arial, sans-serif;
+	font-size: 9px;
+	line-height: 1;
+	color: #7a7a7a;
 }

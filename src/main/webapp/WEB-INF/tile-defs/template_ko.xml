@@ -9,14 +9,16 @@
         <put-attribute name="extra" value="/WEB-INF/jsp/inc/extra.jsp" />
         <put-attribute name="footer" value="/WEB-INF/jsp/inc/footer.jsp" />
     </definition>
-    <!-- 홈페이지 -->
-	<definition name="index" extends="defaultTemplate">
-		<put-attribute name="title" value="홈페이지" />
-		<put-attribute name="keywords" value="자바스쿨,홈페이지" />
-		<put-attribute name="description" value="자바스쿨에 오신 걸 환영합니다." />
-		<put-attribute name="content" value="/WEB-INF/jsp/index.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/index-menu.jsp" />
-	</definition>
+	<definition name="lectureTemplate" template="/WEB-INF/jsp/template/lectureTemplate.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/inc/header.jsp" />
+		<put-attribute name="main-menu" value="/WEB-INF/jsp/inc/main-menu.jsp" />
+		<put-attribute name="next-link" value="" />
+		<put-attribute name="next-title" value="" />
+		<put-attribute name="prev-link" value="" />
+		<put-attribute name="prev-title" value="" />
+		<put-attribute name="extra" value="/WEB-INF/jsp/inc/extra.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/inc/footer.jsp" />
+	</definition>    
 	<!-- 에러 페이지 -->
 	<definition name="403" extends="defaultTemplate">
 		<put-attribute name="title" value="403 에러" />
@@ -55,30 +57,6 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/bbs/{1}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/bbs/bbs-menu.jsp" />
 	</definition>
-	<!-- 블로그 포스트 -->
-	<!-- Java -->
-	<definition name="java/index" extends="defaultTemplate">
-		<put-attribute name="title" value="자바 관련 포스트 색인" />
-		<put-attribute name="keywords" value="자바 관련 포스트 색인" />
-		<put-attribute name="description" value="자바 관련 포스트 색인" />
-		<put-attribute name="content" value="/WEB-INF/jsp/java/index_ko.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-menu_ko.jsp" />
-	</definition>			
-	<definition name="java/Features" extends="defaultTemplate">
-		<put-attribute name="title" value="자바의 특징" />
-		<put-attribute name="keywords" value="자바,객체지향 프로그래밍,자바 버추얼 머신,플랫폼 독립적" />
-		<put-attribute name="description" value="자바 특징을 설명합니다." />
-		<put-attribute name="content" value="/WEB-INF/jsp/java/Features_ko.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-menu_ko.jsp" />
-	</definition>
-	<!-- JavaScript -->		
-	<definition name="javascript/index" extends="defaultTemplate">
-		<put-attribute name="title" value="자바스크립트 소개" />
-		<put-attribute name="keywords" value="자바스크립트 소개" />
-		<put-attribute name="description" value="자바스크립트 소개" />
-		<put-attribute name="content" value="/WEB-INF/jsp/javascript/index_ko.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-menu_ko.jsp" />
-	</definition>
 	<!-- admin -->		
 	<definition name="admin/*" extends="defaultTemplate">
 		<put-attribute name="title" value="관리자 페이지" />
@@ -87,4 +65,1116 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/admin/{1}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/admin/admin-menu.jsp" />
 	</definition>
+	<!-- 홈페이지 -->
+	<definition name="index" extends="defaultTemplate">
+		<put-attribute name="title" value="홈페이지" />
+		<put-attribute name="keywords" value="홈페이지" />
+		<put-attribute name="description" value="환영합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/index_ko.jsp" />
+		<put-attribute name="next-link" value="java/Features" />
+		<put-attribute name="next-title" value="자바의 특징" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/index-menu.jsp" />
+	</definition>	
+	<!-- 자바 스쿨 강좌 -->
+	<definition name="java/Features" extends="lectureTemplate">
+		<put-attribute name="title" value="Features" />
+		<put-attribute name="keywords" value="자바의 특징,JVM,OOP" />
+		<put-attribute name="description" value="자바 언어의 특징을 설명합니다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Features_ko.jsp" />
+		<put-attribute name="next-link" value="Class-Object" />
+		<put-attribute name="next-title" value="객체와 클래스" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Class-Object" extends="lectureTemplate">
+		<put-attribute name="title" value="Class and Object" />
+		<put-attribute name="keywords" value="Class, Object" />
+		<put-attribute name="description" value="Class and Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Class_Object_ko.jsp" />
+		<put-attribute name="next-link" value="Keyword_Indentifiers_Comment" />
+		<put-attribute name="next-title" value="키워드, 식별자, 주석" />
+		<put-attribute name="prev-link" value="Features" />
+		<put-attribute name="prev-title" value="자바의 특징" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Keyword_Indentifiers_Comment" extends="lectureTemplate">
+		<put-attribute name="title" value="키워드, 식별자, 주석" />
+		<put-attribute name="keywords" value="Keyword,키워드,Indentifiers,식별자,Comment,주석" />
+		<put-attribute name="description" value="자바 언어의 키워드와 주석을 설명하고 식별자를 만드는 방법에 대해서도 설명한다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Keyword_Indentifiers_Comment_ko.jsp" />
+		<put-attribute name="next-link" value="DataType_Casting" />
+		<put-attribute name="next-title" value="자료형과 형변환" />
+		<put-attribute name="prev-link" value="Class-Object" />
+		<put-attribute name="prev-title" value="객체와 클래스" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/DataType_Casting" extends="lectureTemplate">
+		<put-attribute name="title" value="Data Type and Type Casting" />
+		<put-attribute name="keywords" value="Data Type,Literal,Variable,Primitive Type,Reference Type,boolean,char,byte,short,int,long,float,double,null,Casting,Up-Casting,Down-Casting" />
+		<put-attribute name="description" value="This chapter describes about Java Data Type and Type Casting" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/DataType_Casting_ko.jsp" />
+		<put-attribute name="next-link" value="Arrays" />
+		<put-attribute name="next-title" value="배열" />
+		<put-attribute name="prev-link" value="Keyword_Indentifiers_Comment" />
+		<put-attribute name="prev-title" value="키워드, 식별자, 주석" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Arrays" extends="lectureTemplate">
+		<put-attribute name="title" value="Java Arrays" />
+		<put-attribute name="keywords" value="Java Arrays,Array of primitive type,Array of reference type,length,String[] parameter in main method" />
+		<put-attribute name="description" value="This chapter describes about Java Arrays" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Arrays_ko.jsp" />
+		<put-attribute name="prev-link" value="DataType_Casting" />
+		<put-attribute name="prev-title" value="자료형과 형변환" />
+		<put-attribute name="next-link" value="Operators" />
+		<put-attribute name="next-title" value="연산자, if문과 반복문" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Operators" extends="lectureTemplate">
+		<put-attribute name="title" value="Operators" />
+		<put-attribute name="keywords" value="Operators" />
+		<put-attribute name="description" value="This chapter describes that Java Operators" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Operators_ko.jsp" />
+		<put-attribute name="prev-link" value="Arrays" />
+		<put-attribute name="prev-title" value="배열" />
+		<put-attribute name="next-link" value="if_switch_loops" />
+		<put-attribute name="next-title" value="연산자, if문과 반복문" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/if_switch_loops" extends="lectureTemplate">
+		<put-attribute name="title" value="if, switch, loops" />
+		<put-attribute name="keywords" value="Operators,if,while,do ~ while,for,switch,case,break,default,continue,return" />
+		<put-attribute name="description" value="This chapter describes that if, switch, loop statements" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/if_switch_loops-content.jsp" />
+		<put-attribute name="prev-link" value="Operators" />
+		<put-attribute name="prev-title" value="연산자, if문과 반복문" />
+		<put-attribute name="next-link" value="Package_Modifiers" />
+		<put-attribute name="next-title" value="패키지와 접근자" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Package_Modifiers" extends="lectureTemplate">
+		<put-attribute name="title" value="Package and Modifiers" />
+		<put-attribute name="keywords" value="package and modifiers" />
+		<put-attribute name="description" value="This chapter describes that package and access modifiers" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Package_Modifiers.jsp" />
+		<put-attribute name="prev-link" value="if_switch_loops" />
+		<put-attribute name="prev-title" value="연산자, if문과 반복문" />
+		<put-attribute name="next-link" value="Inheritance" />
+		<put-attribute name="next-title" value="상속" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Inheritance" extends="lectureTemplate">
+		<put-attribute name="title" value="Inheritance" />
+		<put-attribute name="keywords" value="OOP,Inheritance,super class,sub class,method overriding,constructor,this,super,Polymorphism,method overloading,final,abstract class,interface,implements" />
+		<put-attribute name="description" value="This chapter describes that Java Inheritance and interface" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Inheritance.jsp" />
+		<put-attribute name="prev-link" value="Package_Modifiers" />
+		<put-attribute name="prev-title" value="패키지와 접근자" />
+		<put-attribute name="next-link" value="Static" />
+		<put-attribute name="next-title" value="static 키워드" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Static" extends="lectureTemplate">
+		<put-attribute name="title" value="static" />
+		<put-attribute name="keywords" value="static,Class Loader,Singleton Pattern,Java order of Initialization" />
+		<put-attribute name="description" value="This chapter describes that Java static keyword and order of initialization" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Static.jsp" />
+		<put-attribute name="prev-link" value="Inheritance" />
+		<put-attribute name="prev-title" value="상속" />
+		<put-attribute name="next-link" value="Collection" />
+		<put-attribute name="next-title" value="Collection" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Collection" extends="lectureTemplate">
+		<put-attribute name="title" value="Collection" />
+		<put-attribute name="keywords" value="Java Collection,List,Set,SortedSet,Map,SortedMap,HashSet,TreeSet,Generic,ArrayList,LinkedList,Vector,Java Properties,Enumeration,hasMoreElements(),nextElement(),Iterator,hasNext(),next(),remove(),Wrapper Class,Boolean,Byte,Character,Short,Integer,Long,Float,Double" />
+		<put-attribute name="description" value="This chapter describes that Java Collection and Wrapper Classes" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Collection.jsp" />
+		<put-attribute name="prev-link" value="Static" />
+		<put-attribute name="prev-title" value="static 키워드" />
+		<put-attribute name="next-link" value="Exception" />
+		<put-attribute name="next-title" value="예외" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Exception" extends="lectureTemplate">
+		<put-attribute name="title" value="Exception" />
+		<put-attribute name="keywords" value="Exception,try catch finally,Exception Handling Mechanisms in Java	,The exception hierarchy in Java,RuntimeException,IOException,ArithmeticException,NullPointerException,IndexOutOfBoundException,EOFException,FileNotFoundException,NegativeArraySizeException,ArrayIndexOutOfBoundException,throws,throw,Java Custom Exception" />
+		<put-attribute name="description" value="This chapter describes that Java Exception" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Exception.jsp" />
+		<put-attribute name="prev-link" value="Collection" />
+		<put-attribute name="prev-title" value="Collection" />
+		<put-attribute name="next-link" value="Javabank-Requirements-analysis" />
+		<put-attribute name="next-title" value="자바은행 분석/설계" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Javabank-Requirements-analysis" extends="lectureTemplate">
+		<put-attribute name="title" value="Java bank Requirements analysis" />
+		<put-attribute name="keywords" value="Java Bank Requirements analysis" />
+		<put-attribute name="description" value="This chapter discusses Requirements analysis of Java Bank Project" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Javabank-Requirements-analysis.jsp" />
+		<put-attribute name="prev-link" value="Exception" />
+		<put-attribute name="prev-title" value="예외" />
+		<put-attribute name="next-link" value="Javabank-Design" />
+		<put-attribute name="next-title" value="자바은행 구현" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Javabank-Design" extends="lectureTemplate">
+		<put-attribute name="title" value="자바은행 구현" />
+		<put-attribute name="keywords" value="자바은행 예제,Account.java,Bank.java,Transaction.java,BankUI.java" />
+		<put-attribute name="description" value="자바은행 예제에 필요한 자바빈즈를 구현한다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Javabank-Design-content.jsp" />
+		<put-attribute name="prev-link" value="Javabank-Requirements-analysis" />
+		<put-attribute name="prev-title" value="자바은행 분석/설계" />
+		<put-attribute name="next-link" value="Javabank-Apply-inheritance" />
+		<put-attribute name="next-title" value="자바은행 - 상속 적용" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Javabank-Apply-inheritance" extends="lectureTemplate">
+		<put-attribute name="title" value="자바은행 예제에 상속 적용" />
+		<put-attribute name="keywords" value="Javabank 예제,Transaction,Account,Bank,Inheritance" />
+		<put-attribute name="description" value="자바은행 예제에 상속 개념을 어떻게 적용하는지 실습을 통해 보여준다." />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Javabank-Apply-inheritance.jsp" />
+		<put-attribute name="prev-link" value="Javabank-Design" />
+		<put-attribute name="prev-title" value="자바은행 구현" />
+		<put-attribute name="next-link" value="Javabank-Apply-abstract-class" />
+		<put-attribute name="next-title" value="자바은행 - 추상클래스 적용" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Javabank-Apply-abstract-class" extends="lectureTemplate">
+		<put-attribute name="title" value="Put abstract class to pratical use in the javabank example" />
+		<put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,abstract" />
+		<put-attribute name="description" value="This chapter discusses How to put abstract class to pratical use in the javabank example" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Javabank-Apply-abstract-class.jsp" />
+		<put-attribute name="prev-link" value="Javabank-Apply-inheritance" />
+		<put-attribute name="prev-title" value="자바은행 - 상속 적용" />
+		<put-attribute name="next-link" value="Javabank-Apply-interface" />
+		<put-attribute name="next-title" value="자바은행 - 인터페이스 적용" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Javabank-Apply-interface" extends="lectureTemplate">
+		<put-attribute name="title"
+			value="Put interface to pratical use in the javabank example" />
+		<put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,interface" />
+		<put-attribute name="description" value="This chapter discusses How to put interface to pratical use in the javabank example" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Javabank-Apply-interface.jsp" />
+		<put-attribute name="prev-link" value="Javabank-Apply-abstract-class" />
+		<put-attribute name="prev-title" value="자바은행 - 추상클래스 적용" />
+		<put-attribute name="next-link" value="Thread" />
+		<put-attribute name="next-title" value="스레드" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Thread" extends="lectureTemplate">
+		<put-attribute name="title" value="Thread" />
+		<put-attribute name="keywords" value="Thread,Runnable,Single Thread,Multi Thread" />
+		<put-attribute name="description" value="This chapter describes that Java Thread" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Thread.jsp" />
+		<put-attribute name="prev-link" value="Javabank-Apply-interface" />
+		<put-attribute name="prev-title" value="자바은행 - 인터페이스 적용" />
+		<put-attribute name="next-link" value="Stream" />
+		<put-attribute name="next-title" value="스트림" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Stream" extends="lectureTemplate">
+		<put-attribute name="title" value="Stream" />
+		<put-attribute name="keywords" value="Java Stream,Input Stream,Output Stream,Source,Destination,InputStreamReader,BufferedReader,FileWriter,객체스트림,Serializable,ObjectOutputStream,FileOutputStream,writeObject(),FileInputStream,readObject()" />
+		<put-attribute name="description" value="This chapter describes that Java Stream" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Stream.jsp" />
+		<put-attribute name="prev-link" value="Thread" />
+		<put-attribute name="prev-title" value="스레드" />
+		<put-attribute name="next-link" value="Logging" />
+		<put-attribute name="next-title" value="로깅" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Logging" extends="lectureTemplate">
+		<put-attribute name="title" value="Logging" />
+		<put-attribute name="keywords" value="Log,Logging,FileWriter(),log4j,Logger,rootLogger,appender,ConsoleAppender,SimpleLayout,DailyRollingFileAppender,DatePattern,PatternLayout,ConversionPattern,isInfoEnabled(),info(),log4j.properties,log4j.rootLogger,log4j.appender.console,log4j.appender.console.layout,log4j.appender.file,fatal,error,warn,info,debug,trace,log4j.xml,jakarta Commons logging,commons-logging.properties" />
+		<put-attribute name="description" value="This chapter describes Logging" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Logging.jsp" />
+		<put-attribute name="prev-link" value="Stream" />
+		<put-attribute name="prev-title" value="스트림" />
+		<put-attribute name="next-link" value="Socket" />
+		<put-attribute name="next-title" value="소켓" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/Socket" extends="lectureTemplate">
+		<put-attribute name="title" value="Socket" />
+		<put-attribute name="keywords" value="Java Socket Programming,EchoServer,EchoClient,Socket,ServerSocket,accept()" />
+		<put-attribute name="description" value="This chapter describes Java Socket" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/Socket.jsp" />
+		<put-attribute name="prev-link" value="Logging" />
+		<put-attribute name="prev-title" value="로깅" />
+		<put-attribute name="next-link" value="RMI" />
+		<put-attribute name="next-title" value="RMI" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<definition name="java/RMI" extends="lectureTemplate">
+		<put-attribute name="title" value="RMI" />
+		<put-attribute name="keywords" value="RMI,Hello.java,Server.java,Remote,RemoteException,UnicastRemoteOjbect,exportObject(),LocateRegistry,getRegistry(),bind(),start rmiregistry,rmiregistry &amp;,EJB 기반기술" />
+		<put-attribute name="description" value="This chapter describes RMI" />
+		<put-attribute name="content" value="/WEB-INF/jsp/java/RMI.jsp" />
+		<put-attribute name="prev-link" value="Socket" />
+		<put-attribute name="prev-title" value="소켓" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
+	</definition>
+	<!-- JDBC -->
+	<definition name="jdbc/JDBC-Intro" extends="lectureTemplate">
+		<put-attribute name="title" value="JDBC Introduction" />
+		<put-attribute name="keywords" value="Database,RDBMS,SQL,JDBC" />
+		<put-attribute name="description" value="This chapter introduces RDBMS,SQL,JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Intro.jsp" />
+		<put-attribute name="next-link" value="How-to-install-Oracle" />
+		<put-attribute name="next-title" value="오라클 설치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/How-to-install-Oracle" extends="lectureTemplate">
+		<put-attribute name="title" value="Oracle Install" />
+		<put-attribute name="keywords" value="Oracle 10g,Oracle 10g Windows XP install" />
+		<put-attribute name="description" value="This chapter describes How to install Oracle RDBMS in Windows System" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/How-to-install-Oracle.jsp" />
+		<put-attribute name="next-link" value="Login-to-the-scott-account" />
+		<put-attribute name="next-title" value="SQL 연습 - SCOTT 계정" />
+		<put-attribute name="prev-link" value="How-to-install-Oracle" />
+		<put-attribute name="prev-title" value="오라클 설치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/Login-to-the-scott-account" extends="lectureTemplate">
+		<put-attribute name="title" value="To practice sql from scott account" />
+		<put-attribute name="keywords" value="Oracle SCOTT account,SQL*PLUS,EMP,DEPT,NULL,NUMBER,DATE,VARCHAR2,desc" />
+		<put-attribute name="description" value="This chapter describes SQL practices from scott account" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/Login-to-the-scott-account.jsp" />
+		<put-attribute name="next-link" value="SQL-SELECT-Statement" />
+		<put-attribute name="next-title" value="SELECT 문" />
+		<put-attribute name="prev-link" value="How-to-install-Oracle" />
+		<put-attribute name="prev-title" value="오라클 설치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/SQL-SELECT-Statement" extends="lectureTemplate">
+		<put-attribute name="title" value="To practice SELECT Statement " />
+		<put-attribute name="keywords" value="SQL,SELECT statement,SELECT" />
+		<put-attribute name="description" value="This chapter describes SELECT statement" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/SQL-SELECT-Statement.jsp" />
+		<put-attribute name="next-link" value="SQL-DML-Statement" />
+		<put-attribute name="next-title" value="DML 문" />
+		<put-attribute name="prev-link" value="Login-to-the-scott-account" />
+		<put-attribute name="prev-title" value="SQL 연습 - SCOTT 계정" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/SQL-DML-Statement" extends="lectureTemplate">
+		<put-attribute name="title" value="DML" />
+		<put-attribute name="keywords" value="SQL,DML,INSERT,UPDATE,DELETE" />
+		<put-attribute name="description" value="This chapter introduces DML" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/SQL-DML-Statement.jsp" />
+		<put-attribute name="next-link" value="Oracle-JDBC-Test" />
+		<put-attribute name="next-title" value="오라클 JDBC 테스트" />
+		<put-attribute name="prev-link" value="SQL-SELECT-Statement" />
+		<put-attribute name="prev-title" value="SELECT 문" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/Oracle-JDBC-Test" extends="lectureTemplate">
+		<put-attribute name="title" value="Oracle JDBC Test" />
+		<put-attribute name="keywords" value="Oracle JDBC Driver,오라클 JDBC 드라이버 설치방법,오라클 JDBC 드라이버 테스트,GetEmp.java" />
+		<put-attribute name="description" value="This chapter describes how to use JDBC Driver" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/Oracle-JDBC-Test.jsp" />
+		<put-attribute name="next-link" value="Guide-to-using-JDBC" />
+		<put-attribute name="next-title" value="JDBC 프로그래밍 방법" />
+		<put-attribute name="prev-link" value="SQL-DML-Statement" />
+		<put-attribute name="prev-title" value="DML 문" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/Guide-to-using-JDBC" extends="lectureTemplate">
+		<put-attribute name="title" value="Guide to using JDBC" />
+		<put-attribute name="keywords" value="Guide to using JDBC,Class.forName(),DriverManager.getConnection(,,)" />
+		<put-attribute name="description" value="This chapter discusses JDBC Programming" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/Guide-to-using-JDBC.jsp" />
+		<put-attribute name="next-link" value="JDBC-Create-Table" />
+		<put-attribute name="next-title" value="테이블 생성" />
+		<put-attribute name="prev-link" value="Oracle-JDBC-Test" />
+		<put-attribute name="prev-title" value="오라클 JDBC 테스트" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Create-Table" extends="lectureTemplate">
+		<put-attribute name="title" value="JDBC Introduction" />
+		<put-attribute name="keywords" value="JDBC,Create table" />
+		<put-attribute name="description" value="This chapter describes How to create table using JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Create-Table.jsp" />
+		<put-attribute name="next-link" value="JDBC-Insert" />
+		<put-attribute name="next-title" value="JDBC로 INSERT" />
+		<put-attribute name="prev-link" value="Guide-to-using-JDBC" />
+		<put-attribute name="prev-title" value="JDBC 프로그래밍 방법" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Insert" extends="lectureTemplate">
+		<put-attribute name="title" value="To insert records using JDBC" />
+		<put-attribute name="keywords" value="JDBC,INSERT" />
+		<put-attribute name="description" value="How to insert records using JDBC.Do not connect SQL*PLUS when you test JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Insert.jsp" />
+		<put-attribute name="next-link" value="JDBC-Select" />
+		<put-attribute name="next-title" value="JDBC로 SELECT" />
+		<put-attribute name="prev-link" value="JDBC-Create-Table" />
+		<put-attribute name="prev-title" value="테이블 생성" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Select" extends="lectureTemplate">
+		<put-attribute name="title" value="Select records using JDBC" />
+		<put-attribute name="keywords" value="JDBC,SELECT" />
+		<put-attribute name="description" value="This chapter describes How to select records using JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Select.jsp" />
+		<put-attribute name="next-link" value="JDBC-Update" />
+		<put-attribute name="next-title" value="JDBC로 UPDATE" />
+		<put-attribute name="prev-link" value="JDBC-Insert" />
+		<put-attribute name="prev-title" value="JDBC로 INSERT" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Update" extends="lectureTemplate">
+		<put-attribute name="title" value="Update records using JDBC" />
+		<put-attribute name="keywords" value="JDBC UPDATE" />
+		<put-attribute name="description" value="This chapter describes How to update records using JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Update.jsp" />
+		<put-attribute name="next-link" value="PreparedStatement" />
+		<put-attribute name="next-title" value="PreparedStatement" />
+		<put-attribute name="prev-link" value="JDBC-Select" />
+		<put-attribute name="prev-title" value="JDBC로 UPDATE" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/PreparedStatement" extends="lectureTemplate">
+		<put-attribute name="title" value="PreparedStatement" />
+		<put-attribute name="keywords" value="JDBC PreparedStatement" />
+		<put-attribute name="description" value="This chapter introduces JDBC PreparedStatement" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/PreparedStatement.jsp" />
+		<put-attribute name="next-link" value="JDBC-Join" />
+		<put-attribute name="next-title" value="JDBC로 테이블 조인" />
+		<put-attribute name="prev-link" value="JDBC-Update" />
+		<put-attribute name="prev-title" value="JDBC로 UPDATE" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Join" extends="lectureTemplate">
+		<put-attribute name="title" value="How to join tables using JDBC" />
+		<put-attribute name="keywords" value="JDBC Join example" />
+		<put-attribute name="description" value="This chapter introduces Join example using JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Join.jsp" />
+		<put-attribute name="next-link" value="JDBC-Transaction" />
+		<put-attribute name="next-title" value="JDBC로 트랜잭션" />
+		<put-attribute name="prev-link" value="PreparedStatement" />
+		<put-attribute name="prev-title" value="PreparedStatement" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JDBC-Transaction" extends="lectureTemplate">
+		<put-attribute name="title" value="Transaction using JDBC" />
+		<put-attribute name="keywords" value="JDBC,Transaction" />
+		<put-attribute name="description" value="This chapter describes JDBC Transaction" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JDBC-Transaction.jsp" />
+		<put-attribute name="next-link" value="Connection-Pool" />
+		<put-attribute name="next-title" value="Connection Pool" />
+		<put-attribute name="prev-link" value="JDBC-Join" />
+		<put-attribute name="prev-title" value="JDBC로 테이블 조인" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/Connection-Pool" extends="lectureTemplate">
+		<put-attribute name="title" value="Connection Pool" />
+		<put-attribute name="keywords" value="Connection Pooling,DBCP" />
+		<put-attribute name="description" value="This chapter introduces JDBC Connection Pooling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/Connection-Pool.jsp" />
+		<put-attribute name="next-link" value="Namecard" />
+		<put-attribute name="next-title" value="명함관리" />
+		<put-attribute name="prev-link" value="JDBC-Transaction" />
+		<put-attribute name="prev-title" value="JDBC로 트랜잭션" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/Namecard" extends="lectureTemplate">
+		<put-attribute name="title" value="JDBC,Namecard Mini Project" />
+		<put-attribute name="keywords" value="JDBC Namecard example" />
+		<put-attribute name="description" value="This chapter introduces JDBC Namecard Project" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/Namecard.jsp" />
+		<put-attribute name="next-link" value="JavaBank" />
+		<put-attribute name="next-title" value="자바은행" />
+		<put-attribute name="prev-link" value="Connection-Pool" />
+		<put-attribute name="prev-title" value="Connection Pool" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<definition name="jdbc/JavaBank" extends="lectureTemplate">
+		<put-attribute name="title" value="JavaBank" />
+		<put-attribute name="keywords" value="JDBC,JavaBank Mini Project" />
+		<put-attribute name="description" value="This chapter introduces JDBC JavaBank Project" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jdbc/JavaBank.jsp" />
+		<put-attribute name="prev-link" value="Namecard" />
+		<put-attribute name="prev-title" value="명함관리" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jdbc/jdbc-sub.jsp" />
+	</definition>
+	<!-- JSP -->
+	<definition name="jsp/How-to-install-Tomcat" extends="lectureTemplate">
+		<put-attribute name="title" value="Tomcat Install" />
+		<put-attribute name="keywords" value="Tomcat,ROOT Application,ROOT.xml,web.xml" />
+		<put-attribute name="description" value="How to install Tomcat" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/How-to-install-Tomcat.jsp" />
+		<put-attribute name="next-link" value="Namecard-Webapp" />
+		<put-attribute name="next-title" value="명함관리를 웹 애플리케이션으로" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Namecard-Webapp" extends="lectureTemplate">
+		<put-attribute name="title" value="Namecard Webapp" />
+		<put-attribute name="keywords" value="Namecard Web Application" />
+		<put-attribute name="description" value="Convert JDBC Namecard example to Web Application" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Namecard-Webapp.jsp" />
+		<put-attribute name="next-link" value="Web-Application" />
+		<put-attribute name="next-title" value="웹 애플리케이션이란?" />
+		<put-attribute name="prev-link" value="How-to-install-Tomcat" />
+		<put-attribute name="prev-title" value="Tomcat 설치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Web-Application" extends="lectureTemplate">
+		<put-attribute name="title" value="Web Application" />
+		<put-attribute name="keywords" value="Servlets Container,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,Packing" />
+		<put-attribute name="description" value="This chapter describes about Web Application?" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Web-Application.jsp" />
+		<put-attribute name="next-link" value="Web-Application-Directory-Structure" />
+		<put-attribute name="next-title" value="웹 애플리케이션 작성 실습" />
+		<put-attribute name="prev-link" value="Namecard-Webapp" />
+		<put-attribute name="prev-title" value="명함관리를 웹 애플리케이션으로" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Web-Application-Directory-Structure" extends="lectureTemplate">
+		<put-attribute name="title" value="Web Application Directory Structure" />
+		<put-attribute name="keywords" value="How to create a new Web Application,Web Application Directory Structure,Tomcat Admin Tool,tomcat-users.xml,Context file,How to change ROOT Application" />
+		<put-attribute name="description" value="This chapter describes about Web Application Directory Structure" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Web-Application-Directory-Structure.jsp" />
+		<put-attribute name="next-link" value="Servlets" />
+		<put-attribute name="next-title" value="서블릿" />
+		<put-attribute name="prev-link" value="Web-Application" />
+		<put-attribute name="prev-title" value="웹 애플리케이션이란?" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Servlets" extends="lectureTemplate">
+		<put-attribute name="title" value="Servlets" />
+		<put-attribute name="keywords" value="Servlets Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
+		<put-attribute name="description" value="This chapter describes about Servlets Spec" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Servlets.jsp" />
+		<put-attribute name="next-link" value="JSP" />
+		<put-attribute name="next-title" value="JSP" />
+		<put-attribute name="prev-link" value="Web-Application-Directory-Structure" />
+		<put-attribute name="prev-title" value="웹 애플리케이션 작성 실습" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/JSP" extends="lectureTemplate">
+		<put-attribute name="title" value="JSP" />
+		<put-attribute name="keywords" value="JSP Spec,Directives,Scriptlet,Declarations,EL,Actions,Implicit Objects" />
+		<put-attribute name="description" value="This chapter describes about JSP spec" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/JSP.jsp" />
+		<put-attribute name="next-link" value="Accessing-database-from-JSP_Servlets" />
+		<put-attribute name="next-title" value="데이터베이스 연동" />
+		<put-attribute name="prev-link" value="Servlets" />
+		<put-attribute name="prev-title" value="서블릿" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Accessing-database-from-JSP_Servlets" extends="lectureTemplate">
+		<put-attribute name="title" value="Accessing database from JSP and Servlets" />
+		<put-attribute name="keywords" value="Accessing database from JSP and Servlets" />
+		<put-attribute name="description" value="This chapter describes that how to access a database using JSP and Servlets" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Accessing-database-from-JSP_Servlets.jsp" />
+		<put-attribute name="next-link" value="BBS-Study" />
+		<put-attribute name="next-title" value="게시판" />
+		<put-attribute name="prev-link" value="JSP" />
+		<put-attribute name="prev-title" value="JSP" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/BBS-Study" extends="lectureTemplate">
+		<put-attribute name="title" value="BBS Study" />
+		<put-attribute name="keywords" value="BBS" />
+		<put-attribute name="description" value="This chapter describes about BBS" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/BBS-Study.jsp" />
+		<put-attribute name="next-link" value="Thread-BBS" />
+		<put-attribute name="next-title" value="계층형 게시판" />
+		<put-attribute name="prev-link" value="Accessing-database-from-JSP_Servlets" />
+		<put-attribute name="prev-title" value="데이터베이스 연동" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Thread-BBS" extends="lectureTemplate">
+		<put-attribute name="title" value="Thread BBS" />
+		<put-attribute name="keywords" value="Thread BBS" />
+		<put-attribute name="description" value="This chapter describes about Thread BBS" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Thread-BBS.jsp" />
+		<put-attribute name="next-link" value="BBS-Model1" />
+		<put-attribute name="next-title" value="모델 1 게시판" />
+		<put-attribute name="prev-link" value="BBS-Study" />
+		<put-attribute name="prev-title" value="게시판" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/BBS-Model1" extends="lectureTemplate">
+		<put-attribute name="title" value="To create BBS in the Model1" />
+		<put-attribute name="keywords" value="Model1 BBS" />
+		<put-attribute name="description" value="This chapter describes that how to make a BBS using Model1" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/BBS-Model1.jsp" />
+		<put-attribute name="next-link" value="DataSource" />
+		<put-attribute name="next-title" value="DataSource" />
+		<put-attribute name="prev-link" value="Thread-BBS" />
+		<put-attribute name="prev-title" value="계층형 게시판" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/DataSource" extends="lectureTemplate">
+		<put-attribute name="title" value="DataSource" />
+		<put-attribute name="keywords" value="DataSource,Set Up DataSource in Tomcat" />
+		<put-attribute name="description" value="This chapter describes about DataSource" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/DataSource.jsp" />
+		<put-attribute name="next-link" value="Model2" />
+		<put-attribute name="next-title" value="모델 2" />
+		<put-attribute name="prev-link" value="BBS-Model1" />
+		<put-attribute name="prev-title" value="모델 1 게시판" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Model2" extends="lectureTemplate">
+		<put-attribute name="title" value="Model2" />
+		<put-attribute name="keywords" value="Model2,BBS,Model,View,Controller" />
+		<put-attribute name="description" value="This chapter describes about Model2" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Model2.jsp" />
+		<put-attribute name="next-link" value="Paging" />
+		<put-attribute name="next-title" value="페이징 로직 재사용" />
+		<put-attribute name="prev-link" value="DataSource" />
+		<put-attribute name="prev-title" value="DataSource" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<definition name="jsp/Paging" extends="lectureTemplate">
+		<put-attribute name="title" value="Try to reuse Paging Process" />
+		<put-attribute name="keywords" value="Reuse Paging Process,Pageable,Paginator" />
+		<put-attribute name="description" value="This chapter discusses the paging process reuse" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp/Paging.jsp" />
+		<put-attribute name="prev-link" value="Model2" />
+		<put-attribute name="prev-title" value="모델 2" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp/jsp-sub.jsp" />
+	</definition>
+	<!-- CSS-Layout -->
+	<definition name="css-layout/div-element-arrangement" extends="lectureTemplate">
+		<put-attribute name="title" value="Main Elements Arrangement" />
+		<put-attribute name="keywords" value="CSS positioning, CSS layout, negative margin" />
+		<put-attribute name="description" value="This chapter describes about CSS Positioning" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/div-element-arrangement.jsp" />
+		<put-attribute name="next-link" value="main-menu-styling" />
+		<put-attribute name="next-title" value="주요 엘리먼트 배치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/main-menu-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="main-menu styling" />
+		<put-attribute name="keywords" value="CSS menu,main menu" />
+		<put-attribute name="description" value="This chapter describes about css menu styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/main-menu-styling.jsp" />
+		<put-attribute name="next-link" value="sub-menu-styling" />
+		<put-attribute name="next-title" value="서브 메뉴" />
+		<put-attribute name="prev-link" value="div-element-arrangement" />
+		<put-attribute name="prev-title" value="주요 엘리먼트 배치" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/sub-menu-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="sub-menu styling" />
+		<put-attribute name="keywords" value="css menu,sub menu" />
+		<put-attribute name="description" value="This chapter describes about css menu styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/sub-menu-styling.jsp" />
+		<put-attribute name="next-link" value="header-footer-content-styling" />
+		<put-attribute name="next-title" value="#header, #footer, #content" />
+		<put-attribute name="prev-link" value="main-menu-styling" />
+		<put-attribute name="prev-title" value="메인 메뉴" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/header-footer-content-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="header,footer,content styling" />
+		<put-attribute name="keywords" value="header, footer, content styling" />
+		<put-attribute name="description" value="This chapter describes about css styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/header-footer-content-styling.jsp" />
+		<put-attribute name="next-link" value="bbs-list-styling" />
+		<put-attribute name="next-title" value="목록" />
+		<put-attribute name="prev-link" value="sub-menu-styling" />
+		<put-attribute name="prev-title" value="서브 메뉴" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/bbs-list-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="bbs list styling" />
+		<put-attribute name="keywords" value="css styling,bbs list" />
+		<put-attribute name="description" value="This chapter describes about css styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/bbs-list-styling.jsp" />
+		<put-attribute name="next-link" value="bbs-view-styling" />
+		<put-attribute name="next-title" value="상세보기" />
+		<put-attribute name="prev-link" value="header-footer-content-styling" />
+		<put-attribute name="prev-title" value="#header, #footer, #content" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/bbs-view-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="bbs view styling" />
+		<put-attribute name="keywords" value="css styling" />
+		<put-attribute name="description" value="This chapter describes about css styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/bbs-view-styling.jsp" />
+		<put-attribute name="next-link" value="bbs-write_form-styling" />
+		<put-attribute name="next-title" value="글쓰기, 회원가입" />
+		<put-attribute name="prev-link" value="bbs-list-styling" />
+		<put-attribute name="prev-title" value="목록" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<definition name="css-layout/bbs-write_form-styling" extends="lectureTemplate">
+		<put-attribute name="title" value="bbs write_form styling" />
+		<put-attribute name="keywords" value="css styling" />
+		<put-attribute name="description" value="This chapter describes about css styling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/css-layout/bbs-write_form-styling.jsp" />
+		<put-attribute name="prev-link" value="bbs-view-styling" />
+		<put-attribute name="prev-title" value="상세보기" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/css-layout/css-layout-sub.jsp" />
+	</definition>
+	<!-- JSP Project -->
+	<definition name="jsp-pjt/Dynamic-Web-Project-Set-Up" extends="lectureTemplate">
+		<put-attribute name="title" value="Dynamic Web Project Set Up" />
+		<put-attribute name="keywords" value="JSP mini Project,Dynamic Web Project" />
+		<put-attribute name="description" value="This chapter describes about How to create a dynamic web project in eclipse" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/Dynamic-Web-Project-Set-Up.jsp" />
+		<put-attribute name="next-link" value="database-design" />
+		<put-attribute name="next-title" value="데이터베이스 설계" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/database-design" extends="lectureTemplate">
+		<put-attribute name="title" value="Database Design" />
+		<put-attribute name="keywords" value="JSP mini project,BBS member table,database design" />
+		<put-attribute name="description" value="This chapter describes about Database Design" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/database-design.jsp" />
+		<put-attribute name="next-link" value="how-to-use-log4j" />
+		<put-attribute name="next-title" value="로깅" />
+		<put-attribute name="prev-link" value="Dynamic-Web-Project-Set-Up" />
+		<put-attribute name="prev-title" value="개발 준비" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/how-to-use-log4j" extends="lectureTemplate">
+		<put-attribute name="title" value="How to use log4j" />
+		<put-attribute name="keywords" value="JSP mini project,logging policy" />
+		<put-attribute name="description" value="This chapter describes about the log4j" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/how-to-use-log4j.jsp" />
+		<put-attribute name="next-link" value="bbs-prototype" />
+		<put-attribute name="next-title" value="프로토타입" />
+		<put-attribute name="prev-link" value="database-design" />
+		<put-attribute name="prev-title" value="데이터베이스 설계" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/bbs-prototype" extends="lectureTemplate">
+		<put-attribute name="title" value="BBS project's prototype" />
+		<put-attribute name="keywords" value="JSP mini project's prototype" />
+		<put-attribute name="description" value="This chapter describes about BBS mini project's prototype" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/bbs-prototype.jsp" />
+		<put-attribute name="next-link" value="bbs-javabeans" />
+		<put-attribute name="next-title" value="자바빈즈" />
+		<put-attribute name="prev-link" value="how-to-use-log4j" />
+		<put-attribute name="prev-title" value="로깅" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/bbs-javabeans" extends="lectureTemplate">
+		<put-attribute name="title" value="BBS project's javabeans" />
+		<put-attribute name="keywords" value="BBS mini project's javabeans" />
+		<put-attribute name="description" value="This chapter describes about JSP mini project's javabeans" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/bbs-javabeans.jsp" />
+		<put-attribute name="next-link" value="bbs-implementation" />
+		<put-attribute name="next-title" value="구현" />
+		<put-attribute name="prev-link" value="bbs-prototype" />
+		<put-attribute name="prev-title" value="프로토타입" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/bbs-implementation" extends="lectureTemplate">
+		<put-attribute name="title" value="BBS mini project implementation" />
+		<put-attribute name="keywords" value="BBS mini project" />
+		<put-attribute name="description" value="This chapter implementates BBS mini project" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/bbs-implementation.jsp" />
+		<put-attribute name="next-link" value="bbs-model-2" />
+		<put-attribute name="next-title" value="모델 2" />
+		<put-attribute name="prev-link" value="bbs-javabeans" />
+		<put-attribute name="prev-title" value="자바빈즈" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<definition name="jsp-pjt/bbs-model-2" extends="lectureTemplate">
+		<put-attribute name="title" value="Migrate Model1 to Model2" />
+		<put-attribute name="keywords" value="BBS mini project,model2" />
+		<put-attribute name="description" value="This chapter migrates Model1 to Model2" />
+		<put-attribute name="content" value="/WEB-INF/jsp/jsp-pjt/bbs-model-2.jsp" />
+		<put-attribute name="prev-link" value="bbs-implementation" />
+		<put-attribute name="prev-title" value="구현" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/jsp-pjt/jsp-pjt-sub.jsp" />
+	</definition>
+	<!-- Spring -->
+	<definition name="spring/building-java-projects-with-maven" extends="lectureTemplate">
+		<put-attribute name="title" value="Building java projects with maven" />
+		<put-attribute name="keywords" value="maven" />
+		<put-attribute name="description" value="This chapter describles how to build java projects with maven" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/building-java-projects-with-maven.jsp" />
+		<put-attribute name="next-link" value="di" />
+		<put-attribute name="next-title" value="Spring DI" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/di" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring DI" />
+		<put-attribute name="keywords" value="spring di" />
+		<put-attribute name="description" value="This chapter describes about Spring DI" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/di.jsp" />
+		<put-attribute name="next-link" value="aop" />
+		<put-attribute name="next-title" value="Spring AOP" />
+		<put-attribute name="prev-link" value="building-java-projects-with-maven" />
+		<put-attribute name="prev-title" value="메이븐으로 스프링 실습" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/aop" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring AOP" />
+		<put-attribute name="keywords" value="Spring AOP" />
+		<put-attribute name="description" value="This chapter describes about Spring AOP" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/aop.jsp" />
+		<put-attribute name="next-link" value="jdbc" />
+		<put-attribute name="next-title" value="Spring JDBC" />
+		<put-attribute name="prev-link" value="di" />
+		<put-attribute name="prev-title" value="Spring DI" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/jdbc" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring JDBC" />
+		<put-attribute name="keywords" value="Spring JDBC" />
+		<put-attribute name="description" value="This chapter describes about Spring JDBC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/jdbc.jsp" />
+		<put-attribute name="next-link" value="transaction" />
+		<put-attribute name="next-title" value="Spring 트랜잭션" />
+		<put-attribute name="prev-link" value="aop" />
+		<put-attribute name="prev-title" value="Spring AOP" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/transaction" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Transaction" />
+		<put-attribute name="keywords" value="Spring Transaction" />
+		<put-attribute name="description" value="This chapter describes about Spring Transaction" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/transaction.jsp" />
+		<put-attribute name="next-link" value="spring-mvc-with-maven" />
+		<put-attribute name="next-title" value="메이븐으로 스프링 실습" />
+		<put-attribute name="prev-link" value="jdbc" />
+		<put-attribute name="prev-title" value="Spring JDBC" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/spring-mvc-with-maven" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring MVC with maven" />
+		<put-attribute name="keywords" value="Spring MVC" />
+		<put-attribute name="description" value="This chapter describes about Spring MVC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/spring-mvc-with-maven.jsp" />
+		<put-attribute name="next-link" value="spring-mvc-bbs" />
+		<put-attribute name="next-title" value="메이븐으로 Spring MVC 실습" />
+		<put-attribute name="prev-link" value="transaction" />
+		<put-attribute name="prev-title" value="Spring 트랜잭션" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/spring-mvc-bbs" extends="lectureTemplate">
+		<put-attribute name="title" value="BBS with Spring MVC" />
+		<put-attribute name="keywords" value="BBS,Spring MVC" />
+		<put-attribute name="description" value="This chapter describes BBS project with Spring MVC" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/spring-mvc-bbs.jsp" />
+		<put-attribute name="next-link" value="spring-security-config" />
+		<put-attribute name="next-title" value="시큐리티 설정과 웹 요청 보안" />
+		<put-attribute name="prev-link" value="spring-mvc-with-maven" />
+		<put-attribute name="prev-title" value="메이븐으로 Spring MVC 실습" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/spring-security-config" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Security Configuration" />
+		<put-attribute name="keywords" value="Spring Security Configuration" />
+		<put-attribute name="description" value="This chapter describes about Spring Security Configuration" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/spring-security-config.jsp" />
+		<put-attribute name="next-link" value="method-security" />
+		<put-attribute name="next-title" value="메소드 보안" />
+		<put-attribute name="prev-link" value="spring-mvc-bbs" />
+		<put-attribute name="prev-title" value="Spring MVC 게시판" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/method-security" extends="lectureTemplate">
+		<put-attribute name="title" value="Method Security" />
+		<put-attribute name="keywords" value="spring,spring security,method security" />
+		<put-attribute name="description" value="This chapter describes about method security" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/method-security.jsp" />
+		<put-attribute name="next-link" value="security-at-view-layer" />
+		<put-attribute name="next-title" value="뷰 레벨 보안" />
+		<put-attribute name="prev-link" value="spring-security-config" />
+		<put-attribute name="prev-title" value="시큐리티 설정과 웹 요청 보안" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/security-at-view-layer" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Security at view layer" />
+		<put-attribute name="keywords" value="spring,spring security,security at view layer" />
+		<put-attribute name="description" value="This chapter describes about spring security at view layer" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/security-at-view-layer.jsp" />
+		<put-attribute name="next-link" value="bean-validation-at-signUp" />
+		<put-attribute name="next-title" value="회원가입" />
+		<put-attribute name="prev-link" value="method-security" />
+		<put-attribute name="prev-title" value="메소드 보안" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/bean-validation-at-signUp" extends="lectureTemplate">
+		<put-attribute name="title" value="Bean validation at signUp" />
+		<put-attribute name="keywords" value="spring,bean validation" />
+		<put-attribute name="description" value="This chapter describes about bean validation" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/bean-validation-at-signUp.jsp" />
+		<put-attribute name="next-link" value="bean-validation-at-editAccount" />
+		<put-attribute name="next-title" value="내정보 수정" />
+		<put-attribute name="prev-link" value="security-at-view-layer" />
+		<put-attribute name="prev-title" value="뷰 레벨 보안" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/bean-validation-at-editAccount" extends="lectureTemplate">
+		<put-attribute name="title" value="Bean validation at editAccount" />
+		<put-attribute name="keywords" value="spring,bean validation" />
+		<put-attribute name="description" value="This chapter describes about bean validation" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/bean-validation-at-editAccount.jsp" />
+		<put-attribute name="next-link" value="bean-validation-at-changePasswd" />
+		<put-attribute name="next-title" value="비밀번호 변경" />
+		<put-attribute name="prev-link" value="bean-validation-at-signUp" />
+		<put-attribute name="prev-title" value="회원가입" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/bean-validation-at-changePasswd" extends="lectureTemplate">
+		<put-attribute name="title" value="Bean validation at changePasswd" />
+		<put-attribute name="keywords" value="spring,bean validation" />
+		<put-attribute name="description" value="This chapter describes about bean validation" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/bean-validation-at-changePasswd.jsp" />
+		<put-attribute name="next-link" value="bean-validation-at-write-article" />
+		<put-attribute name="next-title" value="글쓰기" />
+		<put-attribute name="prev-link" value="bean-validation-at-editAccount" />
+		<put-attribute name="prev-title" value="내 정보 수정" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/bean-validation-at-write-article" extends="lectureTemplate">
+		<put-attribute name="title" value="Bean validation at write article" />
+		<put-attribute name="keywords" value="spring,bean validation" />
+		<put-attribute name="description" value="This chapter describes about bean validation" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/bean-validation-at-write-article.jsp" />
+		<put-attribute name="next-link" value="bean-validation-at-modify-article" />
+		<put-attribute name="next-title" value="게시글 수정" />
+		<put-attribute name="prev-link" value="bean-validation-at-changePasswd" />
+		<put-attribute name="prev-title" value="비밀번호 변경" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/bean-validation-at-modify-article" extends="lectureTemplate">
+		<put-attribute name="title" value="Bean validation at modify article" />
+		<put-attribute name="keywords" value="bean validation" />
+		<put-attribute name="description" value="This chapter describes about bean validation" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/bean-validation-at-modify-article.jsp" />
+		<put-attribute name="next-link" value="i18n" />
+		<put-attribute name="next-title" value="국제화" />
+		<put-attribute name="prev-link" value="bean-validation-at-write-article" />
+		<put-attribute name="prev-title" value="글쓰기" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/i18n" extends="lectureTemplate">
+		<put-attribute name="title" value="i18n" />
+		<put-attribute name="keywords" value="i18n" />
+		<put-attribute name="description" value="This chapter describes about i18n" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/i18n.jsp" />
+		<put-attribute name="next-link" value="downloadController" />
+		<put-attribute name="next-title" value="다운로드 컨트롤러" />
+		<put-attribute name="prev-link" value="bean-validation-at-modify-article" />
+		<put-attribute name="prev-title" value="게시글 수정" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/downloadController" extends="lectureTemplate">
+		<put-attribute name="title" value="Controller for download" />
+		<put-attribute name="keywords" value="Controller for download" />
+		<put-attribute name="description" value="This chapter describes about download controller" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/downloadController.jsp" />
+		<put-attribute name="next-link" value="Setting-development-environment-in-Ubuntu" />
+		<put-attribute name="next-title" value="우분투 개발환경" />
+		<put-attribute name="prev-link" value="i18n" />
+		<put-attribute name="prev-title" value="국제화" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/Setting-development-environment-in-Ubuntu" extends="lectureTemplate">
+		<put-attribute name="title" value="Setting development environment in Ubuntu" />
+		<put-attribute name="keywords" value="spring,ubuntu" />
+		<put-attribute name="description" value="This chapter describes Setting development environment in Ubuntu" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/Setting-development-environment-in-Ubuntu.jsp" />
+		<put-attribute name="next-link" value="SpringBbs-with-MySql" />
+		<put-attribute name="next-title" value="MySql용 SpringBbs" />
+		<put-attribute name="prev-link" value="downloadController" />
+		<put-attribute name="prev-title" value="다운로드 컨트롤러" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/SpringBbs-with-MySql" extends="lectureTemplate">
+		<put-attribute name="title" value="SpringBbs with MySql" />
+		<put-attribute name="keywords" value="spring,SpringBbs,Mysql" />
+		<put-attribute name="description" value="This chapter describes SpringBbs with MySql" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/SpringBbs-with-MySql.jsp" />
+		<put-attribute name="next-link" value="migrating-to-spring-security-4" />
+		<put-attribute name="next-title" value="Spring Security 4" />
+		<put-attribute name="prev-link" value="Setting-development-environment-in-Ubuntu" />
+		<put-attribute name="prev-title" value="우분투 개발환경" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/migrating-to-spring-security-4" extends="lectureTemplate">
+		<put-attribute name="title" value="Migrating to Spring Security 4" />
+		<put-attribute name="keywords" value="spring,spring security 4" />
+		<put-attribute name="description" value="This chapter describes Migrating to Spring Security 4" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/migrating-to-spring-security-4.jsp" />
+		<put-attribute name="next-link" value="spring-security-access-denied-handling" />
+		<put-attribute name="next-title" value="접근 거부 다루기" />
+		<put-attribute name="prev-link" value="SpringBbs-with-MySql" />
+		<put-attribute name="prev-title" value="MySql용 SpringBbs" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/spring-security-access-denied-handling" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Security Access Denied Handling" />
+		<put-attribute name="keywords" value="spring,spring security" />
+		<put-attribute name="description" value="This chapter describes about spring security access denied handling" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/spring-security-access-denied-handling.jsp" />
+		<put-attribute name="next-link" value="spring-security-password-encoder" />
+		<put-attribute name="next-title" value="패스워드 암호화" />
+		<put-attribute name="prev-link" value="migrating-to-spring-security-4" />
+		<put-attribute name="prev-title" value="Spring Security 4" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<definition name="spring/spring-security-password-encoder" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Security Password encoder" />
+		<put-attribute name="keywords" value="spring security,password encoder" />
+		<put-attribute name="description" value="This chapter describes about spring security password encoder" />
+		<put-attribute name="content" value="/WEB-INF/jsp/spring/spring-security-password-encoder.jsp" />
+		<put-attribute name="prev-link" value="spring-security-access-denied-handling" />
+		<put-attribute name="prev-title" value="접근거부 다루기" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/spring/spring-sub.jsp" />
+	</definition>
+	<!-- JavaScript -->
+	<definition name="javascript/introduction" extends="lectureTemplate">
+		<put-attribute name="title" value="JavaScript Introduction" />
+		<put-attribute name="keywords" value="javascript" />
+		<put-attribute name="description" value="javascript" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/introduction.jsp" />
+		<put-attribute name="next-link" value="dataType" />
+		<put-attribute name="next-title" value="기본 데이터형" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/dataType" extends="lectureTemplate">
+		<put-attribute name="title" value="JavaScript Data Type" />
+		<put-attribute name="keywords" value="javascript,data type" />
+		<put-attribute name="description" value="javascript's data type" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/dataType.jsp" />
+		<put-attribute name="next-link" value="handling-select-items" />
+		<put-attribute name="next-title" value="select 엘리먼트 다루기" />
+		<put-attribute name="prev-link" value="introduction" />
+		<put-attribute name="prev-title" value="자바스크립트 소개" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/handling-select-items" extends="lectureTemplate">
+		<put-attribute name="title" value="Handling select element with javascript" />
+		<put-attribute name="keywords" value="javascript,select element" />
+		<put-attribute name="description" value="handling a select element with javascript" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/handling-select-items.jsp" />
+		<put-attribute name="next-link" value="difference-between-javascript-and-java" />
+		<put-attribute name="next-title" value="자바와 다른점" />
+		<put-attribute name="prev-link" value="dataType" />
+		<put-attribute name="prev-title" value="기본 데이터형" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/difference-between-javascript-and-java" extends="lectureTemplate">
+		<put-attribute name="title" value="Difference between javascript and java" />
+		<put-attribute name="keywords" value="javascript" />
+		<put-attribute name="description" value="Difference between javascript and java" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/difference-between-javascript-and-java.jsp" />
+		<put-attribute name="next-link" value="Number" />
+		<put-attribute name="next-title" value="Number" />
+		<put-attribute name="prev-link" value="handling-select-items" />
+		<put-attribute name="prev-title" value="select 엘리먼트 다루기" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Number" extends="lectureTemplate">
+		<put-attribute name="title" value="Number" />
+		<put-attribute name="keywords" value="javascript,Number Object" />
+		<put-attribute name="description" value="JavaScript's Number Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Number.jsp" />
+		<put-attribute name="next-link" value="String" />
+		<put-attribute name="next-title" value="String" />
+		<put-attribute name="prev-link" value="difference-between-javascript-and-java" />
+		<put-attribute name="prev-title" value="자바와 다른점" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/String" extends="lectureTemplate">
+		<put-attribute name="title" value="String" />
+		<put-attribute name="keywords" value="javascript,String" />
+		<put-attribute name="description" value="JavaScript's String Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/String.jsp" />
+		<put-attribute name="next-link" value="RegExp" />
+		<put-attribute name="next-title" value="정규표현식" />
+		<put-attribute name="prev-link" value="Number" />
+		<put-attribute name="prev-title" value="Number" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/RegExp" extends="lectureTemplate">
+		<put-attribute name="title" value="RegExp" />
+		<put-attribute name="keywords" value="RegExp" />
+		<put-attribute name="description" value="JavaScript's RegExp Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/RegExp.jsp" />
+		<put-attribute name="next-link" value="Date" />
+		<put-attribute name="next-title" value="Date" />
+		<put-attribute name="prev-link" value="String" />
+		<put-attribute name="prev-title" value="String" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Date" extends="lectureTemplate">
+		<put-attribute name="title" value="Date" />
+		<put-attribute name="keywords" value="Date" />
+		<put-attribute name="description" value="JavaScript's Date Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Date.jsp" />
+		<put-attribute name="next-link" value="Array" />
+		<put-attribute name="next-title" value="배열" />
+		<put-attribute name="prev-link" value="RegExp" />
+		<put-attribute name="prev-title" value="정규표현식" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Array" extends="lectureTemplate">
+		<put-attribute name="title" value="Array" />
+		<put-attribute name="keywords" value="javascript,Array" />
+		<put-attribute name="description" value="JavaScript's Array Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Array.jsp" />
+		<put-attribute name="next-link" value="Math" />
+		<put-attribute name="next-title" value="Math" />
+		<put-attribute name="prev-link" value="Date" />
+		<put-attribute name="prev-title" value="Date" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Math" extends="lectureTemplate">
+		<put-attribute name="title" value="Math" />
+		<put-attribute name="keywords" value="javascript,Math" />
+		<put-attribute name="description" value="JavaScript's Math Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Math.jsp" />
+		<put-attribute name="next-link" value="Function" />
+		<put-attribute name="next-title" value="함수" />
+		<put-attribute name="prev-link" value="Array" />
+		<put-attribute name="prev-title" value="배열" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Function" extends="lectureTemplate">
+		<put-attribute name="title" value="Function" />
+		<put-attribute name="keywords" value="javascript,Function" />
+		<put-attribute name="description" value="JavaScript's Function Object" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Function.jsp" />
+		<put-attribute name="next-link" value="javascript-form-validation" />
+		<put-attribute name="next-title" value="유효성 검사" />
+		<put-attribute name="prev-link" value="Math" />
+		<put-attribute name="prev-title" value="Math" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/javascript-form-validation" extends="lectureTemplate">
+		<put-attribute name="title" value="Form Validation with JavaScript" />
+		<put-attribute name="keywords" value="javascript,form validation" />
+		<put-attribute name="description" value="form validation with javascript" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/javascript-form-validation.jsp" />
+		<put-attribute name="next-link" value="Cookie" />
+		<put-attribute name="next-title" value="쿠키 다루기" />
+		<put-attribute name="prev-link" value="Function" />
+		<put-attribute name="prev-title" value="함수" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/Cookie" extends="lectureTemplate">
+		<put-attribute name="title" value="Handling Cookie with JavaScript" />
+		<put-attribute name="keywords" value="javascript,Cookie" />
+		<put-attribute name="description" value="Handling Cookie with JavaScript" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/Cookie.jsp" />
+		<put-attribute name="next-link" value="decoupling-html-and-javascript" />
+		<put-attribute name="next-title" value="DOM 실습 - HTML에서 스크립트 분리" />
+		<put-attribute name="prev-link" value="javascript-form-validation" />
+		<put-attribute name="prev-title" value="유효성 검사" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>
+	<definition name="javascript/decoupling-html-and-javascript" extends="lectureTemplate">
+		<put-attribute name="title" value="Decoupling HTML and JavaScript" />
+		<put-attribute name="keywords" value="javascript,DOM" />
+		<put-attribute name="description" value="Decoupling HTML and JavaScript" />
+		<put-attribute name="content" value="/WEB-INF/jsp/javascript/decoupling-html-and-javascript.jsp" />
+		<put-attribute name="prev-link" value="Cookie" />
+		<put-attribute name="prev-title" value="쿠키 다루기" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/javascript/javascript-sub.jsp" />
+	</definition>	
 </tiles-definitions>
