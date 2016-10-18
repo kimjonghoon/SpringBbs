@@ -6,7 +6,7 @@
 <h2><spring:message code="user.login.heading" /></h2>
 
 <c:if test="${not empty param.error }">
-	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>
+	<h3>${SPRING_SECURITY_LAST_EXCEPTION.message }</h3>
 </c:if>
 <c:url var="loginUrl" value="/login" />
 <form action="${loginUrl }" method="post">

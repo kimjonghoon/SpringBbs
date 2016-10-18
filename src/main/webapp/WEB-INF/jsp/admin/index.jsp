@@ -12,15 +12,16 @@ function goDel(user) {
 	}
 }
 </script>
-<h1>Member</h1>
+
+<h2><spring:message code="user.list" /></h2>
 
 <table class="table-in-article">
 <tr>
 	<th>No</th>
-	<th>Full Name</th>
-	<th>Email</th>
-	<th>Mobile</th>
-	<th>ROLE</th>
+	<th><spring:message code="user.full.name" /></th>
+	<th><spring:message code="user.email" /></th>
+	<th><spring:message code="user.mobile" /></th>
+	<th><spring:message code="user.authority" /></th>
 	<th>X</th>
 </tr>
 <c:forEach var="user" items="${list }" varStatus="status">

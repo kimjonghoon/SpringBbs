@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
-<h1>Modify User</h1>
+<h2><spring:message code="user.modify" /></h2>
 
 <sf:form id="editAccountForm" action="editAccount" method="post" commandName="user">
 <sf:hidden path="email" value="${user.email }" />
@@ -26,7 +26,7 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="2"><input type="submit" value="전송" /></td>
+	<td colspan="2"><input type="submit" value="<spring:message code="global.submit" />" /></td>
 </tr>
 </table>
 </sf:form>
@@ -47,7 +47,7 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="2"><input type="submit" value="전송" /></td>
+	<td colspan="2"><input type="submit" value="<spring:message code="global.submit" />" /></td>
 </tr>
 </table>
 </sf:form>
@@ -61,16 +61,13 @@
 <sf:errors path="*" cssClass="error" />
 <table>
 <tr>
-	<td>Current ROLE : ${user.authority }</td>
-</tr>
-<tr>
 	<td>
 		<sf:input path="authority" /><br />
 		<sf:errors path="authority" cssClass="error" />
 	</td>
 </tr>
 <tr>
-	<td colspan="2"><input type="submit" value="전송" /></td>
+	<td colspan="2"><input type="submit" value="<spring:message code="global.submit" />" /></td>
 </tr>
 </table>
 </sf:form>
@@ -79,7 +76,7 @@
 <form action="/admin">
 	<input type="hidden" name="page" value="${param.page }" />
 	<input type="hidden" name="search" value="${param.search }" />
-	<input type="submit" value="회원목록" />
+	<input type="submit" value="<spring:message code="user.list" />" />
 </form>
 </div>
 	
