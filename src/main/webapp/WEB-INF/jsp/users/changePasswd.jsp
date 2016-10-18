@@ -42,7 +42,7 @@ ${user.mobile }<br />
 	<td><input type="password" name="confirm" /></td>
 </tr>
 <tr>
-	<td colspan="2"><input type="submit" value="확인" /></td>
+	<td colspan="2"><input type="submit" value="<spring:message code="global.submit" />" /></td>
 </tr>
 </table>
 </sf:form>

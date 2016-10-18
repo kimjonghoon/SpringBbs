@@ -44,7 +44,7 @@ function check() {
 	</td>
 </tr>
 <tr>
-	<td colspan="2"><input type="submit" value="전송" /></td>
+	<td colspan="2"><input type="submit" value="<spring:message code="global.submit" />" /></td>
 </tr>
 </table>
 </sf:form>

@@ -2,7 +2,7 @@
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
-<h2><spring:message code="user.changepasswd.confirm.heading" /></h2>
+<h2><spring:message code="user.changePasswd.confirm.heading" /></h2>
 
-<spring:message code="user.changepasswd.confirm.login.again" />
+<spring:message code="user.changePasswd.confirm.login.again" />
 <input type="button" value="<spring:message code="user.login" />" onclick="javascript:location.href='login'" />
