@@ -130,18 +130,18 @@ ul#nav {
 	left: 17px;
 }	
 
-ul#nav li {
+ul#nav > li {
 	float: left;
 	padding: 0 17px 0 8px;
 	background: url('../images/bull_circle.gif') no-repeat 0 50%;
 }
 
-ul#nav li a {
+ul#nav > li > a {
 	text-decoration: none;
 	color: #FFF;
 }
 
-ul#nav li a:hover {
+ul#nav > li > a:hover {
 	text-decoration: underline;
 	background: none;
 	color: #FFF;
