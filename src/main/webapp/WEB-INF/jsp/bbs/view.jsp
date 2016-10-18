@@ -87,7 +87,7 @@
         <a href="#" class="comment-delete" title="${comment.commentNo }"><spring:message code="global.delete" /></a>
     </span>
 	</security:authorize>
-    <p class="view-comment">${comment.memo }</p>
+    <p class="view-comment">${comment.htmlMemo }</p>
     <form class="modify-comment" action="/bbs/updateComment" method="post" style="display: none;">
     <p>
         <input type="hidden" name="commentNo" value="${comment.commentNo }" />
@@ -95,10 +95,10 @@
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        <input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     <div style="text-align: right;">
-            <a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#"><spring:message code="global.cancel" /></a>
+            <a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#" class="comments-modify-cancel"><spring:message code="global.cancel" /></a>
     </div>
     <div>
         <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
@@ -259,4 +259,5 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
     </form>
+   	<div id="delete-confirm" title="<spring:message code="delete.confirm" />"></div>
 </div>

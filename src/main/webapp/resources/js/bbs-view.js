@@ -7,7 +7,8 @@ $(document).ready(function() {
 	});
 
 	$('#file-list a:not(.download)').click(function() {
-		var chk = confirm("정말로 삭제하시겠습니까?");
+		var msg = $('#delete-confirm').attr('title');
+		var chk = confirm(msg);
 
 		if (chk == true) {
 			var $attachFileNo = this.title;
@@ -18,7 +19,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-//	덧글반복
+	//Comments
 	$('.comments').click(function(e) {
 		if ($(e.target).is('.comment-toggle')) {
 			var $form = $(e.target).parent().parent().find('.modify-comment');
@@ -33,7 +34,8 @@ $(document).ready(function() {
 			}
 			return false;
 		} else if ($(e.target).is('.comment-delete')) {
-			var chk = confirm("정말로 삭제하시겠습니까?");
+			var msg = $('#delete-confirm').attr('title');
+			var chk = confirm(msg);
 			if (chk == true) {
 				var $commentNo = $(e.target).attr('title');
 				$('#deleteCommentForm input[name*=commentNo]').val($commentNo);
@@ -43,14 +45,14 @@ $(document).ready(function() {
 		}
 	});
 
-	//form 안의 수정하기 링크
+	//Modify Link in form
 	$('.modify-comment a.comments-modify-submit').click(function(e) {
 		$(e.target).parent().parent().submit();
 		return false;
 	});
 
-	//form 안의 취소 링크
-	$('.modify-comment a:contains("취소")').click(function(e) {
+	//Cancel Link in form
+	$('.modify-comment a.comments-modify-cancel').click(function(e) {
 		var $form = $(e.target).parent().parent();
 		var $p = $(e.target).parent().parent().parent().find('.view-comment');
 
@@ -72,56 +74,57 @@ $(document).ready(function() {
 		return false;
 	});
 
-//	수정 버튼
+	//Modify Button
 	$('.goModify').click(function() {
 		$('#modifyForm').submit();
 	});
 
-	//삭제 버튼
+	//Del Button
 	$('.goDelete').click(function() {
-		var chk = confirm('정말로 삭제하시겠습니까?');
+		var msg = $('#delete-confirm').attr('title');
+		var chk = confirm(msg);
 		if (chk == true) {
 			$('#delForm').submit();
 		}
 	});
 
-	//다음글 버튼
+	//Next Article Button
 	$('.next-article').click(function() {
 		var $articleNo = this.title;
 		goView($articleNo);
 	});
 
-	//이전글 버튼
+	//Prev Article Button
 	$('.prev-article').click(function() {
 		var $articleNo = this.title;
 		goView($articleNo);
 	});
 
-	//목록버튼
+	//List Button
 	$('.goList').click(function() {
 		$('#listForm').submit();
 	});
 
-	//새글쓰기 버튼
+	//Write Button
 	$('.goWrite').click(function() {
 		$('#writeForm').submit();
 	});
 
-	//상세보기 안의 목록의 제목링크
+	//Title Link in view.jsp
 	$('#list-table a').click(function() {
 		var $articleNo = this.title;
 		goView($articleNo);
 		return false;
 	});
 
-	//페이징 처리
+	//Paging
 	$('#paging a').click(function() {
 		var $curPage = this.title;
 		goList($curPage);
 		return false;
 	});
 
-	//검색 버튼 위의 새글쓰기 버튼
+	//Write Button on Search Button
 	$('#list-menu input').click(function() {
 		$('#writeForm').submit();
 	});

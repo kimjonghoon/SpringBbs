@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <script type="text/javascript">
 function goDel(user) {
-	var check = confirm("정말로 삭제하겠습니까?")
+	var check = confirm('<spring:message code="delete.confirm" />')
 	if (check) {
 		var form = document.getElementById("delUserForm");
 		form.email.value = user;

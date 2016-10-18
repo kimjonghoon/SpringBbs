@@ -574,3 +574,7 @@ ul#nav > li > a:hover {
 	line-height: 1;
 	color: #7a7a7a;
 }
+.view-comment {
+	font-size: 0.9em;
+	line-height: 1em;
+}
