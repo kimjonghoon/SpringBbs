@@ -12,6 +12,6 @@
 	<li><a href="/javascript/introduction">JavaScript</a></li>
 	<li><a href="/bbs/free/?curPage=1">BBS</a></li>
 <security:authorize access="hasRole('ROLE_ADMIN')">
-	<li><a href="/admin?page=1" class="main-admin">Admin</a></li>
+	<li><a href="/admin?page=1">Admin</a></li>
 </security:authorize>
 </ul>

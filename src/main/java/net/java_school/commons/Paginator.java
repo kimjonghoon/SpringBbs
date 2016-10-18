@@ -4,6 +4,7 @@ public class Paginator {
 
 	public NumbersForPagingProcess getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
 		int totalPage = totalRecord / numPerPage;
+		if (totalRecord % numPerPage != 0) totalPage++;
 		int totalBlock = totalPage / pagePerBlock;
 		if (totalPage % pagePerBlock != 0) totalBlock++;
 		int block = curPage / pagePerBlock;
