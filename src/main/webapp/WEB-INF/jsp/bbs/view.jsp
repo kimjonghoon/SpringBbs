@@ -5,13 +5,12 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-<script src="/js/bbs-view.js"></script>
+<script src="/resources/js/bbs-view.js"></script>
 
 <div id="url-navi">BBS</div>
 
-<h1>${boardNm }</h1>
+<h2>${boardNm }</h2>
 
-<div id="bbs">
 <div class="view-menu" style="margin-bottom: 5px;">
     <security:authorize access="#email == principal.username or hasAuthority('ROLE_ADMIN')">
     <div class="fl">
@@ -31,7 +30,7 @@
     </div>
 </div>
 
-<table>
+<table class="bbs-table">
 <tr>
     <th style="width: 37px;text-align: left;vertical-align: top;">TITLE</th>
     <th style="text-align: left;color: #555;">${title }</th>
@@ -139,7 +138,7 @@
 </div>
 
 <!--  BBS list in detailed Article -->
-<table id="list-table">
+<table id="list-table" class="bbs-table">
 <tr>
 	<th style="width: 60px;">NO</th>
 	<th>TITLE</th>
@@ -208,8 +207,6 @@
 	</div>
 	</form>
 </div>
-
-</div><!-- #bbs end -->
 
 <div id="form-group" style="display: none">
     <form id="listForm" action="/bbs/${boardCd }/" method="get">

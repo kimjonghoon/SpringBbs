@@ -16,7 +16,7 @@ function check() {
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
-<h1><spring:message code="user.changePasswd.heading" /></h1>
+<h2><spring:message code="user.changePasswd.heading" /></h2>
 
 ${user.name }<br />
 ${user.mobile }<br />

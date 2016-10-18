@@ -10,7 +10,7 @@ function check() {
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
-<h1><spring:message code="user.bye.heading" /></h1>
+<h2><spring:message code="user.bye.heading" /></h2>
 
 <form id="byeForm" action="bye" method="post" onsubmit="return check()">
 <p style="margin: 0;padding: 0;">

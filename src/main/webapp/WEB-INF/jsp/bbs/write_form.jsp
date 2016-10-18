@@ -21,16 +21,17 @@ function goView() {
 
 <div id="url-navi"><spring:message code="global.bbs" /></div>
 
-<h1>${boardNm }</h1>
-<div id="bbs">
-<h2><spring:message code="bbs.new.article" /></h2>
+<h2>${boardNm }</h2>
+
+<h3><spring:message code="bbs.new.article" /></h3>
+
 <sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="curPage" value="${param.curPage }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error" />
-<table id="write-form">
+<table id="write-form" class="bbs-table">
 <tr>
     <td><spring:message code="global.title" /></td>
     <td>
@@ -57,21 +58,18 @@ function goView() {
     </c:if>
 </div>
 </sf:form>
-</div>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="${param.articleNo }" method="get">
-    <p>
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+    <form id="viewForm" action="/bbs/${param.boardCd }/${param.articleNo }" method="get">
+    <div>
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
+    </div>
+    </form>    
+    <form id="listForm" action="/bbs/${param.boardCd }/" method="get">
+    <div>
+        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="searchWord" value="${param.searchWord }" />
+    </div>
     </form>
-    <form id="listForm" action="/bbs/" method="get">
-    <p>
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
-        <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
-    </form>   
 </div>

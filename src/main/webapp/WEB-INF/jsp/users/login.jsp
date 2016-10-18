@@ -3,7 +3,7 @@
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
-<h1><spring:message code="user.login.heading" /></h1>
+<h2><spring:message code="user.login.heading" /></h2>
 
 <c:if test="${not empty param.error }">
 	<h2>${SPRING_SECURITY_LAST_EXCEPTION.message }</h2>

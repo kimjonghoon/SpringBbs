@@ -18,17 +18,16 @@ function goView() {
 
 <div id="url-navi"><spring:message code="global.bbs" /></div>
 
-<h1>${boardNm }</h1>
+<h2>${boardNm }</h2>
 
-<div id="bbs">
-<h2><spring:message code="global.modify" /></h2>
+<h3><spring:message code="global.modify" /></h3>
 <sf:form id="modifyForm" action="modify?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="curPage" value="${param.curPage }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error"/>
-<table id="write-form">
+<table id="write-form" class="bbs-table">
 <tr>
     <td><spring:message code="global.title" /></td>
     <td>
@@ -52,15 +51,12 @@ function goView() {
     <input type="button" value="<spring:message code="bbs.back.to.article" />" onclick="goView()" />
 </div>
 </sf:form>
-</div>
 		
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="view" method="get">
-    <p>
-        <input type="hidden" name="articleNo" value="${param.articleNo }" />
-        <input type="hidden" name="boardCd" value="${param.boardCd }" />
+    <form id="viewForm" action="/bbs/${param.boardCd }/${param.articleNo }" method="get">
+    <div>
         <input type="hidden" name="curPage" value="${param.curPage }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
-    </form>
+    </div>
+    </form>    
 </div>

@@ -12,7 +12,7 @@ function check() {
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
-<h1><spring:message code="user.signup.heading" /></h1>
+<h2><spring:message code="user.signup.heading" /></h2>
 
 <sf:form id="signUpForm" action="signUp" method="post" commandName="user" onsubmit="return check();">
 <sf:errors path="*" cssClass="error" />

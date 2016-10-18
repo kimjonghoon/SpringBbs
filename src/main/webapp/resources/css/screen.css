@@ -6,7 +6,7 @@ html, body {
 	font-family: "돋움", dotum, sans-serif; 
 }
 
-div, input, select, textarea, td {
+input, select, textarea, td {
 	color: #646464; 
 	font-size: 12px;
 	font-family: "돋움", dotum, sans-serif; 
@@ -223,35 +223,29 @@ ul#nav li a:hover {
 	border-bottom: 1px solid #DAEAAA;
 }
 
-#content h1 {
-	margin: 9px 0;
-	padding: 7px 0;
-	font-size: 15px;
-}
-
-#bbs table {
+.bbs-table {
 	width: 100%;
-	margin: 0 0 7px 0;
+	margin: 1em 0;
 }
 
-#bbs table th {
+.bbs-table th {
 	color: #92B91C;
 	border-top: 1px solid #92B91C;
 	border-bottom: 1px solid #92B91C;
 }
 
-#bbs td {
+.bbs-table td {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-bottom: silver 1px solid;
 }
 
-#bbs td a {
+.bbs-table td a {
 	color: #555;
 	text-decoration: none;
 }
 
-#bbs td a:hover {
+.bbs-table td a:hover {
 	color:#555;
 	text-decoration: underline;
 }
@@ -466,27 +460,28 @@ ul#nav li a:hover {
 }
 #content > h1 {
 	margin: 0;
+	margin-bottom: 0.3em;
 	font-size: 1.4em;
 	clear: both;
 }
 #content > h2 {
-	margin-top: 15px;
-	margin-bottom: 0;
+	margin-top: 1em;
+	margin-bottom: 0.3em;
 	font-size: 1.3em;
 }
 #content > h3 {
-	margin-top: 10px;
-	margin-bottom: 0;
+	margin-top: 0.7em;
+	margin-bottom: 0.3em;
 	font-size: 1.2em;
 }
 #content > h4 {
-	margin-top: 5px;
-	margin-bottom: 0;
+	margin-top: 0.5em;
+	margin-bottom: 0.3em;
 	font-size: 1.1em;
 }
 #content > h5 {
-	margin-top: 3px;
-	margin-bottom: 0;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
 	font-size: 1em;
 }
 #last-modified {
@@ -575,7 +570,7 @@ ul#nav li a:hover {
 	padding-top: 3px;
 	text-align: right;
 	font-family: tahoma, arial, sans-serif;
-	font-size: 9px;
+	font-size: 10px;
 	line-height: 1;
 	color: #7a7a7a;
 }
