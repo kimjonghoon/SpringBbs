@@ -6,14 +6,23 @@
 
 <mapper namespace="net.java_school.mybatis.BoardMapper">
 
-    <select id="selectListOfBoardCodeBoardName" resultType="Board">
-        SELECT boardcd,boardnm FROM board
+	<select id="selectOneBoard" parameterType="string" resultType="Board">
+		SELECT * FROM board WHERE boardcd = #{boardCd}
+	</select>
+
+    <select id="selectAllBoard" resultType="Board">
+        SELECT * FROM board
     </select>
     
-    <select id="selectListOfBoardCodeBoardKoreanName" resultType="Board">
-        SELECT boardcd,boardnm_ko boardnm FROM board
-    </select>
-	
+    <insert id="insertBoard" parameterType="Board">
+        INSERT INTO board VALUES (#{boardCd}, #{boardNm}, #{boardNm_ko})
+    </insert>
+    
+    <update id="updateBoard" parameterType="Board">
+        UPDATE board SET boardnm = #{boardNm}, boardnm_ko = #{boardNm_ko}
+        WHERE boardcd = #{boardCd}
+    </update>
+
 	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
 	SELECT articleno, title, regdate, hit, attachfileNum, commentNum 
 	FROM (
@@ -149,10 +158,6 @@
 	<delete id="deleteFile" parameterType="int">
 		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
 	</delete>
-
-	<select id="selectOneBoardName" parameterType="string" resultType="Board">
-		SELECT boardnm,boardnm_ko FROM board WHERE boardcd = #{boardCd}
-	</select>
 
 	<insert id="insertComment" parameterType="Comment">
 		INSERT INTO comments (commentno, articleno, email, memo, regdate)

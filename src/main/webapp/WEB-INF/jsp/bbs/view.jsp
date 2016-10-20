@@ -9,7 +9,7 @@
 
 <div id="url-navi">BBS</div>
 
-<h2>${boardNm }</h2>
+<h2>${boardName }</h2>
 
 <div class="view-menu" style="margin-bottom: 5px;">
     <security:authorize access="#email == principal.username or hasAuthority('ROLE_ADMIN')">

@@ -5,13 +5,21 @@ import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface BoardService {
-	//게시판 목록
+	//게시판
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public List<Board> getListOfBoardCodeAndBoardName();
+	public Board getBoard(String boardCd);
 
 	//게시판 목록
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public List<Board> getListOfBoardCodeAndBoardKoreanName();
+	public List<Board> getBoards();
+	
+	//게시판 생성
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public void createBoard(Board board);
+
+	//게시판 수정
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public void editBoard(Board board);
 	
 	//목록
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -61,10 +69,6 @@ public interface BoardService {
 	//첨부파일 삭제
 	@PreAuthorize("#attachFile.email == principal.username or hasRole('ROLE_ADMIN')")
 	public void removeAttachFile(AttachFile attachFile);
-
-	//게시판 이름
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public Board getBoardNm(String boardCd);
 
 	//댓글 쓰기
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

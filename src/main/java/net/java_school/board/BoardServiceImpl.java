@@ -12,17 +12,29 @@ import net.java_school.mybatis.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
+
+	//게시판
+	@Override
+	public Board getBoard(String boardCd) {
+		return boardMapper.selectOneBoard(boardCd);
+	}
 	
 	//게시판 목록
 	@Override
-	public List<Board> getListOfBoardCodeAndBoardName() {
-		return boardMapper.selectListOfBoardCodeBoardName();
+	public List<Board> getBoards() {
+		return boardMapper.selectAllBoard();
 	}
-
-	//게시판 목록
+	
+	//게시판 생성
 	@Override
-	public List<Board> getListOfBoardCodeAndBoardKoreanName() {
-		return boardMapper.selectListOfBoardCodeBoardKoreanName();
+	public void createBoard(Board board) {
+		boardMapper.insertBoard(board);
+	}
+	
+	//게시판 수정
+	@Override
+	public void editBoard(Board board) {
+		boardMapper.updateBoard(board);
 	}
 	
 	//목록
@@ -117,12 +129,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void removeAttachFile(AttachFile attachFile) {
 		boardMapper.deleteFile(attachFile.getAttachFileNo());
-	}
-
-	//게시판 이름
-	@Override
-	public Board getBoardNm(String boardCd) {
-		return boardMapper.selectOneBoardName(boardCd);
 	}
 
 	//댓글 쓰기

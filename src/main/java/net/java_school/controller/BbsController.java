@@ -37,19 +37,8 @@ public class BbsController extends Paginator {
 	@Autowired
 	private BoardService boardService;
 	
-	private List<Board> getBoards(String lang) {
-	    switch (lang) {
-	    case "en":
-	        return boardService.getListOfBoardCodeAndBoardName();
-	    case "ko":
-	        return boardService.getListOfBoardCodeAndBoardKoreanName();
-	    default:
-	        return boardService.getListOfBoardCodeAndBoardName();//설정에서 로케일 디폴트를 영어로 설정했으므로  
-	    }
-	}
-
 	private String getBoardName(String boardCd, String lang) {
-		Board board = boardService.getBoardNm(boardCd);
+		Board board = boardService.getBoard(boardCd);
 		
 		switch (lang) {
 		case "en":
@@ -90,10 +79,10 @@ public class BbsController extends Paginator {
 		model.addAttribute("lastPage", lastPage);
 		
 		String lang = locale.getLanguage();
-		List<Board> boards = this.getBoards(lang);
-		String boardNm = this.getBoardName(boardCd, lang);
+		List<Board> boards = boardService.getBoards();
+		String boardName = this.getBoardName(boardCd, lang);
 		model.addAttribute("boards", boards);
-		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardName", boardName);
 		
 		//파라미터로 전달되지 않는다.
 		model.addAttribute("boardCd", boardCd);
@@ -115,7 +104,7 @@ public class BbsController extends Paginator {
 		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
 		List<Comment> commentList = boardService.getCommentList(articleNo);
-		String boardNm = this.getBoardName(boardCd, lang);
+		String boardName = this.getBoardName(boardCd, lang);
 
 		//상세보기에서 볼 게시글 관련 정보
 		String title = article.getTitle();//제목
@@ -160,9 +149,9 @@ public class BbsController extends Paginator {
 		model.addAttribute("firstPage", firstPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("nextPage", nextPage);
-		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardName", boardName);
 
-		List<Board> boards = this.getBoards(lang);
+		List<Board> boards = boardService.getBoards();
 		model.addAttribute("boards", boards);
 		
 		//파라미터로 전달되지 않기에
@@ -176,10 +165,10 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/write_form", method=RequestMethod.GET)
 	public String writeForm(String boardCd, Locale locale, Model model) {
 		String lang = locale.getLanguage();
-		String boardNm = this.getBoardName(boardCd, lang);
-		List<Board> boards = this.getBoards(lang);
+		String boardName = this.getBoardName(boardCd, lang);
+		List<Board> boards = boardService.getBoards();
 		
-		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardName", boardName);
 		model.addAttribute("article", new Article());
 		model.addAttribute("boards", boards);
 
@@ -199,8 +188,8 @@ public class BbsController extends Paginator {
 			Principal principal) throws Exception {
 
 		if (bindingResult.hasErrors()) {
-			String boardNm = this.getBoardName(article.getBoardCd(), locale.getLanguage());
-			model.addAttribute("boardNm", boardNm);
+			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
+			model.addAttribute("boardName", boardName);
 			return "bbs/write_form";
 		}
 
@@ -303,13 +292,13 @@ public class BbsController extends Paginator {
 		
 		String lang = locale.getLanguage();
 		Article article = boardService.getArticle(articleNo);
-		String boardNm = this.getBoardName(boardCd, lang);
+		String boardName = this.getBoardName(boardCd, lang);
 
 		//수정페이지에서의 보일 게시글 정보
 		model.addAttribute("article", article);
-		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardName", boardName);
 		
-		List<Board> boards = this.getBoards(lang);
+		List<Board> boards = boardService.getBoards();
 		model.addAttribute("boards", boards);
 		
 		return "bbs/modify_form";
@@ -326,8 +315,8 @@ public class BbsController extends Paginator {
 			MultipartHttpServletRequest mpRequest) throws Exception {
 
 		if (bindingResult.hasErrors()) {
-			String boardNm = this.getBoardName(article.getBoardCd(), locale.getLanguage());
-			model.addAttribute("boardNm", boardNm);
+			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
+			model.addAttribute("boardName", boardName);
 			return "bbs/modify_form";
 		}
 

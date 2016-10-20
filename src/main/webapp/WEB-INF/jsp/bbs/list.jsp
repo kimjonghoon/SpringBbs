@@ -23,7 +23,7 @@ function goWrite() {
 
 <div id="url-navi"><spring:message code="global.bbs" /></div>
 
-<h2>${boardNm }</h2>
+<h2>${boardName }</h2>
 
 <table class="bbs-table">
 <tr>
@@ -39,7 +39,7 @@ function goWrite() {
 	<td>
 		<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">
-			<img src="/images/attach.png" alt="<spring:message code="global.attach.file" />" />
+			<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">
 			<span class="bbs-strong">[${article.commentNum }]</span>

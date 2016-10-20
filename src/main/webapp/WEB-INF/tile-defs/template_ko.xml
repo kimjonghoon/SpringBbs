@@ -55,7 +55,7 @@
 		<put-attribute name="keywords" value="게시판" />
 		<put-attribute name="description" value="게시판" />
 		<put-attribute name="content" value="/WEB-INF/jsp/bbs/{1}.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/bbs/bbs-menu.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/bbs/bbs-menu_ko.jsp" />
 	</definition>
 	<!-- admin -->		
 	<definition name="admin/*" extends="defaultTemplate">
