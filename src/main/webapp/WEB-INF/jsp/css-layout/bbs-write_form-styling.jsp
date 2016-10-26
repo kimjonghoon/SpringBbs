@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <div id="last-modified">Last Modified : 2014.7.31</div>
 <h1>글쓰기, 회원가입</h1>
 
