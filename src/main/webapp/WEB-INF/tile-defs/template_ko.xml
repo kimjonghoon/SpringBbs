@@ -41,7 +41,7 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/error.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/error-menu.jsp" />
 	</definition>
-	<!-- 회원 -->		
+	<!-- 회원 -->
 	<definition name="users/*" extends="defaultTemplate">
 		<put-attribute name="title" value="회원" />
 		<put-attribute name="keywords" value="회원" />
