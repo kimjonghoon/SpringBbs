@@ -72,14 +72,14 @@ SpringBbs
 	insert into board values ('data', 'Data', '자료실');
 	commit;
 
-##have to edit
+##Have to do
  
-1. net.java_school.commons.WebContants.java's UPLOAD_PATH
+1. Edit **UPLOAD_PATH** in net.java_school.commons.WebContants.java
 
-2. /src/main/resources/log4j.xml 
-&lt;param name="File"  value="{Full path of log file}"/&gt; 
+2. Edit log file location in /src/main/resources/log4j.xml
+&lt;param name="File" value="**Full path of your log file**"/&gt; 
 
-3. ojdbc6.jar -&gt; {TOMCAT_HOME}/lib
+3.Copy the Oracle JDBC driver(ojdbc6.jar) to the {TOMCAT_HOME}/lib directory.
 
 ##How to compile and Run
 
