@@ -84,7 +84,7 @@ SpringBbs
 2. Edit full path of your log file in /src/main/resources/log4j.xml's &lt;param name="File" value="**Full path of your log file**"/&gt;
 3. Copy the Oracle JDBC driver(ojdbc6.jar) to the {TOMCAT_HOME}/lib directory
 
-##How to compile and Run
+##How to compile
 
 $ mvn clean compile war:inplace
     
