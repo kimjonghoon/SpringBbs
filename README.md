@@ -1,9 +1,15 @@
 SpringBbs
 ============
 
-#BBS using Spring MVC + MyBatis-Spring + Spring-Security + Bean Validation
+##A Bulletin Board Program with 
+* Spring MVC
+* MyBatis-Spring
+* Spring-Security
+* Bean Validation
+* i18n
+* Apache Tiles
 
-##Database design
+##Database Design
 
 	GRANT CONNECT,RESOURCE,UNLIMITED TABLESPACE TO java IDENTIFIED BY school;
 	ALTER USER java DEFAULT TABLESPACE USERS;
