@@ -8,7 +8,6 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 	form.boardCd.value = boardCd;
 	form.boardNm.value = boardNm;
 	form.boardNm_ko.value = boardNm_ko;
-	return false;
 }
 </script>
 
