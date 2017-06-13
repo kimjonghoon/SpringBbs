@@ -21,6 +21,7 @@ function goView() {
 <h2>${boardName }</h2>
 
 <h3><spring:message code="global.modify" /></h3>
+
 <sf:form id="modifyForm" action="modify?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />

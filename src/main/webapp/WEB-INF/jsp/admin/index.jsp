@@ -27,8 +27,8 @@ function goDel(user) {
 <c:forEach var="user" items="${list }" varStatus="status">
 <tr>
 	<td>${listItemNo - status.index }</td>
-	<td><a href="/admin/editAccount?email=${user.email }&page=${param.page }&search=${param.search }">${user.name }</a></td>
-	<td>${user.email }</td>
+	<td>${user.name }</td>
+	<td><a href="/admin/editAccount?email=${user.email }&page=${param.page }&search=${param.search }">${user.email }</a></td>
 	<td>${user.mobile }</td>
 	<td>${user.authority }</td>
 	<td><a href="javascript:goDel('${user.email }')">X</a></td>

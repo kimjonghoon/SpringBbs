@@ -179,11 +179,11 @@ public class BbsController extends Paginator {
 	//글쓰기
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write(@Valid Article article,
+			BindingResult bindingResult,
 			Integer curPage,
 			String searchWord,
-			BindingResult bindingResult,
-			Model model,
 			Locale locale,
+			Model model,
 			MultipartHttpServletRequest mpRequest,
 			Principal principal) throws Exception {
 
