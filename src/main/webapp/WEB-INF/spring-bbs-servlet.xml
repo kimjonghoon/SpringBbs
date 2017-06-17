@@ -20,14 +20,15 @@
 
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven validator="validator" />
 
 	<context:component-scan
 		base-package="net.java_school.controller,
 			net.java_school.board,
 			net.java_school.user" />
 
-	<mybatis:scan base-package="net.java_school.mybatis" />
+<!-- 	<mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
+	<mybatis:scan base-package="net.java_school.mybatis.mysql" /> 
 
 	<!-- ViewResolver -->
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -67,5 +68,9 @@
 			<property name="paramName" value="lang" />
 		</bean>
 	</mvc:interceptors>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
 
 </beans>

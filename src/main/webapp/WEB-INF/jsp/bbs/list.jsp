@@ -5,9 +5,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <script type="text/javascript">
-function goList(curPage) {
+function goList(page) {
 	var form = document.getElementById("listForm");
-	form.curPage.value = curPage;
+	form.page.value = page;
 	form.submit();
 }
 function goView(articleNo) {
@@ -62,7 +62,7 @@ function goWrite() {
 
 	<c:forEach var="i" begin="${firstPage }" end="${lastPage }" varStatus="stat">
 		<c:choose>
-		<c:when test="${param.curPage == i}">
+		<c:when test="${param.page == i}">
 			<span class="bbs-strong">${i }</span>
 		</c:when>
 		<c:otherwise>
@@ -84,7 +84,7 @@ function goWrite() {
 <div id="search">
 	<form id="searchForm" method="get">
 	<div>
-		<input type="hidden" name="curPage" value="1" />
+		<input type="hidden" name="page" value="1" />
 		<input type="text" name="searchWord" size="15" maxlength="30" />
 		<input type="submit" value="<spring:message code="global.search" />" />
 	</div>	
@@ -94,20 +94,20 @@ function goWrite() {
 <div id="form-group">
 	<form id="listForm" method="get">
 	<p>
-		<input type="hidden" name="curPage" />
+		<input type="hidden" name="page" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
 	</form>
        <form id="viewForm" action="/bbs/${boardCd }/" method="get">
        <p>
-           <input type="hidden" name="curPage" value="${param.curPage }" />
+           <input type="hidden" name="page" value="${param.page }" />
            <input type="hidden" name="searchWord" value="${param.searchWord }" />
        </p>
        </form>
 	<form id="writeForm" action="/bbs/write_form" method="get">
 	<p>
 		<input type="hidden" name="boardCd" value="${boardCd }" />
-		<input type="hidden" name="curPage" value="${param.curPage }" />
+		<input type="hidden" name="page" value="${param.page }" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
 	</form>

@@ -1,4 +1,4 @@
-package net.java_school.mybatis;
+package net.java_school.mybatis.oracle;
 
 import java.util.HashMap;
 import java.util.List;

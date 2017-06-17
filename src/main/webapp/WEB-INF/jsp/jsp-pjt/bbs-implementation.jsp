@@ -71,7 +71,7 @@ if (user == null) {
     if (url != null &amp;&amp; !url.equals("")) {
         response.sendRedirect(url);
     } else {
-        response.sendRedirect("../bbs/list.jsp?boardCd=free&amp;curPage=1");
+        response.sendRedirect("../bbs/list.jsp?boardCd=free&amp;page=1");
     }
 }
 %&gt;
@@ -266,7 +266,7 @@ response.sendRedirect("bye_confirm.jsp");
 request.setCharacterEncoding("UTF-8");
 
 String boardCd = request.getParameter("boardCd");
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 if (searchWord == null) searchWord = "";
 BoardService service = new BoardService();
@@ -277,7 +277,7 @@ int totalRecord = service.getTotalRecord(boardCd, searchWord);
 //2. numPerPage, pagePerBlock 설정
 int numPerPage = 10;
 int pagePerBlock = 10;
-PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+PagingHelper pagingHelper = new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
 
 //BoardService에 PagingHelper 주입
 service.setPagingHelper(pagingHelper);
@@ -299,7 +299,7 @@ String boardNm = service.getBoardNm(boardCd);
 <pre class="prettyprint">&lt;form action="list.jsp" method="get"&gt;
     &lt;p style="margin: 0;padding: 0;"&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="page" value="1" /&gt;
         &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
         &lt;input type="submit" value="검색" /&gt;
     &lt;/p&gt;
@@ -312,7 +312,7 @@ String boardNm = service.getBoardNm(boardCd);
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -320,14 +320,14 @@ String boardNm = service.getBoardNm(boardCd);
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -377,7 +377,7 @@ if (service.getPrevPage() != 0) {
 int firstPage = service.getFirstPage();
 int lastPage = service.getLastPage();
 for (int i = firstPage; i &lt;= lastPage; i++) {
-    if (curPage == i) {
+    if (page == i) {
 %&gt;</strong>
         &lt;span class="bbs-strong"&gt;&lt;%=i %&gt;&lt;/span&gt;       
 <strong>&lt;%
@@ -415,7 +415,7 @@ request.setCharacterEncoding("UTF-8");
 
 String articleNo = request.getParameter("articleNo");
 String boardCd = request.getParameter("boardCd");
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String searchWord = request.getParameter("searchWord");
 
 BoardService service = new BoardService();
@@ -526,14 +526,14 @@ if (articleNo != null) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -619,7 +619,7 @@ article.setBoardCd(boardCd);
 BoardService service = new BoardService();
 service.addArticle(article, attachFile);
 
-response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;curPage=1");</strong>
+response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;page=1");</strong>
 %&gt;
 </pre>
 
@@ -639,7 +639,7 @@ request.setCharacterEncoding("UTF-8");
 
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 String boardCd = request.getParameter("boardCd");
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 if (searchWord == null) searchWord = "";
 
@@ -649,7 +649,7 @@ BoardService service = new BoardService();
 int totalRecord = service.getTotalRecord(boardCd, searchWord);//총 레코드
 int numPerPage = 10;
 int pagePerBlock = 10;
-PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+PagingHelper pagingHelper = new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
 
 //BoardService에 PagingHelper 주입
 service.setPagingHelper(pagingHelper);
@@ -699,9 +699,9 @@ function modifyCommentToggle(articleNo) {
     form.style.display = form_display;
 }
 
-function goList(curPage) {
+function goList(page) {
     var form = document.getElementById("listForm");
-    form.curPage.value = curPage;
+    form.page.value = page;
     form.submit();
 }
 
@@ -849,7 +849,7 @@ for (int i = 0; i &lt; size; i++ ) {
         &lt;input type="hidden" name="commentNo" value="<strong>&lt;%=commentNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;div class="fr"&gt;
@@ -871,7 +871,7 @@ for (int i = 0; i &lt; size; i++ ) {
     &lt;p style="margin: 0;padding: 0;"&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;div id="addComment"&gt;
@@ -922,7 +922,7 @@ if (prevArticle != null) {
 <strong>&lt;%
 }
 %&gt;</strong>           
-        &lt;input type="button" value="목록" onclick="goList(<strong>'&lt;%=curPage %&gt;'</strong>)" /&gt;
+        &lt;input type="button" value="목록" onclick="goList(<strong>'&lt;%=page %&gt;'</strong>)" /&gt;
         &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -997,7 +997,7 @@ int firstPage = service.getFirstPage();
 int lastPage = service.getLastPage();
 
 for (int i = firstPage; i &lt;= lastPage; i++) {
-    if (curPage == i) {
+    if (page == i) {
 %&gt;</strong>
     &lt;span class="bbs-strong"&gt;<strong>&lt;%=i %&gt;</strong>&lt;/span&gt;
 <strong>&lt;%
@@ -1024,7 +1024,7 @@ if (service.getNextPage() != 0) {
     &lt;form action="list.jsp" method="get"&gt;
     &lt;p style="margin: 0;padding: 0;"&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="page" value="1" /&gt;
         &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
         &lt;input type="submit" value="검색" /&gt;
     &lt;/p&gt;  
@@ -1055,7 +1055,7 @@ if (service.getNextPage() != 0) {
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1063,7 +1063,7 @@ if (service.getNextPage() != 0) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1071,7 +1071,7 @@ if (service.getNextPage() != 0) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1079,7 +1079,7 @@ if (service.getNextPage() != 0) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1087,7 +1087,7 @@ if (service.getNextPage() != 0) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1096,7 +1096,7 @@ if (service.getNextPage() != 0) {
         &lt;input type="hidden" name="commentNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;   
@@ -1105,7 +1105,7 @@ if (service.getNextPage() != 0) {
         &lt;input type="hidden" name="attachFileNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;   
@@ -1131,7 +1131,7 @@ if (service.getNextPage() != 0) {
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
 로그인 체크를 통과하면 
 먼저 요청의 캐릭터 셋을 UTF-8으로 설정한다.
-boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서 댓글을 인서트 한다.
+boardCd, articleNo, page, searchWord, memo 파라미터를 받아서 댓글을 인서트 한다.
 댓글을 인서트 한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
 */
 <strong>
@@ -1144,7 +1144,7 @@ request.setCharacterEncoding("UTF-8");
 
 String boardCd = request.getParameter("boardCd");
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 String memo = request.getParameter("memo");
 
@@ -1157,7 +1157,7 @@ BoardService service = new BoardService();
 service.addComment(comment);
 
 searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
-response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>
 
@@ -1176,7 +1176,7 @@ response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boar
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
 작성자 체크를 통과하면
 요청의 캐릭터 셋을 UTF-8으로 설정한다.
-commentNo, boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서
+commentNo, boardCd, articleNo, page, searchWord, memo 파라미터를 받아서
 댓글을 업데이트한다.
 댓글을 업데이트한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
 */
@@ -1196,7 +1196,7 @@ if (user == null || !user.getEmail().equals(comment.getEmail())) {
 
 String boardCd = request.getParameter("boardCd");
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 
 String memo = request.getParameter("memo");
@@ -1210,7 +1210,7 @@ comment.setMemo(memo);
 service.modifyComment(comment);
 
 searchWord = java.net.URLEncoder.encode(searchWord,"UTF-8");
-response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>
 
@@ -1231,7 +1231,7 @@ response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boar
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다."); return;
 요청의 캐릭터 셋을 UTF-8으로 설정해야 한다.
 요청에서 참조해야 하는 파라미터는
-commentNo, boardCd, articleNo, curPage, searchWord 이다.
+commentNo, boardCd, articleNo, page, searchWord 이다.
 댓글을 삭제 후 상세보기를 돌아가기 위해선 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
 */
 <strong>
@@ -1250,13 +1250,13 @@ if (user == null || !user.getEmail().equals(comment.getEmail())) {
 
 String boardCd = request.getParameter("boardCd");
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 
 service.removeComment(commentNo);
 
 searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
-response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>
 
@@ -1277,7 +1277,7 @@ response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boar
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다."); return;
 요청의 캐릭터 셋을 UTF-8으로 설정해야 한다.
 요청에서 참조해야 하는 파라미터는
-attachFileNo, articleNo, boardCd, curPage, searchWord이다.
+attachFileNo, articleNo, boardCd, page, searchWord이다.
 첨부 파일을 삭제 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
 */
 <strong>
@@ -1296,13 +1296,13 @@ if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
 
 String boardCd = request.getParameter("boardCd");
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 
 service.removeAttachFile(attachFileNo);
 
 searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
-response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>
 
@@ -1319,7 +1319,7 @@ request.setCharacterEncoding("UTF-8");
 
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 String boardCd = request.getParameter("boardCd");
-int curPage = Integer.parseInt(request.getParameter("curPage"));
+int page = Integer.parseInt(request.getParameter("page"));
 String searchWord = request.getParameter("searchWord");
 
 //articleNo로 게시글 객체를 얻어서 현재 로그인된 사용자가 소유자인지 검사
@@ -1390,7 +1390,7 @@ function goView() {
 &lt;p style="margin: 0;padding: 0;"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-&lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+&lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
 &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
 &lt;/p&gt;
 &lt;table id="write-form"&gt;
@@ -1439,7 +1439,7 @@ function goView() {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>&lt;%=page %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1467,7 +1467,7 @@ function goView() {
 -구현-
 작성자인지 검사하고 작성자가 아니면
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
-articleNo, boardCd, curPage, searchWord, title, content, attachFile 파라미터를 받고
+articleNo, boardCd, page, searchWord, title, content, attachFile 파라미터를 받고
 게시글을 수정한다.
 form이 enctype="multipart/form-data"인 경우 request.getParameter()로 파라미터의 값을 얻을 수 없다.
 쉽게 프로그래밍하기 위해 외부 라이브러리를 이용한다. (아파치 commons.fileupload 또는 cos)
@@ -1494,7 +1494,7 @@ if (!service.getArticle(articleNo).getEmail().equals(user.getEmail())) {
 }
 
 String boardCd = multi.getParameter("boardCd");
-int curPage = Integer.parseInt(multi.getParameter("curPage"));
+int page = Integer.parseInt(multi.getParameter("page"));
 String searchWord = multi.getParameter("searchWord");
 searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
 
@@ -1526,7 +1526,7 @@ article.setEmail(user.getEmail());
 
 service.modifyArticle(article, attachFile);
 
-response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>
 
@@ -1546,7 +1546,7 @@ response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boar
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
 작성자 체크를 통과하면
 요청의 캐릭터 셋을 UTF-8으로 설정한다.
-articleNo, boardCd, curPage, searchWord 파라미터를 받고
+articleNo, boardCd, page, searchWord 파라미터를 받고
 articleNo로 게시글을 삭제한다.
 게시글 삭제 후 목록을 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
 */
@@ -1554,7 +1554,7 @@ articleNo로 게시글을 삭제한다.
 User user = (User) session.getAttribute(WebContants.USER_KEY);
 
 request.setCharacterEncoding("UTF-8");
-//전달된 파라미터 articleNo,boardCd,curPage,searchWord
+//전달된 파라미터 articleNo,boardCd,page,searchWord
 int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 //글 소유자 검사
 BoardService service = new BoardService();
@@ -1567,10 +1567,10 @@ if (user == null || !user.getEmail().equals(article.getEmail())) {
 service.removeArticle(articleNo);
 
 String boardCd = request.getParameter("boardCd");
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String searchWord = request.getParameter("searchWord");
 
 searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
-response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);</strong>
 %&gt;
 </pre>

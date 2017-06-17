@@ -60,7 +60,7 @@ function goView() {
 &lt;p style="margin: 0;padding: 0;"&gt;
 	&lt;input type="hidden"  name="articleNo" value="${param.articleNo }" /&gt;
 	&lt;input type="hidden"  name="boardCd" value="${param.boardCd }" /&gt;
-	&lt;input type="hidden"  name="curPage" value="${param.curPage }" /&gt;
+	&lt;input type="hidden"  name="page" value="${param.page }" /&gt;
 	&lt;input type="hidden"  name="searchWord" value="${param.searchWord }" /&gt;
 &lt;/p&gt;
 &lt;table id="write-form"&gt;
@@ -108,7 +108,7 @@ function goView() {
 	&lt;p&gt;
 	&lt;input type="hidden" name="articleNo" value="${param.articleNo }"/&gt;
 	&lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
-	&lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+	&lt;input type="hidden" name="page" value="${param.page }" /&gt;
 	&lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 	&lt;/p&gt;
 	&lt;/form&gt;
@@ -144,7 +144,7 @@ public String modify(MultipartHttpServletRequest mpRequest) throws Exception {
 	Article article = boardService.getArticle(articleNo);
 	
 	String boardCd = mpRequest.getParameter("boardCd");
-	int curPage = Integer.parseInt(mpRequest.getParameter("curPage"));
+	int page = Integer.parseInt(mpRequest.getParameter("page"));
 	String searchWord = mpRequest.getParameter("searchWord");
 	
 	String title = mpRequest.getParameter("title");
@@ -186,7 +186,7 @@ public String modify(MultipartHttpServletRequest mpRequest) throws Exception {
 	
 	return "redirect:/bbs/view?articleNo=" + articleNo +
 		"&amp;boardCd=" + boardCd +
-		"&amp;curPage=" + curPage +
+		"&amp;page=" + page +
 		"&amp;searchWord=" + searchWord;
 
 }

@@ -1,14 +1,12 @@
 package net.java_school.commons;
 
-public class NumbersForPagingProcess {
+public class NumbersForPaging {
 	private int totalPage;
 	private int firstPage;
 	private int lastPage;
 	private int prevBlock;
 	private int nextBlock;
 	private int listItemNo;
-	private int startRecord;
-	private int endRecord;
 	
 	public int getTotalPage() {
 		return totalPage;
@@ -46,18 +44,5 @@ public class NumbersForPagingProcess {
 	public void setListItemNo(int listItemNo) {
 		this.listItemNo = listItemNo;
 	}
-	public int getStartRecord() {
-		return startRecord;
-	}
-	public void setStartRecord(int startRecord) {
-		this.startRecord = startRecord;
-	}
-	public int getEndRecord() {
-		return endRecord;
-	}
-	public void setEndRecord(int endRecord) {
-		this.endRecord = endRecord;
-	}
-	
 	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.java_school.board.Board;
 import net.java_school.board.BoardService;
-import net.java_school.commons.NumbersForPagingProcess;
+import net.java_school.commons.NumbersForPaging;
 import net.java_school.commons.Paginator;
 import net.java_school.commons.WebContants;
 import net.java_school.user.User;
@@ -35,10 +35,19 @@ public class AdminController extends Paginator {
 		int pagePerBlock = 10;
 		
 		int totalRecord = userService.getTotalCount(search);
-		NumbersForPagingProcess numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
-		Integer startRecord = numbers.getStartRecord();
-		Integer endRecord = numbers.getEndRecord();
+		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+/*		
+		//oracle
+		int startRecord = (page - 1) * numPerPage + 1;
+		int endRecord = page * numPerPage;
 		List<User> list = userService.getAllUser(search, startRecord, endRecord);
+		*/
+
+		//mysql
+		int offset = (page - 1) * numPerPage;
+		List<User> list = userService.getAllUser(search, offset, numPerPage);
+		
+		
 		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prev = numbers.getPrevBlock();

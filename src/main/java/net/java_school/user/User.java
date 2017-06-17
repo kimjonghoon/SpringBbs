@@ -9,11 +9,11 @@ public class User {
 	@NotBlank(message="이메일 형식이 아닙니다.")
 	@Email(message="이메일 형식이 아닙니다.")
 	private String email;
-	@Size(min=4, message="패스워드는 4자 이상이어야 합니다.")
+	@Size(min=4, message="{passwd.validation.error}")
 	private String passwd;
-	@Size(min=2, message="이름은 2자 이상이어야 합니다.")
+	@Size(min=2, message="{fullname.validation.error}")
 	private String name;
-	@Size(min=6, message="모바일폰 번호형식이 아닙니다.")
+	@Size(min=6, message="{mobile.validation.error}")
 	private String mobile;
 	private String authority;
 	

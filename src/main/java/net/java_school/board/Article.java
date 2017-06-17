@@ -8,7 +8,7 @@ public class Article {
 	private Integer articleNo;
 	@Size(min=2,max=10,message="게시판코드는 2자에서 10자 사이이어야 합니다.")
 	private String boardCd;
-	@Size(min=1,max=60,message="제목은 1자에서 60자 사이이어야 합니다.")
+	@Size(min=1,max=60,message="{bbs.title.validation.error}")
 	private String title;
 	@Size(min=1,message="내용은 1자 이상이어야 합니다.")
 	private String content;

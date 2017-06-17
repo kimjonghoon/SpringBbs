@@ -169,9 +169,9 @@ EL과 JSTL를 사용하여 코드를 수정함과 동시에,
 &lt;ul&gt;
     &lt;li&gt;
         &lt;ul&gt;
-            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=free&amp;curPage=1"&gt;자유 게시판&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=qna&amp;curPage=1"&gt;QnA게시판&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=data&amp;curPage=1"&gt;자료실&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=free&amp;page=1"&gt;자유 게시판&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=qna&amp;page=1"&gt;QnA게시판&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=data&amp;page=1"&gt;자료실&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/li&gt;
 &lt;/ul&gt;
@@ -202,9 +202,9 @@ logincheck.jsp가 담당하는 로직은 액션 클래스에서 담당하는 것
 &lt;script type="text/javascript"&gt;
 //&lt;![CDATA[
            
-function goList(curPage) {
+function goList(page) {
     var form = document.getElementById("listForm");
-    form.curPage.value = curPage;
+    form.page.value = page;
     form.submit();
 }
 function goView(articleNo) {
@@ -275,7 +275,7 @@ function goWrite() {
         
         <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
             <strong>&lt;c:choose&gt;
-                &lt;c:when test="${param.curPage == i }"&gt;</strong>
+                &lt;c:when test="${param.page == i }"&gt;</strong>
                 &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
                 <strong>&lt;/c:when&gt;
                 &lt;c:otherwise&gt;</strong>
@@ -297,7 +297,7 @@ function goWrite() {
         &lt;form action="list<strong>.do</strong>" method="get" style="margin: 0;padding: 0;"&gt;
             &lt;p style="margin: 0;padding: 0;"&gt;
                 &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-                &lt;input type="hidden" name="curPage" value="1" /&gt;
+                &lt;input type="hidden" name="page" value="1" /&gt;
                 &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
                 &lt;input type="submit" value="검색" /&gt;
             &lt;/p&gt;
@@ -328,7 +328,7 @@ function goWrite() {
     &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -336,14 +336,14 @@ function goWrite() {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form<strong>.do</strong>" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -401,9 +401,9 @@ function modifyCommentToggle(articleNo) {
     form.style.display = form_display;
 }
 
-function goList(curPage) {
+function goList(page) {
     var form = document.getElementById("listForm");
-    form.curPage.value = curPage;
+    form.page.value = page;
     form.submit();
 }
 
@@ -508,7 +508,7 @@ function deleteComment(commentNo) {
         &lt;input type="hidden" name="commentNo" value="<strong>${comment.commentNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;div class="fr"&gt;
@@ -527,7 +527,7 @@ function deleteComment(commentNo) {
     &lt;p style="margin: 0; padding: 0;"&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>"/&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;       
     &lt;/p&gt;
     &lt;div id="addComment"&gt;
@@ -561,7 +561,7 @@ function deleteComment(commentNo) {
         <strong>&lt;c:if test="${prevArticle != null }"&gt;</strong>
         &lt;input type="button" value="이전 글" onclick="goView('<strong>${prevArticle.articleNo }</strong>')" /&gt;
         <strong>&lt;/c:if&gt;</strong>
-        &lt;input type="button" value="목록" onclick="goList('<strong>${param.curPage }</strong>')" /&gt;
+        &lt;input type="button" value="목록" onclick="goList('<strong>${param.page }</strong>')" /&gt;
         &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -609,7 +609,7 @@ function deleteComment(commentNo) {
     
     <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
         <strong>&lt;c:choose&gt;</strong>
-            <strong>&lt;c:when test="${param.curPage == i }"&gt;</strong>
+            <strong>&lt;c:when test="${param.page == i }"&gt;</strong>
                 &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
             <strong>&lt;/c:when&gt;</strong>
             <strong>&lt;c:otherwise&gt;</strong>
@@ -631,7 +631,7 @@ function deleteComment(commentNo) {
     &lt;form action="list<strong>.do</strong>" method="get"&gt;
         &lt;p style="margin: 0;padding: 0;"&gt;
             &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-            &lt;input type="hidden" name="curPage" value="1" /&gt;
+            &lt;input type="hidden" name="page" value="1" /&gt;
             &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
             &lt;input type="submit" value="검색" /&gt;
         &lt;/p&gt;
@@ -663,7 +663,7 @@ function deleteComment(commentNo) {
     &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -671,7 +671,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -679,7 +679,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -687,7 +687,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -695,7 +695,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -704,7 +704,7 @@ function deleteComment(commentNo) {
         &lt;input type="hidden" name="commentNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;   
@@ -713,7 +713,7 @@ function deleteComment(commentNo) {
         &lt;input type="hidden" name="attachFileNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;       
@@ -852,14 +852,14 @@ function goView() {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;   
@@ -922,7 +922,7 @@ function goView() {
 &lt;p style="margin: 0;padding: 0;"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-&lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+&lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
 &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
 &lt;/p&gt;
 &lt;table id="write-form"&gt;
@@ -971,7 +971,7 @@ function goView() {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>${param.curPage }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -1645,7 +1645,7 @@ if (loginUser == null) {
             &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
             &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
             &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/bbs/list<strong>.do</strong>?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/bbs/list<strong>.do</strong>?boardCd=free&amp;page=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
@@ -2005,7 +2005,7 @@ public class LoginAction implements Action {
                 forward.setView(url);
                 forward.setRedirect(true);
             } else {
-                forward.setView(contextPath + "/bbs/list.do?boardCd=free&amp;curPage=1");
+                forward.setView(contextPath + "/bbs/list.do?boardCd=free&amp;page=1");
                 forward.setRedirect(true);
             }
         }
@@ -2486,7 +2486,7 @@ public class ListAction implements Action {
         }
         
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
         
         BoardService service = new BoardService();
@@ -2495,7 +2495,7 @@ public class ListAction implements Action {
         int numPerPage = 10;
         int pagePerBlock = 10;
         PagingHelper pagingHelper = 
-        	new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+        	new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
         
         service.setPagingHelper(pagingHelper);
         
@@ -2575,7 +2575,7 @@ public class ViewAction implements Action {
 
         int articleNo = Integer.parseInt(req.getParameter("articleNo"));
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
 
         BoardService service = new BoardService();
@@ -2584,7 +2584,7 @@ public class ViewAction implements Action {
         int numPerPage = 10;
         int pagePerBlock = 10;
         PagingHelper pagingHelper = 
-        	new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+        	new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
         serivce.setPagingHelper(pagingHelper);
                 
         service.increaseHit(articleNo);
@@ -2778,7 +2778,7 @@ public class WriteAction implements Action {
         BoardService service = new BoardService();
         service.addArticle(article, attachFile);
         
-        forward.setView("list.do?boardCd=" + boardCd + "&amp;curPage=1");
+        forward.setView("list.do?boardCd=" + boardCd + "&amp;page=1");
         forward.setRedirect(true);
         
         return forward;
@@ -2900,7 +2900,7 @@ public class ModifyAction implements Action {
         }
 
         String boardCd = multi.getParameter("boardCd");
-        int curPage = Integer.parseInt(multi.getParameter("curPage"));
+        int page = Integer.parseInt(multi.getParameter("page"));
         String searchWord = multi.getParameter("searchWord");
         searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
 
@@ -2932,7 +2932,7 @@ public class ModifyAction implements Action {
 
         service.modifyArticle(article, attachFile);
 
-        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;
@@ -2985,12 +2985,12 @@ public class DeleteAction implements Action {
         service.removeArticle(articleNo);
 
         String boardCd = req.getParameter("boardCd");
-        String curPage = req.getParameter("curPage");
+        String page = req.getParameter("page");
         String searchWord = req.getParameter("searchWord");
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
         
-        forward.setView("list.do?boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("list.do?boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;
@@ -3037,7 +3037,7 @@ public class AddCommentAction implements Action {
 
         int articleNo = Integer.parseInt(req.getParameter("articleNo"));
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
         String memo = req.getParameter("memo");
 
@@ -3050,7 +3050,7 @@ public class AddCommentAction implements Action {
         service.addComment(comment);
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
-        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;
@@ -3102,7 +3102,7 @@ public class UpdateCommentAction implements Action {
 
         int articleNo = Integer.parseInt(req.getParameter("articleNo"));
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
 
         String memo = req.getParameter("memo");
@@ -3116,7 +3116,7 @@ public class UpdateCommentAction implements Action {
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
         
-        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;
@@ -3168,13 +3168,13 @@ public class DeleteCommentAction implements Action {
 
         int articleNo = Integer.parseInt(req.getParameter("articleNo"));
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
 
         service.removeComment(commentNo);
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
-        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;
@@ -3226,14 +3226,14 @@ public class DeleteAttachFileAction implements Action {
 
         int articleNo = Integer.parseInt(req.getParameter("articleNo"));
         String boardCd = req.getParameter("boardCd");
-        int curPage = Integer.parseInt(req.getParameter("curPage"));
+        int page = Integer.parseInt(req.getParameter("page"));
         String searchWord = req.getParameter("searchWord");
 
         service.removeAttachFile(attachFileNo);
 
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
         
-        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
         forward.setRedirect(true);
         
         return forward;

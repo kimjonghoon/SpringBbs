@@ -447,7 +447,7 @@ public class PagingHelper {
     private int endRecord; // 현재 페이지의 목록 쿼리에서 사용할 오라클 마지막 ROWNUM
     <strong>private int numPerPage; //페이지당 보일 레코드 수</strong>
     
-    public PagingHelper(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+    public PagingHelper(int totalRecord, int page, int numPerPage, int pagePerBlock) {
         <strong>this.numPerPage = numPerPage;</strong>	
         //총 페이지 수
         this.totalPage = totalRecord / numPerPage;
@@ -458,8 +458,8 @@ public class PagingHelper {
         if (totalPage % pagePerBlock != 0) totalBlock++;
         
         //현재 블록
-        int block = curPage / pagePerBlock;
-        if (curPage % pagePerBlock != 0) block++;
+        int block = page / pagePerBlock;
+        if (page % pagePerBlock != 0) block++;
         
         //현재 블록에 속한 첫 번째 페이지 번호와 마지막 페이지 번호
         firstPage = (block - 1) * pagePerBlock + 1;
@@ -481,11 +481,11 @@ public class PagingHelper {
         }
         
         //현재 페이지의 목록 아이템 앞에 붙일 번호 계산
-        listItemNo = totalRecord - (curPage - 1) * numPerPage;
+        listItemNo = totalRecord - (page - 1) * numPerPage;
         
         //현재 페이지의 목록을 위한 첫 번째 레코드 번호와 마지막 레코드 번호 계산
-        startRecord = (curPage - 1) * numPerPage + 1;
-        endRecord = curPage * numPerPage;
+        startRecord = (page - 1) * numPerPage + 1;
+        endRecord = page * numPerPage;
     }
     
     public int getTotalPage() {

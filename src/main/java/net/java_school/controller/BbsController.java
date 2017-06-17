@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -16,7 +17,7 @@ import net.java_school.board.AttachFile;
 import net.java_school.board.Board;
 import net.java_school.board.BoardService;
 import net.java_school.board.Comment;
-import net.java_school.commons.NumbersForPagingProcess;
+import net.java_school.commons.NumbersForPaging;
 import net.java_school.commons.Paginator;
 import net.java_school.commons.WebContants;
 
@@ -52,19 +53,40 @@ public class BbsController extends Paginator {
 	
 	//목록
 	@RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
-	public String list(@PathVariable String boardCd, Integer curPage, String searchWord, Locale locale, Model model) {
-		if (curPage == null) curPage = 1;
+	public String list(@PathVariable String boardCd, Integer page, String searchWord, Locale locale, Model model) {
+		if (page == null) page = 1;
 		
 		int numPerPage = 10;
 		int pagePerBlock = 10;
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 
-		NumbersForPagingProcess numbers = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
-		Integer startRecord = numbers.getStartRecord();
-		Integer endRecord = numbers.getEndRecord();
-		List<Article> list = boardService.getArticleList(boardCd, searchWord, startRecord, endRecord);
+		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
+/*		
+		//oracle
+		int startRecord = (page - 1) * numPerPage + 1;
+		int endRecord = page * numPerPage;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardCd", boardCd);
+		map.put("searchWord", searchWord);
+		map.put("start", startRecord.toString());
+		map.put("end", endRecord.toString());
+		List<Article> list = boardService.getArticleList(map);
+*/
+		
+		//mysql
+		Integer offset = (page - 1) * numPerPage;
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardCd", boardCd);
+		map.put("searchWord", searchWord);
+		map.put("offset", offset.toString());
+		Integer rowCount = numPerPage;
+		map.put("rowCount", rowCount.toString());
+		List<Article> list = boardService.getArticleList(map);
+
+		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prevPage = numbers.getPrevBlock();
 		Integer nextPage = numbers.getNextBlock();
@@ -94,8 +116,8 @@ public class BbsController extends Paginator {
 	//상세보기
 	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
 	public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
-			Integer curPage, String searchWord, Locale locale, Model model) {
-		if(curPage == null) curPage = 1;
+			Integer page, String searchWord, Locale locale, Model model) {
+		if(page == null) page = 1;
 		String lang = locale.getLanguage();
 		boardService.increaseHit(articleNo);
 
@@ -132,10 +154,31 @@ public class BbsController extends Paginator {
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 		
-		NumbersForPagingProcess numbers = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
-		Integer startRecord = numbers.getStartRecord();
-		Integer endRecord = numbers.getEndRecord();
-		List<Article> list = boardService.getArticleList(boardCd, searchWord, startRecord, endRecord);
+		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+		
+		/*		
+		//oracle
+		int startRecord = (page - 1) * numPerPage + 1;
+		int endRecord = page * numPerPage;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardCd", boardCd);
+		map.put("searchWord", searchWord);
+		map.put("start", startRecord.toString());
+		map.put("end", endRecord.toString());
+		List<Article> list = boardService.getArticleList(map);
+*/
+		
+		//mysql
+		Integer offset = (page - 1) * numPerPage;
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardCd", boardCd);
+		map.put("searchWord", searchWord);
+		map.put("offset", offset.toString());
+		Integer rowCount = numPerPage;
+		map.put("rowCount", rowCount.toString());
+		List<Article> list = boardService.getArticleList(map);
+		
 
 		int listItemNo = numbers.getListItemNo();
 		int prevPage = numbers.getPrevBlock();
@@ -180,7 +223,7 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write(@Valid Article article,
 			BindingResult bindingResult,
-			Integer curPage,
+			Integer page,
 			String searchWord,
 			Locale locale,
 			Model model,
@@ -223,7 +266,7 @@ public class BbsController extends Paginator {
 			boardService.addAttachFile(attachFile);
 		}
 
-		return "redirect:/bbs/" + article.getBoardCd() + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + article.getBoardCd() + "/?page=" + page + "&searchWord=" + searchWord;
 		
 	}
 
@@ -231,7 +274,7 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/addComment", method=RequestMethod.POST)
 	public String addComment(Integer articleNo, 
 			String boardCd, 
-			Integer curPage, 
+			Integer page, 
 			String searchWord,
 			String memo,
 			Principal principal) throws Exception {
@@ -245,7 +288,7 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
 
 	}
 
@@ -253,7 +296,7 @@ public class BbsController extends Paginator {
 	public String updateComment(Integer commentNo, 
 			Integer articleNo, 
 			String boardCd, 
-			Integer curPage, 
+			Integer page, 
 			String searchWord, 
 			String memo) throws Exception {
 
@@ -263,7 +306,7 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord, "UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
 
 	}
 
@@ -271,7 +314,7 @@ public class BbsController extends Paginator {
 	public String deleteComment(Integer commentNo, 
 			Integer articleNo, 
 			String boardCd, 
-			Integer curPage, 
+			Integer page, 
 			String searchWord) throws Exception {
 
 		Comment comment = boardService.getComment(commentNo);
@@ -279,7 +322,7 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
 
 	}
 
@@ -308,7 +351,7 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
 	public String modify(@Valid Article article,
 			BindingResult bindingResult,
-			Integer curPage,
+			Integer page,
 			String searchWord,
 			Locale locale,
 			Model model,
@@ -355,7 +398,7 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + article.getBoardCd() + "/" + article.getArticleNo() + "?curPage=" + curPage	+ "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + article.getBoardCd() + "/" + article.getArticleNo() + "?page=" + page	+ "&searchWord=" + searchWord;
 
 	}
 
@@ -363,7 +406,7 @@ public class BbsController extends Paginator {
 	public String deleteAttachFile(Integer attachFileNo, 
 			Integer articleNo, 
 			String boardCd, 
-			Integer curPage, 
+			Integer page, 
 			String searchWord) throws Exception {
 
 		AttachFile attachFile = boardService.getAttachFile(attachFileNo);
@@ -371,16 +414,16 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "?&curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/" + articleNo + "?&page=" + page + "&searchWord=" + searchWord;
 
 	}
 
 	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.DELETE)
-	public String deleteArticle(@PathVariable String boardCd, @PathVariable Integer articleNo, Integer curPage, String searchWord) {
+	public String deleteArticle(@PathVariable String boardCd, @PathVariable Integer articleNo, Integer page, String searchWord) {
 		Article article = boardService.getArticle(articleNo);
 		boardService.removeArticle(article);
 		
-		return "redirect:/bbs/" + boardCd + "/?curPage=" + curPage + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" + boardCd + "/?page=" + page + "&searchWord=" + searchWord;
 
 	}
 

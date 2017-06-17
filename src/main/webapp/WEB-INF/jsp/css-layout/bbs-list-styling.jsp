@@ -125,7 +125,7 @@ index.html의 #content에 다음을 붙여넣는다.<br />
 		&lt;form action="list.jsp" method="get"&gt;
 		&lt;p style="margin: 0;padding: 0;" &gt;
 			&lt;input type="hidden" name="boardCd" value="free" /&gt;
-			&lt;input type="hidden" name="curPage" value="1" /&gt;                               
+			&lt;input type="hidden" name="page" value="1" /&gt;                               
 			&lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
 			&lt;input type="submit" value="검색" /&gt;
 		&lt;/p&gt;

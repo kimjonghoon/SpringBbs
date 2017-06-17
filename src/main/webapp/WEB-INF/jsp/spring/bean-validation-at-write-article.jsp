@@ -63,7 +63,7 @@ public String write(@Valid Article article,
 
     //파일 데이터 삽입 - 기존과 같음
 
-    return "redirect:/bbs/list?curPage=1&amp;boardCd=" + article.getBoardCd();
+    return "redirect:/bbs/list?page=1&amp;boardCd=" + article.getBoardCd();
 }
 </pre>
 
@@ -77,7 +77,7 @@ public String write(@Valid Article article,
 &lt;p style="margin: 0;padding: 0;"&gt;
     &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
     &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
-    &lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+    &lt;input type="hidden" name="page" value="${param.page }" /&gt;
     &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 &lt;/p&gt;
 <strong>&lt;sf:errors path="*" cssClass="error" /&gt;</strong>

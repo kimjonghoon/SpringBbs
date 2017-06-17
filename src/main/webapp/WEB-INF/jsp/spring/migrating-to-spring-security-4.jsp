@@ -73,7 +73,7 @@ authentication-failure-url 속성의 기본값은 /login?error=1으로 변경되
 &lt;form-login 
 	login-page="/users/login"
 	authentication-failure-url="/users/login?<strong>error=1</strong>"  
-	default-target-url="/bbs/list?boardCd=free&amp;curPage=1" /&gt;
+	default-target-url="/bbs/list?boardCd=free&amp;page=1" /&gt;
 </pre>
 
 login-page 속성의 기본값은 /login, authentication-failure-url 속성의 기본값은 /login?error=1이다.<br />

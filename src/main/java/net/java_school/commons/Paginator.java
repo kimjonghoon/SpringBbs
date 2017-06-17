@@ -2,13 +2,13 @@ package net.java_school.commons;
 
 public class Paginator {
 
-	public NumbersForPagingProcess getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+	public NumbersForPaging getNumbersForPaging(int totalRecord, int page, int numPerPage, int pagePerBlock) {
 		int totalPage = totalRecord / numPerPage;
 		if (totalRecord % numPerPage != 0) totalPage++;
 		int totalBlock = totalPage / pagePerBlock;
 		if (totalPage % pagePerBlock != 0) totalBlock++;
-		int block = curPage / pagePerBlock;
-		if (curPage % pagePerBlock != 0) block++;
+		int block = page / pagePerBlock;
+		if (page % pagePerBlock != 0) block++;
 		int firstPage = (block - 1) * pagePerBlock + 1;
 		int lastPage = block * pagePerBlock;
 		int prevPage = 0;
@@ -22,11 +22,9 @@ public class Paginator {
 		if (block >= totalBlock) {
 			lastPage = totalPage;
 		}
-		int listItemNo = totalRecord - (curPage - 1) * numPerPage;
-		int startRecord = (curPage - 1) * numPerPage + 1;
-		int endRecord = curPage * numPerPage;
+		int listItemNo = totalRecord - (page - 1) * numPerPage;
 		
-		NumbersForPagingProcess numbers = new NumbersForPagingProcess();
+		NumbersForPaging numbers = new NumbersForPaging();
 		
 		numbers.setTotalPage(totalPage);
 		numbers.setFirstPage(firstPage);
@@ -34,8 +32,6 @@ public class Paginator {
 		numbers.setPrevBlock(prevPage);
 		numbers.setNextBlock(nextPage);
 		numbers.setListItemNo(listItemNo);
-		numbers.setStartRecord(startRecord);
-		numbers.setEndRecord(endRecord);
 		
 		return numbers;
 	}

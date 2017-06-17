@@ -273,15 +273,15 @@ public class PagingHelper {
 	private int startRecord;
 	private int endRecord;
 	
-	public PagingHelper(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+	public PagingHelper(int totalRecord, int page, int numPerPage, int pagePerBlock) {
 		int totalPage = totalRecord / numPerPage;
 		if (totalRecord % numPerPage != 0) totalPage++;
 		
 		int totalBlock = totalPage / pagePerBlock;
 		if (totalPage % pagePerBlock != 0) totalBlock++;
 		
-		int block = curPage / pagePerBlock;
-		if (curPage % pagePerBlock != 0) block++;
+		int block = page / pagePerBlock;
+		if (page % pagePerBlock != 0) block++;
 		
 		firstPage = (block - 1) * pagePerBlock + 1;
 
@@ -298,10 +298,10 @@ public class PagingHelper {
 			nextLink = lastPage + 1;
 		}
 		
-		listNo = totalRecord - (curPage - 1) * numPerPage;
+		listNo = totalRecord - (page - 1) * numPerPage;
 		
-		startRecord = (curPage - 1) * numPerPage + 1;
-		endRecord = curPage * numPerPage;
+		startRecord = (page - 1) * numPerPage + 1;
+		endRecord = page * numPerPage;
 	}
 
 	public int getFirstPage() {
@@ -347,13 +347,13 @@ ROOT 애플리케이션의 도큐먼트 베이스에 model1 이란 서브 디렉
 &lt;%@ page import="java.util.*" %&gt;
 &lt;%
 request.setCharacterEncoding("UTF-8");
-int curPage = (request.getParameter("curPage") == null  ? 1 : 
-	Integer.parseInt(request.getParameter("curPage")));
+int page = (request.getParameter("page") == null  ? 1 : 
+	Integer.parseInt(request.getParameter("page")));
 String keyword = request.getParameter("keyword");
 if (keyword == null) keyword = "";
 BoardDao dao = new BoardDao();
 int totalRecord = dao.getTotalRecord(keyword);
-PagingHelper pagingHelper = new PagingHelper(totalRecord,curPage,10,5);
+PagingHelper pagingHelper = new PagingHelper(totalRecord,page,10,5);
 int startRecord = pagingHelper.getStartRecord();
 int endRecord = pagingHelper.getEndRecord();
 ArrayList&lt;Article&gt; list = dao.getBoardList(startRecord, endRecord, keyword);
@@ -380,7 +380,7 @@ for (int i = 0; i &lt; list.size(); i++) {
 	}
 %&gt;
 &lt;%=bbsNo %&gt;
-&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
 &lt;%=article.getWriteDate() %&gt;&lt;br /&gt;
 &lt;hr /&gt;
 &lt;%
@@ -389,25 +389,25 @@ bbsNo--;
 int prevLink = pagingHelper.getPrevLink();
 if (prevLink != 0) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%
 }
 int firstPage = pagingHelper.getFirstPage();
 int lastPage = pagingHelper.getLastPage();
 for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 &lt;%
 }
 int nextLink = pagingHelper.getNextLink();
 if (nextLink != 0) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 }
 %&gt;				
 &lt;p&gt;
-&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.jsp?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
 &lt;/p&gt;
 &lt;form action="list.jsp" method="post"&gt;
 	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
@@ -441,10 +441,10 @@ public class BoardService {
 	
 	public BoardService() {}
 	
-	public BoardService(int curPage, String keyword, int numPerPage, int pagePerBlock) {
+	public BoardService(int page, String keyword, int numPerPage, int pagePerBlock) {
 		this.keyword = keyword;
 		int totalRecord = dao.getTotalRecord(keyword);
-		pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+		pagingHelper = new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
 	}
 
 	public String getkeyword() {
@@ -493,10 +493,10 @@ BoardService.java 만을 사용하도록 list.jsp 수정한다.
 &lt;%@ page import="java.util.*" %&gt;
 &lt;%
 request.setCharacterEncoding("UTF-8");
-int curPage = (request.getParameter("curPage") == null  ? 1 : Integer.parseInt(request.getParameter("curPage")));
+int page = (request.getParameter("page") == null  ? 1 : Integer.parseInt(request.getParameter("page")));
 String keyword = request.getParameter("keyword");
 if (keyword == null) keyword = "";
-BoardService service = new BoardService(curPage, keyword, 10, 5);
+BoardService service = new BoardService(page, keyword, 10, 5);
 ArrayList&lt;Article&gt; list = service.getBoardList();
 %&gt;
 &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -521,7 +521,7 @@ for (int i = 0; i &lt; list.size(); i++) {
 	}
 %&gt;
 &lt;%=bbsNo %&gt;
-&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
 &lt;%=article.getWriteDate() %&gt;&lt;br /&gt;
 &lt;hr /&gt;
 &lt;%
@@ -530,25 +530,25 @@ bbsNo--;
 int prevLink = service.getPrevLink();
 if (prevLink != 0) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%
 }
 int firstPage = service.getFirstPage();
 int lastPage = service.getLastPage();
 for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 &lt;%
 }
 int nextLink = service.getNextLink();
 if (nextLink != 0) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 }
 %&gt;				
 &lt;p&gt;
-&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.jsp?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
 &lt;/p&gt;
 &lt;form action="list.jsp" method="post"&gt;
 	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
@@ -566,7 +566,7 @@ if (nextLink != 0) {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 %&gt;
 &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
@@ -593,7 +593,7 @@ String keyword = request.getParameter("keyword");
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
+		&lt;a href="list.jsp?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -727,7 +727,7 @@ public Article getArticle(int no) {
 &lt;%
 request.setCharacterEncoding("UTF-8");
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 if (keyword == null) keyword = "";
 BoardService service = new BoardService();
@@ -739,14 +739,14 @@ Article article = service.getArticle(no);
 &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
 &lt;title&gt;상세보기&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-function goModify(no,curPage,keyword) {
-	location.href="modify_form.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+function goModify(no,page,keyword) {
+	location.href="modify_form.jsp?no=" + no + "&amp;page=" + page + "&amp;keyword=" + keyword;
 }
 
-function goDelete(no,curPage,keyword) {
+function goDelete(no,page,keyword) {
 	var check = confirm("정말로 삭제하겠습니까?");
 	if (check) {
-		location.href="del.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+		location.href="del.jsp?no=" + no + "&amp;page=" + page + "&amp;keyword=" + keyword;
 	}
 }
 &lt;/script&gt;
@@ -757,10 +757,10 @@ function goDelete(no,curPage,keyword) {
 &lt;p&gt;
 &lt;%=article.getHtmlContent() %&gt;
 &lt;/p&gt;
-&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
-&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
-&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
-&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
+&lt;a href="list.jsp?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
+&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=page %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=page %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -813,7 +813,7 @@ public void modify(Article article) {
 request.setCharacterEncoding("UTF-8");
 
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 BoardService service = new BoardService();
@@ -830,7 +830,7 @@ Article article = service.getArticle(no);
 &lt;h1&gt;수정&lt;/h1&gt;
 &lt;form action="modify.jsp" method="post"&gt;
 &lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;"&gt;
 &lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -846,7 +846,7 @@ Article article = service.getArticle(no);
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -864,7 +864,7 @@ Article article = service.getArticle(no);
 &lt;%
 	request.setCharacterEncoding("UTF-8");
 	int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-	String curPage = request.getParameter("curPage");
+	String page = request.getParameter("page");
 	String keyword = request.getParameter("keyword");
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
@@ -877,7 +877,7 @@ Article article = service.getArticle(no);
 	BoardService service= new BoardService();
 	service.modify(article);
 	keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
-	response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;curPage=" + curPage + "&amp;keyword=" +  keyword);
+	response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;page=" + page + "&amp;keyword=" +  keyword);
 %&gt;
 </pre>
 
@@ -962,13 +962,13 @@ public void delete(int articleNo) {
 &lt;%
 request.setCharacterEncoding("UTF-8");
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 BoardService service= new BoardService();
 service.delete(no);
 keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
-response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" +  keyword);
+response.sendRedirect("list.jsp?page=" + page + "&amp;keyword=" +  keyword);
 %&gt;
 </pre>
 
@@ -1067,7 +1067,7 @@ public void reply(Article article) {
 request.setCharacterEncoding("UTF-8");
 
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 BoardService service = new BoardService();
@@ -1090,14 +1090,14 @@ content = Article.LINE_SEPARATOR + Article.LINE_SEPARATOR + "&gt;" + content;
 &lt;input type="hidden" name="family" value="&lt;%=article.getFamily() %&gt;" /&gt;
 &lt;input type="hidden" name="indent" value="&lt;%=article.getIndent() %&gt;" /&gt;
 &lt;input type="hidden" name="depth" value="&lt;%=article.getDepth() %&gt;" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;" /&gt;
 제목 : &lt;input type="text" name="title" size="45" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;br /&gt;
 &lt;textarea name="content" rows="10" cols="60"&gt;&lt;%=article.getContent() %&gt;&lt;/textarea&gt;&lt;br /&gt;
 &lt;input type="submit" value="전송" /&gt;
 &lt;input type="reset" value="취소" /&gt;&lt;br /&gt;
 &lt;/form&gt;
-&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -1118,7 +1118,7 @@ int indent = Integer.parseInt(request.getParameter("indent")) + 1;
 String title = request.getParameter("title");
 String content = request.getParameter("content");
 
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 Article article = new Article();
@@ -1133,7 +1133,7 @@ BoardService service= new BoardService();
 service.reply(article);
 
 keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
-response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+response.sendRedirect("list.jsp?page=" + page + "&amp;keyword=" + keyword);
 %&gt;
 </pre>
 

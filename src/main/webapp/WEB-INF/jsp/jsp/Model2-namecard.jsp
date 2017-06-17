@@ -48,7 +48,7 @@ commit;
 	int nextPage = vo.getNextPage(); //[다음] 페이지 번호
 	int firstPage = vo.getFirstPage(); //for문 첫번째 페이지 번호
 	int lastPage = vo.getLastPage(); //for문 마지막 페이지 번호
-	int curPage = vo.getCurPage(); //현재 페이지 번호(요청 페이지 번호)
+	int page = vo.getpage(); //현재 페이지 번호(요청 페이지 번호)
 	String searchWord = vo.getSearchWord(); //검색어
 %&gt;
 &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -110,17 +110,17 @@ function del(no) {
 &lt;%
 	if (prevPage &gt; 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=prevPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;[이전]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=prevPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%		
 	}
 	for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=i %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;&lt;%=i %&gt;&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=i %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;&lt;%=i %&gt;&lt;/a&gt;
 &lt;%
 	}//for statement end
 	if (nextPage &gt; 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=nextPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;[다음]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=nextPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 	}
 %&gt;	
@@ -128,22 +128,22 @@ function del(no) {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;form action="list.do" method="post"&gt;
-&lt;input type="button" value="명함추가" onclick="location.href='add.do?curPage=&lt;%=curPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
+&lt;input type="button" value="명함추가" onclick="location.href='add.do?page=&lt;%=page %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
 &lt;input type="text" name="searchWord" /&gt;
 &lt;input type="submit" value="검색" /&gt;
 &lt;/form&gt;
 
-&lt;!-- 수정화면으로 no,curPage,searchWord를 전송하기 위한 폼--&gt;
+&lt;!-- 수정화면으로 no,page,searchWord를 전송하기 위한 폼--&gt;
 &lt;form id="modifyForm" action="modify.do" method="post"&gt;
 &lt;input type="hidden" name="no" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="searchWord" value="&lt;%=searchWord %&gt;" /&gt;	
 &lt;/form&gt;
 
-&lt;!-- 삭제액션으로 no,curPage,searchWord를 전송하기 위한 폼--&gt;
+&lt;!-- 삭제액션으로 no,page,searchWord를 전송하기 위한 폼--&gt;
 &lt;form id="deleteForm" action="delAction.do" method="post"&gt;
 &lt;input type="hidden" name="no" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="searchWord" value="&lt;%=searchWord %&gt;" /&gt;	
 &lt;/form&gt;
 
@@ -156,10 +156,10 @@ function del(no) {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
-	String curPage = request.getParameter("curPage");
+	String page = request.getParameter("page");
 	String searchWord = request.getParameter("searchWord");
 	if (searchWord == null) searchWord = "";
-	out.println("curPage :" +curPage);
+	out.println("page :" +page);
 	out.println("searchWord :" +searchWord);
 %&gt;
 &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
@@ -176,7 +176,7 @@ function del(no) {
 이메일 &lt;input type="text" name="email" /&gt;&lt;br /&gt;
 만난날짜 &lt;input type="text" name="mdate" /&gt;(2013/05/05 형식으로)&lt;br /&gt;
 &lt;input type="submit" value="전송" /&gt;
-&lt;input type="button" value="목록으로" onclick="location.href='list.do?curPage=&lt;%=curPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
+&lt;input type="button" value="목록으로" onclick="location.href='list.do?page=&lt;%=page %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
 &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -188,7 +188,7 @@ function del(no) {
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="com.google.namecard.Namecard" %&gt;
 &lt;%
-	String curPage = request.getParameter("curPage");
+	String page = request.getParameter("page");
 	String searchWord = request.getParameter("searchWord");
 	if (searchWord == null) searchWord = "";
 	Namecard card = (Namecard) request.getAttribute("card");
@@ -202,14 +202,14 @@ function del(no) {
 &lt;body&gt;
 &lt;form action="modifyAction.do" method="post"&gt;
 &lt;input type="hidden" name="no" value="&lt;%=card.getNo() %&gt;" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="searchWord" value="&lt;%=searchWord %&gt;" /&gt;
 이름 &lt;input type="text" name="name" value="&lt;%=card.getName() %&gt;" /&gt;&lt;br /&gt;
 모바일 &lt;input type="text" name="mobile" value="&lt;%=card.getMobile() %&gt;" /&gt;&lt;br /&gt;
 이메일 &lt;input type="text" name="email" value="&lt;%=card.getEmail() %&gt;" /&gt;&lt;br /&gt;
 만난날짜 &lt;input type="text" name="mdate" value="&lt;%=card.getMdate() %&gt;" /&gt;&lt;br /&gt;
 &lt;input type="submit" value="수정" /&gt;
-&lt;input type="button" value="목록으로" onclick="location.href='list.do?curPage=&lt;%=curPage %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
+&lt;input type="button" value="목록으로" onclick="location.href='list.do?page=&lt;%=page %&gt;&amp;searchWord=&lt;%=searchWord %&gt;'" /&gt;
 &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -671,15 +671,15 @@ public class NamecardListAction implements Action {
 	public void execute(HttpServletRequest request) {
 		String searchWord = request.getParameter("searchWord"); 
 		if (searchWord == null) searchWord = "";
-		int curPage = request.getParameter("curPage") == null ? 
-				1 : Integer.parseInt(request.getParameter("curPage")); 
+		int page = request.getParameter("page") == null ? 
+				1 : Integer.parseInt(request.getParameter("page")); 
 		NamecardDao dao = new NamecardDao();
 		int numPerPage = 10;//페이지당 레코드 갯수
 		ArrayList&lt;Namecard&gt; list = null;
 		if (searchWord == null || searchWord.equals("") ) {
-			list = dao.select(curPage,numPerPage);	
+			list = dao.select(page,numPerPage);	
 		} else {
-			list = dao.selectBykeyword(curPage,numPerPage,searchWord);
+			list = dao.selectBykeyword(page,numPerPage,searchWord);
 		}
 		//총페이지수 구하기(마지막 페이지번호와 같다.)
 		int totalPage = 0;
@@ -696,11 +696,11 @@ public class NamecardListAction implements Action {
 		}
 		int pagePerBlock = 10;//블록마다 페이지 링크가 몇개인가?
 		int block = 0;//페이지를 그룹화할 때 그룹번호를 저장할 변수
-		//curPage 가 속한 블록번호는 curPage 로 부터 구할 수 있다.
-		if (curPage % pagePerBlock == 0) {
-			block = curPage / pagePerBlock;
+		//page 가 속한 블록번호는 page 로 부터 구할 수 있다.
+		if (page % pagePerBlock == 0) {
+			block = page / pagePerBlock;
 		} else {
-			block = curPage / pagePerBlock + 1;
+			block = page / pagePerBlock + 1;
 		}
 		int firstPage = 0;
 		int lastPage = 0;
@@ -725,7 +725,7 @@ public class NamecardListAction implements Action {
 		vo.setNextPage(nextPage);
 		vo.setFirstPage(firstPage);
 		vo.setLastPage(lastPage);
-		vo.setCurPage(curPage);
+		vo.setpage(page);
 		vo.setSearchWord(searchWord);
 		
 		//구해서 전달할 데이터를 request에 담는다.
@@ -812,13 +812,13 @@ import java.util.ArrayList;
 import com.google.namecard.Namecard;
 
 public class CardListVO {
-//목록,[이전],[다음],firstPage,lastPage,curPage,검색어
+//목록,[이전],[다음],firstPage,lastPage,page,검색어
 	private ArrayList&lt;Namecard&gt; list;//목록
 	private int prevPage;//[이전]
 	private int nextPage;//[다음]
 	private int firstPage;// 11,12,.....20 에서 11
 	private int lastPage;//  11,12,.....20에서 20
-	private int curPage;//list.do?curPage=현재 페이지번호
+	private int page;//list.do?page=현재 페이지번호
 	private String searchWord;//검색어
 	
 	public ArrayList&lt;Namecard&gt; getList() {
@@ -851,11 +851,11 @@ public class CardListVO {
 	public void setLastPage(int lastPage) {
 		this.lastPage = lastPage;
 	}
-	public int getCurPage() {
-		return curPage;
+	public int getpage() {
+		return page;
 	}
-	public void setCurPage(int curPage) {
-		this.curPage = curPage;
+	public void setpage(int page) {
+		this.page = page;
 	}
 	public String getSearchWord() {
 		return searchWord;
@@ -933,22 +933,22 @@ public class HelloServlet extends HttpServlet {
 		} else if (command.equals("/modifyAction.do")) {
 			action = new NamecardModifyAction();
 			action.execute(req);
-			String curPage = req.getParameter("curPage");
+			String page = req.getParameter("page");
 			String searchWord = req.getParameter("searchWord");
 			if (searchWord == null) searchWord = "";
 			searchWord = URLEncoder.encode(searchWord,"UTF-8");
-			url = contextPath + "/list.do?curPage=" + 
-					curPage + "&amp;searchWord=" + searchWord;
+			url = contextPath + "/list.do?page=" + 
+					page + "&amp;searchWord=" + searchWord;
 			isRedirect = true;
 		} else if (command.equals("/delAction.do")) {
 			//명함삭제 처리
 			action = new NamecardDelAction();
 			action.execute(req);
-			String curPage = req.getParameter("curPage");
+			String page = req.getParameter("page");
 			String searchWord = req.getParameter("searchWord");
 			searchWord = URLEncoder.encode(searchWord,"UTF-8");
-			url = contextPath + "/list.do?curPage=" + 
-					curPage + "&amp;searchWord=" + searchWord;
+			url = contextPath + "/list.do?page=" + 
+					page + "&amp;searchWord=" + searchWord;
 			isRedirect = true;
 		}
 		if (isRedirect == false) {

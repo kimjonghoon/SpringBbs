@@ -726,7 +726,7 @@ ROWNUM은 오라클의 가상 컬럼으로 쿼리 문장에서 1부터 시작하
 ROWNUM을 WHERE 절의 조건에 쓰면 보여줄 그룹에 해당하는 레코드를 추출할 수 있다. 
 list.jsp를 요청할 때 그룹 번호를 파라미터로 넘겨준다면 그룹에 해당하는 시작 레코드 번호와 
 마지막 레코드 번호를 구할 수 있을 것이다. 
-list.jsp에 전달할 레코드 그룹 번호에 해당하는 파라미터를 curPage라 한다면 
+list.jsp에 전달할 레코드 그룹 번호에 해당하는 파라미터를 page라 한다면 
 페이지 분할 기능을 아래처럼 구현 할 수 있다. 
  
  
@@ -734,9 +734,9 @@ list.jsp에 전달할 레코드 그룹 번호에 해당하는 파라미터를 cu
 <pre class="prettyprint">
 &lt;%
 // .. 중간생략 ..
-<strong>int curPage = (request.getParameter("curPage") == null) ? 1 : Integer.parseInt(request.getParameter("curPage"));</strong>
+<strong>int page = (request.getParameter("page") == null) ? 1 : Integer.parseInt(request.getParameter("page"));</strong>
 // 시작 레코드 계산  
-<strong>int start = (curPage - 1) * 10 + 1;</strong>
+<strong>int start = (page - 1) * 10 + 1;</strong>
 // 마지막 레코드 계산
 <strong>int end = start + 10 - 1;</strong>
 
@@ -756,10 +756,10 @@ rs = pstmt.executeQuery();
 %&gt;
 </pre>
 
-이제 http://localhost:8989/board/list.jsp?curPage=1을 요청하면 그룹1의 레코드를 볼 수 있게 되었다.
+이제 http://localhost:8989/board/list.jsp?page=1을 요청하면 그룹1의 레코드를 볼 수 있게 되었다.
 하지만 주소창에 일일히 쳐가며 방문하는 게시판은 없다.
 일반적인 게시판은 페이지를 이동할 수 있는 링크를 제공한다.
-<strong>&lt;a href=&quot;list.jsp?curPage=1&quot;&gt;[1]&lt;/a&gt;</strong><br />
+<strong>&lt;a href=&quot;list.jsp?page=1&quot;&gt;[1]&lt;/a&gt;</strong><br />
 마지막 페이지 번호를 알아낸다면 1부터 마지막 페이지 번호까지 for 문을 이용해 위와 같은 링크를 만들 수 있다. 
 마지막 페이지는 어떻게 알 수 있을까?
 "마지막 페이지 번호"는 페이지가 1부터 시작하므로 "총 페이지 수"와 같다.
@@ -800,7 +800,7 @@ list.jsp의 시작 레코드와 마지막 레코드 번호를 계산하는 코�
 
 <pre class="prettyprint">
 int numPerPage = 10; //페이지당 레코드 수
-int start = (curPage - 1) * numPerPage + 1; //시작 레코드
+int start = (page - 1) * numPerPage + 1; //시작 레코드
 int end = start + numPerPage - 1; //마지막 레코드
 </pre>
 
@@ -825,7 +825,7 @@ if (totalRecord != 0) {
 &lt;%
 for (int i = 1; i &lt;= totalPage; i++) {
 %&gt;
-   &lt;a href="list.jsp?curPage=&lt;%=i%&gt;"&gt;[&lt;%=i%&gt;]&lt;/a&gt;
+   &lt;a href="list.jsp?page=&lt;%=i%&gt;"&gt;[&lt;%=i%&gt;]&lt;/a&gt;
 &lt;%
 }
 %&gt;
@@ -910,10 +910,10 @@ if (totalRecord != 0) {
 }
 
 //3.첫번째 레코드 번호와 마지막 레코드 번호를 구한다.
-int curPage = request.getParameter("curPage") == null ? 1 : Integer.parseInt(request.getParameter("curPage"));
+int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
 
 //시작 레코드 계산
-int start = (curPage - 1) * numPerPage + 1;
+int start = (page - 1) * numPerPage + 1;
 //마지막 레코드 계산
 int end = start + numPerPage - 1;
 //해당 페이지의 레코드 셋을 구한 후 출력한다.
@@ -969,12 +969,12 @@ try {
 //4.각 페이지에 대한 직접 이동 링크를 만든다.
 for (int i = 1; i &lt;= totalPage; i++) {
 %&gt;
-	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+	&lt;a href="list.jsp?page=&lt;%=i %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 &lt;%
 }
 %&gt;
 &lt;p&gt;
-&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.jsp?page=&lt;%=page %&gt;"&gt;글쓰기&lt;/a&gt;
 &lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -1030,12 +1030,12 @@ WHERE R BETWEEN 1 and 10;
 
 <img src="https://lh3.googleusercontent.com/ulUUomivFb4v8w2v9yqoA7VcR48i-adOy48WnNc0dRCoR8FpQ0EuYU9BwRM7sx2C_EeRs_8kM1oh9Rqcf41Bhtw4as9K_9vARuetxuElsNDmdieN2V0jc69S5bskwyyIuRPUF3A6hiIL8g6TPDmLRbEGPw_PL46pJdbawRst6-5hd3JQy7CKcu4gXNrhgGeZ5U5wLEvPaw45x5bmEhHRTvLDf7yYgHa222jjuS9bNmUv_JZRyrLgzXwBMBoq-BvAxw7lFnJrXEGW_ZcVzefsMu1Dkw9WZtywKX_RkhRd-7kXMoHrekLrHLy7QyibSGKzKz-Yy6c9gucJNozBKSpFTuNtERLYXVruYudBe9RhaqTNcjo_cZU1HTdq1ZiLn-sLBzW-jVP34HP07tPjjp8I6XSuHOchTpbdEQ3SDX2n6mPMDHVTFPaBQBlvr5xTqenY9y2x4iqootZhsRYcKhvt_HgSGlo7O76zKPmMDV1QMA4wubW6Bo4H4rvCbW7hAD1iydPgY-s1U0qde4UEFFxSmCju70T9BdrmxzqchK_Mx1g0Kuu8xGADNFoZ8Lanns5lVf1WaKH_Cx_-JYs3EBZWt1JHq1yZpus=w366-h405-no" alt="페이지 링크 그룹화" /><br />
 
-curPage가 어느 그룹에 속하는지는 다음 코드로 구할 수 있다.
+page가 어느 그룹에 속하는지는 다음 코드로 구할 수 있다.
 페이지를 그룹화할 때 그룹 번호를 저장할 변수를 block라고 하겠다.
 페이지를 그룹으로 묶을 때 묶는 단위를 pagePerBlock라고 하겠다.
 즉, block은 페이지 그룹 번호를 저장하고, pagePerBlock은 block 당 페이지 수를 저장한다.<br />
 
-<em class="filename">curPage가 속한 block 구하기</em>
+<em class="filename">page가 속한 block 구하기</em>
 <pre class="prettyprint">
 //페이지 그룹 번호를 저장할 변수 선언과 초기화
 int block = 1;
@@ -1043,10 +1043,10 @@ int block = 1;
 //블록 당 페이지 수를 저장할 변수와 초기화
 int pagePerBlock = 5;
 
-if (curPage % pagePerBlock == 0) {
-   block = curPage / pagePerBlock;
+if (page % pagePerBlock == 0) {
+   block = page / pagePerBlock;
 } else {
-   block = curPage / pagePerBlock + 1;
+   block = page / pagePerBlock + 1;
 }
 </pre>
 
@@ -1066,7 +1066,7 @@ int lastPage =  block * pagePerBlock;
 &lt;%
 for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-   &lt;a href="list.jsp?curPage=&lt;%=i%&gt;"&gt;[&lt;%=i%&gt;]&lt;/a&gt;
+   &lt;a href="list.jsp?page=&lt;%=i%&gt;"&gt;[&lt;%=i%&gt;]&lt;/a&gt;
 &lt;%
 }
 %&gt;
@@ -1106,7 +1106,7 @@ int prevPage = 0;
 if(block &gt; 1) {
   prevPage = firstPage - 1;
 %&gt;
- &lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;"&gt;[이전]&lt;/a&gt;
+ &lt;a href="list.jsp?page=&lt;%=prevPage %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%
 }
 </pre>
@@ -1118,7 +1118,7 @@ if(block &gt; 1) {
 if(block &lt; totalBlock) {
   int nextPage = lastPage + 1;
 %&gt;
-  &lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;"&gt;[다음]&lt;/a&gt;
+  &lt;a href="list.jsp?page=&lt;%=nextPage %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 }
 %&gt;
@@ -1175,21 +1175,21 @@ if (block &gt;= totalBlock) {
 </ol>
 
 이제는 다른 서버측 컴포넌트(JSP 와 Servlets)와 함께 테스트한다.
-list.jsp?curPage=5에서 view.jsp을 방문한 후 view.jsp의 목록 링크를 클릭하면 list.jsp로 방문하게 된다.
+list.jsp?page=5에서 view.jsp을 방문한 후 view.jsp의 목록 링크를 클릭하면 list.jsp로 방문하게 된다.
 즉, 5 페이지에서 상세보기를 보고 다시 목록으로 돌아오는데 1 페이지로 돌아온 것이다.
 이에 대한 정상적인 기대는 목록 5 페이지에서 상세보기를 보고 목록 링크를 클릭하면 5 페이지의 목록으로 돌아가는 것이다.
-이 문제를 해결하려면 "새글쓰기 처리 서블릿"을 제외한 게시판 관련된 모든 컴포넌트에 curPage 파라미터를 전달해야 하고 전달받은 컴포넌트는 
-이 curPage 파라미터를 이용해서 다른 컴포넌트로 이동할 때 이 파라미터를 전달하도록 해야 한다.
+이 문제를 해결하려면 "새글쓰기 처리 서블릿"을 제외한 게시판 관련된 모든 컴포넌트에 page 파라미터를 전달해야 하고 전달받은 컴포넌트는 
+이 page 파라미터를 이용해서 다른 컴포넌트로 이동할 때 이 파라미터를 전달하도록 해야 한다.
 /board/list.jsp 파일을 열고 아래를 참고하여 다른 컴포넌트로의 링크 부분을 수정한다.
 
-<em class="filename">list.jsp 에서 view.jsp 로 이동시 curPage 파라미터 전달</em>
+<em class="filename">list.jsp 에서 view.jsp 로 이동시 page 파라미터 전달</em>
 <pre class="prettyprint">
-&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
 </pre>
 
-<em class="filename">list.jsp 에서 write_form.jsp 로 이동시 curPage 파라미터 전달</em>
+<em class="filename">list.jsp 에서 write_form.jsp 로 이동시 page 파라미터 전달</em>
 <pre class="prettyprint">
-&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.jsp?page=&lt;%=page %&gt;"&gt;글쓰기&lt;/a&gt;
 </pre>
 
 다음으로 /board/view.jsp 파일을 열고 아래를 참고하여 다른 컴포넌트로의 이동 부분의 코드를 수정한다.
@@ -1203,7 +1203,7 @@ list.jsp?curPage=5에서 view.jsp을 방문한 후 view.jsp의 목록 링크를 
 &lt;%@ page import="net.java_school.db.dbpool.*" %&gt;
 &lt;%
 int no = Integer.parseInt(request.getParameter("no"));
-<strong>String curPage = request.getParameter("curPage");</strong>
+<strong>String page = request.getParameter("page");</strong>
 %&gt;
 &lt;jsp:useBean id="dbmgr" scope="application" class="net.java_school.db.dbpool.OracleConnectionManager" /&gt;
 &lt;!DOCTYPE html&gt;
@@ -1212,14 +1212,14 @@ int no = Integer.parseInt(request.getParameter("no"));
 &lt;meta charset="UTF-8" /&gt;
 &lt;title&gt;상세보기&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-function goModify(no,<strong>curPage</strong>) {
-	location.href="modify_form.jsp?no=" + no + <strong>"&amp;curPage=" + curPage</strong>;
+function goModify(no,<strong>page</strong>) {
+	location.href="modify_form.jsp?no=" + no + <strong>"&amp;page=" + page</strong>;
 }
 
-function goDelete(no,curPage) {
+function goDelete(no,page) {
 	var check = confirm('정말로 삭제하시겠습니까?');
 	if (check) {
-		location.href="../servlet/BoardDeleter?no=" + no + <strong>"&amp;curPage=" + curPage</strong>;
+		location.href="../servlet/BoardDeleter?no=" + no + <strong>"&amp;page=" + page</strong>;
 	}
 }
 &lt;/script&gt;
@@ -1229,15 +1229,15 @@ function goDelete(no,curPage) {
 
 ..중간 생략 ..
 
-&lt;a href="list.jsp<strong>?curPage=&lt;%=curPage %&gt;</strong>"&gt;목록&lt;/a&gt;
-&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;',<strong>'&lt;%=curPage %&gt;'</strong>)"&gt;
-&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;',<strong>'&lt;%=curPage %&gt;'</strong>)"&gt;
+&lt;a href="list.jsp<strong>?page=&lt;%=page %&gt;</strong>"&gt;목록&lt;/a&gt;
+&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;',<strong>'&lt;%=page %&gt;'</strong>)"&gt;
+&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;',<strong>'&lt;%=page %&gt;'</strong>)"&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
 
 /board/write_form.jsp 파일을 열고 목록으로 돌아가는 부분의 코드를 수정한다.
-폼 액션 속성값에 ../servlet/BoardWriter?curPage=&lt;%=curPage %&gt;와 같이 curPage 파라미터를 전달해서는 안된다.
+폼 액션 속성값에 ../servlet/BoardWriter?page=&lt;%=page %&gt;와 같이 page 파라미터를 전달해서는 안된다.
 새글은 언제나 첫번째 페이지로 돌아가야 확인할 수 있기 때문이다.
 5 페이지에서 글쓰기를 클릭하여 새글을 등록했는데 다시 5 페이지로 돌아간다면 
 자신이 작성한 새글을 확인하기 위해서 하단의 [1] 링크를 클릭해야 하는 수고를 해야 한다.
@@ -1248,7 +1248,7 @@ function goDelete(no,curPage) {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
-<strong>String curPage = request.getParameter("curPage");</strong>
+<strong>String page = request.getParameter("page");</strong>
 %&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -1274,7 +1274,7 @@ function goDelete(no,curPage) {
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="list.jsp<strong>?curPage=&lt;%=curPage %&gt;</strong>"&gt;목록&lt;/a&gt;
+		&lt;a href="list.jsp<strong>?page=&lt;%=page %&gt;</strong>"&gt;목록&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -1294,7 +1294,7 @@ function goDelete(no,curPage) {
 &lt;jsp:useBean id="dbmgr" scope="application" class="net.java_school.db.dbpool.OracleConnectionManager" /&gt;
 &lt;%
 int no = Integer.parseInt(request.getParameter("no"));
-<strong>String curPage = request.getParameter("curPage");</strong>
+<strong>String page = request.getParameter("page");</strong>
 
 Log log = new Log();
 
@@ -1313,7 +1313,7 @@ Log log = new Log();
 &lt;h1&gt;수정&lt;/h1&gt;
 &lt;form action="../servlet/BoardModifier" method="post"&gt;
 &lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
-<strong>&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;</strong>
+<strong>&lt;input type="hidden" name="page" value="&lt;%=page %&gt;"&gt;</strong>
 &lt;table&gt;
 &lt;tr&gt;
 	&lt;td&gt;제목&lt;/td&gt;
@@ -1328,7 +1328,7 @@ Log log = new Log();
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="view.jsp?no=&lt;%=no %&gt;<strong>&amp;curPage=&lt;%=curPage %&gt;</strong>"&gt;상세보기&lt;/a&gt;
+		&lt;a href="view.jsp?no=&lt;%=no %&gt;<strong>&amp;page=&lt;%=page %&gt;</strong>"&gt;상세보기&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -1348,12 +1348,12 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	Log log = new Log();
 	
 	int no = Integer.parseInt(req.getParameter("no"));
-	<strong>String curPage = req.getParameter("curPage");</strong>
+	<strong>String page = req.getParameter("page");</strong>
 	
 	//..중간 생략 ..
 				
 	String path = req.getContextPath();
-	resp.sendRedirect(path + "/board/view.jsp?no=" + no + <strong>"&amp;curPage=" + curPage</strong>);
+	resp.sendRedirect(path + "/board/view.jsp?no=" + no + <strong>"&amp;page=" + page</strong>);
 	
 }
 </pre>
@@ -1368,12 +1368,12 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	Log log = new Log();
 	
 	int no = Integer.parseInt(req.getParameter("no"));
-	<strong>String curPage = req.getParameter("curPage");</strong>
+	<strong>String page = req.getParameter("page");</strong>
 		
 	//..중간 생략 ..
 	
 	String path = req.getContextPath();
-	resp.sendRedirect(path + "/board/list.jsp<strong>?curPage=" + curPage</strong>);
+	resp.sendRedirect(path + "/board/list.jsp<strong>?page=" + page</strong>);
 	
 }
 </pre>
@@ -1394,7 +1394,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 &lt;/form&gt;
 </pre>
 
-list.jsp에 curPage 외에 keyword 파라미터도 함께 전달해야 한다.
+list.jsp에 page 외에 keyword 파라미터도 함께 전달해야 한다.
 전달받은 keyword 파라미터가 널인 경우 "" 문자로 바꾸어 주는 것이 좋다.
 다음 코드를 list.jsp의 적당한 위치에 추가한다.
 
@@ -1437,31 +1437,31 @@ list.jsp 파일을 열고 list.jsp로의 링크에 keyword 파라미터가 전�
 결색 결과의 5 페이지를 목록을 보고 있다가 상세보기를 하고 다시 목록보기를 했는데, 검색 결과가 아닌 5 페이지로 돌아가면 사용자는 당황할 것이다.
 
 <pre class="prettyprint">
-&lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+&lt;a href="list.jsp?page=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
 </pre>
 
 <pre class="prettyprint">
-&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+&lt;a href="list.jsp?page=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 </pre>
 
 <pre class="prettyprint">
-&lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+&lt;a href="list.jsp?page=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
 </pre>
 
 list.jsp를 방문한 후 검색을 테스트한다.
 검색 후 목록에서 상세보기로 이동한 후 다시 목록으로 돌아오면 검색된 목록으로 돌아오지 못한다.
-view.jsp 요청할 때 curPage 외에 keyword란 파라미터를 전달해야 다시 검색 목록으로 돌아갈 수 있다.
+view.jsp 요청할 때 page 외에 keyword란 파라미터를 전달해야 다시 검색 목록으로 돌아갈 수 있다.
 list.jsp 파일을 열고 아래를 참조하여 상세보기와 글쓰기에 대한 링크를 수정한다.
 
 <pre class="prettyprint">
-&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
 </pre>
 
 <pre class="prettyprint">
-&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.jsp?page=&lt;%=page %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;글쓰기&lt;/a&gt;
 </pre>
 
-view.jsp에는 curPage와 keyword 파라미터를 수신하고 list.jsp로 돌아갈 때는 이 파라미터를 이용하도록 코드를 수정한다.
+view.jsp에는 page와 keyword 파라미터를 수신하고 list.jsp로 돌아갈 때는 이 파라미터를 이용하도록 코드를 수정한다.
 글쓰기를 제외한 게시판의 다른 컴포넌트 역시 keyword 파라미터를 수신하고 코드에서 다른 컴포넌트로의 링크를 수정한다.
 
 <em class="filename">/board/view.jsp 수정</em>
@@ -1474,7 +1474,7 @@ view.jsp에는 curPage와 keyword 파라미터를 수신하고 list.jsp로 돌�
 &lt;%
 <strong>request.setCharacterEncoding("UTF-8");</strong>
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 %&gt;
 &lt;jsp:useBean id="dbmgr" scope="application" class="net.java_school.db.dbpool.OracleConnectionManager" /&gt;
@@ -1484,14 +1484,14 @@ String keyword = request.getParameter("keyword");
 &lt;meta charset="UTF-8" /&gt;
 &lt;title&gt;상세보기&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-function goModify(no,curPage,keyword) {
-	location.href="modify_form.jsp?no=" + no + "&amp;curPage=" + curPage + <strong>"&amp;keyword=" + keyword</strong>;
+function goModify(no,page,keyword) {
+	location.href="modify_form.jsp?no=" + no + "&amp;page=" + page + <strong>"&amp;keyword=" + keyword</strong>;
 }
 
-function goDelete(no,curPage,keyword) {
+function goDelete(no,page,keyword) {
 	var check = confirm('정말로 삭제하시겠습니까?');
 	if (check) {
-		location.href="../servlet/BoardDeleter?no=" + no + "&amp;curPage=" + curPage + <strong>"&amp;keyword=" + keyword</strong>;
+		location.href="../servlet/BoardDeleter?no=" + no + "&amp;page=" + page + <strong>"&amp;keyword=" + keyword</strong>;
 	}
 }
 &lt;/script&gt;
@@ -1501,9 +1501,9 @@ function goDelete(no,curPage,keyword) {
 
 ..중간 생략 ..
 
-&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;목록&lt;/a&gt;
-&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=curPage %&gt;',<strong>'&lt;%=keyword %&gt;'</strong>)"&gt;
-&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=curPage %&gt;',<strong>'&lt;%=keyword %&gt;'</strong>)"&gt;
+&lt;a href="list.jsp?page=&lt;%=page %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;목록&lt;/a&gt;
+&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=page %&gt;',<strong>'&lt;%=keyword %&gt;'</strong>)"&gt;
+&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=page %&gt;',<strong>'&lt;%=keyword %&gt;'</strong>)"&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -1517,7 +1517,7 @@ function goDelete(no,curPage,keyword) {
     pageEncoding="UTF-8"%&gt;
 &lt;%
 <strong>request.setCharacterEncoding("UTF-8");</strong>
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 <strong>String keyword = request.getParameter("keyword");</strong>
 %&gt;
 &lt;!DOCTYPE html&gt;
@@ -1544,7 +1544,7 @@ String curPage = request.getParameter("curPage");
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;목록&lt;/a&gt;
+		&lt;a href="list.jsp?page=&lt;%=page %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;목록&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -1565,7 +1565,7 @@ String curPage = request.getParameter("curPage");
 &lt;%
 <strong>request.setCharacterEncoding("UTF-8");</strong>
 String no = request.getParameter("no");
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 <strong>String keyword = request.getParameter("keyword");</strong>
 Log log = new Log();
 
@@ -1584,7 +1584,7 @@ Log log = new Log();
 &lt;h1&gt;수정&lt;/h1&gt;
 &lt;form action="../servlet/BoardModifier" method="post"&gt;
 &lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;"&gt;
 <strong>&lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;"&gt;</strong>
 &lt;table&gt;
 &lt;tr&gt;
@@ -1600,7 +1600,7 @@ Log log = new Log();
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;상세보기&lt;/a&gt;
+		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;<strong>&amp;keyword=&lt;%=keyword %&gt;</strong>"&gt;상세보기&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -1619,14 +1619,14 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	Log log = new Log();
 	
 	int no = Integer.parseInt(req.getParameter("no"));
-	String curPage = req.getParameter("curPage");
+	String page = req.getParameter("page");
 	<strong>String keyword = req.getParameter("keyword");</strong>
 	
 	//..중간 생략 ..
 				
 	String path = req.getContextPath();
 	<strong>keyword = java.net.URLEncoder.encode(keyword,"UTF-8");</strong>
-	resp.sendRedirect(path + "/board/view.jsp?no=" + no + "&amp;curPage=" + curPage + <strong>"&amp;keyword=" + keyword</strong>);
+	resp.sendRedirect(path + "/board/view.jsp?no=" + no + "&amp;page=" + page + <strong>"&amp;keyword=" + keyword</strong>);
 	
 }
 </pre>
@@ -1641,14 +1641,14 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	Log log = new Log();
 	
 	int no = Integer.parseInt(req.getParameter("no"));
-	String curPage = req.getParameter("curPage");
+	String page = req.getParameter("page");
 	<strong>String keyword = req.getParameter("keyword");</strong>
 		
 	//..중간 생략 ..
 	
 	String path = req.getContextPath();
 	<strong>keyword = java.net.URLEncoder.encode(keyword,"UTF-8");</strong>
-	resp.sendRedirect(path + "/board/list.jsp?curPage=" + curPage + <strong>"&amp;keyword=" + keyword</strong>);
+	resp.sendRedirect(path + "/board/list.jsp?page=" + page + <strong>"&amp;keyword=" + keyword</strong>);
 
 }
 </pre>
@@ -1733,7 +1733,7 @@ list.jsp에서 검색폼의 method 속성을 method="post" 에서 method="get"�
 
 <span id="comments">주석</span>
 <ol>
-	<li>"페이지 분할 기능"에서 그룹화의 대상은 레코드이고, 레코드 그룹 번호를 저장하는 변수는 curPage이다.</li>
+	<li>"페이지 분할 기능"에서 그룹화의 대상은 레코드이고, 레코드 그룹 번호를 저장하는 변수는 page이다.</li>
 </ol>
 
 <span id="refer">참고</span>

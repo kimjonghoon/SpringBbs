@@ -81,7 +81,7 @@ function goView() {
 &lt;p style="margin: 0;padding: 0;"&gt;
 &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
 &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
-&lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+&lt;input type="hidden" name="page" value="${param.page }" /&gt;
 &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 &lt;/p&gt;
 &lt;table id="write-form"&gt;
@@ -132,14 +132,14 @@ function goView() {
     &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="${param.articleNo }"/&gt;
         &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
-        &lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+        &lt;input type="hidden" name="page" value="${param.page }" /&gt;
         &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
-        &lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+        &lt;input type="hidden" name="page" value="${param.page }" /&gt;
         &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
@@ -149,7 +149,7 @@ function goView() {
 &lt;/html&gt;
 </pre>
 
-빌드를 한 후 bbs/list?boardCd=data&amp;curPage=1를 방문한다.<br />
+빌드를 한 후 bbs/list?boardCd=data&amp;page=1를 방문한다.<br />
 새글쓰기 버튼을 클릭하여 글쓰기 폼으로 이동하는지 테스트한다.<br />
 
 <h2>글쓰기 처리</h2>
@@ -222,7 +222,7 @@ public String write(MultipartHttpServletRequest mpRequest) throws Exception {
         boardService.addAttachFile(attachFile);
     }
 
-    return "redirect:/bbs/list?curPage=1&amp;boardCd=" + article.getBoardCd();
+    return "redirect:/bbs/list?page=1&amp;boardCd=" + article.getBoardCd();
 }
 </pre>
 

@@ -27,7 +27,7 @@ public class Paginator&lt;T&gt; {
 	private List&lt;T&gt; list;
 	
 	public Paginator(int totalRecord, 
-			int curPage, 
+			int page, 
 			int numPerPage, 
 			int pagePerBlock) {
 		
@@ -43,10 +43,10 @@ public class Paginator&lt;T&gt; {
 			totalBlock = totalPage / pagePerBlock + 1;
 		}
 		int block = 1;
-		if (curPage % pagePerBlock == 0) {
-			block = curPage / pagePerBlock;
+		if (page % pagePerBlock == 0) {
+			block = page / pagePerBlock;
 		} else {
-			block = curPage / pagePerBlock + 1;
+			block = page / pagePerBlock + 1;
 		}
 		
 		this.firstPage = (block - 1) * pagePerBlock + 1;
@@ -64,7 +64,7 @@ public class Paginator&lt;T&gt; {
 			this.nextLink = lastPage + 1;
 		}
 		
-		this.listNo = totalRecord - (curPage - 1) * numPerPage;
+		this.listNo = totalRecord - (page - 1) * numPerPage;
 	}
 	
 	public int getPrevLink() {
@@ -109,17 +109,17 @@ public class BoardService {
 	
 	private BoardDao dao = new BoardDao();
 	
-	public Paginator&lt;Article&gt; getPaginator(int curPage, 
+	public Paginator&lt;Article&gt; getPaginator(int page, 
 					String keyword, 
 					int numPerPage, 
 					int pagePerBlock) {
 			
-		int start = (curPage - 1) * numPerPage + 1;
-		int end = curPage * numPerPage;
+		int start = (page - 1) * numPerPage + 1;
+		int end = page * numPerPage;
 		ArrayList&lt;Article&gt; list = dao.getBoardList(start, end, keyword);
 		int totalRecord = dao.getTotalRecord(keyword);
 		Paginator&lt;Article&gt; paginator = 
-			new Paginator&lt;Article&gt;(totalRecord, curPage, numPerPage, pagePerBlock);
+			new Paginator&lt;Article&gt;(totalRecord, page, numPerPage, pagePerBlock);
 		paginator.setList(list);
 		
 		return paginator;
@@ -158,8 +158,8 @@ import net.java_school.commons.Paginator;
 public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request) {
-		int curPage = (request.getParameter("curPage") == null  ? 1 : 
-			Integer.parseInt(request.getParameter("curPage")));
+		int page = (request.getParameter("page") == null  ? 1 : 
+			Integer.parseInt(request.getParameter("page")));
 			
 		String keyword = request.getParameter("keyword");
 		if (keyword == null) keyword = "";
@@ -167,7 +167,7 @@ public class ListAction implements Action {
 		BoardService service = new BoardService();
 
 		// numPerPage 를 10, pagePerBlock 를 5 로 설정한다면
-		Paginator&lt;Article&gt; paginator = service.getPaginator(curPage, keyword, 10, 5);
+		Paginator&lt;Article&gt; paginator = service.getPaginator(page, keyword, 10, 5);
 		
 		ArrayList&lt;Article&gt; list = (ArrayList&lt;Article&gt;) paginator.getList();
 		int listNo = paginator.getListNo();

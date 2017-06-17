@@ -367,11 +367,11 @@ HttpServletRequest, HttpServletResponse 인터페이스를 구현한 클래스�
 	<dd class="api-summary-dd">getSession(created:boolean) : HttpSession</dd>
 	<dd class="api-summary-dd-method-desc">현재 세션을 리턴, 만약 세션이 없는 경우 created 가 true 이면 세션을 생성후 리턴하고 created 가 false 면 null 리턴</dd>
 	<dd class="api-summary-dd">getContextPath() : String</dd>
-	<dd class="api-summary-dd-method-desc">요청 URI 에서 컨텍스트를 지시하는 부분을 리턴한다.<br />http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면 /ContextPath 를 리턴한다.</dd>
+	<dd class="api-summary-dd-method-desc">요청 URI 에서 컨텍스트를 지시하는 부분을 리턴한다.<br />http://localhost:port/ContextPath/board/list.do?page=1를 요청하면 /ContextPath 를 리턴한다.</dd>
 	<dd class="api-summary-dd">getRequestURI() : String</dd>
-	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면<br />/ContextPath/board/list.do 를 리턴한다.</dd>
+	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?page=1를 요청하면<br />/ContextPath/board/list.do 를 리턴한다.</dd>
 	<dd class="api-summary-dd">getQueryString() : String</dd>
-	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면<br />curPage=1 를 리턴한다.</dd>
+	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?page=1를 요청하면<br />page=1 를 리턴한다.</dd>
 </dl>
 
 
@@ -640,8 +640,8 @@ SimpleServlet 서블릿이 응답을 보내기까지 과정을 살펴보자.<br 
 </tr>
 <tr>
 	<td class="table-in-article-td">
-	&lt;input type="hidden" name="<strong>curPage</strong>" value="1" /&gt;</td>
-	<td>req.getParameter("<strong>curPage</strong>");</td>
+	&lt;input type="hidden" name="<strong>page</strong>" value="1" /&gt;</td>
+	<td>req.getParameter("<strong>page</strong>");</td>
 </tr>
 <tr>
 	<td class="table-in-article-td">

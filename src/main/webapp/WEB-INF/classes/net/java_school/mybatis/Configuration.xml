@@ -16,9 +16,11 @@
 		<typeAlias type="net.java_school.user.User" alias="User" />
 	</typeAliases>
 
-	<mappers>
-		<mapper resource="net/java_school/mybatis/BoardMapper.xml" />
-		<mapper resource="net/java_school/mybatis/UserMapper.xml" />
-	</mappers>
+<!-- 	<mappers>
+		<mapper resource="net/java_school/mybatis/oracle/BoardMapper.xml" />
+		<mapper resource="net/java_school/mybatis/oracle/UserMapper.xml" />
+		<mapper resource="net/java_school/mybatis/mysql/BoardMapper.xml" />
+		<mapper resource="net/java_school/mybatis/mysql/UserMapper.xml" />
+	</mappers> -->
 
 </configuration>

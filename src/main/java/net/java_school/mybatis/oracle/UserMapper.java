@@ -1,4 +1,4 @@
-package net.java_school.mybatis;
+package net.java_school.mybatis.oracle;
 
 import java.util.List;
 
@@ -14,10 +14,6 @@ public interface UserMapper {
 			@Param("email") String email, 
 			@Param("authority") String authority);
 
-	/*  public User login(
-    @Param("email") String email, 
-    @Param("passwd") String passwd);*/
-
 	public int update(User user);
 
 	public int updatePasswd(
@@ -31,7 +27,10 @@ public interface UserMapper {
 
 	public User selectOne(String email);
 	
-	public List<User> selectAll(@Param("search") String search, @Param("startRecord") Integer startRecord, @Param("endRecord") Integer endRecord);
+	public List<User> selectAll(
+			@Param("search") String search, 
+			@Param("startRecord") Integer startRecord, 
+			@Param("endRecord") Integer endRecord);
 	
 	public int selectTotalCount(@Param("search") String search);
 	

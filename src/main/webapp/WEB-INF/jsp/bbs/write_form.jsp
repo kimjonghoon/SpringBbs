@@ -28,7 +28,7 @@ function goView() {
 <sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
-<input type="hidden" name="curPage" value="${param.curPage }" />
+<input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error" />
 <table id="write-form" class="bbs-table">
@@ -62,13 +62,13 @@ function goView() {
 <div id="form-group" style="display: none">
     <form id="viewForm" action="/bbs/${param.boardCd }/${param.articleNo }" method="get">
     <div>
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </div>
     </form>    
     <form id="listForm" action="/bbs/${param.boardCd }/" method="get">
     <div>
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </div>
     </form>

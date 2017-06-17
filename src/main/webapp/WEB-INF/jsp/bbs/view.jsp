@@ -55,7 +55,7 @@
 <p>
     <input type="hidden" name="articleNo" value="${articleNo }" />
     <input type="hidden" name="boardCd" value="${boardCd }" />
-    <input type="hidden" name="curPage" value="${param.curPage }" />
+    <input type="hidden" name="page" value="${param.page }" />
     <input type="hidden" name="searchWord" value="${param.searchWord }" />
 </p>
 </form>
@@ -64,7 +64,7 @@
 <p style="margin: 0;padding: 0">
 	<input type="hidden" name="articleNo" value="${articleNo }" />
 	<input type="hidden" name="boardCd" value="${boardCd }" />
-	<input type="hidden" name="curPage" value="${param.curPage }" />
+	<input type="hidden" name="page" value="${param.page }" />
 	<input type="hidden" name="searchWord" value="${param.searchWord }" />
 	<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
 </p>
@@ -93,7 +93,7 @@
         <input type="hidden" name="commentNo" value="${comment.commentNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
@@ -180,7 +180,7 @@
 	
 	<c:forEach var="i" begin="${firstPage }" end="${lastPage }">
 		<c:choose>
-			<c:when test="${param.curPage == i }">
+			<c:when test="${param.page == i }">
 				<span class="bbs-strong">${i }</span>
 			</c:when>	
 			<c:otherwise>	
@@ -201,7 +201,7 @@
 <div id="search">
 	<form action="/bbs/${boardCd }/" method="get">
 	<div>
-		<input type="hidden" name="curPage" value="1" />
+		<input type="hidden" name="page" value="1" />
 		<input type="text" name="searchWord" size="15" maxlength="30" />
 		<input type="submit" value="<spring:message code="global.search" />" />
 	</div>
@@ -211,13 +211,13 @@
 <div id="form-group" style="display: none">
     <form id="listForm" action="/bbs/${boardCd }/" method="get">
     <p>
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
     <form id="viewForm" action="/bbs/${boardCd }/" method="get">
     <p>
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
@@ -225,12 +225,12 @@
     <p>
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
     <sf:form id="delForm" action="/bbs/${boardCd }/${articleNo }" method="delete">
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </sf:form>
     <form id="deleteCommentForm" action="/bbs/deleteComment" method="post">
@@ -238,7 +238,7 @@
         <input type="hidden" name="commentNo" />
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>
@@ -248,7 +248,7 @@
         <input type="hidden" name="attachFileNo" />
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="curPage" value="${param.curPage }" />
+        <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </p>

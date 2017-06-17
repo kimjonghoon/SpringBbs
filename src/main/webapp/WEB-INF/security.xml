@@ -25,7 +25,7 @@
 		<form-login
 			login-page="/users/login"
 			authentication-failure-url="/users/login?error=1"
-			default-target-url="/bbs/free/?curPage=1" />
+			default-target-url="/bbs/free/?page=1" />
 
 		<logout logout-success-url="/" invalidate-session="true" />
 
@@ -47,9 +47,9 @@
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select email as username,passwd as password,1 as enabled
-          from MEMBER where email = ?"
+          from member where email = ?"
 				authorities-by-username-query="select email as username,authority
-          from AUTHORITIES where email = ?" />
+          from authorities where email = ?" />
 			<password-encoder ref="bcryptPasswordEncoder" />          
 		</authentication-provider>
 	</authentication-manager>

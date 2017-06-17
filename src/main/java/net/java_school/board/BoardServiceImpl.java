@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.java_school.mybatis.BoardMapper;
+
+//import net.java_school.mybatis.oracle.BoardMapper;
+import net.java_school.mybatis.mysql.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -39,20 +41,14 @@ public class BoardServiceImpl implements BoardService {
 	
 	//목록
 	@Override
-	public List<Article> getArticleList(String boardCd, String searchWord, Integer startRecord, Integer endRecord) {
-		HashMap<String, String> hashmap = new HashMap<String, String>();
-		hashmap.put("boardCd", boardCd);
-		hashmap.put("searchWord", searchWord);
-		hashmap.put("start", startRecord.toString());
-		hashmap.put("end", endRecord.toString());
-		
+	public List<Article> getArticleList(HashMap<String, String> hashmap) {
 		return boardMapper.selectListOfArticles(hashmap);
 	}
 	
 	//총 레코드수
 	@Override
 	public int getTotalRecord(String boardCd, String searchWord) {
-		HashMap<String,String> hashmap = new HashMap<String,String>();
+		HashMap<String, String> hashmap = new HashMap<String, String>();
 		hashmap.put("boardCd", boardCd);
 		hashmap.put("searchWord", searchWord);
 		

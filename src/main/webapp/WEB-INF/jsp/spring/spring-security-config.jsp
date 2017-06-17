@@ -87,7 +87,7 @@ ROLE_USER은 일반 사용자 권한, ROLE_ADMIN은 관리자 권한이다.<br /
 		&lt;form-login 
 			login-page="/users/login" 
 			authentication-failure-url="/users/login?login_error=1" 
-			default-target-url="/bbs/list?boardCd=free&amp;amp;curPage=1" /&gt;
+			default-target-url="/bbs/list?boardCd=free&amp;amp;page=1" /&gt;
 		
 		&lt;logout 
 			logout-success-url="/users/login" 
@@ -414,7 +414,7 @@ login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.<br />
 <h2>테스트</h2>
 라이브러리가 추가되었으니 빌드를 한다.<br />
 설정이 바뀌었으니 톰캣을 재실행한다.<br />
-http://localhost:port/spring-bbs/list?boardCd=free&amp;curPage=1를 방문한다.<br />
+http://localhost:port/spring-bbs/list?boardCd=free&amp;page=1를 방문한다.<br />
 로그인 페이지로 이동하면 im@gmail.org/1111로 로그인하고 게시판으로 이동하는지 확인한다.<br />
 주소창에 http://localhost:port/spring-bbs/admin를 입력하여 방문을 시도한다.<br />
 임꺽정은 일반 사용자 권한만 가지고 있으므로 noAuthority.jsp로 이동하게 된다.<br />
@@ -583,7 +583,7 @@ public String write(MultipartHttpServletRequest mpRequest, <strong>Principal pri
 @RequestMapping(value="/addComment", method=RequestMethod.POST)
 public String addComment(Integer articleNo, 
         String boardCd, 
-        Integer curPage, 
+        Integer page, 
         String searchWord, 
         String memo,
         <strong>Principal principal</strong>) throws Exception {

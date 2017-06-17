@@ -119,8 +119,8 @@ $(document).ready(function() {
 
 	//Paging
 	$('#paging a').click(function() {
-		var $curPage = this.title;
-		goList($curPage);
+		var $page = this.title;
+		goList($page);
 		return false;
 	});
 
@@ -137,7 +137,7 @@ function goView(articleNo) {
 	form.submit();
 }
 
-function goList(curPage) {
-	$('#listForm input[name*=curPage]').val(curPage);
+function goList(page) {
+	$('#listForm input[name*=page]').val(page);
 	$('#listForm').submit();
 }

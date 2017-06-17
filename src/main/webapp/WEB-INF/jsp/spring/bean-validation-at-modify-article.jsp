@@ -13,7 +13,7 @@
 @RequestMapping(value="/modify", method=RequestMethod.POST)
 public String modify(@Valid Article article,
         BindingResult bindingResult,
-        Integer curPage,
+        Integer page,
         String searchWord,
         Model model,
         MultipartHttpServletRequest mpRequest) throws Exception {
@@ -39,7 +39,7 @@ public String modify(@Valid Article article,
     
     return "redirect:/bbs/view?articleNo=" + article.getArticleNo() +
         "&amp;boardCd=" + article.getBoardCd() +
-        "&amp;curPage=" + curPage +
+        "&amp;page=" + page +
         "&amp;searchWord=" + searchWord
 }
 </pre>
@@ -54,7 +54,7 @@ public String modify(@Valid Article article,
 &lt;p style="margin: 0;padding: 0;"&gt;
     &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
     &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
-    &lt;input type="hidden" name="curPage" value="${param.curPage }" /&gt;
+    &lt;input type="hidden" name="page" value="${param.page }" /&gt;
     &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 &lt;/p&gt;
 <strong>&lt;sf:errors path="*" cssClass="error" /&gt;</strong>

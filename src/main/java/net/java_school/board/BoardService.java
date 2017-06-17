@@ -1,5 +1,6 @@
 package net.java_school.board;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public interface BoardService {
 	
 	//목록
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public List<Article> getArticleList(String boardCd, String searchWord, Integer startRecord, Integer endRecord);
+	public List<Article> getArticleList(HashMap<String, String> hashmap);
 	
 	//총 레코드 수
 	public int getTotalRecord(String boardCd, String searchWord);

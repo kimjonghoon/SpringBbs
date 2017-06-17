@@ -1472,7 +1472,7 @@ public class PagingHelper {
 
     public PagingHelper(
             int totalRecord, 
-            int curPage, 
+            int page, 
             int numPerPage, 
             int pagePerBlock) {
         
@@ -1491,10 +1491,10 @@ public class PagingHelper {
         }
         
         int block = 1;//현재 블록
-        if (curPage % pagePerBlock == 0) {
-            block = curPage / pagePerBlock;
+        if (page % pagePerBlock == 0) {
+            block = page / pagePerBlock;
         } else {
-            block = curPage / pagePerBlock + 1;
+            block = page / pagePerBlock + 1;
         }
         
         //현재 블록에 속한 첫 번째 페이지와 마지막 페이지를 구한다.
@@ -1517,10 +1517,10 @@ public class PagingHelper {
         }
         
         //list.jsp 에서 목록 아이템 앞에 붙여지는 번호를 계산한다.
-        this.listItemNo = totalRecord - (curPage - 1) * numPerPage;
+        this.listItemNo = totalRecord - (page - 1) * numPerPage;
         
         //목록을 구하기 위해서 첫 번째 레코드번호와 마지막 레코드 번호를 구한다.
-        this.startRecord = (curPage - 1) * numPerPage + 1;
+        this.startRecord = (page - 1) * numPerPage + 1;
         this.endRecord = startRecord + numPerPage - 1;
     }
 

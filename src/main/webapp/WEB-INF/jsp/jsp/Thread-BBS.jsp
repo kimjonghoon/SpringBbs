@@ -365,7 +365,7 @@ String sql = "INSERT INTO board (no,title,content,wdate,family,parent,depth,inde
 
 <em class="filename">/board/view.jsp 수정</em>
 <pre class="prettyprint">
-&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
+&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
 </pre>
 
 다음으로 사용자에게 답변을 쓰기 위한 양식을 제공하는 JSP 페이지인 reply_form.jsp 을 만든다.<br />
@@ -397,7 +397,7 @@ String content = null;
 Date wdate = null;
 
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 Connection con = null;
@@ -461,14 +461,14 @@ try {
 &lt;input type="hidden" name="family" value="&lt;%=family %&gt;" /&gt;
 &lt;input type="hidden" name="indent" value="&lt;%=indent %&gt;" /&gt;
 &lt;input type="hidden" name="depth" value="&lt;%=depth %&gt;" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;" /&gt;
 제목 : &lt;input type="text" name="title" size="45" value="&lt;%=title %&gt;" /&gt;&lt;br /&gt;
 &lt;textarea name="content" rows="10" cols="60"&gt;&lt;%=content %&gt;&lt;/textarea&gt;&lt;br /&gt;
 &lt;input type="submit" value="전송" /&gt;
 &lt;input type="reset" value="취소" /&gt;&lt;br /&gt;
 &lt;/form&gt;
-&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -523,7 +523,7 @@ public class BoardReplier extends HttpServlet {
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		
-		String curPage = req.getParameter("curPage");
+		String page = req.getParameter("page");
 		String keyword = req.getParameter("keyword");
 		
 		Connection con = null;
@@ -580,7 +580,7 @@ public class BoardReplier extends HttpServlet {
 			log.close();
 			String path = req.getContextPath();
 			keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
-			resp.sendRedirect(path + "/board/list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+			resp.sendRedirect(path + "/board/list.jsp?page=" + page + "&amp;keyword=" + keyword);
 		}
 
 	}
@@ -675,7 +675,7 @@ public class BoardDeleter extends HttpServlet {
 		Log log = new Log();
 		
 		int no = Integer.parseInt(req.getParameter("no"));
-		String curPage = req.getParameter("curPage");
+		String page = req.getParameter("page");
 		String keyword = req.getParameter("keyword");
 		
 		Connection con = dbmgr.getConnection();
@@ -734,7 +734,7 @@ public class BoardDeleter extends HttpServlet {
 			log.close();
 			String path = req.getContextPath();
 			keyword = java.net.URLEncoder.encode(keyword, "UTF-8");
-			resp.sendRedirect(path + "/board/list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+			resp.sendRedirect(path + "/board/list.jsp?page=" + page + "&amp;keyword=" + keyword);
 		}
 		
 	}
@@ -1053,7 +1053,7 @@ public class BoardDeleter extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		int no = Integer.parseInt(req.getParameter("no"));
-		String curPage = req.getParameter("curPage");
+		String page = req.getParameter("page");
 		String keyword = req.getParameter("keyword");
 		
 		Connection con = dbmgr.getConnection();
@@ -1064,7 +1064,7 @@ public class BoardDeleter extends HttpServlet {
 		
 		String path = req.getContextPath();
 		keyword = URLEncoder.encode(keyword, "UTF-8");
-		resp.sendRedirect(path + "/board/list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+		resp.sendRedirect(path + "/board/list.jsp?page=" + page + "&amp;keyword=" + keyword);
 	}
 	
 }

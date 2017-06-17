@@ -114,13 +114,13 @@ import net.java_school.commons.PagingHelper;
 public class ListAction {
 	public void execute(HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
-		int curPage = (request.getParameter("curPage") == null  ? 1 : 
-			Integer.parseInt(request.getParameter("curPage")));
+		int page = (request.getParameter("page") == null  ? 1 : 
+			Integer.parseInt(request.getParameter("page")));
 		String keyword = request.getParameter("keyword");
 		if (keyword == null) keyword = "";
 		BoardDao dao = new BoardDao();
 		int totalRecord = dao.getTotalRecord(keyword);
-		PagingHelper pagingHelper = new PagingHelper(totalRecord,curPage,10,5);
+		PagingHelper pagingHelper = new PagingHelper(totalRecord,page,10,5);
 		int startRecord = pagingHelper.getStartRecord();
 		int endRecord = pagingHelper.getEndRecord();
 		ArrayList&lt;Article&gt; list = dao.getBoardList(startRecord, endRecord, keyword);
@@ -144,13 +144,13 @@ import net.java_school.commons.PagingHelper;
 
 public class ListAction {
 	public void execute(HttpServletRequest request) {
-		int curPage = (request.getParameter("curPage") == null  ? 1 : 
-			Integer.parseInt(request.getParameter("curPage")));
+		int page = (request.getParameter("page") == null  ? 1 : 
+			Integer.parseInt(request.getParameter("page")));
 		String keyword = request.getParameter("keyword");
 		if (keyword == null) keyword = "";
 		BoardDao dao = new BoardDao();
 		int totalRecord = dao.getTotalRecord(keyword);
-		PagingHelper pagingHelper = new PagingHelper(totalRecord,curPage,10,5);
+		PagingHelper pagingHelper = new PagingHelper(totalRecord,page,10,5);
 		int startRecord = pagingHelper.getStartRecord();
 		int endRecord = pagingHelper.getEndRecord();
 		ArrayList&lt;Article&gt; list = dao.getBoardList(startRecord, endRecord, keyword);
@@ -250,7 +250,7 @@ public class ControllerServlet extends HttpServlet {
 &lt;%@ page import="net.java_school.board.*" %&gt;
 &lt;%@ page import="java.util.*" %&gt;
 &lt;%
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 int bbsNo = (Integer) request.getAttribute("listNo");
 ArrayList&lt;Article&gt; list = (ArrayList&lt;Article&gt;) request.getAttribute("list");
@@ -281,7 +281,7 @@ for (int i = 0; i &lt; list.size(); i++) {
 	}
 %&gt;
 &lt;%=bbsNo %&gt;
-&lt;a href="view.do?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;a href="view.do?no=&lt;%=article.getNo() %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
 &lt;%=article.getWriteDate() %&gt;&lt;br /&gt;
 &lt;hr /&gt;
 &lt;%
@@ -290,25 +290,25 @@ bbsNo--;
 //int prevLink = service.getPrevLink();
 if (prevLink != 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%
 }
 //int firstPage = service.getFirstPage();
 //int lastPage = service.getLastPage();
 for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 &lt;%
 }
 //int nextLink = service.getNextLink();
 if (nextLink != 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 }
 %&gt;				
 &lt;p&gt;
-&lt;a href="write_form.do?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.do?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
 &lt;/p&gt;
 &lt;form action="list.do" method="post"&gt;
 	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
@@ -325,7 +325,7 @@ list.jsp 코드는 이제 자신이 보여줄 결과물만을 전달받는다.<b
 그런데 list.jsp 아래 부분의 코드가 마음에 들지 않는다.<br />
 
 <pre class="prettyprint">
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 int bbsNo = (Integer) request.getAttribute("listNo");
 ArrayList&lt;Article&gt; list = (ArrayList&lt;Article&gt;) request.getAttribute("list");
@@ -404,11 +404,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ListAction {
 	public void execute(HttpServletRequest request) {
-		int curPage = (request.getParameter("curPage") == null  ? 1 : 
-			Integer.parseInt(request.getParameter("curPage")));
+		int page = (request.getParameter("page") == null  ? 1 : 
+			Integer.parseInt(request.getParameter("page")));
 		String keyword = request.getParameter("keyword");
 		if (keyword == null) keyword = "";
-		BoardService service = new BoardService(curPage, keyword, 10, 5);
+		BoardService service = new BoardService(page, keyword, 10, 5);
 		
 		ArrayList&lt;Article&gt; list = service.getBoardList();
 		int listNo = service.getListNo();
@@ -439,8 +439,8 @@ list.jsp 파일을 수정한다.
 &lt;%@ page import="net.java_school.board.*" %&gt;
 &lt;%@ page import="java.util.*" %&gt;
 &lt;%
-String curPage = request.getParameter("curPage");
-<strong>if (curPage == null) curPage = "1";</strong>
+String page = request.getParameter("page");
+<strong>if (page == null) page = "1";</strong>
 String keyword = request.getParameter("keyword");
 ListVo vo = (ListVo)request.getAttribute("listVo");
 %&gt;
@@ -468,7 +468,7 @@ for (int i = 0; i &lt; list.size(); i++) {
 	}
 %&gt;
 &lt;%=bbsNo %&gt;
-&lt;a href="view.do?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;a href="view.do?no=&lt;%=article.getNo() %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
 &lt;%=article.getWriteDate() %&gt;&lt;br /&gt;
 &lt;hr /&gt;
 &lt;%
@@ -478,7 +478,7 @@ bbsNo--;
 int prevLink = vo.getPrevLink();
 if (prevLink != 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=prevLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
 &lt;%
 }
 //int firstPage = service.getFirstPage();
@@ -487,19 +487,19 @@ int firstPage = vo.getFirstPage();
 int lastPage = vo.getLastPage();
 for (int i = firstPage; i &lt;= lastPage; i++) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
 &lt;%
 }
 //int nextLink = service.getNextLink();
 int nextLink = vo.getNextLink();
 if (nextLink != 0) {
 %&gt;
-	&lt;a href="list.do?curPage=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+	&lt;a href="list.do?page=&lt;%=nextLink %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
 &lt;%
 }
 %&gt;				
 &lt;p&gt;
-&lt;a href="write_form.do?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;a href="write_form.do?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
 &lt;/p&gt;
 &lt;form action="list.do" method="post"&gt;
 	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
@@ -724,7 +724,7 @@ view.jsp 파일을 열고 코드에 있는 .jsp 를 모두 .do 로 수정한다.
 &lt;%@ page import="net.java_school.board.*" %&gt;
 &lt;%
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 if (keyword == null) keyword = "";
 <strong>Article article = (Article) request.getAttribute("article");</strong>
@@ -735,14 +735,14 @@ if (keyword == null) keyword = "";
 &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
 &lt;title&gt;상세보기&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-function goModify(no,curPage,keyword) {
-	location.href="modify_form.do?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+function goModify(no,page,keyword) {
+	location.href="modify_form.do?no=" + no + "&amp;page=" + page + "&amp;keyword=" + keyword;
 }
 
-function goDelete(no,curPage,keyword) {
+function goDelete(no,page,keyword) {
 	var check = confirm("정말로 삭제하겠습니까?");
 	if (check) {
-		location.href="del.do?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+		location.href="del.do?no=" + no + "&amp;page=" + page + "&amp;keyword=" + keyword;
 	}
 }
 &lt;/script&gt;
@@ -753,10 +753,10 @@ function goDelete(no,curPage,keyword) {
 &lt;p&gt;
 &lt;%=article.getHtmlContent() %&gt;
 &lt;/p&gt;
-&lt;a href="list.do?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
-&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
-&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
-&lt;a href="reply_form.do?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
+&lt;a href="list.do?page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
+&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=page %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=page %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;a href="reply_form.do?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -805,7 +805,7 @@ modify_form.jsp 파일을 열고 .jsp 를 모두 .do 로 수정한다.<br />
 &lt;%@ page import="net.java_school.board.*" %&gt;
 &lt;%
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 <strong>Article article = (Article) request.getAttribute("article");</strong>
 %&gt;
@@ -820,7 +820,7 @@ String keyword = request.getParameter("keyword");
 &lt;h1&gt;수정&lt;/h1&gt;
 &lt;form action="modify.do" method="post"&gt;
 &lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;"&gt;
 &lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -836,7 +836,7 @@ String keyword = request.getParameter("keyword");
 	&lt;td colspan="2"&gt;
 		&lt;input type="submit" value="전송"&gt;
 		&lt;input type="reset" value="취소"&gt;
-		&lt;a href="view.do?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+		&lt;a href="view.do?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -853,11 +853,11 @@ String keyword = request.getParameter("keyword");
 action = new ModifyAction();
 action.execute(req);
 String no = req.getParameter("no");
-String curPage = req.getParameter("curPage");
+String page = req.getParameter("page");
 String keyword = req.getParameter("keyword");
 if (keyword == null) keyword = "";
 keyword = java.net.URLEncoder.encode(keyword, "UTF-8");
-view = "/model2/view.do?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+view = "/model2/view.do?no=" + no + "&amp;page=" + page + "&amp;keyword=" + keyword;
 isRedirect = true;
 </pre>
 
@@ -903,11 +903,11 @@ public class ModifyAction implements Action {
 <pre class="prettyprint">
 action = new DeleteAction();
 action.execute(req);
-String curPage = req.getParameter("curPage");
+String page = req.getParameter("page");
 String keyword = req.getParameter("keyword");
 if (keyword == null) keyword = "";
 keyword = java.net.URLEncoder.encode(keyword, "UTF-8");
-view = "/model2/list.do?curPage=" + curPage + "&amp;keyword=" + keyword;
+view = "/model2/list.do?page=" + page + "&amp;keyword=" + keyword;
 isRedirect = true;
 </pre>
 
@@ -987,7 +987,7 @@ reply_form.jsp 파일을 열고 .jsp 를 .do 로 수정한다.<br />
 &lt;%@ page import="net.java_school.board.*" %&gt;
 &lt;%
 int no = Integer.parseInt(request.getParameter("no"));
-String curPage = request.getParameter("curPage");
+String page = request.getParameter("page");
 String keyword = request.getParameter("keyword");
 
 <strong>Article article = (Article) request.getAttribute("article");</strong>
@@ -1004,14 +1004,14 @@ String keyword = request.getParameter("keyword");
 &lt;input type="hidden" name="family" value="&lt;%=article.getFamily() %&gt;" /&gt;
 &lt;input type="hidden" name="indent" value="&lt;%=article.getIndent() %&gt;" /&gt;
 &lt;input type="hidden" name="depth" value="&lt;%=article.getDepth() %&gt;" /&gt;
-&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="page" value="&lt;%=page %&gt;" /&gt;
 &lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;" /&gt;
 제목 : &lt;input type="text" name="title" size="45" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;br /&gt;
 &lt;textarea name="content" rows="10" cols="60"&gt;&lt;%=<strong>article.getContent()</strong> %&gt;&lt;/textarea&gt;&lt;br /&gt;
 &lt;input type="submit" value="전송" /&gt;
 &lt;input type="reset" value="취소" /&gt;&lt;br /&gt;
 &lt;/form&gt;
-&lt;a href="view.do?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+&lt;a href="view.do?no=&lt;%=no %&gt;&amp;page=&lt;%=page %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -1022,11 +1022,11 @@ String keyword = request.getParameter("keyword");
 <pre class="prettyprint">
 action = new ReplyAction();
 action.execute(req);
-String curPage = req.getParameter("curPage");
+String page = req.getParameter("page");
 String keyword = req.getParameter("keyword");
 if (keyword == null) keyword = "";
 keyword = java.net.URLEncoder.encode(keyword, "UTF-8");
-view = "/model2/list.do?curPage=" + curPage + "&amp;keyword=" + keyword;
+view = "/model2/list.do?page=" + page + "&amp;keyword=" + keyword;
 isRedirect = true;
 </pre>
 

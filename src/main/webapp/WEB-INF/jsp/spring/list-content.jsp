@@ -38,7 +38,7 @@ public class BbsController {
     private BoardService boardService;
 	
     @RequestMapping(value="/list", method=RequestMethod.GET)
-    public String list(String boardCd, Integer curPage, String searchWord, Model model) {
+    public String list(String boardCd, Integer page, String searchWord, Model model) {
         
         int numPerPage = 10;
         int pagePerBlock = 10;
@@ -46,7 +46,7 @@ public class BbsController {
         int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
         
         PagingHelper pagingHelper = 
-                new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);
+                new PagingHelper(totalRecord, page, numPerPage, pagePerBlock);
         boardService.setPagingHelper(pagingHelper);
 
         List&lt;Article&gt; list = boardService.getArticleList(boardCd, searchWord);
@@ -156,7 +156,7 @@ compile war:inplace는 src/main/webapp/WEB-INF/lib에 라이브러리를 복사�
 
 <img src="images/MVC/compile-war-result.png" alt="src/main/webapp/WEB-INF/lib" /><br />
 
-/spring-bbs/bbs/list?boardCd=free&amp;curPage=1를 방문하여 테스트한다.<br />
+/spring-bbs/bbs/list?boardCd=free&amp;page=1를 방문하여 테스트한다.<br />
 데이터가 있다면 검색을 테스트한다.<br />
 만일 한글 검색이 되지 않는다면 TOMCAT_HOME/conf/server.xml 파일을 열고 다음을 확인한다.<br />
 
@@ -260,7 +260,7 @@ context:component-scan으로 스캔되지 않기 때문이다.<br />
 	--&gt;
 &lt;/beans&gt;
 </pre>
-톰캣을 재실행하고 /spring-bbs/bbs/list?boardCd=data&amp;curPage=1를 방문하여 테스트한다.<br />
+톰캣을 재실행하고 /spring-bbs/bbs/list?boardCd=data&amp;page=1를 방문하여 테스트한다.<br />
 <br />
 BoardServiceImpl.java의 종속 변수인 매퍼에 @Autowired를 적용한다.<br />
 <em class="filename">BoardServiceImpl.java</em>
@@ -294,7 +294,7 @@ public class BoardServiceImpl implements BoardService {
 	
 </pre>
 자바 소스가 변경됬으니 빌드한다.<br />
-톰캣을 재실행하고 /spring-bbs/bbs/list?boardCd=data&amp;curPage=1를 방문하여 테스트한다.<br />
+톰캣을 재실행하고 /spring-bbs/bbs/list?boardCd=data&amp;page=1를 방문하여 테스트한다.<br />
 
 <span id="refer">참고</span>
 <ul id="references">
