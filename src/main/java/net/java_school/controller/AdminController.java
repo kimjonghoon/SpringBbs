@@ -68,8 +68,8 @@ public class AdminController extends Paginator {
 	@RequestMapping(value="/editAccount", method=RequestMethod.GET)
 	public String editAccountForm(String email, Model model) {
 		User user = userService.getUser(email);
-		String authority = userService.getAuthority(email);
-		user.setAuthority(authority);
+		//String authority = userService.getAuthority(email);
+		//user.setAuthority(authority);
 		model.addAttribute(WebContants.USER_KEY, user);
 		
 		return "admin/editAccount";

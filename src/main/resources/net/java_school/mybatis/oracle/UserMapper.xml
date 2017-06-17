@@ -37,9 +37,9 @@
 	</delete>
 
 	<select id="selectOne" parameterType="string" resultType="User">
-		SELECT email, passwd, name, mobile
-		FROM member
-		WHERE email = #{email}
+		SELECT m.email, passwd, name, mobile, authority
+		FROM member m, authorities a
+		WHERE m.email = a.email AND m.email = #{email}
 	</select>
 
 	<select id="selectAll" resultType="User">

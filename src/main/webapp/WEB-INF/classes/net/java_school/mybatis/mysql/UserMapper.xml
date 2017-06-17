@@ -39,7 +39,7 @@
     WHERE m.email = a.email AND m.email = #{email}
   </select>
   
-  <select id="selectList" resultType="User">
+  <select id="selectAll" resultType="User">
 	SELECT 
 		m.email, name, mobile, authority
 	FROM 
