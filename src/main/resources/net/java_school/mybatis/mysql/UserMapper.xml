@@ -34,9 +34,9 @@
   </delete>
 
   <select id="selectOne" parameterType="string" resultType="User">
-    SELECT m.email, passwd, name, mobile, authority
-    FROM member m, authorities a
-    WHERE m.email = a.email AND m.email = #{email}
+    SELECT email, passwd, name, mobile
+    FROM member
+    WHERE email = #{email}
   </select>
   
   <select id="selectAll" resultType="User">
@@ -75,12 +75,6 @@
 		</if>
   </select>
 	
-	<select id="selectOneAuthority" parameterType="string" resultType="string">
-		SELECT authority
-		FROM authorities
-		WHERE email = #{email}
-	</select>
-	
   <update id="updatePasswdByAdmin" parameterType="User">
     UPDATE member SET passwd = #{passwd} 
     WHERE email = #{email}
@@ -90,5 +84,15 @@
 		UPDATE authorities SET authority = #{authority}
 		WHERE email = #{email}
 	</update>
+	
+	<select id="selectRolesOfSomeone" resultType="string">
+		SELECT authority FROM authorities
+		WHERE email = #{email}
+	</select>
 
+	<delete id="deleteRoleOfSomeone">
+		DELETE FROM authorities
+		WHERE email = #{email} AND authority = #{role}
+	</delete>
+	
 </mapper>

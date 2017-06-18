@@ -59,5 +59,13 @@ public interface UserService {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delUser(User user);
 	
+	//사용자 권한
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public List<String> getRoles(String email);
+	
+	//사용자 권한 삭제
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void delRole(String email, String role);
+	
 	
 }

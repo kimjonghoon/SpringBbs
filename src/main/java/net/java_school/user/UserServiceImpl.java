@@ -116,10 +116,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void delUser(User user) {
-		System.out.println(user.getEmail());
 		userMapper.deleteAuthority(user.getEmail());
-		System.out.println(user.getEmail());
 		userMapper.delete(user);
+	}
+	
+	@Override
+	public List<String> getRoles(String email) {
+		return userMapper.selectRolesOfSomeone(email);
+	}
+	
+	
+	@Override
+	public void delRole(String email, String role) {
+		userMapper.deleteRoleOfSomeone(email, role);
 	}
 
 }

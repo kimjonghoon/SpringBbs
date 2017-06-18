@@ -39,5 +39,8 @@ public interface UserMapper {
   public void updatePasswdByAdmin(User user);
   
   public void updateAuthority(User user);
-    
+   
+  public List<String> selectRolesOfSomeone(@Param("email") String email);
+  
+  public void deleteRoleOfSomeone(@Param("email") String email, @Param("role") String role);
 }

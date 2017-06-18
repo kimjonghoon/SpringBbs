@@ -68,9 +68,9 @@ public class AdminController extends Paginator {
 	@RequestMapping(value="/editAccount", method=RequestMethod.GET)
 	public String editAccountForm(String email, Model model) {
 		User user = userService.getUser(email);
-		//String authority = userService.getAuthority(email);
-		//user.setAuthority(authority);
+		List<String> roles = userService.getRoles(email);
 		model.addAttribute(WebContants.USER_KEY, user);
+		model.addAttribute("roles", roles);
 		
 		return "admin/editAccount";
 	}
@@ -93,7 +93,7 @@ public class AdminController extends Paginator {
 
 	@RequestMapping(value="/changeAuthority", method=RequestMethod.POST)
 	public String changeAuthority(User user, String page, String search) throws Exception {
-		userService.changeAuthority(user);
+		userService.addAuthority(user.getEmail(), user.getAuthority());
 		
 		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
 		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
@@ -127,6 +127,14 @@ public class AdminController extends Paginator {
 		boardService.editBoard(board);
 		
 		return "redirect:/admin/board";
+	}
+
+	@RequestMapping(value="/delRole", method=RequestMethod.GET)
+	public String delRole(String role, String email, String page, String search) throws Exception {
+		
+		userService.delRole(email, role);
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin/editAccount?email=" + email + "&page=" + page + "&search=" + search;
 	}
 	
 }
