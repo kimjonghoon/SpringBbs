@@ -7,10 +7,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//import net.java_school.mybatis.oracle.UserMapper;
-
-
-import net.java_school.mybatis.mysql.UserMapper;
+import net.java_school.mybatis.oracle.UserMapper;
+//import net.java_school.mybatis.mysql.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {

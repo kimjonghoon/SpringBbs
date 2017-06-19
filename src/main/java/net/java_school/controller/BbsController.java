@@ -63,10 +63,10 @@ public class BbsController extends Paginator {
 
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-/*		
+		
 		//oracle
-		int startRecord = (page - 1) * numPerPage + 1;
-		int endRecord = page * numPerPage;
+		Integer startRecord = (page - 1) * numPerPage + 1;
+		Integer endRecord = page * numPerPage;
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("boardCd", boardCd);
@@ -74,8 +74,9 @@ public class BbsController extends Paginator {
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		List<Article> list = boardService.getArticleList(map);
-*/
-		
+
+
+/*		
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -86,7 +87,7 @@ public class BbsController extends Paginator {
 		map.put("rowCount", rowCount.toString());
 		List<Article> list = boardService.getArticleList(map);
 
-		
+*/		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prevPage = numbers.getPrevBlock();
 		Integer nextPage = numbers.getNextBlock();
@@ -156,10 +157,11 @@ public class BbsController extends Paginator {
 		
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 		
-		/*		
+
+		
 		//oracle
-		int startRecord = (page - 1) * numPerPage + 1;
-		int endRecord = page * numPerPage;
+		Integer startRecord = (page - 1) * numPerPage + 1;
+		Integer endRecord = page * numPerPage;
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("boardCd", boardCd);
@@ -167,8 +169,9 @@ public class BbsController extends Paginator {
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		List<Article> list = boardService.getArticleList(map);
-*/
+
 		
+/*		
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -178,7 +181,7 @@ public class BbsController extends Paginator {
 		Integer rowCount = numPerPage;
 		map.put("rowCount", rowCount.toString());
 		List<Article> list = boardService.getArticleList(map);
-		
+*/		
 
 		int listItemNo = numbers.getListItemNo();
 		int prevPage = numbers.getPrevBlock();
