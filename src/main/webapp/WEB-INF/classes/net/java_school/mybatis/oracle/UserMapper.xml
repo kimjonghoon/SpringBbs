@@ -7,21 +7,25 @@
 <mapper namespace="net.java_school.mybatis.oracle.UserMapper">
 
 	<insert id="insert" parameterType="User">
-		INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
+		INSERT INTO member VALUES
+		(#{email}, #{passwd}, #{name}, #{mobile})
 	</insert>
 
 	<insert id="insertAuthority">
-		INSERT INTO authorities VALUES (#{email}, #{authority})
+		INSERT INTO authorities VALUES (#{email},
+		#{authority})
 	</insert>
 
 	<update id="update" parameterType="User">
-		UPDATE member SET name = #{name}, mobile = #{mobile}
+		UPDATE member SET name =
+		#{name}, mobile = #{mobile}
 		WHERE email = #{email}
 	</update>
 
 	<update id="updatePasswd">
 		UPDATE member SET passwd = #{newPasswd}
-		WHERE passwd = #{currentPasswd} AND email = #{email}
+		WHERE passwd =
+		#{currentPasswd} AND email = #{email}
 	</update>
 
 	<delete id="delete">
@@ -34,65 +38,63 @@
 	</delete>
 
 	<select id="selectOne" parameterType="string" resultType="User">
-		SELECT email, passwd, name, mobile
+		SELECT
+		email, passwd, name, mobile
 		FROM member
 		WHERE email = #{email}
 	</select>
 
 	<select id="selectAll" resultType="User">
 		SELECT *
-		FROM (	
-			SELECT ROWNUM R,a.*
-			FROM (
-				SELECT m.email, passwd, name, mobile, authority
-				FROM member m, authorities a
-				WHERE m.email = a.email
-				<if test="search != null and search != ''">
-					AND (
-						m.email LIKE '%' || #{search} || '%'
-						OR name LIKE '%' || #{search} || '%'
-						OR mobile LIKE '%' || #{search} || '%'
-						OR authority LIKE '%' || #{search} || '%'
-					)
-				</if>
-				ORDER BY authority ASC, name ASC
-			) a
-		)
-		WHERE R BETWEEN #{startRecord} AND #{endRecord}	
-	</select>
-
-	<select id="selectTotalCount" resultType="int">
-		SELECT count(*) 
-		FROM member m, authorities a 
+		FROM (
+		SELECT ROWNUM R,a.*
+		FROM (
+		SELECT m.email, passwd, name, mobile, authority
+		FROM member m, authorities a
 		WHERE m.email = a.email
 		<if test="search != null and search != ''">
 			AND (
-				m.email LIKE '%' || #{search} || '%'
-				OR name LIKE '%' || #{search} || '%'
-				OR mobile LIKE '%' || #{search} || '%'
-				OR authority LIKE '%' || #{search} || '%'
+			m.email LIKE '%' || #{search} || '%'
+			OR name LIKE '%' || #{search} || '%'
+			OR mobile LIKE '%' || #{search} || '%'
+			OR authority LIKE '%' || #{search} || '%'
+			)
+		</if>
+		ORDER BY authority ASC, name ASC
+		) a
+		)
+		WHERE R BETWEEN #{startRecord} AND #{endRecord}
+	</select>
+
+	<select id="selectTotalCount" resultType="int">
+		SELECT count(*)
+		FROM member m, authorities a
+		WHERE m.email = a.email
+		<if test="search != null and search != ''">
+			AND (
+			m.email LIKE '%' || #{search} || '%'
+			OR name LIKE '%' || #{search} || '%'
+			OR mobile LIKE '%' || #{search} || '%'
+			OR authority LIKE '%' || #{search} || '%'
 			)
 		</if>
 	</select>
 
 	<update id="updatePasswdByAdmin" parameterType="User">
-		UPDATE member SET passwd = #{passwd}
-		WHERE email = #{email}
-	</update>
-	
-	<update id="updateAuthority" parameterType="User">
-		UPDATE authorities SET authority = #{authority}
+		UPDATE member SET
+		passwd = #{passwd}
 		WHERE email = #{email}
 	</update>
 
-	<select id="selectRolesOfSomeone" resultType="string">
-		SELECT authority FROM authorities
+	<select id="selectAuthoritiesOfUser" resultType="string">
+		SELECT authority
+		FROM authorities
 		WHERE email = #{email}
 	</select>
-	
-	<delete id="deleteRoleOfSomeone">
+
+	<delete id="deleteAuthorityOfUser">
 		DELETE FROM authorities
-		WHERE email = #{email} AND authority = #{role}
+		WHERE email = #{email} AND authority = #{authority}
 	</delete>
-	
+
 </mapper>

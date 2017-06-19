@@ -3,11 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <script type="text/javascript">
-function goDel(user) {
+function goDel(email) {
 	var check = confirm('<spring:message code="delete.confirm" />')
 	if (check) {
 		var form = document.getElementById("delUserForm");
-		form.email.value = user;
+		form.email.value = email;
 		form.submit();
 	}
 }
@@ -31,7 +31,7 @@ function goDel(user) {
 	<td><a href="/admin/editAccount?email=${user.email }&page=${param.page }&search=${param.search }">${user.email }</a></td>
 	<td>${user.mobile }</td>
 	<td>${user.authority }</td>
-	<td><a href="javascript:goDel('${user.email }')">X</a></td>
+	<td><a href="javascript:goDel('${user.email }','${user.authority }')">X</a></td>
 </tr>
 </c:forEach>
 </table>

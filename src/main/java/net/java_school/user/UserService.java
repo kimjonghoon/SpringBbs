@@ -12,9 +12,6 @@ public interface UserService {
 	//회원권한 추가
 	public void addAuthority(String email, String authority);
 
-	//로그인
-	/*  public User login(String email, String passwd);*/
-
 	//내 정보 수정
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	public int editAccount(User user);
@@ -51,21 +48,17 @@ public interface UserService {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void changePasswdByAdmin(User user);
 
-	//권한 변경
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void changeAuthority(User user);
-	
 	//사용자 삭제
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delUser(User user);
 	
 	//사용자 권한
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public List<String> getRoles(String email);
+	public List<String> getAuthoritiesOfUser(String email);
 	
 	//사용자 권한 삭제
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void delRole(String email, String role);
+	public void delAuthorityOfUser(String email, String authority);
 	
 	
 }

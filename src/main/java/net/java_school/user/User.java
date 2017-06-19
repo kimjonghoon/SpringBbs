@@ -24,12 +24,11 @@ public class User {
 		this.passwd = passwd;
 	}
 	
-	public User(String email, String passwd, String name, String mobile, String authority) {
+	public User(String email, String passwd, String name, String mobile) {
 		this.email = email;
 		this.passwd = passwd;
 		this.name = name;
 		this.mobile = mobile;
-		this.authority = authority;
 	}
 
 	public String getEmail() {
@@ -64,6 +63,5 @@ public class User {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	
 	
 }

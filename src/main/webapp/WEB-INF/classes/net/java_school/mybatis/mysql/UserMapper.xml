@@ -5,94 +5,90 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.java_school.mybatis.mysql.UserMapper">
-    
-  <insert id="insert" parameterType="User">
-    INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
-  </insert>
 
-  <insert id="insertAuthority">
-    INSERT INTO authorities VALUES (#{email}, #{authority})
-  </insert>
-  
-  <update id="update" parameterType="User">
-    UPDATE member SET name = #{name}, mobile = #{mobile}
-    WHERE email = #{email}
-  </update>
+	<insert id="insert" parameterType="User">
+		INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
+	</insert>
 
-  <update id="updatePasswd">
-    UPDATE member SET passwd = #{newPasswd} 
-    WHERE passwd = #{currentPasswd} AND email = #{email}
-  </update>
+	<insert id="insertAuthority">
+		INSERT INTO authorities VALUES (#{email}, #{authority})
+	</insert>
 
-  <delete id="delete">
-    DELETE FROM member WHERE email = #{email}
-  </delete>
-  
-  <delete id="deleteAuthority">
-    DELETE FROM authorities
-    WHERE email = #{email}
-  </delete>
-
-  <select id="selectOne" parameterType="string" resultType="User">
-    SELECT email, passwd, name, mobile
-    FROM member
-    WHERE email = #{email}
-  </select>
-  
-  <select id="selectAll" resultType="User">
-	SELECT 
-		m.email, name, mobile, authority
-	FROM 
-		member m, authorities a
-	WHERE
-		m.email = a.email
-		<if test="search != null and search != ''">
-		AND (
-			m.email LIKE concat('%', #{search}, '%')
-			OR name LIKE concat('%', #{search}, '%')
-			OR mobile LIKE concat('%', #{search}, '%')
-			OR authority LIKE concat('%', #{search}, '%')
-			)
-		</if>
-	ORDER BY authority ASC,name ASC
-	LIMIT #{offset}, #{rowCount}
-  </select>
-  
-  <select id="selectTotalCount" resultType="int">
-	SELECT 
-		count(*)
-	FROM 
-		member m, authorities a
-	WHERE
-		m.email = a.email
-		<if test="search != null and search != ''">
-		AND (
-			m.email LIKE concat('%', #{search}, '%')
-			OR name LIKE concat('%', #{search}, '%')
-			OR mobile LIKE concat('%', #{search}, '%')
-			OR authority LIKE concat('%', #{search}, '%')
-			)
-		</if>
-  </select>
-	
-  <update id="updatePasswdByAdmin" parameterType="User">
-    UPDATE member SET passwd = #{passwd} 
-    WHERE email = #{email}
-  </update>
-
-	<update id="updateAuthority" parameterType="User">
-		UPDATE authorities SET authority = #{authority}
+	<update id="update" parameterType="User">
+		UPDATE member SET name = #{name}, mobile = #{mobile}
 		WHERE email = #{email}
 	</update>
-	
-	<select id="selectRolesOfSomeone" resultType="string">
-		SELECT authority FROM authorities
+
+	<update id="updatePasswd">
+		UPDATE member SET passwd = #{newPasswd}
+		WHERE passwd = #{currentPasswd} AND email = #{email}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM member WHERE email = #{email}
+	</delete>
+
+	<delete id="deleteAuthority">
+		DELETE FROM authorities
+		WHERE email = #{email}
+	</delete>
+
+	<select id="selectOne" parameterType="string" resultType="User">
+		SELECT email, passwd, name, mobile
+		FROM member
 		WHERE email = #{email}
 	</select>
 
-	<delete id="deleteRoleOfSomeone">
+	<select id="selectAll" resultType="User">
+		SELECT
+		m.email, name, mobile, authority
+		FROM
+		member m, authorities a
+		WHERE
+		m.email = a.email
+		<if test="search != null and search != ''">
+			AND (
+			m.email LIKE concat('%', #{search}, '%')
+			OR name LIKE concat('%', #{search}, '%')
+			OR mobile LIKE concat('%', #{search}, '%')
+			OR authority LIKE concat('%', #{search}, '%')
+			)
+		</if>
+		ORDER BY authority ASC,name ASC
+		LIMIT #{offset}, #{rowCount}
+	</select>
+
+	<select id="selectTotalCount" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		member m, authorities a
+		WHERE
+		m.email = a.email
+		<if test="search != null and search != ''">
+			AND (
+			m.email LIKE concat('%', #{search}, '%')
+			OR name LIKE concat('%', #{search}, '%')
+			OR mobile LIKE concat('%', #{search}, '%')
+			OR authority LIKE concat('%', #{search}, '%')
+			)
+		</if>
+	</select>
+
+	<update id="updatePasswdByAdmin" parameterType="User">
+		UPDATE member SET passwd = #{passwd}
+		WHERE email = #{email}
+	</update>
+
+	<select id="selectAuthoritiesOfUser" resultType="string">
+		SELECT authority
+		FROM authorities
+		WHERE email = #{email}
+	</select>
+
+	<delete id="deleteAuthorityOfUser">
 		DELETE FROM authorities
-		WHERE email = #{email} AND authority = #{role}
+		WHERE email = #{email} AND authority = #{authority}
 	</delete>
-	
+
 </mapper>

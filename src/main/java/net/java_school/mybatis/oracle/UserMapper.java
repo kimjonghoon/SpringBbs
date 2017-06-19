@@ -26,17 +26,20 @@ public interface UserMapper {
 	public void deleteAuthority(@Param("email") String email);
 
 	public User selectOne(String email);
-	
+
 	public List<User> selectAll(
 			@Param("search") String search, 
 			@Param("startRecord") Integer startRecord, 
 			@Param("endRecord") Integer endRecord);
-	
+
 	public int selectTotalCount(@Param("search") String search);
-	
+
 	public String selectOneAuthority(String email);
-	
+
 	public void updatePasswdByAdmin(User user);
-	
-	public void updateAuthority(User user);
+
+	public List<String> selectAuthoritiesOfUser(@Param("email") String email);
+
+	public void deleteAuthorityOfUser(@Param("email") String email, @Param("authority") String authority);
+
 }

@@ -4,9 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
-function delRole(role) {
-	var form = document.getElementById("deleteRoleForm");
-	form.role.value = role;
+function delAuthority(authority) {
+	var form = document.getElementById("deleteAuthorityForm");
+	form.authority.value = authority;
 	form.submit();
 }
 </script>
@@ -61,7 +61,7 @@ function delRole(role) {
 
 <hr />
 
-<sf:form id="editAuthorityForm" action="changeAuthority" method="post" commandName="user">
+<sf:form id="addAuthorityForm" action="addAuthority" method="post" commandName="user">
 <sf:hidden path="email" value="${user.email }" />
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="search" value="${param.search }" />
@@ -70,8 +70,8 @@ function delRole(role) {
 <tr>
 	<td>현재 권한</td>
 	<td>
-	<c:forEach var="role" items="${roles }" varStatus="status">
-			${role } <a href="javascript:delRole('${role }')">x</a>
+	<c:forEach var="authority" items="${authorities }" varStatus="status">
+			${authority } <a href="javascript:delAuthority('${authority }')">x</a>
 	</c:forEach>
 	</td>
 </tr>
@@ -98,10 +98,10 @@ function delRole(role) {
 </div>
 
 <div style="display: none;">
-<form id="deleteRoleForm" action="delRole" method="get">
+<form id="deleteAuthorityForm" action="delAuthority" method="get">
 	<input type="hidden" name="email" value="${user.email }" />
 	<input type="hidden" name="page" value="${param.page }" />
 	<input type="hidden" name="search" value="${param.search }" />
-	<input type="text" name="role" />
+	<input type="text" name="authority" />
 </form>
 </div>

@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 //import net.java_school.mybatis.oracle.UserMapper;
+
+
 import net.java_school.mybatis.mysql.UserMapper;
 
 @Service
@@ -30,12 +32,7 @@ public class UserServiceImpl implements UserService {
 		userMapper.insertAuthority(email, authority);
 	}
 
-/*	@Override
-	public User login(String email, String passwd) {
-		return userMapper.login(email, passwd);
-	}
-
-*/	@Override
+	@Override
 	public int editAccount(User user) {
 		String encodedPassword = this.getUser(user.getEmail()).getPasswd();   
 		boolean check = this.bcryptPasswordEncoder.matches(user.getPasswd(), encodedPassword);
@@ -110,25 +107,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void changeAuthority(User user) {
-		userMapper.updateAuthority(user);
-	}
-
-	@Override
 	public void delUser(User user) {
 		userMapper.deleteAuthority(user.getEmail());
 		userMapper.delete(user);
 	}
 	
 	@Override
-	public List<String> getRoles(String email) {
-		return userMapper.selectRolesOfSomeone(email);
+	public List<String> getAuthoritiesOfUser(String email) {
+		return userMapper.selectAuthoritiesOfUser(email);
 	}
 	
 	
 	@Override
-	public void delRole(String email, String role) {
-		userMapper.deleteRoleOfSomeone(email, role);
+	public void delAuthorityOfUser(String email, String authority) {
+		userMapper.deleteAuthorityOfUser(email, authority);
 	}
 
 }

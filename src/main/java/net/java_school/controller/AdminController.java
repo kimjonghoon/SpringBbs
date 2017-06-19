@@ -68,9 +68,9 @@ public class AdminController extends Paginator {
 	@RequestMapping(value="/editAccount", method=RequestMethod.GET)
 	public String editAccountForm(String email, Model model) {
 		User user = userService.getUser(email);
-		List<String> roles = userService.getRoles(email);
+		List<String> authorities = userService.getAuthoritiesOfUser(email);
 		model.addAttribute(WebContants.USER_KEY, user);
-		model.addAttribute("roles", roles);
+		model.addAttribute("authorities", authorities);
 		
 		return "admin/editAccount";
 	}
@@ -86,14 +86,6 @@ public class AdminController extends Paginator {
 	@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
 	public String changePasswd(User user, String page, String search) throws Exception {
 		userService.changePasswdByAdmin(user);
-		
-		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
-		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
-	}
-
-	@RequestMapping(value="/changeAuthority", method=RequestMethod.POST)
-	public String changeAuthority(User user, String page, String search) throws Exception {
-		userService.addAuthority(user.getEmail(), user.getAuthority());
 		
 		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
 		return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
@@ -129,12 +121,20 @@ public class AdminController extends Paginator {
 		return "redirect:/admin/board";
 	}
 
-	@RequestMapping(value="/delRole", method=RequestMethod.GET)
-	public String delRole(String role, String email, String page, String search) throws Exception {
+	@RequestMapping(value="/delAuthority", method=RequestMethod.GET)
+	public String delAuthority(String authority, String email, String page, String search) throws Exception {
 		
-		userService.delRole(email, role);
+		userService.delAuthorityOfUser(email, authority);
 		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
 		return "redirect:/admin/editAccount?email=" + email + "&page=" + page + "&search=" + search;
 	}
-	
+
+	@RequestMapping(value="/addAuthority", method=RequestMethod.POST)
+	public String addAuthority(String authority, String email, String page, String search) throws Exception {
+		
+		userService.addAuthority(email, authority);
+		if (search != null && !search.equals("")) search = URLEncoder.encode(search, "UTF-8");
+		return "redirect:/admin/editAccount?email=" + email + "&page=" + page + "&search=" + search;
+	}
+
 }
