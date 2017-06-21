@@ -12,8 +12,7 @@
 	</insert>
 
 	<insert id="insertAuthority">
-		INSERT INTO authorities VALUES (#{email},
-		#{authority})
+		INSERT INTO authorities VALUES (#{email}, #{authority})
 	</insert>
 
 	<update id="update" parameterType="User">
@@ -37,30 +36,32 @@
 		WHERE email = #{email}
 	</delete>
 
-	<select id="selectOne" parameterType="string" resultType="User">
+	<select id="selectOne" resultMap="UserResult">
 		SELECT
 		email, passwd, name, mobile
 		FROM member
 		WHERE email = #{email}
 	</select>
 
-	<select id="selectAll" resultType="User">
-		SELECT *
+	<resultMap id="UserResult" type="User">
+		<id property="email" column="email" />
+		<collection property="authorities" javaType="ArrayList" column="email" ofType="string" select="selectAuthoritiesOfUser" />
+	</resultMap>
+	
+	<select id="selectAll" resultMap="UserResult">
+		SELECT email, name, mobile
 		FROM (
-		SELECT ROWNUM R,a.*
+		SELECT ROWNUM R, a.*
 		FROM (
-		SELECT m.email, passwd, name, mobile, authority
-		FROM member m, authorities a
-		WHERE m.email = a.email
+		SELECT email, name, mobile
+		FROM member
 		<if test="search != null and search != ''">
-			AND (
-			m.email LIKE '%' || #{search} || '%'
+		WHERE 
+			email LIKE '%' || #{search} || '%'
 			OR name LIKE '%' || #{search} || '%'
 			OR mobile LIKE '%' || #{search} || '%'
-			OR authority LIKE '%' || #{search} || '%'
-			)
 		</if>
-		ORDER BY authority ASC, name ASC
+		ORDER BY name ASC
 		) a
 		)
 		WHERE R BETWEEN #{startRecord} AND #{endRecord}
@@ -68,15 +69,12 @@
 
 	<select id="selectTotalCount" resultType="int">
 		SELECT count(*)
-		FROM member m, authorities a
-		WHERE m.email = a.email
+		FROM member
 		<if test="search != null and search != ''">
-			AND (
-			m.email LIKE '%' || #{search} || '%'
+		WHERE 
+			email LIKE '%' || #{search} || '%'
 			OR name LIKE '%' || #{search} || '%'
 			OR mobile LIKE '%' || #{search} || '%'
-			OR authority LIKE '%' || #{search} || '%'
-			)
 		</if>
 	</select>
 

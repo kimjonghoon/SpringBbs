@@ -61,16 +61,16 @@ function delAuthority(authority) {
 
 <hr />
 
-<sf:form id="addAuthorityForm" action="addAuthority" method="post" commandName="user">
-<sf:hidden path="email" value="${user.email }" />
+<form id="addAuthorityForm" action="addAuthority" method="post">
+<input type="hidden" name="email" value="${user.email }" />
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="search" value="${param.search }" />
-<sf:errors path="*" cssClass="error" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 <table>
 <tr>
 	<td>현재 권한</td>
 	<td>
-	<c:forEach var="authority" items="${authorities }" varStatus="status">
+	<c:forEach var="authority" items="${user.authorities }" varStatus="status">
 			${authority } <a href="javascript:delAuthority('${authority }')">x</a>
 	</c:forEach>
 	</td>
@@ -78,16 +78,15 @@ function delAuthority(authority) {
 <tr>
 	<td>권한 추가</td>
 	<td>
-		<sf:select path="authority">
-			<sf:option value="ROLE_USER" selected="selected">ROLE_USER</sf:option>
-			<sf:option value="ROLE_ADMIN">ROLE_ADMIN</sf:option>
-		</sf:select>
-		<sf:errors path="authority" cssClass="error" />
+		<select name="authority">
+			<option value="ROLE_USER" selected="selected">ROLE_USER</option>
+			<option value="ROLE_ADMIN">ROLE_ADMIN</option>
+		</select>
 		<input type="submit" value="<spring:message code="global.submit" />" />
 	</td>
 </tr>
 </table>
-</sf:form>
+</form>
 
 <div style="text-align: right;">
 <form action="/admin">

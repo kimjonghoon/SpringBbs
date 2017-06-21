@@ -25,7 +25,7 @@ public interface UserMapper {
 
 	public void deleteAuthority(@Param("email") String email);
 
-	public User selectOne(String email);
+	public User selectOne(@Param("email") String email);
 
 	public List<User> selectAll(
 			@Param("search") String search, 

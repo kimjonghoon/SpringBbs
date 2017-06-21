@@ -1,5 +1,7 @@
 package net.java_school.user;
 
+import java.util.List;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -15,7 +17,7 @@ public class User {
 	private String name;
 	@Size(min=6, message="{mobile.validation.error}")
 	private String mobile;
-	private String authority;
+	private List<String> authorities;
 	
 	public User() {}
 	
@@ -24,11 +26,12 @@ public class User {
 		this.passwd = passwd;
 	}
 	
-	public User(String email, String passwd, String name, String mobile) {
+	public User(String email, String passwd, String name, String mobile, List<String> authorities) {
 		this.email = email;
 		this.passwd = passwd;
 		this.name = name;
 		this.mobile = mobile;
+		this.authorities = authorities;
 	}
 
 	public String getEmail() {
@@ -56,12 +59,12 @@ public class User {
 		this.mobile = mobile;
 	}
 
-	public String getAuthority() {
-		return authority;
+	public List<String> getAuthorities() {
+		return authorities;
 	}
 
-	public void setAuthority(String authority) {
-		this.authority = authority;
+	public void setAuthorities(List<String> authorities) {
+		this.authorities = authorities;
 	}
 	
 }

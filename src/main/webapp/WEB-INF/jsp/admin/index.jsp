@@ -21,17 +21,20 @@ function goDel(email) {
 	<th><spring:message code="user.full.name" /></th>
 	<th><spring:message code="user.email" /></th>
 	<th><spring:message code="user.mobile" /></th>
-	<th><spring:message code="user.authority" /></th>
-	<th>X</th>
+	<th><spring:message code="user.authorities" /></th>
+	<th>&nbsp;</th>
 </tr>
 <c:forEach var="user" items="${list }" varStatus="status">
 <tr>
 	<td>${listItemNo - status.index }</td>
 	<td>${user.name }</td>
-	<td><a href="/admin/editAccount?email=${user.email }&page=${param.page }&search=${param.search }">${user.email }</a></td>
+	<td>${user.email }</td>
 	<td>${user.mobile }</td>
-	<td>${user.authority }</td>
-	<td><a href="javascript:goDel('${user.email }','${user.authority }')">X</a></td>
+	<td>${user.authorities }</td>
+	<td>
+		<a href="/admin/editAccount?email=${user.email }&page=${param.page }&search=${param.search }"><spring:message code="global.modify" /></a> |
+		<a href="javascript:goDel('${user.email }')"><spring:message code="global.delete" /></a>
+	</td>
 </tr>
 </c:forEach>
 </table>
