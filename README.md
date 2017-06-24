@@ -182,12 +182,12 @@ $ mvn clean compile war:inplace
 
 ## Oracle -> MySql
 
-1. spring-bbs-servlet.xml
+# 1. spring-bbs-servlet.xml
 
 > <!-- <mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
 > <mybatis:scan base-package="net.java_school.mybatis.mysql" />
 
-2. AdminController.java
+# 2. AdminController.java
 
 	/*
 	//oralce
@@ -200,7 +200,7 @@ $ mvn clean compile war:inplace
 	int offset = (page - 1) * numPerPage;
 	List<User> list = userService.getAllUser(search, offset, numPerPage);
 
-3. BbsController.java (in list() and view() methods)
+# 3. BbsController.java (in list() and view() methods)
 
 	/*
 	//oracle
@@ -225,7 +225,7 @@ $ mvn clean compile war:inplace
 	map.put("rowCount", rowCount.toString());
 	List<Article> list = boardService.getArticleList(map);
 
-4. applicationContext.xml
+# 4. applicationContext.xml
 	
 	<!--
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -263,18 +263,12 @@ $ mvn clean compile war:inplace
 		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
 	</bean>
  
-5. UserServiceImpl.java
+# 5. UserServiceImpl.java
 	
 	//import net.java_school.mybatis.oracle.UserMapper;
 	import net.java_school.mybatis.mysql.UserMapper;
 	
-6. BoardServiceImpl.java
+# 6. BoardServiceImpl.java
 
 	//import net.java_school.mybatis.oracle.BoardMapper;
 	import net.java_school.mybatis.mysql.BoardMapper;
-	
-    
-
-
-
-
