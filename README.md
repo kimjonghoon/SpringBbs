@@ -214,7 +214,7 @@ $ mvn clean compile war:inplace
 	map.put("end", endRecord.toString());
 	List<Article> list = boardService.getArticleList(map);
 	*/
-
+	
 	//mysql
 	Integer offset = (page - 1) * numPerPage;
 	HashMap<String, String> map = new HashMap<String, String>();
@@ -239,13 +239,13 @@ $ mvn clean compile war:inplace
 		<property name="defaultAutoCommit" value="true" />
 		<property name="validationQuery" value=" SELECT 1 FROM DUAL" />
 	</bean>
-
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
 	</bean> 
 	-->
-
+	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;characterEncoding=UTF-8" />
@@ -257,7 +257,7 @@ $ mvn clean compile war:inplace
 		<property name="defaultAutoCommit" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
 	</bean>
-
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
@@ -265,15 +265,14 @@ $ mvn clean compile war:inplace
  
 5. UserServiceImpl.java
 	
-	
 	//import net.java_school.mybatis.oracle.UserMapper;
 	import net.java_school.mybatis.mysql.UserMapper;
 	
-    
 6. BoardServiceImpl.java
 
 	//import net.java_school.mybatis.oracle.BoardMapper;
 	import net.java_school.mybatis.mysql.BoardMapper;
+	
     
 
 
