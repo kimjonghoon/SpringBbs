@@ -33,12 +33,12 @@ public void setArticleNo(Integer articleNo) {
 <em class="filename">BbsController.java</em>
 <pre class="prettyprint">
 //글쓰기 화면
-@RequestMapping(value="/write_form", method=RequestMethod.GET)
+@RequestMapping(value="/write", method=RequestMethod.GET)
 public String writeForm(String boardCd, Model model) {
     String boardNm = boardService.getBoardNm(boardCd);
     model.addAttribute("boardNm", boardNm);
     model.addAttribute("article", new Article());
-    return "bbs/write_form";
+    return "bbs/write";
 }
 
 //글쓰기 처리
@@ -53,7 +53,7 @@ public String write(@Valid Article article,
     if (bindingResult.hasErrors()) {
         String boardNm = boardService.getBoardNm(article.getBoardCd());
         model.addAttribute("boardNm", boardNm);
-        return "bbs/write_form";
+        return "bbs/write";
     }
     
     article.setEmail(principal.getName());
@@ -67,7 +67,7 @@ public String write(@Valid Article article,
 }
 </pre>
 
-<em class="filename">write_form.jsp</em>
+<em class="filename">write.jsp</em>
 <pre class="prettyprint">
 <strong>
 &lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;

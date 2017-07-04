@@ -51,7 +51,7 @@
 		</c:forEach>
     </p>
 </div>
-<form id="modifyForm" action="/bbs/modify_form" method="get">
+<form id="modifyForm" action="/bbs/modify" method="get">
 <p>
     <input type="hidden" name="articleNo" value="${articleNo }" />
     <input type="hidden" name="boardCd" value="${boardCd }" />
@@ -221,7 +221,7 @@
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </p>
     </form>
-    <form id="writeForm" action="/bbs/write_form" method="get">
+    <form id="writeForm" action="/bbs/write" method="get">
     <p>
         <input type="hidden" name="articleNo" value="${articleNo }" />
         <input type="hidden" name="boardCd" value="${boardCd }" />

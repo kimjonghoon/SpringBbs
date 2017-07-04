@@ -158,10 +158,10 @@ header.jsp에 jQuery를 사용하고 있으므로 화면을 보여주는 페이�
 새글 쓰기 처리에서 다시 빈 화면을 만나게 된다.<br />
 첨부 파일의 경우 <em class="path">&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</em>이 아닌 쿼리 스프링으로 CSRF 토큰을 전달해야 한다.<br />
 이는 스프링 폼 태그를 사용하고 있다 하더라도 마찬가지다.<br />
-write_form.jsp와 modify_form.jsp 파일을 열고 <em class="path">&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</em>이 있다면 지우고, 
+write.jsp와 modify.jsp 파일을 열고 <em class="path">&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</em>이 있다면 지우고, 
 아래와 같이 폼의 action 속성을 수정한다.<br />
  
-<em class="filename">write_form.jsp의 action 속성</em>
+<em class="filename">write.jsp의 action 속성</em>
 <pre class="prettyprint">
 &lt;sf:form action="write?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
 </pre>

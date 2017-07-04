@@ -208,7 +208,7 @@ public class BbsController extends Paginator {
 	}
 	
 	//글쓰기 양식
-	@RequestMapping(value="/write_form", method=RequestMethod.GET)
+	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String writeForm(String boardCd, Locale locale, Model model) {
 		String lang = locale.getLanguage();
 		String boardName = this.getBoardName(boardCd, lang);
@@ -218,7 +218,7 @@ public class BbsController extends Paginator {
 		model.addAttribute("article", new Article());
 		model.addAttribute("boards", boards);
 
-		return "bbs/write_form";
+		return "bbs/write";
 		
 	}
 
@@ -236,7 +236,7 @@ public class BbsController extends Paginator {
 		if (bindingResult.hasErrors()) {
 			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
 			model.addAttribute("boardName", boardName);
-			return "bbs/write_form";
+			return "bbs/write";
 		}
 
 		article.setEmail(principal.getName());
@@ -330,7 +330,7 @@ public class BbsController extends Paginator {
 	}
 
 	//수정 양식
-	@RequestMapping(value="/modify_form", method=RequestMethod.GET)
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
 	public String modifyForm(Integer articleNo, 
 			String boardCd,
 			Locale locale,
@@ -347,7 +347,7 @@ public class BbsController extends Paginator {
 		List<Board> boards = boardService.getBoards();
 		model.addAttribute("boards", boards);
 		
-		return "bbs/modify_form";
+		return "bbs/modify";
 	}
 
 	//수정
@@ -363,7 +363,7 @@ public class BbsController extends Paginator {
 		if (bindingResult.hasErrors()) {
 			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
 			model.addAttribute("boardName", boardName);
-			return "bbs/modify_form";
+			return "bbs/modify";
 		}
 
 		//관리자가 수정하더라도 원글 소유자를 그대로 유지하기 위해서 

@@ -7,8 +7,7 @@
 <mapper namespace="net.java_school.mybatis.oracle.UserMapper">
 
 	<insert id="insert" parameterType="User">
-		INSERT INTO member VALUES
-		(#{email}, #{passwd}, #{name}, #{mobile})
+		INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
 	</insert>
 
 	<insert id="insertAuthority">
@@ -16,15 +15,13 @@
 	</insert>
 
 	<update id="update" parameterType="User">
-		UPDATE member SET name =
-		#{name}, mobile = #{mobile}
+		UPDATE member SET name = #{name}, mobile = #{mobile}
 		WHERE email = #{email}
 	</update>
 
 	<update id="updatePasswd">
 		UPDATE member SET passwd = #{newPasswd}
-		WHERE passwd =
-		#{currentPasswd} AND email = #{email}
+		WHERE passwd = #{currentPasswd} AND email = #{email}
 	</update>
 
 	<delete id="delete">
@@ -37,8 +34,7 @@
 	</delete>
 
 	<select id="selectOne" resultMap="UserResult">
-		SELECT
-		email, passwd, name, mobile
+		SELECT email, passwd, name, mobile
 		FROM member
 		WHERE email = #{email}
 	</select>
@@ -79,8 +75,7 @@
 	</select>
 
 	<update id="updatePasswdByAdmin" parameterType="User">
-		UPDATE member SET
-		passwd = #{passwd}
+		UPDATE member SET passwd = #{passwd}
 		WHERE email = #{email}
 	</update>
 

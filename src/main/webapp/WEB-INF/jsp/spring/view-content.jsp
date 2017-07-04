@@ -315,7 +315,7 @@ function goDelete() {
 		&lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 	&lt;/p&gt;
 	&lt;/form&gt;
-	&lt;form id="writeForm" action="write_form" method="get"&gt;
+	&lt;form id="writeForm" action="write" method="get"&gt;
 	&lt;p&gt;
 		&lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
 		&lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
@@ -323,7 +323,7 @@ function goDelete() {
 		&lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
 	&lt;/p&gt;
 	&lt;/form&gt;
-	&lt;form id="modifyForm" action="modify_form" method="get"&gt;
+	&lt;form id="modifyForm" action="modify" method="get"&gt;
 	&lt;p&gt;
 		&lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
 		&lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;

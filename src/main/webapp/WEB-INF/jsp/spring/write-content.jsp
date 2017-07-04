@@ -7,18 +7,18 @@
 <h2>글쓰기 폼으로 이동</h2>
 <em class="filename">BbsController.java</em> 
 <pre class="prettyprint">
-@RequestMapping(value="/write_form", method=RequestMethod.GET)
+@RequestMapping(value="/write", method=RequestMethod.GET)
 public String write(String boardCd, Model model) {
 	
 	//게시판 이름
 	String boardNm = boardService.getBoardNm(boardCd);
 	model.addAttribute("boardNm", boardNm);
 	
-	return "bbs/write_form";
+	return "bbs/write";
 }
 </pre>
 
-<em class="filename">/WEB-INF/jsp/bbs/write_form.jsp</em> 
+<em class="filename">/WEB-INF/jsp/bbs/write.jsp</em> 
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;

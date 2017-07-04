@@ -104,7 +104,7 @@ function goWrite() {
            <input type="hidden" name="searchWord" value="${param.searchWord }" />
        </p>
        </form>
-	<form id="writeForm" action="/bbs/write_form" method="get">
+	<form id="writeForm" action="/bbs/write" method="get">
 	<p>
 		<input type="hidden" name="boardCd" value="${boardCd }" />
 		<input type="hidden" name="page" value="${param.page }" />

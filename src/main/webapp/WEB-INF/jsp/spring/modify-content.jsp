@@ -4,7 +4,7 @@
 
 <h1>게시글 수정</h1>
 
-<em class="filename">/WEB-INF/jsp/bbs/modify_form.jsp</em> 
+<em class="filename">/WEB-INF/jsp/bbs/modify.jsp</em> 
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
@@ -120,7 +120,7 @@ function goView() {
 
 <em class="filename">BbsController.java</em> 
 <pre class="prettyprint">
-@RequestMapping(value="/modify_form", method=RequestMethod.GET)
+@RequestMapping(value="/modify", method=RequestMethod.GET)
 public String modifyForm(Integer articleNo, 
 		String boardCd, 
 		Model model) {
@@ -132,7 +132,7 @@ public String modifyForm(Integer articleNo,
 	model.addAttribute("article", article);
 	model.addAttribute("boardNm", boardNm);
 	
-	return "bbs/modify_form";
+	return "bbs/modify";
 }
 </pre>
 

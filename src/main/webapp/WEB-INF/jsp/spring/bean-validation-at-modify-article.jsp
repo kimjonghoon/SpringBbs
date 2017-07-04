@@ -22,7 +22,7 @@ public String modify(@Valid Article article,
         String boardNm = boardService.getBoardNm(article.getBoardCd());
         model.addAttribute("boardNm", boardNm);
 
-        return "bbs/modify_form";
+        return "bbs/modify";
     }
 
     //관리자가 수정하더라도 글 소유자를 유지
@@ -44,7 +44,7 @@ public String modify(@Valid Article article,
 }
 </pre>
 
-<em class="filename">modify_form.jsp</em>
+<em class="filename">modify.jsp</em>
 <pre class="prettyprint">
 <strong>
 &lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;

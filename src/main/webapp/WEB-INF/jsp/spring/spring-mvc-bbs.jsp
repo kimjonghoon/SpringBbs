@@ -1760,7 +1760,7 @@ public class BbsController {
         
     }
 
-    @RequestMapping(value="/write_form", method=RequestMethod.GET)
+    @RequestMapping(value="/write", method=RequestMethod.GET)
     public String writeForm(String boardCd,
             HttpServletRequest req,
             HttpSession session,
@@ -1782,7 +1782,7 @@ public class BbsController {
         String boardNm = boardService.getBoardNm(boardCd);
         model.addAttribute("boardNm", boardNm);
         
-        return "bbs/write_form";
+        return "bbs/write";
     }
 
     @RequestMapping(value="/write", method=RequestMethod.POST)
@@ -2008,7 +2008,7 @@ public class BbsController {
 
     }
 
-    @RequestMapping(value="/modify_form", method=RequestMethod.GET)
+    @RequestMapping(value="/modify", method=RequestMethod.GET)
     public String modifyForm(Integer articleNo, 
             String boardCd,
             HttpSession session,
@@ -2032,7 +2032,7 @@ public class BbsController {
         model.addAttribute("content", content);
         model.addAttribute("boardNm", boardNm);
         
-        return "bbs/modify_form";
+        return "bbs/modify";
     }
     
     @RequestMapping(value="/modify", method=RequestMethod.POST)
@@ -2235,16 +2235,16 @@ Integer lastPage = boardService.getLastPage();
 </pre>
 
 <h3>글쓰기 폼 요청</h3>
-writeForm() 메서드는 GET방식의 /bbs/write_form 요청에 매핑된다.<br />
+writeForm() 메서드는 GET방식의 /bbs/write 요청에 매핑된다.<br />
 
-<pre>@RequestMapping(value="/write_form", method=RequestMethod.GET)
+<pre>@RequestMapping(value="/write", method=RequestMethod.GET)
 public String writeForm(String boardCd,HttpServletRequest req,HttpSession session...</pre>
 
 메서드 아규먼트로는 파라미터값을 받는 boardCd와 목록 메서드와 같은 이유로 req와 session이 있다.<br />
 boardCd는 게시판 이름을 만드는 데 필요하다.<br />
 page와 searchWord는 포워딩 되므로 아규먼트로 받을 특별한 이유가 없다.<br />
 게시판은 로그인 사용자만 이용할 수 있으므로 메서드는 먼저 로그인 체크로 시작하고,
-로그인 체크가 통과하면 게시판 이름을 생성하고 write_form.jsp로 포워딩한다.<br />
+로그인 체크가 통과하면 게시판 이름을 생성하고 write.jsp로 포워딩한다.<br />
 
 <h3>글쓰기 처리 요청</h3>
 write() 메서드는 POST방식의 /bbs/write 요청에 매핑된다.<br />
@@ -2580,9 +2580,9 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
 </pre>
 
 <h3>글 수정 폼 요청</h3>
-modifyForm() 메서드는 GET 방식의 게시글 수정 폼 요청 /bbs/modify_form에 매핑되는 메서드다.<br />
+modifyForm() 메서드는 GET 방식의 게시글 수정 폼 요청 /bbs/modify에 매핑되는 메서드다.<br />
 
-<pre>@RequestMapping(value="/modify_form", method=RequestMethod.GET)
+<pre>@RequestMapping(value="/modify", method=RequestMethod.GET)
 public String modifyForm(
         Integer <strong>articleNo</strong>, 
         String <strong>boardCd</strong>,
@@ -2615,7 +2615,7 @@ model.addAttribute("title", title);
 model.addAttribute("content", content);
 model.addAttribute("boardNm", boardNm);
 
-return "bbs/modify_form";
+return "bbs/modify";
 </pre>
 
 <h3>글 수정 처리 요청</h3>
