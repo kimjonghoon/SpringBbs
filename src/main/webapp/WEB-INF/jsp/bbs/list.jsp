@@ -98,12 +98,12 @@ function goWrite() {
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
 	</form>
-       <form id="viewForm" action="/bbs/${boardCd }/" method="get">
-       <p>
-           <input type="hidden" name="page" value="${param.page }" />
-           <input type="hidden" name="searchWord" value="${param.searchWord }" />
-       </p>
-       </form>
+	<form id="viewForm" action="/bbs/${boardCd }/" method="get">
+	<p>
+		<input type="hidden" name="page" value="${param.page }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
+	</form>
 	<form id="writeForm" action="/bbs/write" method="get">
 	<p>
 		<input type="hidden" name="boardCd" value="${boardCd }" />

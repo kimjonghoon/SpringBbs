@@ -51,14 +51,6 @@
 		</c:forEach>
     </p>
 </div>
-<form id="modifyForm" action="/bbs/modify" method="get">
-<p>
-    <input type="hidden" name="articleNo" value="${articleNo }" />
-    <input type="hidden" name="boardCd" value="${boardCd }" />
-    <input type="hidden" name="page" value="${param.page }" />
-    <input type="hidden" name="searchWord" value="${param.searchWord }" />
-</p>
-</form>
 
 <form id="addCommentForm" action="/bbs/addComment" method="post" style="margin-bottom: 10px;">
 <p style="margin: 0;padding: 0">
@@ -107,7 +99,6 @@
 </div>
 </c:forEach>
 <!--  comments end -->
-
 
 <div class="next-prev">
     <c:if test="${nextArticle != null }">
@@ -233,6 +224,14 @@
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </sf:form>
+    <form id="modifyForm" action="/bbs/modify" method="get">
+	<p>
+	    <input type="hidden" name="articleNo" value="${articleNo }" />
+	    <input type="hidden" name="boardCd" value="${boardCd }" />
+	    <input type="hidden" name="page" value="${param.page }" />
+	    <input type="hidden" name="searchWord" value="${param.searchWord }" />
+	</p>
+	</form>
     <form id="deleteCommentForm" action="/bbs/deleteComment" method="post">
     <p>
         <input type="hidden" name="commentNo" />
