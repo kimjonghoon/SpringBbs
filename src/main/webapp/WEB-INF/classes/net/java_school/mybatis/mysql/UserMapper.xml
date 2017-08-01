@@ -45,7 +45,7 @@
 	</resultMap>
 
 	<select id="selectAll" resultMap="UserResult">
-		SELECT	email, name, mobile, authority
+		SELECT	email, name, mobile
 		FROM
 		member
 		<if test="search != null and search != ''">

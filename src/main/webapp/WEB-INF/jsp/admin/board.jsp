@@ -28,29 +28,6 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 </c:forEach>
 </table>
 
-<h2>New Board</h2>
-
-<form id="createBoard" action="/admin/createBoard" method="post">
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-<table class="bbs-table">
-<tr>
-	<td>Board Code</td>
-	<td><input type="text" name="boardCd" />
-</tr>
-<tr>
-	<td>Board Name</td>
-	<td><input type="text" name="boardNm" />
-</tr>
-<tr>
-	<td>Board Korean Name</td>
-	<td><input type="text" name="boardNm_ko" />
-</tr>
-</table>
-<div>
-	<input type="submit" value="Submit" />
-</div>
-</form>
-
 <h2>Edit Board</h2>
 
 <form id="editBoard" action="/admin/editBoard" method="post">
@@ -73,4 +50,26 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 	<input type="submit" value="Submit" />
 </div>
 </form>
-</html>
+
+<h2>New Board</h2>
+
+<form id="createBoard" action="/admin/createBoard" method="post">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+<table class="bbs-table">
+<tr>
+	<td>Board Code</td>
+	<td><input type="text" name="boardCd" />
+</tr>
+<tr>
+	<td>Board Name</td>
+	<td><input type="text" name="boardNm" />
+</tr>
+<tr>
+	<td>Board Korean Name</td>
+	<td><input type="text" name="boardNm_ko" />
+</tr>
+</table>
+<div>
+	<input type="submit" value="Submit" />
+</div>
+</form>
