@@ -2,18 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-<tiles:importAttribute name="keywords" />
-<meta name="Keywords" content="<spring:message code="${keywords }" />" />
-<tiles:importAttribute name="description" />
-<meta name="Description" content="<spring:message code="${description }" />" />
-<tiles:importAttribute name="title" />
-<title><spring:message code="${title }" /></title>
+<meta name="Keywords" content="Account Book" />
+<meta name="Description" content="Account Book" />
+<title>Account Book</title>
 <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
-<script type="text/javascript" src="/resources/js/jquery-3.0.0.min.js"></script>
+<script src="/resources/js/jquery-3.0.0.min.js"></script>
+<script>
+</script>
 </head>
 <body>
 

@@ -25,7 +25,8 @@ function goView() {
 
 <h3><spring:message code="bbs.new.article" /></h3>
 
-<sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
+<sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" 
+		commandName="article" enctype="multipart/form-data" onsubmit="return check();">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 <input type="hidden" name="page" value="${param.page }" />
@@ -66,7 +67,7 @@ function goView() {
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </div>
     </form>    
-    <form id="listForm" action="/bbs/${param.boardCd }/" method="get">
+    <form id="listForm" action="/bbs/${param.boardCd }" method="get">
     <div>
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />

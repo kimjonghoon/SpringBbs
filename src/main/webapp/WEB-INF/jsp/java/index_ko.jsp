@@ -21,9 +21,13 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="url-navi">Java</div>
+<div id="last-modified">Last Modified : 2017.8.2</div>
 
-<h1>자바 포스트 색인</h1>
+<h1>REST 테스트</h1>
+
+<ul>
+    <li id="jdk-install"><a href="#">JDK 설치</a></li>
+</ul>
 
 <article>
 <pre class="prettyprint">

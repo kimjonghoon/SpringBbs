@@ -10,6 +10,7 @@
 
 	<http>
 		<access-denied-handler error-page="/403" />
+		<intercept-url pattern="/account-book/**" access="permitAll" />
 		<intercept-url pattern="/user/bye_confirm" access="permitAll" />
 		<intercept-url pattern="/user/welcome" access="permitAll" />
 		<intercept-url pattern="/user/signUp" access="permitAll" />

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Controller
+@RequestMapping("/java")
 public class JavaController {
 
 	@RequestMapping(method=RequestMethod.GET)
@@ -22,7 +24,7 @@ public class JavaController {
 		posts.setTitle("자바 설치");
 		posts.setKeywords("JDK,Java 8");
 		posts.setDescription("자바 설치에 대해 설명합니다.");
-		posts.setContents("<h1>자바 8 다운로드</h1>");
+		posts.setContents("<em>자바 8 다운로드</em>");
 		
 		return posts;
 	}

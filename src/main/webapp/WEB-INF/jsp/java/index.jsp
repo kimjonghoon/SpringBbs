@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#jdk-install a').click(function() {
@@ -21,12 +22,17 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="url-navi">Java</div>
+<div id="last-modified">Last Modified : 2017.8.2</div>
 
-<h1>Java Posts's Index</h1>
+<h1>REST Test</h1>
 
+<ul>
+    <li id="jdk-install"><a href="#">JDK Install</a></li>
+</ul>
 
 <article>
+
+
 <pre class="prettyprint">
 public class User {
     private String username;

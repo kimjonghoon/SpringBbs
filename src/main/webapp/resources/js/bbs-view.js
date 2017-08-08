@@ -38,7 +38,9 @@ $(document).ready(function() {
 			var chk = confirm(msg);
 			if (chk == true) {
 				var $commentNo = $(e.target).attr('title');
-				$('#deleteCommentForm input[name*=commentNo]').val($commentNo);
+				var $action = $('#deleteCommentForm').attr('action');
+				$action += $commentNo;
+				$('#deleteCommentForm').attr('action', $action);
 				$('#deleteCommentForm').submit();
 			}
 			return false;

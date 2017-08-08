@@ -269,14 +269,19 @@ public class BbsController extends Paginator {
 			boardService.addAttachFile(attachFile);
 		}
 
-		return "redirect:/bbs/" + article.getBoardCd() + "/?page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ article.getBoardCd() 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 		
 	}
 
 
-	@RequestMapping(value="/addComment", method=RequestMethod.POST)
-	public String addComment(Integer articleNo, 
-			String boardCd, 
+	@RequestMapping(value="/{boardCd}/{articleNo}/comments", method=RequestMethod.POST)
+	public String addComment(@PathVariable Integer articleNo, 
+			@PathVariable String boardCd, 
 			Integer page, 
 			String searchWord,
 			String memo,
@@ -291,14 +296,22 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "/" 
+			+ articleNo 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 
 	}
 
-	@RequestMapping(value="/updateComment", method=RequestMethod.POST)
-	public String updateComment(Integer commentNo, 
-			Integer articleNo, 
-			String boardCd, 
+	//댓글 수정
+	@RequestMapping(value="/{boardCd}/{articleNo}/comments/{commentNo}", method=RequestMethod.PUT)
+	public String updateComment(@PathVariable Integer commentNo, 
+			@PathVariable Integer articleNo, 
+			@PathVariable String boardCd, 
 			Integer page, 
 			String searchWord, 
 			String memo) throws Exception {
@@ -309,14 +322,21 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord, "UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "/" 
+			+ articleNo 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 
 	}
 
-	@RequestMapping(value="/deleteComment", method=RequestMethod.POST)
-	public String deleteComment(Integer commentNo, 
-			Integer articleNo, 
-			String boardCd, 
+	@RequestMapping(value="/{boardCd}/{articleNo}/comments/{commentNo}", method=RequestMethod.DELETE)
+	public String deleteComment(@PathVariable Integer commentNo, 
+			@PathVariable Integer articleNo, 
+			@PathVariable String boardCd, 
 			Integer page, 
 			String searchWord) throws Exception {
 
@@ -325,13 +345,19 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "/?page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "/" 
+			+ articleNo 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" + searchWord;
 
 	}
 
 	//수정 양식
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public String modifyForm(Integer articleNo, 
+	public String modifyForm(Integer articleNo,
 			String boardCd,
 			Locale locale,
 			Model model) {
@@ -401,7 +427,14 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + article.getBoardCd() + "/" + article.getArticleNo() + "?page=" + page	+ "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ article.getBoardCd() 
+			+ "/" 
+			+ article.getArticleNo() 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 
 	}
 
@@ -417,7 +450,14 @@ public class BbsController extends Paginator {
 
 		searchWord = URLEncoder.encode(searchWord,"UTF-8");
 
-		return "redirect:/bbs/" + boardCd + "/" + articleNo + "?&page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "/" 
+			+ articleNo 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 
 	}
 
@@ -426,7 +466,12 @@ public class BbsController extends Paginator {
 		Article article = boardService.getArticle(articleNo);
 		boardService.removeArticle(article);
 		
-		return "redirect:/bbs/" + boardCd + "/?page=" + page + "&searchWord=" + searchWord;
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
 
 	}
 

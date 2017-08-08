@@ -52,21 +52,16 @@
     </p>
 </div>
 
-<form id="addCommentForm" action="/bbs/addComment" method="post" style="margin-bottom: 10px;">
-<p style="margin: 0;padding: 0">
-	<input type="hidden" name="articleNo" value="${articleNo }" />
-	<input type="hidden" name="boardCd" value="${boardCd }" />
+<sf:form id="addCommentForm" action="/bbs/${boardCd }/${articleNo }/comments" method="post" style="margin-bottom: 10px;">
 	<input type="hidden" name="page" value="${param.page }" />
 	<input type="hidden" name="searchWord" value="${param.searchWord }" />
-	<input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
-</p>
-<div id="addComment">
-	<textarea name="memo" rows="7" cols="50"></textarea>
-</div>
-<div style="text-align: right;">
-	<input type="submit" value="<spring:message code="bbs.new.comments" />" />
-</div>
-</form>
+	<div id="addComment">
+		<textarea name="memo" rows="7" cols="50"></textarea>
+	</div>
+	<div style="text-align: right;">
+		<input type="submit" value="<spring:message code="bbs.new.comments" />" />
+	</div>
+</sf:form>
 
 <!--  comments begin -->
 <c:forEach var="comment" items="${commentList }" varStatus="status">
@@ -80,22 +75,16 @@
     </span>
 	</security:authorize>
     <p class="view-comment">${comment.htmlMemo }</p>
-    <form class="modify-comment" action="/bbs/updateComment" method="post" style="display: none;">
-    <p>
-        <input type="hidden" name="commentNo" value="${comment.commentNo }" />
-        <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="page" value="${param.page }" />
-        <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </p>
-    <div style="text-align: right;">
-            <a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#" class="comments-modify-cancel"><spring:message code="global.cancel" /></a>
-    </div>
-    <div>
-        <textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
-    </div>
-    </form>
+    <sf:form class="modify-comment" action="/bbs/${boardCd }/${articleNo }/comments/${comment.commentNo }" method="put" style="display: none;">
+		<input type="hidden" name="page" value="${param.page }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+    	<div style="text-align: right;">
+			<a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#" class="comments-modify-cancel"><spring:message code="global.cancel" /></a>
+		</div>
+		<div>
+			<textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
+		</div>
+    </sf:form>
 </div>
 </c:forEach>
 <!--  comments end -->
@@ -200,7 +189,7 @@
 </div>
 
 <div id="form-group" style="display: none">
-    <form id="listForm" action="/bbs/${boardCd }/" method="get">
+    <form id="listForm" action="/bbs/${boardCd }" method="get">
     <p>
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
@@ -232,16 +221,10 @@
 	    <input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
 	</form>
-    <form id="deleteCommentForm" action="/bbs/deleteComment" method="post">
-    <p>
-        <input type="hidden" name="commentNo" />
-        <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${boardCd }" />
+    <sf:form id="deleteCommentForm" action="/bbs/${boardCd }/${articleNo }/comments/" method="delete">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </p>
-    </form>   
+    </sf:form>   
     <form id="deleteAttachFileForm" action="/bbs/deleteAttachFile" method="post">
     <p>
         <input type="hidden" name="attachFileNo" />
