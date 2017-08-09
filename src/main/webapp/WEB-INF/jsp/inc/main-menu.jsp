@@ -14,5 +14,4 @@
 <security:authorize access="hasRole('ROLE_ADMIN')">
 	<li><a href="/admin?page=1">Admin</a></li>
 </security:authorize>
-	<li><a href="/account-book">Account Book</a>
 </ul>

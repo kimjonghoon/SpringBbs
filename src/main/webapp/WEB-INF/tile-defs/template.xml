@@ -55,17 +55,6 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/admin/{1}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/admin/admin-menu.jsp" />
 	</definition>
-	<definition name="accountTemplate" template="/WEB-INF/jsp/template/accountBook.jsp">
-		<put-attribute name="header" value="/WEB-INF/jsp/inc/header.jsp" />
-		<put-attribute name="main-menu" value="/WEB-INF/jsp/inc/main-menu.jsp" />
-		<put-attribute name="sidebar" value="" />
-		<put-attribute name="extra" value="/WEB-INF/jsp/inc/extra.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/jsp/inc/footer.jsp" />
-	</definition>	
-	<!-- Account Book -->
-	<definition name="account-book/*" extends="accountTemplate">
-		<put-attribute name="content" value="/WEB-INF/jsp/account-book/{1}.jsp" />
-	</definition>	
 	<!-- homepage -->
 	<definition name="index" extends="defaultTemplate">
 		<put-attribute name="title" value="Homepage" />
