@@ -6,6 +6,123 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <script src="/resources/js/bbs-view.js"></script>
+<script>
+function displayComments() {
+	var url = '/comments/' + ${articleNo};
+	$.getJSON(url, function(data) {
+		$('#all-comments').empty();
+		$.each(data, function(i, item) {
+			var creation = new Date(item.regdate);
+			var comments = '<div class="comments">'
+								+ '<span class="writer">' + item.name + '</span>'
+								+ '<span class="date">' + creation.toLocaleString() + '</span>'
+								+ '<span class="modify-del">'
+									+ '<a href="#" class="comment-modify-link">Modify</a> |' 
+									+ '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">Del</a>'
+								+ '</span>'
+								+ '<p class="comment-p">' + item.htmlMemo + '</p>'
+								+ '<form class="comment-form" action="/comments/' + ${articleNo } + '/' + item.commentNo + '" method="put" style="display: none;">'
+									+ '<div style="text-align: right;">'
+										+ '<a href="#" class="comment-modify-submit-link">Submit</a> | <a href="#" class="comment-modify-cancel-link">Cancel</a>'
+									+ '</div>'
+									+ '<div>'
+										+ '<textarea class="comment-textarea" name="memo" rows="7" cols="50">' + item.memo + '</textarea>'
+									+ '</div>'
+								+ '</form>'
+							+ '</div>';
+			$('#all-comments').append(comments);
+			console.log(item);
+		});
+	});
+}
+
+$(document).ready(function() {
+	displayComments();
+	//new comment
+	$("#addCommentForm").submit(function(event) {
+		event.preventDefault();
+		var $form = $(this);
+		var dataToBeSent = $form.serialize();
+		var url = $form.attr("action");
+		var posting = $.post(url, dataToBeSent);
+		posting.done(function() {
+			displayComments();
+			$('#addComment-ta').val('');
+		});
+	});
+
+});
+
+$('body').on('click', '#all-comments', function(e) {
+	if ($(e.target).is('.comment-modify-link')) {
+		e.preventDefault();
+		var $form = $(e.target).parent().parent().find('.comment-form');
+		var $p = $(e.target).parent().parent().find('.comment-p');
+
+		if ($form.is(':hidden') == true) {
+			$form.show();
+			$p.hide();
+		} else {
+			$form.hide();
+			$p.show();
+		}
+	} else if ($(e.target).is('.comment-modify-cancel-link')) {
+		e.preventDefault();
+		var $form = $(e.target).parent().parent().parent().find('.comment-form');
+		var $p = $(e.target).parent().parent().parent().find('.comment-p');
+
+		if ($form.is(':hidden') == true) {
+			$form.show();
+			$p.hide();
+		} else {
+			$form.hide();
+			$p.show();
+		}
+	} else if ($(e.target).is('.comment-modify-submit-link')) {
+		e.preventDefault();
+		var $form = $(e.target).parent().parent().parent().find('.comment-form');
+		var $textarea = $(e.target).parent().parent().find('.comment-textarea');
+		var memo = $textarea.val();
+		$('#modifyCommentForm input[name*=memo]').val(memo);
+		var dataToBeSent = $('#modifyCommentForm').serialize();
+		var url = $form.attr("action");
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: dataToBeSent,
+			success: function() {
+				displayComments();
+			},
+			error: function() {
+				alert('error!');
+			}
+		});
+	} else if ($(e.target).is('.comment-delete-link')) {
+		e.preventDefault();
+		var msg = $('#i18n-delete-confirm').attr('title');
+		var chk = confirm(msg);
+		if (chk == false) {
+			return;
+		}
+		var $commentNo = $(e.target).attr('title');
+		var url = $('#deleteCommentForm').attr('action');
+		url += $commentNo;
+		var dataToBeSent = $('#deleteCommentForm').serialize();
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: dataToBeSent,
+			success: function() {
+				displayComments();
+			},
+			error: function() {
+				alert('error!');
+			}
+		});
+	}
+});
+</script>
+
 
 <div id="url-navi">BBS</div>
 
@@ -52,11 +169,9 @@
     </p>
 </div>
 
-<sf:form id="addCommentForm" action="/bbs/${boardCd }/${articleNo }/comments" method="post" style="margin-bottom: 10px;">
-	<input type="hidden" name="page" value="${param.page }" />
-	<input type="hidden" name="searchWord" value="${param.searchWord }" />
+<sf:form id="addCommentForm" action="/comments/${articleNo }" method="post" style="margin-bottom: 10px;">
 	<div id="addComment">
-		<textarea name="memo" rows="7" cols="50"></textarea>
+		<textarea id="addComment-ta" name="memo" rows="7" cols="50"></textarea>
 	</div>
 	<div style="text-align: right;">
 		<input type="submit" value="<spring:message code="bbs.new.comments" />" />
@@ -64,29 +179,8 @@
 </sf:form>
 
 <!--  comments begin -->
-<c:forEach var="comment" items="${commentList }" varStatus="status">
-<div class="comments">
-    <span class="writer">${comment.name }</span>
-    <span class="date">${comment.regdate }</span>
-	<security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')">
-    <span class="modify-del">
-        <a href="#" class="comment-toggle"><spring:message code="global.modify" /></a> | 
-        <a href="#" class="comment-delete" title="${comment.commentNo }"><spring:message code="global.delete" /></a>
-    </span>
-	</security:authorize>
-    <p class="view-comment">${comment.htmlMemo }</p>
-    <sf:form class="modify-comment" action="/bbs/${boardCd }/${articleNo }/comments/${comment.commentNo }" method="put" style="display: none;">
-		<input type="hidden" name="page" value="${param.page }" />
-		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-    	<div style="text-align: right;">
-			<a href="#" class="comments-modify-submit"><spring:message code="global.submit" /></a> | <a href="#" class="comments-modify-cancel"><spring:message code="global.cancel" /></a>
-		</div>
-		<div>
-			<textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
-		</div>
-    </sf:form>
+<div id="all-comments">
 </div>
-</c:forEach>
 <!--  comments end -->
 
 <div class="next-prev">
@@ -221,25 +315,24 @@
 	    <input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
 	</form>
-    <sf:form id="deleteCommentForm" action="/bbs/${boardCd }/${articleNo }/comments/" method="delete">
-        <input type="hidden" name="page" value="${param.page }" />
-        <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </sf:form>   
-    <form id="deleteAttachFileForm" action="/bbs/deleteAttachFile" method="post">
-    <p>
-        <input type="hidden" name="attachFileNo" />
-        <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${boardCd }" />
-        <input type="hidden" name="page" value="${param.page }" />
-        <input type="hidden" name="searchWord" value="${param.searchWord }" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </p>
+	<sf:form id="deleteCommentForm" action="/comments/${articleNo }/" method="delete">
+		<input type="hidden" name="_method" value="DELETE" />
+	</sf:form>
+	<form id="deleteAttachFileForm" action="/bbs/deleteAttachFile" method="post">
+		<input type="hidden" name="attachFileNo" />
+		<input type="hidden" name="articleNo" value="${articleNo }" />
+		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="page" value="${param.page }" />
+		<input type="hidden" name="searchWord" value="${param.searchWord }" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	</form>
+	<form id="downForm" action="/file/download" method="post">
+		<input type="hidden" name="filename" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </form>
-    <form id="downForm" action="/file/download" method="post">
-    <p>
-        <input type="hidden" name="filename" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </p>
-    </form>
-   	<div id="delete-confirm" title="<spring:message code="delete.confirm" />"></div>
+	<sf:form id="modifyCommentForm" method="put">
+		<input type="hidden" name="_method" value="PUT" />
+		<input type="hidden" name="memo" />
+	</sf:form>
+	<div id="i18n-delete-confirm" title="<spring:message code="delete.confirm" />"></div>    
 </div>

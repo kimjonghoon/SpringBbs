@@ -11,7 +11,7 @@
 <title><tiles:insertAttribute name="title" /></title>
 <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
 <link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
-<script src="/resources/js/jquery-3.0.0.min.js"></script>
+<script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/prettify.js"></script>
 <script src="/resources/js/commons.js"></script>
 <script>

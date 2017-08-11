@@ -4,20 +4,14 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#jdk-install a').click(function() {
-		var url = '/java/jdk-install';
-		$.getJSON(url, function(data) {
-			$('title').empty();
-			$('title').append(data.title);
-			$("meta[name='Keywords']").attr("content", data.keywords);
-			$("meta[name='Description']").attr("content", data.description);
-			$('article').empty();
-			$('article').append(data.contents);
-			console.log(data);
-			console.log($("meta[name='Keywords']").attr("content"));
-			console.log($("meta[name='Description']").attr("content"));
+	var url = '/java/jdk-install';
+	$.getJSON(url, function(data) {
+		$('article').empty();
+		$.each(data, function(i, item) {
+			$('article').append(item.contents);
+			console.log(item);
 		});
-		return false;
+		console.log(data);
 	});
 });
 </script>
@@ -32,11 +26,11 @@ $(document).ready(function() {
 
 <article>
 
-
 <pre class="prettyprint">
 public class User {
     private String username;
     private String password;
 }
 </pre>
+
 </article>

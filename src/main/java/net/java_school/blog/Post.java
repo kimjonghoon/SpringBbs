@@ -1,6 +1,6 @@
 package net.java_school.blog;
 
-public class Posts {
+public class Post {
 	private String title;
 	private String keywords;
 	private String description;

@@ -126,7 +126,7 @@ public class BbsController extends Paginator {
 		List<AttachFile> attachFileList = boardService.getAttachFileList(articleNo);
 		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
-		List<Comment> commentList = boardService.getCommentList(articleNo);
+		//List<Comment> commentList = boardService.getCommentList(articleNo);
 		String boardName = this.getBoardName(boardCd, lang);
 
 		//상세보기에서 볼 게시글 관련 정보
@@ -147,7 +147,7 @@ public class BbsController extends Paginator {
 		model.addAttribute("attachFileList", attachFileList);
 		model.addAttribute("nextArticle", nextArticle);
 		model.addAttribute("prevArticle", prevArticle);
-		model.addAttribute("commentList", commentList);
+		//model.addAttribute("commentList", commentList);
 
 		//목록관련
 		int numPerPage = 10;//페이지당 레코드 수

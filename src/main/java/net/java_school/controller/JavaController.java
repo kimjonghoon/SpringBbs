@@ -1,6 +1,9 @@
 package net.java_school.controller;
 
-import net.java_school.blog.Posts;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.java_school.blog.Post;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +21,25 @@ public class JavaController {
 
 	@RequestMapping(value="/jdk-install", method=RequestMethod.GET)
 	@ResponseBody
-	public Posts jdkInstall() {
-		Posts posts = new Posts();
+	public List<Post> jdkInstall() {
+		List<Post> posts = new ArrayList<Post>();
+		
+		Post post1 = new Post();
 
-		posts.setTitle("자바 설치");
-		posts.setKeywords("JDK,Java 8");
-		posts.setDescription("자바 설치에 대해 설명합니다.");
-		posts.setContents("<em>자바 8 다운로드</em>");
+		post1.setTitle("자바 설치");
+		post1.setKeywords("JDK,Java 8");
+		post1.setDescription("자바 설치에 대해 설명합니다.");
+		post1.setContents("<em>자바 8 다운로드</em>");
+
+		Post post2 = new Post();
+
+		post2.setTitle("JDK Install");
+		post2.setKeywords("JDK,Java 8");
+		post2.setDescription("How to Install Java 8");
+		post2.setContents("<em>Java 8 Download</em>");
+		
+		posts.add(post1);
+		posts.add(post2);
 		
 		return posts;
 	}
