@@ -9,6 +9,7 @@ public class Comment {
 	private String name;
 	private String memo;
 	private Date regdate;
+	private boolean editable;
 	
 	public int getCommentNo() {
 		return commentNo;
@@ -51,6 +52,12 @@ public class Comment {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	public boolean isEditable() {
+		return editable;
+	}
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 }

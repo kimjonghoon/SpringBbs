@@ -15,15 +15,19 @@ function displayComments() {
 			var creation = new Date(item.regdate);
 			var comments = '<div class="comments">'
 								+ '<span class="writer">' + item.name + '</span>'
-								+ '<span class="date">' + creation.toLocaleString() + '</span>'
+								+ '<span class="date">' + creation.toLocaleString() + '</span>';
+			if (item.editable == true) {
+				comments = comments   
 								+ '<span class="modify-del">'
-									+ '<a href="#" class="comment-modify-link">Modify</a> |' 
-									+ '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">Del</a>'
-								+ '</span>'
+									+ '<a href="#" class="comment-modify-link">' + $('#global-modify').attr('title') + '</a> |' 
+									+ '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">'+ $('#global-delete').attr('title') + '</a>'
+								+ '</span>';
+			}					
+				comments = comments  
 								+ '<p class="comment-p">' + item.htmlMemo + '</p>'
 								+ '<form class="comment-form" action="/comments/' + ${articleNo } + '/' + item.commentNo + '" method="put" style="display: none;">'
 									+ '<div style="text-align: right;">'
-										+ '<a href="#" class="comment-modify-submit-link">Submit</a> | <a href="#" class="comment-modify-cancel-link">Cancel</a>'
+										+ '<a href="#" class="comment-modify-submit-link">' + $('#global-submit').attr('title') + '</a> | <a href="#" class="comment-modify-cancel-link">' + $('#global-cancel').attr('title') + '</a>'
 									+ '</div>'
 									+ '<div>'
 										+ '<textarea class="comment-textarea" name="memo" rows="7" cols="50">' + item.memo + '</textarea>'
@@ -99,7 +103,7 @@ $('body').on('click', '#all-comments', function(e) {
 		});
 	} else if ($(e.target).is('.comment-delete-link')) {
 		e.preventDefault();
-		var msg = $('#i18n-delete-confirm').attr('title');
+		var msg = $('#delete-confirm').attr('title');
 		var chk = confirm(msg);
 		if (chk == false) {
 			return;
@@ -334,5 +338,9 @@ $('body').on('click', '#all-comments', function(e) {
 		<input type="hidden" name="_method" value="PUT" />
 		<input type="hidden" name="memo" />
 	</sf:form>
-	<div id="i18n-delete-confirm" title="<spring:message code="delete.confirm" />"></div>    
+	<div id="delete-confirm" title="<spring:message code="delete.confirm" />"></div>
+	<div id="global-modify" title="<spring:message code="global.modify" />"></div>
+	<div id="global-delete" title="<spring:message code="global.delete" />"></div>
+	<div id="global-submit" title="<spring:message code="global.submit" />"></div>
+	<div id="global-cancel" title="<spring:message code="global.cancel" />"></div>    
 </div>

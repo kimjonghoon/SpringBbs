@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 //import net.java_school.mybatis.oracle.BoardMapper;
 import net.java_school.mybatis.mysql.BoardMapper;
 
@@ -160,6 +162,14 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Comment getComment(int commentNo) {
 		return boardMapper.selectOneComment(commentNo);
+	}
+	
+	//댓글 editable를 true로 세팅
+	@Override
+	public void setEditableTrue(List<Comment> comments) {
+		for (Comment comment : comments) {
+			comment.setEditable(true);
+		}
 	}
 
 }
