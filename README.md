@@ -95,6 +95,20 @@ SpringBbs
 	INSERT INTO authorities VALUES ('im@gmail.org','ROLE_USER');
 	
 	commit;
+	
+	create table views (
+		no number,
+		articleNo number,
+		ip varchar(60),
+		yearMonthDayHour char(10),
+		constraint PK_VIEWS PRIMARY KEY(no),
+		constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
+	);
+
+	create sequence SEQ_VIEWS
+		increment by 1
+		start with 1;
+	
 
 ## Database Design (MySql)
 
@@ -167,6 +181,14 @@ SpringBbs
 	
 	insert into board values ('free','Free','자유 게시판');
 	commit;
+	
+	create table views (
+		no int primary key AUTO_INCREMENT,
+		articleNo int,
+		ip varchar(60),
+		yearMonthDayHour char(10),
+		unique key (articleNo, ip, yearMonthDayHour)
+	);
 
 ## Have to do
  
