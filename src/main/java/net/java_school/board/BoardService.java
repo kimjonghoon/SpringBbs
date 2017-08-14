@@ -47,7 +47,7 @@ public interface BoardService {
 
 	//조회수 증가
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public void increaseHit(int articleNo);
+	public void increaseHit(Integer articleNo, String ip, String yearMonthDayHour);
 	
 	//상세보기
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -98,5 +98,9 @@ public interface BoardService {
 	//댓글 editable 세팅
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void setEditableTrue(List<Comment> comments);
+	
+	//조회수 for 상세보기
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public int getViews(int articleNo);
 	
 }

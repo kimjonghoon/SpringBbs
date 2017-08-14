@@ -40,7 +40,7 @@ public interface BoardMapper {
 	public void delete(int articleNo);
 	
 	//조회수 증가
-	public void updateHitPlusOne(int articleNo);	
+	public void insertOneViews(HashMap<String, String> hashmap);	
 	
 	//상세보기
 	public Article selectOne(int articleNo);
@@ -74,5 +74,9 @@ public interface BoardMapper {
 
 	//댓글 찾기
 	public Comment selectOneComment(int commentNo);
+	
+	//조회수 for 상세보기
+	public int selectCountOfViews(int articleNo);
+
 
 }

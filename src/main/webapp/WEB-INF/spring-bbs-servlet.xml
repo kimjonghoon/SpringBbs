@@ -27,7 +27,7 @@
 			net.java_school.board,
 			net.java_school.user" />
 
-<!-- 	<mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
+	<!-- <mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
 	<mybatis:scan base-package="net.java_school.mybatis.mysql" /> 
 
 	<!-- ViewResolver -->

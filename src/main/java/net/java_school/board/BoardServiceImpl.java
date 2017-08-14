@@ -82,8 +82,13 @@ public class BoardServiceImpl implements BoardService {
 
 	//조회수 증가
 	@Override
-	public void increaseHit(int articleNo) {
-		boardMapper.updateHitPlusOne(articleNo);
+	public void increaseHit(Integer articleNo, String ip, String yearMonthDayHour) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("articleNo", articleNo.toString());
+		map.put("ip", ip);
+		map.put("yearMonthDayHour", yearMonthDayHour);
+		
+		boardMapper.insertOneViews(map);
 	}
 
 	//상세보기
@@ -170,6 +175,12 @@ public class BoardServiceImpl implements BoardService {
 		for (Comment comment : comments) {
 			comment.setEditable(true);
 		}
+	}
+	
+	//조회수 for 상세보기
+	@Override
+	public int getViews(int articleNo) {
+		return boardMapper.selectCountOfViews(articleNo);
 	}
 
 }

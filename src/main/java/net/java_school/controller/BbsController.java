@@ -3,6 +3,7 @@ package net.java_school.controller;
 import java.io.File;
 import java.net.URLEncoder;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import net.java_school.board.Article;
@@ -63,7 +65,7 @@ public class BbsController extends Paginator {
 
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-/*		
+/*
 		//oracle
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
@@ -117,10 +119,25 @@ public class BbsController extends Paginator {
 	//상세보기
 	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
 	public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
-			Integer page, String searchWord, Locale locale, Model model) {
+			Integer page, String searchWord, Locale locale, HttpServletRequest req, Model model) {
 		if(page == null) page = 1;
 		String lang = locale.getLanguage();
-		boardService.increaseHit(articleNo);
+		
+		//조회수 증가 수정: views 테이블 이용 2017.8.14 추가
+		//articleNo, user'ip, yearMonthDayHour
+		String ip = req.getRemoteAddr();
+		LocalDateTime now = LocalDateTime.now();
+		Integer year = now.getYear();
+		Integer month = now.getMonthValue();
+		Integer day = now.getDayOfMonth();
+		Integer hour = now.getHour();
+		String yearMonthDayHour = year.toString() + month.toString() + day.toString() + hour.toString();
+
+		try {
+			boardService.increaseHit(articleNo, ip, yearMonthDayHour);
+		} catch (Exception e) {
+			
+		}
 
 		Article article = boardService.getArticle(articleNo);//상세보기에서 볼 게시글
 		List<AttachFile> attachFileList = boardService.getAttachFileList(articleNo);
@@ -133,10 +150,13 @@ public class BbsController extends Paginator {
 		String title = article.getTitle();//제목
 		String content = article.getContent();//내용
 		content = content.replaceAll(WebContants.LINE_SEPARATOR, "<br />");
-		int hit = article.getHit();//조회수
+		//int hit = article.getHit();//조회수
 		String name = article.getName();//작성자 이름
 		String email = article.getEmail();//작성자 ID
 		Date regdate = article.getRegdate();//작성일
+		
+		//조회수 구하기 추가 2017.8.14
+		int hit = boardService.getViews(articleNo);
 
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
@@ -169,8 +189,8 @@ public class BbsController extends Paginator {
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		List<Article> list = boardService.getArticleList(map);
-
-*/		
+*/
+		
 		
 		//mysql
 		Integer offset = (page - 1) * numPerPage;

@@ -41,8 +41,8 @@ public class AdminController extends Paginator {
 		int startRecord = (page - 1) * numPerPage + 1;
 		int endRecord = page * numPerPage;
 		List<User> list = userService.getAllUser(search, startRecord, endRecord);
-
 */
+
 
 		//mysql
 		int offset = (page - 1) * numPerPage;

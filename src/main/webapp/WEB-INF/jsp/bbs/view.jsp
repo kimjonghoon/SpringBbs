@@ -338,6 +338,7 @@ $('body').on('click', '#all-comments', function(e) {
 		<input type="hidden" name="_method" value="PUT" />
 		<input type="hidden" name="memo" />
 	</sf:form>
+	<!-- For JavaScript i18n -->
 	<div id="delete-confirm" title="<spring:message code="delete.confirm" />"></div>
 	<div id="global-modify" title="<spring:message code="global.modify" />"></div>
 	<div id="global-delete" title="<spring:message code="global.delete" />"></div>
