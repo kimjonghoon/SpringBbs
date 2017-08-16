@@ -246,8 +246,6 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write(@Valid Article article,
 			BindingResult bindingResult,
-			Integer page,
-			String searchWord,
 			Locale locale,
 			Model model,
 			MultipartHttpServletRequest mpRequest,
@@ -289,12 +287,7 @@ public class BbsController extends Paginator {
 			boardService.addAttachFile(attachFile);
 		}
 
-		return "redirect:/bbs/" 
-			+ article.getBoardCd() 
-			+ "?page=" 
-			+ page 
-			+ "&searchWord=" 
-			+ searchWord;
+		return "redirect:/bbs/" + article.getBoardCd() + "?page=1"; 
 		
 	}
 
