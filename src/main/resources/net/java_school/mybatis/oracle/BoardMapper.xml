@@ -26,30 +26,27 @@
 	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
 	SELECT articleno, title, regdate, hit, attachfileNum, commentNum 
 	FROM (
-		SELECT rownum r,a.* 
+		SELECT rownum R,A.* 
 			FROM (
 				SELECT 
-					a.articleno, a.title, a.regdate, m.name,
+					a.articleno, a.title, a.regdate,
 					count(distinct(v.no)) hit, 
 					count(distinct(f.attachfileno)) attachfileNum, 
 					count(distinct(c.commentno)) commentNum
 				FROM 
-					article a, attachfile f, comments c, member m, views v
+					article a left join attachfile f on a.articleno = f.articleno
+					left join comments c on a.articleno = c.articleno
+					left join views v on a.articleno = v.articleNo
 				WHERE
-					a.articleno = f.articleno(+) 
-					AND a.articleno = c.articleno(+) 
-					AND a.email = m.email(+)
-					AND a.articleno = v.articleNo(+)
-					AND a.boardcd = #{boardCd}
+					a.boardcd = #{boardCd}
 					<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 
-						OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+					AND (title LIKE '%${searchWord}%' 	OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
 					</if>
-				GROUP BY a.articleno, title, a.regdate, m.name
+				GROUP BY a.articleno, title, a.regdate
 				ORDER BY articleno DESC
-				) a
+				) A
 		)
-	WHERE r BETWEEN #{start} AND #{end}
+	WHERE R BETWEEN #{start} AND #{end}
 	</select>
 
 	<select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
@@ -87,9 +84,9 @@
 		DELETE FROM article WHERE articleno = #{articleNo}
 	</delete>
 
-	<update id="insertOneViews" parameterType="hashmap">
+	<insert id="insertOneViews" parameterType="hashmap">
 		INSERT INTO views values (seq_views.nextval, #{articleNo}, #{ip}, #{yearMonthDayHour})
-	</update>
+	</insert>
 
 	<select id="selectOne" parameterType="int" resultType="Article">
 		SELECT 
@@ -99,10 +96,10 @@
 			a.email,
 			NVL(name, 'Anonymous') name,
 			regdate
-		FROM article a, member m
+		FROM 
+			article a left join member m on a.email = m.email
 		WHERE 
-			a.email = m.email(+)
-			AND a.articleno = #{articleNo}
+			articleno = #{articleNo}
 	</select>
 
 	<select id="selectNextOne" parameterType="hashmap" resultType="Article">
@@ -181,10 +178,10 @@
 			NVL(name, 'Anonymous') name,
 			memo, 
 			regdate
-		FROM comments c, member m
+		FROM 
+			comments c left join member m on c.email = m.email
 		WHERE 
-			c.email = m.email(+)
-			AND articleno = #{articleNo}
+			articleno = #{articleNo}
 		ORDER BY commentno DESC
 	</select>
 
@@ -219,6 +216,5 @@
 		WHERE 
 			articleNo = #{articleNo}
 	</select>
-	
 
  </mapper>

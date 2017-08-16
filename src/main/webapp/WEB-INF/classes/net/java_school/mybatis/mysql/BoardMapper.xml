@@ -25,21 +25,20 @@
 	
 	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
 		SELECT 
-			a.articleno, a.title, a.regdate, m.name,
+			a.articleno, a.title, a.regdate,
 			count(distinct(v.no)) hit, 
 			count(distinct(f.attachfileno)) attachfileNum, 
 			count(distinct(c.commentno)) commentNum
 		FROM 
 			article as a left join attachfile as f on a.articleno = f.articleno
 				left join comments as c on a.articleno = c.articleno
-				left join member as m on a.email = m.email
 				left join views as v on a.articleno = v.articleNo
 		WHERE
 			a.boardcd = #{boardCd}
 			<if test="searchWord != null and searchWord != ''">
 			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
 			</if>
-		GROUP BY a.articleno, title, a.regdate, m.name
+		GROUP BY a.articleno, title, a.regdate
 		ORDER BY articleno DESC
 		LIMIT ${offset}, ${rowCount}
 	</select>
@@ -75,9 +74,9 @@
 		DELETE FROM article WHERE articleno = #{articleNo}
 	</delete>
 
-	<update id="insertOneViews" parameterType="hashmap">
+	<insert id="insertOneViews" parameterType="hashmap">
 		INSERT INTO views (articleNo, ip, yearMonthDayHour) values (#{articleNo}, #{ip}, #{yearMonthDayHour})
-	</update>
+	</insert>
 
 	<select id="selectOne" parameterType="int" resultType="Article">
 		SELECT 
