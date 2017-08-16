@@ -54,6 +54,10 @@ $(document).ready(function() {
 			$('#addComment-ta').val('');
 		});
 	});
+	$('title').empty();
+	var title = $('#bbs-title').html();
+	console.log(title);
+	$('title').append(title);
 
 });
 
@@ -154,7 +158,7 @@ $('body').on('click', '#all-comments', function(e) {
 <table class="bbs-table">
 <tr>
     <th style="width: 37px;text-align: left;vertical-align: top;">TITLE</th>
-    <th style="text-align: left;color: #555;">${title }</th>
+    <th style="text-align: left;color: #555;" id="bbs-title">${title }</th>
 </tr>
 </table>
 <div id="detail">
