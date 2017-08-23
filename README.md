@@ -162,7 +162,6 @@ SpringBbs
 	    email varchar(60),    
 	    memo varchar(4000) NOT NULL,
 	    regdate datetime,
-	    nickname varchar(20), 
 	    constraint PK_COMMENTS PRIMARY KEY(commentno)
 	);
 	
