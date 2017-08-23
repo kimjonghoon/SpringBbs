@@ -152,7 +152,6 @@ SpringBbs
 	    email varchar(60),
 	    hit bigint,    
 	    regdate datetime,
-	    nickname varchar(20),
 	    constraint PK_ARTICLE PRIMARY KEY(articleno),
 	    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
 	);
@@ -209,45 +208,7 @@ $ mvn clean compile war:inplace
 > <!-- <mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
 > <mybatis:scan base-package="net.java_school.mybatis.mysql" />
 
-### 2. AdminController.java
-
-	/*
-	//oralce
-	int startRecord = (page - 1) * numPerPage + 1;
-	int endRecord = page * numPerPage;
-	List<User> list = userService.getAllUser(search, startRecord, endRecord);
-	*/
-	
-	//mysql
-	int offset = (page - 1) * numPerPage;
-	List<User> list = userService.getAllUser(search, offset, numPerPage);
-
-### 3. BbsController.java (in list() and view() methods)
-
-	/*
-	//oracle
-	Integer startRecord = (page - 1) * numPerPage + 1;
-	Integer endRecord = page * numPerPage;
-		
-	HashMap<String, String> map = new HashMap<String, String>();
-	map.put("boardCd", boardCd);
-	map.put("searchWord", searchWord);
-	map.put("start", startRecord.toString());
-	map.put("end", endRecord.toString());
-	List<Article> list = boardService.getArticleList(map);
-	*/
-	
-	//mysql
-	Integer offset = (page - 1) * numPerPage;
-	HashMap<String, String> map = new HashMap<String, String>();
-	map.put("boardCd", boardCd);
-	map.put("searchWord", searchWord);
-	map.put("offset", offset.toString());
-	Integer rowCount = numPerPage;
-	map.put("rowCount", rowCount.toString());
-	List<Article> list = boardService.getArticleList(map);
-
-### 4. applicationContext.xml
+### 2. applicationContext.xml
 	
 	<!--
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -274,8 +235,45 @@ $ mvn clean compile war:inplace
 		<property name="defaultAutoCommit" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
 	</bean>
+
+### 3. AdminController.java
+
+	/*
+	//oralce
+	int startRecord = (page - 1) * numPerPage + 1;
+	int endRecord = page * numPerPage;
+	List<User> list = userService.getAllUser(search, startRecord, endRecord);
+	*/
 	
- 
+	//mysql
+	int offset = (page - 1) * numPerPage;
+	List<User> list = userService.getAllUser(search, offset, numPerPage);
+
+### 4. BbsController.java (in list() and view() methods)
+
+	/*
+	//oracle
+	Integer startRecord = (page - 1) * numPerPage + 1;
+	Integer endRecord = page * numPerPage;
+		
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("boardCd", boardCd);
+	map.put("searchWord", searchWord);
+	map.put("start", startRecord.toString());
+	map.put("end", endRecord.toString());
+	List<Article> list = boardService.getArticleList(map);
+	*/
+	
+	//mysql
+	Integer offset = (page - 1) * numPerPage;
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("boardCd", boardCd);
+	map.put("searchWord", searchWord);
+	map.put("offset", offset.toString());
+	Integer rowCount = numPerPage;
+	map.put("rowCount", rowCount.toString());
+	List<Article> list = boardService.getArticleList(map);
+
 ### 5. UserServiceImpl.java
 	
 	//import net.java_school.mybatis.oracle.UserMapper;

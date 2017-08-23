@@ -35,7 +35,7 @@ function displayComments() {
 								+ '</form>'
 							+ '</div>';
 			$('#all-comments').append(comments);
-			console.log(item);
+			//console.log(item);
 		});
 	});
 }
@@ -46,6 +46,12 @@ $(document).ready(function() {
 	$("#addCommentForm").submit(function(event) {
 		event.preventDefault();
 		var $form = $(this);
+		var memo = $('#addComment-ta').val();
+		memo = $.trim(memo);
+		if (memo.length == 0) {
+			$('#addComment-ta').val('');
+			return false;
+		}
 		var dataToBeSent = $form.serialize();
 		var url = $form.attr("action");
 		var posting = $.post(url, dataToBeSent);
@@ -56,7 +62,6 @@ $(document).ready(function() {
 	});
 	$('title').empty();
 	var title = $('#bbs-title').html();
-	console.log(title);
 	$('title').append(title);
 
 });
@@ -129,6 +134,21 @@ $('body').on('click', '#all-comments', function(e) {
 		});
 	}
 });
+
+
+$(window).on('load', function() {
+	var originWidth = $('#article-content > iframe').width();
+	var originHeight = $('#article-content > iframe').height();
+
+	var width = $('#detail').width();
+	var height = originHeight * width / originWidth;
+	
+	$('#article-content > iframe').attr('width', width);
+	$('#article-content > iframe').attr('height', height);
+	
+	$('#article-content > iframe').attr('allowFullScreen', '');
+});
+
 </script>
 
 
@@ -165,7 +185,7 @@ $('body').on('click', '#all-comments', function(e) {
     <span id="date-writer-hit">
     	edited <fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${regdate }" />
 		by ${name } hit ${hit }</span>
-    <p>${content }</p>
+    <p id="article-content">${content }</p>
     <p id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
     	   <a href="#" title="${file.filename }" class="download">${file.filename }</a>
@@ -257,6 +277,7 @@ $('body').on('click', '#all-comments', function(e) {
                 
 <div id="paging">
 	<c:if test="${prevPage > 0 }">
+		<a href="#" title="1">1</a>
 		<a href="#" title="${prevPage }">[ <spring:message code="global.prev" /> ]</a>
 	</c:if>
 	
@@ -273,6 +294,7 @@ $('body').on('click', '#all-comments', function(e) {
 	
 	<c:if test="${nextPage > 0 }">	
 		<a href="#" title="${nextPage }">[ <spring:message code="global.next" /> ]</a>
+		<a href="#" title="${totalPage }">[ <spring:message code="global.last" /> ]</a>
 	</c:if>
 </div>
 

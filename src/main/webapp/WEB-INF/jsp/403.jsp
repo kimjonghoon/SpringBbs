@@ -1,4 +1,7 @@
 <div id="url-navi">403</div>
 
-<h1>403</h1>
+<h2>403</h2>
+
+<p>
 Access is Denied.
+</p>

@@ -57,6 +57,7 @@ function goWrite() {
 <div id="paging">
 	
 	<c:if test="${prevPage > 0 }">
+		<a href="javascript:goList('1')">1</a>
 		<a href="javascript:goList('${prevPage }')">[ <spring:message code="global.prev" /> ]</a>
 	</c:if>
 
@@ -73,6 +74,7 @@ function goWrite() {
 	
 	<c:if test="${nextPage > 0 }">
 		<a href="javascript:goList('${nextPage }')">[ <spring:message code="global.next" /> ]</a>
+		<a href="javascript:goList('${totalPage }')">[ <spring:message code="global.last" /> ]</a>
 	</c:if>
 	
 </div>

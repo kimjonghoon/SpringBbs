@@ -6,11 +6,11 @@ import javax.validation.constraints.Size;
 
 public class Article {
 	private Integer articleNo;
-	@Size(min=2,max=10,message="게시판코드는 2자에서 10자 사이이어야 합니다.")
+	@Size(min=2,max=20,message="{bbs.boardCd.validation.error}")
 	private String boardCd;
-	@Size(min=1,max=60,message="{bbs.title.validation.error}")
+	@Size(min=1,max=100,message="{bbs.title.validation.error}")
 	private String title;
-	@Size(min=1,message="내용은 1자 이상이어야 합니다.")
+	@Size(min=2,message="{bbs.content.validation.error}")
 	private String content;
 	private String email;
 	private String name;

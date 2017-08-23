@@ -23,7 +23,7 @@
 	<div id="container">
 		<div id="content">
 			<div id="url-navi">500</div>
-			<h1>500</h1>
+			<h2>500</h2>
 			내부 서버 에러!
 		</div>
     </div>

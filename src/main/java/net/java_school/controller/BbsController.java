@@ -76,8 +76,8 @@ public class BbsController extends Paginator {
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		List<Article> list = boardService.getArticleList(map);
-
 */
+
 		
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
@@ -95,6 +95,7 @@ public class BbsController extends Paginator {
 		Integer nextPage = numbers.getNextBlock();
 		Integer firstPage = numbers.getFirstPage();
 		Integer lastPage = numbers.getLastPage();
+		Integer totalPage = numbers.getTotalPage();
 
 		model.addAttribute("list", list);
 		model.addAttribute("listItemNo", listItemNo);
@@ -102,6 +103,7 @@ public class BbsController extends Paginator {
 		model.addAttribute("nextPage", nextPage);
 		model.addAttribute("firstPage", firstPage);
 		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("totalPage", totalPage);
 		
 		String lang = locale.getLanguage();
 		List<Board> boards = boardService.getBoards();
