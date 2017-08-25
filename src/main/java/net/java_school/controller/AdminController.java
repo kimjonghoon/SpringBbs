@@ -37,18 +37,18 @@ public class AdminController extends Paginator {
 		int totalRecord = userService.getTotalCount(search);
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 		
-/*		
+		
 		//oracle
 		int startRecord = (page - 1) * numPerPage + 1;
 		int endRecord = page * numPerPage;
 		List<User> list = userService.getAllUser(search, startRecord, endRecord);
 
-*/
 
+/*
 		//mysql
 		int offset = (page - 1) * numPerPage;
 		List<User> list = userService.getAllUser(search, offset, numPerPage);
-		
+*/		
 		
 		
 		Integer listItemNo = numbers.getListItemNo();

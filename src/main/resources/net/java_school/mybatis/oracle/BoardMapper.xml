@@ -63,9 +63,9 @@
 		<selectKey keyProperty="articleNo" resultType="int" order="BEFORE">
 			SELECT seq_article.nextval FROM dual
 		</selectKey>
-		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
+		INSERT INTO article (articleno, boardcd, title, content, email, regdate)
 		VALUES
-		(#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
+		(#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, sysdate)
 	</insert>
 	
 	<insert id="insertAttachFile" parameterType="AttachFile">

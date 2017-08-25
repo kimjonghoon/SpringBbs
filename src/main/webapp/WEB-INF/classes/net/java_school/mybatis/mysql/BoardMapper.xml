@@ -53,9 +53,9 @@
 	</select>
 
 	<insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleNo">
-		INSERT INTO article (boardcd, title, content, email, hit, regdate)
+		INSERT INTO article (boardcd, title, content, email, regdate)
 		VALUES
-		(#{boardCd}, #{title}, #{content}, #{email}, 0, now())
+		(#{boardCd}, #{title}, #{content}, #{email}, now())
 	</insert>
 	
 	<insert id="insertAttachFile" parameterType="AttachFile">
