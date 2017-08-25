@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
     
 <ul id="nav">
-	<li><a href="/java/Features">Java</a></li>
+	<li><a href="/java">Java</a></li>
 	<li><a href="/jdbc/JDBC-Intro">JDBC</a></li>
 	<li><a href="/jsp/How-to-install-Tomcat">JSP</a></li>
 	<li><a href="/css-layout/div-element-arrangement">CSS Layout</a></li>

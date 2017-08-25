@@ -4,7 +4,7 @@ public class Post {
 	private String title;
 	private String keywords;
 	private String description;
-	private String contents;
+	private String content;
 	
 	public String getTitle() {
 		return title;
@@ -24,13 +24,11 @@ public class Post {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
-	
 	
 }

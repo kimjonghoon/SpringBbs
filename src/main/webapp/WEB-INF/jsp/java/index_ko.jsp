@@ -11,7 +11,7 @@ $(document).ready(function() {
 			$("meta[name='Keywords']").attr("content", data.keywords);
 			$("meta[name='Description']").attr("content", data.description);
 			$('article').empty();
-			$('article').append(data.contents);
+			$('article').append(data.content);
 			console.log(data);
 			console.log($("meta[name='Keywords']").attr("content"));
 			console.log($("meta[name='Description']").attr("content"));

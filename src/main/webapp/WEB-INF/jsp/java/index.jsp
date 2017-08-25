@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$.getJSON(url, function(data) {
 		$('article').empty();
 		$.each(data, function(i, item) {
-			$('article').append(item.contents);
+			$('article').append(item.content);
 			console.log(item);
 		});
 		console.log(data);
