@@ -1100,8 +1100,7 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
                     AND a.email = m.email(+)
                     AND a.boardcd = <%="#" %>{boardCd}
                     &lt;if test="searchWord != null and searchWord != ''"&gt;
-                    AND (title LIKE '%${searchWord}%' 
-                        OR DBMS_LOB.INSTR(content, '${searchWord}') &gt; 0)
+                    AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, <%="#" %>{searchWord}) &gt; 0)
                     &lt;/if&gt;
                 GROUP BY a.articleno, title, a.regdate, hit, m.name
                 ORDER BY articleno DESC
@@ -1113,8 +1112,7 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
     &lt;select id="selectCountOfArticles" parameterType="hashmap" resultType="int"&gt;
         SELECT count(*) FROM article WHERE boardcd = <%="#" %>{boardCd}
             &lt;if test="searchWord != null and searchWord != ''"&gt;
-            AND (title LIKE '%${searchWord}%' 
-                OR DBMS_LOB.INSTR(content, '${searchWord}') &gt; 0)
+            AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, <%="#" %>{searchWord}) &gt; 0)
             &lt;/if&gt;
     &lt;/select&gt;
 
@@ -1171,8 +1169,7 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
                     boardCd = <%="#" %>{boardCd} 
                     AND articleno &gt; <%="#" %>{articleNo}
                 &lt;if test="searchWord != null and searchWord != ''"&gt;
-                    AND (title LIKE '%${searchWord}%' 
-                        OR DBMS_LOB.INSTR(content, '${searchWord}') &gt; 0)
+                    AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, <%="#" %>{searchWord}) &gt; 0)
                 &lt;/if&gt;
                 ORDER BY articleno) 
             a)
@@ -1190,8 +1187,7 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
                     boardCd = <%="#" %>{boardCd} 
                     AND articleno &lt; <%="#" %>{articleNo}
                 &lt;if test="searchWord != null and searchWord != ''"&gt;
-                    AND (title LIKE '%${searchWord}%' 
-                        OR DBMS_LOB.INSTR(content, '${searchWord}') &gt; 0)
+                    AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, <%="#" %>{searchWord}) &gt; 0)
                 &lt;/if&gt; 
                 ORDER BY articleno DESC)
             a)

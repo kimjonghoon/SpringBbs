@@ -40,7 +40,7 @@
 				WHERE
 					a.boardcd = #{boardCd}
 					<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 	OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+					AND (title LIKE '%${searchWord}%' 	OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
 					</if>
 				GROUP BY a.articleno, title, a.regdate
 				ORDER BY articleno DESC
@@ -54,8 +54,7 @@
 		WHERE 
 			boardcd = #{boardCd}
 			<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' 
-				OR 	DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+			AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
 			</if>
 	</select>
 
@@ -113,8 +112,7 @@
 					boardCd = #{boardCd} 
 					AND articleno &gt; #{articleNo}
 				<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 
-						OR 	DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+					AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
 				</if> 
 				ORDER BY articleno) 
 			a)
@@ -132,8 +130,7 @@
 					boardCd = #{boardCd} 
 					AND articleno &lt; #{articleNo}
 				<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 
-					OR DBMS_LOB.INSTR(content, '${searchWord}') > 0)
+					AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
 				</if> 
 				ORDER BY articleno DESC)
 				a)
