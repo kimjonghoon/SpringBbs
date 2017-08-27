@@ -101,6 +101,6 @@ public interface BoardService {
 	
 	//조회수 for 상세보기
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public int getViews(int articleNo);
+	public int getTotalViews(int articleNo);
 	
 }

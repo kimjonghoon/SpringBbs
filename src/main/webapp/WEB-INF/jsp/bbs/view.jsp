@@ -152,11 +152,9 @@ $(window).on('load', function() {
 </script>
 
 
-<div id="url-navi">BBS</div>
+<div id="url-navi">${boardName }</div>
 
-<h2>${boardName }</h2>
-
-<div class="view-menu" style="margin-bottom: 5px;">
+<div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;">
     <security:authorize access="#email == principal.username or hasAuthority('ROLE_ADMIN')">
     <div class="fl">
         <input type="button" value="<spring:message code="global.modify" />" class="goModify" />
@@ -177,8 +175,8 @@ $(window).on('load', function() {
 
 <table class="bbs-table">
 <tr>
-    <th style="width: 37px;text-align: left;vertical-align: top;">TITLE</th>
-    <th style="text-align: left;color: #555;" id="bbs-title">${title }</th>
+    <th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;">TITLE</th>
+    <th style="text-align: left;color: #555;font-size: 1em;" id="bbs-title">${title }</th>
 </tr>
 </table>
 <div id="detail">

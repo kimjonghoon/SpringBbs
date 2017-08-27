@@ -15,13 +15,13 @@ function goDel(email) {
 
 <h2><spring:message code="user.list" /></h2>
 
-<table class="table-in-article">
+<table class="bbs-table">
 <tr>
-	<th>No</th>
-	<th><spring:message code="user.full.name" /></th>
-	<th><spring:message code="user.email" /></th>
-	<th><spring:message code="user.mobile" /></th>
-	<th><spring:message code="user.authorities" /></th>
+	<th style="text-align: left;">No</th>
+	<th style="text-align: left;"><spring:message code="user.full.name" /></th>
+	<th style="text-align: left;"><spring:message code="user.email" /></th>
+	<th style="text-align: left;"><spring:message code="user.mobile" /></th>
+	<th style="text-align: left;"><spring:message code="user.authorities" /></th>
 	<th>&nbsp;</th>
 </tr>
 <c:forEach var="user" items="${list }" varStatus="status">
@@ -41,6 +41,7 @@ function goDel(email) {
 
 <div id="paging">
 	<c:if test="${prev > 0 }">
+		<a href="/admin?page=1">1</a>
 		<a href="/admin?page=${prev }&search=${search }">[ <spring:message code="global.prev" /> ]</a>
 	</c:if>
 	<c:forEach var="i" begin="${firstPage }" end="${lastPage }" varStatus="stat">
@@ -55,6 +56,7 @@ function goDel(email) {
 	</c:forEach>
 	<c:if test="${next > 0 }">
 		<a href="/admin?page=${next }&search=${search }">[ <spring:message code="global.next" /> ]</a>
+		<a href="/admin?page=${totalPage }">[ <spring:message code="global.last" /> ]</a>
 	</c:if>
 </div>
 

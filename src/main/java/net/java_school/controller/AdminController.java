@@ -31,7 +31,7 @@ public class AdminController extends Paginator {
 	public String index(Integer page, String search, Model model) {
 		if (page == null) page = 1;
 
-		int numPerPage = 10;
+		int numPerPage = 20;
 		int pagePerBlock = 10;
 		
 		int totalRecord = userService.getTotalCount(search);

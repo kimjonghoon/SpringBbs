@@ -177,7 +177,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	//조회수 for 상세보기
 	@Override
-	public int getViews(int articleNo) {
+	public int getTotalViews(int articleNo) {
 		return boardMapper.selectCountOfViews(articleNo);
 	}
 

@@ -4,14 +4,32 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+/*	
 	var url = '/java/jdk-install';
 	$.getJSON(url, function(data) {
 		$('article').empty();
+		
 		$.each(data, function(i, item) {
 			$('article').append(item.content);
 			console.log(item);
 		});
 		console.log(data);
+	});
+*/
+	$('#jdk-install a').click(function() {
+		var url = '/java/jdk-install';
+		$.getJSON(url, function(data) {
+			$('title').empty();
+			$('title').append(data.title);
+			$("meta[name='Keywords']").attr("content", data.keywords);
+			$("meta[name='Description']").attr("content", data.description);
+			$('article').empty();
+			$('article').append(data.content);
+			console.log(data);
+			console.log($("meta[name='Keywords']").attr("content"));
+			console.log($("meta[name='Description']").attr("content"));
+		});
+		return false;
 	});
 });
 </script>

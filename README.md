@@ -87,13 +87,6 @@ SpringBbs
 	insert into board values ('qna', 'Q and A', '묻고 답하기');
 	insert into board values ('data', 'Data', '자료실');
 	
-	INSERT INTO member VALUES ('hong@gmail.org','1111','홍길동','010-1111-1111');
-	INSERT INTO member VALUES ('im@gmail.org','1111','임꺽정','010-1111-2222');
-	
-	INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_USER');
-	INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_ADMIN');
-	INSERT INTO authorities VALUES ('im@gmail.org','ROLE_USER');
-	
 	commit;
 	
 	create table views (

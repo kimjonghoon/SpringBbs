@@ -158,7 +158,7 @@ public class BbsController extends Paginator {
 		Date regdate = article.getRegdate();//작성일
 		
 		//조회수 구하기 추가 2017.8.14
-		int hit = boardService.getViews(articleNo);
+		int hit = boardService.getTotalViews(articleNo);
 
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
@@ -172,7 +172,7 @@ public class BbsController extends Paginator {
 		//model.addAttribute("commentList", commentList);
 
 		//목록관련
-		int numPerPage = 10;//페이지당 레코드 수
+		int numPerPage = 20;//페이지당 레코드 수
 		int pagePerBlock = 10;//블록당 페이지 링크수
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);

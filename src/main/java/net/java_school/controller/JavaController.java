@@ -1,7 +1,6 @@
 package net.java_school.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import net.java_school.blog.Post;
 
@@ -21,27 +20,33 @@ public class JavaController {
 
 	@RequestMapping(value="/jdk-install", method=RequestMethod.GET)
 	@ResponseBody
-	public List<Post> jdkInstall() {
-		List<Post> posts = new ArrayList<Post>();
+	public Post jdkInstall(Locale locale) {
+		String lang = locale.getLanguage();
 		
-		Post post1 = new Post();
-
-		post1.setTitle("자바 설치");
-		post1.setKeywords("JDK,Java 8");
-		post1.setDescription("자바 설치에 대해 설명합니다.");
-		post1.setContent("<em>자바 8 다운로드</em>");
-
-		Post post2 = new Post();
-
-		post2.setTitle("JDK Install");
-		post2.setKeywords("JDK,Java 8");
-		post2.setDescription("How to Install Java 8");
-		post2.setContent("<em>Java 8 Download</em>");
+		Post post = new Post();
 		
-		posts.add(post1);
-		posts.add(post2);
+		switch (lang) {
+		case "ko":
+			post.setTitle("자바 설치");
+			post.setKeywords("JDK,Java 8");
+			post.setDescription("자바 설치에 대해 설명합니다.");
+			post.setContent("<em>자바 8 다운로드</em>");
+			break;
+		case "en":
+			post.setTitle("JDK Install");
+			post.setKeywords("JDK,Java 8");
+			post.setDescription("How to Install Java 8");
+			post.setContent("<em>Java 8 Download</em>");
+			break;
+		default: 
+			post.setTitle("JDK Install");
+			post.setKeywords("JDK,Java 8");
+			post.setDescription("How to Install Java 8");
+			post.setContent("<em>Java 8 Download</em>");			
+			break;
+		}
 		
-		return posts;
+		return post;
 	}
 	
 }

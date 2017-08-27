@@ -3,10 +3,11 @@
 html, body {
 	margin: 0;
 	padding: 0;
+	font-size: 1em;
 	font-family: "돋움", dotum, sans-serif; 
 }
 
-input, select, textarea, td {
+input, select, textarea, td, th {
 	color: #646464; 
 	font-size: 12px;
 	font-family: "돋움", dotum, sans-serif; 
@@ -85,8 +86,8 @@ a:hover {
 	margin-right: 210px;
 	padding-left: 9px;
 	padding-right: 9px;
-	font-size: 13px;
-	line-height: 19px;
+	font-size: 0.9em;
+	line-height: 1.6em;
 }
 
 #sidebar {
@@ -216,11 +217,9 @@ ul#nav > li > a:hover {
 #url-navi {
 	margin: 0;
 	padding-top: 10px;
-	padding-bottom: 8px;
 	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
 	font-size: 11px;
 	color: #666;
-	border-bottom: 1px solid #DAEAAA;
 }
 
 .bbs-table {
@@ -238,6 +237,7 @@ ul#nav > li > a:hover {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-bottom: silver 1px solid;
+	line-height: 1.45em;
 }
 
 .bbs-table td a {
@@ -252,12 +252,12 @@ ul#nav > li > a:hover {
 
 #paging {
 	text-align: center;
+	font-size: 13px;
 }
 
 #paging a {
 	color: #555;
 	text-decoration: none;
-	font-weight: bold;
 }
 
 #paging a:hover {
@@ -349,7 +349,7 @@ ul#nav > li > a:hover {
 	margin: 0;
 	padding: 0 3px 3px 3px;
 	color: #555;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .comment-form {
@@ -460,7 +460,7 @@ ul#nav > li > a:hover {
 #content > h1 {
 	margin: 0;
 	margin-bottom: 0.3em;
-	font-size: 1.4em;
+	font-size: 1.5em;
 	clear: both;
 }
 #content > h2 {
@@ -574,6 +574,6 @@ ul#nav > li > a:hover {
 	color: #7a7a7a;
 }
 .comment-p {
-	font-size: 0.9em;
+	font-size: 1em;
 	line-height: 1.2em;
 }

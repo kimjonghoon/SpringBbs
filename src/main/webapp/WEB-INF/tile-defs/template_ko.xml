@@ -79,7 +79,7 @@
 		<put-attribute name="keywords" value="REST" />
 		<put-attribute name="description" value="REST 테스트" />
 		<put-attribute name="content" value="/WEB-INF/jsp/java/index_ko.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/java/java-sub_ko.jsp" />
 	</definition>	
 	<definition name="java/Features" extends="lectureTemplate">
 		<put-attribute name="title" value="Features" />

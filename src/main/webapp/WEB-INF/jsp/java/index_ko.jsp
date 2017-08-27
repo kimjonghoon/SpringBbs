@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<style>
+article {
+	overflow: hidden;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#jdk-install a').click(function() {
+
+	$('#jdk-install a').click(function(e) {
+		e.preventDefault();
 		var url = '/java/jdk-install';
 		$.getJSON(url, function(data) {
 			$('title').empty();
@@ -16,8 +23,16 @@ $(document).ready(function() {
 			console.log($("meta[name='Keywords']").attr("content"));
 			console.log($("meta[name='Description']").attr("content"));
 		});
-		return false;
-	});
+	}); 
+
+	$('#oracle-jdbc-test a').click(function(e) {
+		e.preventDefault();
+		var url = '/resources/html/Oracle-JDBC-Test-content.html';//이건 된다.!
+		//var url = 'https://java-school.000webhostapp.com/jdbc/html/Oracle-JDBC-Test-content.html';
+		$("article").load(url);
+	}); 
+	
+	
 });
 </script>
 
@@ -26,7 +41,8 @@ $(document).ready(function() {
 <h1>REST 테스트</h1>
 
 <ul>
-    <li id="jdk-install"><a href="#">JDK 설치</a></li>
+	<li id="jdk-install"><a href="#">JDK 설치</a></li>
+	<li id="oracle-jdbc-test"><a href="#">Oracle JDBC Test</a></li>
 </ul>
 
 <article>
@@ -36,4 +52,6 @@ public class User {
     private String password;
 }
 </pre>
+<object type="text/html" data="https://java-school.000webhostapp.com/jdbc/html/Oracle-JDBC-Test-content.html" style="overflow:hidden; width: 590px; height: 9500px">
+</object>
 </article>
