@@ -84,8 +84,6 @@ SpringBbs
 	
 	-- for test records  
 	insert into board values ('free', 'Free', '자유게시판');
-	insert into board values ('qna', 'Q and A', '묻고 답하기');
-	insert into board values ('data', 'Data', '자료실');
 	
 	commit;
 	
@@ -275,3 +273,8 @@ $ mvn clean compile war:inplace
 
 	//import net.java_school.mybatis.oracle.BoardMapper;
 	import net.java_school.mybatis.mysql.BoardMapper;
+	
+## for Admin Test
+After sign up, add admin role as following.
+
+	insert into authorities values ('<em>your email</em>','ROLE_ADMIN');	
