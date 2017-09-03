@@ -277,4 +277,4 @@ $ mvn clean compile war:inplace
 ## for Admin Test
 After sign up, add admin role as following.
 
-	insert into authorities values ('<em>your email</em>','ROLE_ADMIN');	
+	insert into authorities values ('*your email*','ROLE_ADMIN');	
