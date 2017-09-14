@@ -182,8 +182,7 @@ SpringBbs
 ## Have to do
  
 1. Edit **UPLOAD_PATH** in net.java_school.commons.WebContants.java
-2. Edit full path of your log file in /src/main/resources/log4j.xml's &lt;param name="File" value="**Full path of your log file**"/&gt;
-3. Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
+2. Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
  
 > mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 
