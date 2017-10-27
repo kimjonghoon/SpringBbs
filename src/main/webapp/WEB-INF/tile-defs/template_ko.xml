@@ -74,13 +74,6 @@
 		<put-attribute name="sidebar" value="/WEB-INF/views/index-menu.jsp" />
 	</definition>	
 	<!-- 자바 스쿨 강좌 -->
-	<definition name="java/index" extends="lectureTemplate">
-		<put-attribute name="title" value="REST 테스트" />
-		<put-attribute name="keywords" value="REST" />
-		<put-attribute name="description" value="REST 테스트" />
-		<put-attribute name="content" value="/WEB-INF/views/java/index_ko.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
-	</definition>	
 	<definition name="java/Features" extends="lectureTemplate">
 		<put-attribute name="title" value="Features" />
 		<put-attribute name="keywords" value="자바의 특징,JVM,OOP" />

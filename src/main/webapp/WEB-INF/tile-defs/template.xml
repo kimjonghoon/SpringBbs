@@ -74,13 +74,6 @@
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
 	</definition>	
 	<!-- Java Web Programming Lectures -->
-	<definition name="java/index" extends="lectureTemplate">
-		<put-attribute name="title" value="REST Test" />
-		<put-attribute name="keywords" value="REST" />
-		<put-attribute name="description" value="REST Test" />
-		<put-attribute name="content" value="/WEB-INF/views/java/index.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
-	</definition>
 	<definition name="java/Features" extends="lectureTemplate">
 		<put-attribute name="title" value="Features" />
 		<put-attribute name="keywords" value="Java Features,JVM,OOP" />
