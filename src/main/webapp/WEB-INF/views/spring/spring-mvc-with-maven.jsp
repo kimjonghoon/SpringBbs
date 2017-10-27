@@ -166,7 +166,7 @@ public class PlayerController implements Controller {
 		
 		//반환값인 ModelAndView 인스턴스 생성
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/WEB-INF/jsp/player/test.jsp");
+		modelAndView.setViewName("/WEB-INF/views/player/test.jsp");
 		modelAndView.addAllObjects(model);
 		
 		return modelAndView;
@@ -418,7 +418,7 @@ pom.xml 파일을 다음과 같이 수정한다.
 &lt;/project&gt;
 </pre>
 
-/src/main/webapp/WEB-INF/jsp/player 디렉토리를 만들고, 
+/src/main/webapp/WEB-INF/views/player 디렉토리를 만들고, 
 test.jsp 파일을 만들어 위치시킨다.<br />
 
 <em class="filename">test.jsp</em>
@@ -490,7 +490,7 @@ spring-bbs-servlet.xml 파일을 열고 &lt;!-- ViewResolver --&gt; 부분에 �
 		&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 	&lt;/property&gt;
 	&lt;property name="prefix"&gt;
-		&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+		&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 	&lt;/property&gt;
 	&lt;property name="suffix"&gt;
 		&lt;value&gt;.jsp&lt;/value&gt;
@@ -511,7 +511,7 @@ return modelAndView;
 </pre>
 
 InternalResourceViewResolver 설정대로 player/test는
-/WEB-INF/jsp/player/test.jsp로 해석될 것이다.<br />
+/WEB-INF/views/player/test.jsp로 해석될 것이다.<br />
 자바 소스가 변경되었으므로 빌드를 한다.<br />
 톰캣을 재실행하고 http://localhost:port/spring-bbs/player/test?id=1를 방문한다.<br />
 
@@ -553,7 +553,7 @@ spring-bbs-servlet.xml 파일을 열고 강조된 부분을 추가한다.<br />
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;
@@ -700,7 +700,7 @@ public class PlayerService {
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;

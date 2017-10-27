@@ -3,7 +3,7 @@
     
 <h1>게시판 - 파일 다운로드</h1>
 
-<em class="filename">/WEB-INF/jsp/inc/download.jsp</em>
+<em class="filename">/WEB-INF/views/inc/download.jsp</em>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

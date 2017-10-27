@@ -171,7 +171,7 @@ C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\test&gt;<strong>j
 	DocumentBase 에는 주로 웹 애플리케이션의 구성 요소 중 정적인 요소가 위치하게 된다.<br />
 	DocumentBase 아래 css 서브디렉토리에는 스타일 시트 파일를, js 에는 자바스크립트 파일을, images 에는 이미지 파일을 두는 식이다.<br />
 	동적인 요소중 JSP는 DocumentBase 에 두어도 된다.<br />
-	하지만 정책상 WEB-INF 아래에 WEB-INF/jsp 와 같은 디렉토리를 만들어서 그곳에 위치시키는 경우가 많다.<br />
+	하지만 정책상 WEB-INF 아래에 WEB-INF/views와 같은 디렉토리를 만들어서 그곳에 위치시키는 경우가 많다.<br />
 	</li>
 	<li>이 web.xml 파일의 설정대로 지금 테스트할 수 없다.<br />
 	테스트하려면 TestServlet를 만들어야 한다.<br />

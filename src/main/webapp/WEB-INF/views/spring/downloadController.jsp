@@ -7,7 +7,7 @@
 <h1>다운로드 컨트롤러</h1>
 
 파일 다운로드를 담당하는 컨트롤러를 작성한다.
-(지금까지 파일 다운로드는 /WEB-INF/jsp/inc/download.jsp 파일을 사용했다.)
+(지금까지 파일 다운로드는 /WEB-INF/views/inc/download.jsp 파일을 사용했다.)
 
 <em class="filename">DownloadController.java</em>
 <pre class="prettyprint">

@@ -252,17 +252,17 @@ web.xml를 열고 web-app 엘리먼트의 내용을 모두 지우고 아래와 �
 &lt;!-- 최종 테스트 전까지 풀지 않는다.
   &lt;error-page&gt;
     &lt;error-code&gt;403&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt;
 
   &lt;error-page&gt;
     &lt;error-code&gt;404&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt;
 
   &lt;error-page&gt;
     &lt;error-code&gt;500&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt; 
 --&gt;
 </strong> 
@@ -380,10 +380,10 @@ list.jsp와 view.jsp 열고 아랫부분을 수정한다.<br />
 <h2>첨부 파일을 내려받는 JSP 추가</h2>
 
 기존 상세보기(view.jsp)에서는 첨부 파일을 단순히 링크 거는 것으로 구현했었는데 스프링 MVC에서는 
-/WEB-INF/jsp/inc/download.jsp를 이용하는 것으로 수정할 것이다.<br />
+/WEB-INF/views/inc/download.jsp를 이용하는 것으로 수정할 것이다.<br />
 이 경우 웹 브라우저가 접근하지 못하는 경로에 첨부 파일이 있어도 상관없다.<br />
 
-<em class="filename">/WEB-INF/jsp/inc/download.jsp</em>
+<em class="filename">/WEB-INF/views/inc/download.jsp</em>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;	  
     
@@ -991,7 +991,7 @@ sprng-bbs-servlet.xml라는 이름으로 web.xml과 같은 위치인 WEB-INF에 
       &lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
     &lt;/property&gt;
     &lt;property name="prefix"&gt;
-      &lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+      &lt;value&gt;/WEB-INF/views/&lt;/value&gt;
     &lt;/property&gt;
     &lt;property name="suffix"&gt;
       &lt;value&gt;.jsp&lt;/value&gt;
@@ -1062,12 +1062,12 @@ dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용
 스프링 MVC에는 여러 가지 예외 처리 방법이 있다.<br />
 이 중에서 SimpleMappingExceptionResolver를 이용하는 것이 가장 사용하기 쉽다.<br />
 설정대로라면 AuthenticationException 예외가 발생하면 선택되는 뷰는 error이다.<br />
-error 역시 뷰리졸브의 의해 /WEB-INF/jsp/error.jsp로 해석된다.<br />
+error 역시 뷰리졸브의 의해 /WEB-INF/views/error.jsp로 해석된다.<br />
 이 밖의 다른 예외가 발생하면 
 <em class="path">&lt;property name="defaultErrorView" value="error" /&gt;</em>설정이 담당한다.<br />
 여기서는 각각의 상황에 맞게 에러 페이지를 만들지 않고 error.jsp 하나로 통일했다.<br />
 404 HTTP 상태 코드에 대해서는 web.xml에서 error-page 엘리먼트로 설정했다.<br />
-web.xml에서 에러 페이지에 대한 경로를 /WEB-INF/jsp/error.jsp라고 지정해야 함에 주의해야 한다.<br />
+web.xml에서 에러 페이지에 대한 경로를 /WEB-INF/views/error.jsp라고 지정해야 함에 주의해야 한다.<br />
 web.xml의 에러 페이지 설정과 마찬가지로 이 부분 역시 주석으로 처리했다.<br />
 최종 테스트 전까지 주석을 제거하지 않는 것이 개발에 도움이 된다.<br /> 
 
@@ -2253,7 +2253,7 @@ MultipartHttpServletRequest 타입의 mpRequest 아규먼트는 시스템에 전
 <br />
 구현은 먼저 로그인 여부를 판단한다.<br />
 로그인되어 있지 않다면 AuthenticationException 예외를 발생시킨다.<br />
-spring-bbs-servlet.xml에 설정된 예외 리졸브에 의해서 뷰는 /WEB-INF/jsp/error.jsp가 선택된다.<br />
+spring-bbs-servlet.xml에 설정된 예외 리졸브에 의해서 뷰는 /WEB-INF/views/error.jsp가 선택된다.<br />
 
 <pre>//로그인 체크
 User user = (User) session.getAttribute(WebContants.USER_KEY);

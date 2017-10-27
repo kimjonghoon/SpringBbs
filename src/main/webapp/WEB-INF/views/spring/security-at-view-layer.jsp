@@ -10,7 +10,7 @@
 
 <img alt="Before applying spring security at viewlayer" src="https://lh3.googleusercontent.com/7mUut6ifJQxxowLptysUi0z7rSY9nrsPwQr5J_HkZosjh-lU1te9649PhrqwYkIkeu67pVv0iZB2PND5iz7w1ihp2XyboTnFykXFs2p4F1eztyI6dH_lhovjeHqhfZ4DDhqQ_XpvDSebDg7f0HzALTTYWR7z1VrTvFwKzMzAV5CTvcf4v5m9LMfgKyeDWdeDyAo4g_ijmp0NGRN8bKJ-KLVbrJzYM7bpf08us-RzZHrUHK6kBvC1Xv4EEGyDR3nEEgb1yZwDsz-o7kHgM2tV56VBpfkaY6AzNdBZQaKar5SruS4QxGd4NPF3go_D8z6SJjoOkmL_jSneQELDqVQnQ05JuypuoPlWpirJr4ahJWcqVsTY9sD7DdJOhcUupYIHoammu7VZUgiAejhVd0-AqwD0IDo5UoTj1Gd9QtDX5yTd2hd5YKUKp4zvTX6yaLANNUbLoFp9hpHg2e36qdqE5LDxsFpkSCqBlYRlqWfBVFbAIaJLXN809Sh8gonAGY0fG8ChUeU6y_5MyjXu28c3gHo0zIeXptsXwOp8Dwga2-n_KQJ5hvQhWLm9ioNAHWLRMADOC903y2zoljR6MqXQPOjPxqNzNOg=w590-h488-no"><br />
 <br />
-<em class="filename">/WEB-INF/jsp/bbs/view.jsp</em>
+<em class="filename">/WEB-INF/views/bbs/view.jsp</em>
 <pre class="prettyprint">
 &lt;!-- 중간 생략 --&gt;
 
@@ -58,7 +58,7 @@
 </pre>
 
 이미 수정한 header.jsp 파일 역시 스프링 시큐리티 태그를 사용하여 뷰가 선별적으로 랜더링된다.<br />
-<em class="filename">/WEB-INF/jsp/inc/header.jsp</em>
+<em class="filename">/WEB-INF/views/inc/header.jsp</em>
 <pre class="prettyprint">
 &lt;!-- 중간 생략 --&gt;
 

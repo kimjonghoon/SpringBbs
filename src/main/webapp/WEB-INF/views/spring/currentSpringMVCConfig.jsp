@@ -62,7 +62,7 @@ Spring MVC 의 최신 권고대로 핸들러를 만들고 테스트해보자.<br
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;
@@ -172,7 +172,7 @@ public class UserController {
 }
 </pre>
 
-<em class="filename">WEB-INF/jsp/user/view.jsp</em> 
+<em class="filename">WEB-INF/views/user/view.jsp</em> 
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

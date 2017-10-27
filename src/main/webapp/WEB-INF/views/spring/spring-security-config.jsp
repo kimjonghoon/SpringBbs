@@ -192,7 +192,7 @@ spring-bbs-servlet.xml 파일을 수정한다.<br />
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;
@@ -298,7 +298,7 @@ spring-bbs-servlet.xml 파일을 수정한다.<br />
 	<strong>
 	&lt;error-page&gt;
 		&lt;error-code&gt;403&lt;/error-code&gt;
-		&lt;location&gt;/WEB-INF/jsp/noAuthority.jsp&lt;/location&gt;
+		&lt;location&gt;/WEB-INF/views/noAuthority.jsp&lt;/location&gt;
 	&lt;/error-page&gt;
 	</strong>
 &lt;/web-app&gt;
@@ -331,7 +331,7 @@ public String logout(HttpSession session) {
 
 <h2>JSP</h2>
 
-<em class="filename">/WEB-INF/jsp/noAuthority.jsp</em>
+<em class="filename">/WEB-INF/views/noAuthority.jsp</em>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -349,7 +349,7 @@ public String logout(HttpSession session) {
 
 login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.<br />
 
-<em class="filename">/WEB-INF/jsp/users/login.jsp</em>
+<em class="filename">/WEB-INF/views/users/login.jsp</em>
 <pre class="prettyprint">
 &lt;h1&gt;로그인&lt;/h1&gt;
 <strong>&lt;c:if test="${not empty param.login_error }"&gt;
@@ -368,7 +368,7 @@ login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.<br />
 &lt;/table&gt;
 </pre>
 
-<em class="filename">/WEB-INF/jsp/inc/header.jsp</em>
+<em class="filename">/WEB-INF/views/inc/header.jsp</em>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -394,7 +394,7 @@ login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.<br />
 스프링 시큐리티는 사용자 정보를 세션에 담지 않으므로 수정하지 않으면 로그인 후 로그아웃/내정보수정 버튼을 볼 수 없다.
 스프링 시큐리티 태그를 사용하는 예는 <a href="security-at-view-layer">뷰 레벨 보안</a>에서도 다룬다.<br />
 
-<em class="filename">/WEB-INF/jsp/users/loginUsers-menu.jsp</em>
+<em class="filename">/WEB-INF/views/users/loginUsers-menu.jsp</em>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

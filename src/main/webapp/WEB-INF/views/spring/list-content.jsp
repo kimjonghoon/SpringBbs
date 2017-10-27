@@ -106,7 +106,7 @@ spring-bbs-servlet.xml 파일을 수정한다.<br />
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;
@@ -224,7 +224,7 @@ context:component-scan으로 스캔되지 않기 때문이다.<br />
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;

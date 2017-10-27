@@ -4,7 +4,7 @@
 
 <h1>게시글 수정</h1>
 
-<em class="filename">/WEB-INF/jsp/bbs/modify.jsp</em> 
+<em class="filename">/WEB-INF/views/bbs/modify.jsp</em> 
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;

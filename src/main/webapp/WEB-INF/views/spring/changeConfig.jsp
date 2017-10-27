@@ -249,7 +249,7 @@ web.xml 파일을 아래 내용으로 수정한다.<br />
 
 	&lt;error-page&gt;
 		&lt;error-code&gt;403&lt;/error-code&gt;
-		&lt;location&gt;/WEB-INF/jsp/noAuthority.jsp&lt;/location&gt;
+		&lt;location&gt;/WEB-INF/views/noAuthority.jsp&lt;/location&gt;
 	&lt;/error-page&gt;
 
 &lt;/web-app&gt;
@@ -296,7 +296,7 @@ coreweb-servlet.xml 이라는 이름으로 스프링 설정파일 WEB-INF 폴더
 			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="prefix"&gt;
-			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
 		&lt;/property&gt;
 		&lt;property name="suffix"&gt;
 			&lt;value&gt;.jsp&lt;/value&gt;

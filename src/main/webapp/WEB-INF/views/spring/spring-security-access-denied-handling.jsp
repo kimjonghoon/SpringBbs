@@ -17,17 +17,17 @@ web.xml에서 403 에러 페이지 설정을 주석 처리했다.<br />
 &lt;!--
   &lt;error-page&gt;
     &lt;error-code&gt;403&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt;
 --&gt;
   &lt;error-page&gt;
     &lt;error-code&gt;404&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt;
 
   &lt;error-page&gt;
     &lt;error-code&gt;500&lt;/error-code&gt;
-    &lt;location&gt;/WEB-INF/jsp/error.jsp&lt;/location&gt;
+    &lt;location&gt;/WEB-INF/views/error.jsp&lt;/location&gt;
   &lt;/error-page&gt;
 </pre>
 
@@ -58,7 +58,7 @@ web.xml에서 403 에러 페이지 설정을 주석 처리했다.<br />
 error-page 속성값 /403은 요청 URL로, 이 설정만으로 접근이 금지되는 상황에서 /403.jsp 페이지로 이동하지 않는다.<br />
 이 설정만 하고 테스트하면 http://localhost:8080/403을 요청하게 되고, 결과적으로 에러 페이지에서 
 404 메시지를 보게 된다.<br />
-WEB-INF/jsp/ 디렉터리에 403.jsp 파일을 만들고 HomeController에 다음을 추가한다.<br />
+WEB-INF/views/ 디렉터리에 403.jsp 파일을 만들고 HomeController에 다음을 추가한다.<br />
 
 <em class="filename">HomeController.java</em>
 <pre class="prettyprint">
