@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 //Analyze the servlet exception
 Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");

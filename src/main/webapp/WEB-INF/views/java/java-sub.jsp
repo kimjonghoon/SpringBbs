@@ -12,8 +12,7 @@
 	<li><a href="/java/Keyword_Indentifiers_Comment">Indentifiers</a></li>
 	<li><a href="/java/DataType_Casting">Data Type</a></li>
 	<li><a href="/java/Arrays">Arrays</a></li>
-	<li><a href="/java/Operators">Operators</a></li>
-	<li><a href="/java/if_switch_loops">if, switch, loops</a></li>
+	<li><a href="/java/Operators_if_loops">Operators,if, loops, switch</a></li>
 	<li><a href="/java/Package_Modifiers">Package, Modifiers</a></li>
 	<li><a href="/java/Inheritance">Inheritance</a></li>
 	<li><a href="/java/Static">static keyword</a></li>

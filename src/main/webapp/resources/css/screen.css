@@ -1,10 +1,15 @@
 @CHARSET "UTF-8";
-/*** 공통 시작***/
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 html, body {
 	margin: 0;
 	padding: 0;
+	background-color: #FFF;
+	font-family: "Noto Sans KR", "Liberation Sans", Helvetica, "돋움", dotum, sans-serif;
 	font-size: 1em;
-	font-family: "돋움", dotum, sans-serif; 
+}
+pre {
+	margin: 0 0 0.7em 0;
+	font-family: Consolas, "Noto Sans KR", dotum, "Liberation Mono", Courier, monospace;	
 }
 
 input, select, textarea, td, th {
@@ -41,8 +46,6 @@ a:hover {
 	color: #2C80D0;
 	text-decoration: underline;
 }
-/*** 공통 끝***/
-
 #wrap {
 	margin: 0 auto;
 	padding: 0;
@@ -441,47 +444,55 @@ ul#nav > li > a:hover {
 .error {
 	color: red;
 }
-
-.table-in-article {
+article table {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	width: 100%;
 }
-.table-in-article td {
+article td {
 	padding: 5px 6px 3px 6px;
 	border: silver 1px solid;
 }
-.table-in-article th {
+article th {
 	padding: 5px 6px 3px 6px;
 	border: silver 1px solid;
 	text-align: left;
 	border: silver 1px solid;
 }
-#content > h1 {
+article caption {
 	margin: 0;
-	margin-bottom: 0.3em;
-	font-size: 1.5em;
-	clear: both;
+	padding: 0;
+	font-weight: bold;
+	text-align: left;
 }
-#content > h2 {
-	margin-top: 1em;
-	margin-bottom: 0.3em;
+article > h1 {
+	margin: 0.5em 0 0 0;
+	padding: 0;
+	font-size: 1.6em;	
+}
+article > h2 {
+	margin-top: 15px;
+	margin-bottom: 0;
 	font-size: 1.3em;
 }
-#content > h3 {
-	margin-top: 0.7em;
-	margin-bottom: 0.3em;
+article > h3 {
+	margin-top: 10px;
+	margin-bottom: 0;
 	font-size: 1.2em;
 }
-#content > h4 {
-	margin-top: 0.5em;
-	margin-bottom: 0.3em;
+article > h4 {
+	margin-top: 5px;
+	margin-bottom: 0;
 	font-size: 1.1em;
 }
-#content > h5 {
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
+article > h5 {
+	margin-top: 3px;
+	margin-bottom: 0;
 	font-size: 1em;
+}
+h6 {
+	margin: 0;
+	padding: 0;
 }
 #last-modified {
 	float: right;
@@ -562,8 +573,6 @@ ul#nav > li > a:hover {
 .filename {
 	display: block;
 	font-style: normal;
-	position: relative;
-	top: 1em;
 }
 #last-modified {
 	padding-top: 3px;

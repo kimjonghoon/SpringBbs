@@ -16,12 +16,19 @@
 <script src="/resources/js/commons.js"></script>
 <script>
 $(document).ready(function() {
-	prettyPrint();
-	$('pre.prettyprint').html(function() {
-		return this.innerHTML.replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+	var url = $('#main-article').attr('title');
+	$('#main-article').load('/resources/articles/' + url + '.html', function() {
+		runAfterLoadArticle();
 	});
-	$('pre.prettyprint').dblclick(function() {
-		selectRange(this);
+	$('#next-prev a').click(function(e) {
+		e.preventDefault();
+		var $chapter = this.title;
+		var $article = this.id;
+		var $url = "/";
+		if ($chapter) $url += $chapter;
+		if ($article) $url += '/' + $article;
+		$("#lectureForm").attr("action", $url);
+		$('#lectureForm').submit();
 	});
 });
 </script>
@@ -41,16 +48,16 @@ $(document).ready(function() {
 
 		<div id="container">
 			<div id="content">
-				<tiles:insertAttribute name="content" />
+				<div id="main-article" title="<tiles:insertAttribute name="content" />"></div>			
 				<div id="next-prev">
 					<ul>
 						<li>
 							<spring:message code="global.next" /> : 
-							<a href="<tiles:insertAttribute name="next-link" />"><tiles:insertAttribute name="next-title" /></a>
+							<a href="#" title="<tiles:insertAttribute name="chapter-of-next-article" />" id="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
 						</li>
 						<li>
 							<spring:message code="global.prev" /> : 
-							<a href="<tiles:insertAttribute name="prev-link" />"><tiles:insertAttribute name="prev-title" /></a>
+							<a href="#" title="<tiles:insertAttribute name="chapter-of-prev-article" />" id="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
 						</li>
 					</ul>
 				</div>
@@ -70,6 +77,17 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
+<script>
+/*
+var url = $('#main-article').attr('title');
+$('#main-article').load('/resources/articles/' + url + '.html', function() {
+	runAfterLoadArticle();
+});
+*/
+</script>
+<div style="display:none;">
+	<form id="lectureForm">
+	</form>
+</div>
 </body>
 </html>

@@ -4,13 +4,13 @@
 <h1>CSS-Layout</h1>
 <ul>
 	<li class="sub-heading">3 column fixed width layout</li>
-	<li><a href="/css-layout/div-element-arrangement">주요 엘리먼트 배치</a></li>
-	<li><a href="/css-layout/main-menu-styling">메인 메뉴</a></li>
-	<li><a href="/css-layout/sub-menu-styling">서브 메뉴</a></li>
-	<li><a href="/css-layout/header-footer-content-styling">#header, #footer, #content 스타일</a></li>
+	<li><a href="/css-layout/div-element-arrangement">Main div elements arrangement</a></li>
+	<li><a href="/css-layout/main-menu-styling">Main Menu Styling</a></li>
+	<li><a href="/css-layout/sub-menu-styling">Sub Menu Styling</a></li>
+	<li><a href="/css-layout/header-footer-content-styling">#header, #footer, #content Styling</a></li>
 	
-	<li class="sub-heading">게시판 디자인</li>
-	<li><a href="/css-layout/bbs-list-styling">목록</a></li>
-	<li><a href="/css-layout/bbs-view-styling">상세보기</a></li>
-	<li><a href="/css-layout/bbs-write_form-styling">글쓰기, 회원가입</a></li>
+	<li class="sub-heading">Board Design</li>
+	<li><a href="/css-layout/bbs-list-styling">List</a></li>
+	<li><a href="/css-layout/bbs-view-styling">Detailed View</a></li>
+	<li><a href="/css-layout/bbs-write_form-styling">Write &amp; Sign Up</a></li>
 </ul>

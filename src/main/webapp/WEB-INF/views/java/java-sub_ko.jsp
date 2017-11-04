@@ -12,8 +12,7 @@
 	<li><a href="/java/Keyword_Indentifiers_Comment">키워드, 식별자, 주석</a></li>
 	<li><a href="/java/DataType_Casting">자료형과 형변환</a></li>
 	<li><a href="/java/Arrays">배열</a></li>
-	<li><a href="/java/Operators">연산자</a></li>
-	<li><a href="/java/if_switch_loops">if문, switch문, 반복문</a></li>
+	<li><a href="/java/Operators_if_loops">연산자,if,루프,스위치 문</a></li>
 	<li><a href="/java/Package_Modifiers">패키지와 접근자</a></li>
 	<li><a href="/java/Inheritance">상속</a></li>
 	<li><a href="/java/Static">static 키워드</a></li>

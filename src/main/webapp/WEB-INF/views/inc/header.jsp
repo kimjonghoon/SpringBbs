@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <h1 style="float: left;width: 150px;"><a href="/"><img src="/resources/images/ci.gif" alt="java-school" /></a></h1>
 
 <div id="memberMenu" style="float: right;position: relative;top: 7px;">
@@ -64,7 +63,7 @@ pageContext.setAttribute("korean", korean);
 <form id="logoutForm" action="/logout" method="post" style="display:none">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
-<script type="text/javascript" src="/resources/js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-3.2.1.min.js"></script>
 
 <script>
 $(document).ready(function() {
