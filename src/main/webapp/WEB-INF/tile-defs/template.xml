@@ -26,7 +26,13 @@
 		<put-attribute name="prev-article-title" value="" />
 		<put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-	</definition>    
+	</definition>
+	<definition name="blogTemplate" template="/WEB-INF/views/template/blogTemplate.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+		<put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
+		<put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+	</definition>
 	<!-- Error Page -->
 	<definition name="403" extends="errorTemplate">
 		<put-attribute name="title" value="403 Error" />
@@ -1294,5 +1300,139 @@
 		<put-attribute name="prev-article" value="Cookie" />
 		<put-attribute name="prev-article-title" value="Handling Cookie with JavaScript" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-	</definition>	
+	</definition>
+	<!-- Blogs -->
+	<definition name="blog" extends="blogTemplate">
+		<put-attribute name="title" value="Blog Index" />
+		<put-attribute name="keywords" value="Blog Index" />
+		<put-attribute name="description" value="Blog Index" />
+		<put-attribute name="content" value="blog-index" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2015/spring-security-password-encoder" extends="blogTemplate">
+		<put-attribute name="title" value="Spring Security Password Encoder" />
+		<put-attribute name="keywords" value="spring security" />
+		<put-attribute name="description" value="spring security" />
+		<put-attribute name="content" value="2015/spring-security-password-encoder" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2016/spring-security-access-denied-handling" extends="blogTemplate">
+		<put-attribute name="title" value="Spring Security Access Denied Handling" />
+		<put-attribute name="keywords" value="spring security" />
+		<put-attribute name="description" value="spring security" />
+		<put-attribute name="content" value="2016/spring-security-access-denied-handling" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/migrating-to-spring-security-4" extends="blogTemplate">
+		<put-attribute name="title" value="Migrating to Spring Security 4" />
+		<put-attribute name="keywords" value="spring security" />
+		<put-attribute name="description" value="spring security" />
+		<put-attribute name="content" value="2017/migrating-to-spring-security-4" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/SpringBbs-with-MySql" extends="blogTemplate">
+		<put-attribute name="title" value="SpringBbs with MySql" />
+		<put-attribute name="keywords" value="spring mvc" />
+		<put-attribute name="description" value="spring mvc, board," />
+		<put-attribute name="content" value="2017/SpringBbs-with-MySql" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/jetty-maven-plugin" extends="blogTemplate">
+		<put-attribute name="title" value="Jetty Maven Plugin" />
+		<put-attribute name="keywords" value="jetty maven plugin" />
+		<put-attribute name="description" value="jetty maven plugin" />
+		<put-attribute name="content" value="2017/jetty-maven-plugin" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/basic-board" extends="blogTemplate">
+		<put-attribute name="title" value="Basic Board Program" />
+		<put-attribute name="keywords" value="Basic Board Program" />
+		<put-attribute name="description" value="Basic Board Program" />
+		<put-attribute name="content" value="2017/basic-board" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/thread-board" extends="blogTemplate">
+		<put-attribute name="title" value="Thread Board" />
+		<put-attribute name="keywords" value="Thread Board" />
+		<put-attribute name="description" value="Thread Board" />
+		<put-attribute name="content" value="2017/thread-board" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/board-using-oracle-hierarchical-query" extends="blogTemplate">
+		<put-attribute name="title" value="board,oracle hierarchical query" />
+		<put-attribute name="keywords" value="board,oracle hierarchical query" />
+		<put-attribute name="description" value="board,oracle hierarchical query" />
+		<put-attribute name="content" value="2017/board-using-oracle-hierarchical-query" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/model1-board" extends="blogTemplate">
+		<put-attribute name="title" value="board,model 1" />
+		<put-attribute name="keywords" value="board,model 1" />
+		<put-attribute name="description" value="board,model 1" />
+		<put-attribute name="content" value="2017/model1-board" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/model2-board" extends="blogTemplate">
+		<put-attribute name="title" value="board,model 2" />
+		<put-attribute name="keywords" value="board,model 2" />
+		<put-attribute name="description" value="board,model 2" />
+		<put-attribute name="content" value="2017/model2-board" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/model2-board-using-DBCP" extends="blogTemplate">
+		<put-attribute name="title" value="board,model 2,DBCP" />
+		<put-attribute name="keywords" value="board,model 2,DBCP" />
+		<put-attribute name="description" value="board,model 2" />
+		<put-attribute name="content" value="2017/model2-board-using-DBCP" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/REST-example" extends="blogTemplate">
+		<put-attribute name="title" value="REST" />
+		<put-attribute name="keywords" value="REST" />
+		<put-attribute name="description" value="REST" />
+		<put-attribute name="content" value="2017/REST-example" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/model2mysqlboard-using-DBCP" extends="blogTemplate">
+		<put-attribute name="title" value="Model 2 Board on MySql using DBCP" />
+		<put-attribute name="keywords" value="model 2" />
+		<put-attribute name="description" value="model 2" />
+		<put-attribute name="content" value="2017/model2mysqlboard-using-DBCP" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/spring-mvc-ajax-example" extends="blogTemplate">
+		<put-attribute name="title" value="Ajax Example on Spring MVC" />
+		<put-attribute name="keywords" value="ajax,spring mvc" />
+		<put-attribute name="description" value="simple ajax example" />
+		<put-attribute name="content" value="2017/spring-mvc-ajax-example" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/i18n" extends="blogTemplate">
+		<put-attribute name="title" value="i18n" />
+		<put-attribute name="keywords" value="i18n" />
+		<put-attribute name="description" value="simple i18n example" />
+		<put-attribute name="content" value="2017/i18n" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/spring-mvc-apache-tiles" extends="blogTemplate">
+		<put-attribute name="title" value="Apache Tiles on Spring MVC" />
+		<put-attribute name="keywords" value="apache tiles,spring mvc" />
+		<put-attribute name="description" value="simple apache tiles example" />
+		<put-attribute name="content" value="2017/spring-mvc-apache-tiles" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/Setting-development-environment-in-Ubuntu" extends="blogTemplate">
+		<put-attribute name="title" value="Setting development environment in Ubuntu" />
+		<put-attribute name="keywords" value="ubuntu,mysql" />
+		<put-attribute name="description" value="ubuntu" />
+		<put-attribute name="content" value="2017/Setting-development-environment-in-Ubuntu" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
+	<definition name="blog/2017/downloadController" extends="blogTemplate">
+		<put-attribute name="title" value="DownloadController" />
+		<put-attribute name="keywords" value="DownloadController" />
+		<put-attribute name="description" value="DownloadController Example" />
+		<put-attribute name="content" value="2017/downloadController" />
+		<put-attribute name="sidebar" value="" />
+	</definition>
  </tiles-definitions>

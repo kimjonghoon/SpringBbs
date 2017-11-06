@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,28 +10,25 @@
 <title><tiles:insertAttribute name="title" /></title>
 <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
 <link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
+<style type="text/css">
+#sidebar {
+	display: none;
+}
+#content {
+	margin-left: 0;
+}
+</style>
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/prettify.js"></script>
 <script src="/resources/js/commons.js"></script>
 <script>
 $(document).ready(function() {
-	var url = $('#main-article').attr('title');
-	$('#main-article').load('/resources/articles/' + url + '.html', function() {
+	var url = $('#content').attr('title');
+	$('#content').load('/resources/articles/' + url + '.html', function() {
 		runAfterLoadArticle();
-	});
-	$('#next-prev a').click(function(e) {
-		e.preventDefault();
-		var $chapter = this.title;
-		var $article = this.id;
-		var $url = "/";
-		if ($chapter) $url += $chapter;
-		if ($article) $url += '/' + $article;
-		$("#lectureForm").attr("action", $url);
-		$('#lectureForm').submit();
 	});
 });
 </script>
-</head>
 </head>
 <body>
 
@@ -47,21 +43,7 @@ $(document).ready(function() {
 		</div>
 
 		<div id="container">
-			<div id="content">
-				<div id="main-article" title="<tiles:insertAttribute name="content" />"></div>			
-				<div id="next-prev">
-					<ul>
-						<li>
-							<spring:message code="global.next" /> : 
-							<a href="#" title="<tiles:insertAttribute name="chapter-of-next-article" />" id="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
-						</li>
-						<li>
-							<spring:message code="global.prev" /> : 
-							<a href="#" title="<tiles:insertAttribute name="chapter-of-prev-article" />" id="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
-						</li>
-					</ul>
-				</div>
-			</div>
+			<div id="content" title="<tiles:insertAttribute name="content" />"></div>
 		</div>
 
 		<div id="sidebar">
@@ -77,9 +59,5 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-<div style="display:none;">
-	<form id="lectureForm">
-	</form>
-</div>
 </body>
 </html>

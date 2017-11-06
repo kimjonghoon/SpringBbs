@@ -494,8 +494,11 @@ h6 {
 	margin: 0;
 	padding: 0;
 }
-#last-modified {
-	float: right;
+.last-modified {
+	text-align: right;
+	font-size: 11px;
+	font-family: tahoma, arial, sans-serif;
+	color: #7a7a7a;
 }
 #next-prev {
 	margin-top: 10px;
@@ -524,6 +527,20 @@ h6 {
 	border-bottom: 1px solid #999;
 }
 #references {
+	margin-top: 5px;
+	padding: 0;
+	list-style-type: none;
+}
+#related-articles {
+	display: block;
+	margin-top: 15px;
+	padding-bottom: 3px;
+	color: #236CAC;
+	font-weight: bold;
+	line-height: 1;
+	border-bottom: 2px solid #236CAC;
+}
+#related-articles-ul {
 	margin-top: 5px;
 	padding: 0;
 	list-style-type: none;
