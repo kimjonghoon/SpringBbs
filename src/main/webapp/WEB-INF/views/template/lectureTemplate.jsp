@@ -20,14 +20,11 @@ $(document).ready(function() {
 	$('#main-article').load('/resources/articles/' + url + '.html', function() {
 		runAfterLoadArticle();
 	});
-	$('#next-prev a').click(function(e) {
+ 	$('#next-prev a').click(function(e) {
 		e.preventDefault();
-		var $chapter = this.title;
-		var $article = this.id;
-		var $url = "/";
-		if ($chapter) $url += $chapter;
-		if ($article) $url += '/' + $article;
-		$("#lectureForm").attr("action", $url);
+		var url = "/" + this.title;
+		url = url.replace('#','/');
+		$("#lectureForm").attr("action", url);
 		$('#lectureForm').submit();
 	});
 });
@@ -50,16 +47,16 @@ $(document).ready(function() {
 			<div id="content">
 				<div id="main-article" title="<tiles:insertAttribute name="content" />"></div>			
 				<div id="next-prev">
-					<ul>
-						<li>
-							<spring:message code="global.next" /> : 
-							<a href="#" title="<tiles:insertAttribute name="chapter-of-next-article" />" id="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
-						</li>
-						<li>
-							<spring:message code="global.prev" /> : 
-							<a href="#" title="<tiles:insertAttribute name="chapter-of-prev-article" />" id="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
-						</li>
-					</ul>
+				<ul>
+					<li>
+						<spring:message code="global.next" /> : 
+						<a href="#" title="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
+					</li>
+					<li>
+						<spring:message code="global.prev" /> : 
+						<a href="#" title="<tiles:insertAttribute name="prev-article" />""><tiles:insertAttribute name="prev-article-title" /></a>
+					</li>
+				</ul>
 				</div>
 			</div>
 		</div>
