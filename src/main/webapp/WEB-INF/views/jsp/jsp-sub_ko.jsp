@@ -10,7 +10,7 @@
 	<li><a href="/jsp/Namecard-Webapp">명함관리 웹 애플리케이션</a></li>
 	<li><a href="/jsp/Web-Application">웹 애플리케이션</a></li>
 	<li><a href="/jsp/Creating-a-new-web-application">웹 애플리케이션 작성 실습</a></li>
-	<li><a href="/jsp/Servlets">서블릿</a></li>
+	<li><a href="/jsp/Servlet">서블릿</a></li>
 	<li><a href="/jsp/JSP">JSP</a></li>
 	<li><a href="/jsp/Accessing-database-from-JSP_Servlets">데이터베이스 연동</a></li>
 	<li class="sub-heading">게시판</li>	

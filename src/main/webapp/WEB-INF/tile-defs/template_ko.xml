@@ -534,7 +534,7 @@
 	</definition>
 	<definition name="jsp/Web-Application" extends="lectureTemplate">
 		<put-attribute name="title" value="웹 애플리케이션이란?" />
-		<put-attribute name="keywords" value="서블릿 컨테이너,Servlets Container,웹 애플리케이션,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,패킹,Packing" />
+		<put-attribute name="keywords" value="서블릿 컨테이너,Servlet Container,웹 애플리케이션,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,패킹,Packing" />
 		<put-attribute name="description" value="웹 애플리케이션을 설명합니다." />
 		<put-attribute name="content" value="0420-Web-Application" />
 		<put-attribute name="next-article" value="jsp#Creating-a-new-web-application" />
@@ -548,15 +548,15 @@
 		<put-attribute name="keywords" value="웹 애플리케이션을 만드는 방법, 웹 애플리케이션 디렉터리 구조, 톰캣 어드민,tomcat-users.xml,Context file,ROOT 애플리케이션 변경" />
 		<put-attribute name="description" value="자바 웹 애플리케이션의 디렉터리 구조를 설명합니다." />
 		<put-attribute name="content" value="0430-Creating-a-new-web-application" />
-		<put-attribute name="next-article" value="jsp#Servlets" />
+		<put-attribute name="next-article" value="jsp#Servlet" />
 		<put-attribute name="next-article-title" value="서블릿" />
 		<put-attribute name="prev-article" value="jsp#Web-Application" />
 		<put-attribute name="prev-article-title" value="웹 애플리케이션이란?" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
 	</definition>
-	<definition name="jsp/Servlets" extends="lectureTemplate">
+	<definition name="jsp/Servlet" extends="lectureTemplate">
 		<put-attribute name="title" value="서블릿" />
-		<put-attribute name="keywords" value="Servlets Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
+		<put-attribute name="keywords" value="Servlet Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
 		<put-attribute name="description" value="서블릿 스펙을 설명합니다." />
 		<put-attribute name="content" value="0440-Servlet" />
 		<put-attribute name="next-article" value="jsp#JSP" />
@@ -572,7 +572,7 @@
 		<put-attribute name="content" value="0450-JSP" />
 		<put-attribute name="next-article" value="jsp#Accessing-database-from-JSP_Servlets" />
 		<put-attribute name="next-article-title" value="데이터베이스 연동" />
-		<put-attribute name="prev-article" value="jsp#Servlets" />
+		<put-attribute name="prev-article" value="jsp#Servlet" />
 		<put-attribute name="prev-article-title" value="서블릿" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
 	</definition>

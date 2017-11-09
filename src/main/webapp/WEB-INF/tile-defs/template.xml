@@ -532,7 +532,7 @@
 	</definition>
 	<definition name="jsp/Web-Application" extends="lectureTemplate">
 		<put-attribute name="title" value="Web Application" />
-		<put-attribute name="keywords" value="Servlets Container,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,Packing" />
+		<put-attribute name="keywords" value="Servlet Container,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,Packing" />
 		<put-attribute name="description" value="This chapter describes about Web Application?" />
 		<put-attribute name="content" value="0420-Web-Application_en" />
 		<put-attribute name="next-article" value="jsp#Creating-a-new-web-application" />
@@ -546,16 +546,16 @@
 		<put-attribute name="keywords" value="How to create a new Web Application,Web Application Directory Structure,Tomcat Admin Tool,tomcat-users.xml,Context file,How to change ROOT Application" />
 		<put-attribute name="description" value="This chapter describes about Web Application Directory Structure" />
 		<put-attribute name="content" value="0430-Creating-a-new-web-application_en" />
-		<put-attribute name="next-article" value="jsp#Servlets" />
-		<put-attribute name="next-article-title" value="Servlets" />
+		<put-attribute name="next-article" value="jsp#Servlet" />
+		<put-attribute name="next-article-title" value="Servlet" />
 		<put-attribute name="prev-article" value="jsp#Web-Application" />
 		<put-attribute name="prev-article-title" value="Web Application" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
 	</definition>
-	<definition name="jsp/Servlets" extends="lectureTemplate">
-		<put-attribute name="title" value="Servlets" />
-		<put-attribute name="keywords" value="Servlets Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
-		<put-attribute name="description" value="This chapter describes about Servlets Spec" />
+	<definition name="jsp/Servlet" extends="lectureTemplate">
+		<put-attribute name="title" value="Servlet" />
+		<put-attribute name="keywords" value="Servlet Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
+		<put-attribute name="description" value="This chapter describes about Servlet Spec" />
 		<put-attribute name="content" value="0440-Servlet_en" />
 		<put-attribute name="next-article" value="jsp#JSP" />
 		<put-attribute name="next-article-title" value="JSP" />
@@ -570,8 +570,8 @@
 		<put-attribute name="content" value="0450-JSP_en" />
 		<put-attribute name="next-article" value="jsp#Accessing-database-from-JSP_Servlets" />
 		<put-attribute name="next-article-title" value="Accessing database from JSP Servlets" />
-		<put-attribute name="prev-article" value="jsp#Servlets" />
-		<put-attribute name="prev-article-title" value="Servlets" />
+		<put-attribute name="prev-article" value="jsp#Servlet" />
+		<put-attribute name="prev-article-title" value="Servlet" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
 	</definition>
 	<definition name="jsp/Accessing-database-from-JSP_Servlets" extends="lectureTemplate">

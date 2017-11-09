@@ -10,7 +10,7 @@
 	<li><a href="/jsp/Namecard-Webapp">Namecard Web application</a></li>
 	<li><a href="/jsp/Web-Application">Web Application?</a></li>
 	<li><a href="/jsp/Creating-a-new-web-application">Creating a new web application</a></li>
-	<li><a href="/jsp/Servlets">Servlets</a></li>
+	<li><a href="/jsp/Servlet">Servlet</a></li>
 	<li><a href="/jsp/JSP">JSP</a></li>
 	<li><a href="/jsp/Accessing-database-from-JSP_Servlets">Accessing databas from JSP &amp; Servlets</a></li>
 	<li class="sub-heading">Board System</li>	
