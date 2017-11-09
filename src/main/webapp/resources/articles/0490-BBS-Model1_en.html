@@ -1,0 +1,1275 @@
+<article>
+
+<h1>Model 1 BBS</h1>
+
+<p>
+Model 1 refers to the code that makes the Java code in the JSP into a JavaBean.
+The bulletin board code in the previous section contains the JDBC code in the JSP.
+This code is called a nightmare, at least the JDBC code should be in JavaBean.
+Create Article JavaBean for the posting information as follows.
+</p>
+
+<em class="filename">Article.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.util.Date;
+
+public class Article {
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+	private int no;
+	private String title;
+	private String content;
+	private Date wdate;
+	private int parent;
+	private int indent;
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		if (content == null) content = "";
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(LINE_SEPARATOR, "&lt;br /&gt;");
+		}
+	}
+
+	public Date getWdate() {
+		return wdate;
+	}
+
+	public void setWdate(Date wdate) {
+		this.wdate = wdate;
+	}
+
+	public int getParent() {
+		return parent;
+	}
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+	public int getIndent() {
+		return indent;
+	}
+
+	public void setIndent(int indent) {
+		this.indent = indent;
+	}
+}
+</pre>
+
+<p>
+The fields in Article.java are mapped to columns in the board table.
+There is no indent column in the board table.
+The indent field is needed to indent the title of the post in the list (list.jsp). 
+</p>
+
+<p>
+The getHtmlContent() is a method that changes the newline character stored in the content column to &lt;br /&gt;.
+This method is used in the detail view (view.jsp).
+</p>
+
+<p>
+<em>public static final String LINE_SEPARATOR = System.getProperty("line.separator");</em><br />
+The LINE_SEPARATOR constant is used in the getHtmlContent() method.
+Here are some tips for managing constants in Java programs.
+</p>
+
+<em class="filename">WebContants.java</em>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public class WebContants {
+	//Line Separator
+	public final static String LINE_SEPARATOR = System.getProperty("line.separator");
+}
+</pre>
+
+<p>
+This modification should remove the LINE_SEPARATOR declaration from the Article and correct the Article's getHtmlContent() method as follows:
+</p>
+
+<pre class="prettyprint">
+//.. Omit ..
+
+import net.java_school.commons.WebContants;
+
+public class Article {
+	//public static final String LINE_SEPARATOR = System.getProperty("line.separator"); //Remove it
+	
+	//.. Omit ..
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(<strong>WebContants.LINE_SEPARATOR</strong>, "&lt;br /&gt;");
+		}
+	}
+
+	//.. Omit ..
+	
+}
+</pre>
+
+<p>
+You can change the WebContants class to an enum like this:
+</p>
+
+<em class="filename">WebContants.java</em>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public enum WebContants {
+	lineSeparator (System.getProperty("line.separator"));
+	
+	public String value;
+	
+	WebContants (String value) {
+		this.value = value;
+	}
+}
+</pre>
+
+<p>
+If you change it to enum, the Article class changes as follows.
+</p>
+
+<pre class="prettyprint">
+//.. Omit ..
+
+import net.java_school.commons.WebContants;
+
+public class Article {
+
+	//.. Omit ..
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(<strong>WebContants.lineSeparator.value</strong>, "&lt;br /&gt;");
+		}
+	}
+
+	//.. Omit ..
+	
+}
+</pre>
+
+<p>
+Next, create a BoardDao bean that is responsible for JDBC.
+Dao after the name is abbreviation of Data Access Object.
+Beans with this name should have only JDBC code.
+This is called a DAO pattern.
+I will not use the custom connection pool I used so far.
+Soon we will learn how to use open source connection pool.
+This section does not use the connection pool itself.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+
+import net.java_school.util.Log;
+
+public class BoardDao {
+	private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	private static final String USER = "scott";
+	private static final String PASSWORD = "tiger";
+	
+	public BoardDao() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(URL, USER, PASSWORD);
+	}
+	
+	private void close(ResultSet rs, PreparedStatement stmt, Connection con) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List&lt;Article&gt; getBoardList(int start, int end, String keyword) {
+		Log log = new Log();
+		List&lt;Article&gt; list = new ArrayList&lt;Article&gt;();
+		String sql = null;
+		
+		if (keyword == null || keyword.equals("")) {
+		    sql = "SELECT no, indent, parent, title, wdate FROM " +
+		    "(SELECT ROWNUM R, A.* " +
+		    "FROM " +
+		    "(SELECT no, level as indent, parent, title, wdate FROM board " +
+		    "START WITH parent = 0 " +
+		    "CONNECT BY PRIOR no = parent " +
+		    "ORDER SIBLINGS BY no DESC) A) " +
+		    "WHERE R BETWEEN ? AND ?";
+		
+		} else {
+			keyword = "%" + keyword + "%";
+		    sql = "SELECT no, indent, parent, title, wdate FROM " +
+		    "(SELECT ROWNUM R, A.* " +
+		    "FROM " +
+		    "(SELECT no, level as indent, parent, title, wdate FROM board " +
+		    "WHERE title LIKE ? OR content LIKE ? " +
+		    "START WITH parent = 0 " +
+		    "CONNECT BY PRIOR no = parent " +
+		    "ORDER SIBLINGS BY no DESC) A) " +
+		    "WHERE R BETWEEN ? AND ?";
+		}
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			stmt = con.prepareStatement(sql);
+			if (keyword == null || keyword.equals("")) {
+				stmt.setInt(1, start);
+				stmt.setInt(2, end);
+			} else {
+				stmt.setString(1, keyword);
+				stmt.setString(2, keyword);
+				stmt.setInt(3, start);
+				stmt.setInt(4, end);
+			}
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Article article = new Article();
+				article.setNo(rs.getInt("no"));
+				article.setTitle(rs.getString("title"));
+				article.setWdate(rs.getDate("wdate"));
+				article.setIndent(rs.getInt("indent"));
+				list.add(article);
+			}
+		} catch (SQLException e) {
+			log.debug("Error Source : BoardDao.getBoardList() : SQLException");
+			log.debug("SQLState : " + e.getSQLState());
+			log.debug("Message : " + e.getMessage());
+			log.debug("Oracle Error Code : " + e.getErrorCode());
+			log.debug("sql : " + sql);
+		} finally {
+			close(rs, stmt, con);
+			log.close();
+		}
+		
+		return list;
+	}
+	
+	public int getTotalRecord(String keyword) {
+		Log log = new Log();
+		int totalRecord = 0;
+		String sql = null;
+		
+		if (keyword == null || keyword.equals("")) {
+			sql = "SELECT count(*) FROM board";
+		} else {
+			sql = "SELECT count(*) FROM board " +
+			"WHERE title LIKE ? OR content LIKE ?";
+		}
+				
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			stmt = con.prepareStatement(sql);
+			if (keyword != null &amp;&amp; !keyword.equals("")) {
+				keyword = "%" + keyword + "%";
+				stmt.setString(1, keyword);
+				stmt.setString(2, keyword);
+			}
+			rs = stmt.executeQuery();
+			rs.next();
+			totalRecord = rs.getInt(1);
+		} catch (SQLException e) {
+			log.debug("Error Source : BoardDao.getTotalRecord() : SQLException");
+			log.debug("SQLState : " + e.getSQLState());
+			log.debug("Message : " + e.getMessage());
+			log.debug("Oracle Error Code : " + e.getErrorCode());
+			log.debug("sql : " + sql);
+		} finally {
+			close(rs, stmt, con);
+			log.close();
+		}
+		
+		return totalRecord;
+	}
+}
+</pre>
+
+<p>
+The following method produces the numbers needed to paginate the list.
+</p>
+
+<pre class="prettyprint">
+public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+	Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+	
+	int totalPage = totalRecord / numPerPage;
+	if (totalRecord % numPerPage != 0) totalPage++;
+	int totalBlock = totalPage / pagePerBlock;
+	if (totalPage % pagePerBlock != 0) totalBlock++;
+	
+	int block = curPage / pagePerBlock;
+	if (curPage % pagePerBlock != 0) block++;
+	
+	int firstPage = (block - 1) * pagePerBlock + 1;
+	int lastPage = block * pagePerBlock;
+	
+	int prevPage = 0;
+	if (block &gt; 1) {
+		prevPage = firstPage - 1;
+	}
+
+	int nextPage = 0;
+	if (block &lt; totalBlock) {
+		nextPage = lastPage + 1;
+	}
+	if (block &gt;= totalBlock) {
+		lastPage = totalPage;
+	}
+
+	int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+	int startRecord = (curPage - 1) * numPerPage + 1;
+	int endRecord = curPage * numPerPage;
+
+	map.put("totalPage", totalPage);
+	map.put("firstPage", firstPage);
+	map.put("lastPage", lastPage);
+	map.put("prevPage", prevPage);
+	map.put("nextPage", nextPage);
+	map.put("listItemNo", listItemNo);
+	map.put("startRecord", startRecord);
+	map.put("endRecord", endRecord);
+
+	return map;
+}    
+</pre>
+
+<p>
+Apply the above method to list.jsp.
+</p>
+
+<em class="filename">/board/list.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%!
+public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+
+	Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+	
+	int totalPage = totalRecord / numPerPage;
+	if (totalRecord % numPerPage != 0) totalPage++;
+	int totalBlock = totalPage / pagePerBlock;
+	if (totalPage % pagePerBlock != 0) totalBlock++;
+	
+	int block = curPage / pagePerBlock;
+	if (curPage % pagePerBlock != 0) block++;
+	
+	int firstPage = (block - 1) * pagePerBlock + 1;
+	int lastPage = block * pagePerBlock;
+	
+	int prevPage = 0;
+	if (block &gt; 1) {
+		prevPage = firstPage - 1;
+	}
+
+	int nextPage = 0;
+	if (block &lt; totalBlock) {
+		nextPage = lastPage + 1;
+	}
+	if (block &gt;= totalBlock) {
+		lastPage = totalPage;
+	}
+
+	int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+	int startRecord = (curPage - 1) * numPerPage + 1;
+	int endRecord = curPage * numPerPage;
+
+	map.put("totalPage", totalPage);
+	map.put("firstPage", firstPage);
+	map.put("lastPage", lastPage);
+	map.put("prevPage", prevPage);
+	map.put("nextPage", nextPage);
+	map.put("listItemNo", listItemNo);
+	map.put("startRecord", startRecord);
+	map.put("endRecord", endRecord);
+
+	return map;
+}
+%&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int curPage = request.getParameter("curPage") == null ? 1 : Integer.parseInt(request.getParameter("curPage"));
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardDao dao = new BoardDao();
+int totalRecord = dao.getTotalRecord(keyword);
+Map&lt;String, Integer&gt; numbers = this.getNumbersForPaging(totalRecord, curPage, 10, 5);
+int startRecord = numbers.get("startRecord");
+int endRecord = numbers.get("endRecord");
+List&lt;Article&gt; list = dao.getBoardList(startRecord, endRecord, keyword);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-size: 11px;"&gt;
+&lt;h1&gt;List&lt;/h1&gt;
+&lt;%
+int listItemNo = numbers.get("listItemNo");//This value is the number assigned to the list item on the list page.It is not a value stored in the no column.
+for (int i = 0; i &lt; list.size(); i++) {
+	Article article = list.get(i);
+	int indent = article.getIndent();
+	for (int j = 0; j &lt; indent; j++) {
+		out.println("&amp;nbsp;&amp;nbsp;");
+	}
+	if(indent != 1) {
+		out.println("&#8627;");
+	}
+%&gt;
+&lt;%=listItemNo %&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;%=article.getWdate() %&gt;&lt;br /&gt;
+&lt;hr /&gt;
+&lt;%
+listItemNo--;
+}
+int prevPage = numbers.get("prevPage");
+if (prevPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;]&lt;/a&gt;
+&lt;%
+}
+int firstPage = numbers.get("firstPage");
+int lastPage = numbers.get("lastPage");
+for (int i = firstPage; i &lt;= lastPage; i++) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+&lt;%
+}
+int nextPage = numbers.get("nextPage");
+if (nextPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&gt;]&lt;/a&gt;
+&lt;%
+}
+%&gt;				
+&lt;p&gt;
+&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;New&lt;/a&gt;
+&lt;/p&gt;
+&lt;form method="get"&gt;
+	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
+	&lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Article and BoardDao are all you need to create a simple bulletin board.
+But, most web programs often create a bean that acts as a front-end to the JSP.
+These beans name will end up with Service.
+Create a BoardService bean as shown below.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+
+public class BoardService {
+
+	private BoardDao dao = new BoardDao();
+	
+	public BoardService() {}
+	
+	public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+		Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+		
+		int totalPage = totalRecord / numPerPage;
+		if (totalRecord % numPerPage != 0) totalPage++;
+		int totalBlock = totalPage / pagePerBlock;
+		if (totalPage % pagePerBlock != 0) totalBlock++;
+		
+		int block = curPage / pagePerBlock;
+		if (curPage % pagePerBlock != 0) block++;
+		
+		int firstPage = (block - 1) * pagePerBlock + 1;
+		int lastPage = block * pagePerBlock;
+		
+		int prevPage = 0;
+		if (block &gt; 1) {
+			prevPage = firstPage - 1;
+		}
+	
+		int nextPage = 0;
+		if (block &lt; totalBlock) {
+			nextPage = lastPage + 1;
+		}
+		if (block &gt;= totalBlock) {
+			lastPage = totalPage;
+		}
+	
+		int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+		int startRecord = (curPage - 1) * numPerPage + 1;
+		int endRecord = curPage * numPerPage;
+	
+		map.put("totalPage", totalPage);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("prevPage", prevPage);
+		map.put("nextPage", nextPage);
+		map.put("listItemNo", listItemNo);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+	
+		return map;
+	}
+	
+	public List&lt;Article&gt; getBoardList(int startRecord, int endRecord, String keyword) {
+        return dao.getBoardList(startRecord, endRecord, keyword);
+    }
+    
+    public int getTotalRecord(String keyword) {
+    	return dao.getTotalRecord(keyword);
+    }
+}
+</pre>
+
+<p>
+When you create a BoardService, JSPs only uses the BoardService bean.
+Notice that the getNumbersForPaging() method declared in list.jsp has been moved to BoardService.
+</p>
+
+<p>
+Modify the list.jsp to use only BoardService bean.
+</p>
+
+<em class="filename">/board/list.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int curPage = (request.getParameter("curPage") == null ? 1 : Integer.parseInt(request.getParameter("curPage")));
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardService service = new BoardService();
+int totalRecord = service.getTotalRecord(keyword);
+Map&lt;String, Integer&gt; numbers = service.getNumbersForPaging(totalRecord, curPage, 10, 5);
+int startRecord = numbers.get("startRecord");
+int endRecord = numbers.get("endRecord");
+List&lt;Article&gt; list = service.getBoardList(startRecord, endRecord, keyword);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-size: 11px;"&gt;
+&lt;h1&gt;List&lt;/h1&gt;
+&lt;%
+int listItemNo = numbers.get("listItemNo");
+for (int i = 0; i &lt; list.size(); i++) {
+	Article article = list.get(i);
+	int indent = article.getIndent();
+	for (int j = 0; j &lt; indent; j++) {
+		out.println("&amp;nbsp;&amp;nbsp;");
+	}
+	if(indent != 1) {
+		out.println("&#8627;");
+	}
+%&gt;
+&lt;%=listItemNo %&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;%=article.getWdate() %&gt;&lt;br /&gt;
+&lt;hr /&gt;
+&lt;%
+listItemNo--;
+}
+int prevPage = numbers.get("prevPage");
+if (prevPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;]&lt;/a&gt;
+&lt;%
+}
+int firstPage = numbers.get("firstPage");
+int lastPage = numbers.get("lastPage");
+for (int i = firstPage; i &lt;= lastPage; i++) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+&lt;%
+}
+int nextPage = numbers.get("nextPage");
+if (nextPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&gt;]&lt;/a&gt;
+&lt;%
+}
+%&gt;				
+&lt;p&gt;
+&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;New&lt;/a&gt;
+&lt;/p&gt;
+&lt;form method="get"&gt;
+	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
+	&lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;	
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Modify the action attribute value of the form tag in /board/write_form.jsp file to write.jsp.
+</p>
+
+<em class="filename">/board/write_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;New&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;New&lt;/h1&gt;
+&lt;form action="<strong>write.jsp</strong>" method="post"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td&gt;Title&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="title" size="50"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;textarea name="content" rows="20" cols="100"&gt;&lt;/textarea&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input type="submit" value="Submit"&gt;
+		&lt;input type="reset" value="Reset"&gt;
+		&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;List&lt;/a&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Add the following method to BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void insert(Article article) {
+	Log log = new Log();
+	String sql = "INSERT INTO board (no, title, content, wdate, parent) "
+		+ "VALUES (board_no_seq.nextval, ?, ?, sysdate, 0)";
+		
+	Connection con = null;
+	PreparedStatement stmt = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, article.getTitle());
+		stmt.setString(2, article.getContent());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.insert() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(null, stmt, con);
+		log.close();
+	}
+}
+</pre>
+
+<p>
+Add the following method to BoardService.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void write(Article article) {
+	dao.insert(article);
+}
+</pre>
+
+<p>
+Create write.jsp as shown below.
+</p>
+
+<em class="filename">/board/write.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+Article article = new Article();
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.write(article);
+
+response.sendRedirect("list.jsp");
+%&gt;
+</pre>
+
+<p>
+Next, let's implement the details view.
+Add the selectOne() method to BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public Article selectOne(int no) {
+	Log log = new Log();
+	
+	Article article = null;
+	String sql = "SELECT no, title, content, wdate FROM board WHERE no = ?";
+	
+	Connection con = null;
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, no);
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			article = new Article();
+			article.setNo(rs.getInt("no"));
+			article.setTitle(rs.getString("title"));
+			article.setContent(rs.getString("content"));
+			article.setWdate(rs.getDate("wdate"));
+		}
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.selectOne() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(rs, stmt, con);
+		log.close();
+	}
+
+	return article;
+}
+</pre>
+
+<p>
+Add the following method to BoardService.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public Article getArticle(int no) {
+	return dao.selectOne(no);
+}
+</pre>
+
+<p>
+Modify view.jsp as shown below.
+</p>
+
+<em class="filename">/board/view.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;View&lt;/title&gt;
+&lt;script type="text/javascript"&gt;
+function goModify(no,curPage,keyword) {
+	location.href="modify_form.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+}
+
+function goDelete(no,curPage,keyword) {
+	var check = confirm("Are you sure you want to delete it?");
+	if (check) {
+		location.href="del.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+	}
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;View&lt;/h1&gt;
+&lt;h2&gt;Title: &lt;%=article.getTitle() %&gt;, Date created: &lt;%=article.getWdate() %&gt;&lt;/h2&gt;
+&lt;p&gt;
+&lt;%=article.getHtmlContent() %&gt;
+&lt;/p&gt;
+&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;List&lt;/a&gt;
+&lt;input type="button" value="Modify" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;input type="button" value="Delete" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;Reply&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Next, let's implement the post modification.
+Add the following update() method to BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void update(Article article) {
+	Log log = new Log();
+	String sql = "UPDATE board SET title = ?, content = ? WHERE no = ?";		
+	Connection con = null;
+	PreparedStatement stmt = null;
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, article.getTitle());
+		stmt.setString(2, article.getContent());
+		stmt.setInt(3, article.getNo());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.update() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(null, stmt, con);
+		log.close();
+	}
+}
+</pre>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void modify(Article article) {
+	dao.update(article);
+}
+</pre>
+
+<p>
+Modify modify_form.jsp to use only BoardService.
+</p>
+
+<em class="filename">/board/modify_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;Edit posts&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Edit posts&lt;/h1&gt;
+&lt;form action="modify.jsp" method="post"&gt;
+&lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
+&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;
+&lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td&gt;Title&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="title" size="50" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;textarea name="content" rows="30" cols="100"&gt;&lt;%=article.getContent() %&gt;&lt;/textarea&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input type="submit" value="Submit"&gt;
+		&lt;input type="reset" value="Reset"&gt;
+		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;View&lt;/a&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Create modify.jsp as shown below.
+</p>
+
+<em class="filename">/board/modify.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+Article article = new Article();
+article.setNo(no);
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.modify(article);
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("view.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" +  keyword);
+%&gt;
+</pre>
+
+<p>
+Next, let's implement delete the post.
+Add a delete() method to BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void delete(int no) {
+	Log log = new Log();
+	
+	String sql1 = "SELECT count(*) FROM board WHERE parent = ?";
+	String sql2 = "DELETE FROM board WHERE no = ?";
+	
+	Connection con = null;
+	PreparedStatement stmt1 = null;
+	PreparedStatement stmt2 = null;
+	ResultSet rs = null;
+	
+	boolean check = false; //If true, delete post
+	
+	try {
+		con = getConnection();
+		stmt1 = con.prepareStatement(sql1);
+		stmt1.setInt(1, no);
+		rs = stmt1.executeQuery();
+		rs.next();
+		int num = rs.getInt(1);
+		if (num == 0) {
+			check = true;
+		}
+		if (check == true) {
+			stmt2 = con.prepareStatement(sql2);
+			stmt2.setInt(1, no);
+			stmt2.executeUpdate();
+		}
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.delete() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql1);
+	} finally {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {}
+		}
+		if (stmt1 != null) {
+			try {
+				stmt1.close();
+			} catch (SQLException e) {}
+		}
+		if (stmt2 != null) {
+			try {
+				stmt2.close();
+			} catch (SQLException e) {}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {}
+		}
+		log.close();
+	}
+}
+</pre>
+
+<p>
+Add the following delete() method to BoardService.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void delete(int no) {
+	dao.delete(no);
+}
+</pre>
+
+<p>
+Create del.jsp as follows.
+</p>
+
+<em class="filename">/board/del.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service= new BoardService();
+service.delete(no);
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" +  keyword);
+%&gt;
+</pre>
+
+<p>
+Next, let's implement reply.
+Add the following reply() method to BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void reply(Article article) {
+	Log log = new Log();
+	
+	String sql = "INSERT INTO board " + 
+			"(no, parent, title, content, wdate) " + 
+			"VALUES (board_no_seq.nextval, ?, ?, ?, sysdate)";
+			
+	Connection con = null;
+	PreparedStatement stmt = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, article.getParent());
+		stmt.setString(2, article.getTitle());
+		stmt.setString(3, article.getContent());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source:BoardDao.reply() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		log.close();
+	}
+}
+</pre>
+
+<p>
+Add the following reply() method to BoardService.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void reply(Article article) {
+	dao.reply(article);
+}
+</pre>
+
+<em class="filename">/board/reply_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+String content = article.getContent();
+
+//Add &gt; for each line of the parent content.
+content = content.replaceAll(WebContants.lineSeparator.value, WebContants.lineSeparator.value + "&gt;");
+content = WebContants.lineSeparator.value + WebContants.lineSeparator.value + "&gt;" + content;
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;Reply&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;Reply&lt;/h1&gt;
+
+&lt;form action="reply.jsp" method="post"&gt;
+&lt;input type="hidden" name="no" value="&lt;%=no %&gt;" /&gt;
+&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;" /&gt;
+제목 : &lt;input type="text" name="title" size="45" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;br /&gt;
+&lt;textarea name="content" rows="10" cols="60"&gt;&lt;%=content %&gt;&lt;/textarea&gt;&lt;br /&gt;
+&lt;input type="submit" value="Submit" /&gt;
+&lt;input type="reset" value="Reset" /&gt;&lt;br /&gt;
+&lt;/form&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;View&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Create reply.jsp as shown below.
+</p>
+
+<em class="filename">/board/reply.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+int parent = Integer.parseInt(request.getParameter("no"));
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+Article article = new Article();
+article.setParent(parent);
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.reply(article);
+
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+%&gt;
+</pre>
+
+</article>

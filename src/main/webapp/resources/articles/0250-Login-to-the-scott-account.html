@@ -1,0 +1,311 @@
+<article>
+
+<h1>SQL 연습 - SCOTT 계정</h1>
+
+<p class="floatstop">
+11g XE를 설치했다면 11g 정식 버전에 있는 테스트 계정 SCOTT이 없다.<sup>1</sup><br />
+C:\를 선택해 XE를 설치했다면 SCOTT 계정 생성 파일 경로는<br />
+<em class="path">C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql</em>이다.<sup>2</sup><br />
+파일의 경로는 직접 탐색기를 사용하여 확인해야 한다.<br />
+명령 프롬프트를 실행한 후 SYSTEM 계정으로 SQL*Plus에 접속한다.<br />
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Users\kim&gt;<span class="prompt-selection">sqlplus</span>
+
+SQL*Plus: Release 11.2.0.2.0 Production on 화 6월 7 13:29:14 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: <span class="prompt-selection">system</span>
+Enter password: <span class="prompt-selection">설치할 때 지정한 SYS와 SYSTEM 비밀번호</span>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL&gt;
+</pre>
+
+<p>
+SQL*Plus는 SQL를 실행할 수 있는 오라클 커맨드 라인 프로그램이다.<br />
+SQL*Plus에 접속된 상태에서 SCOTT 계정 생성 파일을 실행한다.<br />
+SQL*Plus에서 파일을 실행하려면 파일의 전체 경로 앞에 @를 붙인다.<br />
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">@C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql</span>
+SQL&gt;
+</pre>
+
+<p>
+파일 실행에 성공하면 에러 없이 커서가 떨어진다.<br />
+이 상태에서 SQL*Plus에 접속된 사용자를 확인한다.<br />
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">show user</span>
+USER is "SCOTT"
+SQL&gt;
+</pre>
+
+<p>
+접속된 사용자가 SYSTEM에서 SCOTT로 바뀌어 있다.<br />
+계속해서 SCOTT 계정의 비밀번호를 tiger로 변경한다.<br />
+이어지는 JDBC 관련 글의 모든 예제에서 SCOTT 계정의 비밀번호를 tiger로 사용하기 때문이다.<br />
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">alter user scott identified by tiger;</span>
+User altered.
+SQL&gt;
+</pre>
+
+<p>
+SQL*Plus에서 빠져나오려면 exit를 사용한다.<br />
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">exit</span>
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0
+- 64bit Production
+C:\Users\kim&gt;
+</pre>
+
+<p>
+오라클은 데이터베이스 객체안에 사용자 계정 단위로 오라클 객체(테이블, 뷰, 시퀀스, 인덱스 등)를 관리한다.
+scott.sql 파일을 실행하면 SCOTT 계정이 만들어 지고 SCOTT 계정 안에 테이블이 만들어진다.
+SCOTT 계정으로 SQL*Plus에 접속하여 SCOTT 계정 테이블을 확인해 보자.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Users\kim&gt;<span class="prompt-selection">sqlplus scott/tiger</span>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL&gt; <span class="prompt-selection">select * from tab;</span>
+
+TNAME                                                        TABTYPE
+---------------------------------------------------------------------
+BONUS                                                        TABLE
+DEPT                                                         TABLE
+EMP                                                          TABLE
+SALGRADE                                                     TABLE
+
+SQL>
+</pre>
+
+<p>
+BONUS, DEPT, EMP, SALGRADE 테이블을 확인할 수 있다.<br />
+테이블 구조를 확인해 보자.<br />
+DEPT 테이블 구조는 보려면 <em class="path">desc dept;</em>를 실행한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc dept;</span>
+이름                                      널?      유형
+----------------------------------------- -------- -------------------
+
+DEPTNO                                    NOT NULL NUMBER(2)
+DNAME                                              VARCHAR2(14)
+LOC                                                VARCHAR2(13)
+
+SQL&gt;
+</pre>
+
+<p>
+<em class="path">desc dept;</em> 실행 결과에서 이름은 컬럼명(열명)이다.<br />
+유형은 자바에서 자료형과 같은 의미로 컬럼에 지정된 데이터 형을 의미한다.<br />
+자바에서 변수에 데이터 형을 지정하듯이 데이터베이스에서는 컬럼에 데이터 형을 지정한다.
+지정된 데이터 형의 값만 해당 컬럼에 저장될 수 있다.
+DEPT 테이블은 첫번째 컬럼의 이름은 DEPTNO이며 널값이 들어갈 수 없고 NUMBER 형이다.
+두번째 컬럼의 이름은 DNAME이며 널값이 허용되고 VARCHAR2 형이다.
+세번째 컬럼의 이름은 LOC이며 널값이 허용되고 VARCHAR2 형이다.
+</p>
+
+<dl class="note">
+<dt>NULL 이란?</dt>
+<dd>
+컬럼에 어떤 값도 들어 있지 않음을 나타낸다.<br />
+연산, 비교가 불가능하다.<br />
+0도 공백문자(SPACE)도 아니다.<br />
+</dd>
+<dt>오라클의 대표적인 데이터 형</dt>
+<dd>
+데이터 형은 데이터베이스마다 다르다.<br />
+오라클의 대표적인 데이터 형은 다음과 같다.<br />
+<br />
+<strong>NUMBER</strong>(PRECISION,SCALE)<br />
+숫자를 저장하기 위한 데이터 형<br />
+PRECISION : 소수점을 포함한 전체 자리수<br />
+SCALE : 소수점 이하 자리수<br />
+예) 72.5 은 NUMBER(3,1), 10 은 NUMBER(2),<br /> 
+7788은 NUMBER(4), 어떤숫자도 상관없다면 NUMBER<br />
+<br />
+<strong>DATE</strong><br />
+날짜 및 시간 데이터를 저장하기 위한 데이터 형<br />
+<br />
+<strong>VARCHAR2</strong>(숫자)<br />
+가변적인 문자열를 저장하기 위한 데이터 형<br />
+괄호안은 바이트 수를 의미한다.<br />
+만일 컬럼의 데이터 형이 VARCHAR2(15)라면 최대 15바이트의 문자열을 저장할 수 있다.<br />
+(오라클 캐리터셋이 KO16KSC5601이나 KO16MSWIN949이면 한글은 2바이트, 영어는 1바이트이다.
+UTF8이나  AL32UTF8이면 한글은 3바이트, 영어는 1바이트이다.)<br />
+</dd>
+</dl>
+
+<p>
+DEPT 테이블에 담겨있는 레코드를 확인해 보자.<br />
+(레코드는 테이블이나 조회결과의 한 행을 의미한다.)
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from dept;</span>
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+        20 RESEARCH                     DALLAS
+        30 SALES                        CHICAGO
+        40 OPERATIONS                   BOSTON
+
+SQL&gt;
+</pre>
+
+<p>
+참고로, SQL문은 대소문자를 가리지 않는다. 하지만 이 말이 SQL문 속의 데이터까지 대소문자를 구별하지 않는다는 말은 아니다.
+DEPT 테이블은 부서 테이블이다.
+DEPTNO 컬럼에는 부서번호, DNAME 컬럼에는 부서명, LOC 컬럼에는 부서위치 데이터를 저장한다.
+select 문장은 테이블에서 레코드를 가져올 때 사용하는 SQL문이다.<br />
+다음은 테이블 EMP 테이블의 구조를 알아보자.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc emp;</span>
+
+ 이름                                      널?      유형
+ ----------------------------------------- -------- ----------------------------
+
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(9)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+SQL&gt;
+</pre>
+
+<p>
+EMP 테이블 컬럼이 의미하는 바는 다음과 같다.
+</p>
+
+<ol>
+	<li>EMPNO(사원번호)</li>
+	<li>ENAME(이름)</li>
+	<li>JOB(직책)</li>
+	<li>MGR(직속상사 사원번호)</li>
+	<li>HIREDATE(입사일)</li>
+	<li>SAL(급여)</li>
+	<li>COMM(커미션)</li>
+	<li>DEPTNO(부서번호)</li>
+</ol>
+
+<p>
+EMP 테이블에 담긴 모든 사원 레코드를 조회해 보자.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from emp;</span>
+
+EMPNO ENAME  JOB           MGR  HIREDATE   SAL     COMM    DEPTNO   
+---- -------------------------- --------   ------- ------- -------
+7369 SMITH   CLERK         7902 80/12/17   800               20   
+7499 ALLEN   SALESMAN      7698 81/02/20   1600     300      30   
+7521 WARD    SALESMAN      7698 81/02/22   1250     500      30   
+7566 JONES   MANAGER       7839 81/04/02   2975              20   
+7654 MARTIN  SALESMAN      7698 81/09/28   1250     1400     30   
+7698 BLAKE   MANAGER       7839 81/05/01   2850              30   
+7782 CLARK   MANAGER       7839 81/06/09   2450              10   
+7839 KING    PRESIDENT          81/11/17   5000              10   
+7844 TURNER  SALESMAN      7698 81/09/08   1500       0      30   
+7900 JAMES   CLERK         7698 81/12/03   950               30   
+7902 FORD    ANALYST       7566 81/12/03   3000              20   
+7934 MILLER  CLERK         7782 82/01/23   1300              10   
+
+12 개의 행이 선택되었습니다.
+
+SQL&gt;
+</pre>
+
+<p>
+사원은 총 12명이다.<br />
+직책(JOB)이 영업(SALESMAN)인 사원만이 COMM(커미션) 컬럼에 값을 가진다.<br />
+나머지 사원의 커미션 컬럼은 NULL이다.<br />
+KING은 직책(JOB)이 회장(PRESIDENT)이기 때문에 직속상사의 사원번호가 NULL이다.<br />
+SALGRADE 테이블의 구조를 확인하자.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc salgrade;</span>
+이름                                      널?      유형
+----------------------------------------- -------- -------
+
+GRADE                                              NUMBER
+LOSAL                                              NUMBER
+HISAL                                              NUMBER
+
+SQL&gt;
+</pre>
+
+<p>
+SALGRADE 테이블은 급여 등급에 관한 테이블이다.<br />
+GRADE은 급여 등급, LOSAL은 등급별 최소 급여, HISAL은 등급별 최대 급여 컬럼이다.<br />
+SALGRADE 테이블의 데이터를 확인한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from salgrade;</span>
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL&gt;
+</pre>
+
+<p>
+1등급은 700 ~ 1200달러의 사이의 급여<br />
+2등급은 1201 ~ 1400달러 사이의 급여<br />
+3등급은 1401 ~ 2000달러 사이의 급여<br />
+4등급은 2001 ~ 3000달러 사이의 급여<br />
+5등급은 3001 ~ 9999달러 사이의 급여
+</p>
+
+<span id="comments">주석</span>
+<ol>
+	<li>만약 XE가 아닌 Oracle Database 11g Release 2를 설치했다면 SCOTT 계정이 만들어져 있다.
+	하지만 락(lock)이 걸려 있으니 관리자 계정에서 alter user scott account unlock으로 락을 풀어주어야 한다.
+	락을 푼 후 처음 scott 계정에 접속할 때 오라클은 비밀번호를 바꾸도록 지시하는데,
+	이어지는 JDBC 글 예제의 일관성을 위해 tiger로 변경하자.</li>
+	<li>리눅스의 경우 동일한 내용의 파일은 utlsampl.sql이다.</li>
+</ol>
+</article>

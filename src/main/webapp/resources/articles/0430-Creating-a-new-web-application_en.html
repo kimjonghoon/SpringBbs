@@ -1,0 +1,122 @@
+<article>
+
+<h1>Web application directory structure</h1>
+
+<p>
+You already know how to add a new web application to {TOMCAT_HOME}/webapps.
+In this chapter, you will learn how to make Tomcat serve web applications that are not in {TOMCAT_HOME}/webapps.
+Create C:/www/myapp directory.
+Create subdirectories under myapp/ as shown below.
+</p>
+
+<ul>
+	<li>WEB-INF</li>
+	<li>WEB-INF/classes</li>
+	<li>WEB-INF/lib</li>
+</ul>
+
+<p>
+C:/www/myapp is not Tomcat's default web application directory, 
+so Tomcat does not know the existence of myapp application.
+So there is something you need to do to make Tomcat serve myapp web application.
+The task is to create one XML file.
+This XML file is the file that Tomcat needs to manage the web application.
+This XML file is called a context file because the root element of this XML file is Context. (In Tomcat, Context is a Web application.)
+The most important information in the context file is the top-level directory (called DocumentBase or Context Root) of the Web application 
+and the Context Path that is URL path information for accessing web application with web browser.
+These information are set in the docBase and path attributes of the Context element in the context file.
+If you create a Context file and place it in {TOMCAT_HOME}/conf/Catalina/localhost, Tomcat will automatically recognize and load your web application.
+If the context file is written incorrectly, Tomcat will not load your web application and will write the cause of the failure to a log file in {TOMCAT_HOME}/logs.
+</p>
+
+<h3>How to create a Tomcat Context file</h3>
+
+<p>
+Let's create a context file for myapp web application.
+</p>
+
+<em class="filename">myapp.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+    docBase="C:/www/myapp"
+    reloadable="true"&gt;
+&lt;/Context&gt;
+</pre>
+
+<p>
+Copy myapp.xml file to {TOMCAT_HOME}/conf/Catalina/ localhost.
+If you name your Context file as myapp.xml as above, if you omit the path attribute, the context path is determined as myapp.
+</p>
+<p>
+For testing, create a test.html file in the C:/www/myapp directory.
+</p>
+
+<strong class="filename">test.html</strong>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;myapp TEST&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;myapp TEST&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+Restart Tomcat and visit http://localhost:port/myapp/test.html.
+If not 404, Tomcat is servicing myapp.
+</p>
+
+<table class="table-in-article">
+<caption class="table-in-article-caption">Main Properties of Context</caption>
+<tr>
+	<th class="table-in-article-th" style="width: 100px;">attribute</th>
+	<th class="table-in-article-th" style="width: 60px;">Default</th>
+	<th class="table-in-article-th">Description</th>
+</tr>
+<tr>
+	<td class="table-in-article-td"><strong>docBase</strong></td>
+	<td class="table-in-article-td">&nbsp;</td>
+	<td class="table-in-article-td">It specifies the root directory (called the Document Base or Context Root) where the web application's source will be located.</td>
+</tr>
+<tr>
+	<td class="table-in-article-td"><strong>path</strong></td>
+	<td class="table-in-article-td">&nbsp;</td>
+	<td class="table-in-article-td">It specifies the URL path to connect to the web application.
+This path is called the context path.
+If the path value is the same as the Context file name, you can omit the path attribute in the Context file. 
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td"><strong>reloadable</strong></td>
+	<td class="table-in-article-td">false</td>
+	<td class="table-in-article-td">
+Set to true if you want Tomcat to monitor classes in/WEB-INF/classes/ and /WEB-INF/lib for changes, 
+and automatically reload the web application if a change is detected. 
+This feature is very useful during application development,
+but it requires significant runtime overhead and is not recommended for use on deployed production applications. 
+	</td>
+</tr>
+</table>
+<p>
+For more information, please visit: <a href="https://tomcat.apache.org/tomcat-8.0-doc/config/context.html">https://tomcat.apache.org/tomcat-8.0-doc/config/context.html</a>
+
+</p>
+<h3>Changing the ROOT application</h3>
+
+<p>
+The web application that responds when accessing http://localhost:port/ is the ROOT application.
+Stop Tomcat and rename myapp.xml to ROOT.xml.
+Restart Tomcat and visit http://localhost:port/test.html.
+If there is a problem with the ROOT.xml file, then the previous ROOT web application could work.
+</p>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://tomcat.apache.org/tomcat-8.0-doc/config/context.html">http://tomcat.apache.org/tomcat-8.0-doc/config/context.html</a></li>
+</ul>
+</article>

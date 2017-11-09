@@ -1,0 +1,114 @@
+<article>
+
+<h1>JDBC - Select</h1>
+
+<p>
+This chapter demonstrates the JDBC example of retrieving records from the NAMECARD table.
+Complete the main method of NamecardSelect.java by referring to the JDBC programming procedure below.
+Our goal is to run the following statement in JDBC.
+</p>
+
+<pre>
+SELECT NO,NAME,MOBILE,EMAIL,COMPANY 
+FROM NAMECARD
+ORDER BY NO DESC
+</pre>
+
+<ol>
+	<li>Loading a JDBC Driver</li>
+	<li>Getting a Connection</li>
+	<li>Execute SQL</li>
+	<li>[If the SQL statement is a select statement, use ResultSet to process the data.]</li>
+	<li>Returning Resources</li>
+</ol>
+
+<em class="filename">NamecardSelect.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class NamecardSelect {
+	static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	static final String USER = "scott";
+	static final String PASS = "tiger";
+	
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT NO,NAME,MOBILE,EMAIL,COMPANY " +
+			"FROM NAMECARD " +
+			"ORDER BY NO DESC";
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASS);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");
+				String mobile = rs.getString("mobile");
+				String email = rs.getString("email");
+				String company = rs.getString("company");
+				System.out.println(no + "|" + name + "|" + mobile + "|" + email + "|" + company);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}
+</pre>
+
+<dl class="note">
+<dt>ResultSet next() method</dt>
+<dd>
+The cursor of the returned ResultSet is initially pointed to before the first record.
+The method that moves the cursor one space is the next () method of the ResultSet.
+In a loop, you can use the next () method to retrieve all the records in the table.
+The next () method returns true if there is a record at the cursor position, or false if it is not. 
+</dd>
+<dt>ResultSet getXXX() method</dt>
+<dd>
+It is not actually named getXXX ().
+XXX should be replaced with Java's data type.
+If the data type of the first column in the result set pointed to by the cursor is NUMBER, replace the XXX part with an int, which is one of the Java data types.
+If you pass an index of the column as an argument value like getInt(1), you can get the value of that column as a Java int value.
+You can pass the column name as an argument value.
+In our example, we are passing the column name as an argument to the getXXX() method.
+Of course, performance is faster to pass indexes, but giving column names is good for maintenance.
+</dd>
+</dl>
+</article>

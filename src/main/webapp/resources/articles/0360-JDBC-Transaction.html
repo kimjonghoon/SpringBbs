@@ -1,0 +1,154 @@
+<article>
+
+<h1>트랜잭션</h1>
+
+<p>
+트랜잭션 관리의 예는 계좌이체가 가장 좋은 예제이다.<br />
+A 계좌에서 B 계좌로 1000 원을 이체한다면 아래와 같다.
+</p>
+
+<pre>
+<strong>과정 1. A계좌에서 1000원을 뺀다.</strong>
+<strong>과정 2. B계좌에서 1000원을 더한다.</strong>
+</pre>
+
+<p>
+계좌이체의 트랜잭션을 관리한다면,
+<strong>과정 1</strong>이 성공하고 <strong>과정 2</strong>가 실패하면 <strong>과정 1</strong>까지 
+취소하여, <strong>과정 1</strong> 직전 상태로 복구해야 한다.<br />
+</p>
+
+<p>
+트랜잭션 관리를 위해서 <strong>과정 1</strong>과 <strong>과정 2</strong>는 하나의 단위로 봐야 한다.<br />
+이때 <strong>과정 1</strong>과 <strong>과정 2</strong>를 묶어서 트랜잭션의 단위라고 한다.<br />
+</p>
+
+<p>
+JDBC 프로그램에서 얻은 커넥션은 기본적으로 자동 커밋 모드이다.<br />
+자동 커밋 모드는 SQL 문장 하나 하나를 트랜잭션 단위로 본다.<br />
+JDBC 트랙잭션 관리 코딩은 자동 커밋 모드를 false로 설정하고 프로그램상으로 커밋 시점을 정의한다.<br />
+</p>
+
+<p>
+계좌이체에 적용하면 다음과 같다.
+</p>
+
+<pre class="prettyprint">
+<em>con.setAutoCommit(false);</em>
+<strong>과정 1. A계좌에서 1000원을 뺀다.</strong>
+<strong>과정 2. B계좌에서 1000원을 더한다.</strong>
+<em>con.commit();</em>
+</pre>
+
+<p>
+트랜잭션 예제를 위해서 아래와 같이 scott계정에 ACCOUNT 테이블을 만들고 데이터를 인서트한다. 
+</p>
+
+<pre class="prettyprint">
+create table account (
+ accountno varchar2(3) primary key,
+ balance number,
+ constraint account_balance_ck check(balance between 0 and 3000)
+)
+/
+insert into account values ('111', 3000)
+/
+insert into account values ('222', 2000)
+/
+</pre>
+
+<p>
+TransactionPairs.java의 메인 메서드에 아래 SQL 문을 JDBC로 실행하는 코드를 작성한다.
+</p>
+
+<pre class="prettyprint">
+update account set balance = balance - 1500 where accountno = '111'
+update account set balance = balance + 1500 where accountno = '222'
+</pre>
+
+<p>
+JDBC 코드는 아래 순서를 참조한다.
+</p>
+
+<ol>
+	<li>JDBC 드라이버 로딩</li>
+	<li>Connection 맺기</li>
+	<li>SQL 실행</li>
+	<li>[SQL문이 select문이었다면 ResultSet을 이용한 처리]</li>
+	<li>자원 반환</li>
+</ol>
+
+
+<em class="filename">TransactionPairs.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class TransactionPairs {
+	static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	static final String USER = "scott";
+	static final String PASS = "tiger";
+	
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE account SET balance = balance + ? WHERE accountno = ?";
+		
+		try {
+			con = DriverManager.getConnection(URL, USER, PASS);
+			<strong>
+			con.setAutoCommit(false);
+			</strong>
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, -1500);
+			pstmt.setString(2, "111");
+			pstmt.executeUpdate();
+			
+			pstmt.setInt(1, 1500);
+			pstmt.setString(2, "222");
+			pstmt.executeUpdate();
+			<strong>
+			con.commit();
+			</strong>
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				<strong>con.rollback();</strong> //익셉션이 발생하면 롤백한다.
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+</pre>
+
+<p>
+실행하고 SQL*PLUS로 결과를 확인한다.<br />
+<em>java.sql.SQLException: ORA-02290: 체크 제약조건(SCOTT.ACCOUNT_BALANCE_CK)이 위배되었습니다</em>
+라는 익셉션 메시지를 보게 된다.<br />
+ACCOUNT 테이블의 BALANCE 컬럼은 0에서 3000까지의 수만 저장될 수 있기 때문이다.<br />
+그 결과 catch블록에서 롤백이 실행된다.
+</p>
+</article>

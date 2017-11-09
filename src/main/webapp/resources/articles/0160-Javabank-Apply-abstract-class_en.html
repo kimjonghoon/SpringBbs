@@ -1,0 +1,174 @@
+<article>
+	
+<h1>Abstract class in JavaBank</h1>
+
+<p>
+Modify the existing account class to an abstract class, and modify the normal account and the minus account to inherit the abstract account class.
+If you need a new kind of account class, then this class will inherit the abstract account class.
+</p>
+
+<p>
+Let's create a custom exception class to use when there is insufficient amounts at the time of withdrawal.<br />
+Create and save InsufficientBalanceException class to inherit RuntimeException as shown below.<br />
+<img alt="Custom Exception 1" src="https://lh3.googleusercontent.com/RHaayx8aOaZZh4w-c2PbLBDtz3rF3yuzgnk5bqEea0ESShr0MpPwf_6TK-5TgJNbptz7JsbvzyEmc7PWG2CATUPddqQ9MdJJg5wEL74BroGVs6Ep7V-hDXDp65OlrMQUYV9xwbkNn2nbZMwFoGQAy9hUcqa3QfJtd52TDoGs8BgadnXmg_U0Tz0Sc6JVsUu7jSJkRJUxGt5Svb-PB4WAnmyE9MoCWcsROrMu1YOOHY7yybBwjTdskuw__EtBdIN1jtP0EVgofNjFldXCV17t3ovHYXxWxqlUI6q95YvEXR7UIslVgH0ASFnw7tdhD6odpdkYbU9HLPfoNrJ6PzkYOR8HagrGLCQjSK5I1aDwfPtxyMeT7FMuQNqWSyeHKGQdXCHreOC2KwCG7cHXTyV3k0qkduvplfXFXTBE07RMBgiOUZV7WCuMxRiqFqSEHFqMGIF-dyYVEkqPbgEPH7X45spA18QJeO2nRjVQ9enb4tY467m3jIbRNSM6pwchTwGpB4xaQltBMyt6oVJXD5AFTzh5SBFr5bgecC4PU35vvmKPl2rh1o1HovnvorpCFoZZrivbWN2Fd1LVhrl1kS2IIHwFox18U9wuRVhYSyUS4dkHt3-FkjT4=w543-h241-no" /><br />
+Right-click on an empty space in the Eclipse editor view to display the context menu.<br />
+Select <em>Source</em> and <em>Generate Constructors form SuperClass ...</em> to create the constructor.<br />
+<img alt="Custom Exception 2" src="https://lh3.googleusercontent.com/JODCdLiA47Ku4j9jumvMmOmqZ5vvdoW9hYKj4e-V8oSVfyKhlF2_d_18F7hznO7SHp9jypXZjZo9U0X1rGjWZD7vLQH50fASeTxb8iviVOy2V4Ahd2lmm4Wxfenhd9VT3t8SKHUqDhKQ6zT9fEugqS7GBQSf4RZRmUESW7Ro7FvJuNLRobpHZxxiNDfuM6SUqwbNC2OyVrgK7wTqOyVpzGaMHaVBs-ffvUogCQqOB_pwnt4O2DFyX3lE1St7lINaaUudbe3xE24qtRuc-xHR3x_NIH3MfNmUbEUwWjizo53C_p7NIT5n0r8Nt5U2_KFy7hT978w3_JLU6Z_iE9WJFL8j0zthHRFu6ccIXkYUMsFxqk15vfcIDfItktHDmyEQ5H6h9UPY3UztWojBQTXkwv-q1ov2VYVfEgrX8Okx2w2dk9z2A4EMomETf6m8AGJY-WmLezwajTYhzi4cH8s8M1hlLI0PifzgvIWHLObpI0Dfbdxp0IhNRA_xtamIwdoWXY0n18T9c2fKmK0S88uKDbgySh9VGQgAsNK6jfeuf1Leird4ajQhAcGN851Eiz5THbLjNIuPTscmTw9H3u4YuF3CucoHupg9c-HnUKtrgjtS-cGojX0s=w495-h704-no" /><br />
+</p>
+
+<em class="filename">InsufficientBalanceException.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class InsufficientBalanceException extends RuntimeException {
+
+	private static final long serialVersionUID = -8617159875648641557L;
+
+	public InsufficientBalanceException() {
+		super();
+	}
+
+	public InsufficientBalanceException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public InsufficientBalanceException(String message) {
+		super(message);
+	}
+
+	public InsufficientBalanceException(Throwable cause) {
+		super(cause);
+	}
+
+}
+</pre>
+
+<p>
+Create an exception class to use when registering an account with an existing account number in the same way as above.
+</p>
+
+<em class="filename">DuplicateAccountException.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class DuplicateAccountException extends RuntimeException {
+
+	private static final long serialVersionUID = -100648724423914991L;
+
+	public DuplicateAccountException() {
+		super();
+	}
+
+	public DuplicateAccountException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public DuplicateAccountException(String message) {
+		super(message);
+	}
+
+	public DuplicateAccountException(Throwable cause) {
+		super(cause);
+	}
+
+}
+</pre>
+
+<p>
+Change the existing account class to an abstract class.
+Change the withdraw () method to an abstract method.
+</p>
+
+<em class="filename">Account.java</em>
+<pre class="prettyprint">
+public <strong>abstract</strong> class Account {
+
+	//.. Same as existing code ..
+		
+	<strong>public abstract void withdraw(long amount);</strong>
+	
+	//.. Same as existing code .. 
+}
+</pre>
+
+<p>
+Generate a normal account that can not be withdrawn larger than the balance.
+</p>
+
+<em class="filename">NormalAccount.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class NormalAccount extends Account {
+
+	public NormalAccount() {}
+	
+	public NormalAccount(String accountNo, String name, String kind) {
+		super(accountNo, name, kind);
+	}
+
+	public NormalAccount(String accountNo, String name, long balance, String kind) {
+		super(accountNo, name, balance, kind);
+	}
+	
+	@Override
+	public void withdraw(long amount)  {
+		<strong>if (amount &gt; balance) {
+			throw new InsufficientBalanceException("There is not enough balance.");
+		}</strong>
+		balance = balance - amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.WITHDRAW);
+		transaction.setBalance(this.balance);
+		transactions.add(transaction);
+	}
+	
+}
+</pre>
+
+<em class="filename">Bank.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bank {
+	private ArrayList&lt;Account&gt; accounts = new ArrayList&lt;Account&gt;();
+
+	public void addAccount(String accountNo, String name, String kind) {
+		Account account = getAccount(accountNo);
+		<strong>if (account != null) throw new DuplicateAccountException("Duplicated account.");</strong>
+		
+		if (Account.NORMAL.equals(kind)) {
+			accounts.add(new NormalAccount(accountNo, name, kind));
+		} else if (Account.MINUS.equals(kind)) {
+			accounts.add(new MinusAccount(accountNo, name, kind));
+		}
+	}
+	
+	public void addAccount(String accountNo, String name, long balance, String kind) {
+		Account account = getAccount(accountNo);
+		<strong>if (account != null) throw new DuplicateAccountException("Duplicated account.");</strong>
+		
+		if (Account.NORMAL.equals(kind)) {
+			accounts.add(new NormalAccount(accountNo, name, balance, kind));
+		} else if (Account.MINUS.equals(kind)) {
+			accounts.add(new MinusAccount(accountNo, name, balance, kind));
+		}
+	}
+	
+	//.. Omitted ..  
+	
+}
+</pre>
+
+</article>

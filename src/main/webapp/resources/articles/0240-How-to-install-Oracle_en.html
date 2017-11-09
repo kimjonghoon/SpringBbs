@@ -1,0 +1,285 @@
+<article>
+	
+<h1>How to install Oracle</h1>
+<p>
+To learn JDBC, you need to install a relational database on your system.
+Let's install Oracle 11 XE.
+</p>
+
+<h3>How to install Oracle 11g XE on Windows</h3>
+
+<p>
+Visit the following address, download the Oracle Database 11g Express Edition.<sup>1</sup><br />
+<a href="http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html">http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html</a><br />
+You must have an account on the Oracle website to download Oracle 11g XE.
+Windows is the official OS supported by Oracle and easy to install.
+Run setup.exe and click the Next button to complete the installation.
+</p>
+
+<h3>How to install Oracle 11g XE on Ubuntu</h3>
+
+<p>
+It is difficult to install Oracle on Ubuntu.
+Ubuntu is not a Linux distribution officially supported by Oracle.<sup>2</sup>
+</p>
+
+<p>
+Download Oracle 11g XE for Linux from the following address:<br /> 
+<a href="http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html">http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html</a><br />
+For 64-bit systems, choose Oracle Database Express Edition 11g Release 2 for Linux x64.
+When you log in to the site, the download begins.
+After downloading, go to the directory where the file is located and execute the following command.
+</p>
+
+<pre class="shell-prompt">
+unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+sudo apt-get install alien libaio1 unixodbc
+cd Disk1
+sudo alien --scripts -d oracle-xe-11.2.0-1.0.x86_64.rpm
+</pre>
+
+<p>
+Create /sbin/chkconfig file with the following command:
+</p>
+
+<pre class="shell-prompt">
+sudo nano /sbin/chkconfig
+</pre>
+
+<p>
+Copy and paste the following into the chkconfig file.
+</p>
+
+<pre class="prettyprint">
+#!/bin/bash
+# Oracle 11gR2 XE installer chkconfig hack for Ubuntu
+file=/etc/init.d/oracle-xe
+if [[ ! `tail -n1 $file | grep INIT` ]]; then
+echo >> $file
+echo '### BEGIN INIT INFO' >> $file
+echo '# Provides: OracleXE' >> $file
+echo '# Required-Start: $remote_fs $syslog' >> $file
+echo '# Required-Stop: $remote_fs $syslog' >> $file
+echo '# Default-Start: 2 3 4 5' >> $file
+echo '# Default-Stop: 0 1 6' >> $file
+echo '# Short-Description: Oracle 11g Express Edition' >> $file
+echo '### END INIT INFO' >> $file
+fi
+update-rc.d oracle-xe defaults 80 01
+</pre>
+
+<p>
+Save the above file and grant execute permission.
+</p>
+
+<pre class="shell-prompt">
+sudo chmod 755 /sbin/chkconfig
+</pre>
+
+<p>
+Set the Kernel parameters:<br />
+Oracle 11g XE requires to set the following additional kernel parameters:
+</p>
+
+<pre class="shell-prompt">
+sudo nano /etc/sysctl.d/60-oracle.conf
+</pre>
+
+<p>
+Copy and paste the following into 60-oracle.conf file.
+</p>
+
+<pre class="prettyprint">
+# Oracle 11g XE kernel parameters  
+fs.file-max=6815744  
+net.ipv4.ip_local_port_range=9000 65000  
+kernel.sem=250 32000 100 128 
+kernel.shmmax=2066743296
+</pre>
+
+<p>
+The kernel.shmmax value should be set to one-half of the RAM memory installed on the system.
+You can calculate it as follows.
+</p>
+
+<pre class="shell-prompt">
+free -m
+</pre>
+
+<pre class="shell-prompt">
+             total       used       free     shared    buffers     cached
+Mem:          3942       3809        133        947         50       1571
+-/+ buffers/cache:       2186       1756
+Swap:         4083        378       3705
+</pre>
+
+<p>
+3942 * 1024 * 1024 * 0.5 = 2066743296<br />
+</p>
+
+<p>
+Verify the change:
+</p>
+
+<pre class="shell-prompt">
+sudo cat /etc/sysctl.d/60-oracle.conf
+</pre>
+
+<p>
+Load the kernel parameters:
+</p>
+
+<pre class="shell-prompt">
+sudo service procps start
+</pre>
+
+<p>
+Verify:
+</p>
+
+<pre class="shell-prompt">
+sudo sysctl -q fs.file-max
+</pre>
+
+<p>
+Execute the following:
+</p>
+
+<pre class="shell-prompt">
+sudo ln -s /usr/bin/awk /bin/awk
+sudo mkdir /var/lock/subsys
+sudo touch /var/lock/subsys/listener
+</pre>
+
+<p>
+Go to the Disk1 directory where the Oracle installation files are located and start the installation with the following command: 
+</p>
+  
+<pre class="shell-prompt">
+sudo dpkg --install oracle-xe_11.2.0-2_amd64.deb
+sudo /etc/init.d/oracle-xe configure
+</pre>
+
+<p>
+On the configuration screen, the port for Oracle Application Express specifies a value other than 8080.
+This is because WAS like Tomcat uses 8080.
+(I set it to 8989.)<br />
+I will use the default value of 1521 for the listener port.<br />
+(Just hit the enter key to select the default.)<br />
+Set passwords for administrator accounts SYS and SYSTEM.<br />
+Set Oracle autostart to Yes at system boot. (Just hit the enter key)<br />
+</p>
+
+<pre class="shell-prompt">
+Oracle Database 11g Express Edition Configuration
+-------------------------------------------------
+This will configure on-boot properties of Oracle Database 11g Express 
+Edition.  The following questions will determine whether the database 
+should be starting upon system boot, the ports it will use, and 
+the passwords that will be used for database accounts.  
+Press Enter to accept the defaults. 
+Ctrl-C will abort.
+
+Specify the HTTP port that will be used 
+	for Oracle Application Express [8080]:<strong>8989</strong>
+
+Specify a port that will be used for the database listener [1521]:
+
+Specify a password to be used for database accounts.
+Note that the same password will be used for SYS and SYSTEM.
+Oracle recommends the use of different passwords 
+for each database account.
+This can be done after 
+initial configuration: <strong>&lt;Admin Password&gt;</strong>
+Confirm the password: <strong>&lt;Admin Password&gt;</strong>
+
+Do you want Oracle Database 11g Express Edition to be started 
+on boot (y/n) [y]:
+
+Starting Oracle Net Listener...Done
+Configuring database...Done
+Starting Oracle Database 11g Express Edition instance...Done
+Installation completed successfully.
+</pre>
+
+<p>
+Set-up the environmental variables<br />
+Open .bashrc.
+</p>
+
+<pre class="shell-prompt">
+gedit ~/.bashrc
+</pre>
+
+<p>
+Add following lines to your .bashrc
+</p>
+
+<pre class="prettyprint">
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+export ORACLE_SID=XE
+export NLS_LANG=`$ORACLE_HOME/bin/nls_lang.sh`
+export ORACLE_BASE=/u01/app/oracle
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+</pre>
+
+<p>
+Execute your .bashrc to load the changes:
+</p>
+
+<pre class="shell-prompt">
+source ~/.bashrc
+</pre>
+
+<p>
+Start the Oracle 11g XE<br />
+(You do not need this command after rebooting because you have set Oracle startup to yes at boot time.)
+</p>
+
+<pre class="shell-prompt">
+sudo service oracle-xe start
+</pre>
+
+
+<h3>Create a SCOTT account</h3>
+
+<p>
+Start sqlplus and login as sys:
+</p>
+
+<pre class="shell-prompt">
+<strong>sqlplus sys as sysdba</strong>
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 6월 29 12:04:33 2015
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password: <strong>&lt;Admin Password&gt;</strong>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> <strong>@/u01/app/oracle/product/11.2.0/xe/rdbms/admin/utlsampl.sql</strong>
+</pre>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>For information about Oracle Express Edition (XE) licenses, see:<br />
+	<a href="http://daust.blogspot.kr/2012/08/clarification-on-oracle-xe-licensing.html">http://daust.blogspot.kr/2012/08/clarification-on-oracle-xe-licensing.html</a></li>
+	<li>Oracle Enterprise Linux 4 Update 7<br />
+	Oracle Enterprise Linux 5 Update 2<br />
+	Red Hat Enterprise Linux 4 Update 7<br />
+	Red Hat Enterprise Linux 5 Update 2<br />
+	SUSE Linux Enterprise Server 10 SP2<br />
+	SUSE Linux Enterprise Server 11<br />
+	</li>
+</ol>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://docs.oracle.com/cd/E17781_01/install.112/e18802/toc.htm">http://docs.oracle.com/cd/E17781_01/install.112/e18802/toc.htm</a></li>
+	<li><a href="http://docs.oracle.com/cd/E17781_01/install.112/e18803/toc.htm">http://docs.oracle.com/cd/E17781_01/install.112/e18803/toc.htm</a></li>
+	<li><a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a></li>
+</ul>
+</article>

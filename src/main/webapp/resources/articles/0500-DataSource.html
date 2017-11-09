@@ -1,0 +1,162 @@
+<article>
+			
+<h1>DataSource</h1>
+
+<p>
+<a href="/jdbc/Connection-Pool">Connection Pooling</a>에서 사용자 정의 커넥션 풀에 대해 공부했다.
+선 마이크로시스템즈는 JDBC 1.4 버전에 데이터 소스<sup>DataSource</sup> 인터페이스를 추가했다. 
+또한, 서블릿 스펙을, 서블릿 컨테이너가 javax.sql.DataSource 구현체를 제공하도록, 변경했다.
+톰캣에서 제공하는 데이터소스를 사용하기 위한 설정을 알아본 후, 게시판을 데이터소스를 사용하도록 수정한다.
+</p>
+
+<h2>톰캣 데이터소스 설정</h2>
+
+<p>
+{톰캣홈}/conf/Catalina/localhost에 있는 ROOT.xml 파일을 열고 아래 강조된 부분을 추가한다.
+</p>
+
+<em class="filename">ROOT.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+	docBase="C:/www/myapp"
+	reloadable="true"&gt;
+    <strong>
+	&lt;Resource
+		name="jdbc/scott"
+		auth="Container"
+		type="javax.sql.DataSource"
+		username="scott"
+		password="tiger"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+		maxActive="8"
+		maxIdle="4" /&gt;</strong>
+	  
+&lt;/Context&gt;  
+</pre>
+
+<p>
+이때 useNaming 설정이 true이어야 한다.
+이 속성의 디폴트가 true이므로 생략해도 문제가 되지 않는다. 
+</p>
+ 
+<p>
+아래의 JSP 파일을 myapp 애플리케이션의 도큐먼트 베이스에 생성한다.
+</p>
+
+<em class="filename">/dataSourceTest.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page contentType="text/html;charset=UTF-8" %&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;%@ page import="javax.sql.*" %&gt;
+&lt;%@ page import="javax.naming.*" %&gt;
+&lt;%@ page import="net.java_school.util.Log" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;DataSource Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+  Log log = new Log();
+  DataSource ds = null;
+  Context ic = null;
+  Connection con = null;
+  PreparedStatement stmt = null;
+  ResultSet rs = null;
+  String sql = null;
+  int totalRecord = 0;
+  	
+  try {
+    ic = new InitialContext();
+    Context envCtx = (Context) ic.lookup("java:comp/env");
+	ds = (DataSource) envCtx.lookup("jdbc/scott");
+  } catch (NamingException e) {
+    System.out.println(e.getMessage());
+  }
+
+  try {
+    con = ds.getConnection();
+
+    sql = "SELECT count(*) FROM emp";
+
+    stmt = con.prepareStatement(sql);
+    rs = stmt.executeQuery();
+    rs.next();
+    totalRecord = rs.getInt(1);
+  } catch (SQLException e) {
+      log.debug("Error Source:/DataSourceTest.jsp : SQLException");
+      log.debug("SQLState : " + e.getSQLState());
+      log.debug("Message : " + e.getMessage());
+      log.debug("Oracle Error Code : " + e.getErrorCode());
+      log.debug("sql : " + sql);
+  } finally {
+    try {
+      if (rs != null) rs.close();
+      if (stmt != null) stmt.close();
+      if (con != null) con.close();
+    } catch (SQLException e) {}
+    log.close();
+  }
+%&gt;
+&lt;%=totalRecord %&gt;
+</pre>
+
+<p>
+테스트를 위해선 오라클 JDBC 파일이 {톰캣홈}/lib 에 있어야 한다.
+코드에서 확인하듯이, 데이터 소스는 JNDI API를 기반으로 하는 자바 네이밍 서비스를 통해서 사용한다.
+</p>
+
+<p>
+http://localhost:port/dataSourceTest.jsp 화면에서 숫자를 볼 수 있다면 테스트는 성공이다.
+테스트가 성공했다면 게시판의 소스를 수정한다.
+모델 1 게시판의 경우 JDBC 코드를 빈즈에 구현했으므로 BoardDao만 수정하면 된다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+<strong>
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+</strong>
+import net.java_school.util.Log;
+
+public class BoardDao {
+	<strong>
+	private DataSource ds;
+	</strong>
+	
+	public BoardDao() {}
+	
+	public BoardDao() {
+		<strong>try {
+			Context init = new InitialContext();
+			ds  = (DataSource) init.lookup("java:comp/env/jdbc/scott");
+		} catch (NamingException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	}
+	
+	private Connection getConnection() throws SQLException {
+		return <strong>ds.getConnection();</strong>
+	}
+	
+	//..이하 이전 소스와 같다.
+
+}
+</pre>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://tomcat.apache.org/tomcat-6.0-doc/jndi-resources-howto.html">http://tomcat.apache.org/tomcat-6.0-doc/jndi-resources-howto.html</a></li>
+</ul>
+</article>

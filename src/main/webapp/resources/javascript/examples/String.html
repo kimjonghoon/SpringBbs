@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<script type="text/javascript">
+function test() {
+	var name = new String("김태희");
+	var engName = "kim taehee"
+	var lastName = name.substring(0,1);//자바와 같음
+	alert(lastName);
+	var firstName = name.substring(1);//자바와 같음
+	alert(firstName);
+	alert(name.length);//자바는 length() 메소드 이용
+	alert(name.charAt(1));//자바와 같음
+	alert(name.charCodeAt(1));//문자코드 반환, 자바에서의 codePointAt() 메소드와 같음
+	alert(name.concat("와비"));//자바와 같음
+	alert(name.indexOf("태"));//자바와 같음
+	alert(name.lastIndexOf("비",2));//자바와 같음
+	alert(name.match(/태희/));//인자인 정규표현식에 해당하는 문자열을 반환,자바에는 없음
+	alert(name.replace("태희","희선"));//자바에서의 replaceAll()이 가장 비슷
+	alert(name.search(/김/g));//인자인 정규표현식에 해당하는 문자열의 찾아 문자열의 인덱스 반환
+	alert(name.slice(1,2));//자바의 substring(int,int)
+	alert(name.slice(1));//자바의 substring(int)
+	alert(name.split("태"));//자바스크립트의 배열은 , 로 구분된다.,자바에서의 split() 같음
+	alert(name.substring(1,2));//자바와 같음
+	alert(engName.toUpperCase());//자바와 같음
+	alert(engName.toLowerCase());//자바와 같음
+}
+</script>
+</head>
+<body>
+<pre>
+var name = new String("김태희");
+var engName = "kim taehee"
+var lastName = name.substring(0,1);//자바와 같음
+alert(lastName);
+var firstName = name.substring(1);//자바와 같음
+alert(firstName);
+alert(name.length);//자바는 length() 메소드 이용
+alert(name.charAt(1));//자바와 같음
+alert(name.charCodeAt(1));//문자코드 반환, 자바에서의 codePointAt() 메소드와 같음
+alert(name.concat("와비"));//자바와 같음
+alert(name.indexOf("태"));//자바와 같음
+alert(name.lastIndexOf("비",2));//자바와 같음
+alert(name.match(/태희/));//인자인 정규표현식에 해당하는 문자열을 반환,자바에는 없음
+alert(name.replace("태희","희선"));//자바에서의 replaceAll()이 가장 비슷
+alert(name.search(/김/g));//인자인 정규표현식에 해당하는 문자열의 찾아 문자열의 인덱스 반환
+alert(name.slice(1,2));//자바의 substring(int,int)
+alert(name.slice(1));//자바의 substring(int)
+alert(name.split("태"));//자바스크립트의 배열은 , 로 구분된다.,자바에서의 split() 같음
+alert(name.substring(1,2));//자바와 같음
+alert(engName.toUpperCase());//자바와 같음
+alert(engName.toLowerCase());//자바와 같음
+</pre>
+<input type="button" value="예제실행" onclick="test()" />
+</body>
+</html>

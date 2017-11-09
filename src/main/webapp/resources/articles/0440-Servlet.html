@@ -1,0 +1,2556 @@
+<article>
+
+<h1>서블릿</h1>
+
+<h2>서블릿이란?</h2>
+
+<p>
+서블릿은 게시판과 같은 프로그램을 만들기 위한 자바 측 기술이다.<br />
+java.sql 패키지를 JDBC라고 부르듯이, javax.servlet과 javax.servlet.http 패키지를 서블릿이라 부른다.<br />
+서블릿은 네트워크 프로토콜과 무관하게 설계되었지만, 대부분 HTTP 프로토콜을 사용하는 웹 환경에서 동적인 콘텐츠를 만들 때 사용된다.<br />
+JSP는 서블릿 기반 기술이다.<br />
+JSP는 서블릿보다 화면에 해당하는 애플리케이션 요소를 쉽게 만들 수 있다.<br />
+</p>
+
+<h2>서블릿의 기본 구조</h2>
+
+<p>
+서블릿의 기본 구조는 다음과 같다.
+</p>
+
+<ul>
+	<li>모든 서블릿이 구현해야 하는 javax.servlet.Servlet 인터페이스</li>
+	<li>대부분의 서블릿이 상속해야 하는 javax.servlet.GenericServlet 추상클래스</li>
+	<li>HTTP 프로토콜을 사용하는 서블릿이 상속해야 하는 javax.servlet.http.HttpServlet 클래스</li>
+</ul>
+
+<p>
+아래 그림<sup>1</sup>처럼 GenericServlet은 프로그래머가 사용하기 편하도록 javax.servlet.ServletConfig 인터페이스를 구현하고 있다.
+<img src="https://lh3.googleusercontent.com/9IeGxc54vtjXg7SZtRqTESFpYFI6hbHBfx3-qaC9_yYdi7nNWGFLTeU8-bsaMmxAMNxmFjYft3QoJ_kAIkAH_vJej5nvX3IFQImNYjkBWmo8UEgo8VXNEKHN2qSJJ8udkzP8DeH1oYG4-Cc9r1UE8XcavlPJOmB4eQcrTipIZNFqeSYwyWCI6oGhum_NW2sR2TvzQYVzS8NEQi8I8J42esbVLBQnOCjegriVNy3AJqmwlvIkXqG9IXRA1zsAcQnUDpjs7x6ThOPvr00-mSp11qHNZ5aQLGhBf4nbaM6I9fALeMf984mcpHSMVwhx6aS5DZiwLooxcyRxmYPvTEG1FzBepUuBm8O5XNNBe_p_50ZdwUcSFW0qBdfTCvNdAnhfSf5DA0VIehZsv-0uHt-QqeDk1wNvGI8g-NB66O4iz5Ywm1M1BZ7qaGNUonHZBVaaeMWfHVQB94wj6NxOhJCGmXuBfn99WEe82GBF4zn9bjOaedAAR2-Pz2lw3J0BZbEzix6VIKyHzzD1Egq1I_6uW1mkb40Aiqa-xX4cudg6rfXTeW007lcK7TD1TqKaxDrQMfjxzV-0f4Fscsb7aznqLYP21cFlk0IEbQklRwfjMVnS_S1q8llGoA1h=w495-h921-no" alt="Servlets Framework" style="display: block;" />
+</p>
+
+<h3>Servlet 인터페이스</h3>
+
+<p>
+javax.servlet.Servlet 인터페이스는 서블릿 아키텍처의 핵심이다.<br />
+모든 서블릿은 Servlet 인터페이스를 구현해야 한다.<br />
+이 인터페이스에는 서블릿의 생명 주기 메서드가 선언되어 있다.<br />
+</p>
+
+<ul>
+	<li>init(): 서블릿 초기화</li>
+	<li>service(): 클라이언트 요청에 대한 서비스</li>
+	<li>destroy(): 서비스 중지, 자원반납</li>
+</ul>
+
+<h4>init() 메서드</h4>
+
+<p>
+서블릿 컨테이너는 서블릿 객체가 생성된 후, 단 한 번 init() 메서드를 호출한다.<br />
+서블릿은 init() 메서드가 에러 없이 완료되어야 서비스할 수 있다.<br />
+init() 메서드가 완료하기 전의 요청은 차단된다.<br />
+init() 메서드가 호출될 때 ServletConfig 인터페이스 타입의 객체를 매개변수로 전달받는다.<br /> 
+만약 web.xml에서 서블릿 초기화 파라미터를 설정했다면, 전달받은 ServletConfig에는 web.xml에서 설정했던 서블릿 초기화 파라미터를 가지고 있게 된다.
+초기화 파라미터가 있다면 init() 메서드에 서블릿의 초기화 작업을 수행하는 코드가 있어야 한다.
+</p>
+ 
+<pre class="prettyprint no-border">
+void init(ServletConfig config) throws ServletException;
+</pre>
+
+<h4>service() 메서드</h4>
+
+<p>
+클라이언트가 서블릿에 요청을 보낼 때마다, 서블릿 컨테이너는 서블릿의 service() 메서드를 호출한다.<br />
+service() 메서드는, 첫 번째 인자로 전달받은 ServletRequest 타입의 객체를 통해서 요청 정보를 읽고, 
+두 번째 인자로 전달받은 ServletResponse 타입의 객체를 사용하여 클라이언트에게 응답한다.
+클라이언트가 서블릿을 요청할 때마다 서블릿 컨테이너는 새로운 스레드에서 service() 메서드를 실행한다는 점에 주목해야 한다.
+</p>
+
+<p>
+service() 메서드는 별도의 스레드에서 동시에 실행되기에 수많은 클라이언트의 요청을 바로 응답할 수 있다.<br />
+그러나 서블릿이 사용하는 자원(예를 들면, 파일이나 네트워크 커넥션, static 변수, 인스턴스 변수 등등)에 임계 영역 문제가 발생할 수 있다.
+그러므로 서블릿에서 문제가 될 수 있는 정적 변수나 인스턴스 변수를 만들지 않는 게 좋다.
+(서블릿이 사용하는 자원을 동기화하려고 애쓰지 말자. 대부분의 경우 좋은 코드가 아니다) 
+</p>
+
+<pre class="prettyprint no-border">
+void service(ServletRequest req, ServletResponse res) throws ServletException, IOException;
+</pre>
+
+<h4>destroy() 메서드</h4>
+
+<p>
+서블릿이 더는 서비스를 하지 말아야 할 때 서블릿 컨테이너에 의해 호출된다.<br />
+이 메서드는 프로그래머가 코드로 호출하는 게 아니다.<br />
+destroy() 메서드를 실행하려면 "톰캣 매니저"를 사용하여 애플리케이션을 언로드하거나 톰캣을 셧다운 시켜야 한다.<br />
+톰캣 매니저는 http://localhost:port/manager로 접근할 수 있는 웹 애플리케이션로 웹 애플리케이션을 관리하는 웹 애플리케이션이다.<br />
+톰캣 매니저 화면을 보려면, 톰캣을 설치할 때 정해준 관리자와 관리자 비밀번호를 사용하여 로그인해야 한다.<br />
+관리자와 관리자 비밀번호가 생각나지 않으면 {톰캣홈}/conf/tomcat-users.xml 파일을 열어보면 알 수 있다.
+</p>
+
+<pre class="prettyprint no-border">
+void destroy();
+</pre>
+
+<h3>GenericServlet 추상클래스</h3>
+
+<p>
+대부분의 서블릿이 GenericServlet 클래스를 상속한다.<br />
+GenericServlet 클래스는 ServletConfig 인터페이스를 구현하고 있다.<br />
+GenericServlet는 Servlet 인터페이스를 불완전하게 구현하고 있다.<br />
+Servlet 인터페이스의 service() 메서드를 구현하지 않았기 때문에, GenericServlet의 service() 메서드는 추상 메서드이고, 그래서 GenericServlet은 추상클래스이다.
+GenericServlet를 상속하는 서브 클래스는 service() 메서드를 구현해야 한다.
+</p>
+
+<pre class="prettyprint no-border">
+public abstract void service(ServletRequest req, ServletResponse res) throws ServletException, IOException;
+</pre>
+
+<p>
+GenericServlet의 init(ServletConfig config) 메서드는 다음과 같이 구현되어 있다.
+</p>
+
+<pre class="prettyprint no-border">
+public void init(ServletConfig config) throws ServletException {
+	this.config = config;
+	<strong>this.init();</strong>
+}
+</pre>
+
+<p>
+init(ServletConfig config) 구현 부에 마지막에 매개변수가 없는 init() 메서드를 호출한다.<br />
+매개변수가 없는 init() 메서드는 편의를 위해 GenericServlet에 추가되었다.<br />
+이 메서드는 메서드 몸체에 어떤 코드도 없다.
+</p>
+
+<pre class="prettyprint no-border">
+public void init() throws ServletException {
+
+}
+</pre>
+
+<p>
+서브 클래스에서 init(ServletConfig config) 메서드를 오버라이딩하기 보다 init() 메서드를 오버라이딩하는 게 편하다.<br />
+왜냐하면 ServletConfig 객체를 저장해야 한다는 걱정을 하지 않아도 되기 때문이다.<br />
+init(ServletConfig config) 메서드를 오버라이딩하려면 메서드 몸체 첫 줄에 super(config); 코드를 추가해야 한다.<br />
+이 코드가 없으면 서블릿은 ServletConfig 객체를 저장하지 않는다.
+</p>
+
+<p>
+The init(ServletConfig config) 메서드는 인자로 전달받은 ServletConfig 객체를 인스턴스 변수 config에 저장한다.<br />
+GenericServlet의 getServletConfig() 메서드는 이 config를 반환한다.
+</p>
+
+<pre class="prettyprint no-border">
+public ServletConfig getServletConfig() {
+	return config;
+}
+</pre>
+
+<p>
+getServletContext()는 ServletConfig 인터페이스의 메서드이다.<br />
+GenericServlet는 ServletConfig 인터페이스를 구현한다.<br />
+GenericServlet의 getServletContext() 메서드는 아래와 같이 ServletContext 타입 객체를 반환한다.<br />
+</p>
+
+<pre class="prettyprint no-border">
+public ServletContext getServletContext() {
+	return getServletConfig().getServletContext();
+}
+</pre>
+
+<p>
+ServletConfig 인터페이스의 getInitParameter()와 getInitParameterNames() 메서드는 GenericServlet에서 다음과 같이 구현되어 있다.
+</p>
+
+<pre class="prettyprint no-border">
+public String getInitParameter(String name) {
+	return getServletConfig().getInitParameter(name);
+}
+</pre>
+
+<pre class="prettyprint no-border">
+public Enumeration getInitParameterNames() {
+	return getServletConfig().getInitParameterNames();
+}   
+</pre>
+
+<p>
+GenericServlet은 ServletConfig를 구현하고 있다.<br /> 
+이로써 프로그래머가 GenericServlet을 더 편리하게 사용할 수 있다.<br />
+예를 들어 보겠다.<br />
+서블릿에서 ServletContext 레퍼런스를 얻기 위해서 this.getServletConfig().getServletContext(); 보다는 this.getServletContext();가 더 편리하다.<br />
+초기화 파라미터 정보를 얻기 위해서 String driver = this.getServletConfig().getInitParameter("driver"); 보다는 String driver = this.getInitParameter("driver");가 더 편리하다.
+</p>
+
+<h3>HttpServlet 클래스</h3>
+
+<p>
+HTTP 요청을 서비스하는 서블릿은 HttpServlet을 상속해야 한다.<br />
+GenericServlet 추상 클래스를 상속하는 HttpServlet 클래스는 HTTP 프로토콜에 특화된 서블릿이다.
+</p>
+
+<p>
+HttpServlet 클래스는 HTTP 요청을 처리하는 메서드를 제공한다.<br />
+클라이언트의 요청은 HttpServletRequest 객체 타입으로 서블릿에 전달되며, 서블릿은 HttpServletResponse 객체 타입을 사용하여 응답한다.
+</p>
+
+<p>
+HttpServlet 클래스는 GenericServlet의 service() 추상 메서드를 구현하고 있다.<br />
+메소드 몸체의 내용은 protected void service(HttpServletRequest req, HttpServletResponse resp) 메서드를 호출하는 게 전부다.
+</p>
+
+<pre class="prettyprint">
+public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+	
+	HttpServletRequest  request;
+	HttpServletResponse response;
+	
+	try {
+		request = (HttpServletRequest) req;
+		response = (HttpServletResponse) res;
+	} catch (ClassCastException e) {
+		throw new ServletException(&quot;non-HTTP request or response&quot;);
+	}
+	
+	<strong>service(request, response);</strong>
+}
+</pre>
+
+<p>
+결국, 다음 메서드가 HTTP 요청을 처리한다.
+</p>
+
+<pre class="prettyprint">
+protected void service(HttpServletRequest req, HttpServletResponse resp) 
+	throws ServletException, IOException {
+	
+	String method = req.getMethod();
+	
+	if (method.equals(METHOD_GET)) {
+		long lastModified = getLastModified(req);
+		if (lastModified == -1) {
+			// servlet doesn't support if-modified-since, no reason
+			// to go through further expensive logic
+			<strong>doGet(req, resp);</strong>
+		} else {
+			long ifModifiedSince = req.getDateHeader(HEADER_IFMODSINCE);
+			if (ifModifiedSince &lt; (lastModified / 1000 * 1000)) {
+				// If the servlet mod time is later, call doGet()
+				// Round down to the nearest second for a proper compare
+				// A ifModifiedSince of -1 will always be less
+				maybeSetLastModified(resp, lastModified);
+				<strong>doGet(req, resp);</strong>
+			} else {
+				resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+			}
+		}
+	} else if (method.equals(METHOD_HEAD)) {
+		long lastModified = getLastModified(req);
+		maybeSetLastModified(resp, lastModified);
+		doHead(req, resp);
+	} else if (method.equals(METHOD_POST)) {
+		<strong>doPost(req, resp);</strong>
+	} else if (method.equals(METHOD_PUT)) {
+		doPut(req, resp);
+	} else if (method.equals(METHOD_DELETE)) {
+		doDelete(req, resp);
+	} else if (method.equals(METHOD_OPTIONS)) {
+		doOptions(req,resp);
+	} else if (method.equals(METHOD_TRACE)) {
+		doTrace(req,resp);
+	} else {
+		//
+		// Note that this means NO servlet supports whatever
+		// method was requested, anywhere on this server.
+		//
+		
+   		String errMsg = lStrings.getString("http.method_not_implemented");
+   		Object[] errArgs = new Object[1];
+   		errArgs[0] = method;
+   		errMsg = MessageFormat.format(errMsg, errArgs);
+   		
+		resp.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, errMsg);
+	}
+}
+</pre>
+
+<p>
+HttpServlet의 +service() 메서드가 하는 일은 #service() 메서드를 호출하는 게 전부다.<br />
+(여기서 +는 public 접근 한정자를, #은 protected 접근 한정자를 의미한다)<br />
+HttpServlet 클래스의 #service() 메서드가 호출되면, 
+이 메서드는 요청객체(HttpServletRequest타입의 객체)안에서 HTTP 메서드 (POST, GET 등등)를 읽고 이 값에 매칭되는 메서드를 호출한다.<br />
+예를 들어, HTTP 메서드가 "GET"이면 doGet()을, "POST"이면 doPost() 메서드를 호출한다.<br />
+doGet()나 doPost()와 같은 메서드가 오버라이딩해야 할 메서드이다.
+</p>
+
+<p>
+HttpServletRequest 인터페이스는 ServletRequest 인터페이스를 상속한다.<br />
+HttpServletResponse 인터페이스는 ServletResponse 인터페이스를 상속한다.<br />
+서블릿 컨테이너는 클라이언트의 요청이 오면 HttpServletRequest 타입의 객체와 
+HttpServletResponse 타입의 객체를 만들어서 서블릿의 +service(ServletRequest req,ServletResponse res) 메서드에 인자로 전달한다.<br />
+HttpServletRequest, HttpServletResponse 인터페이스를 구현한 클래스는 서블릿 컨테이너 벤더<sup>vendor</sup>가 만들어야 한다.
+</p>
+
+<h2>서블릿 API 요약</h2>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt bottom-line">Servlet 인터페이스</dt>
+	<dd class="api-summary-dd">init(ServletConfig config)</dd>
+	<dd class="api-summary-dd">service(ServletRequest req, ServletResponse res)</dd>
+	<dd class="api-summary-dd">destroy()</dd>
+	<dd class="api-summary-dd">getServletConfig():ServletConfig</dd>
+	<dd class="api-summary-dd-method-desc">서블릿 초기화에 관련된 변수를 가지고 있는 ServletConfig 객체 반환</dd>
+	<dd class="api-summary-dd">getServletInfo():String</dd>
+	<dd class="api-summary-dd-method-desc">서블릿에 대한 간단한 정보를 반환</dd>
+</dl>	
+
+<dl class="api-summary">
+	<dt class="api-summary-dt bottom-line">ServletConfig 인터페이스</dt>
+	<dd class="api-summary-dd">getInitParameter(String name):String</dd>
+	<dd class="api-summary-dd-method-desc">name에 해당하는 초기화 파라미터 값 반환</dd>
+	<dd class="api-summary-dd">getInitParameterNames():Enumeration</dd>
+	<dd class="api-summary-dd-method-desc">서블릿의 초기화 파라미터 이름 모두를 Enumeration 타입으로 반환</dd>
+	<dd class="api-summary-dd">getServletContext():ServletContext</dd>
+	<dd class="api-summary-dd-method-desc">ServletContext 반환</dd>
+	<dd class="api-summary-dd">getServletName():String</dd>
+	<dd class="api-summary-dd-method-desc">서블릿 인스턴스의 이름 반환</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">+GenericServlet 추상 클래스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">프로토콜에 무관한 기본적인 서비스를 제공하는 클래스로 Servlet, ServletConfig 인터페이스를 구현</dd>
+	<dd class="api-summary-dd">+init()</dd>
+	<dd class="api-summary-dd-method-desc">서블릿 초기화 메서드로, GenericServlet의 init(ServletConfig config) 메서드의 의해 호출된다.</dd>
+	<dd class="api-summary-dd">&lt;&lt;abstract&gt;&gt; +service(ServletRequest req, ServletResponse res)</dd>
+	<dd class="api-summary-dd-method-desc">+GenericServlet 추상 클래스는 여전히 Servlet 인터페이스의 service() 메서드를 구현하지 않는다.</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">HttpServlet 추상 클래스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">GenericServlet 추상 클래스 상속</dd>
+	<dd class="api-summary-dd">#doGet(HttpServletRequest req, HttpServletResponse resp)</dd>
+	<dd class="api-summary-dd-method-desc">HTTP의 GET 요청을 처리하기 위한 메서드</dd>
+	<dd class="api-summary-dd">#doPost(HttpServletRequest req, HttpServletResponse resp)</dd>
+	<dd class="api-summary-dd-method-desc">HTTP의 POST 요청을 처리하기 위한 메서드</dd>
+	<dd class="api-summary-dd">+service(HttpServletRequest req, HttpServletResponse resp)</dd>
+	<dd class="api-summary-dd-method-desc">GenericServlet 추상클래스의 추상 메서드 service() 구현함. 구현 내용은 #service() 메서드에 호출이 전부다.</dd>
+	<dd class="api-summary-dd">#service(HttpServletRequest req, HttpServletResponse resp)</dd>
+	<dd class="api-summary-dd-method-desc">HTTP METHOD에 따라 doGet(req, resp), doHead(req, resp), doPost(req, resp), doGet(req, resp), doDelete(req, resp), doOptions(req, resp), doTrace(req, resp) 중 하나를 호출한다.</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">ServletContext 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">
+이 인터페이스는 서블릿이 서블릿 컨테이너와 통신하기 위해서 사용하는 메서드를 제공한다.<br />
+또한, 파일의 MIME 타입, 파일의 전체 경로, RequestDispatcher의 레퍼런스를 얻거나 로그 파일에 로그를 기록하는 기능도 제공한다.<br />
+ServletContext 객체는 웹 애플리케이션마다 하나씩 존재하며, 웹 애플리케이션을 구성하는 서블릿이나 JSP 같은 동적 요소들을 위한 공동 저장소를 역할을 한다.<br />
+즉, ServletContext 겍체에 저장된 데이터는 같은 웹 애플리케이션에 있는 서블릿이나 JSP에서 자유롭게 접근할 수 있다.
+	</dd>
+	<dd class="api-summary-dd">setAttribute(String name, Object value)</dd>
+	<dd class="api-summary-dd-method-desc">데이터를 name|value 쌍으로 저장</dd>
+	<dd class="api-summary-dd">getAttribute(String name):Object</dd>
+	<dd class="api-summary-dd-method-desc">주어진 name을 가진 데이터를 반환</dd>
+	<dd class="api-summary-dd">removeAttribute(String name)</dd>
+	<dd class="api-summary-dd-method-desc">주어진 name을 가진 데이터를 삭제</dd>
+	<dd class="api-summary-dd">getInitParameter(String name):String</dd>
+	<dd class="api-summary-dd-method-desc">주어진 name을 가진 웹 애플리케이션 초기화 파라미터의 값 반환</dd>
+	<dd class="api-summary-dd">getRequestDispatcher(String path):RequestDispatcher</dd>
+	<dd class="api-summary-dd-method-desc">주어진 path에 위치하는 자원에 대한 RequestDispatcher 객체를 반환</dd>
+	<dd class="api-summary-dd">getRealPath(String path):String</dd>
+	<dd class="api-summary-dd-method-desc">주어진 가상 경로에 대한 실제 경로를 반환</dd>
+	<dd class="api-summary-dd">getResource(String path):URL</dd>
+	<dd class="api-summary-dd-method-desc">지정된 경로에 매핑된 리소스의 URL을 반환</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">RequestDispatcher 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">클라이언트의 요청을 다른 자원(서블릿, JSP)으로 전달하거나 다른 자원의 내용을 응답에 포함하기 위해 사용한다.</dd>
+	<dd class="api-summary-dd">forward(ServletRequest req, ServletResponse res)</dd>
+	<dd class="api-summary-dd-method-desc">클라이언트의 요청을 다른 자원으로 전달</dd>
+	<dd class="api-summary-dd">include(ServletRequest req, ServletResponse res)</dd>
+	<dd class="api-summary-dd-method-desc">다른 자원의 내용을 응답에 포함</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">ServletRequest 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">클라이언트의 요청 정보을 담고 있음.</dd>
+	<dd class="api-summary-dd">setAttribute(String name, Object o)</dd>
+	<dd class="api-summary-dd-method-desc">데이터를 name-value 쌍으로 저장</dd>
+	<dd class="api-summary-dd">getAttribute(String name):Object</dd>
+	<dd class="api-summary-dd-method-desc">주어진 name으로 저장된 데이터를 반환</dd>
+	<dd class="api-summary-dd">removeAttribute(String name)</dd>
+	<dd class="api-summary-dd-method-desc">주어진 name으로 저장된 데이터를 제거</dd>
+	<dd class="api-summary-dd">getInputStream():ServletInputStream</dd>
+	<dd class="api-summary-dd-method-desc">요청 몸체에 있는 바이너리 테이터를 읽기 위한 입력 스트림 반환</dd>
+	<dd class="api-summary-dd">getParameter(String name):String</dd>
+	<dd class="api-summary-dd-method-desc">name에 해당하는  HTTP 파라미터의 값 반환</dd>
+	<dd class="api-summary-dd">getParameterNames():Enumeration</dd>
+	<dd class="api-summary-dd-method-desc">모든 HTTP 파라미터 이름을 Enumeration 타입으로 반환</dd>
+	<dd class="api-summary-dd">getParameterValues(String name):String[]</dd>
+	<dd class="api-summary-dd-method-desc">name에 해당하는 HTTP 파라미터의 모든 값을 String 배열로 반환. 체크박스나 다중 선택 리스트와 같이 하나의 HTTP 파라미터에 값이 여러 개 있을 때 이 메서드를 사용한다.</dd>
+	<dd class="api-summary-dd">getServletPath():String</dd>
+	<dd class="api-summary-dd-method-desc">"/"로 시작하는 경로를 반환. 반환되는 경로에 쿼리스트링은 포함되지 않음.</dd>
+	<dd class="api-summary-dd">getRemoteAddr():String</dd>
+	<dd class="api-summary-dd-method-desc">클라이언트의 IP 주소를 반환</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">HttpServletRequest 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">ServletReqeust 상속</dd>
+	<dd class="api-summary-dd">getCookies():Cookie[]</dd>
+	<dd class="api-summary-dd-method-desc">브라우저가 전달한 쿠키 배열을 반환</dd>
+	<dd class="api-summary-dd">getSession():HttpSession</dd>
+	<dd class="api-summary-dd-method-desc">현재 세션(HttpSession)을 반환</dd>
+	<dd class="api-summary-dd">getSession(boolean created):HttpSession</dd>
+	<dd class="api-summary-dd-method-desc">현재 세션을 반환, 만약 세션이 없는 경우 created가 true면 세션을 생성후 반환하고 created가 false면 null 반환</dd>
+	<dd class="api-summary-dd">getContextPath():String</dd>
+	<dd class="api-summary-dd-method-desc">요청 URI에서 컨텍스트를 지시하는 부분을 반환한다.http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면 /ContextPath 반환</dd>
+	<dd class="api-summary-dd">getRequestURI():String</dd>
+	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면/ContextPath/board/list.do 반환</dd>
+	<dd class="api-summary-dd">getQueryString():String</dd>
+	<dd class="api-summary-dd-method-desc">http://localhost:port/ContextPath/board/list.do?curPage=1를 요청하면curPage=1 반환</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">ServletResponse 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">클라이언트에 응답을 보내기 위해 사용.</dd>
+	<dd class="api-summary-dd">getOutputStream():ServletOutputStream</dd>
+	<dd class="api-summary-dd-method-desc">응답으로 바이너리 데이터를 전송하기 위한 출력 스트림 반환.</dd>
+	<dd class="api-summary-dd">getWriter():PrintWriter</dd>
+	<dd class="api-summary-dd-method-desc">응답으로 문자 데이터를 전송하기 위한 출력 스트림 반환.</dd>
+	<dd class="api-summary-dd">setContentType(type:String)</dd>
+	<dd class="api-summary-dd-method-desc">
+응답 데이터의 MIME 타입을 설정할 때 사용.<br />
+MIME은 HTML은 text/html, 일반 텍스트는 text/plain, 바이너리 데이터는 application/octet-stream으로 설정한다.<br />
+getWriter() 메서드 전에 호출되어야 한다.
+	</dd>
+	<dd class="api-summary-dd">getContentType():String</dd>
+	<dd class="api-summary-dd-method-desc">
+setContentType()메서드에서 지정한 MIME 타입 반환.
+지정하지 않았다면 null을 반환한다.</dd>
+	<dd class="api-summary-dd">setCharacterEncoding(charset:String)</dd>
+	<dd class="api-summary-dd-method-desc">
+응답 데이터의 캐릭터셋을 설정.<br />
+UTF-8로 설정하려면 setCharacterEncoding("UTF-8");와 같이 코딩한다.<br />
+이것은 setContentType("text/html; <em>charset=UTF-8</em>");에서의 <em>charset=UTF-8</em>과 동일하다.<br />
+getWrite()메서드가 실행되기 전에 호출되어야 한다.
+	</dd>
+	<dd class="api-summary-dd">getCharacterEncoding():String</dd>
+	<dd class="api-summary-dd-method-desc">
+응답 데이터의 캐릭터셋 반환.<br />
+캐릭터셋을 지정하지 않았다면 "ISO-8859-1" 반환한다.</dd>
+	<dd class="api-summary-dd">setContentLength(length:int)</dd>
+	<dd class="api-summary-dd-method-desc">
+응답 데이터의 크기를 int형 값으로 설정.<br />
+이 메서드는 클라이언트측에서 서버로부터의 응답 데이터를 어느 정도 다운로드하고 있는지 표시하는데 사용될 수 있다.
+	</dd>				
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">HttpServletResponse 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">
+ServletResponse 인터페이스 상속.<br />
+HTTP 응답을 클라이언트에 보내기 위해 사용한다.
+	</dd>
+	<dd class="api-summary-dd">addCookie(cookie:Cookie)</dd>
+	<dd class="api-summary-dd-method-desc">응답에 쿠키를 추가한다.</dd>
+	<dd class="api-summary-dd">sendRedirect(String location)</dd>
+	<dd class="api-summary-dd-method-desc">주어진 URL로 리다이렉트한다.</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">HttpSession 인터페이스</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">세션유지에 필요한 사용자의 정보를 서버 측에서 저장할 때 사용한다.</dd>
+	<dd class="api-summary-dd">getAttribute(String name):Object</dd>
+	<dd class="api-summary-dd">setAttribute(String name, Object value)</dd>
+	<dd class="api-summary-dd">removeAttribute(String name)</dd>
+	<dd class="api-summary-dd">invalidate()</dd>
+</dl>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt">Cookie</dt>
+	<dd class="api-summary-dd-class-desc bottom-line">
+쿠키란 세션 유지를 위해 클라이언트 측에서 저장하는 정보이다.<br />
+세션 유지를 위해 웹 브라우저는 쿠키를 전송해준 서버로 요청을 전송할 때마다 이 쿠키 정보를 요청에 추가한다.<br />
+<br />
+쿠키는 여러 개의 이름 - 값 쌍을 저장할 수 있다.<br />
+또한, 쿠키에는 경로, 도메인, 만료 날짜 및 보안에 대한 선택적 값이 있을 수 있다.<br />
+<br />
+서버 요소에 쿠키를 만들려면 약속된 형식의 문자열을 응답 헤더에 추가하는 코드가 필요하다.<br />
+쿠키 정보를 포함한 응답을 받는 웹 브라우저는 요청을 서버에 보낼 때 쿠키 정보를 함께 보내게 된다.<br />
+서버 요소에 전달 된 쿠키 정보는 HttpServletRequest의 getCookie() 메서드를 사용하면 배열 유형으로 얻을 수 있다.<br />
+쿠키나 세션은 응답 후에 연결을 끊는 HTTP 프로토콜의 한계를 극복하는 기술이다.
+	</dd>
+	<dd class="api-summary-dd">Cookie(String name, value:String)</dd>
+	<dd class="api-summary-dd">getName():String</dd>
+	<dd class="api-summary-dd">getValue():String</dd>
+	<dd class="api-summary-dd">setValue(newValue:String)</dd>
+	<dd class="api-summary-dd">getPath():String</dd>
+	<dd class="api-summary-dd">setPath(uri:String)</dd>
+	<dd class="api-summary-dd">getDomain():String</dd>
+	<dd class="api-summary-dd">setDomain(pattern:String)</dd>
+	<dd class="api-summary-dd">getMaxAge():int</dd>
+	<dd class="api-summary-dd">setMaxAge(expiry:int)</dd>
+	<dd class="api-summary-dd">getSecure():boolean</dd>
+	<dd class="api-summary-dd">setSecure(flag:boolean)</dd>
+</dl>
+
+<h2>서블릿 예제</h2>
+
+<p>
+아래 나오는 모든 예제는 ROOT 애플리케이션에 작성한다.<br />
+<a href="Creating-a-new-web-application">웹 애플리케이션 작성 실습</a>에서 도큐먼트 베이스가 C:/www/myapp인 애플리케이션을 ROOT 애플리케이션으로 변경했었다.<br />
+JSP는 C:/www/myapp 아래에, 자바는 C:/www/myapp/WEB-INF/src 아래 자바 패키지 이름의 서브디렉터리에 생성한다.<br />
+이클립스를 사용하지 않고 에디트플러스와 같은 일반 에디터를 사용한다.
+</p>
+
+<em class="filename">SimpleServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SimpleServlet extends HttpServlet {
+
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doPost(req,resp);
+	}
+	
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
+			
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+    	
+		out.println("&lt;html&gt;");
+		out.println("&lt;body&gt;");
+    	
+		//요청한 클라이언트의 IP를 출력
+		out.println("당신의 IP 는 " + req.getRemoteAddr() + "입니다.\n");
+		out.println("&lt;/body&gt;&lt;/html&gt;");
+		out.close();
+	}
+  
+}
+</pre>
+
+<p>
+SimpleServlet은 서블릿 라이프 사이클 메서드 중 init()과 destroy()는 구현하지 않았다.<br /> 
+이 메서드들은 GenericServlet에 이미 구현되어 있고, 또 특별히 오버라이딩할 이유가 없기 때문이다.<br />
+/WEB-INF/web.xml 파일을 열고 web-app 엘리먼트의 자식 엘리먼트로 servlet 엘리먼트와 내용을 아래와 같이 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+	&lt;servlet-name&gt;SimpleServlet&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;example.SimpleServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;SimpleServlet&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/simple&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+명령 프롬프트에서 SimpleServlet.java가 있는 소스 폴더로 이동하여 아래와 같이 컴파일한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+javac -d C:/www/myapp/WEB-INF/classes ^
+-cp "C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar" ^
+SimpleServlet.java
+</pre>
+
+<dl class="note">
+<dt>package javax.servlet.http does not exist</dt>
+<dd>
+위 컴파일 에러는 자바 컴파일러가 javax.servlet.http 패키지를 찾지 못했기 때문이다.<br />
+원인은 javac의 cp 옵션 값으로 servlet-api.jar 파일의 전체 경로를 잘못 적었기 때문이다.<br />
+cp 옵션값으로 주는 경로에 공백이 있다면 경로를 ""로 묶어주어야 한다.
+</dd>
+</dl>
+
+<p>
+톰캣을 재시작한 후 http://localhost:port<em>/simple</em>을 방문하여 테스트한다.
+</p>
+
+<h3>SimpleServlet.java 소스 설명</h3>
+
+<pre class="prettyprint">
+public class SimpleServlet extends HttpServlet
+</pre>
+
+<p>
+HttpServlet 클래스를 상속받은 서블릿은 public으로 선언해야 한다.
+</p>
+
+<pre class="prettyprint">
+@Override
+public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	doPost(req,res);
+}
+
+@Override
+public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	//..생략..
+}
+</pre>
+
+<p>
+doGet()과 doPost()메서드는 HttpServlet의 doGet()와 doPost() 메서드를 오버라이드 한 메서드이다.<br />
+HTTP METHOD가 GET으로 요청해오면 doGet() 메서드를 오버라이딩한다.<br />
+웹 브라우저의 주소창에서 웹 서버의 자원을 요청하면 GET 방식 요청이다.<br />
+위 예제는 doGet() 메서드는 단지 doPost() 메서드를 호출한다.<br />
+따라서 GET이든 POST이든 모두 같은 코드가 실행된다.<br />
+doGet()과 doPost() 메서드의 매개변수는 HttpServletRequest와 HttpServletResponse다.
+</p>
+
+<pre class="prettyprint">
+resp.setContentType("text/html; charset=UTF-8");
+PrintWriter out = resp.getWriter();
+</pre>
+
+<p>
+resp.setContentType("text/html; charset=UTF-8");은 응답(HttpServletResponse)의 콘텐츠 타입을 설정한다.<br />
+즉, 이 코드는 웹 브라우저에 응답으로 출력될 문서의 MIME<sup>2</sup>타입을 설정한다.<br />
+이 코드는 서블릿에서 단 한 번만 사용할 수 있으며 PrintWriter 객체를 획득하기 전에 실행돼야 한다.<br />
+<em>; charset=UTF-8</em> 부분이 빠지면 한글이 깨진다.<br />
+PrintWriter 객체는 HttpServletResponse의 getWriter()을 호출하면 얻을 수 있다.
+</p>
+
+<pre class="prettyprint no-border">
+PrintWriter out = resp.getWriter();
+
+out.println("&lt;html&gt;");
+out.println("&lt;body&gt;");
+
+//요청한 클라이언트의 IP를 출력한다.
+out.println("당신의 IP는 " + req.getRemoteAddr() + "입니다.\n");
+</pre>
+
+<p>
+PrintWriter의 println()메서드는 인자값으로 전달받은 문자열을 클라이언트의 웹 브라우저에 출력한다.<br />
+위에서 보듯이 SimpleServlet는 클라이언트에게 HTML을 보내기 위해 PrintWriter의 println()메서드를 사용하고 있다.<br />
+<br />
+req.getRemoteAddr()은 클라이언트의 IP 주소를 반환하는 메서드이다.<br />
+이처럼 HttpServeltRequest는 클라이언트가 보내거나 클라이언트에 관한 정보를 담고 있다.<br />
+<br />
+SimpleServlet 서블릿이 응답을 보내기까지 과정을 살펴보자.<br />
+클라이언트가 웹 브라우저를 이용해서 서버의 SimpleSerlvet을 요청한다.<br />
+톰캣은 SimpleServlet의 +service(ServletRequest req, ServletResponse res) 메서드를 호출하면서
+클라이언트의 요청을 캡슐화한 객체(HttpSerlvetRequest 인터페이스 구현체)와 응답을 위한 객체(HttpSerlvetResponse 인터페이스 구현체)를 메서드의 인자로 전달한다.<br />
++service(ServletRequest req, ServletResponse res) 메서드는 단지 #service(HttpServletRequest req,HttpServletResponse resp) 메서드를 호출한다.<br />
+#service(HttpServletRequest req,HttpServletResponse resp) 메서드는 HTTP 메서드타입(GET,POST 등)에 따라 doGet()또는 doPost()와 같은 메서드를 호출한다.<br />
+위 예제는 웹 브라우저 주소창에서 서블릿 자원을 요청했기 때문에 GET 방식 요청이다.<br />
+따라서 doGet() 메서드가 호출된다.
+</p>
+
+<h2>사용자가 문자열 데이터를 서버 측 자원으로 전송하는 방법과 이 데이터를 서버 측 자원에서 수신하는 방법</h2>
+
+<p>
+웹 환경에서 동적인 요소라 하면 클라이언트가 보낸 문자열 데이터에 따라 응답을 하는 요소를 말한다.<br />
+웹에서 동적인 요소를 만들어야 하는 웹 프로그래머는, 클라이언트로 하여금 웹 브라우저를 사용하여 문자열 데이터를 서버 측 자원으로 보내게 하는 방법과 서버 측 자원에서 클라이언트가 보낸 문자열 데이터를 획득하는 방법을 알아야 한다.<br />
+모든 웹 프로그래머는 클라이언트로 하여금 서버 측 자원으로 문자열 데이터를 전송하게 하려고 주로 form과 그 서브 엘리먼트를 사용한다.<sup><a href="#comments">3</a></sup><br />
+클라이언트가 전송하는 데이터는 form 엘리먼트의 action 속성으로 지정된 서버 측 자원으로 전달된다.
+</p>
+
+<h3>파라미터 전송 방법과 전송된 파라미터의 값을 얻는 방법</h3>
+
+<p>
+아래 표에서 "HTML 폼" 항목은 사용자로부터 값을 입력받기 위한 HTML 태그를 보여주며, "서블릿" 항목은 서블릿이 클라이언트가 보낸 파라미터의 값을 얻는 방법을 보여준다.
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">HTML 폼</th>
+	<th class="table-in-article-th">서블릿</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;input type="text" name="<strong>addr</strong>" /&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameter("<strong>addr</strong>");
+</pre>
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;input type="radio" name="<strong>os</strong>" value="Windows" /&gt;
+&lt;input type="radio" name="<strong>os</strong>" value="Linux" /&gt;
+</pre>					
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameter("<strong>os</strong>");
+</pre>
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;input type="hidden" name="<strong>curPage</strong>" value="1" /&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameter("<strong>curPage</strong>");
+</pre>	
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;input type="password" name="<strong>passwd</strong>" /&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParamter("<strong>passwd</strong>");
+</pre>	
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;textarea name="<strong>content</strong>" cols="60" rows="12"&gt;어쩌고저쩌고&lt;/textarea&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParamter("<strong>content</strong>");
+</pre>	
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;select name="<strong>grade</strong>"&gt;
+	&lt;option value="A"&gt;A&lt;/option&gt;
+	&lt;option value="B"&gt;B&lt;/option&gt;
+	&lt;option value="C"&gt;C&lt;/option&gt;
+	&lt;option value="D"&gt;D&lt;/option&gt;
+	&lt;option value="F"&gt;F&lt;/option&gt;
+&lt;/select&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameter("<strong>grade</strong>");
+</pre>
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;input type="checkbox" name="<strong>hw</strong>" value="Intel" /&gt;
+&lt;input type="checkbox" name="<strong>hw</strong>" value="AMD" /&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameterValues("<strong>hw</strong>");
+</pre>	
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+&lt;select name="<strong>sports</strong>" <strong>multiple="multiple"</strong>&gt;
+	&lt;option value="soccer"&gt;축구&lt;/option&gt;
+	&lt;option value="baseball"&gt;야구&lt;/option&gt;
+	&lt;option value="basketball"&gt;농구&lt;/option&gt;
+&lt;/select&gt;
+</pre>	
+	</td>
+	<td class="table-in-article-td">
+<pre class="prettyprint no-border">
+req.getParameterValues("<strong>sports</strong>");
+</pre>	
+	</td>
+</tr>
+</table>
+
+<h4>getParameter(String name)</h4>
+
+<p>
+ServletRequest의 getParameter(String name) 메서드는 사용자가 보낸 데이터를 얻기 위해 사용하는 가장 보편적인 메서드이다.<br />
+클라이언트가 서버로 전달하는 문자 데이터의 형태는 파라미터 이름과 값의 쌍(name-value)이다.<br />
+여기서 name은 form의 서브 엘리먼트(input, textarea, select 등등)의 name 속성값이며 value는 사용자가 입력한 값이다.<br />
+<br /> 
+서버 측 자원의 코드에서 클라이언트가 전달한 매개 변수의 이름이 getParameter(String name) 메서드의 인수로 제공되면, 이 메서드는 사용자가 입력하거나 선택한 값을 반환한다.<br />
+<br /> 
+type 속성값이 radio인 input 엘리먼트를 라디오 버튼이라 부른다.<br />
+name 속성값이 같은 라디오 버튼은 그룹을 형성하고 그룹내에서 단 하나의 항목만 선택할 수 있다.
+</p>
+
+<h4>getParameterValues(String name)</h4>
+
+<p>
+클라이언트가 하나의 파라미터로 여러 개의 값을 전송할 때, 서버 측 자원에서 이 값을 얻으려면 HttpServletRequest의 getParamterValues(String name) 메서드가 필요하다.<br />
+이 메서드는 사용자가 선택한 값들로 구성된 String 배열을 반환한다.<br />
+<br />
+클라이언트 측에서 하나의 파라미터에 값을 여러 개 보내려면, HTML 코드에 체크박스나 multiple 속성값이 "multiple"인 select 엘리먼트가 필요하다.<br />
+(input 엘리먼트의 type 속성값이 "checkbox"이면 체크박스다)<br />
+name 속성값을 같게 주면 체크박스는 같은 그룹에 속하게 된다.<br />
+체크박스는 라디오 버튼과 달리 그룹 내 여러 개를 선택할 수 있다.<br />
+<br />
+select 요소를 사용하면 일반적으로 하나의 항목만 선택할 수 있다.<br />
+그러나 select 엘리먼트의 multiple 속성값이 "multiple"로 설정된 경우 사용자는 Ctrl 또는 Shift 버튼을 사용하여 여러 항목을 선택할 수 있다.
+</p>
+
+<h4>getParamterNames()</h4>
+
+<p>
+사용자가 전송되는 데이터가 어떤 파라미터에 담겨 오는지 알아내려면 서버 측 코드에 HttpServletRequest의 getParamterNames() 메서드가 필요하다.<br />
+getParameterNames() 메서드는 파라미터 이름을 담고 있는 Enumeration<sup><a href="#comments">4</a></sup> 타입 객체를 반환한다.
+</p>
+
+<dl class="note">
+<dt>input type="file"</dt>
+<dd>
+&lt;input type="file" ../&gt;은 이미지와 같은 바이너리 데이터를 서버로 전송할 때 쓰인다.<br />
+부모 엘리먼트인 form은 &lt;form method="post" enctype="multipart/form-data"...&gt;이어야 한다.<br />
+<br />
+업로드하려는 파일뿐 아니라 다른 부가 정보(예를 들면, 이름, 제목, 내용 등등)를 전송해야 한다면, 
+&lt;input type="file" /&gt;을 포함하는 form에 문자열을 전송하는 다른 엘리먼트를 추가한다.<br />
+<br />
+submit 버튼을 누르면 문자열만 전송할 때와 다른 전송 규약으로 데이터가 서버 요소로 전송된다.<br />
+따라서 getParameter(String name) 메서드를 사용해 전송된 데이터에 접근할 수 없다.<br />
+서블릿 API를 사용해서 바이너리 데이터와 바이너리 데이터와 함께 전송된 데이터에 접근하는 메서드를 직접 구현할 순 있지만, 대부분 프로그래머는 이 경우 외부 라이브러리를 사용한다.
+</dd>
+</dl>
+
+<h3>문자열 전송 예제</h3>
+
+<p>
+아래 예제를 통해 사용자가 보낸 데이터를 서블릿에서 수신하는 방법을 실습해 보자.<br />
+다음 HTML 파일을 도큐먼트 베이스/example 디렉터리에 작성한다.
+</p>
+
+<em class="filename">/example/join.html</em>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Sign Up&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h3&gt;Sign Up&lt;/h3&gt;
+
+&lt;form id="joinForm" action="../RegisterServlet" method="post"&gt;
+&lt;div&gt;아이디 &lt;input type="text" name="id" /&gt;&lt;/div&gt;
+&lt;div&gt;별명 &lt;input type="text" name="nickname" /&gt;&lt;/div&gt;
+&lt;div&gt;비밀번호 &lt;input type="password" name="passwd" /&gt;&lt;/div&gt;
+&lt;div&gt;이름 &lt;input type="text" name="name" /&gt;&lt;/div&gt;
+&lt;div&gt;성별 Male &lt;input type="radio" name="gender" value="M" /&gt; Female &lt;input type="radio" name="gender" value="F" /&gt;&lt;/div&gt;
+&lt;div&gt;생년월일 &lt;input type="text" name="birthday" /&gt;&lt;/div&gt;
+&lt;div&gt;휴대폰 &lt;input type="text" name="mobile" /&gt;&lt;/div&gt;
+&lt;div&gt;전화 &lt;input type="text" name="tel" /&gt;&lt;/div&gt;
+&lt;div&gt;주소 &lt;input type="text" name="address" /&gt;&lt;/div&gt;
+&lt;div&gt;이메일 &lt;input type="text" name="email" /&gt;&lt;/div&gt;
+&lt;div&gt;
+스포츠
+&lt;input type="checkbox" name="sports" value="soccer" /&gt;soccer
+&lt;input type="checkbox" name="sports" value="baseball" /&gt;baseball
+&lt;input type="checkbox" name="sports" value="basketball" /&gt;Basketball
+&lt;input type="checkbox" name="sports" value="tennis" /&gt;Tennis
+&lt;input type="checkbox" name="sports" value="tabletennis" /&gt;Tabletennis
+&lt;/div&gt;
+&lt;div&gt;
+강좌
+&lt;select name="main-menu" multiple="multiple"&gt;
+	&lt;option value=""&gt;-- Multiple Select --&lt;/option&gt;
+	&lt;option value="java"&gt;JAVA&lt;/option&gt;
+	&lt;option value="jdbc"&gt;JDBC&lt;/option&gt;
+	&lt;option value="jsp"&gt;JSP&lt;/option&gt;
+	&lt;option value="css-layout"&gt;CSS Layout&lt;/option&gt;
+	&lt;option value="jsp-prj"&gt;JSP Project&lt;/option&gt;
+	&lt;option value="spring"&gt;Spring&lt;/option&gt;
+	&lt;option value="javascript"&gt;JavaScript&lt;/option&gt;
+&lt;/select&gt;
+&lt;/div&gt;
+&lt;div&gt;
+자기 소개
+&lt;textarea name="aboutMe" cols="40" rows="7"&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+&lt;div&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/div&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+RegisterServlet.java를 /WEB-INF/src/example 디렉터리에 아래와 같이 작성한다.
+</p>
+
+<em class="filename">RegisterServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class RegisterServlet extends HttpServlet {
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException,ServletException {
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		req.setCharacterEncoding("UTF-8");
+		
+		String id = req.getParameter("id");
+		
+		out.println("&lt;html&gt;&lt;body&gt;");
+		out.println("id : " + id);
+		
+		String[] sports = req.getParameterValues("sports");
+		int len = sports.length;
+		
+		out.println("&lt;ol&gt;");
+		for (int i = 0; i &lt; len; i++) {
+			out.println("&lt;li&gt;" + sports[i] + "&lt;/li&gt;");
+		}
+		
+		out.println("&lt;/ol&gt;");
+		
+		String path = req.getContextPath();
+		out.println("&lt;a href=" + path + "/example/SignUp.html&gt;Join&lt;/a&gt;");
+		out.println("&lt;/body&gt;&lt;/html&gt;");
+	}
+}
+</pre>
+
+<p>
+명령 프롬프트를 열고 /WEB-INF/src/exampe로 이동하여 아래와 같이 컴파일한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+javac -d C:/www/myapp/WEB-INF/classes ^
+-cp "C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar" ^
+RegisterServlet.java
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;			
+    &lt;servlet-name&gt;RegisterServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;example.RegisterServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;RegisterServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/RegisterServlet&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+톰캣을 재시작한 후, http://localhost:port/example/SignUp.html를 방문한다.
+TODO: 아이디와 스포츠 외의 값을 확인하는 소스를 서블릿에 추가한다.
+</p>
+
+<h2>RequestDispatcher 인터페이스</h2>
+
+<p>
+RequestDispathcer 인터페이스는 include()와 forward(), 2개의 메서드를 가지고 있다.<br />
+include() 메서드는 제어권을 다른 자원에게 넘겼다가, 다른 자원이 실행을 완료하면, 다시 제어권을 가져오는 메서드로, 응답에 다른 자원이 생산한 메시지를 추가하기 위해 사용한다.<br />
+forward() 메서드는 제어권을 다른 자원으로 넘긴다. 그 결과 제어권을 받은 자원이 클라이언트에게 응답하게 된다.<br />
+<br />
+forward() 메서드 예제를 실습해 보자.<br />
+ControllerServlet.java 파일을 /WEB-INF/src/example 디렉터리에 다음과 같이 생성한다.
+</p>
+
+<em class="filename">ControllerServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ControllerServlet extends HttpServlet {
+
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req,resp);
+	}
+
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		
+		String uri = req.getRequestURI();
+		String contextPath = req.getContextPath();
+		String command = null;
+		String view = null;
+		boolean isRedirect = false;
+		
+		command = uri.substring(contextPath.length());
+		
+		if (command.equals("/example/SignUp.action")) {
+			view = "/example/SignUp.html";
+		}
+		if (isRedirect == false) {
+			ServletContext sc = this.getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher(view);
+			<strong>rd.forward(req,resp);</strong>
+		} else {
+			resp.sendRedirect(view);
+		}
+	}
+}
+</pre>
+
+<p>
+명령 프롬프트를 열고 /WEB-INF/src/exampe로 이동하여 다음과 같이 컴파일한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+javac -d C:/www/myapp/WEB-INF/classes ^
+-cp "C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar" ^
+ControllerServlet.java
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+    &lt;servlet-name&gt;Controller&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;example.ControllerServlet&lt;/servlet-class&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Controller&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+톰캣을 재시작한 다음 http://localhost:port<span class="emphasis">/example/SignUp.action</span>를 방문하여 /example/SignUp.html이 응답하는지 확인한다.<br />
+TODO: ControllerServlet.java에서 isRedirect를 true로 변경한 후 다시 컴파일하고 테스트한다.
+</p>
+
+<p>
+우리는 ControllerServlet이 .action으로 끝나는 모든 요청을 담당하도록 web.xml에 ControllerServlet 서블릿 선언과 매핑을 추가했다.<br />
+.action로 끝나는 요청이 오면 톰캣은 web.xml에서 매핑정보를 해석해서 
+ControllerServlet 서블릿의 +service(ServletRequest req, ServletResponse res) 메서드를 호출한다.<br />
++service(ServletRequest req, ServletResponse res) 메서드는 #service(HttpServletRequest req, HttpServletResponse resp) 메서드를 호출한다.<br />
+#service(HttpServletRequest req, HttpServletResponse resp) 메서드에서는 요청의 HTTP METHOD가 무엇인지 판단하고 그에 맞는 메서드를 호출한다.<br />
+<br />
+웹 브라우저의 주소창에 http://localhost:port/example/SignUp.action를 입력하여 요청했으므로 GET 방식이다.<br />
+따라서 이 경우는 doGet() 메서드를 호출된다.<br />
+ControllerServlet서블릿의 doGet() 메서드는 단순히 doPost()을 호출한다.<br />
+다음 표에서 doPost()의 구현 부에 사용된 HttpServletRequest의 메서드를 정리했다.<br />
+</p>
+
+<table>
+<tr>
+	<th>getRequestURI()</th>
+</tr>
+<tr>
+	<td>
+웹 브라우저로 http://localhost:port/example/SignUp.action 요청하면, 이 메서드는 "/example/SignUp.action"을 반환한다.
+	</td>
+</tr>
+<tr>
+	<th>getContextPath()</th>
+</tr>
+<tr>
+	<td>
+컨텍스트 파일의 path 속성값을 반환한다.(이 값을 ContextPath라 한다.)<br />
+우리는 ROOT 애플리케이션에서 작업하므로 이 메서드를 통해 얻을 수 있는 값은 ""이다.
+	</td>
+</tr>
+<tr>
+	<th>req.getRequestURI().substring(req.getContextPath().length())</th>
+</tr>
+<tr>
+	<td>
+위 코드는 "/example/SignUp.action"을 반환한다.
+	</td>
+</tr>
+</table>
+
+<p>
+/example/join.action을 요청한 사용자는 /example/SignUp.html의 응답을 받게 된다.
+</p>
+
+<h2>데이터베이스를 사용하는 서블릿</h2>
+
+<p>
+JDBC 장에서 실습했던 오라클 JDBC 연동 테스트 파일인, GetEmp.java를 서블릿으로 변환해보자.<br />
+ROOT 애플리케이션의 /WEB-INF/src/example 디렉터리에 GetEmpServlet.java 파일을 생성한다.
+</p>
+
+<em class="filename" id="GetEmpServlet">GetEmpServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class GetEmpServlet extends HttpServlet {
+	
+	private String DB_URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	private String DB_USER = "scott";
+	private String DB_PASSWORD = "tiger";
+	
+	/*
+	 * GenericServlet의 init() 메서드
+	 * init(ServletConfig config) 메서드 구현 부에서 이 메서드를 호출하도록 구현되어 있다.
+	 * 따라서 굳이 init(ServletConfig config) 메서드를 오버라이딩하지 않아도 된다.
+	 */
+	@Override
+	public void init() throws ServletException {
+		try {
+			Class.forName( "oracle.jdbc.driver.OracleDriver" );
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from emp";
+		
+		try {
+			con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+				
+				out.println( empno + " : " + ename + " : " + job + " : " + mgr + 
+				" : " + hiredate + " : " + sal + " : " + comm+" : " + depno + "&lt;br /&gt;" );
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace(out);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
+</pre>
+
+<p>
+명령 프롬프트에서 ROOT 애플리케이션의 /WEB-INF/src/example 디렉터리로 이동한 후 다음과 같이 컴파일한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+javac -d C:/www/myapp/WEB-INF/classes ^ 
+-cp "C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar" ^
+GetEmpServlet.java
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+    &lt;servlet-name&gt;GetEmpServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;example.GetEmpServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;GetEmpServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/empList&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+JDBC 드라이버 파일을 {톰캣홈}/lib 복사한다.<br />
+톰캣을 재시작한 후, http://localhost:port<span class="emphasis">/empList</span>를 방문한다.
+</p>
+
+<pre class="browser">
+7369 : SMITH : CLERK : 7902 : 1980-12-17 00:00:00.0 : 800 : null : 20
+7499 : ALLEN : SALESMAN : 7698 : 1981-02-20 00:00:00.0 : 1600 : 300 : 30
+7521 : WARD : SALESMAN : 7698 : 1981-02-22 00:00:00.0 : 1250 : 500 : 30
+7566 : JONES : MANAGER : 7839 : 1981-04-02 00:00:00.0 : 2975 : null : 20
+7654 : MARTIN : SALESMAN : 7698 : 1981-09-28 00:00:00.0 : 1250 : 1400 : 30
+7698 : BLAKE : MANAGER : 7839 : 1981-05-01 00:00:00.0 : 2850 : null : 30
+7782 : CLARK : MANAGER : 7839 : 1981-06-09 00:00:00.0 : 2450 : null : 10
+7788 : SCOTT : ANALYST : 7566 : 1987-04-19 00:00:00.0 : 3000 : null : 20
+7839 : KING : PRESIDENT : null : 1981-11-17 00:00:00.0 : 5000 : null : 10
+7844 : TURNER : SALESMAN : 7698 : 1981-09-08 00:00:00.0 : 1500 : 0 : 30
+7876 : ADAMS : CLERK : 7788 : 1987-05-23 00:00:00.0 : 1100 : null : 20
+7900 : JAMES : CLERK : 7698 : 1981-12-03 00:00:00.0 : 950 : null : 30
+7902 : FORD : ANALYST : 7566 : 1981-12-03 00:00:00.0 : 3000 : null : 20
+7934 : MILLER : CLERK : 7782 : 1982-01-23 00:00:00.0 : 1300 : null : 10
+</pre>
+
+<p>
+원하는 결과가 나오지 않을 때는 아래 리스트를 점검한다.
+</p>
+
+<ul>
+	<li>web.xml 파일에 서블릿 선언과 서블릿 매핑이 올바르게 추가되었는가?</li>
+	<li>/WEB-INF/classes/example 디렉터리에 GetEmpServlet 바이트 코드 있는가?</li>
+	<li>{톰캣홈}/lib에 오라클 JDBC 드라이버 파일(ojdbc6.jar)이 있는가?</li>
+	<li>루트 웹 애플리케이션이 성공적으로 로드되었는가?</li>
+</ul>
+
+<h2>ServletConfig 초기화 파라미터 사용하기</h2>
+
+<p>
+GetEmpServlet.java 예제를 서블릿 초기화 파라미터를 사용하는 예제로 수정해 보자.<br />
+아래 서블릿을 /WEB-INF/src/example 디렉터리에 만든다. 
+</p>
+
+<em class="filename">InitParamServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class InitParamServlet extends HttpServlet {
+	
+	private String url;
+	private String user;
+	private String passwd;
+	private String driver;
+	
+	@Override
+	public void init() throws ServletException {
+		url = this.getInitParameter("url");
+		user = this.getInitParameter("user");
+		passwd = this.getInitParameter("passwd");
+		driver = this.getInitParameter("driver");
+		
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM emp";
+		
+		try {
+			con = DriverManager.getConnection(url, user, passwd);
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+				
+				out.println(empno + " : " + ename + " : " + job + " : " + mgr + 
+				  " : " + hiredate + " : " + sal + " : " + comm+" : " + depno + "&lt;br /&gt;");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(out);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;InitParamServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;example.InitParamServlet&lt;/servlet-class&gt;
+
+  &lt;init-param&gt;
+    &lt;param-name&gt;driver&lt;/param-name&gt;
+    &lt;param-value&gt;oracle.jdbc.driver.OracleDriver&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;url&lt;/param-name&gt;
+    &lt;param-value&gt;jdbc:oracle:thin:@127.0.0.1:1521:XE&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;user&lt;/param-name&gt;
+    &lt;param-value&gt;scott&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;passwd&lt;/param-name&gt;
+    &lt;param-value&gt;tiger&lt;/param-value&gt;
+  &lt;/init-param&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;InitParamServlet&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/initParam&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+위에서 설정한 ServletConfig의 초기화 파라미터의 값은 ServletConfig의 getInitParameter(String name) 메서드를 이용하면 얻어진다.<br />
+톰캣을 재시작한 후에, http://localhost:port<span class="emphasis">/initParam</span>을 방문한다.
+</p>
+
+<h2>ServletContext 초기화 파라미터 이용하기</h2>
+
+<p>
+ServletConfig 초기화 파라미터는 해당 서블릿에서만 참조 할 수 있다.<br />
+ServletContext 초기화 파라미터는 웹 애플리케이션 내 모든 서블릿과 JSP에서 참조할 수 있다.<br />
+ServletContext 초기화 파라미터는 web.xml에 context-param 엘리먼트를 사용하여 설정한다.<br />
+<br />
+schema와 dtd는 지정된 순서가 있다.<br />
+다음은 <a href="http://java.sun.com/dtd/web-app_2_3.dtd">http://java.sun.com/dtd/web-app_2_3.dtd</a>에서 발췌했다.
+</p>
+
+<div id="web-app" class="codebox">
+&lt;!ELEMENT web-app (icon?, display-name?, description?, distributable?,
+<strong>context-param*</strong>, filter*, filter-mapping*, <strong>listener*</strong>, <strong>servlet*</strong>,
+servlet-mapping*, session-config?, mime-mapping*, welcome-file-list?,
+error-page*, taglib*, resource-env-ref*, resource-ref*, security-constraint*,
+login-config?, security-role*, env-entry*, ejb-ref*,  ejb-local-ref*)&gt;
+</div>
+
+<p>
+context-param은 servlet 보다는 앞서 선언해야 한다.<br />
+web.xml을 열고 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;context-param&gt;
+    &lt;param-name&gt;url&lt;/param-name&gt;
+    &lt;param-value&gt;jdbc:oracle:thin:@127.0.0.1:1521:XE&lt;/param-value&gt;
+&lt;/context-param&gt;
+</pre>
+
+<p>
+ServletContext 객체의 레퍼런스는 서블릿에서 getServletContext() 메서드를 이용하면 얻을 수 있다.<br />
+위에서 선언한 ServletContext의 초기화 파라미터인 url 값은 ServletContext 의 getInitParameter(String name) 메서드를 이용하여 구한다.<br /> 
+SimpleSerlvet.java의 적당한 위치에 다음 코드를 추가한다.
+</p>
+
+<h5>SimpleServlet.java 편집</h5>
+
+<pre class="prettyprint">
+ServletContext sc = getServletContext();
+String url = sc.getInitParameter("url");
+out.println(url);
+</pre>
+
+<p>
+톰캣을 재실행하고, http://localhost:port/simple을 방문한다.<br />
+TODO: InitParamServlet.java에서 url이 ServletContext 초기화 파라미터를 이용해서 설정되도록 수정하자. 
+</p>
+
+<h2>리슨너</h2>
+
+<p>
+리슨너는 웹 애플리케이션의 이벤트에 실행된다.<br />
+웹 애플리케이션 이벤트는 서블릿 2.3 스펙에 추가되었다.<br />
+웹 애플리케이션 이벤트는 다음과 같이 나뉜다.
+</p>
+
+<ul>
+	<li>애플리케이션 스타트업과 셧다운</li>
+	<li>세션 생성 및 세션 무효</li>
+</ul>
+
+<p>
+애플리케이션 스타트업 이벤트는 톰캣과 같은 서블릿 컨테이너에 의해 웹 애플리케이션이 처음 로드되어 스타트될 때 발생한다.<br />
+애플리케이션 셧다운 이벤트는 웹 애플리케이션이 셧다운 될 때 발생한다.<br />
+<br />
+세션 생성 이벤트는 새로운 세션이 생성될 때 발생한다.<br />
+세션 무효 이벤트는 세션이 무효화 될때 매번 발생한다.<br />
+<br />
+이벤트를 이용하기 위해서는 리슨너라는 클래스를 작성해야 한다.<br />
+리슨너 클래스는 순수 자바 클래스로 다음의 인터페이스를 구현한다.
+</p>
+
+<ul>
+	<li>javax.servlet.ServletContextListener</li>
+	<li>javax.servlet.http.HttpSessionListener</li>
+</ul>
+
+<p>
+애플리케이션 스타트업 또는 셧다운 이벤트를 위한 리슨너를 원한다면 ServletContextListener 인터페이스를 구현한다.<br />
+세션 생성 및 세션 무효 이벤트를 위한 리슨너를 원한다면 HttpSessionListener 인터페이스를 구현한다.<br />
+ServletContextListener 인터페이스는 다음 2개의 메서드로 구성되어 있다.
+</p>
+
+<ul>
+	<li>public void contextInitialized(ServletContextEvent sce);</li>
+	<li>public void contextDestroyed(ServletContextEvent sce);</li>
+</ul>
+
+<p>
+HttpSessionListener 인터페이스는 다음 2개의 메서드로 구성되어 있다.
+</p>
+
+<ul>
+	<li>public void sessionCreated(HttpSessionEvent se);	</li>
+	<li>public void sessionDestroyed(HttpSessionEvent se);</li>
+</ul>
+
+<p>
+다음 Listener 클래스를 작성한다.<br />
+이 클래스는 웹 애플리케이션 시작 시 OracleConnectionManager 객체를 생성하고 ServletContext에 저장한다.
+</p>
+
+<em class="filename">MyServletContextListener.java</em>
+<pre class="prettyprint">
+package net.java_school.listener;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import net.java_school.db.dbpool.OracleConnectionManager;
+
+public class MyServletContextListener implements ServletContextListener {
+
+	@Override
+	public void contextInitialized(ServletContextEvent sce) {
+		ServletContext sc = sce.getServletContext();
+		OracleConnectionManager dbmgr = new OracleConnectionManager();
+		sc.setAttribute("dbmgr", dbmgr);
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
+		ServletContext sc = sce.getServletContext();
+		sc.removeAttribute("dbmgr");
+	}
+
+}
+</pre>
+
+<p>
+web.xml에 다음을, context-param 아래에 servlet보다는 위에, 추가한다. 
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;listener&gt;
+    &lt;listener-class&gt;net.java_school.listener.MyServletContextListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+</pre>
+
+<h3 id="Custom-ConnectionPool">사용자 정의 커넥션 풀 사용하기</h3>
+<p>
+JDBC 장의 <a href="../jdbc/Connection-Pool">ConnectionPool</a>절 자바 소스를 모두 ROOT 애플리케이션의 WEB-INF/src 디렉터리에 복사한다.<br />
+Log.java 파일을 열고 다음과 같이 수정한다.
+</p>
+
+<pre class="prettyprint">
+public String logFile = "C:/www/myapp/WEB-INF/myapp.log";
+</pre>
+
+<p>
+<a href="../jdbc/Connection-Pool">ConnectionPool</a>절 orcale.properties 파일을 ROOT 애플리케이션의 WEB-INF 디렉터리에 복사한다.<br />
+ConnectionManager.java 파일을 열고 다음과 같이 수정한다.
+</p>
+
+<pre class="prettyprint">
+configFile = "C:/www/myapp/WEB-INF/" + poolName + ".properties";
+</pre>
+
+<p>
+이제 ROOT 웹 애플리케이션이 시작되면 OracleConnectionManager 객체가 생성되고 그 레퍼런스가 ServletContext에 저장된다.<br />
+테스트를 위해 GetEmpServlet.java 파일을 아래와 같이 수정한다.
+</p>
+
+<em class="filename">GetEmpServlet.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.sql.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import net.java_school.db.dbpool.*;
+
+public class GetEmpServlet extends HttpServlet {
+
+	<strong>private OracleConnectionManager dbmgr;</strong>
+	
+	@Override
+	public void init() throws ServletException {
+		<strong>ServletContext sc = getServletContext();
+		dbmgr = (OracleConnectionManager) sc.getAttribute("dbmgr");</strong>
+	}
+	
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+			
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM emp";
+		
+		try {
+			con = <strong>dbmgr.getConnection();</strong>
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+				
+				out.println( empno + " : " + ename + " : " + job + " : " + mgr +
+					" : " + hiredate + " : " + sal + " : " + comm+" : " + depno + "&lt;br&gt;" );
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(out);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
+</pre>
+
+<p>
+사용자 정의 커넥션 풀 소스와 GetEmpServlet.java를 컴파일한다.<br />
+톰캣을 재가동 후 http://localhost:port/empList를 방문한다.
+(GetEmpServlet 서블릿에 대한 선언과 매핑은 이미 이전 실습에서 설정했다)
+</p>
+
+<p>
+HttpSessionListener 인터페이스는 2개의 메서드로 구성된다.<br />
+하나는 세션 생성 이벤트에 동작하는 기능이고, 다른 하나는 세션 무효화 이벤트에 동작하는 기능이다.
+</p>
+
+<ul>
+	<li>public void sessionCreated(HttpSessionEvent se);</li>
+	<li>public void sessionDestroyed(HttpSessionEvent se);</li>
+</ul>
+
+<p>
+다음은 HttpSessionListener 에 대한 예제이다.
+</p>
+
+<em class="filename">SessionCounterListener.java</em>
+<pre class="prettyprint">
+package net.java_school.listener;
+
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
+public class SessionCounterListener implements HttpSessionListener {
+	public static int totalCount;
+	
+	@Override
+	public void sessionCreated(HttpSessionEvent event) {
+		totalCount++;
+		System.out.println("세션증가 총세션수:" + totalCount);
+	}
+
+	@Override
+	public void sessionDestroyed(HttpSessionEvent event) {
+		totalCount--;
+		System.out.println("세션감수 총세션수:" + totalCount);
+	}
+
+}
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;listener&gt;
+    &lt;listener-class&gt;net.java_school.listener.SessionCounterListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+</pre>
+
+<p>
+톰캣을 재실행한 후, http://localhost:port/simple를 방문한다.<br />
+다른 웹 브라우저로 http://localhost:port/simple를 방문한다.<br />
+톰캣 로그 파일의 로그 메시지를 확인한다.
+</p>
+ 
+<h2>Filter</h2>
+
+<p>
+필터란 사용자의 요청이 서버 자원에 전달되기 전에 언제나 수행되어야 하는 코드 조각이 있을 때 사용한다.<br />
+필터가 작동하려면 web.xml에 필터 선언과 필터 매핑을 추가해야 한다.<br />
+web.xml에 필터1 다음에 필터2가 순서대로 선언되고 매핑되었다면 필터1 - 필터2 - 서버 자원 - 필터2 - 필터1 - 웹 브라우저 순으로 실행된다.<br />
+필터 클래스를 작성하기 위해서는 javax.servlet.Filter 인터페이스를 구현해야 한다.
+</p>
+
+<p>
+다음은 필터 매카니즘을 흉내 낸 순수 자바 애플리케이션 예이다.
+</p>
+
+<em class="filename">ChainFilter.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ChainFilter {
+	private ArrayList&lt;Filter&gt; filters;
+	private Iterator&lt;Filter&gt; iterator;
+
+	public void doFilter() {
+		if (iterator.hasNext()) {
+			iterator.next().doFilter(this);
+		} else {
+			System.out.println("Run Server resource");
+		}
+	}
+
+	public ArrayList&lt;Filter&gt; getFilters() {
+		return filters;
+	}
+
+	public void setFilters(ArrayList&lt;Filter&gt; filters) {
+		this.filters = filters;
+		this.iterator = filters.iterator();
+	}
+	
+}
+</pre>
+
+<em class="filename">Filter.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+public interface Filter {
+	
+	public void doFilter(ChainFilter chain);
+
+}
+</pre>
+
+<em class="filename">Filter1.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+public class Filter1 implements Filter {
+
+	@Override
+	public void doFilter(ChainFilter chain) {
+		System.out.println("Run Filter 1 before the server resource runs");
+		chain.doFilter();
+		System.out.println("Run Filter 1 after the server resource runs");
+	}
+
+}
+</pre>
+
+<em class="filename">Filter2.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+public class Filter2 implements Filter {
+
+	@Override
+	public void doFilter(ChainFilter chain) {
+		System.out.println("Run Filter 2 before the server resource runs");
+		chain.doFilter();
+		System.out.println("Run Filter 2 after the server resource runs");
+	}
+
+}
+</pre>
+
+<em class="filename">Tomcat.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+import java.util.ArrayList;
+
+public class Tomcat {
+
+	public static void main(String[] args) {
+		ChainFilter chain = new ChainFilter();
+		ArrayList&lt;Filter&gt; filters = new ArrayList&lt;Filter&gt;();
+		Filter f1 = new Filter1();
+		Filter f2 = new Filter2();
+		filters.add(f1);
+		filters.add(f2);
+		chain.setFilters(filters);
+		chain.doFilter();
+	}
+
+}
+</pre>
+
+<pre class="console">
+<strong class="console-result">Run Filter 1 before the server resource runs
+Run Filter 2 before the server resource runs
+Run Server resource.
+Run Filter 2 after the server resource runs
+Run Filter 1 after the server resource runs
+</strong></pre>
+
+<h3>Filter 인터페이스</h3>
+<ul>
+	<li>init(FilterConfig filterConfig) throws ServletException
+	서블릿 컨테이너에 의해 호출되면 필터는 서비스 상태가 됨</li>
+	<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
+	서블릿 컨테이너에 의해 호출되어 필터링 작업을 수행
+	</li>
+	<li>destroy()
+	서블릿 컨테이너에 의해 호출되면 해당 필터는 더 이상 서비스를 할 수 없음. 주로 자원 반납을 위해 사용한다.
+	</li>
+</ul>
+
+<p>
+doFilter 메서드의 아규먼트는, 필터가 요청이나 응답을 가로챌 때, 
+필터가 ServletRequest, ServletResponse 그리고 javax.servlet.FilterChain 객체에 접근할 수 있음을 보여준다.<br />
+FilterChain 객체는 순서대로 호출되어야 하는 필터의 리스트를 담고 있다.<br />
+<br />
+필터 클래스의 doFilter() 메서드에서 FilterChain의 doFilter() 메서드를 호출하기 전까지가 요청 전에 실행되는 필터링 코드이며 
+FilterChain의 doFilter() 메서드 호출 다음이 응답 전에 호출되는 필터링 코드이다.
+</p>
+
+
+<h3>Filter 예제</h3>
+
+<p>
+다음은 모든 서버 자원이 실행되기 전에 req.setCharacterEncoding("UTF-8"); 코드를 실행하는 예제이다.<br />
+아래와 같이 CharsetFilter.java 파일을 작성한다.
+</p>
+
+<em class="filename">/WEB-INF/src/net/java_school/filter/CharsetFilter.java</em>
+<pre class="prettyprint">
+package net.java_school.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+public class CharsetFilter implements Filter {
+
+	private String charset = null;
+	
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+		this.charset = config.getInitParameter("charset");
+	}
+	
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) 
+		throws IOException, ServletException {
+		
+		if (req.getCharacterEncoding() == null) {
+			req.setCharacterEncoding(charset);
+			chain.doFilter(req,resp);
+		}
+	}
+
+	@Override
+	public void destroy() {
+		//반납할 자원이 있다면 작성한다.
+	}
+
+}
+</pre>
+
+<p>
+명령 프롬프트에서 /WEB-INF/src/net/java_school/filter/ 폴더로 이동한 다음 아래와 같이 컴파일한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+javac -d C:/www/myapp/WEB-INF/classes ^
+-cp "C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar" ^
+CharsetFilter.java
+</pre>
+
+<p>
+다음 web.xml 파일을 열고 다음을 추가한다.<br />
+기존 엘리먼트와의 순서에 주의한다.<br />
+다음 코드는 context-param 엘리먼트와 listener 엘리먼트 사이에 두어야 한다. 
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;filter&gt;
+   &lt;filter-name&gt;CharsetFilter&lt;/filter-name&gt;
+   &lt;filter-class&gt;net.java_school.filter.CharsetFilter&lt;/filter-class&gt;
+   &lt;init-param&gt;
+      &lt;param-name&gt;charset&lt;/param-name&gt;
+      &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+   &lt;/init-param&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+   &lt;filter-name&gt;CharsetFilter&lt;/filter-name&gt;
+   &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</pre>
+
+<p>
+위에서 실행했던 회원가입 예제의 RegisterServlet.java 소스에서 req.setCharacterEncoding("UTF-8");을 주석처리 한 후 RegisterServlet 서블릿을 재컴파일한다.<br />
+http://localhost:port/example/SignUp.jsp를 방문하여 아이디에 한글을 입력하고 좋아하는 운동을 선택한 후 전송을 클릭한다.<br />
+req.setCharacterEncoding("UTF-8");이 실행된다면 사용자가 입력한 한글 아이디가 제대로 출력된다.
+</p>
+
+<p>
+필터 초기화 파라미터는 web.xml에서 filter의 서브 엘리먼트, init-param를 사용하여 설정한다.<br />
+필터 초기화 파라미터를 읽기 위해선 FilterConfig의 getInitParameter() 메서드나 getInitParameters() 메서드를 사용한다.<br />
+<br />
+web.xml에서 filter-mapping 엘리먼트는 필터링 될 자원을 지정한다.<br />
+<br />
+필터는 배치 정의자에 나와 있는 순으로 FilterChain에 추가된다. 이때 서블릿 이름과 매핑된 필터는 URL 패턴에 매칭되는 필터 다음에 추가된다.<br />
+FilterChain.doFilter() 메서드는 FilterChain의 다음 아이템을 호출한다.
+</p>
+
+<h2>파일 업로드</h2>
+
+<p>
+대부분 프로그래머는 외부 라이브러리를 사용하여 파일을 업로드한다.
+</p>
+
+<h3>MultipartRequest</h3>
+
+<p>
+MultipartRequest 패키지는 파일 업로드에 널리 이용되고 있는 패키지이다.<br />
+<a href="http://www.servlets.com/cos/index.html">http://www.servlets.com/cos/index.html</a>에서 cos-26Dec2008.zip를 다운로드한다.<br />
+압축을 푼 후, cos.jar 파일을 ROOT 애플리케이션의 /WEB-INF/lib 디렉터리에 복사한다.<br />
+MultipartRequest 클래스의 생성자는 8개가 있다.<br />
+자세한 사항은 다음 주소에서 참조한다.<br />
+<a href= "http://www.servlets.com/cos/javadoc/com/oreilly/servlet/MultipartRequest.html">http://www.servlets.com/cos/javadoc/com/oreilly/servlet/MultipartRequest.html</a><br />
+다음 생성자는 한글 인코딩 문제를 해결할 수 있고 업로드하는 파일 이름이 중복될 때 자동으로 파일명을 바꾼다.
+</p>
+
+<pre class="prettyprint">
+public MultipartRequest(
+	HttpServletRequest request,
+	String saveDirectory,
+	int maxPostSize,
+	String encoding,
+	FileRenamePolicy policy) throws IOException
+</pre>
+
+<h4>MultipartRequest의 메서드</h4>
+
+<p>
+업로드는 성공하면 MultipartRequest 객체가 생성된다.<br />
+아래 표는 서버 시스템에 파일을 업로드된 후 이용하는 MultipartRequest의 멤버 메서드를 보여준다.<br />
+&lt;input type="file" name="photo"/&gt;으로 logo.gif를 업로드했다고 가정한다.
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-td">getContentType("photo");</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">업로드된 파일의 MIME 타입 반환, 예를 들어 확장자가 gif 이미지라면 "image/gif" 가 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getFile("photo");</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">업로드되어 서버에 저장된 파일의 File 객체 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getFileNames();</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">폼 요소 중 input 태그 속성이 file 로 된 파라미터의 이름을 Enumeration 타입으로 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getFilesystemName("photo");</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">업로드되어 서버 파일시스템에 존재하는 실제 파일명을 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getOriginalFileName("photo");</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">원래의 파일명을 반환</td>
+</tr>
+</table>
+
+<table>
+<caption>HttpServletRequest와 같은 인터페이스를 제공하기 위한 메서드</caption>
+<tr>
+	<th class="table-in-article-td">getParameter(String name);</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">name에 해당하는 파라미터의 값을 String 타입으로 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getParameterNames();</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">모든 파라미터의 이름을 String으로 구성된 Enumeration 타입으로 반환</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getParameterValues(String name);</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">name 에 해당하는 파라미터의 값들을 String[] 타입으로 반환</td>
+</tr>
+</table>
+
+<h4>MultipartRequest 예제</h4>
+
+<p>
+다음 HTML 파일을 ROOT 애플리케이션의 최상위 디렉터리의 example 서브 디렉터리에 작성한다.
+</p>
+
+<em class="filename">/example/MultipartRequest.html</em>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;MultipartRequest Servlet Example&lt;/title&gt;
+	&lt;meta charset="UTF-8" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;MultipartRequest를 이용한 파일 업로드 테스트&lt;/h1&gt;
+
+&lt;form action="../servlet/UploadTest" method="post" enctype="multipart/form-data"&gt;
+&lt;div&gt;Name: &lt;input type="text" name="name" /&gt;&lt;/div&gt;
+&lt;div&gt;파일 1: &lt;input type="file" name="file1" /&gt;&lt;/div&gt;
+&lt;div&gt;파일 2: &lt;input type="file" name="file2" /&gt;&lt;/div&gt;
+&lt;div&gt;&lt;input type="submit" value="전송" /&gt;&lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+다음 서블릿을 작성하고 컴파일한다.<br />
+컴파일할 때에 자바 컴파일러가 cos.jar 파일 경로를 알아야 한다.
+</p>
+
+<em class="filename">UploadTest.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+public class UploadTest extends HttpServlet {
+	
+	@Override	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+			
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		ServletContext cxt = getServletContext();
+		String dir = cxt.getRealPath("/upload");
+		
+		try {
+			MultipartRequest multi = new MultipartRequest(req, dir, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
+					
+			out.println("&lt;html&gt;");
+			out.println("&lt;body&gt;");
+			out.println("&lt;h1&gt;사용자가 전달한 파라미터&lt;/h1&gt;");
+			out.println("&lt;ol&gt;");
+			Enumeration&lt;?&gt; params = multi.getParameterNames();
+			
+			while (params.hasMoreElements()) {
+				String name = (String) params.nextElement();
+				String value = multi.getParameter(name);
+				out.println("&lt;li&gt;" + name + "=" + value + "&lt;/li&gt;");
+			}
+			
+			out.println("&lt;/ol&gt;");
+			out.println("&lt;h1&gt;업로드한 파일&lt;/h1&gt;");
+			
+			Enumeration&lt;?&gt; files = multi.getFileNames();
+			
+			while (files.hasMoreElements()) {
+				out.println("&lt;ul&gt;");
+				String name = (String) files.nextElement();
+				String filename = multi.getFilesystemName(name);
+				String orginalname =multi.getOriginalFileName(name);
+				String type = multi.getContentType(name);
+				File f = multi.getFile(name);
+				out.println("&lt;li&gt;파라미터 이름 : "  + name + "&lt;/li&gt;");
+				out.println("&lt;li&gt;파일 이름 : " + filename + "&lt;/li&gt;");
+				out.println("&lt;li&gt;원래 파일 이름 : " + orginalname + "&lt;/li&gt;");
+				out.println("&lt;li&gt;파일 타입 : " + type + "&lt;/li&gt;");
+				
+				if (f != null) {
+					out.println("&lt;li&gt;크기: " + f.length() + "&lt;/li&gt;");
+				}
+				out.println("&lt;/ul&gt;");
+			}
+		} catch(Exception e) {
+			out.println("&lt;ul&gt;");
+			e.printStackTrace(out);
+			out.println("&lt;/ul&gt;");
+		}
+		out.println("&lt;/body&gt;&lt;/html&gt;");
+	}
+}
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+    &lt;servlet-name&gt;UploadTest&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;example.UploadTest&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;UploadTest&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/servlet/UploadTest&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+예제를 실행하기 전에 ROOT 웹 애플리케이션의 최상위 디렉터리에 upload 서브 디렉터리를 생성한다.<br />
+톰캣을 재가동하고 http://localhost:port/example/upload.html를 방문한다.<br />
+중복된 파일을 업로드한 후 upload 폴더에서 파일명을 확인한다.<br />
+중복된 파일을 업로드하면 확장자를 제외한 파일 이름의 끝에 숫자가 붙어서 업로드되고 있음을 확인할 수 있다.<br />
+만약 테스트가 실패했다면 아래 리스트를 점검한다.
+</p>
+
+<ol>
+	<li>UploadTest 서블릿의 바이트 코드가 생성되었는가?</li>
+	<li>ROOT 애플리케이션의 최상위 디렉터리에 upload 서브 디렉터리가 있는가?</li>
+	<li>톰캣 클래스로더가 찾을 수 있도록 cos.jar 파일이 ROOT 애플리케이션의 /WEB-INF/lib에 복사되어 있는가?</li>
+	<li>web.xml 파일에 UploadTest 서블릿을 선언하고 매핑했는가?</li>
+	<li>ROOT 웹 애플리케이션이 로드되었는가?</li>
+</ol>
+
+<h3>commons-fileupload</h3>
+
+<p>
+Commons-fileupload는 오픈 소스로 유명한 아파치에서 제공하는 파일 업로드 라이브러리이다.<br />
+다음 주소에서 최신 바이너리 파일을 내려받는다.<br />
+<a href="http://commons.apache.org/proper/commons-fileupload/download_fileupload.cgi">http://commons.apache.org/proper/commons-fileupload/download_fileupload.cgi</a><br />
+<a href="http://commons.apache.org/proper/commons-io/download_io.cgi">http://commons.apache.org/proper/commons-io/download_io.cgi</a><br />
+압축을 풀고 commons-fileupload-x.x.jar와 commons-io-x.x.jar를 ROOT 애플리케이션의 /WEB-INF/lib 디렉터리에 복사한다.
+</p>
+
+<em class="filename">/example/commons-fileupload.html</em>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;commons-fileupload 테스트&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;commons-fileupload를 사용하여 파일 업로드하기&lt;/h1&gt;
+
+&lt;form action="../CommonsUpload" method="post" enctype="multipart/form-data"&gt;
+&lt;div&gt;File : &lt;input type="file" name="upload" /&gt;&lt;/div&gt;
+&lt;div&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<em class="filename">CommonsUpload.java</em>
+<pre class="prettyprint">
+package example;
+
+import java.io.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import java.util.Iterator;
+import java.io.File;
+import java.util.List;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+public class CommonsUpload extends HttpServlet {
+
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+			
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		//Check that we have a file upload request
+		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
+		//Create a factory for disk-based file items
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		
+		//Configure a repository (to ensure a secure temp location is used)
+		ServletContext servletContext = this.getServletConfig().getServletContext();
+		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+		factory.setRepository(repository);
+		
+		//Create a new file upload handler
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setHeaderEncoding("UTF-8");//한글파일명 처리위해 추가
+		try {
+			//Parse the request
+			List&lt;FileItem&gt; items = upload.parseRequest(req);
+			//Process a file upload
+			Iterator&lt;FileItem&gt; iter = items.iterator();
+			while (iter.hasNext()) {
+				FileItem item = iter.next();
+				String fileName = null;
+				if (!item.isFormField()) {
+					String fieldName = item.getFieldName();
+					out.println(fieldName);
+					fileName = item.getName();
+					out.println(fileName);
+					String contentType = item.getContentType();
+					out.println(contentType);
+					boolean isInMemory = item.isInMemory();
+					out.println(isInMemory);
+					long sizeInBytes = item.getSize();
+					out.println(sizeInBytes);
+				}
+				// Process a file upload
+				ServletContext cxt = getServletContext();
+				String dir = cxt.getRealPath("/upload");
+				File uploadedFile = new File(dir + "/" + fileName);
+				item.write(uploadedFile);
+			}
+		} catch (Exception e) {
+			out.println("&lt;ul&gt;");
+			e.printStackTrace(out);
+			out.println("&lt;/ul&gt;");
+		}
+		out.println("&lt;a href=/"example/commons-fileupload.html\"&gt;파일 업로드 폼으로&lt;/a&gt;");
+	}
+}
+</pre>
+
+<p>
+web.xml에 다음을 추가한다.
+</p>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;servlet&gt;
+    &lt;servlet-name&gt;commonsUpload&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;example.CommonsUpload&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;commonsUpload&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/CommonsUpload&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>
+톰캣을 재가동하고 http://localhost:port/example/commons-fileupload.html를 방문한다.<br />
+중복된 파일을 업로드한 후 upload 폴더에서 파일명을 확인한다.<br />
+중복된 파일을 업로드하면 cos.jar와는 달리 기존 파일을 덮어쓴다.<br />
+업로드된 파일을 보여주는 예제는 JSP에서 다룬다.
+</p>
+
+<h2>쿠키</h2>
+
+<p>
+HTTP 프로토콜은 상태를 유지할 수 없는 프로토콜이다.<br />
+쿠키는 세션을 유지하지 못하는 HTTP 프로토콜을 극복하기 위한 기술이다.<br />
+서버가 쿠키를 전송하면 웹 브라우저는 요청마다 쿠키값을 서버로 전달하여 사용자 정보를 유지할 수 있게 한다.
+</p>
+
+<h3>서버가 웹 브라우저로 쿠키 전송</h3>
+
+<p>
+쿠키가 작동하려면 서버에서 쿠키를 만들어 웹 브라우저로 전송해야 한다.<br />
+이때 쿠키의 모양은 다음과 같다.
+</p>
+
+<pre class="prettyprint">
+Set-Cookie : name = value ; expires = date ; path = path ; domain = domain ; secure
+</pre>
+
+<p>
+쿠키는 웹 브라우저가 관리하는 파일에 저장된다. 
+</p>
+
+<h3>웹 브라우저에서 서버로 쿠키 전송</h3>
+
+<p>
+쿠키가 웹 브라우저에 세팅되면, 웹 브라우저는 쿠키를 전달해준 서버로 자원을 요청할 때마다 아래와 같은 쿠키 문자열을 서버로 보내게 된다.<br />
+이때 쿠키의 모양은 다음과 같다.
+</p>
+ 
+<pre class="prettyprint">
+Cookie ; name = value1 ; name2 = value2 ;
+</pre>
+
+<p>
+쿠키 이름과 값에 []()="/?@:; 같은 문자는 사용할 수 없다.
+</p>
+
+<h3>쿠키 클래스의 메서드</h3>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-td">setValue(String value)</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">생성된 쿠키의 값을 재설정할 때 사용한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">setDomain(String pattern)</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">
+쿠키는 기본적으로 쿠키를 생성한 서버에만 전송된다.<br />
+같은 도메인을 사용하는 서버에도 쿠키를 보내려면 이 메서드를 사용한다.<br />
+서버와 관련이 없는 도메인을 setDomain()으로 설정할 수 없다.
+	</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">setMaxAge(int expiry)</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">
+쿠키의 유효기간을 초 단위로 설정한다.<br />
+음수를 입력하면 웹 브라우저 종료시 쿠키가 삭제된다.
+	</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">setPath(String uri)</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">
+쿠키가 적용될 경로 정보를 설정한다.<br />
+경로가 설정되면 해당하는 경로로 방문하는 경우에만 웹 브라우저는 쿠키를 웹 서버에 전송한다.
+	</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">setSecure(boolean flag)</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">flag가 true이면 보안 채널을 사용하는 서버로만 쿠키를 전송한다.</td>
+</tr>
+</table>
+
+<p>
+쿠키 클래스의 생성자를 호출하고 쿠키 클래스의 메서드를 적절히 사용해 쿠키를 만들었다면 쿠키를 웹 브라우저로 보내야 한다.<br />
+다음은 웹 브라우저로 쿠키를 전송하는 코드이다.
+</p>
+
+<pre class="prettyprint no-border">
+resp.addCookie(cookie);
+</pre>
+
+<h3>서버 자원에서 웹 브라우저가 보낸 쿠키에 접근하는 방법</h3>
+
+<pre class="prettyprint no-border">
+Cookie[] cookie = <em>req.getCookies();</em>
+</pre>
+
+<p>
+HttpServletRequest의 getCookies() 메서드를 사용해서 쿠키 배열을 얻는다.<br />
+(만약 쿠키가 없다면 getCookies() 메서드는 null을 반환한다)<br />
+다음의 메서드를 사용하면 쿠키에 대한 정보를 얻을 수 있다.<br />
+이중 getName()과 getValue()가 주로 쓰인다.
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-td">getName()</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">쿠키의 이름을 구한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getValue()</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">쿠키의 값을 구한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getDomain()</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">쿠키의 도메인을 구한다.</td>
+</tr>
+<tr>
+	<th class="table-in-article-td">getMaxAge()</th>
+</tr>
+<tr>	
+	<td class="table-in-article-td">쿠키의 유효시간을 구한다.</td>
+</tr>
+</table>
+
+<p>
+다음은 서버 자원에서 쿠키값을 구하는 코드조각이다.
+</p>
+
+<pre class="prettyprint">
+String id = null;
+Cookie[] cookies = request.getCookies();
+
+if (cookies != null) {
+
+	for (int i = 0; i &lt; cookies.length; i++) {
+		String name = cookies[i].getName();
+		
+		if (name.equals("id")) {
+			id = cookies[i].getValue();
+			break;
+		}
+	}
+}
+</pre>
+
+<p>
+아래는 쿠키를 삭제하는 예이다.<br />
+방법은 삭제하고자 하는 쿠키와 같은 이름의 쿠키를 생성하고 setMaxAge(0)을 호출한 다음 쿠키를 웹 브라우저로 보낸다.
+</p>
+
+<pre class="prettyprint">
+Cookie cookie = new Cookie("id","");
+cookie.setMaxAge(0);
+resp.addCookie(cookie);
+</pre>
+
+<p>
+쿠키에 대한 실습은 <a href="JSP">JSP</a>에서 다룬다.
+</p>
+
+<h2>세션</h2>
+
+<p>
+세션은 쿠키 기반 기술로 쿠키의 보안상 약점을 극복하기 위해 만들어졌다.<br />
+웹 브라우저는 서버가 정해준 세션 ID만을 쿠키값으로 저장한다.<br />
+웹 브라우저에 저장된 세션 ID 쿠키와 이와 매핑되는 서버의 세션 객체(HttpSession)로 사용자의 상태를 유지한다.<br />
+다음은 세션을 생성하는 코드이다.
+</p>
+
+<pre class="prettyprint">
+HttpSession session = req.getSession(true); //세션이 없으면 생성
+HttpSession session = req.getSession(false); //세션이 없다면 null반환
+</pre>
+
+<p>
+세션 객체가 생성되었으면 세션에 정보를 아래 코드처럼 저장할 수 있다.
+</p>
+
+<pre class="prettyprint">
+User user = new User("홍길동","1234");
+session.setAttribue("user", user);
+</pre>
+
+<p>
+세션에 대한 실습은 <a href="JSP">JSP</a>에서 다룬다.
+</p>
+
+<span id="comments">주석</span>
+<ol>
+	<li>
+그림(서블릿 기본골격 클래스 다이어그램)이 GenericServlet, HttpServlet 의 모든 속성과 메서드를 모두 나타내고 있지는 않다.<br />
+서블릿을 쉽게 이해하려면, Servlet, ServletConfig, GenericServlet, HttpServlet의 상속 관계를 그릴 수 있어야 한다. 
+	</li>
+	<li>
+MIME(Multipurpose Internet Mail Extensions)<br />
+.html 또는 .htm의 MIME은 text/html, .txt는 text/plain .gif는 image/gif이다.
+	</li>
+	<li>
+쿼리 스트링(Query tring)이란 URL 뒤 ? 다음에 나오는 문자열로, URL에 해당하는 서버 측 자원에 전달되는 데이터이다.<br />
+쿼리 스트링의 정보가 1개 이상일 때는 두 번째부터 &amp;를 사용한다. (예, http://localhost:port/list.jsp?board=free&amp;page=1)
+	</li>
+	<li>Enumeration 인터페이스는 hasMoreElements()와 nextElement() 2개의 메서드를 이용하여 데이터를 순서대로 접근할 수 있다.</li>
+</ol>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="https://java.net/downloads/servlet-spec/Final/servlet-3_1-final.pdf">https://java.net/downloads/servlet-spec/Final/servlet-3_1-final.pdf</a></li>
+	<li><a href="https://tomcat.apache.org/tomcat-8.0-doc/servletapi/">https://tomcat.apache.org/tomcat-8.0-doc/servletapi/</a></li>
+	<li><a href="http://docs.oracle.com/javaee/7/api/index.html?overview-summary.html">http://docs.oracle.com/javaee/7/api/index.html?overview-summary.html</a></li>
+	<li><a href="http://www.mkyong.com/servlet/a-simple-httpsessionlistener-example-active-sessions-counter/">http://www.mkyong.com/servlet/a-simple-httpsessionlistener-example-active-sessions-counter/</a></li>
+	<li><a href="http://commons.apache.org/proper/commons-fileupload/download_fileupload.cgi">http://commons.apache.org/proper/commons-fileupload/download_fileupload.cgi</a></li>
+	<li><a href="http://commons.apache.org/proper/commons-io/download_io.cgi">http://commons.apache.org/proper/commons-io/download_io.cgi</a></li>
+	<li><a href="http://commons.apache.org/proper/commons-fileupload/using.html">http://commons.apache.org/proper/commons-fileupload/using.html</a></li>
+	<li><a href="http://www.albumbang.com/board/board_view.jsp?board_name=free&no=292">http://www.albumbang.com/board/board_view.jsp?board_name=free&amp;no=292</a></li>
+	<li><a href="http://www.docjar.com/docs/api/javax/servlet/GenericServlet.html">http://www.docjar.com/docs/api/javax/servlet/GenericServlet.html</a></li>
+</ul>
+</article>

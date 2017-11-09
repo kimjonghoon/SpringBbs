@@ -1,0 +1,296 @@
+<article>
+
+<h1>Login to the scott account</h1>
+
+<p>
+11g XE does not have a scott account.<sup>1</sup><br />
+If you installed 11g XE by selecting the installation partition as C:\, the path of the SCOTT schema script file is as follows.<br />
+<em class="path">C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql</em> <sup>2</sup><br />
+Use this file to create a scott account. Connect to SQL * Plus with the SYSTEM account.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Users\kim&gt;<span class="prompt-selection">sqlplus</span>
+
+SQL*Plus: Release 11.2.0.2.0 Production on 화 6월 7 13:29:14 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: <span class="prompt-selection">system</span>
+Enter password: <span class="prompt-selection">&lt;Admin Password&gt;</span>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL&gt;
+</pre>
+
+<p>
+SQL * Plus is an Oracle command line program that can execute SQL.
+Run the SCOTT schema script file.
+To run a file in SQL * Plus, prepend the full path to the file with @.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">@C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql</span>
+SQL&gt;
+</pre>
+
+<p>
+If there are no errors, the file has been successfully executed.
+Identify the users connected to SQL * Plus.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">show user</span>
+USER is "SCOTT"
+SQL&gt;
+</pre>
+
+<p>
+You can see that the connected user has changed from SYSTEM to SCOTT.
+Change the password for the SCOTT account to tiger.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">alter user scott identified by tiger;</span>
+User altered.
+SQL&gt;
+</pre>
+
+<p>
+Exit SQL * Plus by executing exit.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">exit</span>
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0
+- 64bit Production
+C:\Users\kim&gt;
+</pre>
+
+<p>
+For each user account, there are Oracle objects such as tables, views, sequences, indexes and so on.
+When you run the scott.sql schema script file, a SCOTT account is created and a table is created in the SCOTT account.
+Reconnect to the SCOTT account with SQL * Plus and check the table in the SCOTT account.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Users\kim&gt;<span class="prompt-selection">sqlplus scott/tiger</span>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL&gt; <span class="prompt-selection">select * from tab;</span>
+
+TNAME                                                        TABTYPE
+---------------------------------------------------------------------
+BONUS                                                        TABLE
+DEPT                                                         TABLE
+EMP                                                          TABLE
+SALGRADE                                                     TABLE
+
+SQL>
+</pre>
+
+<p>
+The scott account has tables BONUS, DEPT, EMP, and SALGRADE.
+Let's check the table structure.
+To view the DEPT table structure, run desc dept;
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc dept;</span>
+NAME                                      NULL?      TYPE
+----------------------------------------- -------- -------------------
+
+DEPTNO                                    NOT NULL NUMBER(2)
+DNAME                                              VARCHAR2(14)
+LOC                                                VARCHAR2(13)
+
+SQL&gt;
+</pre>
+
+<p>
+In the above execution result, the NAME is the column name.
+The TYPE is the data type specified in the column.
+Just as you specify a data type for a variable in Java, the database assigns the data type to the column.
+Only the values of the specified data type can be stored in the corresponding column.
+The first column is named DEPTNO, can not be null, and its type is NUMBER.
+The second column is named DNAME and can be null, and its type is VARCHAR2.
+The third column is named LOC and can be null, and its type is VARCHAR2.
+</p>
+
+<dl class="note">
+<dt>NULL</dt>
+<dd>
+Means that the column does not contain any value.
+Calculation, and comparison are impossible.
+0 is neither a space character.
+</dd>
+<dt>Oracle's main data types</dt>
+<dd>
+<strong>NUMBER</strong>(PRECISION,SCALE)<br />
+Data type for storing numbers<br />
+PRECISION : Total digits including decimal point.<br />
+SCALE : Decimal places.<br />
+For example, 72.5 is NUMBER (3,1), 10 is NUMBER (2),
+7788 is NUMBER (4), and all numeric types are NUMBER.<br />
+<strong>DATE</strong><br />
+Data type for storing date and time data.<br />
+<strong>VARCHAR2</strong>(Number)<br />
+It is a data type for storing variable strings.
+The number in parentheses means the number of bytes.
+If the data type of the column is VARCHAR2(15), a maximum of 15 bytes can be stored.
+</dd>
+</dl>
+
+<p>
+Let's look at the records in the DEPT table.
+(Record means one row.)
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from dept;</span>
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+        20 RESEARCH                     DALLAS
+        30 SALES                        CHICAGO
+        40 OPERATIONS                   BOSTON
+
+SQL&gt;
+</pre>
+
+<p>
+SQL statements are case-insensitive.
+However, this does not mean that the data is not case-sensitive.
+The DEPT table is a department table.
+The DEPTNO column stores the department number, the DNAME column stores the department name, and the LOC column stores the department location information.
+The select statement is used to retrieve records from the table.
+Let's look at the structure of the EMP table.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc emp;</span>
+
+ NAME                                      NULL?      TYPE
+ ----------------------------------------- -------- ----------------------------
+
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(9)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+SQL&gt;
+</pre>
+
+<p>
+What the EMP table column means are:
+</p>
+
+<ol>
+	<li>EMPNO(Employee number)</li>
+	<li>ENAME(Employee Name)</li>
+	<li>JOB</li>
+	<li>MGR(My supervisor employee number)</li>
+	<li>HIREDATE</li>
+	<li>SAL(Salary)</li>
+	<li>COMM(Commission)</li>
+	<li>DEPTNO(Department number)</li>
+</ol>
+
+<p>
+Retrieve all employee records contained in the EMP table.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from emp;</span>
+
+EMPNO ENAME  JOB           MGR  HIREDATE   SAL     COMM    DEPTNO   
+---- -------------------------- --------   ------- ------- -------
+7369 SMITH   CLERK         7902 80/12/17   800               20   
+7499 ALLEN   SALESMAN      7698 81/02/20   1600     300      30   
+7521 WARD    SALESMAN      7698 81/02/22   1250     500      30   
+7566 JONES   MANAGER       7839 81/04/02   2975              20   
+7654 MARTIN  SALESMAN      7698 81/09/28   1250     1400     30   
+7698 BLAKE   MANAGER       7839 81/05/01   2850              30   
+7782 CLARK   MANAGER       7839 81/06/09   2450              10   
+7839 KING    PRESIDENT          81/11/17   5000              10   
+7844 TURNER  SALESMAN      7698 81/09/08   1500       0      30   
+7900 JAMES   CLERK         7698 81/12/03   950               30   
+7902 FORD    ANALYST       7566 81/12/03   3000              20   
+7934 MILLER  CLERK         7782 82/01/23   1300              10   
+
+12 rows selected.
+
+SQL&gt;
+</pre>
+
+<p>
+There are a total of 12 employees.
+Only employees whose job (JOB) is sales (SALESMAN) have values in the COMM (commission) column.
+The commission column for the remaining employees is NULL.
+Since KING is a PRESIDENT, the employee number of his manager is NULL.
+Check the structure of the SALGRADE table.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">desc salgrade;</span>
+NAME                                      NULL?      TYPE
+----------------------------------------- -------- -------
+
+GRADE                                              NUMBER
+LOSAL                                              NUMBER
+HISAL                                              NUMBER
+
+SQL&gt;
+</pre>
+
+<p>
+The SALGRADE table is a table of salary levels.
+GRADE is the salary grade, LOSAL is the minimum salary by grade, and HISAL is the maximum salary column by grade.
+Retrieve all the data from the SALGRADE table.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; <span class="prompt-selection">select * from salgrade;</span>
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL&gt;
+</pre>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>If you installed Oracle Database 11g Release 2, but not XE, the SCOTT account is created.
+But SCOTT is locked.
+Therefore, you must log in as an administrator and run alter user scott account unlock to unlock.
+When you first access the scott account after unlocking, Oracle instructs you to change your password for scott, and change it to tiger for consistency in subsequent JDBC articles.
+	</li>
+	<li>For Linux, the same file is utlsampl.sql.</li>
+</ol>
+</article>

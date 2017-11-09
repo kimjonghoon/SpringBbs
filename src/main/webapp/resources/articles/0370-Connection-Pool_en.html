@@ -1,0 +1,997 @@
+<article>
+
+<h1>Connection Pool</h1>
+
+<p>
+Attempting to connect to a database in a Java program (getting a Connection object) is a time-consuming task.
+If you create a certain amount of connection in advance and store it in the repository, you can save time if the program provides a connection from the repository if there is a request.
+This programming technique is called connection pooling.
+When using JDBC, you should return the connection to the repository instead of returning the resource using the Connection's close () method.
+</p>
+
+<h3>Summary of Connection Pooling Classes</h3>
+
+<p>
+Log is a class for outputting log messages to a file.
+</p>
+
+<p>
+DBConnectionPool is a class that puts database connections into a pool and manages it.
+</p>
+
+<p>
+DBConnectionPoolManager is a class that manages DBConnectionPool objects.
+</p>
+
+<p>
+The ConnectionManager is an abstract class that asks the DBConnectionPoolManager class for a connection.
+The reason for the abstract class is that it considers multiple databases.
+Depending on the database you are using, create a class that inherits this class.
+</p>
+
+<p>
+OracleConnectionManager is a class that inherits the ConnectionManager class to manage connections for Oracle.
+</p>
+
+<p>
+Oracle.properties is the connection pool configuration file for Oracle.
+In oracle.properties, the string "oracle" is used as the distinguished name of the connection pool object for Oracle.
+It is advantageous for reuse and maintenance to manage the configuration as a file rather than to implement it in Java code.
+</p>
+
+<h3>Connection Pooling Sources</h3>
+<em class="filename">Log.java</em>
+<pre class="prettyprint">
+package net.java_school.util;
+
+import java.io.*;
+import java.util.Date;
+
+public class Log {
+	public String logFile = "C:/jdbc/connection-pool.log";
+	FileWriter fw = null;
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	
+	public Log() {
+		try {
+			fw = new FileWriter(logFile, true);
+		} catch (IOException e){}
+	}
+	
+	public void close() {
+		try {
+			fw.close();
+		} catch (IOException e){}
+	}
+	
+	public void close(FileWriter fw) {
+		try {
+			fw.close();
+		} catch (IOException e){}
+	}
+	
+	public void debug(String msg) {
+		try {
+			fw.write(new java.util.Date()+ " : ");
+			fw.write(msg + LINE_SEPARATOR);
+			fw.flush();
+		} catch (IOException e) {
+			System.err.println("IOException.......!!");
+		}
+	}
+	
+	public static void out(String msg) {
+		System.out.println(new Date() + ": " + msg);
+	}
+	
+	public static void err(String msg) {
+		System.out.println(new Date() + ": " + msg);
+	}
+	
+	public static void err(Throwable e, String msg) {
+		System.err.println(new Date() + ": " + msg);
+		e.printStackTrace(System.out);
+	}
+	
+}
+</pre>
+<em class="filename">DBConnectionPool.java</em>
+<pre class="prettyprint">
+package net.java_school.db.dbpool; 
+
+import java.util.*; 
+import java.sql.*; 
+import java.util.Date; 
+
+import net.java_school.util.Log;
+
+class DBConnectionPool {
+	//Number of connections currently in use
+	private int checkedOut;
+	
+	// Free Connection List
+	private Vector&lt;Connection&gt; freeConnections = new Vector&lt;Connection&gt;();
+	
+	//Maximum number of connections
+	private int maxConn;
+	
+	//Initial number of connections 
+	private int initConn;
+	
+	//Waiting time (maximum time to wait when there is no connection in the pool)
+	private int maxWait;
+	
+	//Connection Pool Name
+	private String name;
+	
+	//DB Password
+	private String password;
+	
+	//DB URL
+	private String URL;
+	
+	//DB UserID
+	private String user;
+	
+	//Constructor
+	public DBConnectionPool(String name, 
+			String URL, 
+			String user, 
+			String password, 
+			int maxConn, 
+			int initConn, 
+			int waitTime) {
+			
+		this.name = name;
+		this.URL = URL;
+		this.user = user;
+		this.password = password;
+		this.maxConn = maxConn;
+		this.maxWait = waitTime;
+		
+		for (int i = 0; i &lt; initConn; i++) {
+			freeConnections.addElement(newConnection());
+		}
+	}
+	
+	//Returning Connection
+	//@param con : Connection to return
+	public synchronized void freeConnection(Connection con) {
+		freeConnections.addElement(con);
+		checkedOut--;
+		//Notify thread waiting to get Connection
+		notifyAll();
+	}
+	
+	//Get Connection
+	public synchronized Connection getConnection() {
+		Connection con = null;
+		//If Connection is in Free List, get the first of List
+		if (freeConnections.size() &gt; 0) {
+			con = (Connection) freeConnections.firstElement();
+			freeConnections.removeElementAt(0);
+			
+			try {
+				//If the connection is closed by the DBMS, request again
+				if (con.isClosed()) {
+					Log.err("Removed bad connection from " + name);
+					con = getConnection();
+				}
+			} //If strange connection occurs, request again
+			catch (SQLException e) {
+				Log.err(e, "Removed bad connection from " + name);
+				con = getConnection();
+			}
+		} //If Connection is not in Free List, create new
+		else if (maxConn == 0 || checkedOut &lt; maxConn) {
+			con = newConnection();
+		}
+		
+		if (con != null) {
+			checkedOut++;
+		}
+		
+		return con;
+	}
+	
+	//Get Connection
+	//@param timeout : Maximum Wait Time to Obtain a Connection
+	public synchronized Connection getConnection(long timeout) {
+		long startTime = new Date().getTime();
+		Connection con;
+		while ((con = getConnection()) == null) {
+			try {
+				wait(timeout * maxWait);
+			} catch (InterruptedException e) {}
+			if ((new Date().getTime() - startTime) &gt;= timeout) {
+				//Wait timeout
+				return null;
+			}
+		}
+		
+		return con;
+	}
+	
+	//Get Connection
+	private Connection newConnection() {
+		Connection con = null;
+		try {
+			if (user == null) {
+				con = DriverManager.getConnection(URL);
+			} else {
+				con = DriverManager.getConnection(URL, user, password);
+			}
+			Log.out("Created a new connection in pool " + name);
+		} catch (SQLException e) {
+			StringBuffer sb = new StringBuffer();
+			sb.append("Can't create a new connection for ");
+			sb.append(URL);
+			sb.append(" user: ");
+			sb.append(user);
+			sb.append(" passwd: ");
+			sb.append(password);
+			Log.err(e, sb.toString());
+			return null;
+		}
+		
+		return con;
+	}
+	
+}
+</pre>
+
+<em class="filename">DBConnectionPoolManager.java</em>
+<pre class="prettyprint">
+package net.java_school.db.dbpool;
+
+import java.sql.*;
+import java.util.*;
+
+import net.java_school.util.Log;
+
+public class DBConnectionPoolManager {
+	//To apply the singleton pattern to the DBConnectionPoolManager (keep only one instance), declare it as static
+	static private DBConnectionPoolManager instance;
+	private Vector&lt;String&gt; drivers = new Vector&lt;String&gt;();
+	private Hashtable&lt;String, DBConnectionPool&gt; pools = new Hashtable&lt;String, DBConnectionPool&gt;();
+	
+	//Obtaining instance of DBConnectionPoolManager
+	// @return DBConnectionManger
+	static synchronized public DBConnectionPoolManager getInstance() {
+		if (instance == null) {
+			instance = new DBConnectionPoolManager();
+		}
+		
+		return instance;
+	}
+	
+	// Default Constructor
+	private DBConnectionPoolManager() {}
+	
+	//Send current Connection to Free Connection List
+	//@param name : Pool Name
+	//@param con : Connection
+	public void freeConnection(String name, Connection con) {
+		DBConnectionPool pool = (DBConnectionPool) pools.get(name);
+		if (pool != null) {
+			pool.freeConnection(con);
+		}
+		
+		Log.out("One Connection of " + name + " was freed");
+	}
+	
+	//Obtain Open Connection. Creates a new connection if there are no open connections and the maximum number of connections has not been reached.
+	//Waits for the default wait time when there are no open connections currently and the maximum number of connections is in use.
+	//@param name : Pool Name
+	//@return Connection : The connection or null
+	public Connection getConnection(String name) {
+		DBConnectionPool pool = (DBConnectionPool) pools.get(name);
+		if (pool != null) {
+			return pool.getConnection(10);
+		}
+		return null;
+	}
+	
+	// Create a Connection Pool
+	// @param poolName : Name of Pool to create
+	// @param url : DB URL
+	// @param user : DB UserID
+	// @param password : DB Password
+	private void createPools(String poolName, 
+			String url, 
+			String user,
+			String password, 
+			int maxConn, 
+			int initConn, 
+			int maxWait) {
+			
+		DBConnectionPool pool = new DBConnectionPool(poolName, url, user, password, maxConn, initConn, maxWait);
+		pools.put(poolName, pool);
+		Log.out("Initialized pool " + poolName);
+	}
+	
+	//Initialization
+	public void init(String poolName, 
+			String driver, 
+			String url,
+			String user, 
+			String passwd, 
+			int maxConn, 
+			int initConn, 
+			int maxWait) {
+			
+		loadDrivers(driver);
+		createPools(poolName, url, user, passwd, maxConn, initConn, maxWait);
+	}
+	
+	//JDBC Driver Loading
+	//@param driverClassName : The JDBC driver for the DB you want to use.
+	private void loadDrivers(String driverClassName) {
+		try {
+			Class.forName(driverClassName);
+			drivers.addElement(driverClassName);
+			Log.out("Registered JDBC driver " + driverClassName);
+		} catch (Exception e) {
+			Log.err(e, "Can't register JDBC driver: " + driverClassName);
+		}
+	}
+	
+	public Hashtable&lt;String,DBConnectionPool&gt; getPools() {
+		return pools;
+	}
+	
+	public int getDriverNumber() {
+		return drivers.size();
+	}
+	
+}
+</pre>
+
+<em class="filename">ConnectionManager.java</em>
+<pre class="prettyprint">
+package net.java_school.db.dbpool;
+
+import java.sql.*;
+import java.io.*;
+import java.util.*;
+
+import net.java_school.util.Log;
+
+public abstract class ConnectionManager {
+	protected DBConnectionPoolManager connMgr;
+	protected String poolName, dbServer, dbName, port, userID, passwd;
+	protected int maxConn,initConn, maxWait;
+	private Properties dbProperties;
+	private String configFile;
+	
+	public ConnectionManager(String pool) {
+		poolName = pool;
+		//Specifying the directory for the Property file
+		configFile = "C:/jdbc/"+poolName+".properties";
+		
+		try {
+			dbProperties = readProperties();
+			dbServer = getProperty("dbServer");
+			port = getProperty("port");
+			dbName = getProperty("dbName");
+			userID = getProperty("userID");
+			passwd = getProperty("passwd");
+			maxConn = Integer.parseInt(getProperty("maxConn"));
+			initConn = Integer.parseInt(getProperty("initConn"));
+			maxWait = Integer.parseInt(getProperty("maxWait"));
+		} catch (IOException ioe) {
+			Log.err("Error reading properties of " + configFile);
+		}
+	}
+	
+	public Connection getConnection() {
+		return (connMgr.getConnection(poolName));
+	}
+	
+	public void freeConnection(Connection conn) {
+		connMgr.freeConnection(poolName, conn);
+	}
+	
+	private String getProperty(String prop) throws IOException {
+		return (dbProperties.getProperty(prop));
+	}
+	
+	protected synchronized Properties readProperties() throws IOException {
+		Properties tempProperties = new Properties();
+		FileInputStream in = new FileInputStream(configFile);
+		tempProperties.load(in);
+		return tempProperties;
+	}
+	
+	public int getDriverNumber() {
+		return connMgr.getDriverNumber();
+	}
+	
+}
+</pre>
+
+<em class="filename">OracleConnectionManager.java</em>
+<pre class="prettyprint">
+package net.java_school.db.dbpool;
+
+public class OracleConnectionManager extends ConnectionManager {
+
+	public OracleConnectionManager() {
+		super("oracle");
+		String JDBCDriver = "oracle.jdbc.driver.OracleDriver";
+		//Oracle JDBC thin driver
+		String JDBCDriverType = "jdbc:oracle:thin";
+		String url = JDBCDriverType + ":@" + dbServer + ":" + port + ":" + dbName;
+		connMgr = DBConnectionPoolManager.getInstance();
+		connMgr.init(poolName, JDBCDriver, url, userID, passwd, maxConn, initConn, maxWait);
+	}
+	
+}
+</pre>
+
+<em class="filename">oracle.properties</em>
+<pre class="prettyprint">
+############################################ 
+# Database Connection Properties for Oracle
+############################################ 
+
+# Database Server Name OR IP address 
+dbServer = 127.0.0.1
+
+# The port number your DB server listents to. 
+port = 1521
+
+# Database Name 
+dbName = XE
+
+# Database User 
+userID = scott
+
+# Database Password 
+passwd = tiger
+
+# Maximum Connection Number 
+maxConn = 20
+
+# Inital Connection Number 
+initConn = 5
+
+# Maximum Wait Time 
+maxWait = 5
+</pre>
+
+<h3>How to use</h3>
+
+<p>
+Create an empty file named connection-pool.log in C:/jdbc according to the following code in Log.java:<br /> 
+public String logFile = "C:/jdbc/connection-pool.log"<br />
+Create a file named oracle.properties in C:/jdbc according to the following code in ConnectionManager.java:<br />
+configFile = "C:/jdbc/" + poolName + ".properties";<br />
+If compilation is complete, apply it to GetEmp.java.
+</p>
+
+<em class="filename">GetEmp.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc;
+
+import java.sql.*;
+ 
+import net.java_school.util.Log;
+import net.java_school.db.dbpool.*;
+
+public class GetEmp {
+
+	public static void main(String[] args) {
+		<strong>ConnectionManager conMgr = new OracleConnectionManager();</strong>
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM emp";
+
+		try {
+			conn = <strong>conMgr.getConnection();</strong>
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) { 
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+
+				System.out.println(empno + " : " + ename + " : " + job + " : " + mgr
+					+ " : " + hiredate + " : " + sal + " : " + comm + " : "	+ depno); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				<strong>conMgr.freeConnection(conn);</strong>
+			} catch (SQLException e) {}
+		}
+	}
+}
+</pre>
+
+<h2>DBCP</h2>
+
+<p>
+DBCP is Apache's open source connection pool library.
+More information is available at:<br />
+<a href="http://commons.apache.org/proper/commons-dbcp/">http://commons.apache.org/proper/commons-dbcp/</a>
+</p>
+
+<p>
+An example we will practice is BasicDataSourceExample.java at the following address:
+<a href="http://svn.apache.org/viewvc/commons/proper/dbcp/trunk/doc/">http://svn.apache.org/viewvc/commons/proper/dbcp/trunk/doc/</a>
+I will test BasicDataSourceExample.java with a little modification.
+To practice the example, add the commons-dbcp, commons-pool, and commons-logging libraries to the Build Path.
+</p>
+
+<p>
+Note that DBCP 2 runs only in the JDK 7 environment.
+You should use DBCP 1.4 in JDK 6 and DBCP 1.3 in JDKs 6 and below.
+</p>
+
+<ul>
+	<li>commons-dbcp2-2.0.1-bin.zip
+	<a href="http://commons.apache.org/proper/commons-dbcp/download_dbcp.cgi">http://commons.apache.org/proper/commons-dbcp/download_dbcp.cgi</a></li>
+	<li>commons-pool2-2.2-bin.zip
+	<a href="http://commons.apache.org/proper/commons-pool/download_pool.cgi">http://commons.apache.org/proper/commons-pool/download_pool.cgi</a></li>
+	<li>commons-logging-1.2-bin.zip
+	<a href="http://commons.apache.org/proper/commons-logging/download_logging.cgi">http://commons.apache.org/proper/commons-logging/download_logging.cgi</a></li>
+</ul>
+
+<em class="filename">BasicDataSourceExample.java</em>
+<pre class="prettyprint">
+package net.java_school.dbcp;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+//
+// Here are the dbcp-specific classes.
+// Note that they are only used in the setupDataSource
+// method. In normal use, your classes interact
+// only with the standard JDBC API
+//
+import org.apache.commons.dbcp2.BasicDataSource;
+
+//
+// Here's a simple example of how to use the BasicDataSource.
+//
+
+//
+// Note that this example is very similiar to the PoolingDriver
+// example.
+
+//
+// To compile this example, you'll want:
+//  * commons-pool-1.5.6.jar
+//  * commons-dbcp-1.3.jar (JDK 1.4-1.5) or commons-dbcp-1.4 (JDK 1.6+)
+//  * j2ee.jar (for the javax.sql classes)
+// in your classpath.
+//
+// To run this example, you'll want:
+//  * commons-pool-1.5.6.jar
+//  * commons-dbcp-1.3.jar (JDK 1.4-1.5) or commons-dbcp-1.4 (JDK 1.6+)
+//  * j2ee.jar (for the javax.sql classes)
+//  * the classes for your (underlying) JDBC driver
+// in your classpath.
+//
+// Invoke the class using two arguments:
+//  * the connect string for your underlying JDBC driver
+//  * the query you'd like to execute
+// You'll also want to ensure your underlying JDBC driver
+// is registered.  You can use the "jdbc.drivers"
+// property to do this.
+//
+// For example:
+//  java -Djdbc.drivers=oracle.jdbc.driver.OracleDriver \
+//       -classpath commons-pool-1.5.6.jar:commons-dbcp-1.4.jar:j2ee.jar:oracle-jdbc.jar:. \
+//       PoolingDataSourceExample
+//       "jdbc:oracle:thin:scott/tiger@myhost:1521:mysid"
+//       "SELECT * FROM DUAL"
+//
+public class BasicDataSourceExample {
+
+    public static void main(String[] args) {
+        // First we set up the BasicDataSource.
+        // Normally this would be handled auto-magically by
+        // an external configuration, but in this example we'll
+        // do it manually.
+        //
+        System.out.println("Setting up data source.");
+        DataSource dataSource = setupDataSource("jdbc:oracle:thin:@127.0.0.1:1521:XE");
+        System.out.println("Done.");
+
+        //
+        // Now, we can use JDBC DataSource as we normally would.
+        //
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        try {
+            System.out.println("Creating connection.");
+            conn = dataSource.getConnection();
+            System.out.println("Creating statement.");
+            stmt = conn.createStatement();
+            System.out.println("Executing statement.");
+            rset = stmt.executeQuery("SELECT * FROM dept");
+            System.out.println("Results:");
+            int numcols = rset.getMetaData().getColumnCount();
+            while(rset.next()) {
+                for(int i=1;i&lt;=numcols;i++) {
+                    System.out.print("\t" + rset.getString(i));
+                }
+                System.out.println("");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rset != null) rset.close(); } catch(Exception e) { }
+            try { if (stmt != null) stmt.close(); } catch(Exception e) { }
+            try { if (conn != null) conn.close(); } catch(Exception e) { }
+        }
+    }
+
+    public static DataSource setupDataSource(String connectURI) {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+        ds.setUsername("scott");
+        ds.setPassword("tiger");
+        ds.setUrl(connectURI);
+        return ds;
+    }
+
+    public static void printDataSourceStats(DataSource ds) {
+        BasicDataSource bds = (BasicDataSource) ds;
+        System.out.println("NumActive: " + bds.getNumActive());
+        System.out.println("NumIdle: " + bds.getNumIdle());
+    }
+
+    public static void shutdownDataSource(DataSource ds) throws SQLException {
+        BasicDataSource bds = (BasicDataSource) ds;
+        bds.close();
+    }
+    
+}
+</pre>
+
+<p>
+Let's create a class that gets a connection from the connection pool by referring to the example above.
+</p>
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+package net.java_school.dbcp;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
+public class Test {
+
+	private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	private static final String USER = "scott";
+	private static final String PASS = "tiger";
+	
+	private DataSource dataSource;
+	
+	public Test() {
+		BasicDataSource ds = new BasicDataSource();
+		ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+		ds.setUsername(USER);
+		ds.setPassword(PASS);
+		ds.setUrl(URL);
+	    
+		this.dataSource = ds;
+	}
+
+	public Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
+	}
+
+}
+</pre>
+
+<p>
+Apply the above class to GetEmp.java.
+</p>
+
+<em class="filename">GetEmp.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc;
+
+import java.sql.*; 
+
+import net.java_school.dbcp.*;
+
+public class GetEmp {
+	public static void main(String[] args) {
+		
+		<strong>Test test = new Test();</strong>
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM emp";
+
+		try {
+			conn = <strong>test.getConnection();</strong>
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) { 
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+
+				System.out.println(empno + " : " + ename + " : " + job + " : " + mgr
+					+ " : " + hiredate + " : " + sal + " : " + comm + " : "	+ depno); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				<strong>conn.close();</strong>
+			} catch (SQLException e) {}
+		}
+	}
+}
+</pre>
+
+<p>
+Note that the connection is returned by the <em>conn.close();</em>.
+Would not it be a problem to return resources like this when using a connection pool?
+To solve this question, you should look at the DataSource interface.
+The DataSource is the connection factory.
+There are three kinds of implementations of DataSource.
+</p>
+
+<ul>
+	<li>Base implementation: Produces standard connection objects.</li>
+	<li>Connection pooling implementation: Automatically creates a connection object that participates in the connection pool. This implementation works with the middle tier connection pooling manager.</li>
+	<li>Distributed Transaction Implementation: Produces a connection object that participates in a connection pool for distributed transactions. This implementation works with the middle-tier transaction manager and the connection pooling manager.</li>
+</ul>
+
+<p>
+DBCP implements the javax.sql.DataSource interface.
+The connections we have used so far are different from those for connection pooling.
+The close () method of the connection object for connection pooling returns itself to the pool.
+</p>
+
+<p>
+We will create an example similar to the connection pool we already used.
+First, create a ConnectionManager abstract class.
+The constructor of this abstract class reads the configuration file and sets the object's members.
+This abstract class has a method that is called to get a connection.
+</p>
+
+<em class="filename">ConnectionManager.java</em>
+<pre class="prettyprint">
+package net.java_school.dbcp;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+public abstract class ConnectionManager {
+	protected String poolName, dbServer, dbName, port, userID, passwd;
+	protected int maxConn, initConn, maxWait;
+	protected DataSource dataSource;
+	
+	public ConnectionManager(String pool) {
+		String configFile = pool + ".properties";
+		Properties properties = readProperties(configFile);
+		
+		dbServer = properties.getProperty("dbServer");
+		port = properties.getProperty("port");
+		dbName = properties.getProperty("dbName");
+		userID = properties.getProperty("userID");
+		passwd = properties.getProperty("passwd");
+		maxConn = Integer.parseInt(properties.getProperty("maxConn"));
+		initConn = Integer.parseInt(properties.getProperty("initConn"));
+		maxWait = Integer.parseInt(properties.getProperty("maxWait"));
+	}
+	
+	protected synchronized Properties readProperties(String configFile) {
+		Properties properties = new Properties();
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(configFile);
+			properties.load(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return properties;
+	}
+	
+	public Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
+	}
+	
+}
+</pre>
+
+<p>
+Next, create an OracleConnectionManager class that inherits ConnectionManager.
+</p>
+
+<em class="filename">OracleConnectionManager.java</em>
+<pre class="prettyprint">
+package net.java_school.dbcp;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
+public class OracleConnectionManager extends ConnectionManager {
+
+	public OracleConnectionManager() {
+		super("oracle");
+		String driverClassName = "oracle.jdbc.driver.OracleDriver";
+		String driverType = "jdbc:oracle:thin";
+		String url = driverType + ":@" + dbServer + ":" + port + ":" + dbName;
+		
+		BasicDataSource ds = new BasicDataSource();
+		ds.setDriverClassName(driverClassName);
+		ds.setUsername("scott");
+		ds.setPassword("tiger");
+		ds.setUrl(url);
+
+		this.dataSource = ds;
+	}
+	
+}
+</pre>
+
+<p>
+MaxConn, initConn, maxWait If not set, the default value is applied.
+To set it as a property file, add the following code:
+</p>
+
+<pre class="code">
+ds.setInitialSize(initConn);
+ds.setMaxTotal(maxConn);
+ds.setMaxWaitMillis(maxWait);
+</pre>
+
+<p>
+For instructions on how to set it in BasicDataSource, see the official site documentation.
+Copy the oracle.properties file to the root directory of your Eclipse project.
+</p>
+
+<em class="filename">oracle.properties</em>
+<pre class="prettyprint">
+############################################ 
+# Database Connection Properties for Oracle
+############################################ 
+
+# Database Server Name OR IP address 
+dbServer = 127.0.0.1
+
+# The port number your DB server listents to. 
+port = 1521
+
+# Database Name 
+dbName = XE
+
+# Database User 
+userID = scott
+
+# Database Password 
+passwd = tiger
+
+# Maximum Connection Number 
+maxConn = 20
+
+# Inital Connection Number 
+initConn = 5
+
+# Maximum Wait Time 
+maxWait = 5
+</pre>
+
+<p>
+Let's apply them to GetEmp.java again.
+</p>
+
+<em class="filename">GetEmp.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc;
+
+import java.sql.*; 
+
+import net.java_school.dbcp.*;
+
+public class GetEmp {
+	
+	public static void main(String[] args) {
+		<strong>ConnectionManager conMgr = new OracleConnectionManager();</strong>
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM emp";
+
+		try {
+			conn = <strong>conMgr.getConnection();</strong>
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) { 
+				String empno = rs.getString(1);
+				String ename = rs.getString(2);
+				String job = rs.getString(3);
+				String mgr = rs.getString(4);
+				String hiredate = rs.getString(5);
+				String sal = rs.getString(6);
+				String comm = rs.getString(7);
+				String depno = rs.getString(8);
+
+				System.out.println(empno + " : " + ename + " : " + job + " : " + mgr
+					+ " : " + hiredate + " : " + sal + " : " + comm + " : "	+ depno); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				<strong>conn.close();</strong>
+			} catch (SQLException e) {}
+		}
+	}
+}
+</pre>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html</a></li>
+	<li><a href="http://commons.apache.org/proper/commons-dbcp/">http://commons.apache.org/proper/commons-dbcp/</a></li>
+	<li><a href="http://commons.apache.org/proper/commons-dbcp/apidocs/org/apache/commons/dbcp2/BasicDataSource.html">http://commons.apache.org/proper/commons-dbcp/apidocs/org/apache/commons/dbcp2/BasicDataSource.html</a></li>
+</ul>
+</article>

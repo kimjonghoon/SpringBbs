@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>자바스크립트 select 엘리먼트 다루기</title>
+<script type="text/javascript">
+function chooseLang() {
+	var form = document.getElementById("testForm");
+	var lang = form.programLanguage.value;
+	
+	switch (lang) {
+	case "java":
+		form.step.options[0] = new Option("자바과정에대해","javaIntro");
+		form.step.options[1] = new Option("객체와 클래스","ClassObject");
+		form.step.options[2] = new Option("데이터타입","JavadataType");
+		break;
+	case "javascript":
+		form.step.options[0] = new Option("자바스크립트란","javascriptIntro");
+		form.step.options[1] = new Option("데이터타입","JavascriptDataType");
+		form.step.options[2] = new Option("자바스크립트객체","JavascriptObjects");
+		break;
+	default:
+		form.step.options.length = 0;
+	}
+}
+</script>
+</head>
+<body>
+<form id="testForm" action="sel.html">
+	<select name="programLanguage" onchange="chooseLang()">
+		<option value="">--언어를 선택하세요</option>
+		<option value="java">자바</option>
+		<option value="javascript">자바스크립트</option>
+	</select>
+	<select name="step">
+	</select>
+	<input type="submit" value="테스트" /><br />
+	<a href="../handling-select-items">본문으로</a>
+</form>
+</body>
+</html>

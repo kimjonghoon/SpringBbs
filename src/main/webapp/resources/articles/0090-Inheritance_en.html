@@ -1,0 +1,769 @@
+<article>
+	
+<h1>Inheritance</h1>
+
+<p>
+Inheritance allows you to create classes hierarchically.<br />
+A superclass passes its implementation to a subclass, and a subclass inherits its implementation from a superclass.<br />
+</p>
+
+<p>
+The most important thing in object-oriented programming is reuse.<br />
+Reuse can reuse classes as they are and reuse super classes.<br />
+When reusing a superclass, it means creating a subclass appropriately from the superclass.<br />
+</p>
+<p>
+Let's start with an example of a class that is not inherited.<br />
+The following are the Employee and Manager classes.<br />
+</p>
+
+<em class="filename">Employee.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Employee {
+	private String name;
+	private String position;
+	private String telephone;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append("|");
+		sb.append(position);
+		sb.append("|");
+		sb.append(telephone);
+		
+		return sb.toString();
+	}
+	
+}
+</pre>
+
+<em class="filename">Manager.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Manager {
+	private String name;
+	private String position;
+	private String telephone;
+	private String manageJob;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getManageJob() {
+		return manageJob;
+	}
+
+	public void setManageJob(String manageJob) {
+		this.manageJob = manageJob;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append("|");
+		sb.append(position);
+		sb.append("|");
+		sb.append(telephone);
+		sb.append("|");
+		sb.append(manageJob);
+		
+		return sb.toString();
+	}
+	
+}
+</pre>
+
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Test {
+	public static void main(String[] args) {
+		Employee james = new Employee();
+		james.setName("JAMES");
+		james.setPosition("CLERK");
+		james.setTelephone("19");
+		System.out.println(james.toString());	
+	
+		Manager blake = new Manager();
+		blake.setName("BLAKE");
+		blake.setPosition("MANAGER");
+		blake.setTelephone("9");
+		blake.setManageJob("Project Management");
+		System.out.println(blake.toString());
+	}	
+}
+</pre>
+
+<p>
+The two classes above have nothing to do with each other.<br /> 
+However, since the proposition that "manager is an employee" is correct, 
+the two classes are an inheritance relationship that establishes a "is-a" relationship.<br /> 
+Since the employee is a concept wider than the manager, the employee is a superclass and the manager is a subclass.<br /> 
+Now, in order to implement inheritance as code, make sure that there is overlapping code in employee class and manager class.<br /> 
+You can see that the name, position, and telephone instance variables are overlapped with the getters and setters methods for this variable.<br /> 
+The duplicate code will be inherited and will be deleted from the manager class source.<br /> 
+Modify the manager class to inherit the employee class as shown below.<br />
+</p>
+
+<em class="filename">Manager.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Manager <strong>extends</strong> Employee {
+	private String manageJob;
+	
+	public String getManageJob() {
+		return manageJob;
+	}
+
+	public void setManageJob(String manageJob) {
+		this.manageJob = manageJob;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getName());
+		sb.append("|");
+		sb.append(getPosition());
+		sb.append("|");
+		sb.append(getTelephone());
+		sb.append("|");
+		sb.append(manageJob);
+		
+		return sb.toString();
+	}
+	
+}
+</pre>
+
+<p>
+To inherit a superclass from a subclass, use the extends keyword in the class declaration of the subclass.<br />
+Now the manager class will be able to write the member of the employee class as if it were a member.<br />
+However, from now on, the inherited member and the original member of the class should be considered separately, because the inherited member still applies the access modifiers.<br />
+The reason for using getName (), getPosition (), and getTelephone () in the toString () method of the manager class is that the employee class name, position, and telephone are private.<br />
+To access the parent member variables name, position, and telephone directly, you need to change the access modifiers of these member variables.<br />
+Since the employee class and the manager class are in the same package, 
+applying the name, position, and telephone access modifiers in the employee class as default, protected, or public allows access to the members of the parent directly.<br />
+If the employee class and the manager class are not the same package, you must apply the name, position, and telephone accessors in the employee class as protected or public.<br />
+An object of a subclass type can access the protected member of a superclass even if the package of the subclass and superclass is different.<br />
+The access modifier protected protects the inheritance relationship between classes in other packages.<br />
+Run the Test class to see the results.<br />
+</p>
+
+<dl class="note">
+<dt>Method Overriding</dt>
+<dd>
+You can use the method inherited from the parent, but if you want to "redefine" it is called method overriding.<br />
+When redefining methods of a parent class in a child class, the return type, method name, and parameter list must be the same.<br />
+The toString () of the employee class overrides toString () of the Object class, and the toString () of the manager class overrides the toString () of the employee class.<br />
+Wait, does the toString () in the employee class override the toString () in the Obejct class?
+Check the employee class code again.<br />
+Is there an extends keyword in the class declaration?
+None.<br /> 
+However, if there is no extends keyword in the class declaration, the class inherits the Object class.<br />
+This is because the compiler intervenes and changes the class declaration to public class Employee extends Object.<br />
+As a result, the superclass of the employee class becomes Object.<br />
+
+An element such as @Override is called an annotation.<br />
+An annotation passes information that the Java code can not pass to the compiler or platform.<br />
+In the above code, @Override tells the compiler that the method overrides the superclass method.<br />
+</dd>
+</dl>
+
+<h2>Constructor</h2>
+
+<p>
+In the main method of Test class, Manager blake = new Manager (); is the code to create Manager object.<br />
+Now it is time to talk more about this part of the code.<br />
+The Manager () that comes after new is the code that calls the Manager () constructor.<br />
+Manager () must be declared in the class body just like methods.<br />
+After new, you can call one of the constructors declared in the class.<br />
+In the above example, I did not create a constructor for the employee class and the manager class.<br />
+However, the constructor is called in the main method of the Test class.<br />
+And seeing the result without errors means that the calling constructor was executed.<br />
+How could a constructor that could not be created be called?
+The compiler creates a parameterless constructor if you did not create any constructors as you were writing the class.<br />
+The constructor that the compiler automatically generates is called the "default constructor".<br />
+If you have created any of the constructors, the compiler does not create a "default constructor".<br />
+
+You can create multiple constructors with different parameter lists.<br />
+The constructor is called just once after "the object is created" and is not called again.<br />
+Note that "after object is created".<br />
+It is misleading to think that an object is created when a constructor is called.<br />
+The new keyword allocates space for the object in the heap memory<a href="#comments"><sup>1</sup></a> and initializes the value of the instance variable<a href="#comments"><sup>2</sup></a>.<br />
+Then the constructor after new is called.<br />
+When the constructor finishes without errors, the reference variable is assigned a reference value that can refer to the created object.<br />
+If there is an error in the constructor, no reference value is assigned to the reference variable, and as a result, the object is disabled.<br />
+</p>
+
+<p>
+It is called after the object is created, so it is good to write the constructor only for initialization.<br />
+So initialization of instance variables is done by the constructor.<br />
+If you have code that calls a method in the constructor implementation, it is often not good code.<br />
+</p>
+
+<p>
+The constructor must have no return type and the constructor name must be the same as the class name.<br />
+Many people make a mistake by putting void before the constructor name when making a constructor.<br />
+If you add void, it becomes a method, not a constructor.<br />
+</p>
+
+<p>
+The following describes the constructor syntax associated with inheritance.<br />
+Subclasses do not inherit the superclass's constructor.<br />
+The first line of the subclass constructor implementation must contain code that invokes the constructor of the superclass.<br />
+If not, the compiler adds code to the first line that calls the default constructor for the parent class.<br />
+Later, we will add appropriate constructors to the employee class and the manager class.<br />
+Before implementing code, let's look at the keywords this and super.<br />
+</p>
+
+<dl class="note">
+<dt>this</dt>
+<dd>
+At the time this is executed, this will have the object's own reference value.<br />
+The this keyword is used to call another constructor within the constructor or to distinguish instance variables from parameters in the constructor.<br />
+Note that when you write your code in Eclipse, you can get code assists for the available resources (member variables, methods, and so on) by typing. (Dot) after this.<br />
+</dd>
+<dt>super</dt>
+<dd>
+The super keyword is used in the following cases:
+1. When you need to call a method of a superclass hidden by method overriding
+2. When calling a superclass constructor from a subclass constructor
+</dd>
+</dl>
+
+<em class="filename">Adding a constructor to Employee class</em>
+<pre class="prettyprint">
+public Employee() {} //if you need to create a constructor, it is a good idea to create a default constructor also.
+
+public Employee(String name, String position, String telephone) {
+	this.name = name;
+	this.position = position;
+	this.telephone = telephone;
+}
+</pre>
+
+<em class="filename">Adding a constructor to Manager class</em>
+<pre class="prettyprint">
+public Manager() {} //default constructor
+
+public Manager(String name, String position, String telephone, String manageJob) {
+	super(name, position, telephone);
+	this.manageJob = manageJob;
+}
+</pre>
+
+<em class="filename">Modify the main method of the Test class</em>
+<pre class="prettyprint">
+Employee james = new Employee("JAMES", "CLERK", "19");
+System.out.println(james.toString());
+
+Manager blake = new Manager("BLAKE", "MANAGER", "9", "Project Management");
+<strong>System.out.println(blake);</strong>
+</pre>
+
+<p>
+In System.out.println(blake); the println method calls the toString() method of the object pointed to by blake.<br />
+Therefore, the results of System.out.println(blake.toString ()); and System.out.println(blake); are the same.<br />
+It is up to you to decide which code you like better.<br />
+</p>
+
+<p>
+The above constructor code is changed by the compiler as shown below.<br />
+</p>
+
+<em class="filename">Code that the compiler added in Employee's Contructor</em>
+<pre class="prettyprint">
+public Employee() {
+	<strong>super();</strong>
+}
+
+public Employee(String name, String position, String telephone) {
+	<strong>super();</strong>
+	this.name = name;
+	this.position = position;
+	this.telephone = telephone;
+}
+</pre>
+
+<em class="filename">Code that the compiler added in Manager's Contructor</em>
+<pre class="prettyprint">
+public Manager() {
+	<strong>super();</strong>
+}
+
+public Manager(String name, String position, String telephone, String manageJob) {
+	super(name, position, telephone);
+	this.manageJob = manageJob;
+}
+</pre>
+
+<h2>You may assign a reference value of the subclass type to the reference variable of the superclass type.</h2>
+
+<p>
+It is polymorphism to make them feel like they are in the same shape, but executed in various forms.<br />
+You can see this polymorphism by taking advantage of the fact that you can assign a reference value of a subclass type to a reference of a superclass type.<br />
+</p>
+
+<div style="float: left;width: 300px;">
+	<img src="https://lh3.googleusercontent.com/ZfOxKrlh2ZiCf1BgiINr49yzmknMUiktiGXljDk8dp5EBlmI-M7V15swfwyAYu9K0aH0W3ENkfHNfhxlvHuWg3M4WImdp5-Sg745mqzTW70Yx_SfJ22gxbaihKVPqcsWFE2nVY80a6z26xfSWnVA8pQYflcIKkug5taZpJ4Kcp6yzHyg-knHUXws3GBVhIvEpK5GLdqa_H-MgOOuoUPci7I-02N59ZWtc6yGH_kFSippiYR-_uiwrl4-Y3aFUPMcFqd03dMZqZGVJjl-oH-lQNkXXP5XVP1_-WIb2crWvJgYgnZTbN5wffwHJVhVK6jYvFJwL2KFDwhP-uVGpPlYBx-soQqSUXeT56FGbPHPvzY8LHq2I7QEQYUwMMzrM8LViXR2I2Z18Eg91E3DVuLQUS7bmALGXi-Q_R6WJe-io6szn3Xz1Z1OFd9rxWpCd42RK7NvqzbAHSygytETY2Vj5Cun5uej8glBA6KQgizaEd_a_HVCpvAlTbEHHsLzsnPSFOW_X_BEHZFlRaJ_VvzpFVCuiMY6bQOvkpjqkDOor4cpS8ZeeIjOFZjoFi_DIDMr8zt852alJW5xXMlO06XsVwjb5eD1E4NIGRMPUPr95i8KSJI9G-Hh=w280-h194-no" alt="Polymorphism" />
+</div>
+<p style="line-height: 2em;padding-top: 10px;">
+Guitar extends Instrument
+Drum extends Instrument
+<strong>Instrument i</strong> = new Guitar(); //i is the variable of Intrument type
+<strong>i.play();</strong> //Guitar play
+i = new Drum();
+<strong>i.play();</strong> //Drum play
+</p>
+
+<p style="clear: both;">
+I.play () plays a guitar or drum.<br />
+I.play () has polymorphism.<br />
+Whether the guitar is played or the drum is played is determined at the time i.play () is executed (Runtime).<br />
+It is not determined at compile time.<br />
+When a reference type variable of a superclass type refers to an object of a subclass type, 
+it can not be used to access all members of the object.<br />
+The original member of the subclass is not accessible.<br />
+There is an exception, but the methods overridden in a subclass are accessible.<br />
+In fact, this is the hardest part to understand.<br />
+In conclusion, a superclass type reference can access inherited members from a superclass and overridden methods by subclasses.<br />
+Let's look at an example.<br />
+Add the following to the main method of the Test class:
+</p>
+
+<em class="filename">Add the following code to the main method of Test.java</em>
+<pre class="prettyprint">
+Object king = new Manager("KING", "MANAGER", "1", "SALES");
+System.out.println(king);
+//king.setManageJob("ACCOUNTING");// You can not access the setManagerJob() method with an Object type reference.
+//If you want to use the Employee object completely, you need to cast the reference type variable.
+Manager king1 = (Manager)king;
+king1.setManageJob("ACCOUNTING");
+System.out.println(king);
+</pre>
+
+<p>
+In the last line System.out.println(king); king is an Object type variable.<br />
+The println() method internally calls the toString() method of the object pointed to by king.<br />
+Then, since the object actually created in the heap memory is the manager object, the toString () method that the manager class overrides is called.<br />
+The picture below is drawn for your understanding.<br />
+Regardless of the reference type, (2) and (3) are covered and can not be seen.<br />
+Therefore, (1) is called.<br />  
+<img src="https://lh3.googleusercontent.com/SLLiSuKJ0r4l_ZWFW719zO_J2VZ4ANQgkyvSqTPAN7RI3UAxc3H17Pht9TELt4PrdVMPQmdn2YRjJz9uOPeuHOp0ec5i-6RBLc2wKuKcq4jtaZVyUIzeMdFXe05RvN8ypw38t4hB_0hR-USDlO4hTFH1P5jasjMqg7fy0gEWLhGPir1aMwt7wS0YEgiuZLTdHT1y0W38lxlvACGayt2XYhvcIqP_wKfwJBoTkjNjO18h1F9O1sOYR6nKdcRxxMaBF0mKgbVu4srqN4Lr8smrlKhEc5Mq4uo_yzRb9PkiufGvNm9Ze9gLq8INw-7v01FVym77MfFjgt6bXAN7luiDtoQ7BWFUsBUgaayu-kU9DvNclDx1RNBn1cuRtLaCV0VQKwu0hhVIOa74YFCVVewyTeiGC26urQ6AABCWTiR3cuukEPB6iOPRb8walvd5NSqxX7HYSqqCtB6gY2aRtb6zrVetZwWPbR_p0sTMxjmZENl85KIrQu-VGfMoXhJVZ3KKDXA2Y4KDNyNdKQTbFQFGhPjGOsrO38LD713kF3JQhcw7fzjbXChpjCTd05vW5o3kxo8BiTY_FciU08m9tHze3XjbXx_4qkkcdaQbCPfSr5SbtWBoeDic=w1040-h768-no" alt="Manager Object"/>
+</p>
+
+<dl class="note">
+<dt>Method overloading</dt>
+<dd>
+In Java, you can create any number of methods of the same name, if different from the argument list.<br />
+This is called method overloading.<br />
+Method overloading can create multiple methods of the same name with different argument lists,
+This means that the appropriate method will be called according to the arguments passed in while calling the method.<br />
+Note that the return type has nothing to do with method overloading.<br />
+You cannot create a method with the same name with the same parameter list, but with a different return type.<br />
+
+In Java, naming is important.<br />
+You should name the method so that the behavior of the method is well understood.<br />
+Method overloading reduces this burden of naming.<br />
+
+With overloaded methods, you get the impression that the method looks the same but runs differently.<br />
+Method overloading is polymorphic.<br />
+In System.out.println(); the println() method<a href="#comments"><sup>3</sup></a> looks like it prints whatever the argument value is.<br />
+In fact, there are a number of methods with different parameter types defined, 
+and the right method is called depending on the type of argument value passed when the method is called.<br />
+</dd>
+</dl>
+
+<h2>final keyword</h2>
+<ol>
+	<li>When used in a class declaration<a href="#comments"><sup>4</sup></a>, it is not possible to inherit the class and create a subclass.</li>
+	<li>When used in a method declaration, the method cannot be overridden in a subclass.</li>
+	<li>When creating constants in Java, prefix the variable name with "final".</li>
+</ol>
+
+<h2>Abstract Class</h2>
+
+<p>
+In the class declaration section, a class with an abstract before the class keyword is called an abstract class.<br />
+An abstract class can not be instantiated using the keyword new, unlike a normal class.<br />
+To understand an abstract class, you first need to know the meaning of the abstract method.<br />
+An abstract method is a method declaration, but not a method body.<br />
+To distinguish abstract methods from normal methods, add the abstract keyword after the access modifier in the method declaration.<br />
+If a class has one abstract method, it must be declared as an abstract class.<br />
+Conversely, not all abstract classes need to have more than one abstract method.<br /> If necessary, you can declare an abstract class without an abstract method.<br />
+To use an abstract class, you need to create a normal class that inherits from the abstract class, and override the abstract methods of the abstract class in the normal class you created.<br />
+Let's create an abstract class example by modifying the previous examples.<br />
+Create the abstract class AbstractEmployee.java class as shown below.<br />
+If you make it ambiguous like this, the portability is better.<br /> Of course, there must be a premise that the design is good.<br />
+</p>
+
+<em class="filename">AbstractEmployee.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public abstract class AbstractEmployee {
+	private String name;
+	
+	public AbstractEmployee() {}
+	
+	public AbstractEmployee(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	<strong>//Abstract method
+	public abstract void doWork();
+	</strong>
+	
+}
+</pre>
+
+<p>
+Change the employee class to inherit the AbstractEmployee abstract class.<br />
+The employee class must implement the abstract method doWork () method of the AbstractEmployee class.<br />
+</p>
+
+<em class="filename">Employee.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Employee extends AbstractEmployee {
+	private String position;
+	private String telephone;
+	
+	public Employee() {}
+	
+	public Employee(String name,String position, String telephone) {
+		super(name);
+		this.position = position;
+		this.telephone = telephone;
+	}
+	
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.getName());
+		sb.append("|");
+		sb.append(position);
+		sb.append("|");
+		sb.append(telephone);
+		
+		return sb.toString();
+	}
+	
+	<strong>
+	@Override
+	public void doWork() {
+		System.out.println("work");
+	}
+	</strong>	
+}
+</pre>
+
+<p>
+Manager classes do not change.<br />
+Change the first line of the main method of the Test class you created so far as shown below.<br />
+AbstractEmployee james = new Employee ("JAMES", "CLERK", "19");
+</p>
+
+<h2>Interface: Defines the function of the component<a href="#comments"><sup>5</sup></a>.</h2>
+
+<p>
+The Java interface has the interface keyword in place of the class keyword in the class declaration, and all methods of the class body are abstract methods.<br />
+Because they are all abstract methods, the abstract keyword to distinguish them from normal methods is omitted.<br />
+All fields declared in the interface body are static<a href="#comments"><sup>6</sup></a> final.<br />
+
+Like an abstract class, an interface can not be used alone, and it is used to objectize a class that implements an interface.<br />
+If a class implements an interface, it means a class that implements all of the abstract methods of the interface.<br />
+
+The class declaration that implements the interface defines which interface the class implements using the keyword implements.<br />
+The implements keyword can be followed by one or more interfaces separated by commas, which may look like multiple inheritance.<br />
+
+The Java interface is the same as the user interface of the electronic product.<br />
+Most TVs provide interfaces such as - volume + and - channel + at the bottom of the screen.<br />
+The fact that electronics have adopted the same interface means that their usage is the same.<br />
+If the Java class is an electronic product, then the Java interface corresponds to the user interface of the electronic product.<br />
+The implementation of the TV with the PDP, LCD and LED in the CRT was different, but fortunately the interface did not change.<br />
+As a result, I had no trouble using the TV without having to look at the user manual after buying a new technology TV.<br />
+</p>
+
+<h3>When should I use the interface?</h3>
+
+<p>
+When to use inheritance and when to use the interface is a difficult problem.<br />
+To briefly describe this problem, we apply inheritance if we find the "to" relationship.<br />
+If the focus is on "what function should be", then the interface should be applied.<br />
+Keep in mind that interfaces are not constrained by hierarchical relationships like inheritance, and that Java supports only a single inheritance, while an interface can look like multiple inheritance.<br />
+
+Suppose you have created a driver class that inherits an employee class.<br />
+And if you have a delivery man class and the delivery man is not an employee but has many functions like driver class, you can create an interface with that function.<br />
+However, you can not create a parent class with duplicate code in the DeliveryMan class and the Driver class.<br />
+Because the driver class is two parent classes.<br />
+In the Java source dimension, there must be only one class after extends in the class declaration.<br /> You can not list parent classes with (comma) after extends.<br />
+This is one of the constraints of the hierarchical relationship mentioned above.<br />
+
+You can create an interface with the common functionality of the delivery man and the driver.<br />
+Let's practice the contents so far in order.<br />
+First, make the driver class as follows.<br />
+Because the driver is an employee, he inherited the employee class.<br />
+</p>
+
+  
+<em class="filename">Driver.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Driver <strong>extends Employee</strong> {
+	private String carNo;
+	
+	public Driver() {}
+	
+	public Driver(String name, String position, String telephone, String carNo) {
+		super(name, position, telephone);
+		this.carNo = carNo;
+	}
+
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
+	}
+
+	public void drive() {
+		System.out.println(this.getName() + " drives");
+	}
+	
+	public void transport() {
+		System.out.println(this.getName() + " transports");
+	}
+	
+}
+</pre>
+
+<em class="filename">Transportor.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Transportor {
+	private String carNo;
+	
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
+	}
+
+	public void drive() {
+		System.out.println("drives");
+	}
+	
+	public void transport() {
+		System.out.println("transports");
+	}
+	
+}
+</pre>
+
+<p>
+The transporter and the driver class has common features that drive () and transport ().<br />
+This common function can be created as an interface.<br />
+The interface name is called Drivable.<br />
+</p>
+
+<em class="filename">Drivable.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public interface Drivable {
+	public void drive();
+	
+	public void transport();
+
+}
+</pre>
+
+<p>
+Let's change the transporter and the driver class that implements this interface.
+</p>
+
+<em class="filename">Driver.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Driver extends Employee implements Drivable {
+	private String carNo;
+	
+	public Driver() {}
+	
+	public Driver(String name, String position, String telephone, String carNo) {
+		super(name, position, telephone);
+		this.carNo = carNo;
+	}
+
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
+	}
+	
+	@Override
+	public void drive() {
+		System.out.println(this.getName() + " drives");
+	}
+	
+	@Override
+	public void transport() {
+		System.out.println(this.getName() + " transports");
+	}
+	
+}
+</pre>
+
+<em class="filename">Transportor.java</em>
+<pre class="prettyprint">
+package net.java_school.example;
+
+public class Transportor implements Drivable {
+	private String carNo;
+	
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
+	}
+
+	@Override
+	public void drive() {
+		System.out.println("drives");
+	}
+	
+	@Override
+	public void transport() {
+		System.out.println("transports");
+	}
+	
+}
+</pre>
+
+<p>
+Add the following code snippet to the main method of the Test class.
+</p>
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+Drivable a = new Driver("Michael","CLERK","ext:8","015000");
+System.out.println(a);
+a.drive();
+Drivable b = new Transportor();
+// b.setCarNo("017000"); //error!
+b.drive();
+</pre>
+
+<p>
+As you can see in inheritance, "Subclass type object reference values can be assigned to superclass type references"
+An object reference value of a class that implements an interface can be assigned to a variable of an interface type.
+</p>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>In Java, heap memory is the space in which objects are created.</li>
+	<li>When an object is created before the constructor is called, the value of the instance variable is initialized to 0 for numeric types, false for Boolean values, and null for reference type variables.<br />
+	Char is strictly a numeric type and is initialized to 0 in Unicode tables.
+	</li>
+	<li>The print() and println() methods are methods of the java.io.PrintStream class. Check out the Java documentation.</li>
+	<li>The String class is the final class. In other words, you can not create your own string class by inheriting from the String class. Check out the Java documentation.</li>
+	<li>
+	It is an independent unit that consists of several elements to provide various functions for one purpose.<br /> The condition should be good portability.<br />
+	What if you can buy the necessary components and build a system like a LEGO block?
+	What components do companies like Amazon need? Payment component, warehouse management component, order management component, accounting component ..<br />
+	The interface is responsible for defining the functionality of the component for inter-component communication.
+	</li>
+	<li>
+	When static is attached, it means that it does not belong to the object.<br />
+	In the next chapter, we will learn about static.<br />
+	Note that the static variable is not an instance variable.<br />
+	</li>
+</ol>
+</article>

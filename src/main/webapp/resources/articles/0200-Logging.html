@@ -1,0 +1,453 @@
+<article>
+	
+<h1>로깅(Logging)</h1>
+
+<p>
+로그(Log)란 프로그램 개발이나 운영 시 발생하는 문제점을 추적하거나 운영 상태를 모니터링하기 위한 텍스트다.<br />
+지금까지 우리는 System.out.println();문을 사용하여 로그를 기록했다.<br />
+이것이 로그를 남기기 위한 가장 쉬운 방법이다.<br /> 
+이보다 로그를 기록하는 클래스를 만들어 사용하는 게 더 나은 방법이다.<br />
+다음 클래스는 사용자 정의 로그 클래스이다.
+</p>
+
+<em class="filename">Log.java</em>
+<pre class="prettyprint">
+package net.java_school.util;
+
+import java.io.*;
+import java.util.Date;
+
+public class Log {
+  String logFile = "C:/debug.log";
+  FileWriter fw;
+  static final String ENTER = System.getProperty("line.separator");
+  
+  public Log() {
+    try {
+      fw = new FileWriter(logFile, true);
+    } catch (IOException e){}
+  }
+
+  public void close() {
+    try {
+      fw.close();
+    } catch (IOException e){}
+  }
+
+  public void debug(String msg) {
+    try {
+      fw.write(new Date()+ " : ");
+      fw.write(msg + ENTER);
+      fw.flush();
+    } catch (IOException e) {
+      System.err.println("IOException!");
+    }
+  }
+}
+</pre>
+
+<p>
+아래 파일을 만들어 Log 클래스를 테스트한다.
+</p>
+
+<em class="filename">LogTest1.java</em>
+<pre class="prettyprint">
+package net.java_school.logtest;
+
+import net.java_school.util.Log;
+
+public class LogTest1 {
+
+	public void someMethod() {
+		Log log = new Log(); //출력스트림 생성 
+		log.debug("로그 테스트!"); //로그 기록하기
+		log.close(); //출력스트림 닫기
+	}
+  
+	public static void main(String[] args) {
+		LogTest1 test = new LogTest1();
+		test.someMethod();
+	}
+  
+}
+</pre>
+
+<h2>Log4j 2</h2>
+<p>
+로그를 전담하는 프레임워크가 있다.<br />
+프레임워크란 공통적인 작업을 자동화하고, 개발자로 하여금 빨리 애플리케이션을 개발하도록 하기 위한 노력의 산물을 말한다.<br /> 
+첫 번째로 설명할 프레임워크는 Log4j 2이다.<br />
+Log4j 2를 사용하기 위해서는 아래 경로에서 Log4j 2 바이너리 파일을 내려받는다.<br />
+<a href="http://logging.apache.org/log4j/2.x/download.html">http://logging.apache.org/log4j/2.x/download.html</a><br />
+파일 압축을 풀면 생기는 디렉터리에서 log4j-api-2.8.jar 와 log4j-core-2.8.jar을 복사하고 클래스로더가 찾을 수 있는 경로에 붙여넣는다.<br />
+그다음 아래 프로퍼티 파일을 역시 클래스로더가 찾을 수 있는 경로에 생성한다.
+</p>
+
+<em class="filename">log4j2.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Configuration&gt;
+	&lt;Appenders&gt;
+		&lt;File name="A1" fileName="A1.log" append="true"&gt;
+			&lt;PatternLayout pattern="%t %-5p %c{2} - %m%n" /&gt;
+		&lt;/File&gt;
+		&lt;Console name="STDOUT" target="SYSTEM_OUT"&gt;
+			&lt;PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" /&gt;
+		&lt;/Console&gt;
+	&lt;/Appenders&gt;
+	&lt;Loggers&gt;
+		&lt;Logger name="net.java_school" level="debug"&gt;
+			&lt;AppenderRef ref="A1" /&gt;
+		&lt;/Logger&gt;
+		&lt;Root level="debug"&gt;
+			&lt;AppenderRef ref="STDOUT" /&gt;
+		&lt;/Root&gt;
+	&lt;/Loggers&gt;
+&lt;/Configuration&gt;
+</pre>
+
+<h3>이클립스에서 Log4j 2 테스트</h3>
+
+<ol>
+	<li>Java Project 퍼스펙티브에서 새로운 프로젝트 생성한다.</li>
+	<li>Log4j 2 라이브러리를 프로젝트 빌드패스에 추가한다.
+		<ol>
+			<li>Package Explorer 뷰에서 프로젝트를 선택하고 마우스 오른쪽 버튼을 클릭한다.</li>
+			<li>Build Path - Configure Build Path...를 선택한다.</li>
+			<li>Libraires 탭에서 Add External JARs...를 선택한다.</li>
+			<li>log4j-api-2.8.jar 와 log4j-core-2.8.jar를 추가하고 OK 버튼을 클릭한다.</li> 
+		</ol>
+	<li>아래 LogTest2.java 파일을 생성한다.</li>
+</ol>
+
+<em class="filename">LogTest2.java</em>
+<pre class="prettyprint">
+package net.java_school.logtest;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+public class LogTest2 {
+	//private Logger log = LogManager.getLogger(LogTest2.class); //ROOT 로거만 작동
+	private Logger log = LogManager.getLogger("net.java_school");
+
+	public void xxx() {
+		if (log.isDebugEnabled()) {
+			log.debug("debug message");
+		}
+	}
+
+	public void yyy() {
+		if (log.isInfoEnabled()) {
+			log.info("info message");
+		}
+	}
+
+	public static void main(String[] args) {
+		LogTest2 test = new LogTest2();
+		test.xxx();
+		test.yyy();
+	}
+
+}
+</pre>
+
+<p>
+실행하여 콘솔과 A1.log 파일에서 로그 메시지를 확인한다.<br />
+LogTest1.java처럼 파일에 로그를 쓰지만 출력 스트림을 닫는 코드가 없음에 주목하자.
+</p>
+
+<h3>Log4j2.xml 설정 파일에서 주요 엘리먼트 설명</h3>
+
+<p>
+Log4j 2는 Logger, Appender, Layout라는 세 개의 주요 엘리먼트가 있다.
+이들의 협력으로 로그를 기록한다.
+</p>
+
+<ol>
+	<li>Logger : 로그의 주체로 로그 메시지를 Appender에 전달한다.</li>
+	<li>Appender : 로그 메시지를 출력할 대상을 지정한다. <a href="http://logging.apache.org/log4j/2.x/manual/appenders.html">Appenders</a></li>
+	<li>Layout : 로그의 포맷을 지정한다. <a href="http://logging.apache.org/log4j/2.x/manual/layouts.html">Layouts</a></li>
+</ol>
+
+<p>
+루트 로거는 언제나 존재하며, 모든 로거 중 가장 위에 있다.
+</p>
+
+<p>
+자세한 설명은 <a href="http://logging.apache.org/log4j/2.x/manual/configuration.html">http://logging.apache.org/log4j/2.x/manual/configuration.html</a>에서 찾을 수 있다.
+</p>
+
+<h3>Log Level</h3>
+
+<p>
+로그 레벨은 아래와 같이 계층적으로 구성되어 있다.<br />
+TRACE &gt; DEBUG &gt; INFO &gt; WARN &gt; ERROR &gt; FATAL<br />
+INFO로 셋팅하면, INFO, INFO, WARN, ERROR, FATAL은 기록된다.
+</p>
+
+<ol>
+	<li>FATAL : 프로그램이 중지될 수도 있는 치명적인 에러 이벤트</li>
+	<li>ERROR : 프로그램이 중지될 정도는 아닌 에러 이벤트</li>
+	<li>WARN : 잠재적인 위험</li>
+	<li>INFO : 대략적으로 프로그램의 진행 상황을 강조</li>
+	<li>DEBUG : 응용 프로그램을 디버깅하는 데 가장 유용한 세밀한 정보 이벤트</li>
+	<li>TRACE :  DEBUG보다 세분화 된 정보 이벤트</li>
+</ol>
+
+<h2>Commons Logging와 Log4j 2 연동</h2>
+<p>
+아파치 그룹의 commons-logging은 개발자들에게 공통 로깅 API를 제공하기 위해 만들어진 프레임워크로 애플리케이션이 특정 로깅 프레임워크에 종속되지 않게 한다.<br />
+현재 많은 서드 파티 로깅 프레임워크들이 commons-logging 기반으로 구현되어 있다.<br />
+</p>
+
+<h3>commons-logging 사용법</h3>
+<p>
+아래 주소에서 바이너리 배포본을 내려받는다.<br />
+<a href="http://apache.mirror.cdnetworks.com/commons/logging/binaries/">http://apache.mirror.cdnetworks.com/commons/logging/binaries/</a><br /> 
+다운로드하고 압축을 풀면 서브 폴더에 commons-logging-1.2.jar 파일이 생긴다.<br />
+이 파일을 클래스 패스에 복사한다.<br /> 
+commons-logging은 자체적으로 로깅을 지원한다기보다는 여러 로깅 API를 표준화된 방법으로 사용할 수 있게 해주는 개념이기 때문에,
+실제 로깅 처리를 위한 별도의 로깅 구현체가 필요하다.<br /> 
+여기서는 로깅 구현체로 Log4j 2를 사용하는 방법을 설명한다.<br />
+</p>
+
+<p>
+아래 프로퍼티 파일을 클래스 패스에 생성한다.
+</p>
+
+<em class="filename">commons-logging.properties</em>
+<pre class="prettyprint">
+org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
+</pre>
+
+<p>
+테스트 파일을 만들고 테스트한다.<br />
+</p>
+
+<em class="filename">LogTest3.java</em>
+<pre class="prettyprint">
+package net.java_school.logtest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class LogTest3 {
+	private Log log = LogFactory.getLog(LogTest3.class);
+	// 또는 private Log log = LogFactory.getLog(this.getClass());
+	
+	public void xxx() {
+		if (log.isDebugEnabled()) {
+			log.debug("debug message");
+		}
+	}
+	
+	public void yyy() {
+		if (log.isInfoEnabled()) {
+			log.info("info message");
+		}
+	}
+  
+	public static void main(String[] args) {
+		LogTest3 test = new LogTest3();
+		test.xxx();
+		test.yyy();
+	}
+  
+}
+</pre>
+
+<p>
+commons-logging-1.2.jar와 log4j-jcl-2.8.jar를 빌드 패스에 추가한다.
+log4j-jcl-2.8.jar는 압축을 푼 Log4j 2 디렉터리에서 찾을 수 있다.
+</p>
+
+
+
+<h2>slf4j</h2>
+
+<p>
+다음 주소에서 최신 배포본을 내려받는다.<br />
+<a href="http://www.slf4j.org/download.html">http://www.slf4j.org/download.html</a><br />
+압축을 풀고 slf4j-api-1.7.25.jar 와 slf4j-simple-1.7.25.jar 파일을 클래스 패스에 추가한다.<br />
+다음 예제를 작성하고 테스트한다.<br />
+</p>
+
+<em class="filename">LogTest4.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class LogTest4 {
+	
+	public static void main(String[] args) {
+		Logger logger = LoggerFactory.getLogger(Test.class);
+		int amount = 1000;
+		int balance = 10000;
+		logger.info("amount: {}, balance: {}", amount, balance);
+	}
+
+}
+</pre>
+
+<p>
+slf4j의 디폴트 레벨은 INFO이다.<br />
+로깅 레벨을 DEBUG로 변경하려면 클래스 패스에 simplelogger.properties 파일을 아래 내용으로 만든다.<br />
+</p>
+
+<em class="filename">simplelogger.properties</em>
+<pre class="prettyprint">
+org.slf4j.simpleLogger.defaultLogLevel=DEBUG
+</pre>
+
+<h3>자바은행 예제에 slf4j 적용하기</h3>
+
+<p>
+slf4j-api-1.7.25.jar 와 slf4j-simple-1.7.25.jar 파일을 자바은행 클래스 패스에 추가한다.<br />
+Account, NormalAccount, MinusAccount 클래스의 입금과 출금 메서드에 로깅을 적용한다.<br />
+</p>
+
+<em class="filename">Account.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+//..중간 생략..
+<strong>
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+</strong>
+public abstract class Account implements Serializable {
+	<strong>Logger logger = LoggerFactory.getLogger(Account.class);</strong>
+	
+	//..중간 생략..
+	
+	public synchronized void deposit(long amount) {
+		balance = balance + amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(DEPOSIT);
+		transaction.setBalance(balance);
+		transactions.add(transaction);
+		<strong>logger.debug("AccountNo:{} Amount:{} DEPOSIT/WITHDRAW:{} NORMAL/MINUS:{}", 
+			this.accountNo, amount, Account.DEPOSIT, this.kind);</strong>
+	}
+	
+	//..중간 생략..
+
+}
+</pre>
+
+<em class="filename">NormalAccount.java</em>
+<pre class="prettyprint">
+@Override
+public synchronized void withdraw(long amount) {
+	if (amount &gt; balance) {
+		throw new InsufficientBalanceException("잔액이 부족합니다.");
+	}
+	balance = balance + amount;
+	Transaction transaction = new Transaction();
+	Calendar cal = Calendar.getInstance();
+	Date date = cal.getTime();
+	transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+	transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+	transaction.setAmount(amount);
+	transaction.setKind(Account.WITHDRAW);
+	transaction.setBalance(balance);
+	transactions.add(transaction);
+	<strong>logger.debug("AccountNo:{} Amount:{} DEPOSIT/WITHDRAW:{} NORMAL/MINUS:{}", 
+		this.getAccountNo(), amount, Account.WITHDRAW, this.getKind());</strong>
+}
+</pre>
+
+<em class="filename">MinusAccount.java</em>
+<pre class="prettyprint">
+@Override
+public synchronized void withdraw(long amount) {
+	balance = balance - amount;
+	Transaction transaction = new Transaction();
+	Calendar cal = Calendar.getInstance();
+	
+	Date date = cal.getTime();
+	transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+	transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+	transaction.setAmount(amount);
+	transaction.setKind(Account.WITHDRAW);
+	transaction.setBalance(balance);
+	transactions.add(transaction);
+	<strong>logger.debug("AccountNo:{} Amount:{} DEPOSIT/WITHDRAW:{} NORMAL/MINUS:{}", 
+		this.getAccountNo(), amount, Account.WITHDRAW, this.getKind());</strong>
+}
+</pre>
+
+<p>
+로그 메시지를 콘솔이 아닌 파일에 출력하기를 원한다면 simplelogger.properties에 아래 설정을 추가한다.<br />
+</p>
+
+<em class="filename">simplelogger.properties</em>
+<pre class="prettyprint">
+<strong>org.slf4j.simpleLogger.logFile=C:/java/Bank/javabank.log</strong>
+org.slf4j.simpleLogger.defaultLogLevel=DEBUG
+</pre>
+
+<p>
+javabank.log 파일에 로그가 기록된다.<br />
+하지만 simpleLogger는 로그 파일에 로그 메시지를 축적하지 못한다.<br />
+</p>
+
+<h3 id="logback">logback</h3>
+<p>
+다음 주소에서 최신 배포본을 내려받는다.<br />
+<a href="http://logback.qos.ch/download.html">http://logback.qos.ch/download.html</a><br />
+logback-core-x.x.x.jar, logback-classic-x.x.x.jar, logback-access-x.x.x.jar 파일을 클래스 패스에 추가한다.<br />
+slf4j-simple-x.x.x.jar을 빌드 패스에서 제거한다.<br />
+</p>
+
+<p>
+다음과 같이 logback.xml 파일을 생성한다.<br />
+(logbkack.xml은 웹 애플리케이션의 WEB-INF/classes 아래 생성되도록 작성한다)
+</p>
+
+<em class="filename" id="logback-xml-javabank">logback.xml</em>
+<pre class="prettyprint">
+&lt;configuration&gt;
+    &lt;appender name="FILE" class="ch.qos.logback.core.FileAppender"&gt;
+        &lt;file&gt;javabank.log&lt;/file&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%date %level [%thread] %logger{10} [%file:%line] %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
+        &lt;!-- encoders are assigned the type
+            ch.qos.logback.classic.encoder.PatternLayoutEncoder by default --&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;root level="debug"&gt;
+        &lt;appender-ref ref="FILE" /&gt;
+        &lt;appender-ref ref="STDOUT" /&gt;
+    &lt;/root&gt;
+    
+&lt;/configuration&gt;
+</pre> 
+
+<p>
+LogTest4.java를 다시 실행한다.<br />
+이번에는 프로젝트 루트 디렉터리에 javabank.log 파일이 생성되고, 이 파일에 로그가 축적된다.
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.slf4j.org/">http://www.slf4j.org/</a></li>
+	<li><a href="http://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html">http://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html</a></li>
+	<li><a href="http://logback.qos.ch/manual/configuration.html">http://logback.qos.ch/manual/configuration.html</a></li> 
+</ul>
+</article>

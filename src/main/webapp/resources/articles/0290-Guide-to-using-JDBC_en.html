@@ -1,0 +1,113 @@
+<article>
+
+<h1>JDBC Guide</h1>
+
+<p>
+Memorize the following order.
+</p>
+
+<ol>
+	<li>Loading the JDBC driver</li>
+	<li>Getting a Connection</li>
+	<li>Execute SQL</li>
+	<li>[If the SQL statement is a select statement, use a ResultSet.]</li>
+	<li>Returning Resources</li>
+</ol>
+
+<h2>1. Loading the JDBC driver</h2>
+
+<pre class="prettyprint">
+Class.forName("oracle.jdbc.driver.OracleDriver");
+</pre>
+
+<p>
+The string in parentheses indicates the start class of the Oracle JDBC driver.
+If you extracted the ojdbc6.jar file, you can see the OracleDriver.class in the oracle.jdbc.driver package.
+The forName () method is a static method of Class.
+Class is not a class that belongs to JDBC.
+Class is a class for getting information about a class.
+The forName () method allows the class loader to load the class corresponding to the string input as an argument into memory space.
+In fact, there is a return value for the forName () method, but it is not needed in JDBC programming.
+When this method is executed, if the class loader references the class path and does not find the corresponding class, it will get a ClassNotFoundException.
+In conclusion, the above code is responsible for loading the oracle.jdbc.driver.OracleDriver class into memory.
+The loaded OracleDriver class registers itself with java.sql.DriverManager.
+After that, when you call getConnection () of DriverManager and put the promised value as argument value, the connection implementation created by Oracle will be returned.   
+</p>
+
+<h2>2. Getting a Connection</h2>
+
+<pre class="prettyprint">
+conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "scott", "tiger");
+</pre>
+
+<p>
+The JDBC API is mostly an interface.
+The DriverManager is the only class in our example.
+The role of the DriverManager class, as the name implies, manages the driver that database vendors have implemented Sun's JDBC API.
+The DriverManager's getConnection () method returns a Connection object implemented by a specific database vendor according to the value entered as an argument.
+Obtaining a Connection object means that it is connected to the database.
+</p>
+
+<h2>3. Execute SQL</h2>
+
+<pre class="prettyprint">
+// Getting a Statement
+stmt = conn.createStatement();
+// Execute SQL
+rs = stmt.executeQuery(query);
+</pre>
+
+<p>
+Since the Java program is connected to the database, you now need the code to pass the SQL statement to the DBMS.
+To pass an SQL statement to a database, you must use either a Statement implementation or a PreparedStatement implementation.
+A Statement implementation or a PreparedStatement implementation is created through the Connection implementation.
+If the SQL statement is a select statement, use the executeQuery () method of the Statement object.
+If the SQL statement is an insert, update, or delete statement, use the executeUpdate method.
+</p>
+
+<h2>4. [If the SQL statement is a select statement, use a ResultSet.]</h2>
+
+<pre class="prettyprint">
+while (rs.next()) {
+	String empno = rs.getString(1);
+	String ename = rs.getString(2);
+	...
+	..
+</pre>
+
+<p>
+If the SQL statement is a select statement, you need an object to store the returned records.
+It is the ResultSet that acts as a container for the records.
+Consider a collection that is only used by JDBC to store table-like data.
+The returned ResultSet object has a cursor whose first position is before the first record.
+Therefore, the next () method must be executed to point to the first record.
+When the next () method is executed, it moves the cursor down one level and returns true if there is a record at the cursor point.
+</p>
+
+<h2>5. Returning Resources</h2>
+
+<p>
+Returning resources in JDBC programming is really important.
+The garbage collector works when the object is no longer in use.
+However, the garbage collector does not retrieve objects that are considered to be running.
+Objects related to JDBC belong to these objects.
+Therefore, in JDBC programming, you must write code that returns an object when the program is finished.
+To do this, you implement a resource return code fragment in a finally block.
+The finally block is a block that is executed whether or not an exception occurs.
+The following code should be implemented in a finally block.
+</p>
+
+<pre class="prettyprint">
+// Close the ResultSet.
+rs.close();
+// Close the Statement.
+stmt.close();
+// Close the Connection.
+conn.close();
+</pre>
+
+<p>
+The resource return order is returned in the reverse order of the generated order.
+</p>
+
+</article>

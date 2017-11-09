@@ -1,0 +1,49 @@
+<article>
+
+<h1>Math</h1>
+
+<pre class="prettyprint script-result-display">
+var random = Math.random() * 10;
+random = random.toPrecision(3);
+alert("랜덤값 : " + random);
+
+var ceil = Math.ceil(random);
+alert("올림값 : " + ceil);
+
+var floor = Math.floor(random);
+alert("내림값 : " + floor);
+
+var round = Math.round(random);
+alert("반올림 : " + round);
+</pre>
+
+<h4>로또번호 생성기 자바스크립트 버전</h4>
+<pre class="prettyprint script-result-display">
+var lotto = new Array();
+var index = 0;
+while(true) {
+	var check = true;
+	var ball = Math.random() * 45;
+	ball = Math.floor(ball) + 1;
+	for (var i = 0; i &lt; lotto.length;i++) {
+		if (lotto[i] == ball) {
+			check = false;
+			break;
+		}
+	}
+	if (check) {
+		lotto[index++] = ball
+	}
+	if (index &gt; 5) {
+		break;
+	}
+}
+
+alert("예상로또번호: " + lotto.toString());
+</pre>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.w3schools.com/jsref/jsref_obj_math.asp">http://www.w3schools.com/jsref/jsref_obj_math.asp</a></li>
+</ul>
+</article>

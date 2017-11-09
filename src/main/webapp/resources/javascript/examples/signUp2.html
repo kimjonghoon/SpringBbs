@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>자바스크립트 테스트</title>
+<script type="text/javascript">
+function check() {
+	var form = document.getElementById("signUpForm");
+	var id = form.id.value;
+	id = trim(id);
+	if (id.length == 0) {
+		alert("유효하지 않은 ID입니다.");
+		return false;
+	}
+	var pass = form.passwd.value;
+	pass = trim(pass);
+	if (pass.length == 0) {
+		alert("유효하지 않은 패스워드입니다.");
+		return false;
+	}
+	var name = form.name.value;
+	name = trim(name);
+	if (name.length == 0) {
+		alert("유효하지 않은 이름입니다.");
+		return false;
+	}
+	var email = form.email.value;
+	var chk = emailCheck(email);
+	if (chk == false) {
+		alert("유효하지 않은 이메일입니다.");
+		return false;
+	}
+	var mobile = form.mobile.value;
+	chk = mobileCheck(mobile);
+	if (chk == false) {
+		alert("유효하지 않은 모바일번호입니다.");
+		return false;
+	}
+	
+	return true;
+}
+
+function emailCheck(email) { 
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+}
+
+function trim(str) {
+	return str.replace(/(^\s*)|(\s*$)/gi, "");
+}
+
+function mobileCheck(mobile) {
+	var re = /\d+-\d+-\d+/;
+	return re.test(mobile);
+}
+</script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form id="signUpForm" name="signUpForm" action="signUp.php" method="post" onsubmit="return check();">
+ID : <input type="text" name="id" value="heist" /><br />
+패스워드 : <input type="password" name="passwd" value="1440" /><br />
+이름: <input type="text" name="name" value="홍길동" /><br />
+이메일 : <input type="text" name="email" /><br />
+모바일 : <input type="text" name="mobile" /><br />
+<input type="submit" value="가입" />
+<input type="reset" value="리셋" />
+</form>
+</body>
+</html>

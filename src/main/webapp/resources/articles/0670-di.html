@@ -1,0 +1,487 @@
+<article>
+
+<h1>Spring DI(종속객체 주입)</h1>
+
+<p style="color: #777;">
+아래 글은 워크스페이스를 C:\java로 정하고 진행했다.
+</p>
+
+<h2>명령 프롬프트에서 메이븐 프로젝트 생성</h2>
+
+<p>
+명령 프롬프트로 C:\java로 이동한 후 다음 명령을 실행한다.
+(화면에서 ↵는 엔터키를 누르라는 표시다. 입력하지 않고 엔터키를 누르면 디폴트 값이 선택된다)
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java&gt;<span class="prompt-selection">mvn archetype:generate</span>
+
+Choose a number or apply filter 
+    (format: [groupId:]artifactId, case sensitive contains): 888: ↵
+
+Choose org.apache.maven.archetypes:maven-archetype-quickstart version: 
+1: 1.0-alpha-1
+2: 1.0-alpha-2
+3: 1.0-alpha-3
+4: 1.0-alpha-4
+5: 1.0
+6: 1.1
+Choose a number: 6: ↵
+Define value for property 'groupId': : <span class="prompt-selection">net.java_school</span>
+Define value for property 'artifactId': : <span class="prompt-selection">bank</span>
+Define value for property 'version':  1.0-SNAPSHOT: : ↵
+Define value for property 'package':  net.java_school: : ↵
+Confirm properties configuration:
+groupId: net.java_school
+artifactId: bank
+version: 1.0-SNAPSHOT
+package: net.java_school
+ Y: : ↵
+</pre>
+
+<p>
+시간이 지남에 따라 화면에서 번호나 버전이 다를 수 있으나
+Choose a number or apply filter 에서 엔터키를 눌러 maven-archetype-quickstart 아키타입을,
+Choose org.apache.maven.archetypes:maven-archetype-quickstart version: 에서 엔터키를 눌러 가장 최신 버전이 선택되도록 한다.
+</p>
+
+<h2>테이블 생성 및 소스 코드 복사</h2>
+
+<p>
+<a href="../jdbc/JavaBank">자바은행</a>에서의 테이블을 그대로 사용한다.
+만약 테이블이 없다면 scott 계정으로 SQL*PLUS에 접속한 다음 테이블을 생성한다.
+</p>
+
+<pre class="prettyprint">
+create table bankaccount (
+    accountno varchar2(50),
+    owner varchar2(20) not null,
+    balance number,
+    kind varchar2(10),
+    constraint PK_BANKACCOUNT primary key(accountno),
+    constraint CK_BANKACCOUNT_NORMAL 
+        CHECK (balance >= CASE WHEN kind='NORMAL' THEN 0 END),
+    constraint CK_BANKACCOUNT_KIND CHECK (kind in ('NORMAL', 'MINUS'))
+);  
+
+create table transaction (
+    transactiondate timestamp,
+    kind varchar2(10),
+    amount number,
+    balance number,
+    accountno varchar2(50),
+    constraint FK_TRANSACTION FOREIGN KEY(accountno)
+        REFERENCES bankaccount(accountno)
+);
+</pre>
+
+<p>
+scott 계정으로 SQL*PLUS에 접속한 상태에서, 입금이나 출금할 때 거래 테이블에 데이터를 인서트 하는 트리거를 만든다. 
+</p>
+
+<pre class="prettyprint">
+create or replace trigger bank_trigger
+after insert or update of balance on bankaccount
+for each row
+begin
+    if :new.balance &gt; :old.balance then
+        insert into transaction 
+        values 
+        (
+            systimestamp,
+            'DEPOSIT',
+            :new.balance - :old.balance,
+            :new.balance,
+            :old.accountno
+        );
+    end if;
+    if :new.balance &lt; :old.balance then
+        insert into transaction 
+        values 
+        (
+            systimestamp,
+            'WITHDRAW',
+            :old.balance - :new.balance,
+            :new.balance,
+            :old.accountno
+        );
+    end if;
+end;
+/
+</pre>
+
+
+<p>
+<a href="../jdbc/JavaBank">자바은행</a>에서 작성한 소스를 복사하여 다음 위치에 붙여넣는다.
+</p>
+
+<pre class="code">C:\java\bank
+   └── src
+        └── main
+             └── java
+                  └── net
+                       └── java_school
+                               └── bank
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/Account.java">Account.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/Bank.java">Bank.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/BankDao.java">BankDao.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/BankUi.java">BankUi.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/ShinhanBank.java">ShinhanBank.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/ShinhanBankDao.java">ShinhanBankDao.java</a>
+                                        - <a href="/jdbc/examples/bank/src/net/java_school/bank/Transaction.java">Transaction.java</a>
+</pre>
+
+<h3 id="Oralce-JDBC-Driver-Dependency">오라클 JDBC 드라이버를 로컬 저장소에 설치하기</h3>
+
+<p>
+오라클 JDBC 드라이버는 메이븐 저장소에서 제공하지 않는다.
+따라서 로컬에 설치된 오라클의 JDBC 드라이버 파일을 다음과 같이 로컬 저장소에 설치한 뒤 pom.xml에 의존성 설정해야 한다.
+</p>
+
+<p>
+로컬 저장소에 오라클 JDBC 드라이버를 설치하는 방법하려면, 자신의 시스템에서 ojdbc6.jar 파일이 있는 디렉토리로 이동한 후, 명령 프롬프트에서 아래를 실행한다.
+</p>
+
+<pre class="screen">
+mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
+</pre>
+
+<p>
+로컬 저장소에 저장된 정보대로 pom.xml에 다음과 같이 의존성을 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;dependency&gt;
+	&lt;groupId&gt;com.oracle&lt;/groupId&gt;
+	&lt;artifactId&gt;ojdbc6&lt;/artifactId&gt;
+	&lt;version&gt;11.2.0.2.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+<p>
+pom.xml 파일을 아래와 같이 편집한다.
+</p>
+
+<em class="filename">pom.xml</em>
+<pre class="prettyprint">
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                        http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+                        
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;net.java_school&lt;/groupId&gt;
+  &lt;artifactId&gt;bank&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+
+  &lt;name&gt;bank&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    <strong>&lt;spring.version&gt;4.3.9.RELEASE&lt;/spring.version&gt;
+    &lt;jdk.version&gt;1.8&lt;/jdk.version&gt;</strong>
+  &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;3.8.1&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    <strong>&lt;!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+      &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+      &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+      &lt;version&gt;1.2.3&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.oracle&lt;/groupId&gt;
+      &lt;artifactId&gt;ojdbc6&lt;/artifactId&gt;
+      &lt;version&gt;11.2.0.2.0&lt;/version&gt;
+    &lt;/dependency&gt;</strong>
+  &lt;/dependencies&gt;
+  <strong>
+  &lt;build&gt;
+    &lt;finalName&gt;bank&lt;/finalName&gt;
+      &lt;pluginManagement&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.1&lt;/version&gt;
+            &lt;configuration&gt;
+              &lt;source&gt;${jdk.version}&lt;/source&gt;
+              &lt;target&gt;${jdk.version}&lt;/target&gt;
+              &lt;compilerArgument&gt;&lt;/compilerArgument&gt;
+              &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/pluginManagement&gt;
+  &lt;/build&gt;
+  </strong>
+&lt;/project&gt;
+</pre>
+
+<p>
+메이븐 프로젝트로 성공적으로 변경했는지 빌드하고 실행해 본다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\java\bank&gt;<span class="prompt-selection">mvn clean compile</span>
+
+C:\java\bank&gt;<span class="prompt-selection">mvn exec:java -Dexec.mainClass=net.java_school.bank.BankUi</span>
+</pre>
+
+<h3>자바 소스 수정</h3>
+
+<p>
+자바 은행 예제를 스프링 예제로 변경해 보자.
+자바 소스에서 다음 부분을 수정한다.
+</p>
+
+<em class="filename">Bank.java</em>
+<pre class="prettyprint">
+public void setDao(BankDao dao);//추가
+</pre>
+
+<em class="filename">ShinahanBank.java</em>
+<pre class="prettyprint">
+//private BankDao dao = new ShinhanBankDao();
+
+//추가
+private BankDao dao;
+
+public void setDao(BankDao dao) {
+    this.dao = dao;
+}
+</pre>
+
+<em class="filename">BankUi.java</em>
+<pre class="prettyprint">
+//..중간 생략..
+
+import java.io.PrintStream;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+//..중간 생략..
+//private Bank bank = new ShinhanBank();
+private Bank bank;
+
+public void setBank(Bank bank) {
+    this.bank = bank;
+}
+
+private PrintStream stream;
+
+public void setStream(PrintStream stream) {
+    this.stream = stream;
+}
+
+/* 
+코드에서 System.out.println()을 stream.println(),
+System.out.print()을 stream.print()으로 수정한다.
+*/
+
+//..중간 생략..
+
+
+public static void main(String[] args) {
+	ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	BankUi ui = ctx.getBean(BankUi.class);
+	ui.startWork();
+	ctx.close();
+}
+
+</pre>
+
+<p>
+src/main/resources 폴더를 만들고,  <a href="../java/Logging#logback-xml-javabank">로깅</a>에서의 내용대로 logback.xml 파일을 아래 위치에 생성한다. 
+applicationContext.xml 파일도 같은 위치에 생성한다.
+</p>
+
+<pre class="code">C:\java\bank
+   └── src
+        └── main
+             └── resources
+                           - logback.xml
+                           - applicationContext.xml
+                     
+</pre>
+
+<p>
+appliactionContext.xml 파일을 다음과 같이 편집한다.
+</p>
+
+<em class="filename">applicationContext.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+
+    &lt;bean id="bankUi" class="net.java_school.bank.BankUi"&gt;
+        &lt;property name="stream" value="#{T(System).out}" /&gt;
+        &lt;property name="bank" ref="shinhanBank" /&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id="shinhanBank" class="net.java_school.bank.ShinhanBank"&gt;
+        &lt;property name="dao" ref="shinhanBankDao" /&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id="shinhanBankDao" class="net.java_school.bank.ShinhanBankDao"&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+</pre>
+
+
+<h2>컴파일과 실행</h2>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\java\bank&gt;<span class="prompt-selection">mvn clean compile</span>
+
+C:\java\bank&gt;<span class="prompt-selection">mvn exec:java -Dexec.mainClass=net.java_school.bank.BankUi</span>
+</pre>
+
+<h2>이클립스 작업환경 구축</h2>
+
+<p>
+이클립스를 시작한다.
+워크스페이스는 어디든 상관없다.
+Project Explorer 뷰에서 마우스 오른쪽 버튼을 사용하여 컨텍스트 메뉴를 보이게 한다.
+Import를 사용하여 spring-bbs 프로젝트를 이클립스로 불러온다.<br />
+
+<img alt="컨텍스트 메뉴에서 Import" src="https://lh3.googleusercontent.com/-VjWpQCEiqes/VYYV3b2GPFI/AAAAAAAACh0/-KoRbgI8nn0/s590/maven-project-import.png"><br />
+
+<img alt="이클립스에서 메이븐 프로젝트 Import" src="https://lh3.googleusercontent.com/-uDuAOI41Aj4/VYYV3Pmo4qI/AAAAAAAAChw/m4HA61kOVbE/s610/eclipse-with-maven.png"><br />
+
+이클립스와 pom.xml을 동기화한다.
+Package Explorer에서 프로젝트를 선택한 상태에서 마우스 오른쪽 버튼으로 컨텍스트 메뉴를 연다.
+Maven - Update Project Configuration을 차례로 선택한다.
+이후 진행하면서 pom.xml이 바뀌면 같은 방법으로 이클립스와 동기화를 해주어야 한다.
+</p>
+
+<h2>JavaConfig 설정</h2>
+
+<p>
+스프링이 발전하면서 빈 설정을 XML 파일이 아닌 자바 클래스로도 할 수 있도록 했다.
+빈 설정 클래스는 @Configuration과 @Bean 어노테이션을 사용한다.
+빈 설정 클래스에서 @Bean 어노테이션이 붙은 메서드 이름이 빈 객체가 된다.
+</p>
+
+<p>
+빈 설정 클래스 테스트를 위해 applicationContext.xml에서 모든 설정을 주석 처리한다.
+</p>
+
+<em class="filename">applicationContext.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+&lt;!-- 
+    &lt;bean id="bankUi" class="net.java_school.bank.BankUi"&gt;
+        &lt;property name="stream" value="#{T(System).out}" /&gt;
+        &lt;property name="bank" ref="shinhanBank" /&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id="shinhanBank" class="net.java_school.bank.ShinhanBank"&gt;
+        &lt;property name="dao" ref="shinhanBankDao" /&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id="shinhanBankDao" class="net.java_school.bank.ShinhanBankDao"&gt;
+    &lt;/bean&gt;
+--&gt;
+&lt;/beans&gt;
+</pre>
+
+<p>
+다음과 같이 applicationContext.xml과 같은 내용의 빈 설정 클래스를 작성한다.
+</p>
+
+<em class="filename">BankConfig.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class BankConfig {
+	
+	@Bean
+	public BankDao shinhanBankDao() {
+		return new ShinhanBankDao();
+	}
+	
+	@Bean
+	public Bank shinhanBank() {
+		Bank bank = new ShinhanBank();
+		bank.setDao(shinhanBankDao());
+		return bank;
+	}
+	
+	@Bean
+	public BankUi bankUi() {
+		BankUi ui = new BankUi();
+		ui.setBank(shinhanBank());
+		ui.setStream(System.out);
+		return ui;
+	}
+	
+}
+</pre>
+
+<p>
+BankUi 클래스의 메인 메서드를 다음과 같이 수정한다.
+</p>
+
+<em class="filename">BankUi.java</em>
+<pre class="prettyprint">
+//import문 추가
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+//..중간 생략..
+
+public static void main(String[] args) {
+	//ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BankConfig.class);
+	BankUi ui = ctx.getBean(BankUi.class);
+	ui.startWork();
+	ctx.close();
+}
+</pre>
+
+<h3>최종 소스</h3>
+<ol>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/Transaction.java">Transaction.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/Account.java">Account.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/Bank.java">Bank.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/BankDao.java">BankDao.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/ShinhanBankDao.java">ShinhanBankDao.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/ShinhanBank.java">ShinhanBank.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/BankUi.java">BankUi.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/java/net/java_school/bank/BankConfig.java">BankConfig.java</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/resources/logback.xml">logback.xml</a></li>
+	<li><a href="/spring/examples/di/bank/src/main/resources/applicationContext.xml">applicationContext.xml</a></li>
+	<li><a href="/spring/examples/di/bank/pom.xml">pom.xml</a></li>
+</ol>
+
+</article>

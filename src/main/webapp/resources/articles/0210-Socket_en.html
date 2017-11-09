@@ -1,0 +1,942 @@
+<article>
+	
+<h1>Socket</h1>
+
+<p>
+A socket is an API that uses TCP/IP.
+Sockets were first introduced in 1982 in BSD UNIX.
+Socket is a communication connection point written in software.
+Java also has a socket.
+</p>
+
+<p>
+Once the client and server sockets are connected, they can communicate using the stream.
+The client creates an output stream whose socket is the destination.
+The server creates an input stream whose source is a socket.
+The client sends information to the output stream.
+The server reads the information sent by the client through the input stream.
+</p>
+
+<p>
+The socket that the client and server use to communicate is the java.net.Socket class.
+To connect these sockets, you need a ServerSocket on the server side.
+Server sockets act as a window to the server.
+When a socket connection request is received from the outside, the server socket creates a server-side socket to communicate with the client socket and connects them together.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Server {
+	public static void main(String[] args) throws IOException {
+		ServerSocket serverSocket = new ServerSocket(3000);
+		<strong>Socket socket = serverSocket.accept();</strong>
+		//TODO
+	}
+}
+</pre>
+
+<p>
+Socket socket = serverSocket.accept ();<br />
+When the above code is executed, the program stops and waits for an external socket connection request.
+When a socket connection request is received from the outside, an accept() method creates a server-side socket to communicate with the client, connect to the external socket, and return the reference.
+The socket port on the server side where the connection is actually made is arbitrarily set among the remaining port numbers.
+</p>
+
+<p>
+Let's write code that sends messages from the server to the client.
+This code tells the client the port number of the socket created on the server side.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+<strong>
+import java.io.BufferedWriter;</strong>
+import java.io.IOException;
+<strong>import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;</strong>
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Server {
+	public static void main(String[] args) throws IOException {
+		ServerSocket serverSocket = new ServerSocket(3000);
+		Socket socket = serverSocket.accept();
+		<strong>OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		BufferedWriter bw = new BufferedWriter(osw);
+		PrintWriter pw = new PrintWriter(bw);
+		pw.println("Socket Connected[" + socket.getPort() + "]");</strong>
+	}
+}
+</pre>
+
+<p>
+Create a client program.
+To connect to the server socket, the client code needs the server IP and the port number of the server socket.
+If you test with a single computer, IP can be replaced with localhost.
+If you have two computers, replace localhost with the IP address where the server is running in the source below.
+The port number is 3000 because the server socket uses port 3000.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		<strong>Socket socket = new Socket("localhost", 3000);</strong>
+		//TODO
+	}
+
+}
+</pre>
+
+<p>
+When the sockets are connected, our Server will pass the string to the client.
+To read the string sent by the server, add the following code.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+<strong>import java.io.BufferedWriter;</strong>
+import java.io.IOException;
+<strong>import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;</strong>
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 3000);
+		<strong>OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		BufferedWriter bw = new BufferedWriter(osw);
+		PrintWriter pw = new PrintWriter(bw);
+		pw.println("Socket Connected[Port:" + socket.getPort() + "]");
+		pw.flush();</strong>
+	}
+
+}
+</pre>
+
+<p>
+The server program passes the connected server-side socket port number as a message to the client and ends immediately.
+The client program receives a message from the server that a connection has been established.
+The client program prints a message to the console and the program exits.
+</p>
+
+<p>
+Run the server first, then run the client to test.
+When running on the same PC, you should test each one with a separate command prompt.
+</p>
+<p>
+Let's modify the example so that the server does not shut down.
+The current code is that when the client's connection request comes, the main method ends after the message is sent, and the server program is terminated, so the next client's connection request can not be serviced.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+public static void main(String[] args) throws IOException {
+	ServerSocket serverSocket = new ServerSocket(3000);
+	<strong>while (true) {
+		Socket socket = serverSocket.accept();
+		OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		BufferedWriter bw = new BufferedWriter(osw);
+		PrintWriter pw = new PrintWriter(bw);
+		pw.println("Socket Connected[Port:" + socket.getPort() + "]");
+		pw.flush();
+		pw.close();
+		socket.close();
+	}</strong>
+}
+</pre>
+
+<p>
+To shut down the server, type Ctrl + C to force shutdown.
+Let's make the example a more advanced communication program.
+The next program we will implement is the echo program.
+The echo program sends the message sent by the client back to the client.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+public class Server {
+	//TODO
+}
+</pre>
+
+<p>
+The server has to do two things at the same time.
+You have to service the socket connection connection request from the outside, and you must receive the message of the already connected client and send it back to the client at the same time.
+So the echo program needs a thread.
+Let the new thread execute the code that receives the client's message and sends it back to the client.
+</p>
+<p>
+If you need 'code to receive the client's message and send it back to the client', the server program needs an input stream with the socket as its source and an output stream with the socket as the destination.
+It would be nice to create a class that consists of a socket, an input stream, an output stream, and a thread.
+I will name the class Echo.
+To make the Echo class easier to access the resources of the Server class, I will make the Echo class an inner class of the Server class.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+<strong>
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+</strong>
+public class Server {
+	<strong>
+	private class Echo extends Thread {
+		private Socket socket;
+		private BufferedReader br;
+		private PrintWriter pw;
+			
+		public Echo(Socket socket) throws IOException {
+			this.socket = socket;
+			InputStream is = socket.getInputStream();
+			br = new BufferedReader(new InputStreamReader(is));
+			OutputStream os = socket.getOutputStream();
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+			pw = new PrintWriter(bw);
+		}
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					String str = br.readLine();
+					pw.println("From Server: " + str);
+					pw.flush();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				close();
+			}
+		}
+		
+		private void close() {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			pw.close();
+			
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}//Echo inner class end</strong>
+	
+     
+}
+</pre>
+
+<p>
+To maintain a socket connection, you must maintain an Echo object.
+To do this, add an ArrayList to hold the Echo object.
+At the end of Echo's close () method, insert code to remove the Echo object reference value from the ArrayList.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+<strong>import java.util.ArrayList;</strong>
+
+public class Server {
+	<strong>private ArrayList&lt;Echo&gt; echos = new ArrayList&lt;Echo&gt;();</strong>
+
+	private class Echo extends Thread {
+		private Socket socket;
+		private BufferedReader br;
+		private PrintWriter pw;
+			
+		public Echo(Socket socket) throws IOException {
+			this.socket = socket;
+			InputStream is = socket.getInputStream();
+			br = new BufferedReader(new InputStreamReader(is));
+			OutputStream os = socket.getOutputStream();
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+			pw = new PrintWriter(bw);
+		}
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					String str = br.readLine();
+					pw.println("From Server: " + str);
+					pw.flush();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				close();
+			}
+		}
+		
+		private void close() {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			pw.close();
+			
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			<strong>echos.remove(this);</strong>
+		}
+
+	}//Echo inner class end
+
+     
+}
+</pre>
+
+<p>
+Write the method to serve external socket connection requests.
+This method will be implemented in the methods of the server.
+This method puts the accept () method of the server socket in an infinite loop.
+The main method calls this method just after creating the Server object.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class Server {
+	private ArrayList&lt;Echo&gt; echos = new ArrayList&lt;Echo&gt;();
+	<strong>
+	public void startServer() {
+		ServerSocket serverSocket = null;
+		
+		try {
+			serverSocket = new ServerSocket(3000);
+			while (true) {
+				Socket socket = serverSocket.accept();
+				Echo echo = new Echo(socket);
+				echo.start();
+				echos.add(echo);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}</strong>
+	
+	private class Echo extends Thread {
+		private Socket socket;
+		private BufferedReader br;
+		private PrintWriter pw;
+			
+		public Echo(Socket socket) throws IOException {
+			this.socket = socket;
+			InputStream is = socket.getInputStream();
+			br = new BufferedReader(new InputStreamReader(is));
+			OutputStream os = socket.getOutputStream();
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+			pw = new PrintWriter(bw);
+		}
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					String str = br.readLine();
+					pw.println("From Server: " + str);
+					pw.flush();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				close();
+			}
+		}
+		
+		private void close() {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			pw.close();
+			
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			echos.remove(this);
+		}
+
+	}//Echo inner class end
+	<strong>
+	public static void main(String[] args) {
+		new Server().startServer();
+	}</strong>
+		
+}
+</pre>
+
+<p>
+Next, create a client program.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+public class Client {
+	//TODO
+}
+</pre>
+
+<p>
+Does the client program need a thread?
+If the message comes from the server while the user is writing, a thread is needed.
+For the same reason, the client of the chat program must have a thread.
+But in the echo program, the server and client are synchronized.
+The server can send a message to the client only when the client sends a message to the server.
+In this case, if the response time of the server is not long, it is not necessary to use a thread.
+Let's start with the client implementation by adding the code to make a socket connection.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		<strong>Socket socket = new Socket("localhost", 3000);</strong>
+		//TODO
+		
+	}
+
+}
+</pre>
+
+<p>
+You need an input stream that reads the string you type on the keyboard.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 3000);
+
+		<strong>BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));</strong>
+		//TODO
+	}
+
+}
+</pre>
+
+<p>
+To send a string to the server, you need an output stream whose destination is the socket.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 3000);
+
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+		<strong>
+		OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		PrintWriter pw = new PrintWriter(osw);
+		</strong>
+		//TODO		
+		
+	}
+
+}
+</pre>
+
+<p>
+To read a message from the server, you need an input stream whose source is a socket.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 3000);
+
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+		OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		PrintWriter pw = new PrintWriter(osw);
+		<strong>
+		InputStream is = socket.getInputStream();
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+		</strong>
+		//TODO		
+	}
+
+}
+</pre>
+
+<p>
+Because it is a single-threaded program with only the main thread, put a flag to store whether the user is waiting for input on the keyboard or waiting for a string from the server.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 3000);
+
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+		OutputStream os = socket.getOutputStream();
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		PrintWriter pw = new PrintWriter(osw);
+
+		InputStream is = socket.getInputStream();
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+		<strong>
+		boolean isCommandLineInputWaiting = true;
+		String str = null;
+		
+		while (true) {
+			if (isCommandLineInputWaiting) {
+				str = keyboard.readLine();
+				pw.println(str);
+				pw.flush();
+				isCommandLineInputWaiting = false;
+				continue;
+			}
+			
+			if (isCommandLineInputWaiting == false) {
+				str = br.readLine();
+				System.out.println(str);
+				isCommandLineInputWaiting = true;
+				continue;
+			}
+			
+		}
+		</strong>
+	}
+
+}
+</pre>
+
+
+<h3>Test on two computers</h3>
+<p>
+In the main method of Client.java, modify "localhost" to the server's IP.
+The computer running Server should open port 3000.
+If your system is Windows, you need to take steps to open the ports in Windows Firewall.
+You have to start with the server first.
+Run the server class in Eclipse on the computer you want to use as a server.
+Open a command prompt and run the client on the computer you want to use as a client.
+</p>
+
+<h2>Chat program</h2>
+
+<p>
+Let's create a simple chat program by extending the example above.
+The difference with the echo program is that a message sent by one user to the server is delivered to all users.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+public class Client {
+	//TODO
+}
+</pre>
+
+<p>
+You should use a thread because messages can be delivered from the server while the user is typing on the keyboard.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+public class Client <strong>extends Thread</strong> {
+	<strong>
+	@Override
+	public void run() {
+		//TODO
+	}
+	</strong>
+}
+</pre>
+
+<p>
+I will implement code in the run() method that outputs a message to the console from the server.
+The run () method requires an input stream whose source is a socket.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+<strong>
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+</strong>
+public class Client extends Thread {
+	<strong>private Socket socket;
+	private BufferedReader br;
+	
+	public Client() throws IOException {
+		this.socket = new Socket("localhost", 3000);
+		InputStream is = socket.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		//TODO
+	}
+	</strong>
+	@Override
+	public void run() {
+		//TODO
+	}
+	<strong>
+	public static void main(String[] args) throws IOException {
+		new Client();
+	}
+	</strong>
+}
+</pre>
+
+<p>
+Now, let's implement the run () method.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
+public class Client extends Thread {
+	private Socket socket;
+	private BufferedReader br;
+	
+	public Client() throws IOException {
+		this.socket = new Socket("localhost", 3000);
+		InputStream is = socket.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		//TODO
+	}
+	
+	@Override
+	public void run() {
+		<strong>String str = null;
+		while(true) {
+			try {
+				str = br.readLine();
+				System.out.println(str);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		</strong>
+	}
+	
+	public static void main(String[] args) throws IOException {
+		new Client();
+	}
+	
+}
+</pre>
+
+<p>
+To send a message to the server, you need an input stream whose source is the keyboard and an output stream whose socket is the destination.
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+<strong>import java.io.BufferedWriter;</strong>
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+<strong>import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;</strong>
+import java.net.Socket;
+
+public class Client extends Thread {
+	private Socket socket;
+	private BufferedReader br;
+	private BufferedReader keyboard;
+	private PrintWriter pw;
+	
+	public Client() throws IOException {
+		this.socket = new Socket("localhost", 3000);
+		InputStream is = socket.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		<strong>keyboard = new BufferedReader(new InputStreamReader(System.in));
+		OutputStream os = socket.getOutputStream();
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+		pw = new PrintWriter(bw);</strong>
+	}
+	
+	@Override
+	public void run() {
+		String str = null;
+		while(true) {
+			try {
+				str = br.readLine();
+				System.out.println(str);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		new Client();
+	}
+	
+}
+</pre>
+
+<p>
+Implement code that transfers input from the keyboard to the server in the new method chatStart().
+</p>
+
+<em class="filename">Client.java</em>
+<pre class="prettyprint">
+package net.java_school.socket;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class Client extends Thread {
+	private Socket socket;
+	private BufferedReader br;
+	private BufferedReader keyboard;
+	private PrintWriter pw;
+	
+	public Client() throws IOException {
+		this.socket = new Socket("localhost", 3000);
+		InputStream is = socket.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		keyboard = new BufferedReader(new InputStreamReader(System.in));
+		OutputStream os = socket.getOutputStream();
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+		pw = new PrintWriter(bw);
+	}
+	<strong>
+	public void chatStart() {
+		start();
+		String str = null;
+		while (true) {
+			try {
+				str = keyboard.readLine();
+				pw.println(str);
+				pw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	</strong>
+	@Override
+	public void run() {
+		String str = null;
+		while(true) {
+			try {
+				str = br.readLine();
+				System.out.println(str);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		<strong>new Client().chatStart();</strong>
+	}
+	
+}
+</pre>
+
+<p>
+Implement the server.
+In the echo example, modify only the run () method of the inner class Echo as follows.
+If the client is forcibly terminated, null is sent to the server, so if the string received from the client is null, it should be implemented to remove the corresponding echo object.
+(It's better to rename Echo to Chatter because it's a chat program.)
+</p>
+
+<pre class="prettyprint">
+@Override
+public void run() {
+	try {
+		String str = null;
+		while (true) {
+			str= br.readLine();
+			if (str != null) {
+				<strong>for (Echo echo : echos) {
+					echo.pw.println(str);
+					echo.pw.flush();</strong>
+				}
+			} else {
+				throw new Exception("null!");
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		close();
+	}
+}
+</pre>
+
+<h3>Bug fixes</h3>
+
+<p>
+When you force a server shutdown, every user's console will print an infinite loop of null.
+Modify the client's run () method as follows:
+</p>
+<pre class="prettyprint">
+@Override
+public void run() {
+	String str = null;
+	try {
+		while((str = br.readLine()) != null) {
+			System.out.println(str);
+		}
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
+</pre>
+</article>

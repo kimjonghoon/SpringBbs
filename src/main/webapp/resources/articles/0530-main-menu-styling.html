@@ -1,0 +1,228 @@
+<article>
+
+<h1>메인 메뉴</h1>
+
+<p>
+도큐먼트베이스 아래 images 폴더를 만들고, 다음 이미지를 저장한다.
+</p>
+
+<div style="background: #ebebeb;height: 90px;width: 497px;">
+<img src="https://lh3.googleusercontent.com/-sQJqA2Xy4lA/VYJgApAGzmI/AAAAAAAACak/QoRi8LP0HEA/s4/bull_circle.gif" alt="bull_circle.gif" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-m7AxsWEEYkI/VYJgAlTWMsI/AAAAAAAACag/ZwSK80SF3yI/s11/attach.png" alt="attach.png" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-CLWzjmg1nE0/VYJgBW3wZ2I/AAAAAAAACao/3fAtEYhiSps/s117/ci.gif" alt="ci.gif" />
+<img src="https://lh3.googleusercontent.com/-HRhH9HImJr0/VYJgB_tbr-I/AAAAAAAACa4/r0w7FPaHy6w/s3/circle.gif" alt="circle.gif" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-oNgNdic_nwk/VYJgApt8m8I/AAAAAAAACa0/BbLVtFw5Ayk/s9/arrow.gif" alt="arrow.gif" style="width: 90px;height: 90px;" />
+</div>
+
+<h3>HTML 코드 추가</h3>
+
+<p>
+이전 절 마지막에 만든 index.html을 열고 #main-menu 엘리먼트에 다음 코드를 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;div id="main-menu"&gt;
+<strong>
+	&lt;ul id="nav"&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Java&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Eclipse&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Struts2&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Ajax&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Android&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+</strong>	
+&lt;/div&gt;	
+</pre>
+
+<h3>#main-menu 폰트 설정</h3>
+
+<p>
+메인 메뉴의 폰트 스타일을 지정한다.
+/*** The Essential Code ***/에 다음 강조된 부분을 추가한다.
+/*** Just for Looks ***/에 있는 #main-menu는 필요없으니 제거한다.
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	width: 1000px;
+	height: 35px;
+	<strong>font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;</strong>	
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-ScIYFUn40gE/VYJfewTGNHI/AAAAAAAACZ8/V629ccAxfKc/s1002/main-menu-01.png" alt="예제보기 1" />
+</p>
+
+<h3>ul#nav</h3>
+
+<p>
+/*** The Essential Code ***/에 다음을 추가하여,
+li의 디폴트 리스트 스타일과 ul과 li가 가진 디폴트 마진과 패딩을 제거한다.
+</p>
+
+<pre class="prettyprint">
+ul#nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}	
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-k3YjIyfXNpA/VYJfew_30xI/AAAAAAAACZ4/h1orzH137eQ/s1002/main-menu-02.png" alt="예제보기 2" />
+</p>
+
+<h3>ul#nav li</h3>
+
+<p>
+서브 메뉴가 가로로 보이도록 /*** The Essential Code ***/에 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+ul#nav li {
+	float: left;
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-FIGnHDBVqzY/VYJfe46KQCI/AAAAAAAACZk/reCCXdbwvt8/s1001/main-menu-03.png" alt="예제보기 3" />
+</p>
+
+<p>
+메뉴 항목이 붙어있으니 항목 좌우에 적당한 패딩을 준다.
+</p>
+
+<pre class="prettyprint">
+ul#nav li {
+	float: left;
+	<strong>padding: 0 17px 0 8px;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-lE_DJHJdnS4/VYJffUvVymI/AAAAAAAACZo/Mf7yDGDHhAU/s1002/main-menu-04.png" alt="예제보기 4" />
+</p>
+
+<h3>ul#nav 위치 조절</h3>
+
+<p>
+메뉴가 있는 ul이 #main-menu의 위쪽으로 치우쳐 있다.
+#main-menu의 높이에 변화를 주지 않으면서 ul를 중앙으로 이동시키기 위해 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+ul#nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	<strong>position: relative;
+	top: 9px;
+	left: 17px;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-DMfBbYWa_5U/VYJffkIW81I/AAAAAAAACaI/P2RSUomT3uk/s999/main-menu-05.png" alt="예제보기 5" />
+</p>
+
+<h3>메인 메뉴 링크 스타일</h3>
+
+<p>
+#main-menu 배경색을 지정한다.
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	width: 1000px;
+	height: 35px;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	<strong>background: #92B91C;</strong>
+}
+</pre>
+
+<p>
+링크의 글자색은 흰색으로,
+링크 밑줄은 없애고,
+마우스를 올릴 때 밑줄이 보이도록,
+/*** The Essential Code ***/에 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+<strong>ul#nav li a {
+	text-decoration: none;
+	color: #FFF;
+}
+ul#nav li a:hover {
+	text-decoration: underline;
+	background: none;
+	color: #FFF;
+}</strong>
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-dlvWJ3Z86TU/VYJffwAhvBI/AAAAAAAACaM/PZVGiMptb2M/s999/main-menu-06.png" alt="예제보기 6" />
+</p>
+
+<h3>메인 메뉴의 항목 앞에 이미지 넣기</h3>
+
+<p>
+ul을 list-style-type: none;으로 설정하면, li 앞의 동그라미는 사라진다.
+동그라미 없애고 대신 li 앞에 배경 이미지를 넣으면 리스트를 좀 더 세련되게 표현할 수 있다.
+다음 코드를 ul#nav li 스타일에 추가한다.
+url 다음의 이미지 경로는 CSS 파일 위치를 기준으로 이미지 위치를 상대경로로 표시해야 한다.
+</p>
+
+<pre class="prettyprint">
+ul#nav li {
+	float: left;
+	padding: 0 17px 0 8px;
+	<strong>background: url('../images/bull_circle.gif') no-repeat 0 50%;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-KpORGDfW3HA/VYJfgPAy47I/AAAAAAAACaA/2dF8Wi9oFd0/s1001/main-menu-07.png" alt="예제보기 7" />
+</p>
+
+<h3>둥근 상자 모서리(CSS 3)</h3>
+
+<p>
+CSS 3에서는 상자의 모서리를 둥글게 설정할 수 있다.
+아래 강조된 부분을 #main-menu에 추가한다.
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	<strong>margin-top: 15px;
+	margin-bottom: 15px;</strong>
+	width: 1000px;
+	height: 35px;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;	
+	background: #92B91C;	
+	<strong>-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;</strong>	
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-vFFBr4Ttz5g/VYJfhTmyueI/AAAAAAAACaQ/r5LKKEQRao8/s1000/main-menu-08.png" alt="예제보기 8" />
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.css3.info/preview/rounded-border/">http://www.css3.info/preview/rounded-border/</a></li>
+	<li><a href="http://border-radius.com/">http://border-radius.com/</a></li>
+	<li><a href="http://www.the-art-of-web.com/css/border-radius/">http://www.the-art-of-web.com/css/border-radius/</a></li>
+	<li><a href="http://www.alistapart.com/articles/holygrail/">http://www.alistapart.com/articles/holygrail/</a></li>
+</ul>
+</article>

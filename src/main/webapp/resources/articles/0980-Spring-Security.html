@@ -1,0 +1,810 @@
+<article>
+
+<h1>구글 어카운트 + Spring Security</h1>
+
+<p>
+<a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a>에서는 
+구글 어카운트와 스트링 시큐리티를 함께 사용하는 방법을 제공한다.
+주소에서 구현한 내용을 다음과 같다.
+</p>
+
+<ul>
+	<li>구글 어카운트 인증으로 시큐리티 컨텍스트 세팅 (다중 인증<sup>Multiple Authentication</sup> 아님)</li>
+	<li>사용자 정의 인증<sup>Authentication</sup> 클래스 구현</li>
+	<li>구글 어카운트 정보에 권한 정보 추가</li>
+	<li>권한 정보를 기반으로 접근 제어</li>
+	<li>사용자 정보(구글 어카운트 + 권한)를 데이터스토어에 저장 (네이티브 API 사용)</li>
+	<li>불량 사용자 접근 금지</li>
+</ul>
+
+<p>
+소개한 주소에서 참고하여, 사용자 정보를 영속 데이터로 저장하지 않고도 운영할 수 있는 사이트를 구현해 볼 것이다.
+따라서 위 항목에서 데이터스토어에 사용자 정보를 저장하는 것과 불량 사용자 접근 금지는 구현하지 않는다.
+</p>
+
+<h3>스프링 시큐리티 추가</h3>
+
+<p>
+pom.xml의 properties 엘리먼트에 다음을 추가한다.
+</p>
+
+<h6 class="src">pom.xml</h6>
+<pre class="prettyprint">
+&lt;properties&gt;
+	&lt;!-- 중간 생략 --&gt;
+	
+	<strong>&lt;spring.security.version&gt;4.2.3.RELEASE&lt;/spring.security.version&gt;</strong>
+&lt;/properties&gt;
+</pre>
+
+<p>
+pom.xml의 dependencies 엘리먼트에 다음을 추가한다.
+</p>
+
+<h6 class="src">pom.xml</h6>
+<pre class="prettyprint">&lt;!-- [START Spring Security] --&gt;
+&lt;dependency&gt;
+   &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+   &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
+   &lt;version&gt;${spring.security.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+   &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+   &lt;artifactId&gt;spring-security-taglibs&lt;/artifactId&gt;
+   &lt;version&gt;${spring.security.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+   &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+   &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
+   &lt;version&gt;${spring.security.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- [END Spring Security] --&gt;      
+</pre>
+
+
+<h6 class="src">AppRole.java</h6>
+<pre class="prettyprint">
+package net.java_school.spring.security;
+
+import org.springframework.security.core.GrantedAuthority;
+
+public enum AppRole implements GrantedAuthority {
+    ROLE_ADMIN (0),
+    ROLE_USER (1);
+    
+    private int bit;
+    
+    AppRole (int bit) {
+        this.bit = bit;
+    }
+    
+    @Override
+    public String getAuthority() {
+        return toString();
+    }
+    
+    public int getBit() {
+        return bit;
+    }
+    
+    public void setBit(int bit) {
+        this.bit = bit;
+    }
+
+}
+
+</pre>
+
+<h6 class="src">GaeUser.java</h6>
+<pre class="prettyprint">
+package net.java_school.user;
+
+import java.io.Serializable;
+import java.util.EnumSet;
+import java.util.Set;
+
+import net.java_school.spring.security.AppRole;
+
+@SuppressWarnings("serial")
+public class GaeUser implements Serializable {
+    private String userId;
+    private String email;
+    private String nickname;
+    private Set&lt;AppRole&gt; authorities;
+    
+    public GaeUser() {}
+    
+    public GaeUser(String userId, String email, String nickname) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.authorities = EnumSet.of(AppRole.ROLE_USER);
+    }
+    
+    public GaeUser(String userId, String email, String nickname, Set&lt;AppRole&gt; authorities) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.authorities = authorities;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set&lt;AppRole&gt; getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set&lt;AppRole&gt; authorities) {
+        this.authorities = authorities;
+    }
+    
+}
+</pre>
+
+
+<h6 class="src">GoogleAccountsAuthenticationEntryPoint.java</h6>
+<pre class="prettyprint">
+package net.java_school.spring.security;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+public class GoogleAccountsAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        UserService userService = UserServiceFactory.getUserService();
+        response.sendRedirect(userService.createLoginURL("/"));
+    }
+}
+</pre>
+
+<h6 class="src">GaeUserAuthentication.java</h6>
+<pre class="prettyprint">
+package net.java_school.spring.security;
+
+import java.util.Collection;
+import java.util.HashSet;
+
+import net.java_school.user.GaeUser;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+
+@SuppressWarnings("serial")
+public class GaeUserAuthentication implements Authentication {
+    private final GaeUser principal;
+    private final Object details;
+    private boolean authenticated;
+    
+    public GaeUserAuthentication (GaeUser principal, Object details) {
+        this.principal = principal;
+        this.details = details;
+        this.authenticated = true;
+    }
+    
+    @Override
+    public String getName() {
+        return principal.getEmail();
+    }
+
+    @Override
+    public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
+        return new HashSet&lt;GrantedAuthority&gt;(principal.getAuthorities());
+    }
+
+    @Override
+    public Object getCredentials() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object getDetails() {
+        return null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return principal;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    @Override
+    public void setAuthenticated(boolean authenticated) throws IllegalArgumentException {
+        this.authenticated = authenticated;
+    }
+
+}
+</pre>
+
+<h6 class="src">GaeAuthenticationFilter.java</h6>
+<pre class="prettyprint">
+package net.java_school.spring.security;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.web.filter.GenericFilterBean;
+
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserServiceFactory;
+
+public class GaeAuthenticationFilter extends GenericFilterBean {
+    private AuthenticationDetailsSource&lt;HttpServletRequest, WebAuthenticationDetails&gt; ads = new WebAuthenticationDetailsSource();
+    
+    private AuthenticationManager authenticationManager;
+    
+    private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            // User isn't authenticated. Check if there is a Google Accounts user
+            User googleUser = UserServiceFactory.getUserService().getCurrentUser();
+
+            if (googleUser != null) {
+                /* 
+                User has returned after authenticating through GAE. 
+                Need to authenticate to Spring Security. 
+                */
+                PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(googleUser, null);
+                
+                token.setDetails(ads.buildDetails((HttpServletRequest) request));
+                try {
+                    authentication = authenticationManager.authenticate(token);
+                    // Setup the security context
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } catch (AuthenticationException e) {
+                    // Authentication information was rejected by the authentication manager
+                    failureHandler.onAuthenticationFailure((HttpServletRequest)request, (HttpServletResponse)response, e);
+                    
+                    return;
+                }
+            }
+        }
+
+        chain.doFilter(request, response);
+    }
+
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    public void setFailureHandler(AuthenticationFailureHandler failureHandler) {
+        this.failureHandler = failureHandler;
+    }
+}
+</pre>
+
+
+
+
+<h6 class="src">GoogleAccountsAuthenticationProvider.java</h6>
+<pre class="prettyprint">
+package net.java_school.spring.security;
+
+import net.java_school.user.GaeUser;
+
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserServiceFactory;
+
+public class GoogleAccountsAuthenticationProvider implements AuthenticationProvider {
+
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        User googleUser = (User) authentication.getPrincipal();
+        
+        GaeUser gaeUser = new GaeUser(googleUser.getUserId(), googleUser.getEmail(), googleUser.getNickname());
+        
+        if (UserServiceFactory.getUserService().isUserAdmin()) {
+            gaeUser.getAuthorities().add(AppRole.ROLE_ADMIN);
+        }
+
+        return new GaeUserAuthentication(gaeUser, authentication.getDetails());
+    }
+
+    public final boolean supports(Class&lt;?&gt; authentication) {
+        return PreAuthenticatedAuthenticationToken.class.isAssignableFrom(authentication);
+    }
+
+}
+</pre>
+
+<h6 class="src">security.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd"&gt;
+	<strong>
+    &lt;http pattern="/_ah/login" security="none" /&gt;
+    &lt;http pattern="/_ah/logout" security="none" /&gt;</strong><b><span>&lt;!--</span>1. 시큐리티 예외 설정<span>--&gt;</span></b>
+
+    &lt;http entry-point-ref="<strong>gaeEntryPoint</strong>"&gt;<b><span>&lt;!--</span>2. 인증 진입점<span>--&gt;</span></b>
+        &lt;access-denied-handler error-page="<strong>/403</strong>" /&gt;<b><span>&lt;!--</span>3. 에러 페이지<span>--&gt;</span></b>
+        &lt;intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" /&gt;
+        &lt;intercept-url pattern="/**" access="permitAll" /&gt;
+        <strong>&lt;custom-filter position="PRE_AUTH_FILTER" ref="gaeFilter" /&gt;</strong><b><span>&lt;!--</span>4. 인증 필터<span>--&gt;</span></b>
+    &lt;/http&gt;
+	
+    &lt;authentication-manager alias="<strong>authenticationManager</strong>"&gt;<b><span>&lt;!--</span>5. 인증 관리자<span>--&gt;</span></b>
+        &lt;authentication-provider ref="<strong>gaeAuthenticationProvider</strong>" /&gt;<b><span>&lt;!--</span>6. 인증 공급자<span>--&gt;</span></b>
+    &lt;/authentication-manager&gt;
+	
+&lt;/beans:beans&gt;
+</pre>
+
+<ol>
+	<li>스프링 시큐리티 예외 설정으로 로그인과 로그아웃을 사이트 외부에서 하기에 이 설정은 불가피하다.</li>
+	<li>인증 진입점은 단순히 사용자를 로그인 페이지로 리다이렉트한다.</li>
+	<li>
+		권한이 없는 사용자에게 보여줄 페이지를 지정한다.
+		guestbook-servlet.xml의 뷰 리졸버는 /403을 /WEB-INF/views/403.jsp로 해석할 것이기에, /WEB-INF/views 디렉터리에 403.jsp를 생성해야 한다.
+		또한, 컨트롤러에 /403 요청을 처리하는 핸들러 메서드도 만들어야 한다.
+	</li>
+	<li>
+		인증 필터는 로그인 서식의 POST 요청으로부터 인증에 필요한 정보(아이디와 패스워드)를 추출한다.
+		추출한 정보로 인증<sup>Authentication</sup> 객체에 저장한다.
+		부분적으로 채워진 인증 객체를 인증 관리자<sup>Authentication Manager</sup>에 전달한다.
+	</li>
+	<li>인증 관리자는 필터로부터 인증 판단을 위임받는다. 인증 관리자는 인증 공급자 리스트로 설정한다.</li>
+	<li>
+		실제로 사용자가 누구인지 검증하는 것은 인증 공급자이다.
+		인증 공급자는 데이터베이스와 같은 저장소에서 가져온 비밀번호와 인증 객체에 저장된 비밀번호를 비교한다.
+		비밀번호가 같으면 신원 객체<sup>Principal</sup>를 만들어 인증 객체에 추가하고 인증 객체를 반환한다.
+	</li>
+</ol>
+
+<h6 class="src">applicationContext.xml</h6>
+<pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+
+    &lt;bean id="<strong>gaeEntryPoint</strong>" 
+            class="<strong>net.java_school.spring.security.GoogleAccountsAuthenticationEntryPoint</strong>" /&gt;<b><span>&lt;!--</span>인증 진입점<span>--&gt;</span></b>
+ 	
+    &lt;bean id="<strong>gaeFilter</strong>" class="<strong>net.java_school.spring.security.GaeAuthenticationFilter</strong>"&gt;<b><span>&lt;!--</span>인증 필터<span>--&gt;</span></b>
+        &lt;property name="authenticationManager" ref="authenticationManager" /&gt;<b><span>&lt;!--</span>인증 관리자<span>--&gt;</span></b>
+    &lt;/bean&gt;
+        
+    &lt;bean id="<strong>gaeAuthenticationProvider</strong>" 
+            class="<strong>net.java_school.spring.security.GoogleAccountsAuthenticationProvider</strong>" /&gt;<b><span>&lt;!--</span>인증 공급자<span>--&gt;</span></b>
+	
+&lt;/beans&gt;
+</pre>
+
+
+<h6 class="src">guestbook-servlet.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+    <strong>xmlns:security="http://www.springframework.org/schema/security"</strong>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        <strong>http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd</strong>
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"&gt;
+    
+    <strong>&lt;security:global-method-security pre-post-annotations="enabled" /&gt;</strong><b><span>&lt;!--</span>1. 반드시 이곳에<span>--&gt;</span></b>
+        
+    &lt;mvc:resources mapping="/resources/**" location="/resources/" /&gt;
+    
+    &lt;mvc:annotation-driven /&gt;
+    
+    &lt;context:component-scan base-package="net.java_school.guestbook" /&gt;
+    
+    &lt;bean id="internalResourceViewResolver" 
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+        &lt;property name="viewClass"&gt;
+            &lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="prefix"&gt;
+            &lt;value&gt;/WEB-INF/views/&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="suffix"&gt;
+            &lt;value&gt;.jsp&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+</pre>
+
+<ol>
+	<li>
+		스프링 시큐리티 설정은 분리해서 security.xml을 만들었다.<br />
+		하지만 이 설정만큼은 -servlet.xml로 끝나는 스프링 설정 파일에 있어야 한다.
+	</li>
+</ol>
+
+
+<h6 class="src">web.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;<b><span>&lt;!--</span>1. 스프링 설정 파일 목록<span>--&gt;</span></b>
+            <strong>/WEB-INF/applicationContext.xml</strong>
+            <strong>/WEB-INF/security.xml</strong> 
+        &lt;/param-value&gt;
+    &lt;/context-param&gt;
+    <strong>&lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt;</strong>
+    <strong>&lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.security.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
+    &lt;/listener&gt;</strong>
+    <strong>&lt;filter&gt;
+        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
+    &lt;/filter&gt;</strong>
+    &lt;filter&gt;
+        &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+    <strong>&lt;filter-mapping&gt;
+        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;</strong>
+    &lt;!-- [START Objectify] --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;com.googlecode.objectify.ObjectifyFilter&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;com.google.guestbook.OfyHelper&lt;/listener-class&gt;
+    &lt;/listener&gt;
+	&lt;!-- [END Objectify] --&gt;
+	&lt;servlet&gt;
+        &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+    &lt;jsp-config&gt;
+        &lt;jsp-property-group&gt;
+            &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;
+            &lt;page-encoding&gt;UTF-8&lt;/page-encoding&gt;
+        &lt;/jsp-property-group&gt;
+    &lt;/jsp-config&gt;
+    &lt;session-config&gt;
+        &lt;session-timeout&gt;-1&lt;/session-timeout&gt;
+    &lt;/session-config&gt;
+&lt;/web-app&gt;
+</pre>
+
+<ol>
+	<li>스프링 MVC 서블릿과 관련된 설정 파일(guestbook-servlet.xml)이 로드되기 전에 로드할 스프링 설정 파일 목록</li>
+</ol>
+
+
+<h3>guestbook.jsp 수정</h3>
+
+<p>
+guestbook.jsp을 열고 Sign In은 그대로 두고 Sign out 링크를 아래와 같이 수정한다.
+</p>
+
+<h6 class="src">수정 전</h6>
+<pre class="prettyprint">
+&lt;a href="&lt;%= userService.createLogoutURL("/guestbook/?guestbookName=" + guestbookName) %&gt;"&gt;sign out&lt;/a&gt;
+</pre>
+
+<h6 class="src">수정 후</h6>
+<pre class="prettyprint">
+&lt;a href="/logout"&gt;sign out&lt;/a&gt;
+</pre>
+
+<p>
+스프링 시큐리티를 사용하게 되면 GET 방식을 제외한 모든 요청에는 CSRF 토큰 파라미터가 있어야 한다.
+guestbook.jsp에서 아래 폼에 CSRF 토큰 파라미터를 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;form action="/guestbook/sign" method="post"&gt;
+	&lt;div&gt;&lt;textarea name="content" rows="3" cols="60"&gt;&lt;/textarea&gt;&lt;/div&gt;
+	&lt;div&gt;&lt;input type="submit" value="Post Greeting"/&gt;&lt;/div&gt;
+	&lt;input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/&gt;
+	<strong>&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</strong>
+&lt;/form&gt;
+</pre>
+
+<h3>appengine-web.xml 수정</h3>
+
+<p>
+appengine-web.xml에 다음을 추가한다.
+</p>
+
+<h6 class="src">/WEB-INF/appengine-web.xml</h6>
+<pre class="prettyprint">
+&lt;sessions-enabled&gt;true&lt;/sessions-enabled&gt;
+</pre>
+
+<h3>GuestbookController.java 수정</h3>
+
+<h6 class="src">GuestbookController.java</h6>
+<pre class="prettyprint">
+package net.java_school.guestbook;
+
+import java.io.IOException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.ObjectifyService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Controller
+public class GuestbookController {
+	<strong>
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String home() {
+		return "index";
+	}
+	
+	@RequestMapping(value="/admin", method=RequestMethod.GET)
+	public String adminHome() {
+		return "admin/index";
+	}
+	
+	@RequestMapping(value="/403", method=RequestMethod.GET)
+	public String error403() {
+		return "403";
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.getSession().invalidate();
+		String url = UserServiceFactory.getUserService().createLogoutURL("/guestbook");
+		response.sendRedirect(url);
+	}
+	</strong>
+	@RequestMapping(value="/guestbook", method=RequestMethod.GET)
+	public String guestbook(String guestbookName, Model model) {
+		model.addAttribute("guestbookName", guestbookName);
+		return "guestbook/guestbook";
+	}
+
+	@RequestMapping(value="/guestbook/sign", method=RequestMethod.POST)
+	public String sign(HttpServletRequest req, HttpServletResponse resp) {
+		Greeting greeting;
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		String guestbookName = req.getParameter("guestbookName");
+		String content = req.getParameter("content");
+		if (user != null) {
+			greeting = new Greeting(guestbookName, content, user.getUserId(), user.getEmail());
+		} else {
+			greeting = new Greeting(guestbookName, content);
+		}
+		// Use Objectify to save the greeting and now() is used to make the call synchronously as we
+		// will immediately get a new page using redirect and we want the data to be present.
+		ObjectifyService.ofy().save().entity(greeting).now();
+		return "redirect:/guestbook/?guestbookName=" + guestbookName;
+	}
+
+}
+</pre>
+
+<h3>테스트에 필요한 파일 추가</h3>
+
+<h6 class="src">/WEB-INF/views/index.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;article&gt;
+&lt;h1&gt;Home&lt;/h1&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;a href="/guestbook"&gt;Guestbook&lt;/a&gt;&lt;/li&gt;
+	&lt;security:authorize access="hasRole('ROLE_ADMIN')"&gt;    
+    	&lt;li&gt;&lt;a href="/admin"&gt;Admin&lt;/a&gt;&lt;/li&gt;
+	&lt;/security:authorize&gt;
+&lt;/ul&gt;
+
+&lt;/article&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">/WEB-INF/views/403.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;Error 403&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;article&gt;
+&lt;h1&gt;403&lt;/h1&gt;
+&lt;p&gt;
+Error 403 - Access denied
+&lt;/p&gt;
+&lt;/article&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">/WEB-INF/views/admin/index.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;Admin&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;article&gt;
+&lt;h1&gt;Admin&lt;/h1&gt;
+&lt;p&gt;
+Admin page
+&lt;/p&gt;
+&lt;/article&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+
+<h3>로컬 테스트</h3>
+
+<pre class="screen">
+mvn clean
+mvn appengine:devserver
+</pre>
+
+<p>
+홈페이지를 방문하고 Guestbook 링크를 클릭한다.<br />
+<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
+Sign in를 클릭한다.<br />
+<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
+로그인 페이지에서 Sign in as Administrator를 체크하고 로그인한다.<br />
+<img src="https://lh3.googleusercontent.com/njUdDdcv3eSIj9LTF1ApHIJ6XgpJLSKKIttSNDJQHDCDLkdDWtzG9nGcFGKwKfl_f8d-rrXSo6KRliovQ7a4haZSjjZKTgpqqftWlXtppbDYJOwFErv4GqgWf3iWE5-eXZovYMBiL5FtRV4sre9JiBNIOk80DZ5RSchiXqICdNOjAeI09lO_IonI6CMNWXgAc21w4LJ2n6k-xlktrfdAK4p73gzesBmTCjpA8-bibwgubs95ym0S1CznUS5MuV2X2sE2rsw9Va6bZWfgdlr8jEYs4vgddmW8m2jMXMcD8qxxLRGhh3KaPl7ofZQsSNtOPkpxi3ybXAjUMX4I4nvWIBJ2orwetlr2ZpKBRZmFNC5Z6XSaEfIeXL0WJT0LNKbEDQz3bku0rmTcz1zI9b9xYhzDFP-wk-ig9qkDXXjFPmwXr5NB2fGNC0cuH-NjX11KZ2hfcltGhuBO9DW5gryVjXcda1Em-2iboPpRuwJNmlmJrvCKVW1dIswuQA8I8MLCfIp8Mb0io-vWYMj-Id90fr_K5r17Q0C-SUabGMJIydxSmsAUgXPLOwUW07bO_4xFIIcqqVzcCO2absJGYgpkSgGv6qnwH4wKBuK5L4Ytu1xG7M5aQ07eBx83=w419-h319-no" alt="Sign in by Admin" /><br />
+<img src="https://lh3.googleusercontent.com/ENkdX6uqkza7qAlio0ucvUDNo_cpFud2WEMNTD_p4FPaw8p0_QijcdRsl1ESbO14Q9AHOgHXFeAHY3IjikzXEHf0IrgHGUYbQ_wc4yhmwSDPQFsICIBisQE0ziMbMwiZqRvc7Wi2JVkD1ZJwJFLMTE8PH6UQoPl8S34JOH5Sphv1sbl0VkA9zK7zg49cCyomegROTbY08ffW78VkXMwR4JGkpUHG0M71-Z5180sv-TSy5N-9W71WAmJq9gve23fPUguDYtltxa7hUKZTVbxF9Gi8uT0Tk-kJ0Z3Aiave4oRGRgyQ_wT37QkZLcp_r84wlIrroyxVu-oEHVdqyM9P_qqWVbUKlWlkc4HKANS5Vtl6XtlygpmgF7A9MNrXVYfjcxUmo74Nk9kLKWH0OH-JsuNrW674DipTy7wNJIxn73FHjeoaHd3l-YoALFo5U1dpMYuurOlwBFUIqXJaqjFInswmN8i2L79dQdt0hG6xpuw4o51uJux_HvCPdXN_0Qufg1kgJmYf6kU08ThTYYJM4joWFvxKGVzWaoLzNRP40NqyG3omdOCn2tMsBRvnNrdmA3y7-dFIni5cS2ASciaUJERfmNk88hT_cmHCa1FcbgWAXENnVJA6FeyR=w451-h301-no" alt="Guestbook" /><br />
+관리자로 로그인된 상태에서 다시 홈페이지를 방문한다. Admin 링크를 클릭한다.<br />
+<img src="https://lh3.googleusercontent.com/QvcX_nWvNvGBIDIRVj4LIEPrb5VOx6l90F4c6YcJIxehG_nkkJnHdJKVitkOE4yYKcuSssVFACePlj3ABd343_LciVwp4PhEeuD_6AyrDcrhDg5z9KEoPJQcXdfNe776Fhi3shBvoIKNyKmNT-PnTiDAYKIdRHvtjfUEokRNf7jtfhQ8LOd3Gb2TtZe3leuLxLTIBHk88LyZq-Uk3LYb7OzH6SAAWLtqbHIdyiKg844K4sj_ehH83W7UH5SsLLhVmo8UCGAvFoXkwKXgi-tGKG9W7MvFNKJ9K7u1SPLGjmehk2jxTuqdSue_HOwWymzrY51ndClyzwCVhGhToNFAGmWAlWPCCtqJV0ozoQiRUdigInvopmwKhcvF25W3UeiOA0x-ic9zvffs4Wo_p18EugoqAbz_m8Shev_Ai1H3Rx80O0xHaoogugWuz3BwlJXvvltrHFfve9LFSlhO2NMmEEXZcG-VkerEDJyHd71tPymQRwz8GuK9VlhUgISUVQBrVvOge2DLEDzHUDO7M-qHcotGVsti1AEFI_8nef-31ov8-NlorqY41tBlv7JK6JbrFnm2ERwZzeUgSRvlPXuSvSzeQ6mqOQB9PwDvmtdRwv-Wy9ZYFF6CE7Qw=w452-h220-no" alt="Access Homepage and Admin" /><br />
+<img src="https://lh3.googleusercontent.com/l-ABwrnNjsRxU4bBSBlfih0Sb2jcERvVHr4atqWzf8AQy9VNVc7I-r5Okxrw4P7P25vCX7LlDefGgKkiTz7Vge5EOW5MNQ38LQDyG1EMTA7E8q7RQWlv_4oPCLVcS_RsQ46T5QLWNnOKKtDia86TKgJ91w1w3s7WzVQGA8nIQYLeJdg_0iZysBYTjEdXTN2HCJUCusIOqQ6VsOnLBO7_9F-YnBRddEbfL52slWliGCIYMTpyTjI3vWQsEMKPSd5oANamYpvXdbstkuj4iw20tCZtohu0E5Re-zl1MVpRcwy2pyIm5yh4wq1e-WIaM_rBycsiSS6SEr7xWjY3yzZEbozGfRWmznBXZwYHbpySL6u3sk_n3F5V7oW4UJuDsqPM0NoILxboHBlFT7vebrJ5svSgBmiC4A0xVW59rC7o7M7dFzify8uCDMhdGPaBIOmhgS2dC-5klfcYIKF_iDcdhejT6BFe6wi4SbZl8CG_Qvd9coCoafh5DeTP9AuyEbUAPJaZLc7isiiBX46haQo62uXvMaBwsFQRbVmJvKODKng7-4aP6fqpboXPuSdzLqYyh4o46PHOoQqB1g3GRsT121J-n0FGvqf3oYeHCwc8L9ydCukS51aP5UW8=w450-h233-no" alt="Admin Page" /><br />
+다시 방명록 페이지로 돌아와서 로그아웃하고 Sign in를 클릭한다.<br />
+<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
+이번에는 일반 사용자로 로그인한다.<br />
+<img src="https://lh3.googleusercontent.com/JFIPDnglJq8KtPG5Pv4KMWthG4fUPhGgv2NAYaACQQMxyDzgxKe87titAJKBoTvY-GtcHodBFEZ3C_1u3G6VPuUPqrw65pnxAdxQysd5IP3YCf9FHPBWIOBFHgM6xqb6E87Nm1qQvacYg5kmZg3DUIcydZOwad4JcgFAbNaUmYnnhPG2P95BxyYXqEpAwPXw4BFvJNc0TU36-O3kw2g1mA3ahx9FxbV3AfGdFW-RaTkEKa6NeLlzCehZg7iOWrRw5BXEbTsXkWven_HYHd0PtLrB_Wa1_1qQ7t29OoXL1ox-2HzlkPZNLhqtUmcuVM4JV1OBRQ9efsgne896L2I2i2MdBZffAzWLFLCglvzabSsYhFJ1E-8y8ZFAkylraWxq7MF_cy7jpdHUsaxCLEo6Zgp_uSYc4aO2O88eWrlJIr7pJhlCDy4st8q7XLCeD2LStxEkePbkqKOUBSYpb_wrbsN11N15FpXE67rezkz6J2Dno-5e54JQspx_o3ujA4DZU25iHpgZIwSv3G9lAo0mRz_wWW6zPx7sTZRduMF4fDlA1jEDwUpy1avu89m5xhTT8PESM1hngBxHQIN3GCPRDeQFdqKg6TMuOKMYjsN-_6IV-M5dxPqlIHVZ=w451-h275-no" alt="Sign in by normal user" /><br />
+홈페이지를 방문한다. Admin 링크가 사라진 것을 확인한다.<br />
+<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
+웹 브라우저의 주소창에 localhost:8080/admin를 입력하여 관리자 페이지로의 접근을 시도한다.<br />
+<img src="https://lh3.googleusercontent.com/zVAFmaEpBdA9W3xGV3o1avo-4wYBk2TdS9Ys1wIvYiIWK-Nxvgkrt05T9sFLlQcW6LA_0C3N9NB7GmfSZUvt2Vvix_5tWDORjEAkHawvnGBXlX0LINcBGL7QhiRi4X9xtKn8H5CH8d232k9vb6OF9hFCOjnmqmsP9GJ8w96nqhHhL6kEfA1HK0QoFCky6CzEdnfCmKno-G7voB7N38ITn-e3Cus7o0diqlQw9dlNLDgEqA2eGK7GEeiTqwDKQ9Jz52VWMGeZA0cLvHD1eyIiF50POVQ0j86Y7ixo79fHWS7HQOPYaXIMYy6aoWX-eiz5c5Wqa7ra9hdvM0BIswDNywqHC77umx1ltulzAiQMhbV2DgHNKuru1t3SNMe7Hrx0VN0W6UUmAc0inp5AmSBUu4ZAdw6kiLJyYWWay6LoR_pU8JXkRTywspRdGJV5GfPAb6HWszxTbIT0cv40kmc_23DCq_tlK7_qXRCX4RNXJkspBjoMSm0ZU74EXcn0anrXsMGVRkVnGChLnhDmoKESq-fjinjqIP2yEcKh6S_7kTLz-u2l7nALV7NzhO3U192tXZquOuCWgOvbrMjV3hKVelPMC6k6lKhcE1bqXSkuZdQzwEMCoWhkvnrn=w450-h216-no" alt="Access Denied" /><br />
+</p>
+
+<dl class="note">
+
+<dt>Error 405 Request method 'POST' not supported</dt>
+<dd>
+스프링 시큐리티를 적용한 다음 자주 보게 되는 에러다.
+CSRF 토큰을 전송하지 않았을 때 발생한다.
+</dd>
+
+<dt>
+HTTP Status 405 Request method 'POST' not supported
+</dt>
+
+<dd>
+요청 방식(HTTP method)과 컨트롤러에서 받는 방식이 달랐을 때 발생한다.
+</dd>
+
+<dt>Error: request POST not supported</dt>
+
+<dd>
+이 에러는 다양한 원인으로 발생한다.
+구글 앱 엔진 콘솔에서 로그를 보고 대처한다.
+</dd>
+
+</dl>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a></li>
+</ul>
+</article>

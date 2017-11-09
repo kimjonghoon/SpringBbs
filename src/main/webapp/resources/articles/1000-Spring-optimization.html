@@ -1,0 +1,148 @@
+<article>
+
+<h1>구글 앱 엔진에서 스프링 최적화</h1>
+
+<p>
+구글 클라우드는 애플리케이션의 초기화 시간이 너무 길면 500 에러를 낸다.
+</p>
+
+<p>
+구글의 공식 문서는 컴포넌트 스캔과 오토와이어드를 사용하지 말 것을 권고한다.
+컴포넌트 스캔과 오토와이어드는 애플리케이션 초기화를 더디게 하는 주요 원인이다.
+</p>
+
+<p>
+스프링 MVC 설정에서 컴포넌트 스캔과 오토 와이어드 대신 빈을 일일이 정의하는 것으로 바꾸어 보자.
+</p>
+
+<h6 class="src">guestbook-servlet.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"&gt;
+        
+	&lt;security:global-method-security pre-post-annotations="enabled" /&gt;
+	    
+	&lt;mvc:resources mapping="/resources/**" location="/resources/" /&gt;
+	
+	&lt;mvc:annotation-driven /&gt;
+	
+	&lt;!-- &lt;context:component-scan base-package="net.java_school.guestbook" /&gt; --&gt;
+	<strong>&lt;context:annotation-config /&gt;</strong>
+	
+	&lt;bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+		&lt;property name="viewClass"&gt;
+			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name="prefix"&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name="suffix"&gt;
+			&lt;value&gt;.jsp&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	<strong>
+	&lt;bean id="guestbookController" class="net.java_school.guestbook.GuestbookController"&gt;
+		&lt;property name="guestbookService" ref="guestbookService" /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id="guestbookService" class="net.java_school.guestbook.GuestbookServiceImpl" /&gt;
+	</strong>
+&lt;/beans&gt;
+</pre>
+
+<p>
+component-scan 대신 추가한 context:annotation-config는 스프링의 빈 컨테이너가 빈을 등록할 때 빈에 적용된 애너테이션이 그 기능을 하도록 한다.
+예를 들어, 빈에 @Controller 애너테이션이 적용되었다면, 해당 빈을 컨트롤러로 등록한다.
+context:annotation-config도 mvc:annotation-driven 설정이 필요하다.
+</p>
+
+<p>
+다음으로 오토 와이어드 기능을 제거한다.
+GuestbookController에 @Autowired 애너테이션을 제거하고 세터를 추가한다.
+</p>
+
+<pre class="prettyprint">
+@Controller
+public class GuestbookController {
+  
+	private GuestbookService guestbookService;
+	<strong>
+	public void setGuestbookService(GuestbookService guestbookService) {
+		this.guestbookService = guestbookService;
+	}
+	</strong>
+	//.. omit ..
+	
+}
+</pre>
+
+<h3>Guestbook 최종 소스</h3>
+
+<p>
+최종 소스에는 다음 기능을 추가했다.
+</p>
+
+<ol>
+	<li>
+		앱의 모든 뷰가 메인 메뉴와 로그인 페이지를 이용해 화면을 구성하도록, 메인 메뉴<sup>main-menu.jsp</sup>와 로그인<sup>login.jsp</sup> 페이지를 만들었다.
+		/index.jsp, /admin/index.jsp, /guestbook/guestbook.jsp는 메인 메뉴와 로그인 페이지를 인클루드하도록 수정했다.
+		간편한 구현을 위해, 로그인 페이지를 통해 로그인이나 로그아웃하면 홈페이지로 이동하도록 했다.
+	</li>
+	<li>
+		예제를 진행하면서 Guestbook 예제에 서비스 계층을 만들었다.
+		GuestbookController의 "/guestbook" 요청 핸들러가 서비스 계층을 사용하도록 수정했다.
+	</li>
+	<li>
+		전달받은 데이터를 보여주는 역할만을 수행하도록, JSTL를 사용해서 guestbook.jsp를 수정했다.
+	</li>
+</ol>
+
+<ul>
+	<li><a href="guestbook/pom.xml">pom.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/resources/stylesheets/main.css">src/main/webapp/resources/stylesheets/main.css</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/appengine-web.xml">src/main/webapp/WEB-INF/appengine-web.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/applicationContext.xml">src/main/webapp/WEB-INF/applicationContext.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/guestbook-servlet.xml">src/main/webapp/WEB-INF/guestbook-servlet.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/logging.properties">src/main/webapp/WEB-INF/logging.properties</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/security.xml">src/main/webapp/WEB-INF/security.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/web.xml">src/main/webapp/WEB-INF/web.xml</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/403.jsp">src/main/webapp/WEB-INF/views/403.jsp</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/index.jsp">src/main/webapp/WEB-INF/views/index.jsp</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/admin/index.jsp">src/main/webapp/WEB-INF/views/admin/index.jsp</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/guestbook/guestbook.jsp">src/main/webapp/WEB-INF/views/guestbook/guestbook.jsp</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/inc/login.jsp">src/main/webapp/WEB-INF/views/inc/login.jsp</a></li>
+	<li><a href="guestbook/src/main/webapp/WEB-INF/views/inc/main-menu.jsp">src/main/webapp/WEB-INF/views/inc/main-menu.jsp</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/Greeting.java">src/main/java/net/java_school/guestbook/Greeting.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/Guestbook.java">src/main/java/net/java_school/guestbook/Guestbook.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/GuestbookController.java">src/main/java/net/java_school/guestbook/GuestbookController.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/GuestbookService.java">src/main/java/net/java_school/guestbook/GuestbookService.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/GuestbookServiceImpl.java">src/main/java/net/java_school/guestbook/GuestbookServiceImpl.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/guestbook/OfyHelper.java">src/main/java/net/java_school/guestbook/OfyHelper.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/spring/security/AppRole.java">src/main/java/net/java_school/spring/security/AppRole.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/spring/security/GaeAuthenticationFilter.java">src/main/java/net/java_school/spring/security/GaeAuthenticationFilter.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/spring/security/GaeUserAuthentication.java">src/main/java/net/java_school/spring/security/GaeUserAuthentication.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/spring/security/GoogleAccountsAuthenticationEntryPoint.java">src/main/java/net/java_school/spring/security/GoogleAccountsAuthenticationEntryPoint.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/spring/security/GoogleAccountsAuthenticationProvider.java">src/main/java/net/java_school/spring/security/GoogleAccountsAuthenticationProvider.java</a></li>
+	<li><a href="guestbook/src/main/java/net/java_school/user/GaeUser.java">src/main/java/net/java_school/user/GaeUser.java</a></li>
+</ul>
+
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="https://cloud.google.com/appengine/articles/spring_optimization">https://cloud.google.com/appengine/articles/spring_optimization</a></li>
+</ul>
+</article>

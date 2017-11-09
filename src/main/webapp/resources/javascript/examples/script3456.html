@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>자바와 다른 자바스크립트</title>
+<script type="text/javascript">
+function testSwitch(str) {
+    switch (str) {
+    case "1":
+        alert("1입니다.");
+        break;
+    case "2":
+        alert("2입니다.");
+        break;
+    case "3":
+        alert("3입니다.");
+        break;
+    default:
+        alert("디폴트입니다.");
+    }
+}
+ 
+function testArray() {
+    //배열만드는 방법
+    var arr = [1,2,3,4,5];
+    for (var i = 0; i < arr.length; i++) {
+        alert(arr[i]);
+    }
+}
+ 
+function testforIn() {
+    //연관배열
+    for(prop in document) {
+        document.writeln(prop + "=");
+        eval("document.writeln(document." + prop +")");
+        document.writeln("<br />");
+    }
+}
+</script>
+</head>
+<body>
+<input type="button" value="switch문테스트" onclick="testSwitch('3')"><br>
+<input type="button" value="배열테스트" onclick="testArray()"><br>
+<input type="button" value="for..in문테스트" onclick="testforIn()"><br>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<article>
+
+<h1>What are Web Appliactions?</h1>
+
+<p>
+A server like Tomcat is called a servlet container.
+It is the web application that the servlet container carries and manages.
+The servlet container must ensure that the web application operates in accordance with Sun's Servlets/JSP Spec.
+</p>
+
+<h2>Components of a web application</h2>
+
+<p>
+The web application in Java consists of the following files.
+</p>
+
+<ul>
+	<li>HTML, Images, Style Sheets, JavaScript</li>
+	<li>JSP</li>
+	<li>Servlets</li>
+	<li>Java Classes, Java archive file(jar)</li>
+	<li>web.xml</li>
+</ul>
+
+<p>
+Some of the above components have a specified location.
+Servlets and Java classes should be placed in WEB-INF/classes.
+Java archive files should be placed in WEB-INF/lib.
+The web.xml file should be placed in WEB-INF.
+</p>
+
+<h2>Web application directory</h2>
+
+<p>
+The default location for web applications in Tomcat is {TOMCAT_HOME}/webapps.
+If you want to add a new web application, create a subdirectory<sup><a href="#comments">1</a></sup> with the appropriate name in {TOMCAT_HOME}/webapps and create the following folder in that subdirectory.
+</p>
+
+<h3>WEB-INF</h3>
+
+<p>
+This directory should contain the web application deployment descriptor, web.xml.
+Files in the WEB-INF directory can not be accessed directly through a web browser.
+</p>
+
+<h3>WEB-INF/classes</h3>
+
+<p>
+The Java class file (bytecode) should be here.
+</p>
+
+<h3>WEB-INF/lib</h3>
+
+<p>
+The Java archive file (jar) should be here.
+Note that the same bytecode can be found in the WEB-INF/classes and Java archive files in WEB-INF/lib.
+In this case, the Tomcat class loader first searches WEB-INF/classes, and loads the classes found in WEB-INF/classes into memory.
+The class in Java archive file are ignored and can not participate in the program.
+</p>
+
+<dl class="note">
+<dt>Tomcat Class Loader</dt>
+<dd>
+Tomcat class loader does not refer to the environment variable CLASSPATH.
+Tomcat class loader looks for classes in the following order:
+<ol>
+	<li>Java API</li>
+	<li>WEB-INF/classes directory of a web application</li>
+	<li>WEB-INF/lib directory of a web application</li>
+	<li>{TOMCAT_HOME}/lib</li>
+</ol>
+</dd>
+</dl>
+
+
+<h2>web.xml</h2>
+
+<p>
+The heart of the web application is the web.xml file, called the deployment descriptor.
+A web.xml should be in the WEB-INF/ directory.
+A web.xml contains all the configuration information on a web application.
+</p>
+
+<h3><a href="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">Main configuration items in web.xml</a></h3>
+<ul>
+	<li>ServletContext initialization parameter</li>
+	<li>Filter</li>
+	<li>Listener</li>
+	<li>Servlet Definition</li>
+	<li>Servlet Initialization parameters</li>
+	<li>Servlet Mapping</li>
+	<li>Session Configuration</li>
+	<li>welcome file list</li>
+	<li>error page</li>
+</ul>
+
+<h3>Example and description of web.xml</h3>
+
+<p>
+When creating the web.xml file, copy {TOMCAT_HOME}/webapps/ROOT/WEB-INF/web.xml file and paste it into WEB-INF / of your web application.
+Then open the web.xml file and delete everything in the web-app root element.
+You can configure your web application by adding sub elements of the web-app element, as highlighted below.
+</p>
+
+<em class="filename">web.xml<sup><a href="#comments">2</a></sup></em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;
+
+&lt;web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0"
+	metadata-complete="true"&gt;  
+	<strong>
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;TestServlet&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;net.java_school.TestServlet&lt;/servlet-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;name&lt;/param-name&gt;
+			&lt;param-value&gt;value&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+	
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;TestServlet&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/Test&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+	  
+	&lt;session-config&gt;
+		&lt;session-timeout&gt;30&lt;/session-timeout&gt;
+	&lt;/session-config&gt;
+	</strong>
+&lt;/web-app&gt;
+</pre>
+
+<p>
+The servlet element sets the servlet definition and the initial parameters of the servlet.
+If the value of the load-on-startup element is 0 or positive, Tomcat creates the servlet object at the start of the web application and calls the init () method to make the service available.
+The servlet-mapping element is used for servlet-to-URL mapping.
+As above, if you visit http://localhost:port/contextPath/<strong>Test</strong>, 
+the net.java_school.TestServlet servlet will respond.
+The session-timeout element controls the lifetime of the HttpSession object.
+If session-timeout is set to 30, the servlet container will destroy the HttpSession object if it has no action for 30 minutes.
+</p>
+
+<h2>Packing</h2>
+
+<p>
+You can use the jar tool (jar.exe) to make your web application a single file.
+Once development is complete, you can bundle your web application and distribute it to other servlet containers.
+To do this, you need to create a file with the extension war. (Note that the extension is war rather than jar)
+If the web application's document base is C:\Program Files\Apache Software Foundation\Tomcat 8.0\webapps\test, go to the document base and run the following:
+</p>
+
+<pre>
+C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\test&gt;<strong>jar cvf test.war .</strong>
+</pre>
+
+<p>
+If you copy this test.war file to the default web application folder of another Tomcat server or another vendor's servlet container, 
+the servlet container will automatically deploy and load the test application.
+</p>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>
+This subdirectory is the root directory of the web application to be created.
+For Tomcat, this directory is called DocumentBase.
+The DocumentBase and DocumentBase subdirectories (Exclude WEB-INF/) contain static components of the web application.
+For example, you can place style sheets in the css subdirectory of DocumentBase, 
+JavaScript files in the js subdirectory of DocumentBase, and image files in the images subdirectory of DocumentBase.
+JSPs can also be placed in the DocumentBase and DocumentBase subdirectories.
+However, many web developers create a directory like WEB-INF/jsp and place the JSP file there.
+	</li>
+	<li>
+To test a Web application that has this web.xml, you need to create a TestServlet.
+Servlet examples are covered in full in <a href="Servlet">Servlet</a> chapter.
+	</li>
+</ol>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://stackoverflow.com/questions/809775/what-does-the-servlet-load-on-startup-value-of-0-zero-signify">http://stackoverflow.com/questions/809775/what-does-the-servlet-load-on-startup-value-of-0-zero-signify</a></li>
+</ul>
+</article>

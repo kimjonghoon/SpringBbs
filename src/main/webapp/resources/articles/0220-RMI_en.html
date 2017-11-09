@@ -1,0 +1,222 @@
+<article>
+	
+<h1>RMI</h1>
+
+<p>
+So far, the method call of an object was made between an object and an object in the same JVM.
+Can we then call the methods of the objects that are running in other JVMs?
+We already know about sockets.
+However, if you use sockets, you have to define the protocol that the server and client will use together.
+If you use RMI, you can call methods of objects in other JVMs without these protocols.
+With RMI, you do not need to create messages and interpret messages according to protocols.
+</p>
+
+<h3>RMI Programming Procedures</h3>
+
+<ol>
+	<li>Defining a remote interface</li>
+	<li>Implementing a server</li>
+	<li>Implementing a client</li>
+	<li>Starting the Java RMI Registry, Starting the server, Starting the client</li>
+</ol>
+
+<h3>RMI Example</h3>
+
+<ul>
+	<li>Hello.java - Remote Interface</li>
+	<li>Server.java - Remote interface implementation</li>
+	<li>Client.java - Clients that call remote methods on the remote interface</li>
+</ul>
+
+<h3>1. Defining a remote interface: Hello.java</h3>
+
+<p>
+The remote interface defines methods that can be called remotely from the client.
+The remote interface must inherit from java.rmi.Remote.
+Remote methods on the remote interface must declare throws java.rmi.RemoteException.
+In addition to RemoteException, other exceptions can be added.
+</p>
+
+<em class="filename">Hello.java</em>
+<pre class="prettyprint">
+package example.hello;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface Hello extends Remote {
+	String sayHello() throws RemoteException;
+}
+</pre>
+
+<h3>2. Remote interface implementation: Server.java</h3>
+
+<p>
+Server implements the remote interface Hello.
+You do not need a throws RemoteException when implementing sayHello().
+This is because the remote object's sayHello() does not throw a RemoteException object.
+</p>
+
+<em class="filename">Server.java</em>
+<pre class="prettyprint">
+package example.hello;
+
+import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Server implements Hello {
+
+	public Server(){}
+	
+	public String sayHello() {
+		return "Hello, World!";
+	}
+	
+	public static void main(String[] args) {
+		Server obj = new Server();
+		try {
+			Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
+			
+			// Bind the remote object's stub in the registry
+			Registry registry = LocateRegistry.getRegistry();
+			registry.bind("Hello", stub);
+			System.out.println("Server ready");
+		} catch (Exception e) {
+			System.out.println("Server exception: " + e.toString());
+		}
+	}
+
+}
+</pre>
+
+<p>
+The server's main method must create a remote object that supplies the service.
+And the remote object must be exported to the Java RMI runtime. 
+This process creates a stub for the server in the Java RMI runtime.
+Here's the code to do this: <br />
+</p>
+
+<pre class="prettyprint">
+Server obj = new Server();
+Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
+</pre>
+
+<p>
+Register the server-side stub created with the above code in the Java RMI registry so that it can be found on the client.
+Here's the code to do this: <br />
+</p>
+
+<pre class="prettyprint">
+Registry registry = LocateRegistry.getRegistry();
+registry.bind("Hello", stub);
+</pre>
+
+<p>
+If the getRegistry () method of the LocateRegistry is called without arguments, then the default port of 1099 is used.
+Therefore, depending on the system, it may be necessary to open the 1099 port.
+</p>
+
+<h3>3. Implementing a Client.</h3>
+
+<p>
+The client finds the registered stub on the server side with the registered name and downloads it to the client side JVM.
+It then calls the stub's sayHello() method.
+</p>
+
+<pre class="prettyprint">
+package example.hello;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class Client {
+
+	private Client() {}
+
+	public static void main(String[] args) {
+		String host = (args.length &lt; 1) ? null : args[0];
+		
+		try {
+			Registry registry = LocateRegistry.getRegistry(host);
+			Hello stub = (Hello) registry.lookup("Hello");
+			String response = stub.sayHello();
+			System.out.println("response: " + response);
+		} catch (Exception e) {
+			System.err.println("Client exception: " + e.toString());
+			e.printStackTrace();
+		}
+	}
+}
+</pre>
+
+<h2>4. Test</h2>
+
+<h3>Test on Windows systems</h3>
+
+<pre class="commandLine">
+start rmiregistry
+
+start java -classpath c:/java/rmi/bin ^
+-Djava.rmi.server.codebase=file:c:/java/rmi/bin ^
+example.hello.Server
+</pre>
+
+<p>
+^ Is a newline character in a Windows command.
+Launch a new command prompt and run the client.
+</p>
+
+<pre class="commandLine">
+java -classpath c:/java/rmi/bin example.hello.Client
+</pre>
+
+<h3>Test on Linux Systems</h3>
+
+<pre class="commandLine">
+rmiregistry &amp;
+
+java -classpath /home/kim/java/rmi/bin \
+-Djava.rmi.server.codebase=file:/home/kim/java/rmi/bin \
+example.hello.Server &amp;
+</pre>
+
+<p>
+The backslash is the newline character in linux bash. 
+Launch a new terminal and run the client.
+</p>
+
+<pre class="commandLine">
+java -classpath /home/kim/java/rmi/bin example.hello.Client
+</pre>
+
+<h3>Test on two or more computers</h3>
+
+<p>
+If the server IP is 192.168.0.8, run the following on the client:
+</p>
+
+<pre class="commandLine">
+java -classpath /home/kim/java/rmi/bin example.hello.Client 192.168.0.8
+</pre>
+
+<p>
+In the above example, the Windows system is the server and the Linux system is the client.
+On the client-side computer, there should be a bytecode of Hello and Client.
+On the server side computer, there should be bytecode of Hello and Server.
+</p>
+
+<dl class="note">
+<dt>Test Failure Checklist</dt>
+<dd>
+1. If the test fails on a Windows system, try disabling the loopback adapter and try again. <br />
+2. If the test fails when running the server on Windows, open port 1099 (RMI default port) and try again.<br />
+3. If you are using a router and you run the server on Linux and the test fails, open the /etc/hosts file and modify 127.0.0.1 to the router-assigned private IP and test again.<br />
+</dd>
+</dl>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html">http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html</a></li>
+</ul>
+</article>

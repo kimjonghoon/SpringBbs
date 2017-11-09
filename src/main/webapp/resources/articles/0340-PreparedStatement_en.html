@@ -1,0 +1,120 @@
+<article>
+
+<h1>PreparedStatement</h1>
+
+<p>
+PreparedStatement is more convenient and effective than the Statement interface.
+The PreparedStatement interface inherits the Statement interface.
+
+The SQL statement that the statement passes to the DBMS is a simple string.
+The DBMS compiles the string to be understood by the DBMS and executes it.
+
+PreparedStatement improves performance by delivering precompiled SQL statements to the DBMS.
+Not only does it improve performance, but it is also convenient.
+You can put ? In an SQL statement, and you can set a value in ?.
+Therefore, you can execute the same SQL statement by replacing the value with ?.
+
+Refer to the JDBC programming order to complete the main method of UsingPrepareStatement.java.
+Our goal is to execute the following SQL:
+</p>
+
+<pre>
+UPDATE NAMECARD SET COMPANY = ? WHERE NO = ?
+</pre>
+  
+<ol>
+	<li>Loading a JDBC Driver</li>
+	<li>Getting a Connection</li>
+	<li>Execute SQL</li>
+	<li>[If the SQL statement is a select statement, use the ResultSet to process data.]</li>
+	<li>Returning Resources</li>
+</ol>
+
+<em class="filename">UsingPrepareStatement.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+<strong>import java.sql.PreparedStatement;</strong>
+import java.sql.SQLException;
+
+public class UsingPreparedStatement {
+	static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	static final String USER = "scott";
+	static final String PASS = "tiger";
+	
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE NAMECARD SET COMPANY = <strong>?</strong> WHERE NO = <strong>?</strong>";
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASS);
+			<strong>
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "Google Inc");
+			pstmt.setInt(2, 1);
+			pstmt.executeUpdate();
+			</strong>
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+</pre>
+
+<p>
+I will explain the different parts of using Statement.
+</p>
+
+<pre>
+pstmt = con.prepareStatement(sql);
+</pre>
+
+<p>
+Unlike obtaining a Statement, you must pass an SQL statement with a Java string as an argument to the prepareStatement () method to get a PreparedStatement object.
+</p>
+
+<pre>
+pstmt.executeUpdate();
+</pre>
+
+<p>
+Unlike Statement, when you execute SQL, do not pass the SQL statement as Java string to the executeUpdate() method as an argument.
+</p>
+
+<pre>
+pstmt = con.prepareStatement(sql);
+pstmt.setString(1, "Google Inc");
+pstmt.setInt(2, 1);
+</pre>
+
+<p>
+If the SQL statement contains a question mark, you must set the value of the question mark using the PrepareStatement's setXXX () method before the statement is executed.
+The XXX part of the setXXX () method must be determined by the Java data type that maps to the data type of the column.
+The first parameter to the setXXX () method is the order in which question marks appear.
+The second parameter of the setXXX () method is the value to replace the question mark.
+</p>
+
+</article>

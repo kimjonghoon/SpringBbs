@@ -1,0 +1,233 @@
+<article>
+
+<h1>Spring 트랜잭션</h1>
+
+<em class="filename">applicationContext.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	<strong>xmlns:tx="http://www.springframework.org/schema/tx"</strong>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        <strong>http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd</strong>"&gt;
+	<strong>
+	&lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+		&lt;property name="dataSource" ref="dataSource" /&gt;
+	&lt;/bean&gt;
+
+	&lt;tx:annotation-driven transaction-manager="transactionManager" /&gt;
+	</strong>
+	&lt;aop:aspectj-autoproxy /&gt;
+
+	&lt;bean id="testLogger" class="net.java_school.commons.TestLogger" /&gt;
+
+	&lt;bean id="bankUi" class="net.java_school.bank.BankUi"&gt;
+		&lt;property name="stream" value="#{T(System).out}" /&gt;
+		&lt;property name="bank" ref="shinhanBank" /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id="shinhanBank" class="net.java_school.bank.ShinhanBank"&gt;
+		&lt;property name="dao" ref="shinhanBankDao" /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id="shinhanBankDao" class="net.java_school.bank.ShinhanBankDao"&gt;
+		&lt;property name="dataSource" ref="dataSource" /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"&gt;
+		&lt;property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /&gt;
+		&lt;property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE" /&gt;
+		&lt;property name="username" value="scott" /&gt;
+		&lt;property name="password" value="tiger" /&gt;
+	&lt;/bean&gt;
+
+&lt;/beans&gt;
+</pre>
+
+<p>
+지금까지 입금과 출금 메서드는 void를 반환하도록 설계했기에 입금이나 출금이 성공 또는 실패했는지를 알 수 없었다.
+입금과 출금시 dao가 정수값을 리턴하도록 자바 클래스를 수정한다.
+</p>
+
+<em class="filename">BankDao.java</em>
+<pre class="prettyprint">
+//입금
+public <strong>int</strong> deposit(String accountNo, long amount);
+
+//출금
+public <strong>int</strong> withdraw(String accountNo, long amount);
+</pre>
+
+
+<em class="filename">ShinhanBankDao.java</em>
+<pre class="prettyprint">
+@Override
+public <strong>int</strong> deposit(String accountNo, long amount) {
+	Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
+	params.put("amount", amount);
+	params.put("accountNo", accountNo);
+	
+	<strong>return</strong> getNamedParameterJdbcTemplate().update(DEPOSIT, params);
+}
+
+@Override
+public <strong>int</strong> withdraw(String accountNo, long amount) {
+	Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
+	params.put("amount", amount);
+	params.put("accountNo", accountNo);
+	
+	<strong>return</strong> getNamedParameterJdbcTemplate().update(WITHDRAW, params);		
+}
+</pre>
+
+<p>
+다음과 같이 어노테이션을 사용해 트랜잭션을 설정한다.
+</p>
+
+<em class="filename">ShinhanBank.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.util.List;
+<strong>
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional(propagation=Propagation.SUPPORTS)</strong>
+public class ShinhanBank implements Bank {
+	
+	//..중간 생략..
+	
+	@Override
+	<strong>@Transactional(propagation=Propagation.REQUIRED)</strong>
+	public void transfer(String from, String to, long amount) {
+		<strong>int check = dao.withdraw(from, amount);
+		if (check &lt; 1) {
+			throw new RuntimeException("출금 실패");
+		}
+		check = dao.deposit(to, amount);
+		if (check &lt; 1) {
+			throw new RuntimeException("입금 실패");
+		}</strong>
+	}
+
+	//..중간 생략..
+	
+}
+</pre>
+
+<p>
+테스트하기 전에 BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+</p>
+
+<pre class="prettyprint">
+ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml"); //XML
+//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BankConfig.class); //JavaConfig
+</pre>
+
+<p>
+컴파일하고 실행한 후,
+101 계좌에서 505 계좌(존재하는 않는 계좌)로 이체를 시도한다.
+테스트에 성공했다면(즉, 이체가 취소되었다면), ShinhanBank 클래스에서 transfer() 메서드 위에 있는 @Transactional(propagation=Propagation.REQUIRED)을 제거하고 다시 이체를 시도한다.
+</p>
+
+<h3>JavaConfig 설정</h3>
+
+<em class="filename">BankConfig.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import javax.sql.DataSource;
+
+import net.java_school.commons.TestLogger;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+<strong>import org.springframework.jdbc.datasource.DataSourceTransactionManager;</strong>
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+<strong>import org.springframework.transaction.PlatformTransactionManager;</strong>
+<strong>import org.springframework.transaction.annotation.EnableTransactionManagement;</strong>
+
+@Configuration
+@EnableAspectJAutoProxy
+<strong>@EnableTransactionManagement</strong>
+public class BankConfig {
+
+	@Bean
+	public TestLogger testLogger() {
+		return new TestLogger();
+	}
+
+	@Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+        dataSource.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:XE");
+        dataSource.setUsername("scott");
+        dataSource.setPassword("tiger");
+        return dataSource;
+    }
+	<strong>
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
+    </strong>
+    @Bean
+    public BankDao shinhanBankDao() {
+        ShinhanBankDao bankDao = new ShinhanBankDao();
+        bankDao.setDataSource(dataSource());
+        return bankDao;
+    }
+
+	@Bean
+	public Bank shinhanBank() {
+		Bank bank = new ShinhanBank();
+		bank.setDao(shinhanBankDao());
+		return bank;
+	}
+
+	@Bean
+	public BankUi bankUi() {
+		BankUi ui = new BankUi();
+		ui.setBank(shinhanBank());
+		ui.setStream(System.out);
+		return ui;
+	}
+	
+}
+</pre>
+
+<p>
+테스트하기 전에, applicationContext.xml 설정을 모두 주석 처리한다.
+BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+</p>
+
+<pre class="prettyprint">
+//ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml"); //XML
+AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BankConfig.class); //JavaConfig
+</pre>
+
+<h3>최종 소스</h3>
+<ol>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/Transaction.java">Transaction.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/Account.java">Account.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/Bank.java">Bank.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/BankDao.java">BankDao.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/ShinhanBankDao.java">ShinhanBankDao.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/ShinhanBank.java">ShinhanBank.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/BankUi.java">BankUi.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/java/net/java_school/bank/BankConfig.java">BankConfig.java</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/resources/logback.xml">logback.xml</a></li>
+	<li><a href="/spring/examples/transaction/bank/src/main/resources/applicationContext.xml">applicationContext.xml</a></li>
+	<li><a href="/spring/examples/transaction/bank/pom.xml">pom.xml</a></li>
+</ol>
+
+</article>

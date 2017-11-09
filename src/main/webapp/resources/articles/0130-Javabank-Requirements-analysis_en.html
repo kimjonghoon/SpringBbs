@@ -1,0 +1,59 @@
+<article>
+
+<h1>JavaBank Requirements Analysis</h1>
+
+<p>
+The first step in creating a program is to share a clear understanding of what program to create.
+To do that, we need a scenario.
+</p>
+
+<h2>Scenario</h2>
+
+<p>
+The bank manages the account.<br />
+The bank registers the account.<br />
+The bank searches for an account by account number.<br />
+The bank can find the account by the name of the account owner.<br />
+The bank can view a list of all accounts.<br />
+The account consists of the owner name, account number, and balance.<br />
+The account has a deposit and withdrawal function and a balance check function.<br />
+Whenever there is a change in the balance in the account, it is recorded in the transaction history.<br />
+Transaction details consist of date of transaction, transaction time, deposit / withdrawal, transaction amount, balance.<br />
+</p>
+
+<h2>Class Diagram</h2>
+
+<p>
+You need to extract the classes, fields, and methods from the scenario.<br />
+In a scenario, a noun corresponds to a class or field, and a verb corresponds to a method.<br />
+The output at the requirements analysis stage is the following class diagram.<sup><a href="#comments">1</a></sup><br />
+<img src="https://lh4.googleusercontent.com/-7_W2KsCUQSU/VX_qK5Qp9gI/AAAAAAAACLM/5EQN6xP4NXo/w814-h526-no/bank-classdiagram2.png" alt="JavaBank Class Diagram" /><br />
+A class diagram represents not only the structure of a class, but also the relationship between objects and objects.<br />
+If two classes are connected in a line in the class diagram, the objects created from the two classes are related.<br />
+A filled diamond represents a relationship in which an object has other objects as parts.<sup><a href="#comments">2</a></sup><br />
+0 or * means the maximum number of objects to write as a part.<br />
+0 .. * means zero or more.<br />
+An arrow is the direction in which an object calls the methods of another object.<br />
+</p>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>In addition to class diagrams, there are Use Case Diagrams and Sequence Diagrams.
+	Depending on the project, various diagrams may be needed, but a bank diagram is enough for a class diagram.
+	In the class diagram, private is represented simply as -, public as +, and protected as #.
+	In the class diagram, the methods of the Transaction class are omitted.
+	Bank and Account have also omitted the guessable getter and setter methods.
+	Since the analysis is not perfect, the implementation source may differ from the class diagram above as the process progresses.
+	</li>
+	<li>
+	A relationship in which an object has an object as a part is called a "has a" relationship.
+	Both classes have a "has a" relationship because "bank has multiple accounts" is a right word.
+	The "has a" relationship, which has a high degree of coupling, is called Composistion and is represented by a diamond filled in the class diagram.
+	In a high degree of coupling, parts disappear as the body disappears.
+	The "has a" relationship with a low degree of association is called an aggregation and is represented by a hollow diamond.
+	In low coupling, the parts do not disappear even if the body disappears.
+	In Java, both the Composistion and the Aggregation are implemented as member variables with reference to the part object.
+	For reference, in Spring, one of the Java frameworks, a member variable corresponding to a a part is called a dependent variable.
+	</li>	
+</ol>
+</article>

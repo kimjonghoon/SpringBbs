@@ -1,0 +1,498 @@
+<article>
+
+<h1>상세보기</h1>
+
+<p>
+list.html 파일을 '다른 이름으로 저장하기' 메뉴를 이용하여 view.html 파일을 생성한다.<br />
+view.html 문서를 열고 #content 사이 &lt;h1&gt;Eclipse 설치&lt;/h1&gt; 아래 다음 코드를 붙여넣는다.<br />
+기존 코드는 그대로 두어 목록을 보여주는 코드가 상세보기 화면 아래에 보이도록 한다.
+</p>
+
+<pre class="prettyprint">
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 37px;text-align: left;vertical-align: top;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;"&gt;무궁화꽃이피었습니다&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div id="detail"&gt;
+    &lt;span id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
+    &lt;p&gt;
+    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+&lt;!--  댓글 반복 시작 --&gt;
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;xman&lt;/span&gt;
+    &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+    &lt;/span&gt;
+    &lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
+    &lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="commentNo" value="5" /&gt;
+        &lt;input type="hidden" name="boardCd" value="free" /&gt;
+        &lt;input type="hidden" name="articleNo" value="12" /&gt;
+        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;/p&gt;
+    &lt;div class="fr"&gt;
+            &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
+            | &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;xman&lt;/span&gt;
+    &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:modifyCommentToggle('4')"&gt;수정&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment('4')"&gt;삭제&lt;/a&gt;
+    &lt;/span&gt;
+    &lt;p id="comment4"&gt;무궁화꽃이피었습니다&lt;/p&gt;
+    &lt;form id="modifyCommentForm4" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="commentNo" value="4" /&gt;
+        &lt;input type="hidden" name="boardCd" value="free" /&gt;
+        &lt;input type="hidden" name="articleNo" value="12" /&gt;
+        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;/p&gt;
+    &lt;div class="fr"&gt;
+        &lt;a href="javascript:document.forms.modifyCommentForm4.submit()"&gt;수정하기&lt;/a&gt;
+        | &lt;a href="javascript:modifyCommentToggle('4')"&gt;취소&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+&lt;!--  댓글 반복 끝 --&gt;
+&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
+    &lt;p style="margin: 0; padding: 0;"&gt;
+        &lt;input type="hidden" name="articleNo" value="5"/&gt;
+        &lt;input type="hidden" name="boardCd" value="free" /&gt;
+        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;/p&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="댓글 남기기" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+&lt;div id="next-prev"&gt;
+    &lt;p&gt;다음 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;이전 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="view-menu"&gt;
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" /&gt;
+        &lt;input type="button" value="삭제" /&gt;
+    &lt;/div&gt;
+    &lt;div class="fr"&gt;
+        &lt;input type="button" value="다음 글" /&gt;
+        &lt;input type="button" value="이전 글" /&gt;
+        &lt;input type="button" value="목록" /&gt;
+        &lt;input type="button" value="새 글쓰기" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<p>
+댓글이 반복되는 부분에서 comment5와 modifyCommentForm5에서 <strong>5</strong>는 댓글의 고유번호이다.
+이 번호는 프로그램적으로 부여되어야 한다.
+</p>
+
+<p>
+<img alt="bbs-view-01" src="https://lh3.googleusercontent.com/-spM9lCbDwXc/VYPncRaiXOI/AAAAAAAACgU/zSstUAGRxFo/s656/bbs-view-01.png" style="display: block;" />
+</p>
+
+<h3>댓글 수정을 위한 자바 스크립트 토글 함수</h3>
+
+<p>
+아래 그림의 <strong>수정</strong>을 클릭하면 동작하는 자바스크립트 함수를 생성하려 한다.
+</p>
+
+<p>
+<img alt="댓글 수정 링크" src="https://lh3.googleusercontent.com/-IXhhRvu_r64/VYPpuvOQByI/AAAAAAAACgk/KL1la-qwyac/s59/bbs-view-modify-link.png" style="display: block;" />
+</p>
+
+<p>
+<strong>수정</strong>을 클릭하면 textarea를 포함하는 수정 폼이 나타나야 한다.
+(이 수정 폼은 디폴트로 숨겨져 있다)
+아래 자바스크립트 코드를 &lt;/head&gt; 바로 위에 복사한다.
+</p>
+
+<pre class="prettyprint">
+&lt;script type="text/javascript"&gt;
+function modifyCommentToggle(articleNo) {
+    var p_id = "comment" + articleNo;
+    var p = document.getElementById(p_id);
+    
+    var form_id = "modifyCommentForm" + articleNo;
+    var form = document.getElementById(form_id);
+    
+    var p_display;
+    var form_display;
+    
+    if (p.style.display) {
+            p_display = '';
+            form_display = 'none';
+    } else {
+            p_display = 'none';
+            form_display = '';
+    }
+    p.style.display = p_display;
+    form.style.display = form_display;
+}
+&lt;/script&gt;
+</pre>
+
+<p>
+댓글의 수정과 취소를 클릭하여 자바스크립트 함수가 제대로 동작하는지 확인한다.
+</p>
+
+<p>
+<img alt="게시판 상세보기 댓글 수정 토글 자바스크립트 함수 작성하기" src="https://lh3.googleusercontent.com/-35Fwmda0d2c/VYPneSHd3ZI/AAAAAAAACfs/Yv_nJcA-MUU/s335/bbs-view-modify-javascript.png" style="display: block;" />
+</p>
+
+<p>
+위에서 강조된 수정과 취소 링크는 같은 동작을 한다.
+수정 폼이 보이면 안 보이게, 안 보이면 보이게 한다.
+댓글 본문을 담는 p 엘리먼트는 정확히 이와 반대로 동작한다.
+이를 토글(toggle)이라 한다.
+</p>
+
+<h3>날짜, 작성자, 조회 수 스타일링</h3>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;span id="date-writer-hit&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>#date-writer-hit {
+	display: block;
+	margin: 0;
+	padding: 0;
+	font-size: 11px;
+	color: #555;
+	text-align: right;
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 작성자, 조회 수 디자인 결과" src="https://lh3.googleusercontent.com/--9Qsc-ApwwI/VYPnfeXKn_I/AAAAAAAACgM/hmJjO56M_qs/s596/bbs-view-writer-hit-result.png" style="display: block;" />
+</p>
+
+<h3>게시글 본문 스타일링</h3>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;div id="detail"&gt;
+	&lt;span id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
+	<strong>&lt;p&gt;
+	무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+	무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+	&lt;/p&gt;</strong>
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>#detail &gt; p {
+	margin: 0 0 15px 0;
+	padding: 0;
+	color: #333;
+}</strong>
+</pre>
+
+<h3>댓글 작성자, 댓글 작성일, 수정|삭제 링크, 댓글 본문 스타일링</h3>
+
+<p>
+<img alt="게시판 상세보기 댓글 디자인 전" src="https://lh3.googleusercontent.com/-bOYv4mu4zLE/VYPndx6DK5I/AAAAAAAACfc/29dqUdM6hPA/s163/bbs-view-comments.png" style="display: block;" />
+</p>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;div class="comments"&gt;
+	<strong>&lt;span class="writer"&gt;xman&lt;/span&gt;
+	&lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+	&lt;span class="modify-del"&gt;
+		&lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
+		| &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+	&lt;/span&gt;
+	&lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;</strong>
+	&lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
+		&lt;p&gt;
+			&lt;input type="hidden" name="commentNo" value="5" /&gt;
+			&lt;input type="hidden" name="boardCd" value="free" /&gt;
+			&lt;input type="hidden" name="articleNo" value="12" /&gt;
+			&lt;input type="hidden" name="curPage" value="1" /&gt;
+			&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+		&lt;/p&gt;
+		&lt;div class="fr"&gt;
+			&lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
+			| &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이피었습니다.&lt;/textarea&gt;
+		&lt;/div&gt;
+	&lt;/form&gt;
+&lt;/div&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>/* 댓글과 댓글을 테두리로 구분 */
+.comments {
+	border-top: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	border-left: 1px solid #ebebeb;
+}
+/* 댓글 작성자 ID */
+.comments &gt; span.writer {
+	display: block;
+	float: left;
+	margin: 3px;
+	padding: 0;
+	font-size: 12px;
+	font-weight: bold;
+	color: #555;
+}
+/* 댓글 작성일 */
+.comments &gt; span.date {
+	display: block;
+	float: left;
+	margin: 3px;
+	padding: 0;
+	font-size: 12px;
+	color: #555;
+}
+/* 댓글 수정|삭제 */
+.comments &gt; span.modify-del {
+	display: block;
+	float: right;
+	margin: 3px;
+	padding: 0;
+	font-size: 12px;
+	color: #555;
+}
+/* 댓글 수정|삭제 링크 */
+.comments a {
+	color: #555;
+	text-decoration: none;
+	font-size: 11px;
+}
+.comments a:hover {
+	color: #555;
+	text-decoration: underline;
+}
+/* 댓글 내용 */
+.comments &gt; p {
+	clear: both;
+	margin: 0;
+	padding: 0 3px 3px 3px;
+	color: #555;
+	font-size: 11px;
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 댓글 디자인 결과" src="https://lh3.googleusercontent.com/-7QuRC_gSH2A/VYPnds5VcdI/AAAAAAAACfY/geZAjEzaOYE/s602/bbs-view-comments-result.png" style="display: block;" />
+</p>
+
+<h3>댓글 수정 폼 스타일링</h3>
+
+<p>
+<img alt="게시판 상세보기 댓글 수정 폼 디자인 전" src="https://lh3.googleusercontent.com/-_2d0PBTFctU/VYPneMT2QsI/AAAAAAAACgQ/OAU0LDeRwKc/s598/bbs-view-modify-form.png" style="display: block;" />
+</p>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;div class="comments"&gt;
+	&lt;span class="writer"&gt;xman&lt;/span&gt;
+	&lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+	&lt;span class="modify-del"&gt;
+		&lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
+		| &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+	&lt;/span&gt;
+	&lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
+	<strong>&lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
+	&lt;p&gt;
+		&lt;input type="hidden" name="commentNo" value="5" /&gt;
+		&lt;input type="hidden" name="boardCd" value="free" /&gt;
+		&lt;input type="hidden" name="articleNo" value="12" /&gt;
+		&lt;input type="hidden" name="curPage" value="1" /&gt;
+		&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+	&lt;/p&gt;
+	&lt;div class="fr"&gt;
+		&lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
+		| &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이피었습니다.&lt;/textarea&gt;
+	&lt;/div&gt;
+	&lt;/form&gt;
+    </strong>
+&lt;/div&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>.modify-comment {
+	clear: both; 
+	padding: 0.22em 2.22em 0.22em 3.22em; 
+}
+.modify-comment-ta {
+	border: 1px solid silver;
+	padding: 3px;
+	width: 99%;
+	color:#555;
+	background-color: #eee;
+	font-size: 11px; 
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 댓글 수정 폼 디자인 결과" src="https://lh3.googleusercontent.com/-6c8yr8M8Ceg/VYPnd_9xc-I/AAAAAAAACfo/U-J7YACnkfA/s597/bbs-view-modify-form-result.png" style="display: block;" />
+</p>
+
+<h3>댓글 쓰기 폼 스타일링</h3>
+
+<p>
+<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 전" src="https://lh3.googleusercontent.com/-G9VGAM5vZZE/VYPncTAz8sI/AAAAAAAACgY/Wz1eU4WULUQ/s598/bbs-view-addComments.png" style="display: block;" />
+</p>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
+	&lt;p style="margin: 0; padding: 0;"&gt;
+		&lt;input type="hidden" name="articleNo" value="5"/&gt;
+		&lt;input type="hidden" name="boardCd" value="free" /&gt;
+		&lt;input type="hidden" name="curPage" value="1" /&gt;
+		&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+	&lt;/p&gt;
+	&lt;div id="addComment"&gt;
+		&lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+	&lt;/div&gt;
+	&lt;div style="text-align: right;"&gt;
+		&lt;input type="submit" value="댓글 남기기" /&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>#addComment {
+	margin-bottom: 5px;
+	padding: 0.22em;
+	border: 1px solid #eee;
+	background-color: #fafbf7;
+}
+#addComment textarea {
+	width: 99%;
+	padding: 3px;
+	border: 0;
+	color: #555;    
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 결과" src="https://lh3.googleusercontent.com/-3eCDFB4lAWE/VYPncbyPU8I/AAAAAAAACfI/CsFQ5ZqjN_A/s601/bbs-view-addComments-result.png" style="display: block;" />
+</p>
+
+<h3>다음 글, 이전 글 스타일링</h3>
+
+<p>
+<img alt="게시판 상세보기 다음 글 이전 글 디자인 전" src="https://lh3.googleusercontent.com/-7ourJrdqanc/VYPnfKmtjFI/AAAAAAAACgA/JFZm59MyMMU/s197/bbs-view-next-prev.png" style="display: block;" />
+</p>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;div id="next-prev"&gt;
+	&lt;p&gt;다음 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+	&lt;p&gt;이전 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>#next-prev {
+	margin: 7px 0;
+	border-top: 1px solid #e1e1e1;
+}
+#next-prev &gt; p {
+	margin: 0;
+	padding: 5px;
+	border-bottom: 1px solid #e1e1e1;
+	font-size: 12px;
+	color: #333;
+}
+#next-prev &gt; p &gt; a {
+	color: #333;
+	text-decoration: none;
+}
+#next-prev &gt; p &gt; a:hover {
+	color: #333;
+	text-decoration: underline;
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 다음 글 이전 글 디자인 결과" src="https://lh3.googleusercontent.com/-wU4qc8o8FU0/VYPnetPkSxI/AAAAAAAACf0/wfTFhBLbgUc/s601/bbs-view-next-prev-result.png" style="display: block;" />
+</p>
+
+<h3>수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼 위치 조정</h3>
+
+<p>
+<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 전" src="https://lh3.googleusercontent.com/--C_8xydabOo/VYPndYkt72I/AAAAAAAACgE/PZrb8qK256Q/s329/bbs-view-buttons.png" style="display: block;" />
+</p>
+
+<em class="filename">[HTML]</em>
+<pre class="prettyprint">
+&lt;div id="view-menu"&gt;
+	&lt;div class="fl"&gt;
+		&lt;input type="button" value="수정" /&gt;
+		&lt;input type="button" value="삭제" /&gt;
+	&lt;/div&gt;
+	&lt;div class="fr"&gt;
+		&lt;input type="button" value="다음 글" /&gt;
+		&lt;input type="button" value="이전 글" /&gt;
+		&lt;input type="button" value="목록" /&gt;
+		&lt;input type="button" value="새 글쓰기" /&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<em class="filename">[CSS]</em>
+<pre class="prettyprint">
+<strong>#view-menu {
+    height: 22px;
+    margin-bottom: 47px;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 결과" src="https://lh3.googleusercontent.com/-6j4_CK9ayTg/VYPndPZTiUI/AAAAAAAACgI/fE3YUhtI-MY/s599/bbs-view-buttons-result.png" style="display: block;" />
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.alistapart.com/articles/holygrail/">http://www.alistapart.com/articles/holygrail/</a></li>
+</ul>
+</article>

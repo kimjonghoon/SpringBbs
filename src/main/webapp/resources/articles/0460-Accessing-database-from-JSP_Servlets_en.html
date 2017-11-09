@@ -1,0 +1,339 @@
+<article>
+
+<h1>Using the database with JSP</h1>
+
+<p>
+All of the examples below are written in the document base of the ROOT application using Eclipse.
+Build a working environment for your ROOT application in Eclipse with reference to <a href="Namecard-Webapp.php#3rd-Test">Namecard web application 3rd Test</a>.
+</p>
+
+<h2>Add Servlet API to BuildPath of ROOT application</h2>
+
+<p>
+In Eclipse, open the GetEmpServlet servlet, which you had previously practiced. 
+You will encounter numerous compilation errors. 
+The reason for the error is that you did not add the servlet API to the ROOT application's BuildPath. 
+Select the Libraries tab as shown below and click the Add External JARs .. button to find and add the Servlet API in {TOMCAT_HOME}/lib.
+<img src="https://lh3.googleusercontent.com/P9Bme_jBrFYL8k3VN-Kzx38shbriZdHuHxC6cevfcChQbNsumwi4izmhZnpwy_SRyKYMc8OzgwjlAqCVPtqZ7xzZ9NDNZwTWVsu5AxRz16eWOdKyfbTV8MFUIf8-5_MDbjyO1-mxgUz9wc6gdrqKsBGXi26NijhHKU16V6MB-pu8eraPbXbMe8MQCZmJzEyWKixj00cMaQYxyy3mygyB2dj76LiYIKibFkDwcJY3NFx7q5W7hDxCHpKexgGd_FMwh8SSMjLrSUyC4TejCqZjiiUiBHsO_lbcscidIyYMs9st972RA7osjY9RZ0Y_VY8ZK8ZDvo5DiKOOMWTSE24h_JPGtT6fbyYGYDsUVf5MH3Z7LkVir2quhmNt0YrhZv_UF9sJEBfTpvHoTiSSZyrUA5EQ-zT1947ObJ1Y_qH44Q0DGxaetNZilNgXd1McFF5PjN2slR5O2-jRGCgU1stPGkdOG23q5K5FcI4EJwZGRKVTC8Pm9t7LcddMfnkGThI_n96tUUsWYRXZ7a0TW-o9g0xGG9yMRFbY-Z-dt-Sz9qvWs-F1mtwD-6JyPaTg8e1AW-z4xTOwxYc53B3luxhS2uQnc0g5_vyx_CHCu1RicR-Mz3T5KkbulJSg=w801-h470-no" alt="Add Servlet API to BuildPath of ROOT application" style="display: block;width: 100%;"/>
+</p>
+
+<h2>First JSP example</h2>
+
+<p>
+Create getEmp1.jsp in the ROOT application's document base as shown below.
+(This JSP is a JSP version of the <a href="Servlet#GetEmpServlet">GetEmpServlet servlet</a>)
+</p>
+
+<em class="filename">getEmp1.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;First JSP Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+String DB_URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+String DB_USER = "scott";
+String DB_PASSWORD = "tiger";
+
+try {
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+} catch (ClassNotFoundException e) {
+	e.printStackTrace();
+}
+
+Connection con = null;
+PreparedStatement stmt = null;
+ResultSet rs = null;
+
+String sql = "select * from emp";
+
+try {
+	con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	stmt = con.prepareStatement(sql);
+	rs = stmt.executeQuery();
+
+	while (rs.next()) {
+		String empno = rs.getString(1);
+		String ename = rs.getString(2);
+		String job = rs.getString(3);
+		String mgr = rs.getString(4);
+		String hiredate = rs.getString(5);
+		String sal = rs.getString(6);
+		String comm = rs.getString(7);
+		String depno = rs.getString(8);
+		
+		out.println( empno + " : " + ename + " : " + job + " : " + mgr + 
+		" : " + hiredate + " : " + sal + " : " + comm + " : " + depno + "&lt;br /&gt;" );
+	}
+
+} catch (SQLException e) {
+	System.out.println("Error Source : getEmp1.jsp : SQLException");
+	System.out.println("SQLState : " + e.getSQLState());
+	System.out.println("Message : " + e.getMessage());
+	System.out.println("Oracle Error Code : " + e.getErrorCode());
+	System.out.println("sql : " + sql);
+} finally {
+	if (rs != null) {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	if (stmt != null) {
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	if (con != null) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+You do not need to rerun Tomcat because it is a JSP file.
+Visit http://localhost:port/getEmp1.jsp and test it.
+</p>
+
+<h2>Second JSP example</h2>
+
+<h3>Connection pooling</h3>
+
+<p>
+It takes a long time to acquire a connection object in JDBC.
+Connection pooling is the solution.
+Connection pooling is the idea of creating multiple connections in advance, storing them in collections like vectors, and popping them out whenever you need them.
+</p>
+
+<p>
+The next exercise is to modify getEmp1.jsp to get a connection through the connection pool.
+We have already added connection pooling to the ROOT application in the servlet chapter lab.
+(See: <a href="Servlet#Custom-ConnectionPool">Using Custom Connection Pool</a>)
+Open getEmp1.jsp.
+Use the Save As... menu to create getEmp2.jsp and modify it as shown below.
+</p>
+
+<em class="filename">getEmp2.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+<strong>&lt;%@ page import="net.java_school.db.dbpool.*" %&gt;
+&lt;%@ page import="net.java_school.util.*" %&gt;
+&lt;jsp:useBean id="dbmgr" class="net.java_school.db.dbpool.OracleConnectionManager" scope="application" /&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Second JSP example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+Connection con = null;
+Statement stmt = null;
+ResultSet rs = null;
+
+String sql = "select * from emp";
+
+try {
+	con = <strong>dbmgr.getConnection();</strong>
+	stmt = con.createStatement();
+	rs = stmt.executeQuery(sql);
+
+	while (rs.next()) {
+		String empno = rs.getString(1);
+		String ename = rs.getString(2);
+		String job = rs.getString(3);
+		String mgr = rs.getString(4);
+		String hiredate = rs.getString(5);
+		String sal = rs.getString(6);
+		String comm = rs.getString(7);
+		String depno = rs.getString(8);
+		
+		out.println( empno + " : " + ename + " : " + job + " : " + mgr + 
+		" : " + hiredate + " : " + sal + " : " + comm + " : " + depno + "&lt;br /&gt;" );
+	}
+
+} catch (SQLException e) {
+	System.out.println("Error Source : getEmp2.jsp : SQLException");
+	System.out.println("SQLState : " + e.getSQLState());
+	System.out.println("Message : " + e.getMessage());
+	System.out.println("Oracle Error Code : " + e.getErrorCode());
+	System.out.println("sql : " + sql);
+} finally {
+	if (rs != null) {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	if (stmt != null) {
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	if (con != null) {
+		<strong>dbmgr.freeConnection(con);</strong>
+	}
+}
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The second JSP uses the jsp: useBean action to obtain the OracleConnectionManager object reference.
+The second JSP can obtain a connection by calling the getConnection () method of the OracleConnectionManager whenever a connection is needed.
+One thing to keep in mind when using this custom connection pool is that you should use the freeConnection() method of the OracleConnectionManager instead of using the close() method of Connection after using the connection.
+If you use the close() of Connection, this custom connection pool will not work.
+</p>
+
+<h2>Third JSP Example</h2>
+
+<h3>Using custom log file</h3>
+
+<p>
+So far we have used System.out.println () to print a log message.
+If you install Tomcat with the installer on a Windows system, System.out.println () will print a message to the file starting with stdout_ in the {TOMCAT_HOME}/logs directory.
+
+To provide a better environment for development and operation, log messages need to be output to the file that the programmer or operator wants.
+
+There is a lot of open source about logging.
+However, we need to understand the basic concepts of logging, so let's use a custom log file, Log.java.
+
+Open the getEmp2.jsp file.
+Use the Save As ... menu to create the getEmp3.jsp file and modify it as follows:
+</p>
+
+<em class="filename">getEmp3.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;%@ page import="net.java_school.db.dbpool.*" %&gt;
+&lt;%@ page import="net.java_school.util.*" %&gt;
+&lt;jsp:useBean id="dbmgr" class="net.java_school.db.dbpool.OracleConnectionManager" scope="application" /&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Third JSP Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+<strong>Log log = new Log();</strong>
+Connection con = null;
+Statement stmt = null;
+ResultSet rs = null;
+
+String sql = "select * from emp";
+
+try {
+	con = dbmgr.getConnection();
+	stmt = con.createStatement();
+	rs = stmt.executeQuery(sql);
+
+	while (rs.next()) {
+		String empno = rs.getString(1);
+		String ename = rs.getString(2);
+		String job = rs.getString(3);
+		String mgr = rs.getString(4);
+		String hiredate = rs.getString(5);
+		String sal = rs.getString(6);
+		String comm = rs.getString(7);
+		String depno = rs.getString(8);
+		
+		out.println( empno + " : " + ename + " : " + job + " : " + mgr + 
+		" : " + hiredate + " : " + sal + " : " + comm + " : " + depno + "&lt;br /&gt;" );
+	}
+
+} catch (SQLException e) {
+	<strong>log.debug</strong>("Error Source:getEmp3.jsp : SQLException");
+	<strong>log.debug</strong>("SQLState : " + e.getSQLState());
+	<strong>log.debug</strong>("Message : " + e.getMessage());
+	<strong>log.debug</strong>("Oracle Error Code : " + e.getErrorCode());
+	<strong>log.debug</strong>("sql : " + sql);
+} finally {
+	if (rs != null) {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	if (stmt != null) {
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	if (con != null) {
+		dbmgr.freeConnection(con);
+	}
+	<strong>log.close();</strong>
+}
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The catch block must be executed to check the log message.
+In getemp3.jsp, modify the query to String sql = "<strong> select * fromemp </strong>".
+Visit http://localhost:port/getemp3.jsp.
+Check the log message in the file specified in Log.java.
+</p>
+
+<pre class="code">
+Thu Jun 12 14:30:51 KST 2014 : Oracle Error Code : 923
+Thu Jun 12 14:30:51 KST 2014 : sql : select * fromemp
+Thu Jun 12 14:30:52 KST 2014 : Error Source:getEmp3.jsp : SQLException
+Thu Jun 12 14:30:52 KST 2014 : SQLState : 42000
+Thu Jun 12 14:30:52 KST 2014 : Message : ORA-00923: FROM keyword not found where expected
+</pre>
+
+<h2>Fourth JSP example</h2>
+
+<p>
+The GetEmpServlet servlet loaded the JDBC driver in the init() method.
+In the lesson entitled "Servlet",  you read that the init() method is called once by the servlet container after the servlet is instantiated.
+In JSP, there is a method corresponding to the init() of Servlet.
+
+if our JSP load the JDBC driver in sort of init() method, it will improve performance.
+
+The JSP method corresponding to the init() of Servlet can be found at:
+<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspPage.html#jspInit()">http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspPage.html#jspInit()</a>
+</p>
+
+<p>
+Open getEmp3.jsp.
+Use the Save As .. menu to create getEmp4.jsp.
+Modify getEmp4.jsp so that the JSP method corresponding to the init () of the servlet loads the JDBC driver.
+</p>
+
+<p>
+getEmp4.jsp is your challenge.
+</p>
+</article>

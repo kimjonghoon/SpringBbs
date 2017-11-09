@@ -1,0 +1,640 @@
+<article>
+
+<h1>SQL SELECT Statement</h1>
+
+<p>
+SQL also has a standard.
+In this section, we will practice SELECT statements with standard SQL.
+The SELECT statement should be written in order.
+"SELECT column1, column2, .. FROM table_name" is required.
+</p>
+
+<pre class="prettyprint">
+SELECT column, column ...
+FROM table name
+WHERE condition
+GROUP BY statement
+UNION/UNION ALL/INTERSECT/MINUS
+ORDER BY statement
+</pre>
+
+<p>
+Access the scott account with SQL * PLUS and execute all SQL statements that follow.
+</p>
+
+<h3>Query all the records in the employee table.</h3>
+
+<pre class="prettyprint">
+SELECT * 
+FROM EMP
+</pre>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO 
+FROM EMP
+</pre>
+
+<p>
+The above two SQL statements fetch the same records.
+After select, * means all the columns in order.
+</p>
+
+<h3>Retrieve the employee's name and hire date.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,HIREDATE
+FROM EMP;
+</pre>
+
+<h3>Retrive the employee number and employee's name.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,ENAME 
+FROM EMP
+</pre>
+
+<p>
+You can select and query the columns and change the order of the columns. 
+</p>
+
+<h3>Retrieve the JOB from the employee table.</h3>
+
+<pre class="prettyprint">
+SELECT DISTINCT JOB
+FROM
+EMP
+</pre>
+
+<p>
+DISTINCT is used when duplicate records need to be shown only once in query results.
+</p>
+
+<h3>Find the total number of employees.</h3>
+
+<pre class="prettyprint">
+SELECT COUNT(EMPNO)
+FROM
+EMP
+</pre>
+
+<p>
+COUNT returns the number of records retrieved as one of the group functions.
+COUNT (column name) returns the number of non-NULL records, and COUNT (*) returns the number of records containing NULL.
+</p>
+
+<h2>WHERE conditions</h2>
+
+<h3>Retrieve the employee with department number 10.</h3>
+
+<pre class="prettyprint">
+SELECT * 
+FROM EMP
+WHERE DEPTNO = 10;
+</pre>
+
+<h3>Retrieve employees with salaries of 2500 or more.</h3>
+
+<pre class="prettyprint">
+SELECT *
+FROM EMP
+WHERE SAL &gt;= 2500;
+</pre>
+
+<p>
+A where condition has been added.
+Now, only records matching the conditions after where are selected.
+The above SQL statement can be used in the where condition with =, &gt;, &gt;=, &lt;=, &lt; 
+This is an example using comparison operators.
+</p>
+
+<h3>Retrieve the employee whose name is 'KING'.</h3>
+
+<pre class="prettyprint">
+SELECT *
+FROM EMP
+WHERE ENAME = 'KING';
+</pre>
+
+<p>
+SQL statements are case-insensitive.
+However, the data in the column is, of course, case sensitive.
+It is stored as KING, but is not searched by king.
+</p>
+
+<h3>Retrieve employee number and employee's name whose name begins with S.</h3>   
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME
+FROM EMP
+WHERE ENAME LIKE 'S%';
+</pre>
+
+<h3>Query the employee number and name of the employee whose name includes T in the employee name.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME
+FROM EMP
+WHERE ENAME LIKE '%T%';
+</pre>
+
+<p>
+LIKE is used in searches with % and _.
+</p>
+
+<dl class="note">
+<dt>SQL*PLUS Tips</dt>
+<dd>
+Here's how to edit the SQL statement in the command buffer. <br />
+This is useful if you enter the SQL statement incorrectly. <br />
+<strong>ed</strong><br />
+When you run ed in SQL * PLUS, the system's default editor displays the contents of the buffer.
+In the case of Windows, Notepad executes and displays the SQL statements stored in the buffer.
+After modifying the contents and closing it in Notepad, execute / to execute the SQL statement in the buffer.<br />
+<strong>/</strong>
+</dd>
+</dl>
+
+<h3>Retrieve the employee number, name, and commission of the employee with a commission of 300, 500, or 1400.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,COMM
+FROM EMP
+WHERE COMM = 300 OR COMM = 500 OR COMM = 1400;
+</pre>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,COMM
+FROM EMP
+WHERE COMM IN (300,500,1400);
+</pre>
+
+<p>
+Both are SQL statements that show the same result.
+The first SQL statement used the logical operator OR and the second used IN.
+</p>
+
+<h3>Retrieve the employee number, name, and salary of an employee whose salary is between 1200 and 3500.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,SAL
+FROM EMP
+WHERE SAL BETWEEN 1200 AND 3500;
+</pre>
+
+<p>
+SAL BETWEEN 1200 AND 3500 is mathematically 1200 &lt; = SAL &lt; = 3500.
+</p>
+
+<h3>Retrieve the name, employee number, job, department number of the employee whose job title is manager and whose department number is 30.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,EMPNO,JOB,DEPTNO
+FROM EMP
+WHERE DEPTNO = 30 AND JOB = 'MANAGER';
+</pre>
+
+<h3>Retrieve the number, name, and department number of an employee whose department number is not 30.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,DEPTNO
+FROM EMP
+WHERE NOT DEPTNO = 30;
+</pre>
+
+<h3>Retrieve the employee number, name, and commission of the employees whose commissions are not 300, 500, or 1400.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,COMM
+FROM EMP
+WHERE COMM NOT IN (300,500,1400);
+</pre>
+
+<h3>Retrieve the name and number of the employee whose name does not contain an S.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME
+FROM EMP
+WHERE ENAME NOT LIKE '%S%';
+</pre>
+
+<h3>Retrieve the employee number, name, and salary of employees whose salary is less than 1200 or exceeds 3700.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,SAL
+FROM EMP
+WHERE SAL NOT BETWEEN 1200 AND 3700;
+</pre>
+
+<p>
+So far we have seen how to use AND, OR, and NOT.
+</p>
+
+<h3>Retrieve the name and job of the employee whose his/her supervisor is NULL.</h3>
+
+<p>
+Let's see how to use IS NULL and IS NOT NULL to see if a column is NULL or not. 
+</p>
+
+<pre class="prettyprint">
+SELECT ENAME,JOB
+FROM EMP
+WHERE MGR IS NULL;
+</pre>
+
+<h2>GROUP BY</h2>
+
+<pre class="prettyprint">
+SELECT DEPTNO,AVG(SAL)
+FROM EMP
+</pre>
+
+<p>
+The intent of the above SQL statement is to find the salary average by DEPTNO.
+At this time, DEPTNO is used as a column for grouping.
+When a group function is used together with a column that is the basis of grouping, the column must be specified after GROUP BY.
+</p>
+
+<h3>Retrieve the average salary by department number.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,AVG(SAL)
+FROM EMP
+GROUP BY DEPTNO;
+</pre>
+
+<h3>Retrieve the total number of employees and the number of employees receiving commissions by department number.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,COUNT(*),COUNT(COMM)
+FROM EMP
+GROUP BY DEPTNO;
+</pre>
+
+<h3>Retrieve the maximum salary and minimum salary by department number.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,MAX(SAL),MIN(SAL)
+FROM EMP
+GROUP BY DEPTNO;
+</pre>
+
+<p>
+HAVING is used to extract data from the GROUP BY clause.
+</p>
+
+<h3>Retrieve the salary averages by department number, but only those with a result of 2000 or higher.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,AVG(SAL)
+FROM EMP
+WHERE AVG(SAL) &gt;= 2000;
+GROUP BY DEPTNO;
+</pre>
+
+<p>
+You can not use a WHERE conditional statement when you are giving a condition using the GROUP BY clause.
+Therefore, the above query generates an error.
+To give a condition using the GROUP BY clause, use the HAVING clause instead of the WHERE clause.
+Note that in the HAVING clause, there are only the group functions and the columns that are the basis of the grouping.
+In the above query, DEPTNO can be used in the HAVING statement because the column that is the basis of the grouping is DEPTNO.
+</p>
+
+<pre class="prettyprint">
+SELECT DEPTNO,AVG(SAL)
+FROM EMP
+GROUP BY DEPTNO
+HAVING AVG(SAL) &gt;= 2000;
+</pre>
+
+<h3>Retrieve salary averages by department number only for employees whose salary is 1000 or higher. However, only records with an average of 2000 or more.</h3>
+
+<pre class="prettyprint">
+SELECT DEPTNO,AVG(SAL)
+FROM EMP
+WHERE SAL &gt;= 1000
+GROUP BY DEPTNO
+HAVING AVG(SAL) &gt;= 2000;
+</pre>
+
+<p>
+The WHERE clause is used to retrieve records matching a specific condition from a table.
+The HAVING clause is used to retrieve the records matching a specific condition from the query result of the GROUP BY clause.
+</p>
+
+<h2>ORDER BY</h2>
+
+<p>
+An ORDER BY statement is required when sorting by any column in a SELECT statement.
+The usage is as follows.<br />
+ORDER BY ColumnName ASC; or ORDER BY ColumnName DESC;<br />
+ASC : Means ascending order and can be omitted.<br />
+DESC : Means descending order.<br />
+</p>
+
+<h3>Retrieve the employee number, name, and salary in descending order of salary. However, if the salaries are the same, sort in ascending order by name.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,SAL
+FROM EMP
+ORDER BY SAL DESC,ENAME ASC;
+</pre>
+
+<h2>Join</h2>
+
+<p>
+Joins are used to query data from two or more tables.
+The join condition requires N-1 join conditions when joining N tables.
+</p>
+
+<h3>Cartesian product</h3>
+
+<pre class="prettyprint">
+SELECT EMP.ENAME,DEPT.DNAME
+FROM EMP,DEPT
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+SQL&gt; select ename,dname
+  2  from emp,dept;
+
+ENAME                DNAME
+-------------------- ----------------------------
+SMITH                ACCOUNTING
+ALLEN                ACCOUNTING
+WARD                 ACCOUNTING
+JONES                ACCOUNTING
+MARTIN               ACCOUNTING
+BLAKE                ACCOUNTING
+CLARK                ACCOUNTING
+KING                 ACCOUNTING
+TURNER               ACCOUNTING
+JAMES                ACCOUNTING
+FORD                 ACCOUNTING
+MILLER               ACCOUNTING
+SMITH                RESEARCH
+ALLEN                RESEARCH
+WARD                 RESEARCH
+JONES                RESEARCH
+MARTIN               RESEARCH
+BLAKE                RESEARCH
+CLARK                RESEARCH
+KING                 RESEARCH
+TURNER               RESEARCH
+JAMES                RESEARCH
+FORD                 RESEARCH
+MILLER               RESEARCH
+SMITH                SALES
+ALLEN                SALES
+WARD                 SALES
+JONES                SALES
+MARTIN               SALES
+BLAKE                SALES
+CLARK                SALES
+KING                 SALES
+TURNER               SALES
+JAMES                SALES
+FORD                 SALES
+MILLER               SALES
+SMITH                OPERATIONS
+ALLEN                OPERATIONS
+WARD                 OPERATIONS
+JONES                OPERATIONS
+MARTIN               OPERATIONS
+BLAKE                OPERATIONS
+CLARK                OPERATIONS
+KING                 OPERATIONS
+TURNER               OPERATIONS
+JAMES                OPERATIONS
+FORD                 OPERATIONS
+MILLER               OPERATIONS
+
+48 rows selected.
+
+SQL&gt;
+</pre>
+
+<p>
+The example of joining in the future should be practiced while considering the Cartesian product above.
+A total of 48 rows are generated by multiplying 12 records existing in the EMP table and 4 records existing in the DEPT table.
+If you are certain that a column is a specific table column, you can omit the table name like ENAME for EMP.ENAME.
+</p>
+
+<h3>Retrieve the names of employees and departments.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,DNAME
+FROM EMP,DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO;
+</pre>
+
+<p>
+You can give the table name an alias in the FROM clause.
+</p>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO;
+</pre>
+
+
+<h3>Retrieve employee name, salarie, and salary grade.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,E.SAL,S.GRADE
+FROM EMP E,SALGRADE S
+WHERE E.SAL &gt;= S.LOSAL AND E.SAL &lt;= S.HISAL;
+</pre>
+
+<p>
+The above example uses a comparison operator other than = in the join condition.
+If you change this SQL statement from BETWEEN to AND statement:
+</p>
+
+<pre class="prettyprint">
+SELECT E.ENAME,E.SAL,S.GRADE
+FROM EMP E,SALGRADE S
+WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL;
+</pre>
+
+<h3>Retrieve the employee name, department name, and salary grade.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME,S.GRADE
+FROM EMP E,DEPT D,SALGRADE S
+WHERE E.DEPTNO = D.DEPTNO
+AND E.SAL BETWEEN S.LOSAL AND S.HISAL;
+</pre>
+
+<h3>Retrieve the employee name and his/her senior employee name.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,M.ENAME
+FROM EMP E,EMP M
+WHERE E.MGR = M.EMPNO;
+</pre>
+
+<p>
+The above results are missing the president record. 
+There is no employee whose employee number is NULL, 
+so the president record does not match the join condition. 
+Nevertheless, if you want to see the president records, you should query as follows.
+</p>
+
+<pre class="prettyprint">
+SELECT E.ENAME,M.ENAME
+FROM EMP E,EMP M
+WHERE E.MGR = M.EMPNO(+);
+</pre>
+
+<p>
+Such a join is called an outer join.
+The outer join is used when you want to include the row in the result even if the join condition is not satisfied.
+Outer joins can use the (+) operator to include the excluded rows in the result because they are NULL.
+If you add the (+) operator to the right of the WHERE condition, a KING record is included in the result.
+</p>
+
+<h3>Retrieve the employee name, department name. However, if the employee table does not have an employee with a department number of 40, query the OPERATIONS department to include it in the result.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO(+) = D.DEPTNO;
+</pre>
+
+<h3>Retrieve the employee name, department number, department name.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,E.DEPTNO,DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO;
+</pre>
+
+<h3>Retrieve the employee name, job, department number, and department location of the employees with department number 30.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,JOB,E.DEPTNO,LOC
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO AND D.DEPTNO = 30;
+</pre>
+
+<h3>Retrieve the employee name, commission, department name, and department location of the employee receiving the commission.</h3>
+
+<pre class="prettyprint">
+SELECT ENAME,COMM,DNAME,LOC
+FROM EMP,DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO 
+AND EMP.COMM IS NOT NULL AND EMP.COMM &lt;&gt; 0;
+</pre>
+
+<pre class="prettyprint">
+SELECT ENAME,COMM,DNAME,LOC
+FROM EMP,DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO 
+AND EMP.COMM IS NOT NULL AND EMP.COMM != 0;
+</pre>
+
+<pre class="prettyprint">
+SELECT ENAME,COMM,DNAME,LOC
+FROM EMP,DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO 
+AND EMP.COMM IS NOT NULL AND EMP.COMM NOT IN(0);
+</pre>
+
+<h3>Retrieve the employee name, job, department number, department name of the employee at DALLAS.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,E.JOB,D.DEPTNO,D.DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND D.LOC = 'DALLAS';
+</pre>
+
+<h3>Retrieve the employee name and department name of the employee that contains A in the employee name.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND E.ENAME LIKE '%A%';
+</pre>
+
+<h3>Retrieve employee name, job, salary, salary grade.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,E.JOB,E.SAL,S.GRADE
+FROM EMP E,SALGRADE S
+WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL;
+</pre>
+
+<h3>Retrieve the employee name and department number of the employee who works with ALLEN.</h3>
+
+<pre class="prettyprint">
+SELECT C.ENAME,C.DEPTNO
+FROM EMP E,EMP C
+WHERE E.EMPNO &lt;&gt; C.EMPNO
+AND E.DEPTNO = C.DEPTNO
+AND E.ENAME = 'ALLEN'
+ORDER BY C.ENAME;
+</pre>
+
+<h2>Using Subqueries</h2>
+
+<p>
+A subquery is a SELECT statement enclosed in parentheses () in a SELECT statement and is used to pass the result of a query to the main query.
+</p>
+
+<h3>Retrieve the name of the department to which 'JONES' belongs.</h3>
+
+<pre class="prettyprint">
+SELECT DNAME 
+FROM DEPT
+WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE ENAME = 'JONES');
+</pre>
+
+<p>
+The query that asks for the department number is a subquery.
+This subquery is called a single row subquery because it obtains only one result.
+</p>
+
+<h3>Retrieve the employee name, department name of the department 10.</h3>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME
+FROM EMP E,DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND D.DEPTNO = 10;
+</pre>
+
+<pre class="prettyprint">
+SELECT E.ENAME,D.DNAME
+FROM EMP E,
+(
+	SELECT DEPTNO,DNAME
+	FROM DEPT
+	WHERE DEPTNO = 10
+) D
+WHERE E.DEPTNO = D.DEPTNO;
+</pre>
+
+<h3>Retrieve employee numbers, employee names, and salaries of employees who receive more than average salary.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME,SAL
+FROM EMP
+WHERE SAL &gt; (SELECT AVG(SAL)
+	      FROM EMP)
+ORDER BY SAL DESC;
+</pre>
+
+<h3>Retrieve the employee number and employee name of the employee with the highest salary among the employees with the department number 10.</h3>
+
+<pre class="prettyprint">
+SELECT EMPNO,ENAME
+FROM EMP
+WHERE SAL = (SELECT MAX(SAL) 
+	     FROM EMP 
+	     WHERE DEPTNO = 10);
+</pre>
+</article>

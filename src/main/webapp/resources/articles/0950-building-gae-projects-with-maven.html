@@ -1,0 +1,592 @@
+<article>
+
+<h1>구글 앱 엔진 시작하기</h1>
+
+<h2>개발 환경</h2>
+
+<p>
+자바와 메이븐은 필수다.<br />
+IDE는 이클립스를 선택했다.
+</p>
+
+<h3>1. 자바 설치</h3>
+
+<p>
+자바 8 최신 버전을 설치한다. (<a href="/">JDK 설치</a> 참조)<br />
+(자바 9가 출시됐지만 자바 9로는 테스트에 성공하지 못했다)
+</p>
+
+<h3>2. 메이븐 설치</h3>
+
+<p>
+메이븐 역시 최신 버전을 설치한다. (<a href="/spring/building-java-projects-with-maven#Install-Maven">메이븐 설치</a> 참조)
+<p>
+
+<h3>3. 이클립스 설치</h3>
+
+<p>
+아래 주소에서 최신 버전의 이클립스 인스톨러를 다운로드하고 Java EE Developers를 설치한다.<br />
+<a href="www.eclipse.org">www.eclipse.org</a>
+</p>
+
+<h2>구글 앱 엔진 방명록(guestbook) 아키타입 생성</h2>
+
+<p>
+구글 앱 엔진 프로젝트의 워크스페이스에서 다음 명령을 실행한다.<br />
+</p>
+<p>
+mvn archetype:generate -Dappengine-version=1.9.57 -Dfilter=com.google.appengine.archetype:
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\Lab&gt;<span class="prompt-selection">mvn archetype:generate -Dappengine-version=1.9.57 -Dfilter=com.google.appengine.archetype:</span>
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] &gt;&gt;&gt; maven-archetype-plugin:2.4:generate (default-cli) &gt; generate-sources @ standalone-pom &gt;&gt;&gt;
+[INFO] 
+[INFO] &lt;&lt;&lt; maven-archetype-plugin:2.4:generate (default-cli) &lt; generate-sources @ standalone-pom &lt;&lt;&lt;
+[INFO] 
+[INFO] --- maven-archetype-plugin:2.4:generate (default-cli) @ standalone-pom ---
+[INFO] Generating project in Interactive mode
+[INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
+Choose archetype:
+1: remote -&gt; com.google.appengine.archetypes:appengine-flexible-archetype (A basic Java application with Google App Engine Flexible.)
+2: remote -&gt; com.google.appengine.archetypes:appengine-skeleton-archetype (A skeleton application with Google App Engine)
+3: remote -&gt; com.google.appengine.archetypes:appengine-standard-archetype (A basic Java application with Google App Engine Standard)
+4: remote -&gt; com.google.appengine.archetypes:endpoints-skeleton-archetype (A skeleton project using Cloud Endpoints Frameworks with Google App Engine Standard)
+5: remote -&gt; com.google.appengine.archetypes:guestbook-archetype (A guestbook application with Google App Engine)
+6: remote -&gt; com.google.appengine.archetypes:hello-endpoints-archetype (A simple starter application using Cloud Endpoints Frameworks with Google App Engine Standard)
+7: remote -&gt; com.google.appengine.archetypes:skeleton-archetype (-)
+Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : <span class="prompt-selection"> 5 </span>
+Choose com.google.appengine.archetypes:guestbook-archetype version: 
+1: 1.7.4
+2: 1.7.4.1
+3: 1.7.5
+4: 1.7.6
+5: 1.7.7
+6: 1.8.4
+7: 2.0.0-1.9.10
+8: 3.0.0-1.9.20
+9: 3.0.1-1.9.21
+10: 3.0.1-1.9.25
+11: 3.0.2-1.9.38
+12: 3.1.0-1.9.42
+13: 4.0.0
+14: 4.0.1
+Choose a number: 14: <span class="prompt-selection"> 12 </span>  
+Define value for property 'groupId': : <span class="prompt-selection">net.java_school.guestbook</span>
+Define value for property 'artifactId': : <span class="prompt-selection">guestbook</span>
+Define value for property 'version':  1.0-SNAPSHOT: : <span class="prompt-selection"> 1 </span>
+Define value for property 'package':  net.java_school.guestbook: : ↵
+[INFO] Using property: appengine-version = 1.9.57
+[INFO] Using property: application-id = your-app-id
+Confirm properties configuration:
+groupId: net.java_school.guestbook
+artifactId: guestbook
+version: 1.0-SNAPSHOT
+package: net.java_school.guestbook
+appengine-version: 1.9.57
+application-id: your-app-id
+ Y: : ↵
+[INFO] ----------------------------------------------------------------------------
+[INFO] Using following parameters for creating project from Archetype: guestbook-archetype:3.1.0-1.9.42
+[INFO] ----------------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: net.java_school.guestbook
+[INFO] Parameter: artifactId, Value: guestbook
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: package, Value: net.java_school.guestbook
+[INFO] Parameter: packageInPathFormat, Value: net/java_school/guestbook
+[INFO] Parameter: package, Value: net.java_school.guestbook
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: groupId, Value: net.java_school.guestbook
+[INFO] Parameter: appengine-version, Value: 1.9.57
+[INFO] Parameter: application-id, Value: your-app-id
+[INFO] Parameter: artifactId, Value: guestbook
+[INFO] project created from Archetype in dir: C:\Lab\guestbook
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 42.996 s
+[INFO] Finished at: 2017-06-05T19:53:41+09:00
+[INFO] Final Memory: 15M/180M
+[INFO] ------------------------------------------------------------------------
+</pre>
+
+<p>
+빌드가 완료되면 guestbook 서브 폴더가 생긴다.<br />
+guestbook으로 이동하고 다음 명령을 실행한다.
+<p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\Lab&gt;<span class="prompt-selection">cd guestbook</span>
+C:\Lab\guestbook&gt;<span class="prompt-selection">mvn clean install</span>
+</pre>
+
+
+<h3>로컬 테스트</h3>
+
+<p>
+로컬 테스트를 위한 명령어는 mvn appengine:devserver 이다.<br />
+하지만 실행하면 아래와 같이 에러를 만나게 된다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\Lab\guestbook&gt;<span class="prompt-selection">mvn appengine:devserver</span>
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 0.455 s
+[INFO] Finished at: 2017-06-05T20:02:59+09:00
+[INFO] Final Memory: 7M/106M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Could not find goal 'devserver' in plugin com.google.cloud.tools:appengine-maven-plugin:1.0.0 among available goals deploy, help, run, stage, start, stop -&gt; [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoNotFoundException
+</pre>
+
+<p>
+아래는 에러를 피하기 위한 작업이다.<br />
+pom.xml 파일을 열고 아래 강조된 부분을 제거한다.
+</p>
+
+<pre class="prettyprint">
+&lt;properties&gt;
+    &lt;app.id&gt;your-app-id&lt;/app.id&gt;
+    &lt;app.version&gt;1&lt;/app.version&gt;
+    <strong>&lt;appengine.version&gt;1.9.57&lt;/appengine.version&gt;</strong>&lt;!-- 삭제한다 --&gt;
+    <strong>&lt;appengine.maven.plugin.version&gt;1.0.0&lt;/appengine.maven.plugin.version&gt;</strong>&lt;!-- 삭제한다 --&gt;
+</pre>
+
+<p>
+pom.xml에서 ${appengine.version}을 모두 1.9.57로 수정한다.
+</p>
+
+<p>
+pom.xml에서 플러그인을 아래와 같이 수정한다. 
+</p>
+
+<em class="filename">수정 전</em>
+<pre class="prettyprint">
+&lt;plugin&gt;
+    &lt;groupId&gt;com.google.cloud.tools&lt;/groupId&gt;
+    &lt;artifactId&gt;appengine-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;${appengine.maven.plugin.version}&lt;/version&gt;
+    &lt;configuration&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
+
+<em class="filename">수정 후</em>
+<pre class="prettyprint">
+&lt;plugin&gt;
+    &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
+    &lt;artifactId&gt;appengine-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.9.57&lt;/version&gt;
+    &lt;configuration&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
+
+<p>
+아래 강조한 부분을 참고해 수정한다.
+</p>
+
+<em class="filename">pom.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;version&gt;1&lt;/version&gt;
+
+    &lt;groupId&gt;net.java_school.guestbook&lt;/groupId&gt;
+    &lt;artifactId&gt;guestbook&lt;/artifactId&gt;
+
+    &lt;properties&gt;
+        &lt;app.id&gt;your-app-id&lt;/app.id&gt;
+        &lt;app.version&gt;1&lt;/app.version&gt;
+
+        &lt;objectify.version&gt;5.1.13&lt;/objectify.version&gt;
+        &lt;guava.version&gt;18.0&lt;/guava.version&gt;
+
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;maven.compiler.source&gt;<strong>1.8</strong>&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;<strong>1.8</strong>&lt;/maven.compiler.target&gt;
+        &lt;maven.compiler.showDeprecation&gt;true&lt;/maven.compiler.showDeprecation&gt;
+        &lt;archiveClasses&gt;true&lt;/archiveClasses&gt;
+    &lt;/properties&gt;
+
+    &lt;prerequisites&gt;
+        &lt;maven&gt;<strong>3.5.0</strong>&lt;/maven&gt;
+    &lt;/prerequisites&gt;
+
+    &lt;dependencies&gt;
+        &lt;!-- Compile/runtime dependencies --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
+            &lt;artifactId&gt;appengine-api-1.0-sdk&lt;/artifactId&gt;
+            <strong>&lt;version&gt;1.9.57&lt;/version&gt;</strong>
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;2.5&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;jstl&lt;/groupId&gt;
+            &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+            &lt;version&gt;1.2&lt;/version&gt;
+        &lt;/dependency&gt;
+
+&lt;!-- [START Objectify_Dependencies] --&gt;
+        &lt;dependency&gt;
+          &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+          &lt;artifactId&gt;guava&lt;/artifactId&gt;
+          &lt;version&gt;${guava.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+          &lt;groupId&gt;com.googlecode.objectify&lt;/groupId&gt;
+          &lt;artifactId&gt;objectify&lt;/artifactId&gt;
+          &lt;version&gt;${objectify.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!-- [END Objectify_Dependencies] --&gt;
+
+        &lt;!-- Test Dependencies --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+            &lt;artifactId&gt;mockito-all&lt;/artifactId&gt;
+            &lt;version&gt;2.0.2-beta&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
+            &lt;artifactId&gt;appengine-testing&lt;/artifactId&gt;
+            <strong>&lt;version&gt;1.9.57&lt;/version&gt;</strong>
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
+            &lt;artifactId&gt;appengine-api-stubs&lt;/artifactId&gt;
+            <strong>&lt;version&gt;1.9.57&lt;/version&gt;</strong>
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;!-- for hot reload of the web application--&gt;
+        &lt;outputDirectory&gt;${project.build.directory}/${project.build.finalName}/WEB-INF/classes&lt;/outputDirectory&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+            &lt;artifactId&gt;versions-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.3&lt;/version&gt;
+            &lt;executions&gt;
+              &lt;execution&gt;
+                &lt;phase&gt;compile&lt;/phase&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;display-dependency-updates&lt;/goal&gt;
+                  &lt;goal&gt;display-plugin-updates&lt;/goal&gt;
+                &lt;/goals&gt;
+              &lt;/execution&gt;
+            &lt;/executions&gt;
+          &lt;/plugin&gt;
+
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+            &lt;version&gt;<strong>3.0.0</strong>&lt;/version&gt; &lt;!-- required for Eclipse Mars --&gt;
+            &lt;configuration&gt;
+              &lt;archiveClasses&gt;true&lt;/archiveClasses&gt;
+              &lt;webResources&gt;
+                &lt;!-- in order to interpolate version from pom into appengine-web.xml --&gt;
+                &lt;resource&gt;
+                  &lt;directory&gt;${basedir}/src/main/webapp/WEB-INF&lt;/directory&gt;
+                  &lt;filtering&gt;true&lt;/filtering&gt;
+                  &lt;targetPath&gt;WEB-INF&lt;/targetPath&gt;
+                &lt;/resource&gt;
+              &lt;/webResources&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+          <strong>&lt;plugin&gt;
+            &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
+            &lt;artifactId&gt;appengine-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;1.9.57&lt;/version&gt;
+            &lt;configuration&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;</strong>
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</pre>
+
+<p>
+appengine-web.xml에 다음 강조한 부분을 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;appengine-web-app xmlns="http://appengine.google.com/ns/1.0"&gt;
+    &lt;application&gt;${app.id}&lt;/application&gt;
+    &lt;version&gt;${app.version}&lt;/version&gt;
+    &lt;threadsafe&gt;true&lt;/threadsafe&gt;
+    <strong>&lt;runtime&gt;java8&lt;/runtime&gt;</strong>
+
+    &lt;system-properties&gt;
+        &lt;property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/&gt;
+    &lt;/system-properties&gt;
+&lt;/appengine-web-app&gt;
+</pre>
+
+<p>
+다시 mvn appengine:devserver 실행한다.<br />
+명령 프롬프트에서 Dev App Server is now running가 보이면, 웹 브라우저로 http://localhost:8080을 방문하고 테스트한다.<br />
+테스트가 끝나면 Ctrl + C로 종료한다.
+</p>
+
+<h2>서비스 신청</h2>
+
+<p>
+<a href="https://cloud.google.com">https://cloud.google.com</a>에서 비자 또는 마스터 신용카드나 체크카드로 서비스를 신청할 수 있다.<br />
+구글 계정에 로그인해야 서비스 신청을 할 수 있다.<br />
+</p>
+
+<p>
+서비스 신청 후 구글은 1년간 사용할 수 있는 300달러 바우처를 제공한다.<br />
+1년간 300달러에 해당하는 서비스를 체험하는 것은 무료이다.<br />
+300달러를 소진하거나 1년이 지나면 구글은 서비스를 계속 사용할지를 묻는다.<br />
+서비스를 계속 사용하겠다는 확답을 주면, 구글은 서비스 비용을 0으로 초기화하고 이후 발생한 서비스 비용은 신청시 등록한 카드로 자동 결재한다.<br />
+사용자는 바우처를 사용하는 동안 자신에 맞는 서비스를 정하고 예산을 수립할 수 있도록 노력해야 한다.
+</p>
+
+<h2>프로젝트 생성</h2>
+
+<p style="font-style: italic;font-weight: bold;">
+구글 앱 엔진의 자바 환경은 플렉시블 환경(자바 8)과 표준 환경(자바 7)으로 나뉜다.<br />
+이 글은 표준 환경을 기준으로 작성했다.<br />
+표준 환경이라도 자바 8을 사용할 수 있다.
+</p>
+
+<p>
+신청을 완료하고 다시 <a href="https://cloud.google.com">https://cloud.google.com</a>을 방문하면 GO TO CONSOLE 버튼이 보일 것이다.<br />
+이 버튼을 클릭하면 웹 콘솔 화면으로 이동하게 된다.
+</p>
+
+<p>
+웹 콘솔 화면에서 처음으로 해야 할 일은 프로젝트를 생성하는 것이다.<br />
+왼쪽 상단의 Google Cloud Platform 옆에서 프로젝트를 생성할 수 있는 메뉴를 찾아 실행한다.<br />
+<img alt="새 프로젝트 이름, 아이디" src="https://lh3.googleusercontent.com/0sv1GHn6s-XXPN2ObCQxViZwgDG1aHRWFsG_mY63rlJeNIpKdyo7E5cwXRLxF4o7T3GCX-u3IPyodnlORu0AjUEMPE-y3GTUU9XfGwCb4cEO0G7OLfzvCy4HTK87zUyd216efpND8J13pa_l10lsx3wL41CcFTT64oahY1R-5-fOsHWw6_h5YbwA6YJ71S8wRGryMQ9rx7sooKWG3LSik-GAcf7Sy3_kOjt4_UaC4UQQlltwAdaBNu7XAUnCrD9Wc6jCJppfz8TkVOeDIBbW19XvjxYdgznhxZ1xA7-z89GhaBcIKTyHeRaYE-9W2EgE1VHfQAdNKGiYaN6dPwKTnQqLcLBetq3MmFMtIFf0ojonoxFmIAKrHp2Vflhjts_MCfz_6OM59vEI_oLGCf9aKj93mIwkMxMGYb5YWjuT_tAzYmIeIKoV5nQTXx5rrAr7l2KS8hYgsJ8u2pF_11H363aZz-b3I-NTKNAljFwoDQGxFX7BWDGSJi--h6FoFQVx5QNbTZ_1r1C_-C0pc0KXJ8mVlzksQ3Vd3nht7YAQGPVtOkg7COEdI0eAhMIoedf3gDJ2a9kI5matFKocR4Nyrp7lgKEy0xbFc8SI6kGKK2q93GzjngPPf-wd=w495-h297-no" style="display: block;" />
+프로젝트 이름을 입력하면 프로젝트 아이디는 프로젝트 이름-숫자 형태로 만들어진다.<br />
+프로젝트 이름을 독특하게 짓는다면 프로젝트 이름과 프로젝트 아이디가 같을 수 있다.<br />
+우리가 기억해야 할 것은 프로젝트 아이디이다.
+</p>
+
+
+
+<h3>서버 테스트</h3>
+
+<p>
+pom.xml을 열고 &lt;app.id&gt;your-app-id&lt;/app.id&gt;에서 your-app-id를 자신의 프로젝트 아이디로 수정한다.
+</p>
+
+<pre class="prettyprint">
+&lt;properties&gt;
+    &lt;app.id&gt;<em>프로젝트 아이디</em>&lt;/app.id&gt;
+    &lt;app.version&gt;1&lt;/app.version&gt;
+</pre>
+
+<p>
+명령 프롬프트에서 다음 명령을 실행한다.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\Lab\guestbook&gt;<span class="prompt-selection">mvn appengine:update</span>
+</pre>
+
+<p>
+아래와 같은 에러가 발생할 수 있다.
+</p>
+
+<pre class="screen">
+404 Not Found
+This application does not exist(project_id=u'')...
+</pre>
+
+<p>
+위와 같은 에러가 발생하면, 구글 클라우드 웹 콘솔에 방문한 후 왼쪽 App Engine 메뉴를 선택한다.
+아래 그림을 참조하여 프로그래밍 언어와 지역을 선택하는 것까지 진행한다.
+</p>
+
+<p>
+<img alt="웹 엔진 시작하기" src="https://lh3.googleusercontent.com/h9C_fLIfty50gjNYjLLTbhJVTy2izwhCIPI9IeMqzuriA5lcyLgYRAXgE53WtESpxB-JZlzaY9t84emyxRcLSs3HHdhQ_ThIDWSAnaUYsYlsIqFDtLe1Jya9Q_u1KabwyTAo2fP8PsKlLej0ftGGgmW44lFZ05Mfwo54hZg6JoAJGvn-f5Vl-hP6KixO_qvHiz3WLQV_WUcTSgRDKzUvPctBS2hoXzSg-TiSfjZ3cu3wpTHGjndpDw9MBcFZQHe9-8RQZf11lPcgXzPI2zd0cilReYbroqgKX3jt9FRdYSnhsTj-qYxJaeySMJVAFbFU1_IlhR2k7nikQEPEHgYxuQ6Lo2Hb4gja9C4ux8TQyelRDCBr0P4IrmchXOi_6hNVFwo4GJRpML0pJnMMimN2mozSX35D5ZZ_dgyaHzOxVA53OdYt-_REkzsefQTJRvGeihy1GnJ-PijCaN4yKrpK_Dq_D15xUc5kD-OjW1FyJReHaY1JwJAM8NlZsnsevqbfTXaxuR7Rkpd4enLyO2T4fNbn04Mv9C5_oNntxr09S1C1YsmyFwt76rLA_ba9iwwnLFQAsXTwsuQA9U5uGvJlEhn6ubYW-E-4MmYFrQ-i7-EpVHltWxaGBzqN=w767-h438-no" style="display: block;" />
+<img alt="웹 엔진 언어 선택" src="https://lh3.googleusercontent.com/rRFRqCAsMa98NbWItvh8z-txY3UJAazKmePRAsIef_ggym3jut8Bb3T2Yd1cY6Jb7wH2cp9h6jTmDAxZXktsFi9yuVls25vrzbznsOFfXDNDICJDreDh7J0pe46ECl9HqLoBQBwyFKxau94-61L69k_kde92Qk0dzbC9H_esa2J5X6SVCZEEj6WEnFoGzaXZuG8VgEkiITpdDAxrWAl_XtG__fEw-o9aP2GtgIBpDGxzy2UTE9ZeUK-yKKbF87MO9z_QoEy4kV1W0kVUYxRZ1Z0NC38QrYuIO4pE7uqzadSvT6L9-hKq49wS8bqOx-DQMPND3OwE57ePRPzHM-5BBSAiOrQykokcYPlBCBUfR2q1tKoB5cQBIMFXqvmWqXleGSGkZjTobJIovpoASiZ-xk-YuvDD-KvbCQyMl9iqDaHvjcNssbvI8O8oGFdI9McmuBeYkSEL_JBGEHv9oXuPZ8qK9WPn2z87ePy3bOhIjSXo6EPoZrWhf5nFH-uw6XPhXJbLLPARgwkYhsR28B8EizWe-AjyIPWZWooHkAtdL89T_KAlAVP47qZbdF7EYa4TldvQVJWvX-USriJoOHEvB4E87tcNgRmaP9bQ2bPeaNMFQQ35yxt_IzAD=w798-h460-no" style="display: block;" />
+<img alt="웹 엔진 지역 선택" src="https://lh3.googleusercontent.com/cVqrFltH8rB7u_YTLtjAtZ_VHZNBNVgwexaKtZRo06CLw8UfVqLfHIie7qQ_PBQD7yowOdL3tnm2N4sqRzcMf_XpLxrmHb-8LjY9Kjqi_PvIQQsNIi5TC6bLzCauVRfnRBcrcjxaHKCDkrk1RqAIxNxDguvgXmOQ0NqOzROjDUuKgR6udfzVltJvcrK0VScXODKw6InWhOGcU1vU5H1P1BGf3w0wBmUwhWl0D-wsyZW-Gy0zPtOOL6KIm3vFNUcl0lbNxSdcsHbdsjIJa0OSUaW46WmDifXWMIZk-iaqSYFGl6tjzAlpZtn4E_-pVN5RAHcFVVzsmj9ltnLqnOs13064xe6FTQLx6O_pL8dQWR5kDggR_DhtQ99EKAQHIZV9DHSr0SD1ZGzdTFI4yT3qNEfpumbQE-WHlP6EPP0Ma52q5ec5bZDR0qQKvVhKbO8wh4hxSPjfN25ag-9FfKA--tE_lqtd8DHLG4DVqmtXEK0gmaPeOpE1fYQy54vKpoJrHLGwvl0KPkYSvyOdYPWamDWco-yxF1XjVpQup2gMOnoc4oTWCWMzZQe7Fy5U--TkS7VihB-ANX8d1waapsVoRRt29K2ZP-KGXiblS46tE5WxNC3F61AU9TAh=w625-h657-no" style="display: block;" />
+<img alt="웹 엔진 초기화" src="https://lh3.googleusercontent.com/ekvRnfmByuTJaw47t-JzrR72KpymwAoUH1R5SRc1wPOpnRb4NHuvs9NFntl0BYGWDrtag5r3WXNy0aewMTU6sI4YgPj6vmIDtlFnaU8pQ4DrsrXF8J2iKIL__KR_69zwlfvEUSS312uPvCIEDjE4r6FSLcpqIu5WlyVt4kd8aFe3nqaRM7kp4GbEtREE7qBw8209XLLUMM-UmHrBKufkjSiNzbX_WvTaHoJP-KB6lcEY-p2DDrJ8LjIMDnXWAv6lTI9KUiAZMFSCqBXXTWnr1Zkei-YqY-kXvRMaNQ3CMna_jNjYv55ATz4XhcoXzxi80HzZHLkqgnezO7p9T0Q34N9c1__s6DbKPpJH3cJYI1kvgjpt2kzhpsKB-TnOILKcWBB5KqJrTTjdF3qApT7rG7JVz7NBGqSssdNkdnF_vbh4thF0sxFu8BUwy7Q6RfQyUc2y9UcXygzCiChS1UMgtsCbQC22vd2Bq5-sUK6ray-W3RmxxW-3xxfCmjMmAqnGSNlgStIStS2cSWRgVwn2F3qXyy8_-ga6xFli7oPWDO2bUS0vQmmSIpzxLOHl4dWEXnbzxFnGjS2zXfJVZWR2p6PoWHtfPyuX6Lilxin1nm7VyQx_bs_xzyfU=w593-h294-no" style="display: block;" />
+</p>
+
+<p>
+지역을 선택한 다음의 과정은 대화형 가이드에 따라 앱을 배포하는 과정이다.<br />
+방명록 예제를 이미 작성한 우리는 이 과정을 생략한다.
+</p>
+
+<p>
+mvn appengine:update를 다시 실행한다.<br />
+처음으로 앱을 올리는 경우, 웹 브라우저 실행되고 웹 브라우저의 내용을 명령 프롬프트에 복사하는 절차가 있다.<br />
+<img alt="Copy this code" src="https://lh3.googleusercontent.com/O2zWW7NNUcTHzIvOMMIksKCIhpL0LevU9X1zjipnNg5sU9xtjTaM2g6rHO79fi0M6uAtL-KTOnDbOXBoirzXAGt6hrsnbtv5yiaGozqjpLYNsG5L85Ts0x8G-rZ_AvDjZbU8N09R4i6d1IRfWoapbtjmNW6yl0a51dLeCzbpTMzZZUKZOTPWtriYB8GoqvRj9gfhKBgJ0YBreEMylVeM-2__UJL-4VeKWWyRpDHyojwfT76goFiGJw6BhSwbmLHw4rTHCZyrm433O4gCPlAoxVgvaF2YJlF9KeYkRq9f1vdoaUhA5sjTPOp1xbNLZuYclEyX5x88EJLCvIETX_OSUTHR2eLSWYd9ebHWJDoJbuFUWK3mRPs5mFtOQgjYl3jkK47ia7qf18j6s5aaBomKr60q7by9zbyDWNvbl-UOeC8PkrxZ4ZIBqDN7qFK8Gm0vKlcUovS27JsmTrA59PLiaKhxp76Hhegt0oDXXSaALny2bYJ2zCcCVnNxC2qgkDmYk5eE-JUq2joHd0V5NRyAqnp7wfkIJ8KcSU8j70sVy7i7GSw5Aslh5vhh89Hlpnl510rmiqsZAGOTpoTXD_6RvGaKTI5Ux4WoU0j_gZheMPVSc6iUcv2zk6oq=w631-h290-no" style="display: block;" />
+</p>
+
+
+<p>
+빌드가 성공하면 https://프로젝트 아이디.appspot.com을 방문한다.
+로컬 테스트와 달리 다음과 같은 서버 에러를 만날 것이다.
+<img alt="First Server Error" src="https://lh3.googleusercontent.com/WBI0ZTUKVl8OJBgXJWUBq43QZ6dj51p9e2qLZKoUDu6XfpoiSIADFrhDfWxtLAxVfKVh93jcnewfhrZXJRF1LWU3SQbOorO-9IQ5kEv7VtyvKGzfQM6u9pPafFD-83U7Iv3F4ku8EdhZbpzlDTRdaBB33-bBoPaZIpw5gpO-x_rdrcPwgj9KJgUByd4wqr8ZvwYC3ycMfcO2yvmlKTwiinGRl-YRQKvAnos9fZSvt5zUMj94tZ87YlRbryiftHpKTIWJ2RobxmXvakdXJmiccj9u6lCntlbRB9zuSH31z_P_vv49jrBQA9qtDuH9HSe7KXTapInk5AO_45e4RxtFNZ6sgCndkIgFRqCOt5BA3d7eZY0efWw94HIIci8LB3h5jhhjQK_YaS2CIavP0qyBMldNflZh2aNPE4qAVtY5qVP9CTz7-o4m7tKAvOrIvsyk-oZGNxnwASUKjKfn9U5P12Ami6rn51cK01Q3J5DJQEKKH9zz9_Wl-P0a05QlD1nk1Sa9TlbfR454RmEzBgA5QLBRxjUWZQmpefJV7aCYJ7ya5beVnS5_je7kX98AJKwZJJ0K7KU3W_MWvCFH1XKfqTSIm7dryufY5DbNsl_7UZbGQ6QyRmSPWQp4=w846-h223-no" style="display: block;" />
+하지만 몇 분 후 다시 접속하면 서버 에러 없이 방명록을 테스트할 수 있다.
+<img alt="First Remote Test" src="https://lh3.googleusercontent.com/mUnkUemqhzcVDPF-PdDHu4MQuv1hbWjv0Ede8RNDiKTh5lTuaayYew9l6DAodL1v2K5V44_4ozY0VeUxE0TD37uY6s4kHkKtrBwOOQ8PzUZppVVHebhr_1xvOFlFTNkE1NPtsJSJRAvcMQwMK6WnPIlgGGCaVk6pOWWjyVa3XYs60BBbyCQoEGjeHCSxy5yF_k3gufQs5aftaQEdyzWrFobwx45zlHoMUuSqST6xNzUMEuVbG2YYBg2zYGy5RsAXgsrD_OEvrG7vKGAoscpROZbxFPcpk_0VXr4ac0yfcFMyB2d0V14f_v3bS-pA9xsoNFK_FktFeAsDumfS9fdGUO8U0aCwOxxZ5kzfvlG3ZyT5SUn5sU-tL0Rp_BJQ_zz7C4aVRlhFHXgND20uuHMX2aZYWPcDZngS6zmQVa1b4J3E_9y_iIrUWK2eHicDIxki6GSkAyAxpZA91h9CCrSPRhFvVS9wNJ-3FkY1XE5CGfkcyunva1S1nqwqHwtg8BOAmTmbQpGs5jsBCob8BL2thPdTn6MnEOyY1LqI4o696oEg7Axou5A7vnbfJZyeBBotOcvmDih3okCx07T9-HuOekpXkrBiGZgDdRAaBykt1xWajuldcZSGWs7M=w560-h408-no" style="display: block;" />
+</p>
+
+<p>
+500 Server Error가 계속해서 보인다면 WEB-INF/ 디렉터리에 다음 파일을 생성한다.<br />
+아래에서 강조한 부분은 서버의 콘솔 로그 항목에서 확인할 수 있다.<br />
+</p>
+
+<em class="filename">datastore-indexes.xml</em>
+<pre class="prettyprint">
+&lt;datastore-indexes autoGenerate="true"&gt;
+	<strong>&lt;datastore-index kind="Greeting" ancestor="true" source="manual"&gt;
+		&lt;property name="date" direction="desc" /&gt;
+	&lt;/datastore-index&gt;</strong>
+&lt;/datastore-indexes&gt;
+</pre>
+
+<p>
+인덱스만 갱신하려면 다음 명령을 실행한다.
+</p>
+
+<pre class="screen">
+mvn appengine:update_indexes
+</pre>
+
+<h2>Git 사용하기</h2>
+
+<p>
+구글 클라우드는 개인 저장소를 제공한다.<br />
+이를 사용하기 위해선 다음 과정을 거쳐야 한다.<br />
+(순서의 주의한다)
+</p>
+
+<h3>1. Git 설치</h3>
+
+<p>
+<a href="https://git-scm.com">https://git-scm.com</a>에서 최신 바이너리 파일을 다운로드하고 압축을 푼다.<br />
+압축을 풀고 생성된 디렉터리를 적당한 곳으로 옮긴 후 Git의 bin 디렉터리의 경로를 PATH 환경변수에 추가한다.
+</p>
+
+<h3>2. Cloud SDK 설치</h3>
+
+<p>
+<a href="https://cloud.google.com/sdk/downloads">https://cloud.google.com/sdk/downloads</a>에서 다운로드하고 압축을 푼다.<br />
+압축을 풀고 생성된 디렉터리를 적당한 곳으로 옮긴다. 
+</p>
+
+<p>
+리눅스와 맥 OS X에서 환경 변수 PATH에 Cloud SDK의 bin 경로를 추가하려면 다음을 실행한다.
+</p>
+
+<pre class="screen">
+./google-cloud-sdk/install.sh
+</pre>
+
+<p>
+윈도에서 환경 변수 PATH에 Cloud SDK의 bin 경로를 추가하려면 다음을 실행한다.
+</p>
+
+<pre class="screen">
+.\google-cloud-sdk\install.bat
+</pre>
+
+<!-- <p>
+다음 명령으로 초기화를 진행한다.<br />
+어느 디렉터리에서 행하는지 상관없다.
+</p>
+
+<pre class="screen">
+gcloud init
+</pre>
+
+<p>
+초기화 작업을 통해 사용할 프로젝트와 Google Compute Engine의 존(zone) 지정할 수 있다.
+</p> -->
+
+<h3>3. Git 저장소 생성</h3>
+
+<p>
+다음 명령으로 구글 클라우드의 개인 저장소를 생성한다.
+</p>
+
+<pre class="screen">
+gcloud source repos create firstGaePjt
+</pre>
+
+<p>
+firstGaePjt 라는 이름의 저장소를 구글 클라우드에 생성했다.
+</p>
+
+
+<p>
+다음 명령으로 로컬 저장소를 생성한다. 
+</p>
+
+<pre class="screen">
+gcloud source repos clone firstGaePjt
+</pre>
+
+<p>
+원격 저장소에 아무런 내용이 없으므로 <em>warning: 리모트 HEAD가 없는 레퍼런스를 참고하므로, 체크아웃할 수 없습니다.</em>라는 메시지가 보인다.<br />
+명령을 실행한 디렉터리에 firstGaePjt라는 디렉터리가 생성된다. 이 곳이 소스가 위치할 디렉터리다.<br />
+C:\Lab\guestbook의 모든 파일을 firstGaePjt 디렉터리에 복사한다.
+</p>
+
+<p>
+이후는 git 사용법과 같다.
+</p>
+
+<pre class="screen">
+git add . -A
+git commit -m "First Commit"
+git push origin master
+</pre>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="https://cloud.google.com/source-repositories/pricing">https://cloud.google.com/source-repositories/pricing</a></li>
+	<li><a href="https://cloud.google.com/free/docs/always-free-usage-limits">https://cloud.google.com/free/docs/always-free-usage-limits</a></li>
+	<li><a href="https://cloud.google.com/free/docs/frequently-asked-questions#free-trial">https://cloud.google.com/free/docs/frequently-asked-questions#free-trial</a></li>
+	<li><a href="https://cloud.google.com/source-repositories/docs/quickstart">https://cloud.google.com/source-repositories/docs/quickstart</a></li>
+	<li><a href="https://cloud.google.com/free/docs/frequently-asked-questions#free-trial">https://cloud.google.com/free/docs/frequently-asked-questions#free-trial</a></li>
+	<li><a href="https://cloud.google.com/appengine/docs/standard/java/tools/maven">https://cloud.google.com/appengine/docs/standard/java/tools/maven</a></li>
+	<li><a href="https://cloud.google.com/appengine/docs/standard/java/download">https://cloud.google.com/appengine/docs/standard/java/download</a></li>
+	<li><a href="https://cloud.google.com/appengine/docs/java/">https://cloud.google.com/appengine/docs/java/</a></li>
+	<li><a href="https://cloud.google.com/appengine/docs/standard/java/">https://cloud.google.com/appengine/docs/standard/java/</a></li>
+	<li><a href="https://cloud.google.com/appengine/docs/standard/java/gettingstarted/creating-guestbook">https://cloud.google.com/appengine/docs/standard/java/gettingstarted/creating-guestbook</a></li>
+	<li><a href="https://cloud.google.com/sdk/downloads">https://cloud.google.com/sdk/downloads</a></li>
+</ul>
+</article>

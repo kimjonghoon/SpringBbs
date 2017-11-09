@@ -1,0 +1,154 @@
+<article>
+			
+<h1>DataSource</h1>
+
+<p>
+You learned about custom connection pools in the <a href="/jdbc/Connection-Pool">Connection Pooling</a> section.
+Sun Microsystems has created a DataSource interface that all connection pools must implement, such as the JDBC API, 
+and the servlet specification also changes the servlet container to provide a javax.sql.DataSource implementation.
+This section introduces the configuration for Tomcat DataSource, and then modifies the bulletin board to use the dataSource.
+</p>
+
+<h2>Tomcat DataSource Settings</h2>
+
+<p>
+Open the ROOT.xml in {TOMCAT_HOME}/conf/Catalina/localhost and add the highlighted parts below.
+</p>
+
+<em class="filename">ROOT.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+	docBase="C:/www/myapp"
+	reloadable="true"&gt;
+    <strong>
+	&lt;Resource
+		name="jdbc/scott"
+		auth="Container"
+		type="javax.sql.DataSource"
+		username="scott"
+		password="tiger"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+		maxActive="8"
+		maxIdle="4" /&gt;</strong>
+	  
+&lt;/Context&gt;  
+</pre>
+
+<p>
+Create the following JSP file in the document base of myapp application.
+</p>
+
+<em class="filename">/dataSourceTest.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page contentType="text/html;charset=UTF-8" %&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;%@ page import="javax.sql.*" %&gt;
+&lt;%@ page import="javax.naming.*" %&gt;
+&lt;%@ page import="net.java_school.util.Log" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;DataSource Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+  Log log = new Log();
+  DataSource ds = null;
+  Context ic = null;
+  Connection con = null;
+  PreparedStatement stmt = null;
+  ResultSet rs = null;
+  String sql = null;
+  int totalRecord = 0;
+  	
+  try {
+    ic = new InitialContext();
+    Context envCtx = (Context) ic.lookup("java:comp/env");
+	ds = (DataSource) envCtx.lookup("jdbc/scott");
+  } catch (NamingException e) {
+    System.out.println(e.getMessage());
+  }
+
+  try {
+    con = ds.getConnection();
+
+    sql = "SELECT count(*) FROM emp";
+
+    stmt = con.prepareStatement(sql);
+    rs = stmt.executeQuery();
+    rs.next();
+    totalRecord = rs.getInt(1);
+  } catch (SQLException e) {
+      log.debug("Error Source:/DataSourceTest.jsp : SQLException");
+      log.debug("SQLState : " + e.getSQLState());
+      log.debug("Message : " + e.getMessage());
+      log.debug("Oracle Error Code : " + e.getErrorCode());
+      log.debug("sql : " + sql);
+  } finally {
+    try {
+      if (rs != null) rs.close();
+      if (stmt != null) stmt.close();
+      if (con != null) con.close();
+    } catch (SQLException e) {}
+    log.close();
+  }
+%&gt;
+&lt;%=totalRecord %&gt;
+</pre>
+
+<p>
+For testing, the Oracle JDBC Driver must be in {TOMCAT_HOME}/lib.
+As you can see in the code, the DataSource is used through a Java naming service based on the JNDI API.
+</p>
+
+<p>
+If http://localhost:port/dataSourceTest.jsp prints a number, the test is successful.
+If the test is successful, let's modify the source of the bulletin board.
+We implemented the JDBC code on BoardDao, so we only need to modify BoardDao.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+<strong>
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+</strong>
+import net.java_school.util.Log;
+
+public class BoardDao {
+	<strong>
+	private DataSource ds;
+	</strong>
+	public BoardDao() {
+		<strong>try {
+			Context init = new InitialContext();
+			ds  = (DataSource) init.lookup("java:comp/env/jdbc/scott");
+		} catch (NamingException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	}
+	
+	private Connection getConnection() throws SQLException {
+		return <strong>ds.getConnection();</strong>
+	}
+	
+	//Same as previous source
+
+}
+</pre>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://tomcat.apache.org/tomcat-6.0-doc/jndi-resources-howto.html">http://tomcat.apache.org/tomcat-6.0-doc/jndi-resources-howto.html</a></li>
+</ul>
+</article>

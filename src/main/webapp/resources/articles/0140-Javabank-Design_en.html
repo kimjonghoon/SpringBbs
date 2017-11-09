@@ -1,0 +1,450 @@
+<article>
+
+<h1>JavaBank Design</h1>
+
+<p>
+Create a class based on the class diagram.
+Create transaction history class.
+I added a toString () method that is not in the class diagram.
+</p>
+
+<em class="filename">Transaction.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class Transaction {
+	private String transactionDate;
+	private String transactionTime;
+	private String kind;
+	private long amount;
+	private long balance;
+
+	public Transaction() {}
+	
+	public Transaction(String transactionDate,
+			String transactionTime,
+			String kind,
+			long amount,
+			long balance) {
+			
+		this.transactionDate = transactionDate;
+		this.transactionTime = transactionTime;		
+		this.kind = kind;
+		this.amount = amount;
+		this.balance = balance;
+	}
+	
+	public String getTransactionDate() {
+		return transactionDate;
+	}
+	public void setTransactionDate(String transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+	public String getTransactionTime() {
+		return transactionTime;
+	}
+	public void setTransactionTime(String transactionTime) {
+		this.transactionTime = transactionTime;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	public long getAmount() {
+		return amount;
+	}
+	public void setAmount(long amount) {
+		this.amount = amount;
+	}
+	public long getBalance() {
+		return balance;
+	}
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.transactionDate);
+		sb.append("|");
+		sb.append(this.transactionTime);
+		sb.append("|");
+		sb.append(this.kind);
+		sb.append("|");
+		sb.append(this.amount);
+		sb.append("|");
+		sb.append(this.balance);
+
+		return sb.toString();
+	}
+        
+}
+</pre>
+
+<em class="filename">Account.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class Account {
+	private String accountNo;
+	private String name;
+	private long balance;
+	private Transaction[] transactions = new Transaction[100];
+	private int totalTransaction;
+
+	static final SimpleDateFormat DATE_FORMAT = 
+			new SimpleDateFormat("yyyy/MM/dd");
+			
+	static final SimpleDateFormat TIME_FORMAT = 
+			new SimpleDateFormat("HH:mm:ss");
+			
+	static final String DEPOSIT = "Deposit";
+	static final String WITHDRAW = "Withdrawal";
+
+	public Account() {}
+	
+	public Account(String accountNo, String name) {
+		this.accountNo = accountNo;
+		this.name = name;
+	}
+	
+	public Account(String accountNo, String name, long balance) {
+		this.accountNo = accountNo;
+		this.name = name;
+		this.balance = balance;
+	}
+
+	public void deposit(long amount) {
+		balance = balance + amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.DEPOSIT);
+		transaction.setBalance(this.balance);
+		transactions[totalTransaction++] = transaction;
+	}
+
+	public void withdraw(long amount) {
+		if (amount &gt; balance) {
+			return;
+		}
+		balance = balance - amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.WITHDRAW);
+		transaction.setBalance(this.balance);
+		transactions[totalTransaction++] = transaction;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	public long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+
+	public Transaction[] getTransactions() {
+		return transactions;
+	}
+
+	public int getTotalTransaction() {
+		return totalTransaction;
+	}
+
+	public void setTotalTransaction(int totalTransaction) {
+		this.totalTransaction = totalTransaction;
+	}
+
+	public void setTransactions(Transaction[] transactions) {
+		this.transactions = transactions;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(accountNo);
+		sb.append("|");
+		sb.append(name);
+		sb.append("|");
+		sb.append(balance);
+
+		return sb.toString();
+	}
+
+}
+</pre>
+
+<p>
+<em>private Transaction [] transactions = new Transaction [100];</em><br />
+The variable transactions is assigned an array object of size 100.
+In Java, you can not create an array without specifying its length.
+</p>
+
+<p>
+<em>private int totalTransaction;</em><br />
+The totalTransaction member variable was added to put the values into the transactions array in order.
+</p>
+
+<p>
+Four static constants have been added to the account class.
+DATE_FORMAT stores the deposit / withdrawal date format, TIME_FORMAT stores the deposit / withdraw time format,
+DEPOSIT stores Deposit and WITHDRAW stores the string Withdrawal.
+</p>
+
+<p>
+Two constructors have been added to the account class.
+One is the default constructor and the other is the constructor that accepts the account number and owner name as argument values.</p>
+
+<p>
+The toString () method has been overridden in the account class.
+</p>
+
+<p>
+If changes occur during code implementation, you must modify the class diagram.
+</p>
+ 
+<em class="filename">Bank.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class Bank {
+	private Account[] accounts = new Account[10];
+	private int totalAccount;
+
+	public void addAccount(String accountNo, String name) {
+		accounts[totalAccount++] = new Account(accountNo, name);
+	}
+	
+	public void addAccount(String accountNo, String name, long balance) {
+		accounts[totalAccount++] = new Account(accountNo, name, balance);
+	}
+
+	public Account getAccount(String accountNo) {
+		for (int i = 0; i &lt; totalAccount; i++) {
+			if (accountNo.equals(accounts[i].getAccountNo())) {
+				return accounts[i];
+			}
+		}
+		return null;
+	}
+
+	public Account[] findAccountByName(String name) {
+		Account[] temp = new Account[totalAccount];
+		int total = 0;
+		for (int i = 0; i &lt; totalAccount; i++) {
+			if (name.equals(accounts[i].getName())) {
+				temp[total++] = accounts[i];
+			}
+		}
+		Account[] matched = new Account[total];
+		for (int i = 0; i &lt; total; i++) {
+			matched[i] = temp[i];
+		}
+
+		return matched;
+	}
+
+	public Account[] getAccounts() {
+		return accounts;
+	}
+
+	public int getTotalAccount() {
+		return totalAccount;
+	}
+        
+}	
+
+</pre>
+
+<p>
+<em>private Account[] accounts = new Account[10];</em><br />
+This code assigns an array object of size 10 to the accounts array variable.
+The variable totalAccount, which stores the total number of accounts, is used to put the values into the array variable accounts in order.
+FindAccountByName () is a method to find an account by owner name.
+Since there may be accounts with the same owner name, the return type is Account [].
+</p>
+
+<p>
+Write the Test class for testing.
+</p>
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class Test {
+	static final String ACCOUNTS_HEADING = "Account No|Owner|Balance";
+	static final String TRANSACTIONS_HEADING = "Date|Time|D/W|Amount|Balance";
+
+	public static void main(String[] args) {
+	
+		//Create test accounts
+		Bank bank = new Bank();
+		bank.addAccount("101", "Alison");
+		bank.addAccount("202", "Bill");
+		bank.addAccount("303", "Carol");
+		bank.addAccount("404", "Alison");
+		
+		//1. Print out the total account list.
+		System.out.println("1. Print out the total account list.");
+		Account[] accounts = bank.getAccounts();
+		int totalAccount = bank.getTotalAccount();
+		System.out.println(Test.ACCOUNTS_HEADING);
+		for (int i = 0; i &lt; totalAccount; i++) {
+			System.out.println(accounts[i]);
+		}
+
+		System.out.println();
+				
+		//2. Deposit $ 10 into 101 account.
+		System.out.println("2. Deposit $ 10 into 101 account.");		
+		Account hong = bank.getAccount("101");
+		hong.deposit(10);
+		System.out.println(Test.ACCOUNTS_HEADING);
+		System.out.println(hong);
+
+		System.out.println();
+				
+		//3. Withdraw $ 5 from 101 account.
+		System.out.println("3. Withdraw $ 5 from 101 account.");		
+		hong.withdraw(5);
+		System.out.println(Test.ACCOUNTS_HEADING);
+		System.out.println(hong);
+
+		System.out.println();
+				
+		//4. Print transaction history of the 101 account.
+		System.out.println("4. Print transaction history of the 101 account.");		
+		Transaction[] transactions = hong.getTransactions();
+		int totalTransaction = hong.getTotalTransaction();
+		System.out.println(Test.TRANSACTIONS_HEADING);
+		for (int i = 0; i &lt; totalTransaction; i++) {
+			System.out.println(transactions[i]);
+		}
+
+		System.out.println();
+		
+		//5. Find your account by customer name.
+		System.out.println("5. Find Alison's Account.");
+		Account[] matched = bank.findAccountByName("Alison");
+		System.out.println(Test.ACCOUNTS_HEADING);
+
+		for (Account account : matched) {
+			System.out.println(account);
+		}
+		
+	}
+
+}
+</pre>
+
+<h2>Date and Time</h2>
+
+<p>
+The Java API classes for date and time are java.util.Date and java.util.Calendar.
+The external library for dates and times is joda-Time and the apache project FastDateFormat.
+The following is an example of how to use them.
+</p>
+ 
+<em class="filename">DateExample.java</em>
+<pre class="prettyprint">
+package net.java_school.example.basic;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
+public class DateExample {
+
+	public static void main(String[] args) {
+		
+		Date date = new Date();
+
+		// 1. Date object's toString() call
+		System.out.println("1: " + date);
+
+		// 2. JDK SimpleDateFormat
+		SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+		System.out.println("2-1: " + DATE_FORMAT1.format(date));
+
+		SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("yy/M/d H:m:s");
+		System.out.println("2-2: " + DATE_FORMAT2.format(date));
+
+		// 3. joda-Time 
+		DateTime dt = new DateTime(date);
+		System.out.println("3-1: " + dt.getYear() + "/" + dt.getMonthOfYear() + "/" + dt.getDayOfMonth());
+
+		DateTimeFormatter fmt1 = ISODateTimeFormat.dateTime();
+		System.out.println("3-2: " + fmt1.print(dt));
+
+		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy.MM.dd HH:mm:ss");
+		System.out.println("3-3: " + fmt2.print(dt));
+
+		// 4. apache FastDateFormat
+		System.out.println("4-1: " + DateFormatUtils.ISO_DATETIME_FORMAT.format(date));
+
+		System.out.println("4-2: " + DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(date));
+
+	}
+}
+</pre>
+
+<pre class="console"><strong class="console-result">1: Mon Dec 07 15:44:55 KST 2015
+2-1: 2015.12.07 15:44:55
+2-2: 15/12/7 15:44:55
+3-1: 2015/12/7
+3-2: 2015-12-07T15:44:55.440+09:00
+3-3: 2015.12.07 15:44:55
+4-1: 2015-12-07T15:44:55
+4-2: 2015-12-07T15:44:55+09:00</strong></pre>
+
+<h3>TODO</h3>
+<ol>
+	<li>All arrays are replaced by ArrayList.</li>
+	<li>Do not create duplicate account numbers.</li>
+</ol>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://www.joda.org/joda-time/">http://www.joda.org/joda-time/</a></li>
+	<li><a href="http://www.joda.org/joda-time/userguide.html">joda-Time userguide</a></li>
+	<li><a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a></li>
+	<li><a href="http://examples.javacodegeeks.com/core-java/apache/commons/lang3/date-andtime-format/">Date and Time format examples using Apache Commons Lang</a></li>
+</ul>
+</article>

@@ -1,0 +1,221 @@
+<article>
+
+<h1>static keyword</h1>
+
+<p>
+The static keyword is used to create class-level variables and methods.<br />
+Static means that the memory space determined when the class is loaded does not change.<br />
+Static variables and methods can be used without creating an object like this:<br />
+</p>
+
+<ul>
+	<li>ClassName.staticVariable</li>
+	<li>ClassName.staticMethod()</li>
+</ul>
+
+<p>
+The main method is a static method.<br />
+If you run java Test at the command prompt, The class loader loads Test.class into memory.<br />
+The JVM then calls the main method of the Test class loaded into memory.<br />
+</p>
+
+<p>
+To run a Java program, the class must first be loaded into memory.<br />
+When a class is loaded into memory, space is allocated for static variables.<br />
+The memory space to which a static variable is allocated does not change until the end of the program.<br />
+</p>
+
+<p>
+The memory space to which an object is allocated differs from the memory space in which the class is loaded.<br />
+The space to which objects are allocated is the heap memory area of the JVM.<br />
+Every time new is run, heap memory is allocated for the object's instance variables.<br />
+</p>
+
+<p>
+You can not use instance variables in static methods.<br />
+It does not make sense to refer to the properties of an object that it can not create.<br />
+If you add a main method to the student class and implement it like this, you will get a compile error.<br />
+</p>
+
+<pre class="prettyprint">
+public static void main(String[] args) {
+    absentNum++;
+}
+</pre>
+
+<p>
+Conversely, using static variables or static methods in instance methods is not a problem.<br />
+Suppose a student is fined if he / she is absent, late or late.<br />
+The fine is $ 3 for absences, and $ 1 for late or early retirement.<br />
+The fine must be put in a penalty box.<br />
+A penalty box is only one and all students share.<br />
+And that it is not a property that distinguishes students from students.<br />
+How do I implement a penalty box in code?<br />
+A approach is to make the fines a static variable that all student objects share.<br />
+</p>
+
+<pre class="prettyprint">
+public class Student {
+    <strong>static</strong> int penaltyBox;
+
+    public void absent() {
+        this.absent++;
+        <strong>Student.penaltyBox</strong> += 3;
+    }
+    //..Omit
+}    
+</pre>
+
+
+<p>
+The following is an example of a static variable that stores the total number of users.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.user;
+
+public class User {
+
+    public <strong>static</strong> int totalUser;
+    private String id;
+    
+    public User(String id) {
+        this.id = id;
+        total++;
+    }
+
+    public static void main(String[] args) {
+        User user1 = new User("hong1440");
+        User user2 = new User("im1562");
+        User user3 = new User("jang1692");
+        
+        System.out.println("Total Users : " + <strong>User.totalUser</strong>);
+    }
+
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\..&gt;java net.java_school.user.User
+Total Users : 3</pre>
+
+<h3>Singleton pattern</h3>
+
+<p>
+The design pattern used when only one object needs to be created is a singleton pattern.<br />
+Suppose there is only one dinner table at home.<br />
+It is not an ideal home if you have several dinner tables and eat each one.<br />
+The design of a dinner table object using a singleton pattern is as follows.<br />
+</p>
+
+<pre class="prettyprint">
+package net.java_school.home;
+
+public class DinnerTable {
+
+    private <strong>static DinnerTable</strong> instance = new DinnerTable();
+    
+    public static DinnerTable getInstance() {
+        return instance;
+    }
+    
+    <strong>private</strong> DinnerTable() {}
+    
+    //..Omit
+  
+}
+</pre>
+
+<p>
+A DinnerTable object is created in the heap memory to initialize a static variable, instance of the DinnerTable, and a reference to the generated object is assigned to the instance static variable.<br />
+This reference value can only be obtained through the public getInstance () method.<br />
+Set the access modifier of the single constructor to private to prevent the constructor from being called from outside.<br />
+This implementation will keep the DinnerTable instance as one until the end of the program.<br />
+</p>
+
+<h3>Initialization Order</h3>
+
+<p>
+Variables are initialized when allocated to memory space.<br />
+If there is no initial value, the Boolean type is false, the numeric type is 0, and the reference type is initialized to null.<br />
+<br />
+Instance member variables are initialized when the object is created.<br />
+<br />
+The initialization order is static variables, instance variables, and constructors.<br />
+<br />
+Static variables and static blocks are at the same level.<br />
+So the previous one in the code is initialized first.<br />
+<br />
+For instance blocks, the compiler adds the implementation block of the instance block to the last line of every constructor.<br />
+<br />
+Predict the results of the next problem.<br />
+</p>
+
+<em class="filename">A.java</em>
+<pre class="prettyprint">
+package net.java_school.classvar;
+
+public class A {
+
+    public A() {
+        System.out.println("A() has executed.");
+    }
+        
+}
+</pre>
+
+<em class="filename">B.java</em>
+<pre class="prettyprint">
+package net.java_school.classvar;
+
+public class B {
+    private A a = new A();
+    
+    {
+        System.out.println("B instance block has executed.");
+    }
+    
+    static {
+        System.out.println("B static block has executed.");
+    }
+    
+    private static B b = new B();
+
+    private B() {
+        System.out.println("B() has executed.");
+    }
+    
+    public B(int a) {
+        System.out.println("B(int) has executed.");
+    }
+
+    public static void main(String[] args) {
+        new B();
+        new B(1);
+    }
+        
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\..&gt;java net.java_school.classvar.B
+B static block has executed.
+A() has executed.
+B instance block has executed.
+B() has executed.
+A() has executed.
+B instance block has executed.
+B() has executed.
+A() has executed.
+B instance block has executed.
+B(int) has executed.
+</pre>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html">http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html</a></li>
+	<li><a href="http://www.guru99.com/java-stack-heap.html">http://www.guru99.com/java-stack-heap.html</a></li>
+</ul>
+</article>

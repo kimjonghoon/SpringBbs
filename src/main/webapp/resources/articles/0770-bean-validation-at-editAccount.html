@@ -1,0 +1,93 @@
+<article>
+
+<h1>내 정보 수정에서 빈 검증</h1>
+
+<p>
+컨트롤러의 요청 핸들러에 빈 검증 로직을 추가한다.
+요청 핸들러의 매개 변수 리스트에서 @Valid User user 다음은 곧이어 BindingResult bindingResult를 선언해야 한다. 
+</p>
+
+<em class="filename">UsersController.java</em>
+<pre class="prettyprint">
+RequestMapping(value="/editAccount",method=RequestMethod.POST)
+public String editAccount(<strong>@Valid</strong> User user, <strong>BindingResult bindingResult</strong>, Principal principal) {
+	//검증 로직    
+	<strong>if (bindingResult.hasErrors()) {
+		return "users/editAccount";
+	}</strong>
+	
+	user.setEmail(principal.getName());
+	
+	int check = userService.editAccount(user);
+	
+	if (check != 1) {
+		throw new RuntimeException(WebContants.EDIT_ACCOUNT_FAIL);
+	}
+	
+	return "redirect:/users/changePasswd";
+}
+</pre>
+
+<p>
+JSP 파일을 아래를 참조해 수정한다.
+&lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
+</p>
+
+<em class="filename">editAccount.jsp</em>
+<pre class="prettyprint">
+<strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
+
+&lt;sf:form id="editAccountForm" action="editAccount" method="post" 
+        commandName="user" onsubmit="return check();"&gt;
+    &lt;sf:hidden path="email" value="abc@def.ghi" /&gt;
+    &lt;sf:errors path="*" cssClass="error" /&gt;</strong>
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td&gt;이름(Full Name)&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:input path="name" value="${user.name }" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="name" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;손전화(Mobile)&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:input path="mobile" value="${user.mobile }" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="mobile" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;현재 비밀번호(Password)&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:password path="passwd" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="passwd" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+<strong>&lt;/sf:form&gt;</strong>
+</pre>
+
+<h2>테스트 화면</h2>
+
+<p>
+로그인 후, 내 정보 수정 화면에서 기존 정보 값을 모두 지우고 전송한다.<br />
+<img alt="내 정보 수정 페이지 방문 후 모든 데이터를 지운다." src="https://lh3.googleusercontent.com/sp9DudSY-HoH4gLrvPNvIMMiKOEY0Z6P8fw0DkFh-EVbZYmGD4RX8priWUEnNGzoBN1wvU4hcndE8FShPSUbnrdGmz1NysxeU0T5bJzynFVZ3bPAxdQoiNazeeNu4Eu4pjrdepicBGOSp5rnL7wyjBPnlsJcR6DI_c6MGtl5X6H7FAld2MaFGUZC4n-uQ6tkH8yc_t0-M7DmFKtkWrIgo_OUQckxCQaS9Av_k5aTAAOLGqlnaSFmq88HG1jZvcRy9wk9eNTCfAmF-fggObW5jP2rk5OrsiJqSH0t5ozYGxc33Ez_p5ajDwxsLCrZRYB3OzeMhyR_6go45mW-Dq8pjKcuJLH5l69U6DH9xNf2Ul2GNnY540TLsvGQCFmdoSX_IbNV30ui4cfLJlcY3ZlQ7r8UHduJFN8-v8_3xzHIXZRaWIslNFEcY_36BzQD_4zbKR27pLyWggWFNLh3d5zf1-_Beco_yVRiQ6AW38J9ZZ1-4joPmNqiGB8lHS8Olg1CK1WQULd04Fqo-eiiIfxYYDYkO86hd0BY_cZ6Pn18R6rDxIdLKaO6xW9inly6Q87o21KQhnYWd_8lQs1Sv-F98SQYS8RxI1Ovlg4Z76oMF9bfAqhsf96CGzTc=w555-h239-no" /><br />
+<img alt="검증 실패 후 다시 내 정보 수정 페이지" src="https://lh3.googleusercontent.com/Rmfmkn_q2THUiBh0lOsFv_3ValeXwTYmNHDZJ7cWy3h1FMzgvAV832dECYDA21cGUMLBRNAv8hxbahUPwtTcnXDzeo73HslQPcMFEh5x3Tgge7YWjxfaD4C1_WXpAdw2vsJfGobJrZR_YBzwsvUvGkjPW7mddh3_xriufGx28b5yQkXe3VZ23UL805gEkgSkvGYfhsgx1hEgC8p44l8Af0EXoI78pP8JkIWCuSEA-NS1aA3ljVXPT6-FZP9rT_4A8tda2hNBxpShhC07JLnsWnokpWgjKQgOQrZ8KPObg__V9lh-U5BrUvH6URRBD-1XX5Xnl1SGt81dp9cCcgaEPWXYCIQb1plmsljNuEulzonHaPn5m-RaELcYRMhYfjOnkTXPktb2P-dYQol7twUjX8G30ClZ_MrOWd6mcvjgD0-85poWhEPHNOAwT5F3LrXxVjDa5cbMU8f5r2pNXuBtL5A-e9nH1czgU24LZikpyhqp4SmZN05M4zAhVYPi9Bs1nPaV_1Lo0yhLHjFNlCfIbs4X5-S9CDuGa2MGHVAhqZIVdIrkkvepRFwSakvVhmA66uuIoVH1I3wh9QapmOIelriOkbikIaUzABKiieXyJ93-tOiBP675CsYc=w555-h312-no" /><br />
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://hibernate.org/validator/documentation/getting-started/">Getting started with Hibernate Validator</a></li>
+	<li><a href="http://forum.spring.io/forum/spring-projects/web/80192-validation-empty-int-field">Validation - Empty int field</a></li>
+	<li><a href="http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work">http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work</a></li>
+	<li><a href="http://stackoverflow.com/questions/6227547/spring-3-validation-not-working">http://stackoverflow.com/questions/6227547/spring-3-validation-not-working</a></li>
+	<li><a href="http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found">http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found</a></li>
+	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
+	<li><a href="http://jpub.tistory.com/196">Spring in Action(Jpub) - 크레이그 월즈</a></li>
+	<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/">spring-framework-reference.pdf</a></li>
+	<li><a href="http://mybatis.github.io/mybatis-3/getting-started.html">MyBatis Getting started</a></li>
+</ul>
+</article>

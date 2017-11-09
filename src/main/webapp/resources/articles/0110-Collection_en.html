@@ -1,0 +1,734 @@
+<article>
+
+<h1>Collection</h1>
+
+<p>
+A collection is a Java library for storing several references of the same type.<br /> 
+It is easy to understand if you think that similar to an array but much more convenient.<br /> 
+The following figure shows the hierarchical relationship of the collection's main interfaces.<br />
+
+<img src="https://lh3.googleusercontent.com/1xf6dBmdwHXah004MKTr1k6AS6eRTvruSNj9zujos0wT0cNaM8KdOOHBZlQOhLCJHQVfPbMBqLRcC42FatRL4avzpOfTt1V29lT0ZJU2z9EpEyQD-Y3phZClGBvNyEBXa2-90lhIC2sp32I19-QxgtmqckcUgls4ni-tgI1_5JwRn-W8Z6XxtClIk0Y1TceyHo8Sxwmqk9DrakhfgxuAVokiBhEF9dipvoqqJXwlMGX8ub1Vy4hgle1Pl25aj4RQVjQA3L-TRxzeJ3ofu-DUSzsY6uuCrpxEVLwhky5OZ1QFatOQ5njoT-2mtMYdgmIR_FtDLhTIW-rHkpLaky63TySfdr9YuBQORWw3PS2OwC4urm7m6hSJk_PfAG9GUxwrFi3aF2CWHdzhr7Pz0GDryWicF_IfWwZuksQ1lp_7hFuRQbyzaOid7Oqlsqn3SxVUXcKrEHRb6smgbrDPAOO9V-vYAmYJbDhV1OppHhRhbEdisCDfsK_iaQ-hSwgtP5sMo84tdN5IeJ1E99PS5tdu736Xz-aEVkUY4OO_20AgkehqmK2Pf07qPISMsLiKGb3MDqdnRWgZMSpkxL9BoA16OqSU0Nw5NCGf190FSS1JQk7FzOosN12tA9U8=w380-h242-no" alt="Collection Framework" /><br />
+
+Consider the following when choosing a collection class.<a href="#comments"><sup>1</sup></a>
+</p>
+
+<ul>
+	<li>Set: It does not allow duplication and there is no order in it.</li>
+	<li>List: It does allow duplication and there is an order in it.</li>
+	<li>Map: It is stored in the form of key and value.</li>
+</ul>
+
+<p>
+Here are the frequently used collection classes:<br />
+It shows 6 classes after Java 2 and 2 classes before Java 2.<br />
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">Interface</th>
+	<th class="table-in-article-th">Implementation(after Java 2)</th>
+	<th class="table-in-article-th">Implementation(before Java 2)</th>
+</tr>
+<tr>
+	<td class="table-in-article-td" rowspan="2">Set</td>
+	<td class="table-in-article-td">HashSet</td>
+	<td class="table-in-article-td" rowspan="2"></td>
+</tr>
+<tr>
+	<td class="table-in-article-td">TreeSet</td>
+</tr>
+<tr>
+	<td class="table-in-article-td" rowspan="2">List</td>
+	<td class="table-in-article-td">ArrayList</td>
+	<td class="table-in-article-td" rowspan="2">Vector</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">LinkedList</td>
+</tr>
+<tr>
+	<td class="table-in-article-td" rowspan="2">Map</td>
+	<td class="table-in-article-td">HashMap</td>
+	<td class="table-in-article-td" rowspan="2">Properties</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">TreeMap</td>
+</tr>
+</table>
+
+<p>
+These collection classes are treated as examples below.
+</p>
+
+<h2>Collection class examples</h2>
+
+<h3>Set</h3>
+
+<p>
+The example shows the use of the Set interface.<br />
+Create a HashSet and add the name using the add method of the Set interface.<br />
+The following example attempts to add Bill in duplicate, but it can't.<br />
+Becease it is not allowed to add something to a Set in duplicate.<br />
+</p>
+
+<em class="filename">SetExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class SetExample {
+	public static void main(String args[]) {
+	  
+		Set<strong>&lt;String&gt;</strong> set = new HashSet<strong>&lt;String&gt;</strong>();
+		set.add("Bill");
+		set.add("Elsa");
+		set.add("Debbie");
+		set.add("Alison");
+		set.add("Carol");
+		set.add("Bill");
+		    
+		System.out.println(set);//you can not add something in duplicate to a Set.
+		    
+		Set<strong>&lt;String&gt;</strong> sortedSet = new TreeSet<strong>&lt;String&gt;</strong>(set);
+		System.out.println(sortedSet);//the list is sorted.
+	}
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.SetExample
+[Elsa, Alison, Carol, Bill, Debbie]
+[Alison, Bill, Carol, Debbie, Elsa]
+</pre>
+
+<p>
+If you look in the Java documentation for the collection class covered in the example, 
+you can see the &lt;E&gt;, &lt;T&gt;, &lt;K,V&gt; in the class declaration.<br />
+These interfaces, abstract classes, and classes are called generic.<br />
+Generics have been added since JDK 1.5.<br />
+E means Element, T means Type, K means Key, and V means Value.<br />
+This symbol can be used to declare unspecified data types.<br />
+Unspecified data types are determined when an object is created from a generic.<br />
+The following example creates a generic account number for the account class.<br />
+</p>
+
+<pre class="prettyprint">
+package net.java_school.collection;
+
+public class Account<strong>&lt;T&gt;</strong> {
+	
+	private <strong>T</strong> accountNo;//AccountNo can be any type.
+	
+	public <strong>T</strong> getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(<strong>T</strong> accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	public static void main(String[] args) {
+		Account<strong>&lt;String&gt;</strong> ac1 = null;
+		ac1 = new Account<strong>&lt;String&gt;</strong>();// The account number data type is determined by String.
+		ac1.setAccountNo("111-222-333");
+		
+		Account<strong>&lt;Integer&gt;</strong> ac2 = null;
+		ac2 = new Account<strong>&lt;Integer&gt;</strong>();// The account number data type is determined by Integer.
+		ac2.setAccountNo(111222333);// See below for the wrapper class
+	}
+
+}
+</pre>
+
+<h3>List</h3>
+
+<p>
+The List inherits the Collection interface, has an order, and allows duplicates.<br />
+The List has an index address starting from 0 like an array.<br />
+In the following example, the ArrayList is the most popular class in the List family.<br />
+</p>
+
+<em class="filename">ArrayListExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.ArrayList;
+
+public class ArrayListExample {
+
+	public static void main(String[] args) {
+		ArrayList<strong>&lt;String&gt;</strong> a = new ArrayList<strong>&lt;String&gt;</strong>();
+		
+		a.add("Tom");
+		a.add("Jerry");
+		
+		String hong = <strong>a.get(1);</strong>
+		System.out.println(hong);
+		
+		//Enhanced For-Loops
+		for (<strong>String</strong> name : a) {
+			System.out.print(name +"\t");
+		}
+	}
+
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.ArrayListExample
+Jerry
+Tom		Jerry
+</pre>
+
+<p>
+The following example compares the usage of ArrayList and LinkedList.
+</p>
+
+<em class="filename">ListExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class ListExample {
+	public static void main(String args[]) {
+		List<strong>&lt;String&gt;</strong> list = new ArrayList<strong>&lt;String&gt;</strong>();
+		    
+		list.add("A");
+		list.add("B");
+		list.add("C");
+		list.add("D");
+		list.add("E");
+		
+		System.out.println(list);
+		System.out.println("2: " + list.get(2));
+		System.out.println("0: " + list.get(0));
+		
+		LinkedList<strong>&lt;String&gt;</strong> linkedList = new LinkedList<strong>&lt;String&gt;</strong>();
+		
+		linkedList.addFirst("A");
+		linkedList.addFirst("B");
+		linkedList.addFirst("C");
+		linkedList.addFirst("D");
+		linkedList.addFirst("E");
+		    
+		System.out.println(linkedList);
+		linkedList.removeLast();
+		linkedList.removeLast();
+		    
+		System.out.println(linkedList);
+	    
+	}
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.ListExample
+[A, B, C, D, E]
+2: C
+0: A
+[E, D, C, B, A]
+[E, D, C]
+</pre>
+
+<h3>Map</h3>
+
+<p>
+Map stores data in pairs of keys and values.<br />
+The following example uses a HashMap.<br />
+At the end, change the HashMap to a TreeMap.<br />
+TreeMap sorts data by key value.<br />
+</p>
+
+<em class="filename">MapExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class MapExample {
+	public static void main(String args[]) {
+	
+		Map<strong>&lt;String,String&gt;</strong> map = new HashMap<strong>&lt;String,String&gt;</strong>();
+		
+		map.put("1", "Bill");
+		map.put("2", "Elsa");
+		map.put("3", "Debbie");
+		map.put("4", "Alison");
+		map.put("5", "Carol");
+		
+		System.out.println(map);
+		System.out.println(map.get("4"));
+		
+		Map<strong>&lt;String,String&gt;</strong> sortedMap = new TreeMap<strong>&lt;String,String&gt;</strong>(map);
+		System.out.println(sortedMap);
+	
+	}
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.MapExample
+{3=Debbie, 2=Elsa, 1=Bill, 5=Carol, 4=Alison}
+Alison
+{1=Bill, 2=Elsa, 3=Debbie, 4=Alison, 5=Carol}
+</pre>
+
+<p>
+I will modify the above example using a wrapper class.
+Integer is a Wrapper class corresponding to an int.
+If you give a key value of type Integer, the HashMap is also sorted.
+</p>
+
+<em class="filename">MapExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class MapExample {
+	public static void main(String args[]) {
+	
+		Map<strong>&lt;Integer</strong>,String&gt; map = new HashMap<strong>&lt;Integer</strong>,String&gt;();
+		
+		map.put(1, "Bill");
+		map.put(2, "Elsa");
+		map.put(3, "Debbie");
+		map.put(4, "Alison");
+		map.put(5, "Carol");
+		
+		System.out.println(map);
+		System.out.println(map.get(4));
+		
+		Map<strong>&lt;Integer</strong>,String&gt; sortedMap = new TreeMap<strong>&lt;Integer</strong>,String&gt;(map);
+		System.out.println(sortedMap);
+	
+	}
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.MapExample
+{1=Bill, 2=Elsa, 3=Debbie, 4=Alison, 5=Carol}
+Alison
+{1=Bill, 2=Elsa, 3=Debbie, 4=Alison, 5=Carol}
+</pre>
+
+
+<h3>Vector</h3>
+
+<p>
+The following example is an example of a vector that was used in the past.<br />
+Currently, ArrayList is used instead of Vector.<a href="#comments"><sup>4</sup></a>
+</p>
+
+<em class="filename">VectorExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class VectorExample {
+	public static void main(String[] args) {
+	
+		Vector<strong>&lt;String&gt;</strong> v = new Vector<strong>&lt;String&gt;</strong>();
+	
+		for (int i = 0; i &lt; 10; i++) {
+			v.addElement(String.valueOf(Math.random() * 100));
+		}
+		
+		for (int i = 0; i &lt; 10; i++) {
+			System.out.println(v.elementAt(i));//String타입의  참조값 반환
+		}
+	}
+  
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.VectorExample
+64.93767837163008
+1.7024404924644077
+56.445592597123806
+23.41304656773643
+92.55620070095163
+41.6525553754475
+47.39373268828609
+83.84855063525016
+67.34657837510855
+41.04715452201211
+</pre>
+
+<h3>Properties</h3>
+
+<p>
+Properties is a popular class for reading values from configuration files in Java.<br />
+Properties stores data in pairs of keys and values.<br />
+</p>
+
+<h4>PropertiesStore.java</h4>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+import java.io.*;
+
+public class PropertiesStore {
+	public static void main(String[] args) {
+	
+		Properties prop = new Properties();
+		prop.<strong>put</strong>("title", "Back in Black");
+		prop.<strong>put</strong>("singer", "AC/DC");
+		
+		try {
+			prop.<strong>store</strong>(new FileOutputStream("test.properties"),"My Favorite Song");
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}
+</pre>
+
+<em class="filename">PropertiesLoad.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+import java.io.*;
+
+public class PropertiesLoad {
+	public static void main(String[] args) {
+	
+		Properties prop = new Properties();
+		try {
+			prop.<strong>load</strong>(new FileInputStream("test.properties"));
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println(prop.<strong>getProperty</strong>("title"));
+		System.out.println(prop.<strong>getProperty</strong>("singer"));
+	}
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.PropertiesStore
+
+C:\java\Collection\bin&gt;java net.java_school.collection.PropertiesLoad
+Back in Black
+AC/DC
+</pre>
+
+<p>
+Running the PropertiesStore will create a test.properties file on the file system.<a href="#comments"><sup>5</sup></a><br />
+Open the file and it looks like this.<br />
+</p>
+
+<em class="filename">test.properties</em>
+<pre class="prettyprint">
+#My Favorite Song
+#Thu Apr 10 13:07:41 KST 2014
+singer=AC/DC
+title=Back in Black
+</pre>
+
+<h3>Enumeration</h3>
+
+<p>
+It is an interface that has the necessary methods for retrieving objects stored in enumerated form from beginning to end.<br />
+The interface has two methods:<br />
+</p>
+
+<pre class="prettyprint">
+hasMoreElements()
+nextElement()
+</pre>
+
+<p>
+The following code snippet prints all the elements of the Vector.
+</p>
+
+<pre class="prettyprint">
+for (Enumeration&lt;E&gt; e = v.elements(); e.hasMoreElements();) {
+  System.out.println(e.nextElement());
+}
+</pre>
+
+<p>
+The following is a modification of the previous vector example using Enumeration.<br />
+Performance is lower than the previous example.<br />
+</p>
+
+<em class="filename">VectorExample.java - 제네릭, Enumeration 사용</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+import java.util.*;
+
+public class VectorExample {
+	public static void main(String[] args) {
+	
+		Vector<strong>&lt;String&gt;</strong> v = new Vector<strong>&lt;String&gt;</strong>();
+	
+		for (int i = 0; i &lt; 10; i++) {
+			v.addElement(String.valueOf(Math.random() * 100));
+		}
+		
+		for (Enumeration<strong>&lt;String&gt;</strong> e = v.<strong>elements()</strong>; e.<strong>hasMoreElements()</strong>;) {
+			System.out.println(e.<strong>nextElement()</strong>);
+		}
+	}
+  
+}
+</pre>
+
+<h3>Iterator</h3>
+
+<p>
+The iterator() method of the Collection interface returns an Iterator.<a href="#comments"><sup>6</sup></a><br />
+The Iterator is similar to the Enumeration interface, but it is created later than the Enumeration.<br />
+Method names are simpler than Enumeration, and methods for deleting values have been added.<br />
+</p>
+
+<pre class="prettyprint">
+hasNext()
+next()
+remove()
+</pre>
+
+<h2>Wrapper</h2>
+
+<p>
+Unlike arrays, collections can contain only reference values.<br />
+The value of the primitive data type can not be stored in the collection.<br />
+The answer is to use the wrapper class to store the values of the primitive types in the collection.<br />
+There is a corresponding wrapper class for all primitive types.<br />
+A wrapper instance consists of a primitive datatype value and methods that manipulate that value.<br />
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">Primitive Data Type</th>
+	<th class="table-in-article-th">Wrapper Class</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">boolean</td>
+	<td class="table-in-article-td">Boolean</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">byte</td>
+	<td class="table-in-article-td">Byte</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">char</td>
+	<td class="table-in-article-td">Character</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">short</td>
+	<td class="table-in-article-td">Short</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">int</td>
+	<td class="table-in-article-td">Integer</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">long</td>
+	<td class="table-in-article-td">Long</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">float</td>
+	<td class="table-in-article-td">Float</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">double</td>
+	<td class="table-in-article-td">Double</td>
+</tr>
+</table>
+
+<em class="filename">IntegerExample.java</em>
+<pre class="prettyprint">
+package net.java_school.collection;
+
+public class IntegerExample {
+
+	public static void main(String[] args) {
+		<strong>Integer a = new Integer(2000000000);</strong>
+		int intValue = a.<strong>intValue();</strong>
+		System.out.println(intValue);
+
+		byte byteValue = a.<strong>byteValue();</strong>
+		System.out.println(byteValue);
+		
+		short shortValue = a.<strong>shortValue();</strong>
+		System.out.println(shortValue);
+		
+		long longValue = a.<strong>longValue();</strong>
+		System.out.println(longValue);
+		
+		float floatValue = a.<strong>floatValue();</strong>
+		System.out.println(floatValue);
+		
+		double doubleValue = a.<strong>doubleValue();</strong>
+		System.out.println(doubleValue);
+		
+		String strValue = a.<strong>toString();</strong>
+		System.out.println(strValue);
+
+		System.out.println(<strong>Integer.MAX_VALUE</strong>);
+		System.out.println(<strong>Integer.MIN_VALUE</strong>);
+		System.out.println(<strong>Integer.parseInt("1004")</strong>);
+
+		/* 
+		* The following code is changed by the compiler to Integer b = new Integer(200000000); 
+		* This is called AutoBoxing.
+		* AutoBoxing is not a casting.
+		* There is no casting that converts a primitive datatype to a reference datatype.		  
+		*/
+		Integer b = 2000000000;
+		
+		/* 
+		 * == always asks if the values are the same. 
+		 * If it is a reference value, it is judged whether it is the same object or not.
+		*/
+		if (a == b) {
+			System.out.println("a == b true");
+		} else {
+			System.out.println("a == b false");
+		}
+		
+		/* 
+		 * To determine if a and b have the same int value, use the equals() method of Integer.
+		 * The equals() method of Integer overrides Object's equals method to determine if int values are equal.
+		 <em>if (obj instanceof Integer) {
+		    return value == ((Integer)obj).intValue();
+		 }
+		 return false;</em>  
+		 */
+		if (a.equals(b)) {
+			System.out.println("a.equals(b) true");
+		} else {
+			System.out.println("a.equals(b) false");
+		}
+		
+		
+		/*
+		 * Use the compareTo() method of Integer to determine the values of a and b in various ways. 
+		 */
+		int check = a.<strong>compareTo(b);</strong>
+		System.out.println(check);
+		if (check == 0) {
+			System.out.println("a(int) == b(int)");
+		} else if (check &lt; 0) {
+			System.out.println("a(int) &lt; b(int)");
+		} else {
+			System.out.println("a(int) &gt; b(int)");
+		}
+		
+		int c = 2000000000;
+		if (a.<strong>equals(c)</strong>) { // The compiler changes c to a reference to new Integer(c).
+			System.out.println("a.equals(c) true");
+		} else {
+			System.out.println("a.equals(c) false");
+		}
+		
+		
+		/*
+		 * It appears that a copy of the int value in the Integer object referenced by a is assigned to the variable d of the primitive type outside the object.
+		 * This is called AutoUnboxing.
+		 */
+		int d = a; //The compiler changes this code to int d = a.intValue();
+		System.out.println(d);
+		
+		/*
+		* obj is assigned a reference to an Integer object containing a 1.
+		* The fact is that the compiler modifies this code to Object obj = new Integer(1);
+		*/
+		Object obj = 1;
+		System.out.println(obj);
+		
+		/*
+		* You can not call an Integer's original method using a reference of type Object.
+		* Casting is necessary.
+		System.out.println((<strong>(Integer)obj</strong>).intValue());
+	}
+
+}
+
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Collection\bin&gt;java net.java_school.collection.IntegerExample
+2000000000
+0
+-27648
+2000000000
+2.0E9
+2.0E9
+2000000000
+2147483647
+-2147483648
+1004
+a == b false
+a.equals(b) true
+0
+a(int) == b(int)
+a.equals(c) true
+2000000000
+1
+1
+</pre>
+
+<p>
+AutoBoxing and AutoUnboxing as shown in the examples are provided by the Java camp for ease of development.<br />
+You may have seen a magic trick where you put a coin through a glass and put a coin inside the box out of the box.<br />
+It is AutoBoxing to insert a coin into a box, and AutoUnboxing to take a coin out of a box.<br />
+</p>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>The collection class is either a Set interface implementation, a List interface implementation, or a Map interface implementation.</li>
+
+	<li>
+You can see how the toString () of the HashSet overrides the result.<br />
+Set has no method to return an index and return a value because the stored value is not in order.<br />
+To retrieve the saved value, you must use a method that returns an Enumeration or Iterator interface and use the returned Enumeration or Iterator implementation.<br />
+	</li>
+	
+	<li>
+ArrayList and the Vector is a big difference.<br />
+ArrayList does not thread-safe, whereas Vector is thread safe.<br />
+There are a lot of performance differences between thread-safe and non-thread-safe, so you need a good reason for choosing thread-safe ones.<br />
+In most cases, right to choose not thread-safe.<br />
+For reference, the JDBC connection pooling code covered in JDBC uses a thread-safe Vector.
+	</li>
+
+	<li>
+The location of the file is different when you run it in Eclipse or when you run it from the command prompt.<br />
+In the case of Eclipse, the file is created in the project directory.<br />
+If you think it is ambiguous, you can pass the full path of the file system to the constructor of FileOutputStream and FileInputStream in the above code as follows.<br />
+	new FileOutputStream("C:/java/Collection/test.properties"), new FileInputStream("C:/java/Collection/test.properties")
+	</li>
+	
+	<li>
+Every class that implements the Set or List interface must have an iterator () method.<br />
+This is because the Set and List interfaces inherit the Collection interface.<br />
+The iterator () method returns the Iterator interface type.<br />
+Of course, because the Iterator is an interface, the actual return is an object created from the implementation class that implements Iterator.<br />
+But we do not have to worry about what the implementation class is.<br />
+It is sufficient that the implementation class implements the Iterator interface.<br />
+	</li>      
+</ol>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://java.sun.com/developer/onlineTraining/collections/Collection.html">http://java.sun.com/developer/onlineTraining/collections/Collection.html</a></li>
+</ul>
+</article>

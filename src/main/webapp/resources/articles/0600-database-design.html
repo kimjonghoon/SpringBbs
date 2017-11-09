@@ -1,0 +1,124 @@
+<article>
+
+<h1>데이터베이스 설계</h1>
+
+SYS 계정으로 접속한다.<br />
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Documents and Settings\kim&gt; <strong>sqlplus scott/tiger</strong>
+
+다음에 접속됨:
+Oracle Database 11g
+
+SQL&gt; <strong>connect sys as sysdba</strong>
+암호 입력: 
+연결되었습니다.
+SQL&gt; show user
+USER은 "SYS"입니다
+</pre>
+
+접속한 상태에서 다음을 실행한다.<br />
+
+<script src="https://gist.github.com/kimjonghoon/4ad45823c45c1d60b15c.js"></script>
+
+<h2>DataSource 설정</h2>
+
+{톰캣홈}/conf/Catalina/localhost/JSPProject.xml 을 열고 아래와 같이 추가한다.<br />
+
+<em class="filename">JSPProject.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+	docBase="C:/www/JSPProject/WebContent"
+	reloadable="true"&gt;
+	<strong>
+	&lt;Resource
+		name="jdbc/jsppjt"
+		auth="Container"
+		type="javax.sql.DataSource"
+		username="java"
+		password="school"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:XE" 
+		maxActive="8"
+		maxIdle="4" /&gt;
+	</strong>
+			
+&lt;/Context&gt;
+</pre>
+
+<h3>JDBC 드라이버 파일을 {톰캣홈}/lib에 복사</h3>
+오라클 JDBC 드라이버 파일인 ojdbc6.jar 파일을 {톰캣홈}/lib에 복사한다.<br />
+
+<h3>테스트</h3>
+test.jsp 파일을 도큐멘트베이스(C:/www/JSPProject/WebContent)에 생성한다.<br />
+
+<em class="filename">test.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*,javax.sql.*,javax.naming.*" %&gt;
+&lt;%
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	
+	DataSource ds = null;
+	
+	int totalRecord = 0;
+		
+	try {
+		Context ic = new InitialContext();
+		Context envCtx = (Context) ic.lookup("java:comp/env");
+		ds = (DataSource) envCtx.lookup("<strong>jdbc/jsppjt</strong>");
+	} catch (NamingException e) {
+		System.out.println(e.getMessage());
+	}
+	
+	try {
+		con = ds.getConnection();
+		
+		String sql = "SELECT count(*) FROM board";
+		
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		rs.next();
+		totalRecord = rs.getInt(1);
+	} catch (SQLException e) {
+		System.out.println(e.getMessage());
+	} finally {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+%&gt;	
+&lt;!DOCTYPE html&gt; 
+&lt;html lang="ko"&gt; 
+&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;title&gt;DataSource Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;
+<strong>&lt;%=totalRecord %&gt;</strong>
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+톰캣을 재실행하고 http://localhost:port/JSPProject/test.jsp를 방문한다.
+3을 본다면 성공이다.<br />
+</article>

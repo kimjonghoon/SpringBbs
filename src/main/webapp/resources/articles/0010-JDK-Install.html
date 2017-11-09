@@ -1,0 +1,97 @@
+<article>
+
+<h1>윈도 시스템에 JDK 9 설치</h1>
+
+<h2 class="floatstop">JDK 9 인스톨러 다운로드</h2>
+
+<p>
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a><br /> 
+<img src="https://lh3.googleusercontent.com/D92OV_U_E84BFP7zTEzsKFwZSi_zkMetwD1_4MSVGCDlyG8BOYrimWYuTM7YSHS_m-624a6HUv4QpKKime-NdIxWDwpPo5LnF_vPbj23LhykHyeHJuYXiHqZ18PS6baiLl_Aajhjkba_nlys045fEjc_mqUDgijh5ZoQQA9UtqYxyfJUkzkUdPsKJZHOOKRBBzyc4PFoQW-qQvRqCTeWNdWKot-lxeBjv7yiq-39yNMxOVWGYM6BuXHYz9UBHISXRjhpImcQA8Qo20MXpxfyje5LC3OrNaAPqxt1cNvHPfyLOOjCRwhwy3EH-e6y9kSAVDSR283UsA-SOtAiebEr0RRr8RrWjdP-Lxb2ERiYS3M94iZiWUnnvVPe4g9sg80bJQR8wbebIaVP5a0X7C-Jkcpisr0qrtmBUMvHw-s0ciPNPkFyHmahmPN_uXy0WCZ12h_2BxV3FcVGc9f1q1G_vCNuGLQdeg21XBFWn65caI4-0r6-9bVvfuSOnCnA4d_HCJdiGa5oWDuoEavi2EG2MzSQGSG6kLss8yAr2-HnbIt9Z7Pb2sk4GCySbhhbNHLHtAmpJ7nubdjq4TLr23E9ja3VZiIOlAZq-4jb1QrAUA=w592-h482-no" alt="JDK 9" /><br />
+<img src="https://lh3.googleusercontent.com/6upBwe8Kv2oWC7IjIxo44CD6BF3z4pTGgqJZQ6D8DcmGkcLROF-gXK3u9Tza8itEq2WbgfaxqSv0Xffgos_z_092zg-n3sqD7loqTSuG-gkRlJmUPLfmJIhReVG7-keqXU6qpsnnE1hHa41zDRU-v94BJeo4SrFnkgQZcnZhVz_7peh2LD6mRi2n8eo1pZHAAv8ZCzGdl50APT0ZcxvcHisVnshKfl4N5IUL7Pku2_d0h_rEpeBqHXcWfWMdA9dSZv-GzJE5eGx9abIJ9iDcOqN6sGPhUPJV2nyjVTILzCRZ4O3Gstg_SE2KenBaXJVENrgdyHm1z5MB1uK0f9lGva7QCbr6pEynOJBtMDCQZVRzfewm0HjJe-m-tNMi6KaCvuE292BV4XOiiZRl74mkbBFdE6xL6x0Rg-Ad6VoV9sjEMH_ztOm9pmmDUbL9YZvIky-QLcPSd0H7XRoEpF8kd9unCh7Q8uAqo-AIXsr4g3X4c39BKP4iPwHZ8qxBoj6i7c9fJQ4H-RLQdu08NZZJwvyLnPNErtxs_OlMSOZp-8OlToQAznBES7YBAz2ZrrEA1fbxApwMng-wXvUhgZT2-0ALeEL2LqzCMnTwGlwNjA=w549-h181-no" alt="Windows Java 9 Installer" /><br />
+64비트 시스템에만 설치할 수 있다.
+</p>
+
+<p>
+내려받은 파일을 실행하고, Next 버튼만 클릭하여 JDK를 설치할 수 있다.<br />
+이때 JDK는 C:\Program Files\Java\jdk-9 디렉터리에 설치된다.
+</p>
+
+<h3>Path 환경변수에 JDK의 bin 디렉터리 추가</h3>
+
+<p>
+시작을 클릭하고, 제어판 - 시스템을 선택한다.<br />
+아래 화면에서 고급<sup>Advanced</sup> - 환경 변수<sup>Environment Variables</sup>를 선택한다.<br />
+<img src="https://lh3.googleusercontent.com/-zcZel2n21yk/VYDNqu5CxGI/AAAAAAAACMs/zIwc6Mz6__8optVwJUZnakdVUcAb6ostQCCo/s483/System-Properties_Advanced.png" alt="시스템 속성 창" /><br />
+시스템 변수<sup>System Varialbes</sup>에 JAVA_HOME이란 이름의 새 환경 변수를 만든다.<br />
+JAVA_HOME 값은 윈도 탐색기를 이용하여 JDK 설치 디렉터리를 붙여넣는다.<br />
+<img src="https://lh3.googleusercontent.com/N4Gvv3ztsuE3mT_XgQzum9WEX3XHDnfuRHEKMBdSj4Nn1SUGKzTOo4q-uWHJfJCfBi0Yu8RIVgwad2A1tFzYXo-4iUjer-Q12VzSCekdx4z7HVf6sHGeG08JQyz7zofSSQJKNXwRf6kGM_6hF4T2RgyXWdEZY99HhoQafo4SQ6_HKOznAR7SjmxU0xY46497EaAa0tf_DBN6ZeCn8sFAsBoD7bqFoLOMqZpZu6-Q7w2Cep3VaANO60XWbT4KI39pIwf0edV_DxllmZIiC_lgxb7YI-_dKPbHAQyoRhzdYDaq1LC1th5jax9z_m-BY9X0UBSb2u11xZ06tCCBTRm7NOC1eVErqQMI-EI5CnjAZKCx_eRCccRhNfKBnYgiqZCW1d-qoLL2XTyLPLOl0s2RzpBKURVgGjROtG1nwRnmfbozLXeeWBMPJb2TFMkC_n7PBICxQx2RQTw9G7_rvk6dSoCfa9_aEu4je__L9O4QBYDgnEEBJfh951bKNVCzR6L0QA41rxI1vo5BlUNcZsPw9i1QsFta53lW4UNlsjCBAosCmBTYRbE7q4nKWsyGkFAzg9IWD9uC-C8hDouHtCZDWSQvYZJn9YhWQlCqvBJvrQ=w414-h496-no" alt="시스템 속청 창" /><br />
+시스템 변수<sup>System Varialbes</sup>에서 Path를 선택하고 편집<sup>Edit</sup> 버튼을 클릭한다.<br />
+기존 Path 값 뒤에 <strong>;%JAVA_HOME%\bin</strong>을 추가한다.<br />
+<img src="https://lh3.googleusercontent.com/-iOuENrZbFAc/VYDNqqHl9zI/AAAAAAAACMg/BhZ60DJrp1EjfSclW23kNc6-y7fCzcAEgCCo/s493/add-jdk-bin-path.png" alt="%JAVA_HOME%\bin added in Path" /><br />
+</p>
+ 
+<dl class="note">
+<dt>
+세미콜론 (;)은 윈도 시스템에서 PATH 환경 변수의 값을 구분할 때 사용된다.
+</dt>
+<dt>PATH</dt>
+<dd>
+운영체제는 실행 프로그램을 PATH에 추가된 디렉터리에서 찾는다.
+PATH에 JDK의 bin 폴더를 추가하면, 어느 디렉터리에서나 편리하게 JDK의 bin에 있는 윈도 실행 프로그램인 javac.exe, java.exe, jar.exe 등을 실행할 수 있다.
+만약 PATH에 JDK의 bin 폴더를 추가하지 않고 자바 컴파일을 실행하려면, javac.exe 윈도 실행 프로그램이 있는 경로로 이동하여 명령어를 입력해야 한다.
+<pre><strong>C:\Program Files\Java\jdk-9\bin</strong>&gt;javac C:\Users\Test.java</pre>
+PATH 환경변수는 명령 프롬프트에서 다음 명령으로 확인할 수 있다.
+<pre><strong>echo %PATH%</strong></pre>
+</dd>
+</dl>
+
+<h2>테스트</h2>
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+</pre>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">C:\Users&gt; javac Test.java
+
+C:\Users&gt; java Test
+Hello World!
+</pre>
+
+<dl class="note">
+<dt>테스트 실패시 체크 리스트</dt>
+<dd>
+<pre>javac Test.java</pre>
+<p style="margin-bottom: 1em;">
+<strong>'javac'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.</strong><br />
+PATH 환경변수에 JDK의 bin 폴더를 추가되지 않았거나 잘못 추가된 경우이다.<br />
+</p>
+<pre>java Test</pre>
+<p style="margin-bottom: 1em;">
+<strong>Exception in thread "main" java.lang.NoClassDefFoundError: Test</strong><br />
+Test.class 파일을 찾지 못했다는 메시지이다.<br />
+Test.class 파일이 없는 디렉터리에서 java Test를 실행할 때 이런 에러를 만난다.<br />
+클래스 파일이 없는 디렉터리에서 실행하려면 java.exe의 -cp 옵션을 사용한다.<br />
+</p>
+<pre>C:\javawork&gt; java -cp C:\Users Test</pre>
+</dd>
+</dl>
+
+<h2>에디터 선택</h2>
+
+<p>
+<a href="/java/Package_Modifiers">패키지와 접근자</a>까지 <a href="http://www.editplus.com/kr/">에디트플러스</a>같은 단순한 에디터를 사용한다.<br />
+패키지와 접근자를 학습한 후에 이클립스를 사용한다.
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+<!-- 	<li><a href="http://windows.microsoft.com/en-us/windows/32-bit-and-64-bit-windows#1TC=windows-7">32-bit and 64-bit Windows: frequently asked questions</a></li> -->
+	<li><a href="http://www.editplus.com">editplus</a></li>
+</ul>
+</article>

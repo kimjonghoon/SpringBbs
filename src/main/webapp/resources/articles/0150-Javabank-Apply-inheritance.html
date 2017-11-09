@@ -1,0 +1,363 @@
+<article>
+	
+<h1>자바은행 수정(상속 적용)</h1>
+
+<p>
+출금액이 잔액보다 커도 출금이 되는, 잔액이 음수가 가능한 계좌가 필요하다면,
+상속을 적용하여 기존 계좌를 부모 클래스로 잔액이 음수여도 되는 계좌를 자식 클래스로 둘 수 있다.
+잔액이 음수여도 되는 계좌를 마이너스 계좌라고 부른다면,
+마이너스 계좌는 부모 클래스인 계좌 클래스의 출금 메서드, withdraw()만 오버라이딩하면 된다.
+은행 클래스의 계좌를 생성하는 메서드, addAccount(String accountNo, String name, long balance)는 
+생성할 계좌가 일반 계좌인지 마이너스 계좌인지를 판단해야 한다. 
+그러기 위해서는 매개변수를 추가해야 한다.
+addAccount(String accountNo, String name, long balance, <strong>String kind</strong>)처럼 
+kind란 매개변수를 추가하고 이 매개변수가 '일반' 또는 '마이너스'란 문자를 받도록 구현해 보자.
+</p>
+
+<em class="filename">Account.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+public class Account {
+	private String accountNo;
+	private String name;
+	<strong>protected</strong> long balance;
+	private String kind;
+	<strong>protected</strong> List&lt;Transaction&gt; transactions = new ArrayList&lt;Transaction&gt;();
+	
+	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
+	static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+	static final String DEPOSIT = "입금";
+	static final String WITHDRAW = "출금";
+	<strong>static final String NORMAL = "일반";
+	static final String MINUS = "마이너스";
+	static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance();</strong>
+
+	public Account() {}
+	
+	public Account(String accountNo, String name, <strong>String kind</strong>) {
+		this.accountNo = accountNo;
+		this.name = name;
+		<strong>this.kind = kind;</strong>
+	}
+	
+	public Account(String accountNo, String name, long balance, <strong>String kind</strong>) {
+		this.accountNo = accountNo;
+		this.name = name;
+		this.balance = balance;
+		<strong>this.kind = kind;</strong>
+	}
+	
+	public void deposit(long amount) {
+		balance = balance + amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.DEPOSIT);
+		transaction.setBalance(this.balance);
+		transactions.add(transaction);
+	}
+	
+	public void withdraw(long amount) {
+		if (amount &gt; this.balance) {
+			return;
+		}
+		balance = balance - amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.WITHDRAW);
+		transaction.setBalance(this.balance);
+		transactions.add(transaction);
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getAccountNo() {
+		return accountNo;
+	}
+	
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+	
+	public long getBalance() {
+		return balance;
+	}
+	
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+	
+	public List&lt;Transaction&gt; getTransactions() {
+		return transactions;
+	}
+	
+	public void setTransactions(List&lt;Transaction&gt; transactions) {
+		this.transactions = transactions;
+	}
+	<strong>
+	public String getKind() {
+		return kind;
+	}
+	
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	</strong>
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(accountNo);
+		sb.append("|");		
+		sb.append(name);
+		sb.append("|");
+		<strong>sb.append(Account.NUMBER_FORMAT.format(balance));
+		sb.append("|");
+		sb.append(kind);</strong>
+			
+		return sb.toString();
+	}
+
+}
+</pre>
+
+<p>
+금액에 3 자리마다 ,(콤마)가 있도록 입출금 명세 클래스의 toString() 메서드를 다음과 같이 수정한다.
+</p>
+
+<em class="filename">Transaction.java</em>
+<pre class="prettyprint">
+@Override
+public String toString() {
+	StringBuilder sb = new StringBuilder();
+	sb.append(this.transactionDate);
+	sb.append("|");
+	sb.append(this.transactionTime);
+	sb.append("|");
+	sb.append(this.kind);
+	sb.append("|");
+	<strong>sb.append(Account.NUMBER_FORMAT.format(this.amount));</strong>
+	sb.append("|");
+	<strong>sb.append(Account.NUMBER_FORMAT.format(this.balance));</strong>
+	
+	return sb.toString();
+}
+</pre>
+
+<em class="filename">MinusAccount.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class MinusAccount <strong>extends Account</strong> {
+	
+	public MinusAccount() {}
+	
+	public MinusAccount(String accountNo, String name, String kind) {
+		super(accountNo, name, kind);
+	}
+
+	public MinusAccount(String accountNo, String name, long balance, String kind) {
+		super(accountNo, name, balance, kind);
+	}
+	
+	@Override
+	public void withdraw(long amount) {
+		balance = balance - amount;
+		Transaction transaction = new Transaction();
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		transaction.setTransactionDate(Account.DATE_FORMAT.format(date));
+		transaction.setTransactionTime(Account.TIME_FORMAT.format(date));
+		transaction.setAmount(amount);
+		transaction.setKind(Account.WITHDRAW);
+		transaction.setBalance(this.balance);
+		transactions.add(transaction);
+	}
+	
+}
+</pre>
+
+<em class="filename">Bank.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bank {
+	private List&lt;Account&gt; accounts = new ArrayList&lt;Account&gt;();
+
+	public void addAccount(String accountNo, String name, <strong>String kind</strong>) {
+		<strong>Account account = getAccount(accountNo);
+		if (account == null) {
+			if (Account.NORMAL.equals(kind)) {
+				accounts.add(new Account(accountNo, name, kind));
+			} else if (Account.MINUS.equals(kind)) {
+				accounts.add(new MinusAccount(accountNo, name, kind));
+			}
+		}</strong>
+	}
+	
+	public void addAccount(String accountNo, String name, long balance, <strong>String kind</strong>) {
+		<strong>Account account = getAccount(accountNo);
+		if (account == null) {
+			if (Account.NORMAL.equals(kind)) {
+				accounts.add(new Account(accountNo, name, balance, kind));
+			} else if (Account.MINUS.equals(kind)) {
+				accounts.add(new MinusAccount(accountNo, name, balance, kind));
+			}
+		}</strong>
+	}
+	
+	public Account getAccount(String accountNo) {
+		int totalAccount = <strong>accounts.size();</strong>
+		
+		for (int i = 0; i &lt; totalAccount; i++) {
+			if (accountNo.equals(<strong>accounts.get(i)</strong>.getAccountNo())) {
+				return <strong>accounts.get(i)</strong>;
+			}
+		}
+		
+		return null;
+	}
+	
+	public <strong>List&lt;Account&gt;</strong> findAccountByName(String name) {
+		<strong>List&lt;Account&gt; matched = new ArrayList&lt;Account&gt;();</strong>
+		int totalAccount = accounts.size();
+		
+		for (int i = 0; i &lt; totalAccount; i++) {
+			if (name.equals(<strong>accounts.get(i)</strong>.getName())) {
+				matched.add(<strong>accounts.get(i)</strong>);
+			}
+		}
+		
+		return matched;
+	}
+	<strong>
+	public List&lt;Account&gt; getAccounts() {
+		return accounts;
+	}</strong>
+  
+}
+</pre>
+
+<em class="filename">Test.java</em>
+<pre class="prettyprint">
+package net.java_school.bank;
+
+<strong>import java.util.List;</strong>
+
+public class Test {
+    static final String ACCOUNTS_HEADING = "계좌번호|소유자명|잔액<strong>|계좌종류</strong>";
+    static final String TRANSACTIONS_HEADING = "거래일|거래시간|구분|금액|잔액";
+
+    public static void main(String[] args) {
+    
+         //테스트 계좌 추가
+        Bank bank = new Bank();
+        bank.addAccount("101", "홍길동", <strong>Account.NORMAL</strong>); 
+        bank.addAccount("202", "임꺽정", <strong>Account.NORMAL</strong>);
+        bank.addAccount("303", "장길산", <strong>Account.NORMAL</strong>);
+        bank.addAccount("404", "홍길동", <strong>Account.MINUS</strong>);
+
+        //1. 총 계좌 목록을 출력한다.
+        System.out.println("1. 총 계좌 목록을 출력한다.");
+        <strong>List&lt;Account&gt;</strong> accounts = bank.getAccounts();
+        <strong>int totalAccount = accounts.size();</strong>
+        System.out.println(Test.ACCOUNTS_HEADING);
+        for (int i = 0; i &lt; totalAccount; i++) {
+	        System.out.println(<strong>accounts.get(i)</strong>);
+        }
+       
+        System.out.println();
+        
+        //2. 101계좌에 10,000원을 입금한다.
+        System.out.println("2. 101계좌에 10,000원을 입금한다.");		
+        Account hong = bank.getAccount("101");
+        hong.deposit(10000);
+        System.out.println(Test.ACCOUNTS_HEADING);
+        System.out.println(hong);
+
+        System.out.println();
+		
+        //3. 101계좌에 5,000원을 출금한다.
+        System.out.println("3. 101계좌에 5,000원을 출금한다.");		
+        hong.withdraw(5000);
+        System.out.println(Test.ACCOUNTS_HEADING);
+        System.out.println(hong);
+
+        System.out.println();
+        
+        //4. 101계좌의 입출금 명세를 출력한다.
+        System.out.println("4. 101계좌의 입출금 명세를 출력한다.");		
+        <strong>List&lt;Transaction&gt;</strong> transactions = hong.getTransactions();
+        <strong>int totalTransaction = transactions.size();</strong>
+        System.out.println(Test.TRANSACTIONS_HEADING);
+        for (int i = 0; i &lt; totalTransaction; i++) {
+	        System.out.println(<strong>transactions.get(i)</strong>);
+        }
+        
+        System.out.println();
+
+        //5. 고객명으로 계좌를 찾는다.
+        System.out.println("5. 홍길동 계좌찾기");
+        <strong>List&lt;Account&gt;</strong> matched = bank.findAccountByName("홍길동");
+        System.out.println(Test.ACCOUNTS_HEADING);
+        //확장된 for문
+        for (Account account : matched) {
+	        System.out.println(account);
+        }
+        <strong>
+        System.out.println();
+                        
+        //6. 마이너스 계좌 404에서 5000을 출금한다.
+        System.out.println("6.마이너스 계좌 404에서 5000을 출금한다.");		
+        Account minus = bank.getAccount("404");
+        minus.withdraw(5000);
+        System.out.println(Test.ACCOUNTS_HEADING);
+        System.out.println(minus);
+        </strong>
+    }
+
+}
+</pre>
+
+<h3>과제</h3>
+
+<p>
+다음 사용자 정의 익셉션을 만들어 적용해 보자.
+</p>
+
+<ul>
+	<li>중복된 계좌 - DuplicateAccountException</li>
+	<li>잔액 부족 - InsufficientBalanceException</li>
+</ul>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li>New 알기쉬운 자바2(개정판) 저자: 김철회 출판사: 정보문화사</li> 
+</ul>
+</article>

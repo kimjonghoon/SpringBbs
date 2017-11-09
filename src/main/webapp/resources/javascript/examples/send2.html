@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>자바스크립트 테스트</title>
+<script type="text/javascript">
+function agree() {
+	var form = document.getElementById("testForm");
+	var submit = document.getElementById("submit");
+	if (form.agreement.checked == true) {
+		submit.disabled = false;	
+	} else {
+		submit.disabled = true;
+	}
+	
+}
+function check() {
+	var form = document.getElementById("testForm");
+	form.condition[4].disabled = true;
+	var chk = form.confirm[0].value
+
+	return true;
+}
+</script>
+</head>
+<body>
+<form id="testForm" method="get" onsubmit="return check()">
+	이름 <input type="text" name="name" /><br />
+	B<input type="radio" name="condition" value="best" />
+	G<input type="radio" name="condition" value="good" />
+	N<input type="radio" name="condition" value="normal" />
+	B<input type="radio" name="condition" value="bad" />
+	W<input type="radio" name="condition" value="worst" /><br />
+	서버로 정보를 전달하는 것에 동의합니다.<input type="radio" name="agreement" value="y" onchange="agree()" />
+	<input type="submit" id="submit" value="확인" disabled="disabled" />
+</form>
+</body>
+</html>

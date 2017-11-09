@@ -1,0 +1,1208 @@
+<article>
+
+<h1>모델 1 게시판</h1>
+
+<p>
+모델 1이란 JSP안의 자바 코드를 떼어 내 자바 빈즈로 만든 코드를 말한다.
+이전 절의 게시판 코드는 JSP안에 JDBC 코드가 포함되어 있다.
+이런 코드는 악몽이라 불리는 코드로, 최소한 JDBC 관련 코드는 자바 빈즈에 있어야 한다.
+모델 1 게시판으로 수정하기 위해 먼저 게시글 정보를 담기 위한 자바 빈즈를 다음과 같이 생성한다.
+</p>
+
+<em class="filename">Article.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.util.Date;
+
+public class Article {
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+	private int no;
+	private String title;
+	private String content;
+	private Date wdate;
+	private int parent;
+	private int indent;
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		if (content == null) content = "";
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(LINE_SEPARATOR, "&lt;br /&gt;");
+		}
+	}
+
+	public Date getWdate() {
+		return wdate;
+	}
+
+	public void setWdate(Date wdate) {
+		this.wdate = wdate;
+	}
+
+	public int getParent() {
+		return parent;
+	}
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+	public int getIndent() {
+		return indent;
+	}
+
+	public void setIndent(int indent) {
+		this.indent = indent;
+	}
+}
+</pre>
+
+<p>
+Article.java의 필드는 board 테이블의 컬럼과 매핑된다.
+board 테이블에서 indent 컬럼이 없다.
+indent 필드는 목록(list.jsp)에서 목록 아이템을 들여쓰기할 때 필요하다. 
+</p>
+
+<p>
+getHtmlContent() 메서드는 content 컬럼에 저장되어 있는 개행문자를 &lt;br /&gt;로 바꾸는 메서드이다.
+이 메서드는 상세보기(view.jsp)에서 사용된다.
+</p>
+
+<p>
+<em>public static final String LINE_SEPARATOR = System.getProperty("line.separator");</em><br />
+LINE_SEPARATOR 상수는 getHtmlContent() 메서드에서 사용한다. 
+여기서 자바 프로그램에서 상수를 관리하는 팁을 소개한다.
+</p>
+
+<em class="filename">WebContants.java</em>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public class WebContants {
+	//Line Separator
+	public final static String LINE_SEPARATOR = System.getProperty("line.separator");
+}
+</pre>
+
+<p>
+이렇게 수정하면 Article에서 LINE_SEPARATOR 선언부를 제거해야 하고
+Article의 getHtmlContent() 메서드는 다음과 같이 수정해야 한다.
+</p>
+
+<pre class="prettyprint">
+//.. 중간 생략 ..
+
+import net.java_school.commons.WebContants;
+
+public class Article {
+	//public static final String LINE_SEPARATOR = System.getProperty("line.separator"); 제거한다.
+	
+	//.. 중간 생략 ..
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(<strong>WebContants.LINE_SEPARATOR</strong>, "&lt;br /&gt;");
+		}
+	}
+
+	//.. 중간 생략 ..
+	
+}
+</pre>
+
+<p>
+WebContants 클래스를 enum으로 바꿀 수 있다.
+</p>
+
+<em class="filename">WebContants.java</em>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public enum WebContants {
+	lineSeparator (System.getProperty("line.separator"));
+	
+	public String value;
+	
+	WebContants (String value) {
+		this.value = value;
+	}
+	
+}
+</pre>
+
+<p>
+enum으로 바꾸면 Article 클래스는 다음과 같이 바뀐다.
+</p>
+
+<pre class="prettyprint">
+//.. 중간 생략 ..
+
+import net.java_school.commons.WebContants;
+
+public class Article {
+
+	//.. 중간 생략 ..
+
+	public String getHtmlContent() {
+		if (content == null) {
+			return "";
+		} else {
+			return content.replaceAll(<strong>WebContants.lineSeparator.value</strong>, "&lt;br /&gt;");
+		}
+	}
+
+	//.. 중간 생략 ..
+	
+}
+</pre>
+
+<p>
+다음으로 JDBC를 담당하는 BoardDao 빈즈를 작성한다.
+이름 뒤에 Dao는 Data Access Object의 약자이다.
+이와 같은 이름을 가진 빈은 JDBC 관련 코드만을 지녀야 한다.
+이를 DAO 패턴이라 한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+
+import net.java_school.db.dbpool.OracleConnectionManager;
+import net.java_school.util.Log;
+
+public class BoardDao {
+	
+	private OracleConnectionManager dbmgr;
+	
+	public BoardDao() {}
+	
+	public BoardDao() {
+		this.dbmgr = dbmgr;
+	}
+	
+	private Connection getConnection() throws SQLException {
+		return dbmgr.getConnection();
+	}
+	
+	private void close(ResultSet rs, PreparedStatement stmt, Connection con) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			dbmgr.freeConnection(con);
+		}
+	}
+	
+	public List&lt;Article&gt; getBoardList(int start, int end, String keyword) {
+		Log log = new Log();
+		List&lt;Article&gt; list = new ArrayList&lt;Article&gt;();
+		String sql = null;
+					
+		sql = "SELECT no, indent, parent, title, wdate FROM " +
+			"(SELECT ROWNUM R, A.* " +
+			"FROM " +
+			"(SELECT no, level as indent, parent, title, wdate FROM board ";
+		if (keyword != null &amp;&amp; !keyword.equals("")) {
+			sql += " WHERE title LIKE '%" + keyword + "%' OR content LIKE '%" + keyword + "%' ";
+		}    
+		sql += "START WITH parent = 0 " +
+		    "CONNECT BY PRIOR no = parent " +
+		    "ORDER SIBLINGS BY no DESC) A) " +
+		    "WHERE R BETWEEN ? AND ?";
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			stmt = con.prepareStatement(sql);
+			if (keyword == null || keyword.equals("")) {
+				stmt.setInt(1, start);
+				stmt.setInt(2, end);
+			} else {
+				stmt.setString(1, keyword);
+				stmt.setString(2, keyword);
+				stmt.setInt(3, start);
+				stmt.setInt(4, end);
+			}
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Article article = new Article();
+				article.setNo(rs.getInt("no"));
+				article.setTitle(rs.getString("title"));
+				article.setWdate(rs.getDate("wdate"));
+				article.setIndent(rs.getInt("indent"));
+				list.add(article);
+			}
+		} catch (SQLException e) {
+			log.debug("Error Source : BoardDao.getBoardList() : SQLException");
+			log.debug("SQLState : " + e.getSQLState());
+			log.debug("Message : " + e.getMessage());
+			log.debug("Oracle Error Code : " + e.getErrorCode());
+			log.debug("sql : " + sql);
+		} finally {
+			close(rs, stmt, con);
+			log.close();
+		}
+		
+		return list;
+	}
+	
+	public int getTotalRecord(String keyword) {
+		Log log = new Log();
+		int totalRecord = 0;
+		String sql = null;
+		
+		sql = "SELECT count(*) FROM board ";
+		if (keyword != null &amp;&amp; !keyword.equals("")) {
+			sql += "WHERE title LIKE ? OR content LIKE ?";
+		}
+				
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			stmt = con.prepareStatement(sql);
+			if (keyword != null &amp;&amp; !keyword.equals("")) {
+				keyword = "%" + keyword + "%";
+				stmt.setString(1, keyword);
+				stmt.setString(2, keyword);
+			}
+			rs = stmt.executeQuery();
+			rs.next();
+			totalRecord = rs.getInt(1);
+		} catch (SQLException e) {
+			log.debug("Error Source : BoardDao.getTotalRecord() : SQLException");
+			log.debug("SQLState : " + e.getSQLState());
+			log.debug("Message : " + e.getMessage());
+			log.debug("Oracle Error Code : " + e.getErrorCode());
+			log.debug("sql : " + sql);
+		} finally {
+			close(rs, stmt, con);
+			log.close();
+		}
+		
+		return totalRecord;
+	}
+}
+</pre>
+
+<p>
+다음 메서드는 목록의 페이지 매기기에 필요한 숫자를 만들어낸다.
+</p>
+
+<pre class="prettyprint">
+public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+	Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+	
+	int totalPage = totalRecord / numPerPage;
+	if (totalRecord % numPerPage != 0) totalPage++;
+	int totalBlock = totalPage / pagePerBlock;
+	if (totalPage % pagePerBlock != 0) totalBlock++;
+	
+	int block = curPage / pagePerBlock;
+	if (curPage % pagePerBlock != 0) block++;
+	
+	int firstPage = (block - 1) * pagePerBlock + 1;
+	int lastPage = block * pagePerBlock;
+	
+	int prevPage = 0;
+	if (block &gt; 1) {
+		prevPage = firstPage - 1;
+	}
+
+	int nextPage = 0;
+	if (block &lt; totalBlock) {
+		nextPage = lastPage + 1;
+	}
+	if (block &gt;= totalBlock) {
+		lastPage = totalPage;
+	}
+
+	int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+
+	map.put("totalPage", totalPage);
+	map.put("firstPage", firstPage);
+	map.put("lastPage", lastPage);
+	map.put("prevPage", prevPage);
+	map.put("nextPage", nextPage);
+	map.put("listItemNo", listItemNo);
+
+	return map;
+}    
+</pre>
+
+<em class="filename">/board/list.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%!
+public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+
+	Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+	
+	int totalPage = totalRecord / numPerPage;
+	if (totalRecord % numPerPage != 0) totalPage++;
+	int totalBlock = totalPage / pagePerBlock;
+	if (totalPage % pagePerBlock != 0) totalBlock++;
+	
+	int block = curPage / pagePerBlock;
+	if (curPage % pagePerBlock != 0) block++;
+	
+	int firstPage = (block - 1) * pagePerBlock + 1;
+	int lastPage = block * pagePerBlock;
+	
+	int prevPage = 0;
+	if (block &gt; 1) {
+		prevPage = firstPage - 1;
+	}
+
+	int nextPage = 0;
+	if (block &lt; totalBlock) {
+		nextPage = lastPage + 1;
+	}
+	if (block &gt;= totalBlock) {
+		lastPage = totalPage;
+	}
+
+	int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+
+	map.put("totalPage", totalPage);
+	map.put("firstPage", firstPage);
+	map.put("lastPage", lastPage);
+	map.put("prevPage", prevPage);
+	map.put("nextPage", nextPage);
+	map.put("listItemNo", listItemNo);
+
+	return map;
+}
+%&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int curPage = request.getParameter("curPage") == null ? 1 : Integer.parseInt(request.getParameter("curPage"));
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardDao dao = new BoardDao();
+int totalRecord = dao.getTotalRecord(keyword);
+int numPerPage = 10;
+int pagePerBlock = 5;
+Map&lt;String, Integer&gt; numbers = this.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlcok);
+int startRecord = (curPage - 1) * numPerPage + 1;
+int endRecord = curPage * numPerPage;
+List&lt;Article&gt; list = dao.getBoardList(startRecord, endRecord, keyword);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;목록&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-size: 11px;"&gt;
+&lt;h1&gt;목록&lt;/h1&gt;
+&lt;%
+int listItemNo = numbers.get("listItemNo");//이 값은 목록 페이지에서 계산되는 번호다. no 컬럼 값이 아니다.
+for (int i = 0; i &lt; list.size(); i++) {
+	Article article = list.get(i);
+	int indent = article.getIndent();
+	for (int j = 0; j &lt; indent; j++) {
+		out.println("&amp;nbsp;&amp;nbsp;");
+	}
+	if(indent != 1) {
+		out.println("⌙");
+	}
+%&gt;
+&lt;%=listItemNo %&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;%=article.getWdate() %&gt;&lt;br /&gt;
+&lt;hr /&gt;
+&lt;%
+listItemNo--;
+}
+int prevPage = numbers.get("prevPage");
+if (prevPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+&lt;%
+}
+int firstPage = numbers.get("firstPage");
+int lastPage = numbers.get("lastPage");
+for (int i = firstPage; i &lt;= lastPage; i++) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+&lt;%
+}
+int nextPage = numbers.get("nextPage");
+if (nextPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+&lt;%
+}
+%&gt;				
+&lt;p&gt;
+&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;/p&gt;
+&lt;form method="get"&gt;
+	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
+	&lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+목록을 방문하여 테스트한다.
+간단한 게시판은 Article과 BoardDao 정도로 충분하지만, 대부분 모듈은 JSP의 프런트 역할을 하는 빈즈을 따로 두는 경우가 많다.
+이 빈즈의 이름에는 Service란 이름이 붙는다.
+게시판 JSP의 프런트 역할을 하는 BoardService 빈즈를 생성한다.
+BoardService를 만들면 게시판 JSP는 BoardService만을 바라보게 된다.
+위 list.jsp에 선언된 getNumbersForPaging() 메서드는 BoardService로 옮길 수 있다.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+package net.java_school.board;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+
+public class BoardService {
+
+	private BoardDao dao = new BoardDao();
+	
+	public BoardService() {}
+	
+	public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPage, int numPerPage, int pagePerBlock) {
+		Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();
+		
+		int totalPage = totalRecord / numPerPage;
+		if (totalRecord % numPerPage != 0) totalPage++;
+		int totalBlock = totalPage / pagePerBlock;
+		if (totalPage % pagePerBlock != 0) totalBlock++;
+		
+		int block = curPage / pagePerBlock;
+		if (curPage % pagePerBlock != 0) block++;
+		
+		int firstPage = (block - 1) * pagePerBlock + 1;
+		int lastPage = block * pagePerBlock;
+		
+		int prevPage = 0;
+		if (block &gt; 1) {
+			prevPage = firstPage - 1;
+		}
+	
+		int nextPage = 0;
+		if (block &lt; totalBlock) {
+			nextPage = lastPage + 1;
+		}
+		if (block &gt;= totalBlock) {
+			lastPage = totalPage;
+		}
+	
+		int listItemNo = totalRecord - (curPage - 1) * numPerPage;
+	
+		map.put("totalPage", totalPage);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("prevPage", prevPage);
+		map.put("nextPage", nextPage);
+		map.put("listItemNo", listItemNo);
+	
+		return map;
+	}
+	
+	public List&lt;Article&gt; getBoardList(int startRecord, int endRecord, String keyword) {
+        return dao.getBoardList(startRecord, endRecord, keyword);
+    }
+    
+    public int getTotalRecord(String keyword) {
+    	return dao.getTotalRecord(keyword);
+    }
+}
+</pre>
+
+<p>
+BoardService.java만을 사용하도록 list.jsp를 수정한다.
+</p>
+
+<em class="filename">/board/list.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%
+int curPage = (request.getParameter("curPage") == null ? 1 : Integer.parseInt(request.getParameter("curPage")));
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardService service = new BoardService();
+int totalRecord = service.getTotalRecord(keyword);
+int numPerPage = 10;
+int pagePerBlock = 5;
+Map&lt;String, Integer&gt; numbers = service.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
+int startRecord = (curPage - 1) * numPerPage + 1;
+int endRecord = curPage * numPerPage;
+List&lt;Article&gt; list = service.getBoardList(startRecord, endRecord, keyword);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;목록&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-size: 11px;"&gt;
+&lt;h1&gt;목록&lt;/h1&gt;
+&lt;%
+int listItemNo = numbers.get("listItemNo");
+for (int i = 0; i &lt; list.size(); i++) {
+	Article article = list.get(i);
+	int indent = article.getIndent();
+	for (int j = 0; j &lt; indent; j++) {
+		out.println("&amp;nbsp;&amp;nbsp;");
+	}
+	if(indent != 1) {
+		out.println("⌙");
+	}
+%&gt;
+&lt;%=listItemNo %&gt;
+&lt;a href="view.jsp?no=&lt;%=article.getNo() %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;&lt;%=article.getTitle() %&gt;&lt;/a&gt;
+&lt;%=article.getWdate() %&gt;&lt;br /&gt;
+&lt;hr /&gt;
+&lt;%
+listItemNo--;
+}
+int prevPage = numbers.get("prevPage");
+if (prevPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=prevPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[이전]&lt;/a&gt;
+&lt;%
+}
+int firstPage = numbers.get("firstPage");
+int lastPage = numbers.get("lastPage");
+for (int i = firstPage; i &lt;= lastPage; i++) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=i %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[&lt;%=i %&gt;]&lt;/a&gt;
+&lt;%
+}
+int nextPage = numbers.get("nextPage");
+if (nextPage != 0) {
+%&gt;
+	&lt;a href="list.jsp?curPage=&lt;%=nextPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;[다음]&lt;/a&gt;
+&lt;%
+}
+%&gt;				
+&lt;p&gt;
+&lt;a href="write_form.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;글쓰기&lt;/a&gt;
+&lt;/p&gt;
+&lt;form method="get"&gt;
+	&lt;input type="text" size="10" maxlength="30" name="keyword" /&gt;
+	&lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;	
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+/board/write_form.jsp 파일의 폼 태그의 action 속성값을 write.jsp로 수정한다.
+</p>
+
+<em class="filename">/board/write_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;글쓰기&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;글쓰기&lt;/h1&gt;
+&lt;form action="<strong>write.jsp</strong>" method="post"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td&gt;제목&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="title" size="50"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;textarea name="content" rows="20" cols="100"&gt;&lt;/textarea&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input type="submit" value="전송"&gt;
+		&lt;input type="reset" value="취소"&gt;
+		&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+BoardDao 클래스에 다음 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void insert(Article article) {
+	Log log = new Log();
+	String sql = "INSERT INTO board (no, title, content, wdate, parent) "
+		+ "VALUES (board_no_seq.nextval, ?, ?, sysdate, 0)";
+		
+	Connection con = null;
+	PreparedStatement stmt = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, article.getTitle());
+		stmt.setString(2, article.getContent());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.insert() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(null, stmt, con);
+		log.close();
+	}
+}
+</pre>
+
+<p>
+BoardService에 다음 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardService.java 수정</em>
+<pre class="prettyprint">
+public void write(Article article) {
+	dao.insert(article);
+}
+</pre>
+
+<p>
+새 글쓰기를 처리하는 write.jsp 파일을 만든다.
+</p>
+
+<em class="filename">/board/write.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+Article article = new Article();
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.write(article);
+
+response.sendRedirect("list.jsp");
+%&gt;
+</pre>
+
+<p>
+다음으로 상세보기 구현한다.
+BoardDao에 selectOne() 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public Article selectOne(int no) {
+	Log log = new Log();
+	
+	Article article = null;
+	String sql = "SELECT no, title, content, wdate FROM board WHERE no = ?";
+	
+	Connection con = null;
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, no);
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			article = new Article();
+			article.setNo(rs.getInt("no"));
+			article.setTitle(rs.getString("title"));
+			article.setContent(rs.getString("content"));
+			article.setWdate(rs.getDate("wdate"));
+		}
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.selectOne() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(rs, stmt, con);
+		log.close();
+	}
+
+	return article;
+}
+</pre>
+
+<p>
+BoardService에 다음 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public Article getArticle(int no) {
+	return dao.selectOne(no);
+}
+</pre>
+
+<p>
+view.jsp를 아래와 같이 수정한다.
+</p>
+
+<em class="filename">/board/view.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+if (keyword == null) keyword = "";
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;상세보기&lt;/title&gt;
+&lt;script type="text/javascript"&gt;
+function goModify(no,curPage,keyword) {
+	location.href="modify_form.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+}
+
+function goDelete(no,curPage,keyword) {
+	var check = confirm("정말로 삭제하겠습니까?");
+	if (check) {
+		location.href="del.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" + keyword;
+	}
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;상세보기&lt;/h1&gt;
+&lt;h2&gt;제목: &lt;%=article.getTitle() %&gt;, 작성일: &lt;%=article.getWdate() %&gt;&lt;/h2&gt;
+&lt;p&gt;
+&lt;%=article.getHtmlContent() %&gt;
+&lt;/p&gt;
+&lt;a href="list.jsp?curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;목록&lt;/a&gt;
+&lt;input type="button" value="수정" onclick="javascript:goModify('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;input type="button" value="삭제" onclick="javascript:goDelete('&lt;%=no %&gt;','&lt;%=curPage %&gt;','&lt;%=keyword %&gt;')"&gt;
+&lt;a href="reply_form.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;답변쓰기&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+다음으로 글 수정을 구현한다.
+BoardDao 클래스에 update() 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void update(Article article) {
+	Log log = new Log();
+	String sql = "UPDATE board SET title = ?, content = ? WHERE no = ?";		
+	Connection con = null;
+	PreparedStatement stmt = null;
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, article.getTitle());
+		stmt.setString(2, article.getContent());
+		stmt.setInt(3, article.getNo());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.update() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(null, stmt, con);
+		log.close();
+	}
+}
+</pre>
+
+<em class="filename">BoardService.java 수정</em>
+<pre class="prettyprint">
+public void modify(Article article) {
+	dao.update(article);
+}
+</pre>
+
+<p>
+modify_form.jsp가 BoardService를 사용하도록 수정한다.
+</p>
+
+<em class="filename">/board/modify_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;수정&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;수정&lt;/h1&gt;
+&lt;form action="modify.jsp" method="post"&gt;
+&lt;input type="hidden" name="no" value="&lt;%=no %&gt;"&gt;
+&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;"&gt;
+&lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td&gt;제목&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="title" size="50" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;textarea name="content" rows="30" cols="100"&gt;&lt;%=article.getContent() %&gt;&lt;/textarea&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input type="submit" value="전송"&gt;
+		&lt;input type="reset" value="취소"&gt;
+		&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+modify.jsp를 아래와 같이 생성한다.
+</p>
+
+<em class="filename">/board/modify.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+Article article = new Article();
+article.setNo(no);
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.modify(article);
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("view.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;keyword=" +  keyword);
+%&gt;
+</pre>
+
+<p>
+다음으로 글 삭제를 구현한다.
+BoardDao 클래스에 delete() 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void delete(int no) {
+	Log log = new Log();
+	
+	String sql1 = "SELECT count(*) FROM board WHERE parent = ?";
+	String sql2 = "DELETE FROM board WHERE no = ?";
+	
+	Connection con = null;
+	PreparedStatement stmt1 = null;
+	PreparedStatement stmt2 = null;
+	ResultSet rs = null;
+	
+	boolean check = false; //true면 삭제
+	
+	try {
+		con = getConnection();
+		stmt1 = con.prepareStatement(sql1);
+		stmt1.setInt(1, no);
+		rs = stmt1.executeQuery();
+		rs.next();
+		int num = rs.getInt(1);
+		if (num == 0) {
+			check = true;
+		}
+		if (check == true) {
+			stmt2 = con.prepareStatement(sql2);
+			stmt2.setInt(1, no);
+			stmt2.executeUpdate();
+		}
+	} catch (SQLException e) {
+		log.debug("Error Source : BoardDao.delete() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql1);
+	} finally {
+		if (stmt1 != null) {
+			try {
+				stmt1.close();
+			} catch (SQLException e) {}
+		}
+		close(rs, stmt2, con);
+		log.close();
+	}
+}
+</pre>
+
+<p>
+BoardService에 다음 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void delete(int no) {
+	dao.delete(no);
+}
+</pre>
+
+<p>
+del.jsp를 다음과 같이 생성한다.
+</p>
+
+<em class="filename">/board/del.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service= new BoardService();
+service.delete(no);
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" +  keyword);
+%&gt;
+</pre>
+
+<p>
+답변글이 있으면 삭제되지 않는다.
+다음으로 답변쓰기를 구현한다.
+BoardDao에 다음 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardDao.java</em>
+<pre class="prettyprint">
+public void reply(Article article) {
+	Log log = new Log();
+	
+	//답변쓰기용 쿼리
+	String sql = "INSERT INTO board " + 
+			"(no, parent, title, content, wdate) " + 
+			"VALUES (board_no_seq.nextval, ?, ?, ?, sysdate)";
+			
+	Connection con = null;
+	PreparedStatement stmt = null;
+	
+	try {
+		con = getConnection();
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, article.getParent());
+		stmt.setString(2, article.getTitle());
+		stmt.setString(3, article.getContent());
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		log.debug("Error Source:BoardDao.reply() : SQLException");
+		log.debug("SQLState : " + e.getSQLState());
+		log.debug("Message : " + e.getMessage());
+		log.debug("Oracle Error Code : " + e.getErrorCode());
+		log.debug("sql : " + sql);
+	} finally {
+		close(null, stmt, con);
+		log.close();
+	}
+}
+</pre>
+
+<p>
+BoardService에 reply() 메서드를 추가한다.
+</p>
+
+<em class="filename">BoardService.java</em>
+<pre class="prettyprint">
+public void reply(Article article) {
+	dao.reply(article);
+}
+</pre>
+
+<em class="filename">/board/reply_form.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.*" %&gt;
+&lt;%
+int no = Integer.parseInt(request.getParameter("no"));
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+BoardService service = new BoardService();
+Article article = service.getArticle(no);
+String content = article.getContent();
+
+//부모글을  구별하기 위해 부모글의 각 행마다 &gt;가 추가되도록 한다.
+content = content.replaceAll(WebContants.lineSeparator.value, WebContants.lineSeparator.value + "&gt;");
+content = WebContants.lineSeparator.value + WebContants.lineSeparator.value + "&gt;" + content;
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;답변쓰기&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;답변쓰기&lt;/h1&gt;
+
+&lt;form action="reply.jsp" method="post"&gt;
+&lt;input type="hidden" name="no" value="&lt;%=no %&gt;" /&gt;
+&lt;input type="hidden" name="curPage" value="&lt;%=curPage %&gt;" /&gt;
+&lt;input type="hidden" name="keyword" value="&lt;%=keyword %&gt;" /&gt;
+제목 : &lt;input type="text" name="title" size="45" value="&lt;%=article.getTitle() %&gt;" /&gt;&lt;br /&gt;
+&lt;textarea name="content" rows="10" cols="60"&gt;&lt;%=content %&gt;&lt;/textarea&gt;&lt;br /&gt;
+&lt;input type="submit" value="전송" /&gt;
+&lt;input type="reset" value="취소" /&gt;&lt;br /&gt;
+&lt;/form&gt;
+&lt;a href="view.jsp?no=&lt;%=no %&gt;&amp;curPage=&lt;%=curPage %&gt;&amp;keyword=&lt;%=keyword %&gt;"&gt;상세보기&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+reply.jsp를 아래와 같이 생성한다.
+</p>
+
+<em class="filename">/board/reply.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+int parent = Integer.parseInt(request.getParameter("no"));
+String title = request.getParameter("title");
+String content = request.getParameter("content");
+
+String curPage = request.getParameter("curPage");
+String keyword = request.getParameter("keyword");
+
+Article article = new Article();
+article.setParent(parent);
+article.setTitle(title);
+article.setContent(content);
+
+BoardService service= new BoardService();
+service.reply(article);
+
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");
+response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" + keyword);
+%&gt;
+</pre>
+
+</article>

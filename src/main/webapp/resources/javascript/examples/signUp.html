@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>자바스크립트 테스트</title>
+<script type="text/javascript">
+function check() {
+	var form = document.getElementById("signUpForm");
+	var id = form.id.value;
+	id = trim(id);
+	if (id.length == 0) {
+		alert("유효하지 않는 ID입니다.");
+		return false;
+	}
+	var pass = form.passwd.value;
+	pass = trim(pass);
+	if (pass.length == 0) {
+		alert("유효하지 않는 패스워드입니다.");
+		return false;
+	}
+	var name = form.name.value;
+	name = trim(name);
+	if (name.length == 0) {
+		alert("유효하지 않는 이름입니다.");
+		return false;
+	}
+	var email = form.email.value;
+	var chk = emailCheck(email);
+	if (chk == false) {
+		alert("유효하지 않는 이메일입니다.");
+		return false;
+	}
+	var mobile = form.mobile.value;
+	mobile = trim(mobile);
+	if (mobile.length == 0) {
+		alert("유효하지 않는 모바일 번호입니다.");
+		return false;
+	}
+	chk = beAllowStr(mobile,"0123456789-");
+	if (chk == false) {
+		alert("유효하지 않는 모바일 번호입니다.");
+		return false;
+	}
+	
+	return true;
+}
+
+/*******************************************
+입력 :  문자열
+리턴값 : 입력문자열의 양 사이드의 공백을 제거한 문자열
+********************************************/
+function trim(str) {
+	//문자열 끝에 있는 공백문자를 제거한다.
+	for (var i = str.length - 1; i >= 0; i--) {
+		if (str[i] == " ") {
+			str = str.substring(0, i);
+		} else {
+			break;
+		}
+	}
+	//문자열 앞에 있는 공백을 제거한다.
+	for (var i = 0; i < str.length; i++) {
+		if (str[i] == " ") {
+			str = str.substring(i+1, str.length);
+		}	
+	}
+	return str;
+}
+
+/*******************************************
+입력 : 검사대상 문자열, 허용되는 문자열
+리턴값 : 검사대상 문자열이 허용되는 문자열로 구성되었다면 true,아니면 false
+********************************************/
+function beAllowStr(str, allowStr) {
+	for (var i = 0;i < str.length; i++) {
+		var ch = str.charAt(i);
+		if (allowStr.indexOf(ch) < 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**************************************
+입력 : 문자열
+리턴값 : 유효한 이메일이면 true 아니면 false
+***************************************/
+function emailCheck(email) {
+	if (beAllowStr(email,"1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@.-_") == false) {
+		return false;
+	}
+	var golbang = 0; // @ 문자의 갯수를 저장하기 위한 변수
+	var dot = 0;     // . 문자의 갯수를 저장하기 위한 변수
+	if (email.length < 5) {
+		return false;
+	}
+	if (email.indexOf("@") == -1) {
+		return false;
+	}
+	if (email.indexOf(".") == -1) {
+		return false;
+	}
+	if (email.indexOf(" ") != -1) {
+		return false;
+	}
+	for (var i = 0;i < email.length; i++) {
+		if (email.charAt(i) == "@") {
+			golbang++;
+		}
+		if (email.charAt(i) == ".") {
+			dot++;
+		}
+	}
+	if (golbang != 1 || dot > 3) {
+		return false;
+	}
+	if (email.indexOf("@") > email.indexOf(".")) {
+		return false;
+	}
+	if (email.indexOf("@") == 0  || email.indexOf(".") == email.length - 1) {
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form id="signUpForm" name="signUpForm" action="signUp.php" method="post" onsubmit="return check();">
+ID : <input type="text" name="id" value="heist" /><br />
+패스워드 : <input type="password" name="passwd" value="1440" /><br />
+이름: <input type="text" name="name" value="홍길동"  /><br />
+이메일 : <input type="text" name="email" /><br />
+모바일 : <input type="text" name="mobile" /><br />
+<input type="submit" value="가입" />
+<input type="reset" value="리셋" />
+</form>
+</body>
+</html>

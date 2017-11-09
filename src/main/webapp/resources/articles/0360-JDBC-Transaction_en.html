@@ -1,0 +1,154 @@
+<article>
+
+<h1>JDBC - Transaction</h1>
+
+<p>
+Account transfer is the best example of a transaction.
+If you transfer $ 1500 from account A to account B, you have the following process:
+</p>
+
+<pre>
+Process 1. Subtract $ 1,500 from the A account. 
+Process 2. Add $ 1,500 from the B account.
+</pre>
+
+<p>
+If process 1 succeeds and process 2 fails, 
+the purpose of transaction management is to cancel process 1 and restore the state before process 1 is executed.
+For transaction management, it is most important to see Process 1 and Process 2 as one unit. 
+In this case, the bundle of process 1 and process 2 is called transaction unit.
+</p>
+
+<p>
+The connection is set to autocommit mode by default.
+Auto-commit mode sees each SQL statement in transaction units.
+Setting the auto commit mode to false and defining the commit time in the program is the coding that manages the transaction.
+The coding that manages the transaction is applied to the account transfer as follows.
+</p>
+
+<pre>
+con.setAutoCommit(false);
+Withdraw $ 1500 from Account A.
+Deposit $ 1500 in Account B.
+con.commit();
+</pre>
+
+<p>
+For the transaction example, create the ACCOUNT table in the scott account as shown below and insert the data for the test. 
+</p>
+
+<pre class="prettyprint">
+create table account (
+ accountno varchar2(3) primary key,
+ balance number,
+ constraint account_balance_ck check(balance between 0 and 3000)
+)
+/
+insert into account values ('111', 3000)
+/
+insert into account values ('222', 2000)
+/
+</pre>
+
+<p>
+Refer to the JDBC program procedure below and complete the main method of TransactionPairs.java.
+</p>
+
+<ol>
+	<li>Loading a JDBC Driver</li>
+	<li>Getting a Connection</li>
+	<li>Execute SQL</li>
+	<li>[If the SQL statement is a select statement, use the returned ResultSet to process the data.]</li>
+	<li>Returning Resources</li>
+</ol>
+
+<p>
+Our goal is to execute the following SQL:
+</p>
+
+<pre>
+UPDATE account SET balance = balance - 1500 WHERE accountno = '111'
+UPDATE account SET balance = balance + 1500 WHERE accountno = '222'
+</pre>
+
+<em class="filename">TransactionPairs.java</em>
+<pre class="prettyprint">
+package net.java_school.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class TransactionPairs {
+	static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	static final String USER = "scott";
+	static final String PASS = "tiger";
+	
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE account SET balance = balance + ? WHERE accountno = ?";
+		
+		try {
+			con = DriverManager.getConnection(URL, USER, PASS);
+			<strong>
+			con.setAutoCommit(false);
+			</strong>
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, -1500);
+			pstmt.setString(2, "111");
+			pstmt.executeUpdate();
+			
+			pstmt.setInt(1, 1500);
+			pstmt.setString(2, "222");
+			pstmt.executeUpdate();
+			<strong>
+			con.commit();
+			</strong>
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				<strong>con.rollback();</strong>
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+</pre>
+
+<p>
+Run it and check the results with SQL * PLUS.
+You will see an the following exception message.<br />
+</p>
+
+<pre>
+java.sql.SQLException: ORA-02290: check constraint (SCOTT.ACCOUNT_BALANCE_CK) is violated.
+</pre>
+
+<p>
+This is because the BALANCE column of the ACCOUNT table can only be stored from 0 to 3000.
+When an exception occurs, a rollback is executed in the catch block.
+</p>
+
+</article>

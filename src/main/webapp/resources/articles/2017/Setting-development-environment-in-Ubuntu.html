@@ -1,0 +1,576 @@
+<article>
+<div class="last-modified">Last Modified 2017.10.31</div>
+
+<h1>우분투 개발환경 세팅</h1>
+
+<h2>Ubuntu 16.04 설치</h2>
+
+<p>
+<a href="http://www.ubuntu.com/download/desktop">http://www.ubuntu.com/download/desktop</a>에서 Ubuntu 16.04 LTS를 내려받는다.
+</p>
+
+<h3>설치를 위한 부팅 USB 만들기</h3>
+
+<p>
+윈도 시스템을 사용한다면 다음 링크를 참조한다.<br />
+<a href="http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-windows">http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-windows</a><br />
+우분투를 사용할 수 있다면 다음 과정을 따른다.<br />
+USB를 꼽고 USB 디바이스를 확인한다.<br />
+</p>
+
+<pre class="shell-prompt">
+sudo ls -l /dev/disk/by-id/*usb*
+</pre>
+
+<p>
+만일 sdb, sdb1, sdb2가 함께 보이면, 뒤에 숫자가 없는 sdb가 USB 디바이스를 가리킨다.<br />
+우분투 ISO 파일을 다운로드한 폴더로 이동한다.<br />
+아래 명령을 수행한다. filename.iso 대신 내려받은 우분투 ISO 파일명을, of=다음엔 USB 디바이스를 입력한다.<br />
+</p>
+ 
+<pre class="shell-prompt">
+sudo dd if=<strong>filename.iso</strong> of=<strong>/dev/sdb</strong> bs=4M; sync
+</pre>
+
+<h3>한글 입력</h3>
+
+<p>
+설치 화면에서 국가는 한국을, 키보드 배치에서 한국어 - 한국어를 선택하여 설치하면 이전 버전과 달리 어떠한 설정없이 한/영키로 한영 전환이 된다.<br />
+자바 코드에는 세미콜론을 자주 사용하는데, 세미콜론을 입력할 때마다 불편하다. 다음 과정을 따른다.<br />
+<img src="https://lh3.googleusercontent.com/-g4j89eicYvU/V1ulKrUN6uI/AAAAAAAAC4Y/t6P8FzA6TsgS67HyFWSodai8Dc1wSi-bwCCo/s717/2.png" alt="2" /><br />
+입력기 설정 창의 에드온 탭에서 Quickphrase...를 선택한다.<br />
+<img src="https://lh3.googleusercontent.com/-A2RWzebrZbo/V1ulKmiFLqI/AAAAAAAAC4g/1hepBtwG8Co2cXeqTjgaaE53o-gAlb0hQCCo/s714/3.png" alt="3" /><br />
+그림처럼 Semicolon에서 없음으로 변경한다.<br />
+<img src="https://lh3.googleusercontent.com/-sxKDD2XcHtQ/V1ulLH9gzLI/AAAAAAAAC5M/G8h1RDPOJG8mJYNcypUdsmpdrxsUogLngCCo/s561/4.png" alt="4" /><br />
+확인 버튼을 클릭하여 설정을 끝낸다.<br />
+<img src="https://lh3.googleusercontent.com/-vkZ2Ao3UNoM/V1ulLIQoWfI/AAAAAAAAC5M/RkcLYb2YFuo7tnqtJoZr5KQ1FUVPW_afgCCo/s561/5.png" alt="5" /><br />
+</p>
+
+<h3>한/영키가 작동하지 않는 시스템</h3>
+
+<p>
+한/영키가 작동하지 않은 시스템인 경우만 다음 과정을 따라한다.<br />
+시스템 설정에서 언어 지원을 선택한다.<br />
+<img src="https://lh3.googleusercontent.com/KBV-CZjX6XY93roh9Z5oEm7t-qnizp6RkEvyWp69mtFI3dAewDUGY5lOe1XRsRmAGi279cCTxbhs9G-AXejp3KEBvdSGBZNDNSvD9fBywHJlxea0BQpqdRI38-1bkQ3ZsxwoWMgaXpSJnqgjIXzF6C7D8YIag5hHnloc96fcjjaRPyiT2iDSSynIkKDeuqkJKY_4M9IOJcZk3h6mQUclroqEHA7xlgODP9r8k3u8huABpgPqpiQIet0ov0wYn8dQg2LD5veFNi6e7W_ALwmFTEX5TKfIV-7xnI4ETwnO3J-1158lW3rYOueDSMRVc4hI1F1wo6rXa0Y0G9nUdqlCeKAhuIJbbX9fTcuHokOepde5ZqayCCVASUylYbpfOQL0TzCW2QNa4cnorSZJJKUkqzszpbpDK80zUVAX0TItNZ0Vh7M6WiItADs_wcbJLS82GHYb72BJKqA1BUxv4MLwR0ncpRTAZElLd0ArjNeMO2hzQGSqLvhffesKFOLNjhTIKSN9a6-JD29Tl0mYyyqkEh23uuSKclVZrrDVqm6CekozlxOXpX_MrybtO2eILalaWXjTJHr_ZYxWaE9OCptx34b_0Jibz21I4uTMHaADaA=w849-h639-no" alt="System Setting - Language Support" /><br />
+'언어 지원' 창에서 키보드 입력기가 fcitx인지 확인한다.<br />
+<img src="https://lh3.googleusercontent.com/0_8JsXbtUm0CGSRCrp76VOZ5aetGVJ-7rLQu2Znp7IVxDz6peXBBTwAN2thsGRhHBUfGizm2typ6CZnpVCvbk9qERlLUheeh92KB2zQJ5EzmQeX-o2aY9EG3B7IWTAi7l0P6l8LsK2qFcVMwj28NWHBClx3gVwx5h56qF03UN-AGFtyVuwSK3oDY6Rsjl2iMlWuErDwo34oQUbZ-6OzZW2T0ZtSiYXt3mFdP074kVI1_8T7oe8FF8xGXWZBbSRzeNlojwRAuU5fqGioJml-O31Ygny9tXUI_7m8gsQu7YPWXzgz-JqDODHIHPaS9hImI2zgcV3lIPx4-qS644IbW-Wf8_9nff697ONx_lP-cbaqTPVlPgP7Nz_ifyrUiLSKc9-ETPcDsp4-tpkr3O_Zb-1c4YvxcSSmnv0mgo8qw9TlLZQM08aAi5tKbcnQ0gf2aZa0JlzvRUAWYVHP17W8d07u-T1Ri7lvraJcma5_HSVx6K05zR1Zd1MjUdREk2cewlu-4ttl_muDAHY5NsJYHYl2OMPZp0-Z1yOCIf7M6m1RJ8S7bOuSMMkVo1-EZaMUS2M9ffTTOUuUSnEMH04knzhj3taHn6ZZrSGmKZTAa-g=w389-h512-no" alt="Language Support" /><br />
+</p>
+
+<p>
+시스템 설정에서 키보드 선택한다.<br />
+<img src="https://lh3.googleusercontent.com/4AnXpO65_VBOZDnzPtRh2Dmmu8gC722lSkSd5rkxJ4TjzDjLyQt_S1ZqTWSA3YJPGlVLcyjxOGPJdMQiorT6I3zev7ISKOWrOhXb4BLQoYFjlI0qmt4ADkTLLPeSIjIUKf6WOxhWxzY_yo0wvfwRtIawbFA-L-OU7slMnuZYGVgvWYTmYdRZWBXLOHF_ULWshQQ6knukkZGQorlrM8oV7SeExGCpO0_hTZ08DJ9qDOtLzj6YC-5ip_HPFiq0YW7yiwSeCH6duum0pw-OAdErewRdsXOUsSJwLYaal50Mfw3mNiJGy47lQY9YyW4shUorGRj93YfV_1XHXds7BUJzHWZ1hFzoWPY2GUYFcMzzK7AnN2ffX_eztIfNCdqpQKN9t_nZNb49m4VJgaGX7hD0QhEYlqp3p00N70K3vinLL3lz-gQ3P9njIGLXis6iLiBD08GIifHnP8KcRKHP--7CuBsdl2vbtvtKQ6S0x2zUO5hzlJ6oWfkAFGnkuvbwuQwk2rwSLlzcdVB5Skqp0555ED8KllnbrmJYBejdA100y4HNsADtP-hRgSm0SyT1kd5v8Bn2BnWHGji7ZaALt-9CAFlnm8Fa7-P8F-6cQvirSQ=w849-h662-no" alt="시스템 설정 - 키보드" /><br />
+자판 입력을 선택한다.<br />
+우선 모두 사용 안 함으로 설정한다.<br />
+구성 키를 오른쪽 Alt로 설정한다.<br />
+다음 입력 소스로 전환을 선택한 상태에서 한/영키를 쳐서 Multi_Key가 선택되도록 한다.<br />
+<img src="https://lh3.googleusercontent.com/KMvdA3Mu60QZCX8rWkn5vRoT-wdDLJsi0EULXEanfNwE6ZEZ6qNYh3GmETgfrAlMpREJPUS8-64iWcrMTMZ9eqR9P53RLTahRXUVJWRax98hWteF5eg_dPzU0K184rQGtXAv72zQkh7qDL4OOri0Lb0PucWPM7QFVJKo8OE2UbSQIzADeI5XaukPQT1djmLLnUcm-_8V_gPXlz0arN007IMHhP5JU0MgVwBD2KARxj_D8TG_NilfdSlQStaw0o0TIZAgVF-KseucB2MevtmvXmo0LSEmGy6PdNBm2yvouKYAJhbKatUJU4qb_hq-InkmAuKRMQfD6aR6t2qKzAaHlsv-ebN4iDNiO5N8kiQXdbbjI2BstowwfHXTAuL6MsZnkyeJt9HFmvO1TLTf9Ev1ZJV5dFDaxYLRkHkPgQ8B02BsM0TTzQdRwcvMNbJPGellQGDyZzqL_4qLvBlJ9uM3WinhN3NVuB-9AJP0EUjScnMMJSGxCd_VNedEurKtHkSsj4qI83gU_ZPLnUnCVaQm9jhhgTKCGKplJiRR-ibSZO2jdb0OjcsDJXTDs59kXtNfNumsRQAPEJF3xzIbtTK_9KI6t2nouopwARwxWn0fyQ=w847-h489-no" alt="4" /><br />
+</p>
+
+<p>
+우분투 화면 오른쪽 상단의 키보드 모양의 아이콘을 클릭한 후 설정을 선택한다.<br />
+전역 설정 탭을 선택해서 나타난 화면을 다음과 같이 설정한다.<br />
+<img src="https://lh3.googleusercontent.com/4RIKiDjiN8cTND4-IvUZHUhJsySs66V0OUzGdeTxSpzZbc_i-JV6aeInaRb4lQUXwe6I3Uy1oIKw7g9hJT7LGsPN4x6Nf1DMLYQ8zTVJivjb1fyIuaRVgSnFVAuWGjL3h9TO99-OfIa69kd7MNuFPb40VyfTNpKHhhadUODIqwtR0yCJuBW6XBVqMJ2OQSBcGwxxns7Wb_hE-J_RMLK7of1uSiFAsMhPDICGSVqrkiCmrqssX2VPzfpuoLFqjvK0Z901hkDRINvgmKV9AflkBKWE14sw0bzzpyKZZG8O-UhvLTMod1ZDSBL533l2cIs6O4VtWS_G4TfDlbGD6-7W6uJjmtCcGT-sw3gpGXiduY6bJIsgc5IaycAwR5Fs8HDoRA7hQHxesUw0hr-WSObiqn33FbHyP06tgudvOBiBT8iNBEyHkGteiL7ATfgMJfQU1AGabJGpXNfYOvg_WgrQ0YjKnrZicLyQybWpmcYkokJFCZZ-FV-givlqXb2oqQgHcqp1W1oY-KeEOK1bRvT3BLLW5D1dCMBpCVIy_ysodzTZvuX9X6zTjTpKxY1QuZvGlZuS4sDcd8aDEakw1ss5kAmC-SBGrWcm9UI1M7w_6w=w713-h505-no" alt="1" /><br />
+시스템 설정에서 텍스트 입력창을 선택한다.<br />
+<img src="https://lh3.googleusercontent.com/06I7WftWttdkN7-Aes1JGMdpgbuQpidiUvl5efwgogdhmIIdkhjGKQTS4DEqYllRz-bnCc89xNY41JVgTMg2VvnVyzzUysGA-87fSRK2WdFh1DmkBvX2D3IaetjtARKz9Ina14lmPHxp--yadS2wuZj4NY-lmZiR07A3ICAnL9djPmDtMFg6Zs6RrsCd2J0Akd8xDpQnxruNFnpnxlk3KzAAK_7sBrBlfmJkySwC5MgHDVCQlP8fI6WY882cuEYeQZIj_WC4wMBFIHociYH3rVggZGiJ2RxG-H1271cA1N20ACcd0i8kpW-8gXrUXVeMvw1O5DSaHo7QqiwudM57z79ESV6uUX5Fb7Jwepa0qNWNol-Y5gFkuM3W2BFcqrl6Ro8mkdwCuWu84jcH49rgtDhemAHkqfOTqqecsFkRYi65rfCm1QRj8kXGXvQ_99U1ZzgIZ5IU_vbln2S1oYY9oCtIDRVir1P3Cb4SevO46Os-b43noNeRbFmwe1dcWutU9r1v4TgG9FSilO1TEiMXGBP_XCvuicY7WXdoXg6xhb1AMro_YG-rJjc9LS5mG33I_tChEDXItLnvjQIPxt4MoVB-KX5MCYHqQSEVgT7yfA=w849-h641-no" alt="System Setting - Text Input" /><br />
+다음 소스로 전환을 Multi_Key로 설정한다.<br />
+<img src="https://lh3.googleusercontent.com/al6JIaVCPF1QxQMg1_S3eaJpZDJtgZlKzMOI2q_ksVDPzWMG00blRAcG9WbAze6mjczuOg4E0eUQjJCi8lgdLdKku0wfDVQsXxZI1PM-qLLqZx4DzAIk7dNTcn_kT9rFptpmk35UQYXZkGbHpRocKmjZSVAVUXk93ZTYFtkP7Si7mX_zvfnidYnfI8uZKl0_wjOBouicAM1zoQgsbTQEeWOkOlna17nwiru6ApoeC6GDzivbRazfaIbGnhkM8dhwoQ834nutNrlrGywv295Qz56wywxH5PVwVQwv8PpjUxZPTkUMdKBI2KCTx1alDxRuKT8P3Kz8_gB3Qy9Oht3CGC_oAj1_SqxU-xkwmw-DM0db7fWXtZqqpCIRAzkXoecpb08WyfNLF_Li01L5objQ_n-ZQDDOdz1UH4w9iJleZsO1xnr9tr7o77tw4uVA-7FKd9Q61sz968aUhrZ4l3rAICSUjjrMc4v90urmscjnFxpup-7hx6bEa7-itpQIZY2yefLmDvaUZzyYRN2ZGzSlf6GhHRfDHN9HxsOWDB_kMWO8MjaOukxvRyz78EsUUPBLU4I2ry0vWqLJwpSR39EqbbvfLOE0_Tl5LznuT7mnxg=w846-h493-no" alt="3" /><br />
+<img src="https://lh3.googleusercontent.com/vkPOauylWN9I7mYUPNZZEbmj-spMi5eN6tRpUE6U6sAjRgX9fMaobgtN3ftVuUYz1zSouNjuv2kzukCKDhnEHasss3SLvqJMK_YFcyvI1hCSOFAaedqjjTLv9fUneo-v9WKx86L7vnpyXQ1rfjOeJ1F967pM935Qcfh-cqOcQ863-Xf-Aoo7x6rhRe-qsv75RYo8HWabuneyNgY4_1NI7qm40XQ3ZLqAQ2d48pornhxwF2P2BqL4qcBa9wd1OE-UROni7nZtG5pCag0fRJNorYENQqYu0YNxh_GyxAITK8t5szcf9JTD384ImtHDwIEKdA4Mg8RnbY8MkrsrIgV4EnWhmc9hOLi2PQi_YuK3TJSFZNwgnDFaewVDCtfANozk5FzuCtc_WdKU_COMQaac6k7SabEVhCyGs9pEAfsGAFTaMEnN27N5IG7UUeYIQ9XzNQF5WZ8JbmgbjLt1slzLT-j-NUtvmPD0T6IoqzkVS-HQlHT9W4cXhUZ39c_USXMPLo4OZAUQQZDcWivqehiLH7Q6EZPAudtSFopgGz1UWBTsALrRGifaIGAIVcGPF2Dcj6dm4kmEqnKHaDZ7CSj5MyC4J7w_s8SgLr-6L8ohjw=w845-h483-no" alt="2" /><br />
+</p>
+
+
+<h2>Oracle 11g XE 설치</h2>
+
+<p>
+<a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a><br />
+아래는 위 사이트에서 우분투 시스템에 오라클 설치 방법을 해석한 글이다.<br />
+</p>
+
+<p>
+오라클 공식 사이트에서 리눅스용 오라클 11g XE를 내려받는다.<br /> 
+<a href="http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html">http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html</a><br />
+Accept License Agreement 라디오 박스에 체크하고 Oracle Database Express Edition 11g Release 2 for Linux x64를 선택한다.<br />
+로그인 화면으로 이동하는데 로그인하면 내려받기가 시작된다.<br />
+오라클 공식 웹사이트 회원이 아니면 회원 가입을 한다.<br />
+모두 내려받았다면 파일이 있는 디렉터리로 이동해 다음 명령을 수행한다.
+</p>
+
+<pre class="shell-prompt">
+unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+sudo apt-get install alien libaio1 unixodbc
+cd Disk1
+sudo alien --scripts -d oracle-xe-11.2.0-1.0.x86_64.rpm
+</pre>
+
+<p>
+/sbin/chkconfig 파일을 만든다.
+</p>
+
+<pre class="shell-prompt">
+sudo nano /sbin/chkconfig
+</pre>
+
+<p>
+다음을 복사하여 파일에 붙여넣는다.
+</p>
+
+<pre class="prettyprint">
+#!/bin/bash
+# Oracle 11gR2 XE installer chkconfig hack for Ubuntu
+file=/etc/init.d/oracle-xe
+if [[ ! `tail -n1 $file | grep INIT` ]]; then
+echo >> $file
+echo '### BEGIN INIT INFO' >> $file
+echo '# Provides: OracleXE' >> $file
+echo '# Required-Start: $remote_fs $syslog' >> $file
+echo '# Required-Stop: $remote_fs $syslog' >> $file
+echo '# Default-Start: 2 3 4 5' >> $file
+echo '# Default-Stop: 0 1 6' >> $file
+echo '# Short-Description: Oracle 11g Express Edition' >> $file
+echo '### END INIT INFO' >> $file
+fi
+update-rc.d oracle-xe defaults 80 01
+</pre>
+
+<p>
+파일을 저장하고 실행 권한을 부여한다.
+</p>
+
+<pre class="shell-prompt">
+sudo chmod 755 /sbin/chkconfig
+</pre>
+
+<p>
+커널 파라미터를 설정한다.
+</p>
+
+<pre class="shell-prompt">
+sudo nano /etc/sysctl.d/60-oracle.conf
+</pre>
+
+<p>
+다음 내용을 복사하여 파일에 붙인다.
+</p>
+
+<pre class="prettyprint">
+# Oracle 11g XE kernel parameters  
+fs.file-max=6815744  
+net.ipv4.ip_local_port_range=9000 65000  
+kernel.sem=250 32000 100 128 
+kernel.shmmax=2066743296
+</pre>
+
+<p>
+마지막 줄 kernel.shmmax 값은 시스템에 설치된 램 메모리의 1/2을 할당한다.<br />
+계산 방법은 아래와 같다.<br />
+</p>
+
+<pre class="shell-prompt">
+free -m
+</pre>
+
+<p>
+결과가 다음과 같으면
+</p>
+
+<pre class="shell-prompt">
+             total       used       free     shared    buffers     cached
+Mem:          3942       3809        133        947         50       1571
+-/+ buffers/cache:       2186       1756
+Swap:         4083        378       3705
+</pre>
+
+<p>
+3942 * 1024 * 1024 * 0.5 = 2066743296<br />
+<br />
+검증한다.<br />
+</p>
+
+<pre class="shell-prompt">
+sudo cat /etc/sysctl.d/60-oracle.conf
+</pre>
+
+<p>
+새로운 커널 파라미터를 올린다.
+</p>
+
+<pre class="shell-prompt">
+sudo service procps start
+</pre>
+
+<p>
+검증한다.
+</p>
+
+<pre class="shell-prompt">
+sudo sysctl -q fs.file-max
+</pre>
+
+<p>
+다음을 실행한다.<br />
+</p>
+
+<pre class="shell-prompt">
+sudo ln -s /usr/bin/awk /bin/awk
+sudo mkdir /var/lock/subsys
+sudo touch /var/lock/subsys/listener
+</pre>
+
+<p>
+오라클 설치 파일이 있는 Disk1 디렉터리에서 다음 명령으로 설치를 시작한다.
+</p>
+  
+<pre class="shell-prompt">
+sudo dpkg --install oracle-xe_11.2.0-2_amd64.deb
+sudo /etc/init.d/oracle-xe configure
+</pre>
+
+<p>
+설정에서 Oracle Application Express의 포트는 톰캣과 같은 WAS가 쓰는 8080을 피한다.<br />
+(아래에서는 8989로 설정했다.)<br />
+리슨너 포트는 디폴트 값인 1521를 그대로 사용한다. (디폴트 선택은 그냥 엔터를 치면 된다.)<br />
+관리자 계정인 SYS와 SYSTEM의 비밀번호를 설정한다.<br />
+부팅시 오라클 자동시작을 예스로 설정한다.(엔터)<br />
+</p>
+
+<pre class="shell-prompt">
+Oracle Database 11g Express Edition Configuration
+-------------------------------------------------
+This will configure on-boot properties of Oracle Database 11g Express 
+Edition.  The following questions will determine whether the database 
+should be starting upon system boot, the ports it will use, and 
+the passwords that will be used for database accounts.  
+Press Enter to accept the defaults. 
+Ctrl-C will abort.
+
+Specify the HTTP port that will be used 
+	for Oracle Application Express [8080]:<strong>8989</strong>
+
+Specify a port that will be used for the database listener [1521]:
+
+Specify a password to be used for database accounts.
+Note that the same password will be used for SYS and SYSTEM.
+Oracle recommends the use of different passwords 
+for each database account.
+This can be done after 
+initial configuration: <strong>&lt;관리자 비밀번호&gt;</strong>
+Confirm the password: <strong>&lt;관리자 비밀번호&gt;</strong>
+
+Do you want Oracle Database 11g Express Edition to be started 
+on boot (y/n) [y]:
+
+Starting Oracle Net Listener...Done
+Configuring database...Done
+Starting Oracle Database 11g Express Edition instance...Done
+Installation completed successfully.
+</pre>
+
+<p>
+환경변수를 추가한다.
+</p>
+
+<pre class="shell-prompt">
+gedit ~/.bashrc
+</pre>
+
+<p>
+아래를 복사하여 .bashrc 가장 아래에 붙여넣는다.
+</p>
+
+<pre class="prettyprint">
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+export ORACLE_SID=XE
+export NLS_LANG=`$ORACLE_HOME/bin/nls_lang.sh`
+export ORACLE_BASE=/u01/app/oracle
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+</pre>
+
+<p>
+다음 명령으로 환경 변수를 적용한다.<br />
+</p>
+
+<pre class="shell-prompt">
+source ~/.bashrc
+</pre>
+
+<p>
+오라클을 시작한다.<br />
+(부팅시 오라클 시작을 예스로 설정했으므로 재부팅 후 이 명령은 필요 없다.)
+</p>
+
+<pre class="shell-prompt">
+sudo service oracle-xe start
+</pre>
+
+
+<h3>SCOTT 계정 만들기</h3>
+
+<p>
+관리자 계정으로 오라클에 로그인한다.<br />
+</p>
+
+<pre class="shell-prompt">
+<strong>sqlplus sys as sysdba</strong>
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 6월 29 12:04:33 2015
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password: <strong>&lt;관리자 비밀번호&gt;</strong>
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> <strong>@/u01/app/oracle/product/11.2.0/xe/rdbms/admin/utlsampl.sql</strong>
+</pre>
+
+<h2>JDK 설치</h2>
+
+<pre class="shell-prompt">
+sudo apt-get update
+</pre>
+
+<pre class="shell-prompt">
+sudo apt-get install default-jdk
+</pre>
+
+<pre class="shell-prompt">
+cd /usr/lib/jvm 
+ls -al
+drwxr-xr-x   3 root root  4096 10월  7 15:22 .
+drwxr-xr-x 146 root root 12288 10월 29 12:46 ..
+-rw-r--r--   1 root root  2600  7월 28 11:31 .java-1.8.0-openjdk-amd64.jinfo
+lrwxrwxrwx   1 root root    24  2월 26  2016 default-java -&gt; java-1.8.0-openjdk-amd64
+lrwxrwxrwx   1 root root    20  7월 28 11:31 java-1.8.0-openjdk-amd64 -&gt; java-8-openjdk-amd64
+drwxr-xr-x   7 root root  4096 10월  7 15:24 java-8-openjdk-amd64
+</pre>
+
+
+<p>
+gedit ~/.bashrc 로 .bashrc 파일을 연다.
+</p>
+
+<pre class="shell-prompt">
+gedit ~/.bashrc &amp; 
+</pre>
+
+<p>
+.bashrc 파일에 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+export JAVA_HOME=/usr/lib/jvm/default-java
+export PATH=$JAVA_HOME/bin:$PATH
+</pre>
+
+<p>
+다음 명령으로 환경 변수를 갱신한다.
+</p>
+
+<pre class="shell-prompt">
+source ~/.bashrc
+</pre>
+
+<p>
+자바 버전을 확인한다.
+</p>
+
+<pre class="shell-prompt">
+java -version
+openjdk version "1.8.0_131"
+OpenJDK Runtime Environment (build 1.8.0_131-8u131-b11-2ubuntu1.16.04.3-b11)
+OpenJDK 64-Bit Server VM (build 25.131-b11, mixed mode)
+</pre>
+
+<h3>JDBC 테스트</h3>
+
+<p>
+다음 GetEmp.java 파일을 홈 디렉터리에 만든다.<br />
+<script src="https://gist.github.com/kimjonghoon/ea49c337a11dfa5dd08c.js"></script>
+
+GetEmp.java 파일을 생성하고 GetEmp.java 파일이 있는 디렉터리에서 다음을 수행한다.<br />
+(유닉스에서 환경변수 구분자는 : 이다.)
+</p>
+
+<pre class="shell-prompt">
+javac GetEmp.java
+java -classpath \
+.:/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar GetEmp
+</pre>
+
+<h2>메이븐 설치</h2>
+
+<pre class="shell-prompt">
+sudo apt-get update
+</pre>
+
+<pre class="shell-prompt">
+sudo apt-get install maven
+</pre>
+
+<p>
+apt-get으로 설치하면 환경변수 설정이 따로 필요없다.<br />
+메이븐 버전을 확인한다.<br />
+<pre class="shell-prompt">
+mvn -v
+Apache Maven 3.3.9
+Maven home: /usr/share/maven
+Java version: 1.8.0_131, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-8-openjdk-amd64/jre
+Default locale: ko_KR, platform encoding: UTF-8
+OS name: "linux", version: "4.4.0-97-generic", arch: "amd64", family: "unix"
+</pre>
+
+
+<h2>이클립스 설치</h2>
+
+<p>
+<a href="https://www.eclipse.org/downloads/eclipse-packages/">https://www.eclipse.org/downloads/eclipse-packages/</a>에서 Eclipse IDE for Java EE Developers 를 내려받는다.<br />
+내려받은 파일이 있는 디렉터리로 이동하여 압축을 푼다.
+</p>
+
+<pre class="shell-prompt">
+tar -xvf eclipse-jee-oxygen-1a-linux-gtk-x86_64.tar.gz
+</pre>
+
+<p>
+생성된 eclipse 디렉터리를 /opt 디렉터리로 옮긴다.<br />
+</p>
+
+<pre class="shell-prompt">
+sudo mv eclipse /opt/
+</pre>
+
+<h3>eclipse.desktop 파일 생성</h3>
+
+<pre class="shell-prompt">
+cd ~/.local/share/applications/
+gedit eclipse.desktop
+</pre>
+
+<p>
+다음을 복사하여 eclipse.desktop 파일에 붙여넣는다.
+</p>
+
+<pre class="prettyprint">
+[Desktop Entry]
+Name=Eclipse
+Type=Application
+Exec=/opt/eclipse/eclipse
+Terminal=false
+Icon=/opt/eclipse/icon.xpm
+Comment=Integrated Development Environment
+NoDisplay=false
+Categories=Development;IDE
+Name[en]=eclipse.desktop
+</pre>
+
+<p>
+eclipse를 검색하여 실행한다.<br />
+이클립스를 런처에 고정한다.
+</p>
+
+
+<h2>Git 설치</h2>
+
+<pre class="shell-prompt">
+sudo apt install git
+</pre>
+
+<p>
+git 버전 확인을 확인한다.
+</p>
+
+<pre class="shell-prompt">
+git --version
+</pre>
+
+<p>
+SpringBbs 프로젝트를 설치하려면 다음을 수행한다.
+</p>
+
+<pre class="shell-prompt">
+git clone https://github.com/kimjonghoon/SpringBbs
+</pre>
+
+<p>
+이클립스를 열고 SpringBbs를 임포트한다.<br /> 
+<img alt="컨텍스트 메뉴에서 Import" src="https://lh3.googleusercontent.com/-VjWpQCEiqes/VYYV3b2GPFI/AAAAAAAACh0/-KoRbgI8nn0/s590/maven-project-import.png"><br />
+<img alt="이클립스에서 메이븐 프로젝트 Import" src="https://lh3.googleusercontent.com/-uDuAOI41Aj4/VYYV3Pmo4qI/AAAAAAAAChw/m4HA61kOVbE/s610/eclipse-with-maven.png"><br />
+pom.xml과 이클립스를 동기화한다.<br />
+Package Explorer 뷰에서 프로젝트를 선택하고 마우스 오른쪽 버튼으로 컨텍스트 메뉴를 연다.<br />
+Maven - Update Project Configuration을 차례로 선택한다.<br />
+</p>
+
+<h3>오라클 테이블 생성</h3>
+
+<p>
+system 계정으로 접속해 다음 SQL문을 실행한다.<br />
+<script src="https://gist.github.com/kimjonghoon/4ad45823c45c1d60b15c.js"></script>
+</p>
+
+<h2>MySQL 설치</h2>
+
+<pre class="shell-prompt">
+sudo apt install mysql-server mysql-client
+</pre>
+
+<h3>MySQL 테이블 생성</h3>
+
+<p>
+다음 SQL문을 실행한다.<br />
+<script src="https://gist.github.com/kimjonghoon/95af96412582a8f8c0cb.js"></script>
+</p>
+
+<h2>디렉터리 수정</h2>
+
+<p>
+net.java_school.commons.WebContants.java 파일을 열고 업로드 디렉터리를 자신의 시스템에 맞게 수정한다.
+</p>
+
+<h2>테스트</h2>
+
+<p>
+SpringBbs의 루트 디렉터리에서 다음 명령을 실행한다.<br />
+</p>
+
+<pre class="shell-prompt">
+mvn jetty:run
+</pre>
+
+<p>
+http://localhost:8080에 방문해 테스트한다.
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://crunchbang.org/forums/viewtopic.php?id=23267">http://crunchbang.org/forums/viewtopic.php?id=23267</a></li>
+	<li><a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a></li>
+</ul>
+
+<span id="related-articles">관련 글</span>
+<ul id="related-articles-ul">
+    <li><a href="/spring/spring-mvc-with-maven">메이븐 스프링 MVC 실습</a></li>
+    <li><a href="/spring/spring-mvc-bbs">스프링 MVC 게시판</a></li>
+    <li><a href="/spring/spring-security-config">스프링 시큐리티 웹 요청 보안</a></li>
+    <li><a href="/spring/method-security">스프링 시큐리티 메서드 보안</a></li>
+    <li><a href="/spring/security-at-view-layer">스프링 시큐리티 뷰 레벨 보안</a></li>
+    <li><a href="/spring/bean-validation-at-signUp">회원가입 빈 유효성 검사</a></li>
+    <li><a href="/spring/bean-validation-at-editAccount">내 정보 수정 빈 유효성 검사</a></li>
+    <li><a href="/spring/bean-validation-at-changePasswd">비밀번호 변경 빈 유효성 검사</a></li>
+    <li><a href="/spring/bean-validation-at-write-article">글쓰기 빈 유효성 검사</a></li>
+    <li><a href="/spring/bean-validation-at-modify-article">게시글 수정 빈 유효성 검사</a></li>
+    <li><a href="/blog/2017/i18n">국제화</a></li>
+    <li><a href="/blog/2017/downloadController">다운로드 컨트롤러</a></li>
+    <li><a href="/blog/2017/spring-mvc-apache-tiles">아파치 타일즈</a></li>
+    <li><a href="/blog/2015/spring-security-password-encoder">스트링 시큐리티 비밀번호 암호화</a></li>
+    <li><a href="/blog/2016/spring-security-access-denied-handling">스프링 시큐리티에서 접근 거부 핸들링</a></li>
+    <li><a href="/blog/2017/spring-mvc-ajax-example">스프링 MVC에서 돌아가는 간단한 에이잭스 예제</a></li>
+    <li><a href="/blog/2017/SpringBbs-with-MySql">MySql용 SpringBbs</a></li>
+    <li><a href="/blog/2017/jetty-maven-plugin">Jetty Maven Plugin</a></li>
+    <li><a href="/blog/2017/REST-example">REST 예제</a></li>
+    <li><a href="/blog/2017/basic-board">게시판 기본 기능</a></li>
+    <li><a href="/blog">블로그 목록</a></li>
+</ul>
+
+</article>

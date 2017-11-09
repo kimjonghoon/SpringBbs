@@ -1,0 +1,219 @@
+<article>
+
+<h1>Creating tables with JDBC</h1>
+
+<p>
+If you have successfully tested the GetEmp.java file, let's practice another JDBC programming example.
+The prepared example is a business card management program.
+In this chapter, you create tables and sequences using JDBC.
+</p>
+
+<pre class="prettyprint">
+CREATE TABLE NAMECARD (
+    NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY,
+    NAME    VARCHAR2(20) NOT NULL,
+    MOBILE  VARCHAR2(20) NOT NULL,
+    EMAIL   VARCHAR2(40),
+    COMPANY VARCHAR2(60)
+);
+ 
+CREATE SEQUENCE SEQ_NAMECARD_NO
+INCREMENT BY 1
+START WITH 1;
+
+</pre>
+
+<p>
+Let's recall the JDBC programming order again.
+</p>
+
+<ol>
+	<li>Loading the JDBC Driver</li>
+	<li>Obtaining a Connection</li>
+	<li>Execute SQL</li>
+	<li>[If the SQL statement is a select statement, use the returned ResultSet to process the data.]</li>
+	<li>Returning Resources</li>
+</ol>
+
+<p>
+In the Package Explorer view in Eclipse, create NamecardDDL.java in the jdbc project to be in the package net.java_school.jdbc.test.
+All code will be implemented in the main method.
+</p>
+
+<h3>1. Loading a JDBC Driver</h3>
+
+<p>
+Use the Class.forName () method to load the startup class of the Oracle JDBC driver into memory.
+Copy and paste this snippet from GetEmp.java.<br />
+
+<img src="./images/load-oracle-jdbc-driver-01.gif" alt="Loading a JDBC Driver" /><br />
+
+Since the forName () method of Class class is a method that should handle ClassNotFoundException, the above compilation error is seen.
+With the help of Eclipse's code assist (for help, place it in the code where the compilation error occurs with your mouse)
+Select the second solution as shown to insert a try ~ catch statement.<br />
+
+<img src="./images/load-oracle-jdbc-driver-02.gif" alt="Handing a ClassNotFoundException" /><br />
+</p>
+
+<h3>2. Obtaining a Connection</h3>
+
+<p>
+The connection is obtained using the getConnection (,,) method of the DriverManager class.<br />
+
+<img src="./images/get-connection-03.gif" alt="Obtaining a Connection" /><br />
+
+Connection and DriverManager are in java.sql package.
+Add the import statement by selecting the first solution in the code assist of the compile error as shown above.<br />
+
+<img src="./images/get-connection-04.gif" alt="Add import java.sql.*;" /><br />
+
+The first argument to the DriverManager's getConnection (,,) method is url.
+The second argument is the user and the third argument is the user's password.
+Since we decided to create a table and sequence in the scott account, the second and third argument values are scott and tiger, respectively.<br />
+
+<img src="./images/get-connection-05.png" alt="DriverManager.getConnection(String,String,String) " /><br />
+
+The DriverManager's getConnection (,,) method can raise an SQLException object.
+Select the second solution of the code assist as shown above and handle the exception with a try ~ catch statement.<br />
+ 
+<img src="./images/get-connection-06.gif" alt="Handing a SQLException" /><br />
+
+Since the following methods must handle SQLException exceptions, put these methods in a try block.
+The variable declaration of the connection type con must be outside the try block.
+When returning a resource using the con.close () code snippet in a finally block, the finally block must also be an area where the con variable can be interpreted.<br />
+<img src="./images/get-connection-07.gif" alt="con variable declaration must be outside the try block" /><br />
+</p>
+
+<h3>3. Getting a Statement</h3>
+
+<p>
+The stmt variable declaration of the statement type is also placed outside the try block considering the code implementation for returning resources later.
+If you encounter a compile error that the Statement is of an unresolved type, let the code assist help to insert import java.sql.Statement ;.<br />
+
+<img src="./images/createStatement-08.gif" alt="stmt variable declaration must be outside the try block. Add import java.sql.Statement;"/><br />
+</p>
+
+<h3>4. Execute SQL</h3>
+
+<p>
+The next step is to execute the SQL statement.
+First, make the SQL statement to be executed as a string.
+</p>
+
+<pre class="prettyprint">
+Connection con = null;
+Statement stmt = null;
+<strong>String sql = null;</strong>
+try {
+	con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:XE", "scott", "tiger");
+	stmt = con.createStatement();
+	sql = <strong>"CREATE TABLE NAMECARD ( " +
+		"NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY, " +
+		"NAME    VARCHAR2(20) NOT NULL, " +
+		"MOBILE  VARCHAR2(20) NOT NULL, " +
+		"EMAIL   VARCHAR2(40), " +
+		"COMPANY VARCHAR2(60))"</strong>;
+	<strong>stmt.executeUpdate(sql);</strong>
+	
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+</pre>
+
+<p>
+Execute the SQL statement by calling ExecuteUpdate() of the Statement by passing the string that creates the table as an argument.
+Next, the SQL statement that generates the sequence is made into a string.
+Execute the SQL statement by calling executeUpdate() of the Statement by passing the string that generates the sequence as an argument.<br />
+</p>
+
+<pre class="prettyprint">
+Connection con = null;
+Statement stmt = null;
+String sql = null;
+
+try {
+	con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:XE", "scott", "tiger");
+	stmt = con.createStatement();
+	sql = "CREATE TABLE NAMECARD ( " +
+		"NO  NUMBER CONSTRAINT PK_NAMECARD PRIMARY KEY, " +
+		"NAME    VARCHAR2(20) NOT NULL, " +
+		"MOBILE  VARCHAR2(20) NOT NULL, " +
+		"EMAIL   VARCHAR2(40), " +
+		"COMPANY VARCHAR2(60))";
+	stmt.executeUpdate(sql);
+	sql = "<strong>CREATE SEQUENCE SEQ_NAMECARD_NO " +
+		"INCREMENT BY 1 " +
+		"START WITH 1</strong>";
+	<strong>stmt.executeUpdate(sql);</strong>
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+</pre>
+
+<h3>5. Returning Resources</h3>
+
+<p>
+Create a finally block and insert the code that returns the resource in the finally block.
+Since the resources must be returned in the reverse order of creation, the stmt.close () code must first appear.<br />
+<img src="./images/stmt-close-11.gif" alt="SQLException compile error" /><br />
+
+Since the close () method of Statement is a method that can cause SQLException object, the above compile error occurs.
+Use Eclipse 's code assist to insert a try - catch block.
+Because Connection's close () method is also a method that can cause an SQLException object, we also use code assists to place the con.close () code in a try ~ catch block.<br />
+
+<img src="./images/close-12.gif" alt="Returning Resources Completed." /><br />
+Returning resources is most important in JDBC code. Do not forget to return resources.
+Run NamecardDDL.java.
+If the exception does not occur, access the scott account with SQL * PLUS to see if the table and sequence have been created.
+If an exception occurs, add code to the catch block to output the SQL statement.
+One of the disadvantages of JDBC is that you need to replace the SQL statement with a Java string.
+There are a lot of mistakes in the process of replacing an SQL statement with a Java string.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\Documents and Settings\kim&gt;<span class="emphasis">sqlplus scott/tiger</span>
+
+SQL*Plus: Release 10.2.0.1.0 - Production on 08-JAN-2011 21:11:20
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Release 10.2.0.1.0 - Production
+
+SQL&gt; <span class="emphasis">select tname from tab;</span>
+
+TNAME
+------------------------------------------------------------
+DEPT
+EMP
+BONUS
+SALGRADE
+<span class="emphasis">NAMECARD</span>
+
+5 rows selected.
+
+SQL&gt; <span class="emphasis">select sequence_name from user_sequences;</span>
+
+SEQUENCE_NAME
+------------------------------------------------------------
+<span class="emphasis">SEQ_NAMECARD_NO</span>
+
+SQL&gt;
+</pre>
+
+<p>
+Running NamecardDDL.java again will cause an exception.
+This is because the table and sequence with the same name already exist in the scott account.
+</p>
+
+<dl class="note">
+<dt>executeUpdate()</dt>
+<dd>
+Statement's executeUpdate () method is used to execute DDL statements such as create table .. or DML statements (INSERT, UPDATE, DELETE).
+</dd>
+</dl>
+</article>

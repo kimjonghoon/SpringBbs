@@ -1,0 +1,715 @@
+<article>
+
+<h1>웹 요청 보안</h1>
+
+<p>
+스프링 시큐리티를 프로젝트에 설치하고 웹 요청 보안까지 실습한다.
+다음 순서로 진행한다.
+</p>
+
+<ol>
+	<li>스프링 시큐리티 의존성 추가</li>
+	<li>권한 테이블 생성과 테스트 레코드 삽입</li>
+	<li>스프링 시큐리티 설정 파일 작성 및 ..-servlet.xml에 있는 기존 설정을 특성별로 떼어 새로운 파일에 작성</li>
+	<li>..-servlet.xml 파일에 시큐리티 설정 추가</li>
+	<li>web.xml 시큐리티 설정 추가</li>
+	<li>기존 기존 로그인/로그아웃 메서드 제거</li>
+	<li>로그인 페이지 수정과 로그아웃 링크 수정</li>
+	<li>권한이 없는 사용자에게 보여줄 페이지 생성</li>
+	<li>스프링 시큐리티를 적용하는 코드 구현</li>
+</ol>
+
+<h3>1. 스프링 시큐리티 의존성 추가</h3>
+
+<p>
+pom.xml에 다음과 같이 스프링 시큐리티의 의존성을 추가한다.
+</p>
+
+<pre class="prettyprint">
+&lt;properties&gt;
+	&lt;spring.version&gt;4.3.9.RELEASE&lt;/spring.version&gt;
+	&lt;spring.security.version&gt;<strong>4.2.3.RELEASE</strong>&lt;/spring.security.version&gt;
+	&lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
+&lt;/properties&gt;
+</pre>
+
+<pre class="prettyprint">
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
+	&lt;version&gt;<strong>${spring.security.version}</strong>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-security-taglibs&lt;/artifactId&gt;
+	&lt;version&gt;<strong>${spring.security.version}</strong>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
+	&lt;version&gt;<strong>${spring.security.version}</strong>&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+<h3>2. 권한 테이블 생성과 테스트 레코드 삽입</h3>
+
+<p>
+스프링 시큐리티를 사용하기 위해서 회원과 권한 테이블이 필요하다.
+회원 테이블은 member를 그대로 사용한다.
+권한 테이블을 새로 만들고 테스트를 위한 데이터를 인서트한다.
+</p>
+
+<pre class="prettyprint">
+CREATE TABLE authorities (
+  email VARCHAR2(60) NOT NULL,
+  authority VARCHAR2(20) NOT NULL,
+  CONSTRAINT fk_authorities FOREIGN KEY(email) REFERENCES member(email)
+);
+
+CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority); 
+
+INSERT INTO member VALUES ('hong@gmail.org','1111','홍길동','010-1111-1111');
+INSERT INTO member VALUES ('im@gmail.org','1111','임꺽정','010-1111-2222');
+
+INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_USER');
+INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_ADMIN');
+INSERT INTO authorities VALUES ('im@gmail.org','ROLE_USER');
+
+commit;
+</pre>
+
+<p>
+ROLE_USER은 일반 사용자 권한, ROLE_ADMIN은 관리자 권한이다.
+홍길동은 일반 사용자 권한과 관리자 권한 모두를 가지고, 임꺽정은 일반 사용자 권한만 갖는다.
+</p>
+
+<h3>3. 스프링 시큐리티 설정 파일 작성 및 ..-servlet.xml에 있는 기존 설정을 특성별로 떼어 새로운 파일에 작성</h3>
+
+<p>
+스프링 시큐리티만을 위한 스프링 설정 파일을 /WEB-INF 폴더에 security.xml란 이름으로(이름에 제약은 없다) 아래와 같이 생성한다.
+</p>
+
+<em class="filename">security.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd"&gt;
+
+	&lt;http&gt;
+		&lt;intercept-url pattern="/users/bye_confirm" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/users/welcome" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/users/signUp" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/users/login" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/images/**" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/css/**" access="permitAll" /&gt;
+		&lt;intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/&gt;
+		&lt;intercept-url pattern="/users/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/&gt;
+		&lt;intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" /&gt;
+		
+		&lt;form-login 
+			login-page="/users/login" 
+			authentication-failure-url="/users/login?error=1" 
+			default-target-url="/bbs/list?boardCd=free&amp;amp;page=1" /&gt;
+		
+		&lt;logout 
+			logout-success-url="/users/login" 
+			invalidate-session="true"  /&gt;
+		
+	&lt;/http&gt;
+
+	&lt;authentication-manager&gt;
+		&lt;authentication-provider&gt;
+			&lt;jdbc-user-service 
+				data-source-ref="dataSource"
+				users-by-username-query="SELECT email as username,passwd as password,1 as enabled 
+					FROM member WHERE email = ?"
+				authorities-by-username-query="SELECT email as username,authority 
+					FROM authorities WHERE email = ?" /&gt;
+		&lt;/authentication-provider&gt;
+	&lt;/authentication-manager&gt;
+
+&lt;/beans:beans&gt;
+</pre>
+
+<p>
+&lt;form-login&gt; 요소의 login-page 속성 기본값은 /login, 
+login-processing-url 속성 기본값은 POST /login,
+username-parameter 속성 기본값은 username,
+password-parameter 속성 기본값은 password,
+authentication-failure-url 속성 기본값은 /login?error=1이다.
+기본값 이외의 값을 주려면 속성을 생략해선 안 된다.
+사용자 로그인 페이지(/users/login)를 사용하고 로그인 실패시 다시 로그인 페이지로 이동하게 하려면, 
+login-page 속성 뿐만 아니라 authentication-failure-url 속성을 명시해야 하며
+http 요소에 다음이 있어야 한다.
+</p>
+
+<pre class="prettyprint">
+&lt;intercept-url pattern="/users/login" access="permitAll" /&gt;
+</pre>
+
+<p>
+http의 use-expressions의 속성 기본값이 true이므로 생략할 수 있다.
+</p>
+
+<p>
+위에서 우리는 스프링 시큐리티만의 위한 스프링 설정 파일을 따로 만들었다.
+spring-bbs-servlet.xml 파일에서 빈의 특성별로 따로 스프링 설정 파일을 만들 수 있다.
+여기서는 아래와 같이 spring-bbs-servlet.xml에서 빈을 떼어내 applicationContext.xml 라는 이름으로 /WEB-INF 폴더에 생성한다.
+</p>
+
+<em class="filename">applicationContext.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+	<strong>
+	&lt;bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"&gt;
+		&lt;property name="dataSource" ref="dataSource" /&gt;
+		&lt;property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" /&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id="dataSource" 
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"&gt;
+		&lt;property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/&gt;
+		&lt;property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/&gt;
+		&lt;property name="username" value="java"/&gt;
+		&lt;property name="password" value="school"/&gt;
+		&lt;property name="maxActive" value="100"/&gt;
+		&lt;property name="maxWait" value="1000"/&gt;
+		&lt;property name="poolPreparedStatements" value="true"/&gt;
+		&lt;property name="defaultAutoCommit" value="true"/&gt;
+		&lt;property name="validationQuery" value=" SELECT 1 FROM DUAL" /&gt;
+	&lt;/bean&gt;
+    
+	&lt;bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="104857600" p:maxInMemorySize="10485760" /&gt;
+	</strong>
+&lt;/beans&gt;
+</pre>
+
+<h3>4. ..-servlet.xml 파일에 시큐리티 설정 추가</h3>
+
+<p>
+위에서 스프링 시큐리티만을 위한 스프링 설정 파일을 만들었지만, 스프링 시큐리티 설정 중 반드시 ..-servlet.xml 파일에 
+설정해야 것이 있다.
+</p>
+
+<p>
+spring-bbs-servlet.xml 파일을 열고 아래 강조한 부분을 참고하여 스프링 시큐리티 설정을 추가한다.
+</p>
+
+<em class="filename">spring-bbs-servlet.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	<strong>xmlns:security="http://www.springframework.org/schema/security"</strong> 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		<strong>http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd</strong>
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring 
+		http://mybatis.org/schema/mybatis-spring.xsd"&gt;
+	<strong>	
+	&lt;security:global-method-security pre-post-annotations="enabled" /&gt;
+	</strong>
+	&lt;!-- 중간 생략  --&gt;
+	
+&lt;/beans&gt;	
+</pre>
+
+
+<h3>5. web.xml 시큐리티 설정 추가</h3>
+
+<em class="filename">web.xml</em>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;
+
+
+&lt;web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="true"&gt;
+    
+	&lt;display-name&gt;Spring BBS&lt;/display-name&gt;
+	<strong>
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;
+			/WEB-INF/applicationContext.xml
+			/WEB-INF/security.xml
+		&lt;/param-value&gt;
+	&lt;/context-param&gt;
+
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+		org.springframework.web.context.ContextLoaderListener
+		&lt;/listener-class&gt;	
+	&lt;/listener&gt;
+	
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+		org.springframework.security.web.session.HttpSessionEventPublisher
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;
+	</strong>
+	&lt;filter&gt;
+		&lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;encoding&lt;/param-name&gt;
+			&lt;param-value&gt;UTF-8&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+			&lt;param-value&gt;true&lt;/param-value&gt;
+		&lt;/init-param&gt;
+	&lt;/filter&gt;
+	<strong>
+	&lt;filter&gt;
+		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+		&lt;filter-class&gt;
+		org.springframework.web.filter.DelegatingFilterProxy
+		&lt;/filter-class&gt;
+	&lt;/filter&gt;
+	</strong>
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	<strong>
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;	
+	</strong>
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;spring-bbs&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;spring-bbs&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+	<strong>
+	&lt;error-page&gt;
+		&lt;error-code&gt;403&lt;/error-code&gt;
+		&lt;location&gt;/WEB-INF/views/noAuthority.jsp&lt;/location&gt;
+	&lt;/error-page&gt;
+	</strong>
+&lt;/web-app&gt;
+</pre>
+
+<h3>6. 기존 기존 로그인/로그아웃 메서드 제거</h3>
+
+<p>
+UsersController.java에서 로그인과 로그아웃 메소드를 제거한다.
+</p>
+
+<em class="filename">UsersController.java</em>
+<pre class="prettyprint">
+/*
+@RequestMapping(value="/login", method=RequestMethod.POST)
+public String login(String email, String passwd, HttpSession session) {
+	User user = userService.login(email, passwd);
+	if (user != null) {
+		session.setAttribute(WebContants.USER_KEY, user);
+		return "redirect:/users/changePasswd";
+	} else {
+		return "redirect:/users/login";
+	}
+}
+
+@RequestMapping(value="/logout", method=RequestMethod.GET)
+public String logout(HttpSession session) {
+	session.removeAttribute(WebContants.USER_KEY);
+	//로그아웃하면 로그인페이지로
+	return "redirect:/users/login";
+}
+*/
+</pre>
+
+<h2>7. 로그인 페이지 수정과 로그아웃 링크 수정</h2>
+
+<p>
+login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.
+</p>
+
+<em class="filename">/WEB-INF/views/users/login.jsp</em>
+<pre class="prettyprint">
+<strong>&lt;c:if test="${not empty param.error }"&gt;
+	&lt;h2&gt;${SPRING_SECURITY_LAST_EXCEPTION.message }&lt;/h2&gt;
+&lt;/c:if&gt;</strong>
+<strong>&lt;c:url var="loginUrl" value="/login" /&gt;</strong>
+&lt;form id="loginForm" <strong>action="${loginUrl }" method="post"</strong>&gt;
+<strong>&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</strong>
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td style="width: 200px;"&gt;Email&lt;/td&gt;
+	&lt;td style="width: 390px"&gt;&lt;input type="text" name="<strong>username</strong>" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Password&lt;/td&gt;
+	&lt;td&gt;&lt;input type="password" name="<strong>password</strong>" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+
+<p>
+<strong>&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</strong>
+코드가 없다면, 로그인 화면으로 이동하여 로그인을 시도하면 빈 화면을 만나게 된다.
+로그에 어떤 에러 메시지도 없다.
+원인은 스프링 시큐리티 4의 CSRF 방지 기능이 작동하고 있기 때문이다.
+스프링 시큐리티 4부터는 이 기능이 디폴트로 작동한다.
+따라서 PATCH, POST, PUT, DELETE 요청에 CSRF 토큰을 포함해야 한다.
+스프링 폼 태그를 사용하는 경우, 자동으로 토큰 파라미터가 추가되므로 CSRF 토큰 파라미터를 추가하지 않는다.
+</p>
+
+<em class="filename">/WEB-INF/views/inc/header.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+&lt;h1 style="float: left;width: 150px;"&gt;&lt;a href="../"&gt;&lt;img src="../images/ci.gif" alt="java-school logo" /&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;div id="memberMenu" style="float: right;position: relative;top: 7px;"&gt;
+<strong>&lt;security:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"&gt;
+	&lt;security:authentication property="principal.username" var="<strong>check</strong>" /&gt;
+&lt;/security:authorize&gt;</strong>
+&lt;c:choose&gt;
+	&lt;c:when test="${empty <strong>check</strong>}"&gt;
+		&lt;input type="button" value="로그인" onclick="location.href='/users/login'" /&gt;
+		&lt;input type="button" value="회원가입" onclick="location.href='/users/signUp'" /&gt;
+	&lt;/c:when&gt;
+	&lt;c:otherwise&gt;
+		&lt;input type="button" value="로그아웃" id="logout" /&gt;
+		&lt;input type="button" value="내정보수정" onclick="location.href='/users/editAccount'" /&gt;
+	&lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+&lt;/div&gt;
+<strong>
+&lt;form id="logoutForm" action="/logout" method="post" style="display:none"&gt;
+	&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;
+&lt;/form&gt;
+&lt;script type="text/javascript" src="/resources/js/jquery-3.0.0.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(document).ready(function() {
+	$('#logout').click(function() {
+		$('#logoutForm').submit();
+		return false;
+  	});
+});
+&lt;/script&gt;</strong>
+</pre>
+
+<p>
+스프링 시큐리티는 사용자 정보를 세션에 담지 않으므로 수정하지 않으면 로그인 후 로그아웃/내정보수정 버튼을 볼 수 없다.
+스프링 시큐리티 태그를 사용하는 예는 <a href="security-at-view-layer">뷰 레벨 보안</a>에서도 다룬다.
+로그아웃을 위한 메뉴는 제거한다.
+</p>
+
+<em class="filename">/WEB-INF/views/users/loginUsers-menu.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;h1&gt;회원&lt;/h1&gt;
+&lt;ul&gt;
+    &lt;li&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="/users/editAccount"&gt;내정보 수정&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/users/changePasswd"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/users/bye"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+
+<h3>8. 권한이 없는 사용자에게 보여줄 페이지 생성</h3>
+
+<p>
+테스트를 위해 권한이 없는 사용자가 잘못된 자원을 요청했을 때 보여줄 페이지를 작성한다.
+</p>
+
+<em class="filename">/WEB-INF/views/noAuthority.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+&lt;title&gt;403&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+권한이 없습니다.
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>9. 스프링 시큐리티를 적용하는 코드 구현</h3>
+
+<em class="filename">UserMapper.xml</em>
+<pre class="prettyprint">
+&lt;insert id="insertAuthority"&gt;
+    INSERT INTO authorities VALUES (#{email}, #{authority})
+&lt;/insert&gt;
+
+&lt;delete id="deleteAuthority"&gt;
+    DELETE FROM authorities WHERE email = #{email}	
+&lt;/delete&gt;
+</pre>
+
+<em class="filename">UserMapper.java</em>
+<pre class="prettyprint">
+public void insertAuthority(@Param("email") String email, @Param("authority") String authority);
+  
+public void deleteAuthority(@Param("email") String email);
+</pre>
+
+<em class="filename">UserService.java</em>
+<pre class="prettyprint">
+//권한 추가
+public void addAuthority(String email, String authority);
+</pre>
+
+<em class="filename">UserServiceImpl.java</em>
+<pre class="prettyprint">
+@Override
+public void addAuthority(String email, String authority) {
+    userMapper.insertAuthority(email, authority);
+}
+
+@Override
+public void bye(User user) {
+    <strong>userMapper.deleteAuthority(user.getEmail());</strong>
+    userMapper.delete(user);
+}
+</pre>
+
+<em class="filename">UsersController</em>
+<pre class="prettyprint">
+//중간 생략..
+
+<strong>
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
+import java.security.Principal;
+import org.springframework.ui.Model;
+</strong>
+
+//중간 생략..
+
+@RequestMapping(value="/signUp", method=RequestMethod.POST)
+public String signUp(User user) {
+
+    <strong>String authority = "ROLE_USER";</strong>
+
+    userService.addUser(user);
+    <strong>userService.addAuthority(user.getEmail(), authority);</strong>
+
+    return "redirect:/users/welcome";
+}
+
+@RequestMapping(value="/editAccount", method=RequestMethod.GET)
+public String editAccount(<strong>Principal principal, Model model</strong>) {
+    User user = userService.getUser(<strong>principal.getName()</strong>);
+    model.addAttribute(WebContants.USER_KEY, user);
+
+    return "users/editAccount";
+}
+
+@RequestMapping(value="/editAccount", method=RequestMethod.POST)
+public String editAccount(User user, <strong>Principal principal</strong>) {
+	
+    user.setEmail(<strong>principal.getName()</strong>);
+
+    int check = userService.editAccount(user);
+    if (check &lt; 1) {
+        throw new RuntimeException(WebContants.EDIT_ACCOUNT_FAIL);
+    } 
+
+    return "redirect:/users/changePasswd";
+	
+}
+
+@RequestMapping(value="/changePasswd", method=RequestMethod.GET)
+public String changePasswd(<strong>Principal principal, Model model</strong>) {
+    User user = userService.getUser(<strong>principal.getName()</strong>);
+
+    model.addAttribute(WebContants.USER_KEY, user);
+
+    return "users/changePasswd";
+}
+
+@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
+public String changePasswd(String currentPasswd, String newPasswd, <strong>Principal principal</strong>) {
+	
+    int check = userService.changePasswd(currentPasswd,newPasswd, <strong>principal.getName()</strong>);
+
+    if (check &lt; 1) {
+        throw new RuntimeException(WebContants.CHANGE_PASSWORD_FAIL);
+    }	
+
+    return "redirect:/users/changePasswd_confirm";
+
+}
+
+@RequestMapping(value="/bye", method=RequestMethod.POST)
+public String bye(String email, String passwd, HttpServletRequest req) 
+        throws ServletException {
+
+    User user = userService.login(email, passwd);
+    userService.bye(user);
+    req.logout();
+
+    return "redirect:/users/bye_confirm";
+}
+</pre>
+
+<em class="filename">BbsController.java</em>
+<pre class="prettyprint">
+//중간 생략..
+
+<strong>import java.security.Principal;</strong>
+
+//중간 생략..
+
+@RequestMapping(value="/write", method=RequestMethod.POST)
+public String write(MultipartHttpServletRequest mpRequest, <strong>Principal principal</strong>) 
+        throws Exception {
+
+    //중간 생략..
+    Article article = new Article();
+    article.setBoardCd(boardCd);
+    article.setTitle(title);
+    article.setContent(content);
+    article.setEmail(<strong>principal.getName()</strong>);
+    
+    boardService.addArticle(article);	
+    
+    //중간 생략..
+    
+    //파일데이터 삽입
+    int size = fileList.size();
+    for (int i = 0; i &lt; size; i++) {
+        MultipartFile mpFile = fileList.get(i);
+        AttachFile attachFile = new AttachFile();
+        String filename = mpFile.getOriginalFilename();
+        attachFile.setFilename(filename);
+        attachFile.setFiletype(mpFile.getContentType());
+        attachFile.setFilesize(mpFile.getSize());
+        attachFile.setArticleNo(article.getArticleNo());
+        attachFile.setEmail(<strong>principal.getName()</strong>);
+        boardService.addAttachFile(attachFile);
+    }
+
+    //중간 생략..
+}
+
+@RequestMapping(value="/addComment", method=RequestMethod.POST)
+public String addComment(Integer articleNo, 
+        String boardCd, 
+        Integer page, 
+        String searchWord, 
+        String memo,
+        <strong>Principal principal</strong>) throws Exception {
+		
+    Comment comment = new Comment();
+    comment.setArticleNo(articleNo);
+    comment.setEmail(<strong>principal.getName()</strong>);
+    comment.setMemo(memo);
+
+    //생략..
+}
+</pre>
+
+<p>
+첨부 파일의 경우 <em class="path">&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</em>이 아닌 쿼리 스프링으로 CSRF 토큰을 전달해야 한다.<br />
+이는 스프링 폼 태그를 사용하고 있다 하더라도 마찬가지다.<br />
+write.jsp와 modify.jsp 파일을 열고 <em class="path">&lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;</em>이 있다면 지우고, 
+아래와 같이 폼의 action 속성을 수정한다.<br />
+</p>
+ 
+<em class="filename">write.jsp</em>
+<pre class="prettyprint">
+&lt;sf:form action="write?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
+</pre>
+
+<em class="filename">modify.jsp</em>
+<pre class="prettyprint">
+&lt;sf:form action="modify?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
+</pre>
+
+<p>
+위의 방법은 쿼리 파라미터가 노출될 수 있다.<br />
+민감한 데이터를 노출되지 않도록 바디나 헤더에 두는 것이 좀 더 낫다.<br />
+이에 관한 정보는 아래 참고에 링크해 둔다.<br />
+</p>
+
+<h2>테스트</h2>
+
+<p>
+라이브러리가 추가했으니 다시 빌드를 실행한다.
+톰캣을 재실행한 후, http://localhost:port/list?boardCd=free&amp;page=1를 방문한다.
+로그인 페이지로 이동하게 되는데, im@gmail.org/1111로 로그인한다.
+로그인이 성공하면 게시판으로 이동하게 된다.
+</p>
+
+<p>
+웹 브라우저의 주소창에 http://localhost:port/admin를 입력하여 요청한다.
+임꺽정은 일반 사용자 권한만 가지고 있으므로 접근이 거부되고 noAuthority.jsp로 이동하게 된다.
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-defaults">http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-defaults</a></li>
+	<li><a href="http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#nsa-logout-attributes">http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#nsa-logout-attributes</a></li>
+	<li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec15.html#sec15.1.3">http://www.w3.org/Protocols/rfc2616/rfc2616-sec15.html#sec15.1.3</a></li>	
+	<li><a href="http://dhappy.net/?p=260">Error creating bean with name 'sqlSessionFactory' 구글 검색(spring-mybatis 1.1.1로 교체)</a></li>
+	<li><a href="http://stackoverflow.com/questions/10421588/spring-security-not-working-what-am-i-doing-wrong">시큐리티가 작동하지 않을 때는 web.xml 파일에 스프링 시큐리티에 대한 설정을 검사해야 한다.</a></li>
+	<li><a href="http://static.springsource.org/spring-security/site/faq/faq.html#faq-method-security-in-web-context">컨트롤러보다는 서비스에 시큐리티 적용 권고</a></li>
+	<li><a href="http://stackoverflow.com/questions/3087548/can-spring-security-use-preauthorize-on-spring-controllers-methods">컨트롤러에 시큐리티 적용-테스트 실패</a></li>
+	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
+	<li><a href="http://www.jpub.kr/">Spring in Action(Jpub) - 크레이그 월즈</a></li>
+</ul>
+</article>

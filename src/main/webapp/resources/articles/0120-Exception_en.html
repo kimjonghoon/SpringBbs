@@ -1,0 +1,1184 @@
+<article>
+
+<h1>Exception</h1>
+
+<p>
+The Java API has exception classes that are mapped for every exception that can occur while using the Java API.
+If an exception occurs during execution, the JVM creates an object from the corresponding exception class and throws it to the code that generated the exception.
+The JVM is responsible for throwing an exception object when an exception occurs.
+It is up to the programmer to handle how the exception object is handled.
+Programmers can control the generated exception object with appropriate use of the try, catch, and finally keywords.
+In the Java programming world, if an escalator suddenly stops in the middle, you can program to walk a human object in a catch block<a href="#comments"><sup>1</sup></a>.
+</p>
+
+<dl class="note">
+<dt>What are errors in Java?</dt>
+<dd>
+Exceptions are strictly errors, but Java distinguishes between exceptions and errors.
+An error in Java is "an error that can not be controlled programmatically".
+If an error occurs, the program is terminated.
+When an error occurs, there is little that the programmer can do.
+</dd>
+</dl>
+
+<h2>Control Exceptions</h2>
+
+<p>
+Exception classes have a hierarchical structure. Exception classes are the top class of all exception classes.
+The following is an example of dealing with exceptions.
+</p>
+
+<pre class="prettyprint">
+try {
+   //Code that can cause exceptions A and B
+   //A is hierarchically above B
+} catch (B e) { //e is the reference to the B exception object
+   //Code executed when the exception B occurs
+} catch (A e) {
+   //Code executed when the exception A occurs
+} finally {
+   //The code that must be executed, with or without an exception
+}
+</pre>
+
+<dl class="note">
+<dt>try block</dt>
+<dd>
+It is a block that encloses code that can cause exceptions.
+It can not be used alone, and it is used with a catch block or a finally block.
+</dd>
+<dt>catch block</dt>
+<dd>
+Just as when an error occurs, the program terminates unless an appropriate action is taken by the programmer when an exception occurs.
+To handle exceptions that occur in a try block, you must use the catch block appropriately within your code.
+To fine-tune the exception as in the example above, use multiple catch blocks.
+</dd>
+<dt>finally block</dt>
+<dd>
+Whether an exception occurs or not, it is a block that must be executed.
+You can not use finally blocks in multiple.
+</dd>
+</dl>
+
+<h2>Exception mechanism</h2>
+
+<p>
+Assume that method 1 calls method 2 and method 2 calls method 3, as shown below.<br />
+<img src="https://lh3.googleusercontent.com/-e9lY9rAqJ3s/VYEg9RM3gqI/AAAAAAAACO4/DrD7J9FkFsk/s600-Ic42/exception-mechanism.gif" alt="Exception Mechanism" /><br />
+If there is an exception in method 3 and there is a catch block that catches an exception in method 3 body, the program continues without stopping.
+If there is no catch block that catches the exception that occurred in method 3 body, the exception that occurred in method 3 is passed to method 2 that invoked method 3.
+If method 2 does not have a catch block catching exceptions passed in method 3, this exception is passed to method 1, which called method 2.
+When this exception is passed to the JVM that called the main method, the program is terminated.
+Such termination is an abnormal termination.
+</p>
+
+<h3>Exception class hierarchy</h3>
+
+<img src="https://lh3.googleusercontent.com/HxTwf_0OFEqI2B4LioJ7KjbK62ZvI0mvx0hLYD3bXci_m96ndspOwWfakVdQda37udd0efrC0hM7uW-kUMng1czT7OLGPNypLtk8ca__F6g3MQ7ar6mBNJJxaxRrhquT4or1ySOSzXusufwujhBXLR_yRy07qfepRNEf_r1D8UxhcMy9GvoMCKZEnH1CFY-bKKFWpFVxTL1vgHZDnv1PRza7udnRrDWLiZxhjwFswPaox-gMzJcMfwn5zLEPAsq5ru1Y1Kr1rsWJMtUr5wkgyICMbStXtiNzmL_jwoF8hftuGAVCJ_o3LNT7VyQKb57PGnSComNIDD5qMLBR277f14AtMNTLHDEwWiwTKpy4CXjnS7RqNRbnjvLLNkKPeRkI2iqI2uk4VulyUhooTR6Fsw6wuzMUJW-8gJxbh6qn4eTtT5DxYQ2vOzGRvUHVu7phWVCDpHGycXAJVX0ZHa9MeqzPG552pQHM0T7gJzJIIxK_45O6J9QlX1YeRaEiSIEX4eY01WMFzmhzHZQgQ99giaeoglCan7BsKbFcTFuxvDdiR2Slv62sw_ElrW6NU2MhVojYBKdIHNqIrjnws78T1MRHKU6VPGRmuKn8gmS9NEhSR6QWykjSer0L=w390-h141-no" alt="Exception API" /><br />
+
+<h3>Common exceptions</h3>
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">Exception</th>
+	<th class="table-in-article-th">Example</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">ArithmeticException</td>
+	<td class="table-in-article-td">int a = 12/0;</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">NullPointerException</td>
+	<td class="table-in-article-td">Integer d = null;<br />
+	int val = d.intValue();
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">NegativeArraySizeException</td>
+	<td class="table-in-article-td">int arr = new int[-1];</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">ArrayIndexOutOfBoundException</td>
+	<td class="table-in-article-td">
+	int[] arr = new int[2];<br />
+	arr[2] = 1;
+	</td>
+</tr>
+</table>
+
+<h3><em>throws SomethingException</em> in the method declaration</h3>
+
+<p>
+You can attach an exception class after the throws keyword in the method declaration section.
+If the code that calls this method does not have a code snippet that properly handles exceptions defined after throws, a compilation error will occur.
+</p>
+
+<p>
+Suppose you have the following method.
+</p>
+
+<pre class="prettyprint">
+public void someMethod() throws SomeException {
+	//..Omitted.
+}
+</pre>
+
+<p>
+If you need to create a method with code that calls someMethod() on the method body, 
+you should choose one of the two below to avoid compilation errors.
+</p>
+
+<strong class="filename">1</strong>
+<pre class="prettyprint">
+public void myMethod() <strong>throws SomeException</strong> {
+	someMethod();
+	//..Omitted.
+}
+</pre>
+
+<strong class="filename">2</strong>
+<pre class="prettyprint">
+public void myMethod() {
+	<strong>
+	try {
+		someMethod();
+	} catch (SomeException e) {
+		//..Omitted.
+	}
+	</strong>
+}
+</pre>
+
+<p>
+<strong>1:</strong><br />
+If SomeException is a RuntimeException or a subclass of RuntimeException<a href="#comments"><sup>2</sup></a>, 
+You can omit <em>throws SomeException</em> from the myMethod method declaration section.<br />
+<br />
+<strong>2:</strong><br />
+If SomeException is a RuntimeException or a subclass of RuntimeException,
+Even if try ~ catch is omitted, there is no compilation error.
+However, you can not catch exceptions that occur.
+</p>
+
+
+<h3>Examples</h3>
+
+<p>
+The following is an example of an unchecked exception.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+        
+	public static void method2() {
+		method3();
+	}
+
+	public static void method3() {
+		<strong>int a = 12 / 0;</strong>
+		System.out.println(a);
+	}
+        
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+When you run the example, the ArithmeticException exception object reaches the JVM.
+The JVM will sequentially print the stack on which the exception occurred, as shown below.
+The important thing is that it is not a normal Termination.
+For reference, the main method is implemented to print "Normal Termination" if executed to the last line.
+</p>
+    
+<pre class="console"><strong class="console-result">Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at net.java_school.exception.Test.method3(Test.java:14)
+	at net.java_school.exception.Test.method2(Test.java:10)
+	at net.java_school.exception.Test.method1(Test.java:6)
+	at net.java_school.exception.Test.main(Test.java:19)</strong></pre>
+
+<p>	
+Modify the method3 () to handle exceptions using try ~ catch.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+
+	public static void method2() {
+		method3();
+	}
+
+	public static void method3() {
+		<strong>try {</strong>
+			int a = 12 / 0;
+			System.out.println(a);
+		<strong>} catch (ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	}
+
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");	
+	}
+
+}
+</pre>
+
+<p>
+<em>System.out.println(e.getMessage());</em> prints / by zero.
+</p>    
+    
+<pre class="console"><strong class="console-result">/ by zero
+Normal Termination
+</strong></pre>
+
+<p>
+Retrieve the previous code and modify the method2() to handle the exception using try ~ catch.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		<strong>try {</strong>
+			method3();
+		<strong>} catch (ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+The exception object from method3() is passed to method2().
+You can think of similar to returning a return value.
+</p>
+
+    
+<pre class="console"><strong class="console-result">/ by zero
+Normal Termination
+</strong></pre>
+
+<p>
+Revert the previous code and modify method1() to handle the exception.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		<strong>try {</strong>
+			method2();
+		<strong>} catch (ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+The output is the same, but the exception object is passed to method1() and properly handles exceptions in method1(), thus avoiding abnormal termination.
+</p>
+
+<pre class="console"><strong class="console-result">/ by zero
+Normal Termination
+</strong></pre>
+
+<p>
+Reverses the previous code and modifies the main method to handle the exception.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		<strong>try {</strong>
+			method1();
+		<strong>} catch (ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}</strong>
+	
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+The output is the same, but the exception object is passed to the main method.
+The main method handles the exception object properly, so it exits normally.
+</p>
+
+<pre class="console"><strong class="console-result">/ by zero
+Normal Termination
+</strong></pre>
+
+<p>
+The try block does not have to be used with a catch block.
+However, if there is no catch block, the exception object can not be caught.
+The following example removes the catch block.
+The try block can not be used alone, so I used a finally block instead.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			method1();
+		} <strong>finally</strong> {
+			System.out.println("Executing a finally block");
+		}
+		
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Since there is no catch block, the exception object is passed to the JVM and the program terminates abnormally.
+We can see in the output that the finally block is executed and the exception is passed to the JVM.
+</p>
+    
+<pre class="console"><strong class="console-result">Executing a finally block
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+        at net.java_school.exception.Test.method3(Test.java:14)
+        at net.java_school.exception.Test.method2(Test.java:10)
+        at net.java_school.exception.Test.method1(Test.java:6)
+        at net.java_school.exception.Test.main(Test.java:20)
+</strong></pre>
+
+<p>
+Add a catch block to handle exceptions.
+Modify the catch block so that it catches any exception in the try block.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			method1();
+		} catch (<strong>Exception</strong> e) {
+			System.out.println(e.getMessage());
+		} finally {
+			System.out.println("Executing a finally block");
+		}
+		
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Since an exception has occurred, the catch block is executed and the finally block is executed.
+Since the catch block has caught the exception object, the exception object is no longer passed anywhere.
+</p>
+    
+<pre class="console"><strong class="console-result">/ by zero
+Executing a finally block
+Normal Termination
+</strong></pre>
+
+<p>
+The catch block can be overwritten as if ~ else if ~ else if ....
+However, you should pay attention to the hierarchical relationship of the exception class when using it in this way.
+When an exception occurs in a try block, the catch block tries to catch the exception in order from top to bottom.
+If the preceding exception class is hierarchically above the exception class that follows, then there is no reason for the code to go down.
+So the following code causes a compile error.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			method1();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} catch (<strong>ArithmeticException</strong> e) { 
+			System.out.println(e.getMessage());
+		} finally {
+			System.out.println("Executing a finally block");
+		}
+		
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+You can compile by changing the order of the catch block as shown below.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		int a = 12 / 0;
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			method1();
+		} catch (<strong>ArithmeticException</strong> e) {
+			System.out.println(e.getMessage());
+		} catch (<strong>Exception</strong> e) {
+			System.out.println(e.getMessage());
+		} finally {
+			System.out.println("Executing a finally block");
+		}
+		
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+When you run the program, a catch (ArithmeticException e) {..} block is executed and e.getMessage () of this block is printed.
+The finally block is then executed and the last line of the main is executed.
+</p>
+    
+<pre class="console"><strong class="console-result">/ by zero
+Executing a finally block
+Normal Termination
+</strong></pre>
+
+<p>
+Modify the same example to the checked exception example.
+You will get a compile error in the highlighted section.
+The compilation error message is Unhandled exception type ClassNotFoundException.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		<strong>Class.forName("java.lang.Boolean");</strong>
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Class.forName ("string"); is not a new Java grammar.
+There is a <em>java.lang.Class</em> in the Java API, and this class has a forName () static method.
+The forName () method takes a string as an argument, which is the full name of the Java class (FQCN).
+The forName () method causes the class loader to load the class corresponding to the argument.
+If the class loader does not find the class corresponding to the argument, 
+the JVM creates a ClassNotFoundException exception object and throws it to the Class.forName ("string") line.
+In the example, the class corresponding to "java.lang.Boolean" passed as argument to forName () belongs to the Java API, 
+so the class loader looks for this class without the cp or classpath option.
+The purpose of this class in this example is not important.
+The important thing is the following.
+There is a <em>throws ClassNotFoundException</em> in the class declaration of the forName () method.
+Because ClassNotFoundException is a checked exception that does not inherit RuntimeException, 
+the method that calls forName () must implement code that handles this exception.
+Let's modify the code using the code assist feature in Eclipse.
+If you put your cursor in Class.forName (), Eclipse will give you a solution. 
+If you click on the second method, the code changes as below and the compile error disappears.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		method3();
+	}
+	
+	public static void method3() {
+		<strong>try {
+			Class.forName("java.lang.Boolean");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</strong>
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Execution normally ends without any exception.
+This is because a class called java.lang.Boolean exists in the Java API.
+</p>
+    
+<pre class="console"><strong class="console-result">Normal Termination
+</strong></pre>
+
+<p>
+Reverses the previous code and handles the exception in the first way Eclipse suggests.
+Then a compilation error occurs on <em>method3();</em> line in method2().
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	public static void method2() {
+		<strong>method3();</strong>
+	}
+	
+	public static void method3() <strong>throws ClassNotFoundException</strong> {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+The compilation error is <em>Unhandled exception type ClassNotFoundException</em>.
+A method that calls method3() must handle a ClassNotFoundException because there is a <em>throws ClassNotFoundException</em> in method3() method declaration.
+Place the cursor where the compilation error occurs and click on the second of the solutions Eclipse suggests.
+Then the source is changed as below and the compilation error disappears.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		method2();
+	}
+	
+	<strong>public static void method2() {
+		try {
+			method3();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}</strong>
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Revert the previous code and this time click on the first method that Eclipse suggests.
+Then, the source is changed as below, and a compilation error occurs on <em>method2();</em> line in method1() method.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		<strong>method2();</strong>
+	}
+	
+	public static void method2() <strong>throws ClassNotFoundException</strong> {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Place the cursor where the compilation error occurs and click on the second of the solutions Eclipse suggests.
+The code changes as follows.
+</p>    
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() {
+		<strong>try {
+			method2();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</strong>
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+You can see that it terminates normally without any exception.
+</p>
+
+<pre class="console"><strong class="console-result">Normal Termination
+</strong></pre>
+
+<p>
+After reverting the previous code, place the cursor on the <em>method2();</em> line in method1() and click on the first method Eclipse suggests.
+A compilation error occurs in the main method.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() <strong>throws ClassNotFoundException</strong> {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) {
+		<strong>method1();</strong>
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+In the main method, place the cursor where the compilation error occurs and click the first method that Eclipse suggests.
+The source is changed as follows.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() throws ClassNotFoundException {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean");
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+If you execute it, you can see that it terminates normally without any exception.
+</p>
+
+<pre class="console"><strong class="console-result">Normal Termination
+</strong></pre>
+
+<p>
+Modify the code so that the exception occurs as follows:
+The class java.lang.Boolean2 does not exist in the Java API.
+</p>
+    
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() throws ClassNotFoundException {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("<strong>java.lang.Boolean2</strong>");
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException {
+		method1();
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+When executed, the exception object reaches the main method and does not catch an exception in the main method, so the exception object finally reaches the JVM.
+As a result, the program ends abnormally.
+</p>
+    
+<pre class="console"><strong class="console-result">Exception in thread "main" java.lang.ClassNotFoundException: java.lang.Boolean2
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:217)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+        at java.lang.Class.forName0(Native Method)
+        at java.lang.Class.forName(Class.java:190)
+        at net.java_school.exception.Test.method3(Test.java:13)
+        at net.java_school.exception.Test.method2(Test.java:10)
+        at net.java_school.exception.Test.method1(Test.java:6)
+        at net.java_school.exception.Test.main(Test.java:18)
+</strong></pre>
+
+<p>
+Modify the code to catch exceptions in the main method.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() throws ClassNotFoundException {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean2");
+	}
+	
+	<strong>public static void main(String[] args) {
+		try {
+			method1();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Normal Termination");
+	}</strong>
+
+}
+</pre>
+
+<p>
+The e.printStackTrace (); method will print to the console as follows:
+</p>
+    
+<pre class="console"><strong class="console-result">java.lang.ClassNotFoundException: java.lang.Boolean2
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:217)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+        at java.lang.Class.forName0(Native Method)
+        at java.lang.Class.forName(Class.java:190)
+        at net.java_school.exception.Test.method3(Test.java:14)
+        at net.java_school.exception.Test.method2(Test.java:10)
+        at net.java_school.exception.Test.method1(Test.java:6)
+        at net.java_school.exception.Test.main(Test.java:19)
+Normal Termination
+</strong></pre>
+
+<p>
+This is the same as the output message when the exception object reaches the JVM, but it is <strong>not</strong> an abnormal termination.
+</p>
+
+<p>
+If you remove the catch block from the main method, you will get a compile error.
+ClassNotFoundException is a checked exception and if you do not control the exception at the caller, you will get a compilation error.
+</p>
+
+<p>
+A checked exception object can not escape from a method that does not have a <em>throws checked exception class</em> declared in the class declaration.
+</p>    
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() throws ClassNotFoundException {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean2");
+	}
+	
+	public static void main(String[] args) {
+		try {
+			<strong>method1();</strong>
+		} finally {
+			System.out.println("Executing a finally block");
+		}
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Put the catch block back into your code to avoid compilation errors.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.exception;
+
+public class Test {
+
+	public static void method1() throws ClassNotFoundException {
+		method2();
+	}
+	
+	public static void method2() throws ClassNotFoundException {
+		method3();
+	}
+	
+	public static void method3() throws ClassNotFoundException {
+		Class.forName("java.lang.Boolean2");
+	}
+	
+	public static void main(String[] args) {
+		try {
+			method1();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("Executing a finally block");
+		}
+		System.out.println("Normal Termination");
+	}
+
+}
+</pre>
+
+<p>
+Because there is no java.lang.Boolean2 class, 
+a ClassNotFoundException exception occurs, e.printStackTrace(); is executed in the catch block, 
+the finally block is executed, and the last line of the main method is executed.
+</p>
+
+<pre class="console"><strong class="console-result">java.lang.ClassNotFoundException: java.lang.Boolean2
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:217)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+        at java.lang.Class.forName0(Native Method)
+        at java.lang.Class.forName(Class.java:190)
+        at net.java_school.exception.Test.method3(Test.java:14)
+        at net.java_school.exception.Test.method2(Test.java:10)
+        at net.java_school.exception.Test.method1(Test.java:6)
+        at net.java_school.exception.Test.main(Test.java:19)
+Executing a finally block
+Normal Termination
+</strong></pre>
+
+<p>
+You will often see this type of message printed by e.printStackTrace ();
+Most errors can be solved by guessing the basic Java syntax.
+If you can not solve it, then Googleing is the right answer.
+The ClassNotFoundException object is created when the class loader can not find the class.
+</p>
+    
+<h3>Custom Exception</h3>
+
+<p>
+When an exception occurs, the JVM generates an exception object from the exception class of the Java API and throws the exception to the generated code.
+However, the exception class can be created by the programmer as needed.
+This is called a "custom exception".
+The following is an exception class to be used in an exceptional situation where the balance in the bank program is insufficient.<a href="#comments"><sup>3</sup></a>
+</p>
+
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class InsufficientBalanceException extends Exception {
+
+	public InsufficientBalanceException() {
+		super();
+	}
+	
+	public InsufficientBalanceException(String message, Throwable cause,
+		boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+	
+	public InsufficientBalanceException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	public InsufficientBalanceException(String message) {
+		super(message);
+	}
+	
+	public InsufficientBalanceException(Throwable cause) {
+		super(cause);
+	}
+
+}
+</pre>
+
+<p>
+The JVM does not create a user exception object.
+Therefore, you must explicitly create a custom exception object in code.
+Here is the code to create an exception object from a custom exception class:
+</p>
+
+<pre class="prettyprint">
+throw new InsufficientBalanceException("There is not enough balance.");
+</pre>
+
+<h3>Test</h3>
+
+<p>
+Write a class that executes as shown below.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+C:\java\Exception\bin&gt;java net.java_school.bank.Test
+$ 1 Deposit: java net.java_school.bank.Test d 1
+$ 1 Withdrawal: java net.java_school.bank.Test w 1
+
+C:\java\Exception\bin&gt;java net.java_school.bank.Test d 3
+You can not deposit more than the maximum balance.
+The balance is $ 1.
+
+C:\&gt;java net.java_school.bank.Test w 2
+There is not enough balance.
+The balance is $ 1.
+</pre>
+
+<p>
+Complete the main method.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.bank;
+
+public class Test {
+	public static void main(String[] args) {
+		int MAX_BALANCE = 3; //Maximum balance amount
+		int balance = 1; //Initial balance
+		int amount = 0; //Deposit amount or amount of withdrawal
+		
+		if (args.length &lt; 2) {
+		System.out.println("Deposit $ 1: java net.java_school.bank.Test d 1");
+		System.out.println("Withdrawal $ 1: java net.java_school.bank.Test w 1");
+		return;
+	}
+	
+	//TODO
+
+}        
+</pre>
+
+<p>
+Create and apply the appropriate custom exception class in the code above.
+</p>
+
+<span id="comments">Comments</span>
+<ol>
+	<li>A block is a unit of code that begins with {and ends with}. In Java, variables declared in a block are valid only within blocks.</li>
+	<li>RuntimeException and its subclasses are called unchecked exceptions, and other exceptions are called checked exceptions.</li>
+	<li>You can easily create a custom exception class, InsufficientBalanceException, by using the code assist feature in Eclipse. After creating the package and class declaration as above, place the cursor in the class body, right-click and select Source, Generate constructor from superclass..., and you can get the above code.</li>
+</ol>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://java.sun.com/docs/books/tutorial/essential/exceptions/definition.html">http://java.sun.com/docs/books/tutorial/essential/exceptions/definition.html</a></li>
+</ul>
+</article>

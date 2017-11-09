@@ -1,0 +1,1660 @@
+<article>
+
+<h1>JSP</h1>
+
+<ol>
+	<li><a href="#JSP">JSP란?</a></li>
+	<li><a href="#Directives">지시어(Directives)</a>
+		<ol>
+			<li><a href="#page_Directives">page 지시어</a></li>
+			<li><a href="#include_Directives">include 지시어</a></li>
+			<li><a href="#taglib_Directives">taglib 지시어</a></li>
+		</ol>
+	</li>
+	<li><a href="#Scripting">스트립팅(Scripting)</a>
+		<ol>
+			<li><a href="#Declarations">선언(Declarations)</a></li>
+			<li><a href="#Expressions">표현식(Expressions)</a></li>
+			<li><a href="#Scriptlets">스크립틀릿(Scriptlets)</a></li>
+		</ol>
+	</li>
+	<li><a href="#Actions">액션(Actions)</a>
+		<ol>
+			<li><a href="#useBean">jsp:useBean</a></li>
+			<li><a href="#setProperty">jsp:setProperty</a></li>
+			<li><a href="#getProperty">jsp:getProperty</a></li>
+			<li><a href="#param">jsp:param</a></li>
+			<li><a href="#include">jsp:include</a></li>
+			<li><a href="#forward">jsp:forward</a></li>
+			<!-- <li><a href="#plugin">jsp:plugin</a></li>-->
+		</ol>
+	</li>
+	<li><a href="#Implicit_Objects">내재 객체(Implicit Objects)</a>
+		<ol>
+			<li><a href="#out">out</a></li>
+			<li><a href="#request">request</a></li>
+			<li><a href="#response">response</a></li>
+			<li><a href="#pageContext">pageContext</a></li>
+			<li><a href="#session">session</a></li>
+			<li><a href="#application">application</a></li>
+			<li><a href="#config">config</a></li>
+			<li><a href="#page">page</a></li>
+			<li><a href="#exception">exception</a></li>
+		</ol>
+	</li>
+	<li><a href="#JSP_Confirm">JSP 문법에서 꼭 확인해야 할 사항들</a>
+		<ol>
+			<li><a href="#include_vs_include">include 지시어와 include 액션의 차이점</a></li>
+			<li><a href="#ServletContext_Web-App">서블릿컨텍스트와 웹 애플리케이션의 관계</a></li>
+			<li><a href="#pageDirectives_session-attr">page 지시자의 session 속성의 의미</a></li>
+			<li><a href="#useBean_scope">jsp:useBean 액션의 scope속성의 의미</a></li>
+		</ol>
+	</li>
+	<li><a href="#examples">JSP 예제</a>
+		<ol>
+			<li><a href="#error-handling-1">초기 서블릿/JSP 스펙에서 JSP 에러 핸들링</a></li>
+			<li><a href="#error-handling-2">현재 서블릿/JSP 스펙에서 JSP 에러 핸들링</a></li>
+			<li><a href="#cookie-example">쿠키</a></li>
+			<li><a href="#include-directive-example">include 지시어를 이용하는 페이지 분리</a></li>
+			<li><a href="#login-process">자바 빈즈를 이용한 로그인 (세션 이용)</a></li>
+			<li><a href="#login-process-2">'자바 빈즈를 이용한 로그인(세션 이용)'을 액션을 사용하도록 수정</a></li>
+			<li><a href="#fileList-example">업로드된 파일을 보여주는 JSP</a></li>
+			<li><a href="#download-example">파일을 다운로드하는 JSP</a></li>
+			<li><a href="#jsp-file-upload">JSP 파일 업로드</a></li>
+		</ol>
+	</li>
+</ol>
+
+<h2 id="JSP">1. JSP란?</h2>
+
+<p>
+우리는 이미 <a href="Creating-a-new-web-application">새로운 웹 애플리케이션 만들기</a>에서 myapp 애플리케이션을 ROOT 애플리케이션으로 변경했다.
+(myapp 애플리케이셔의 DocuementBase는 C:/www/myapp이다.)
+아래에 나오는 모든 예제는 서블릿 장과 마찬가지로 ROOT 애플리케이션에서 실습하자. 
+JSP는 C:/www/myapp나 서브 디렉터리에서, 자바 소스는 C:/www/myapp/WEB-INF/src에 자바 패키지 이름의 서브 디렉토리에 생성하자. 
+이클립스를 사용하지 않고 일반 에디터를 사용하는 게 더 효과적이다.
+</p>
+
+<p>
+JSP는 마이크로소프트의 ASP가 인기를 끌자 ASP에 대한 자바측 대응 기술로 등장했다.
+
+JSP는 서블릿 기반 기술이다.
+엄밀히 말해서, JSP 파일이 클라이언트의 요청에 응답하는 건 아니다.
+톰캣과 같은 서블릿 컨테이너는 JSP를 재료로 서블릿<sup>1</sup>을 만들고, 이 서블릿이 클라이언트의 요청에 응답한다.
+
+서블릿은 동적으로 HTML 페이지를 만들어주는 기술이지만 자바 코드와 HTML 코드를 함께 작성하는 데에 어려움이 있다.
+서블릿은 HTML 디자인을 자바 문자열로 만들어서 출력스트림의 메서드에 인자로 전달해야만 한다.
+이것은 HTML 디자인이 자바 코드에 삽입된다는 의미이다.
+
+JSP에선 이와 반대다.
+자바 코드가 HTML 디자인에 삽입된다.
+이는 JSP가 자바 코드와 HTML 디자인을 함께 작성하는 데 있어 서블릿보다 쉽게 작성할 수 있음을 의미한다.<sup>2</sup>
+JSP는 복잡한 디자인을 가진, 동적으로 만들어지는 HTML을 사용자에게 보여줘야 할 때 유용한 기술이다.
+</p>
+
+<p>
+ROOT 애플리케이션의 최상위 디렉터리에 다음 hello.jsp 파일을 만들고 http://localhost:port/hello.jsp를 방문한다.
+</p>
+
+<em class="filename">/hello.jsp</em>
+<pre class="prettyprint">
+&lt;html&gt;
+&lt;body&gt;
+Hello World!
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+톰캣이 /hello.jsp 요청을 처음 받을 때, 톰캣은 다음과 같이 hello.jsp로부터 서블릿을 만든다. 
+</p>
+
+<pre class="prettyprint">
+// .. omit ..
+
+try {
+  response.setContentType("text/html");
+  pageContext = _jspxFactory.getPageContext(this, request, response,
+  			null, true, 8192, true);
+  _jspx_page_context = pageContext;
+  application = pageContext.getServletContext();
+  config = pageContext.getServletConfig();
+  session = pageContext.getSession();
+  out = pageContext.getOut();
+  _jspx_out = out;
+
+  out.write("&lt;html&gt;\n");
+  out.write("&lt;body&gt;\n");
+  out.write("Hello, World!\n");
+  out.write("&lt;/body&gt;\n");
+  out.write("&lt;/html&gt;\n");
+} catch (java.lang.Throwable t) {
+  if (!(t instanceof javax.servlet.jsp.SkipPageException)){
+    out = _jspx_out;
+    if (out != null &amp;&amp; out.getBufferSize() != 0)
+      try {
+        if (response.isCommitted()) {
+          out.flush();
+        } else {
+          out.clearBuffer();
+        }
+      } catch (java.io.IOException e) {}
+    if (_jspx_page_context != null) _jspx_page_context.handlePageException(t);
+    else throw new ServletException(t);
+  }
+} finally {
+  _jspxFactory.releasePageContext(_jspx_page_context);
+}
+
+// .. omit ..
+</pre>
+
+<p>
+hello.jsp가 ROOT애플리케이션의 최상위 디렉토리에 있기에, 만들어진 서블릿의 전체 경로는 {톰캣홈}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java이다.
+톰캣은 이 서블릿을 컴파일하고, 서블릿 바이트코드로부터 객체를 생성하고, 생성한 서블릿 객체의 서비스 메서드를 호출한다.
+/hello.jsp 요청이 다시 오면, 톰캣은 hello.jsp 파일이 변경되었는지를 체크한다.
+hello.jsp가 변경되지 않았다면, 톰캣은 서블릿 객체가 이미 로딩되어 있는지 확인한다.
+만일 객체가 메모리에 있다면, 톰캣은 서블릿 객체의 서비스 메서드를 호출한다.
+로딩되지 않았다면 톰캣은 서블릿 객체를 생성한다.
+hello.jsp가 변경되었다면, 톰캣은 hello.jsp로부터 서블릿 자바 소스를 만든다.
+</p>
+
+<h2 id="Directives">2. 지시어</h2>
+
+<p>
+지시어(Directives)는 JSP 페이지의 전반적인 정보를 서블릿 컨테이너에 제공한다.
+지시어는 page, include, taglib 3개가 있다.
+
+<h3 id="page_Directives">2.1 page 지시어</h3>
+
+<pre class="prettyprint no-border">
+&lt;%@ page {attribute="value"} %&gt;
+</pre>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 190px;">attribute="value"</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">language="scriptLanguage"</td>
+	<td class="table-in-article-td">페이지를 컴파일할 서버 측 언어 (대부분 java)</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">import="importList"</td>
+	<td class="table-in-article-td">페이지가 import하는 자바 패키지 또는 자바 패키지 리스트. 리스트는 콤마(,)로 구분한다.</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">session="true | false"</td>
+	<td class="table-in-article-td">페이지가 세션 데이터를 이용하는지 여부 (디폴트 값은 true)</td>
+</tr>
+<!-- 
+<tr>
+	<td>buffer="none | size in kb"</td>
+	<td>출력 스트림의 버퍼크기를 결정(디폴트 8kb)</td>
+</tr>
+<tr>
+	<td>autoFlush="true | false"</td>
+	<td>출력버퍼가 자동적으로 비워지는가 또는 버퍼가 차면 익셉션을 발생할것인가 여부를 결정 (디폴트 true)</td>
+</tr>
+<tr>
+	<td>isThreadSafe="true | false"</td>
+	<td>서블릿/JSP 엔진에게 이 페이지가 일시에 다중으로 서비스할 수 있는가의 여부를 기술(디폴트 true, 만약 이 값이 false로 셋팅되었다면 SingleThreadModel 로 페이지가 작동)
+	</td>
+</tr>
+<tr>
+	<td>info="text"</td>
+	<td>JSP페이지에 관한 정보를 나타냅니다.
+	Servlet.getServletInfo() 메서드를 이용해 접근가능.
+	</td>
+</tr>
+-->
+<tr>
+	<td class="table-in-article-td">errorPage="error_uri"</td>
+	<td class="table-in-article-td">JSP 예외를 다루는 에러 페이지의 상대경로</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">isErrorPage="true | false"</td>
+	<td class="table-in-article-td">페이지가 에러 페이지인지 여부 (디폴트 값은 false)</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">contentType="ctinfo"</td>
+	<td class="table-in-article-td">응답의 MIME 타입과 캐릭터셋 설정</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">pageEncoding="charset"</td>
+	<td class="table-in-article-td">JSP 파일의 캐릭터셋. contentType의 캐릭터셋과 동일하게 지정한다.</td>
+</tr>
+</table>
+
+<p>
+생략하면 디폴트 값이 적용되는 속성이 많다.
+따라서 모든 속성을 설정할 필요는 없다.
+contentType 속성은 단 한 번만 설정할 수 있고 대부분 첫 번째 페이지 지시어에서 설정한다.
+import 속성은 여러 번 지정할 수 있다.
+</p>
+
+<pre>
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.util.HashMap,java.util.ArrayList" %&gt;
+</pre>
+
+<p>
+위 예에서는 page 지시어가 2개 있다.
+위의 첫 번째 지시어는 응답 컨텐츠 타입을 text/html (HTML 문서)로, 응답 컨텐츠의 캐릭터셋을 UTF-8로 설정했다.
+UTF-8은 현재 인터넷에서 가장 인기있는 문자셋이다.
+
+두번째 페이지 지시어는 import 속성만을 설정한다.
+JSP의 자바 코드는 java.util.HashMap과 java.util.ArrayList가 필요할 때 import 지시어를 사용한다.
+위 코드를 아래와 같이 바꿀 수 있다.
+</p>
+ 
+<pre>
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.util.HashMap" %&gt;
+&lt;%@ page import="java.util.ArrayList" %&gt;
+</pre>
+
+<p>
+두 번째가 보기에 편하다. 그래서 이렇게 많이 코딩한다.
+</p>
+
+<h3 id="include_Directives">2.2 include 지시어</h3>
+
+<p>
+inlcude 지시어는 서블릿 컨테이너가 JSP로 서블릿을 만들 때 서블릿에 문서를 삽입하기 위해 사용된다.
+삽입되는 문서는 웹 애플리케이션내에 존재해야 한다.
+
+<pre class="prettyprint no-border">
+&lt;%@ include file="header.jsp" %&gt;
+</pre>
+
+<h3 id="taglib_Directives">taglib 지시어</h3>
+
+<p>
+taglib 지시어는 JSP 페이지가 사용하는 태그 라이브러리를 지정한다.
+태그 라이브러리란 서블릿이 만들어질 때 자바 코드로 바뀌는 태그를 만드는 기술이다.
+JSP 파일을 작성하면서 자바 코드 대신 태그를 사용할 수 있다면, HTML 디자인을 효율적으로 관리할 수 있다.
+그러나 태그 라이브러리가 너무 많이 만들어지면서, 자바 프로그래머는 태그 라이브러리 사용을 점점 더 꺼려하는 부작용이 발생했다.
+</p>
+
+<p>
+태그 라이브러리는 prefix와 uri를 사용하여 자신의 태그 집합을 유일하게 구별되게 한다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;%@ taglib <strong>uri</strong>="tagLibraryURI" <strong>prefix</strong>="tagPrefix" %&gt;
+</pre>
+
+<p>
+uri는 태그 라이브러리를 고유하게 이름짓는 URI 정보다.
+prefix는 JSP안에서 사용한 태그 라이브러리를 구별하는데 쓰인다.
+</p>
+
+<p>
+태그 라이브러리를 만드는 방법은 다루지 않겠다.
+하지만, JSP 스펙에 포함된 JSTL(JavaServer Pages Standard Tag Library)은 <a href="/jsp-pjt">JSP Project</a>에서 다룬다.  
+</p>
+
+<h2 id="Scripting">3. 스크립팅(Scripting)</h2>
+
+<p>
+스크립팅은 JSP에서 HTML에 자바코드 조각을 삽입하기 위해 사용된다.
+스크립팅에는 선언(Declarations), 표현식(Expressions), 스크립틀릿(Scriptlets) 3가지가 있다.
+</p>
+
+<h3 id="Declarations">선언(Declarations)</h3>
+
+<p>
+선언은  JSP 페이지내에서 서블릿 클래스의 변수와 메서드를 선언하기 위해선 사용된다.
+다음 선언은 서블릿 클래스의 인스턴스 변수가 된다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;%! String name = new String("길동"); %&gt;
+</pre>
+
+<p>
+다음 선언은 서블릿 클래스의 인스턴스 메서드가 된다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;%! 
+public String getName() {
+	return name;
+} 
+%&gt;
+</pre>
+
+<h3 id="Expressions">3.2 표현식(Expressions)</h3>
+
+<p>
+표현식은 서블릿 컨테이너에 의해 문자열로 바뀐다.
+만약 표현식이 문자열로 변환되지 않는다면 ClassCastException이 발생한다.
+다음 표현식은 웹 브라우저에 "Hello, 길동"을 출력한다.
+</p>
+
+<pre class="prettyprint no-border">
+Hello, &lt;%=getName()%&gt;
+</pre>
+
+
+<h3 id="Scriptlets">3.3 스크립틀릿(Scriptlets)</h3>
+
+<p>
+스크립틀릿 안에서는 자바 문장을 자유럽게 기술할 수 있다.
+&lt;%...%&gt;안의 자바 코드는 서블릿으로 변환될때 _jspSevice() 메서드에 포함된다.
+</p>
+
+<h2 id="Actions">4. 액션(Actions)</h2>
+
+<p>
+액션은 객체를 변경하거나 생성하기 위해 사용된다.
+</p>
+
+<h3 id="useBean">4.1 &lt;jsp:useBean&gt;</h3>
+
+<p>
+이 액션은 JSP 빈즈를 생성하거나 생성된 JSP 빈즈를 찾는다.
+&lt;jsp:useBean&gt;은 우선 scope과 id를 사용하는 객체를 찾는다.
+만약 객체를 찾지 못하면 주어진 scope와 id 속성으로 객체를 생성한다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;jsp:useBean id="name" scope="application" class="net.java_school.db.dbpool.OracleConnectionManager" /&gt;
+</pre>
+
+<strong>&lt;jsp:useBean&gt;의 속성</strong>
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 70px;">속성</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">id</td>
+	<td class="table-in-article-td">같은 scope에서 객체 인스턴스를 식별하기 위한 키</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">scope</td>
+	<td class="table-in-article-td">생성된 빈의 레퍼런스가 유효한 범위, page(기본값), request, session, application</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">class</td>
+	<td class="table-in-article-td">FQCN(Fully Qualified Class Name)</td>
+</tr>
+<!-- <tr>
+	<td class="table-in-article-td">beanName</td>
+	<td class="table-in-article-td">java.beans.Beans 클래스의 instantiate() 메서드의 아규먼트로 사용할 빈의 이름을 지정</td>
+</tr> -->
+<tr>
+	<td class="table-in-article-td">type</td>
+	<td class="table-in-article-td">class 속성에서 정의된 클래스의 수퍼 클래스 또는 인터페이스</td>
+</tr>
+</table>
+
+<p>
+&lt;jsp:useBean id="cart" scope="request" class="example.Cart" /&gt;는 다음 스크립틀렛과 같다.
+</p>
+
+<pre class="prettyprint">
+&lt;%
+    example.Cart cart;
+    cart = (example.Cart) request.getAttribute("cart");
+    if (cart == null) {
+        cart = new example.Cart();
+        request.setAttribute("cart", cart);
+    }
+%&gt;
+</pre>
+
+<h3 id="setProperty">4.2 &lt;jsp:setProperty&gt;</h3>
+
+<p>
+이 액션은 자바빈의 속성값을 셋팅하는 데 쓰인다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:useBean id="login" scope="page" class="example.User" /&gt;
+&lt;jsp:setProperty name="login" property="passwd" /&gt;
+</pre>
+
+<p>
+위 코드는 아래 스크립틀렛과 같다.
+</p>
+
+<pre class="prettyprint">
+&lt;%
+    example.User user;
+    user = (example.User) pageContext.getAttribute("user");
+    if (user == null) {
+        user = new example.User();
+        pageContext.setAttribute("user", user);
+    }
+    String _jspParam;
+    _jspParam = request.getParameter("passwd");
+    if (_jspParam != null &amp;&amp; !_jspParam.equals(""))
+        user.setPasswd(_jspParam);
+%&gt;
+</pre>
+
+<strong>&lt;jsp:setProperty&gt;의 속성</strong>
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 70px;">속성</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">name</td>
+	<td class="table-in-article-td">&lt;jsp:useBean&gt;에서 정의된 빈 인스턴스의 이름</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">property</td>
+	<td class="table-in-article-td">
+값을 변경하고자 하는 빈 속성
+property="*"라면, HTTP 요청과 함께 전달된 파라미터의 이름과 매칭되는 모든 setter 메서드를 호출하여 빈의 속성값을 수정한다.
+하지만 파라미터 값이 ""라면 이에 상응하는 빈의 속성은 수정되지 않는다.
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">param</td>
+	<td class="table-in-article-td">
+param 속성값은 HTTP 요청의 파라미터 이름 중 하나이다.
+property 속성으로 설정된 빈즈 속성의 값은 param 속성값으로 설정된다.
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">value</td>
+	<td class="table-in-article-td">value에 정의된 문자열로 빈의 속성을 변경한다.</td>
+</tr>
+</table>
+
+<p>
+다음과 같은 폼이 있다고 가정하자.
+</p>
+
+<pre class="prettyprint">
+&lt;form action="register.jsp" method="post"&gt;
+    &lt;input type="text" name="id" /&gt;
+    &lt;input type="password" name="passwd" /&gt;
+&lt;/form&gt;
+</pre>
+
+<p>
+register.jsp에 사용자가 폼에 입력 한 값을 수신하는 다음 액션이 있다고 가정하자.
+</p>
+
+<pre>
+&lt;jsp:setProperty name="user" property="*" /&gt;
+</pre>
+
+<p>
+위 액션은 아래 스크립틀렛과 동일하다.
+</p>
+
+<pre class="prettyprint">
+&lt;%
+    String _jspParam;
+    _jspParam = request.getParameter("passwd");
+    if ( _jspParam != null &amp;&amp; !_jspParam.equals("") )
+        user.setPasswd(_jspParam);
+    _jspParam = request.getParameter("id");
+    if ( _jspParam != null &amp;&amp; !_jspParam.equals("") )
+        user.setId(_jspParam);
+%&gt;
+</pre>
+
+<p>
+다음과 같은 폼이 있다고 가정하자.
+</p>
+
+<pre class="prettyprint">
+&lt;form action="signUp.jsp" method="post"&gt;
+    &lt;input type="text" name="member_id" /&gt;
+&lt;/form&gt;
+</pre>
+
+<p>
+폼 입력 값을 받는 signUp.jsp에 다음 액션이 있다고 가정하자.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;jsp:setProperty name="user" property="id" param="member_id" /&gt;
+</pre>
+
+<p>
+위 액션은 다음 스크립틀렛과 동일하다.
+</p>
+
+<pre class="prettyprint">
+&lt;%
+    String _jspParam;
+    _jspParam = request.getParameter("member_id");
+    if (_jspParam != null &amp;&amp; !_jspParam.equals(""))
+        user.setId(_jspParam);
+%&gt;
+</pre>
+
+<p>
+위의 예제를 보듯이 빈의 멤버 변수와 폼의 파라미터 이름이 같지 않을 때 param 속성을 사용한다.
+</p>
+
+<p>
+다음은 setProperty 예제이다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:setProperty name="user" property="id" value="admin" /&gt;
+</pre>
+
+<p>
+위 setProperty 액션은 다음 스크렙틀렛과 같다.
+</p>
+
+<pre class="prettyprint">
+&lt;%
+    user.setId("admin");
+%&gt;
+</pre>
+
+<p>
+위의 예제와 같이 setProperty 액션은 빈의 속성 값을 설정하는데 사용한다.
+</p>
+
+<h3 id="getProperty">&lt;jsp:getProperty&gt;</h3>
+
+<p>
+getProperty 액션은 빈의 속성값을 가져와서 출력 스트림에 넣는다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:getProperty name="name" property="propertyName" /&gt;
+</pre>
+
+<strong>&lt;jsp:getProperty&gt; 액션 속성</strong>
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 70px;">속성</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">name</td>
+	<td class="table-in-article-td">빈 인스턴스의 이름</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">property</td>
+	<td class="table-in-article-td">빈 인스턴스의 속성</td>
+</tr>
+</table>
+
+<h3 id="param">4.4 &lt;jsp:param&gt;</h3>
+
+<p>
+이 액션은 &lt;jsp:include&gt;와 &lt;jsp:forward&gt;에 넘길 파라미터를 정의할 때 사용한다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:param name="name" value="value" /&gt;
+</pre>
+
+<h3 id="include">4.5 &lt;jsp:include&gt;</h3>
+
+<p>
+이 액션은 JSP 페이지에 정적(HTML) 혹은 다이나믹 웹 컴포넌트(JSP,Servlets)를 추가할때 사용한다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:include page="urlSpec" flush="true"&gt;
+	&lt;jsp:param ... /&gt;
+&lt;/jsp:include&gt;
+</pre>
+
+<strong>&lt;jsp:include&gt; 액션 속성</strong>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 70px;">속성</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">page</td>
+	<td class="table-in-article-td">인클루드 되는 리소스의 상대경로</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">flush</td>
+	<td class="table-in-article-td">버퍼가 비워지는 여부</td>
+</tr>
+</table>
+
+<h3 id="forward">4.6 &lt;jsp:forward&gt;</h3>
+
+<p>
+이 액션은 포워딩에 사용된다.
+포워딩이란 클라이언트로부터 요청을 받은 자원이 제어권을 다른 자원으로 넘기는 것을 말한다.
+&lt;jsp:forward&gt;은 &lt;jsp:param&gt;를 자식 엘리먼트로 가질 수 있는데, 포워딩할 대상 자원으로 파라미터를 전달하기 위해서다.
+page 속성은 포워딩할 대상 자원의 상대 주소다.
+</p>
+
+<pre class="prettyprint">
+&lt;jsp:forward page="relativeURL"&gt;
+	&lt;jsp:param .../&gt;
+&lt;/jsp:forward&gt;
+</pre>
+
+<!--  
+자바 애플릿은 과거의 기술이 되었다.
+그래서 이 액션 태그 역시 많이 쓰이지 않은 기능이므로 생략한다. 2016.03.13
+<h3 id="plugin">&lt;jsp:plugin&gt;</h3>
+&lt;jsp:plugin&gt; 은 다운로드나 애플릿,자바빈의 실행을 일으키는 HTML 코드를 생성하는데 사용된다.
+이 액션은 한번 해석되어 &lt;object&gt; 나 &lt;embed&gt;로 바뀐다.
+속성은 바뀌는 코드에 표현을 위한 설정데이터로 제공된다.
+
+<pre class="prettyprint">
+&lt;jsp:plugin type="pluginType" code="classFile" codebase="relativeURL"&gt;
+   &lt;jsp:params&gt;..
+   &lt;/jsp:params&gt;
+&lt;/jsp:plugin&gt;
+</pre>
+
+<strong>&lt;jsp:plugin&gt;의 속성</strong>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th" style="width: 70px;">속성</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">type</td>
+	<td class="table-in-article-td">인클루드할 플러그인 타입 예를 들면 applet</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">code</td>
+	<td class="table-in-article-td">플러그인이 실행할 클래스의 이름</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">codebase</td>
+	<td class="table-in-article-td">클래스의 절대 또는 상대경로</td>
+</tr>
+</table>
+-->
+
+<h2 id="Implicit_Objects">5. 내재 객체(Implicit Objects)</h2>
+
+<p>
+내재 객체는 JSP에서 사용되는 객체로 참조값을 얻기위한 작업없이 즉시 사용할 수 있다.
+</p>
+
+<h3 id="out">5.1 out</h3>
+
+<p>
+javax.servlet.jsp.JspWriter 추상 클래스 타입 인스턴스의 레퍼런스이다.
+응답 스트림에 데이터를 쓰는 데 사용한다.
+아래와 같이 helloworld.jsp를 ROOT 애플리케이션의 최상위 디렉터리에 작성한 후 http://localhost:port/helloWorld.jsp를 방문한다.
+</p>
+
+<em class="filename">/helloWorld.jsp</em>
+<pre class="prettyprint">
+&lt;html&gt;
+&lt;body&gt;
+&lt;%
+out.println("Hello, World!");
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+hello.jsp로 만들어진 서블릿과 helloworld.jsp로 만들어진 서블릿을 비교하라.
+각 서블릿의 전체 경로는 다음과 같다.
+</p>
+
+<ul>
+	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java</li>
+	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\helloworld_jsp.java</li>
+</ul>
+
+<h3 id="request">5.2 request</h3>
+
+<p>
+javax.servlet.http.HttpServletRequest 인터페이스 타입 인스턴스의 레퍼런스이다.
+요청 파라미터와 헤더에 있는 사용자가 보낸 정보, 그리고 사용자에 관한 정보에 접근할 수 있다.
+아래와 같이 request.jsp를 작성하고 http://localhost:port/request.jsp?user=gildong를 방문한다.
+</p>
+
+<em class="filename">/request.jsp</em>
+<pre class="prettyprint">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;request&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+out.println("Hello, " + request.getParameter("user"));
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3 id="response">5.3 response</h3>
+
+<p>
+javax.servlet.http.HttpServletResponse 인터페이스 타입 인스턴스의 레퍼런스이다.
+</p>
+
+<h3 id="pageContext">5.4 pageContext</h3>
+
+<p>
+javax.servlet.jsp.PageContext 타입 인스턴스의 레퍼런스이다.
+JSP에서 이용 가능한 모든 자원에 대한 접근 방법을 제공한다.
+예를 들어, ServletRequest, ServletResponse, ServletContext, HttpSession, ServletConfig 자원에 접근할 수 있다.
+</p>
+
+<h3 id="session">5.5 session</h3>
+
+<p>
+session 내재 객체는 서블릿의 javax.servlet.http.HttpSession 타입 인스턴스의 레퍼런스이다.
+세션 데이타를 읽고 저장하는 데 사용된다.
+아래와 같이 session.jsp를 ROOT 애플리케이션의 루트 디렉터리에 작성한 후 http://localhost:port/session.jsp를 여러 번 방문한다.
+</p>
+
+<em class="filename">/session.jsp</em>
+<pre class="prettyprint">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;session&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+Integer count = (Integer)session.getAttribute("count");
+  
+if (count == null) {
+	count = new Integer(1);
+	session.setAttribute("count", count);
+} else {
+	count = new Integer(count.intValue() + 1);
+	session.setAttribute("count", count);
+}
+
+out.println("COUNT: " + count); 
+%&gt; 
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<h3 id="application">5.6 application</h3>
+
+<p>
+javax.servlet.ServletContext 인터페이스 타입 인스턴스의 레퍼런스이다.
+</p>
+
+<h3 id="config">5.7 config</h3>
+
+<p>
+javax.servlet.ServletConfig 인터페이스 타입 인스턴스의 레퍼런스이다.
+ServletConfig 타입의 인스턴스는 서블릿 초기화 파라미터 정보를 가지고 있다.
+</p>
+
+<h3 id="page">5.8 page</h3>
+
+<p>
+page 내재 객체는 페이지 구현 클래스 인스턴스를 참조하는 Object 타입의 레퍼런스이다.
+JSP 스크립팅에서 page라는 이름의 변수를 선언하지 못하는 이유이다.
+쓰임새는 많지 않다.
+</p>
+
+<h3 id="exception">5.9 exception</h3>
+
+<p>
+exception 내재 객체는 JSP 페이지에서 발생한 잡히지 않은 익셉션에 대한 접근을 제공한다.
+exception 변수는 page 지시어의 isErrorPage 속성이 true로 설정한 JSP에서만 사용할 수 있다.
+</p>
+
+<h2 id="JSP_Confirm">6. JSP 문법에서 꼭 확인해야 할 사항들</h2>
+
+<h3 id="include_vs_include">6.1 include 지시어와 include 액션의 차이점</h3>
+
+<p>
+include 지시어의 경우, 모든 JSP가 합쳐져 만들어진 하나의 JSP가 서블릿으로 만들어지고, 이 서블릿이 클라이언트의 요청에 응답한다.
+include 액션의 경우, include의 JSP는 제각각 독립적인 서블릿이 되고 하나의 응답을 만들어내는 데 동참한다.
+즉, 지시어는 서블릿으로 변환될 때 단 한 번 해석되지만, 액션의 경우는 요청할 때마다 매번 해석된다.
+그러므로 이론적으론 포함되는 페이지의 내용이 요청할 때마다 변하지 않고 일정하면 include 지시어를, 포함되는 페이지의 내용이 요청할 때마다 변한다면 include 액션을 사용하는 게 좋다.
+</p>
+
+<h3 id="ServletContext_Web-App">6.2 서블릿 컨텍스트와 웹 애플리케이션의 관계</h3>
+
+<p>
+서블릿 스펙에 의해 웹 애플리케이션마다 단 하나의 서블릿컨텍스트 객체가 생성된다.
+서블릿 컨텍스트는 웹 애플리케이션의 서버 측 컴포넌트와 서블릿 컨테이너와의 통신을 담당하는 메서드를 가지고 있다.
+서블릿 컨텍스트는 JSP와 서블릿과 같은 서버 측 컴포넌트의 공동 저장소 기능도 가지고 있다.
+서블릿 컨텍스트에 저장된 자원은 웹 애플리케이션이 언로드될 때까지 존재한다.
+</p>
+
+<h3 id="pageDirectives_session-attr">6.3 page 지시어의 session 속성</h3>
+
+<p>
+&lt;%@ page session="false" ..&gt;와 같이 page 지시어의 session 속성이 false라면 해당 페이지가 session 객체를 생성하지도 못하고 또한 기존의 session 객체에 대한 레퍼런스도 얻을 수도 없다.
+false로 되어 있는 상태에서 session 객체에 접근하고자 하면 에러가 발생한다.
+</p>
+
+<h3 id="useBean_scope">6.4 jsp:useBean액션의 scope 속성의 의미</h3>
+
+<p>
+scope 속성은 자바 빈즈를 객체화시킨 후 어느 범위까지 사용하는지를 결정한다.
+scope 속성을 어떻게 지정했는가에 따라서 빈 객체는 여러 페이지에서 소멸하지 않고 참조되기도 한다.
+예를 들어 scope 속성이 session이라면 이 빈 객체는 세션이 종료할 때까지 소멸하지 않는다.
+scope의 기본값은 page이다.
+scope 속성에 4개의 값을 지정해 줄 수 있는데 정리하면 다음과 같다.
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">scope</th>
+	<th class="table-in-article-th">설명</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">page</td>
+	<td class="table-in-article-td">
+scope 속성의 기본값이므로 특별히 지정하지 않으면 이 옵션이 적용된다.
+page 영역으로 생성된 객체는 요청된 페이지 내에서만 유효하다.
+같은 페이지를 요청해도 새로운 빈 객체가 생성되고, 페이지의 실행 종료와 함께 빈 객체는 소멸한다.
+page 영역의 빈은 jsp:include나 jsp:forward 액션으로 제어권이 이동한 페이지에선 참조할 수 없다.
+jsp:include나 jsp:forward 액션의 타겟 페이지에 jsp:useBean 액션이 있고, 이 액션의 아이디와 scope 속성이 제어권을 넘겨준 페이지에서 생성한 빈의 아이디와 scope 속성과 같다 하더라도, 이 액션은 새로운 빈을 생성한다. (제어권을 넘겨준 페이지에서 생성된 빈을 참조하지 않는다)
+또한, jsp:include 액션의 타겟 페이지에서 생성한 빈 객체는 제어권을 넘겨준 페이지에서 참조할 수 없다.
+page 영역의 빈 객체는 빈 객체의 상태가 유지될 필요가 없을 때 적합하다.
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">request</td>
+	<td class="table-in-article-td">
+scope이 request인 빈은 HttpServletRequest 객체에 저장된다.
+따라서, scope이 request인 빈은 jsp:forward와 jsp:include 액션의 타겟 페이지에서 참조할 수 있다.
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">session</td>
+	<td class="table-in-article-td">
+scope이 session인 빈은 session 객체(HttpSession)에 저장된다.
+즉, 세션이 유지되는 동안 호출되는 모든 페이지에서 빈 객체는 소멸되지 않는다.
+반면, scope이 page나  request인 빈은 응답이 끝나면 소멸한다.
+각 사용자에 대하여 독립적으로 생성되는 session 객체는 세션이 종료될 때까지 모든 서버 측 컴포넌트가 참조할 수 있는 값을 유지한다.
+page 지시어에서 session 속성을 false로 설정하면 session 객체에 저장한 빈 객체를 사용할 수 없다는 점에 주의한다.
+	</td>
+</tr>
+<tr>
+	<td class="table-in-article-td">application</td>
+	<td class="table-in-article-td">
+scope이 application인 빈은 ServletContext 객체에 저장된다.
+따라서, scope이 application인 빈은 웹 애플리케이션이 언로드될 때까지 소멸하지 않는다.
+서블릿 컨텍스트를 접근할 수 있는 동일한 웹 애플리케이션내의 JSP, 서블릿은 이 빈에 접근할 수 있다.
+appplication 영역으로 생성된 빈은 웹 애플리케이션의 공동자원이다. (이미 우리는 서블릿 컨텍스트가 공동 저장소 역할을 한다는 것을 알고 있다)   
+그런 이유로, scope을 application으로 설정은 신중하게 결정해야 한다.
+	</td>
+</tr>
+</table>
+
+
+<h2 id="examples">7. JSP 예제</h2>
+
+<h3 id="error-handling-1">7.1 초기 서블릿/JSP 스펙에서 JSP 에러 핸들링</h3>
+
+<p>
+JSP 스펙은 오로지 에러만을 다룰 수 있는 JSP 페이지를 제공하므로써 에러를 다룰 수 있는 방법을 제공한다.
+JSP에서 핸들링 할 수 없는 익셉션이 발생한다면, 서블릿 컨테이너는 JSP 에러 페이지로 요청을 전달한다.
+이때 발생한 익셉션 객체도 함께 전달된다.
+JSP 에러 페이지를 만드는 방법은 간단하다.
+JSP 에러 페이지를 만들려면 page 지시어의 isErrorPage 속성을 true로 설정한다.
+다음 errorPage.jsp 파일을 ROOT 애플리케이션의 도큐먼트베이스에 생성한다.
+</p>
+
+<em class="filename">/errorPage.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page <strong>isErrorPage="true"</strong> contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;
+다음과 같은 에러가 발생했습니다.&lt;br /&gt;
+&lt;%=exception.getMessage() %&gt;
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+isErrorPage="true"는 이 페이지가 에러를 전문적으로 다루는 페이지임을 컨테이너에게 알려준다.
+</p>
+
+<p>
+&lt;%=exception.getMessage() %&gt;는 에러 페이지로 전달되어 온 익셉션의 에러 메시지를 출력한다.
+여기서 exception은  내재 객체이다.
+exception 내재 객체는 page 지시어에서 isErrorPage 속성이 true인 JSP 페이지에서만 참조할 수 있다.
+에러 페이지가 어떻게 작동하는지 알아보기 위해, 다음 JSP 페이지를 ROOT 애플리케이션의 도큐먼트베이스에 작성한다.
+</p>
+
+<em class="filename">/errorMaker.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page errorPage="errorPage.jsp" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+&lt;%
+  if (true) {
+    throw new Exception("고의적으로 발생시킨 Exception");
+  }
+%&gt;
+</pre>
+
+<p>
+오류 페이지를 사용하여 오류를 처리하는 방법은 Servlet/JSP 초기 스펙부터 있었다.
+</p>
+
+<h3 id="error-handling-2">7.2 현재 서블릿/JSP 스펙에서 JSP 에러 핸들링</h3>
+
+<p>
+web.xml 파일에 HTTP 상태코드<sup>3</sup>와 발생한 익셉션 유형별로 각각의 에러 페이지를 지정해 줄 수 있다.
+이 스펙은 서블릿 2.3에서 추가되었다. 
+</p>
+
+<em class="filename">/WEB-INF/web.xml</em>
+<pre class="prettyprint">
+&lt;error-page&gt;
+	&lt;error-code&gt;404&lt;/error-code&gt;
+	&lt;location&gt;/error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;error-page&gt;
+	&lt;error-code&gt;403&lt;/error-code&gt;
+	&lt;location&gt;/error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;error-page&gt;
+	&lt;error-code&gt;500&lt;/error-code&gt;
+	&lt;location&gt;/error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+</pre>
+
+<p>
+이 방식을 사용하면, error.jsp에서 내장 객체 exception을 사용할 수 없다.
+대신 새로 추가 된 속성 값을 사용하여 다음과 같이 예외 객체를 가져올 수 있다.
+<sup>4</sup>
+</p>
+
+<pre class="prettyprint no-border">
+Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+</pre>
+
+<p>
+다음은 에러와 관련된 request의 속성 목록이다.
+모두 위와 같은 방법으로 접근할 수 있다.
+</p>
+
+<table>
+<tr>
+	<th>javax.servlet.error.status_code</th>
+</tr>
+<tr>
+	<td>에러 상태 코드. java.lang.Integer 타입</td>
+</tr>
+<tr>
+	<th>javax.servlet.error.exception_type</th>
+</tr>
+<tr>
+	<td>Exception 타입. java.lang.Class 타입</td>
+</tr>
+<tr>
+	<th>javax.servlet.error.message</th>
+</tr>
+<tr>
+	<td>에러 메시지. String 타입</td>
+</tr>
+<tr>
+	<th>javax.servlet.error.exception</th>
+</tr>
+<tr>
+	<td>발생한 익셉션. java.lang.Throwable 타입</td>
+</tr>
+<tr>
+	<th>javax.servlet.error.request_uri</th>
+</tr>
+<tr>
+	<td>에러를 일으킨 자원의 URI. String 타입</td>
+</tr>
+<tr>
+	<th>javax.servlet.error.servlet_name</th>
+</tr>
+<tr>
+	<td>에러를 일으킨 서블릿 이름. String 타입</td>
+</tr>
+</table>
+
+<em class="filename">/error.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Error&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+//Analyze the servlet exception
+Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
+
+if (servletName == null) {
+    servletName = "Unknown";
+}
+
+String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+
+if (requestUri == null) {
+    requestUri = "Unknown";
+}
+ 
+if(statusCode != 500){
+    out.write("&lt;h3&gt;Error Details&lt;/h3&gt;");
+    out.write("&lt;strong&gt;Status Code&lt;/strong&gt;:" + statusCode + "&lt;br&gt;");
+    out.write("&lt;strong&gt;Requested URI&lt;/strong&gt;:"+requestUri);
+}else{
+    out.write("&lt;h3&gt;Exception Details&lt;/h3&gt;");
+    out.write("&lt;ul&gt;&lt;li&gt;Servlet Name:" + servletName + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Exception Name:" + throwable.getClass().getName() + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Requested URI:" + requestUri + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Exception Message:" + throwable.getMessage() + "&lt;/li&gt;");
+    out.write("&lt;/ul&gt;");
+}
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+http://localhost:port/honggildong.jsp를 방문한다.
+honggildong.jsp란 자원이 ROOT 애플리케이션의 도큐먼트베이스에 없으므로 404 에러가 발생하여 error.jsp 파일이 응답하게 된다.
+인터넷 익스플로러에선 에러 페이지가 일정 바이트 이하면 에러페이지로 작동하지 않는다.<sup>3</sup>
+</p>
+
+<p>
+개발 단계에서는 에러 페이지 설정을 하지 않는게 좋다.
+</p>
+
+<h3 id="cookie-example">7.3 쿠키</h3>
+
+<p>
+쿠키는 웹 브라우저에 저장되어 요청을 보낼때 함께 전송되는 간단한 데이터를 말한다.
+쿠키의 유효기간을 setMaxAge() 메서드를 사용하여 구체적인 시간을 명시한다면, 응답 데이터를 받은 웹 브라우저는 응답 데이터에서 쿠키를 꺼내 쿠키저장소에 보관한다.
+setMaxAge()를 사용하지 않은 쿠키 데이터는 웹 브라우저가 종료되면 사라진다.
+</p>
+
+<strong>쿠키 동작 과정</strong>
+<ol>
+	<li>웹브라우저가 쿠키를 굽는 코드가 있는 웹 자원 요청</li>
+	<li>웹 자원은 HTTP 응답 헤더에 쿠키 값을 추가</li>
+	<li>웹 브라우저는 응답 헤더에 있는 쿠키 데이터를 저장</li>
+	<li>웹브라우저는 쿠키를 제공한 웹 사이트의 자원을 요청할 때마다 쿠키 데이터도 함께 전송</li>
+</ol>
+
+<p>
+2번 과정에서 응답 헤더에 포함된 쿠키 값은 아래와 같은 문자열이다.
+</p>
+
+<pre class="prettyprint no-border">
+<strong>Set-Cookie: name=<em>VALUE</em></strong>; expires=<em>DATE</em>; path=<em>PATH</em>; domain=<em>DOMAIN_NAME</em>; secure
+</pre>
+
+<p>
+위에서 강조된 문자열을 필수 데이터이며,
+<em>이탤릭체</em>는 실제 값으로 변경되어야 하는 부분이다.
+</p>
+
+<p>
+4번 과정에서 요청 헤더에 포함된 쿠키 정보는 아래와 같은 문자열이다.
+</p>
+
+<pre class="prettyprint no-border">
+Cookie: <em>name1=VALUE1</em>; <em>name2=VALUE2</em>;...
+</pre>
+
+
+<strong>쿠키의 구성</strong>
+<ul>
+	<li>name : 이름</li>
+	<li>value : 값</li>
+	<li>expires :유효기간</li>
+	<li>domain : 도메인</li>
+	<li>path : 경로</li>
+	<li>secure : 시큐어 웹 여부(https)</li>
+</ul>
+
+<p>
+다음은 쿠키 클래스이다.
+</p>
+
+<dl class="api-summary">
+	<dt class="api-summary-dt bottom-line">javax.servlet.http.Cookie 클래스</dt>
+	<dd class="api-summary-dd">Cookie(String name, String value)</dd>
+	<dd class="api-summary-dd">getName()</dd>
+	<dd class="api-summary-dd">setValue(String)</dd>
+	<dd class="api-summary-dd">getValue()</dd>
+	<dd class="api-summary-dd">setDomain(String)</dd>
+	<dd class="api-summary-dd">getDomain()</dd>
+	<dd class="api-summary-dd">setPath(String)</dd>
+	<dd class="api-summary-dd">getPath()</dd>
+	<dd class="api-summary-dd">setMaxAge(int)</dd>
+	<dd class="api-summary-dd">getMaxAge()</dd>
+	<dd class="api-summary-dd">setSecure(boolean)</dd>
+	<dd class="api-summary-dd">getSecure()</dd>
+</dl>	
+
+<p>
+다음 코드 조각은 Cookie 클래스의 사용법을 보여주고 있다.
+</p>
+  
+<pre class="prettyprint">
+/*
+* 쿠키 생성
+*/
+Cookie cookie = new Cookie("user", "gildong");
+
+/*
+*  . 으로 시작되는 경우 모든 관련도메인에 전송되는 쿠키
+* www.java-school.net, user.java-school.net, blog.java-school.net 등등
+*/
+cookie.setDomain(".java-school.net");
+
+/*
+* 경로를 '/'로 설정하면 웹사이트의 모든 경로에 전송되는 쿠키
+* 만일 '/user' 와 같이 특정 경로를 설정하면 '/user' 경로만 전송되는 쿠키
+*/
+cookie.setPath("/");
+
+/*
+* 초단위의 쿠키 유효기간 설정
+* 음수값이 설정되면 쿠키는 웹 브라우저가 종료할 때 삭제된다. 
+*/
+cookie.setMaxAge(60*60*24*30); //30일동안 유효한 쿠키 
+</pre>
+
+<p>
+쿠키에 대한 간단한 예제를 만들어 보자.
+도큐먼트베이스에 /cookie 서브 디렉토리를 만들고 그 안에 다음 파일을 작성한다.
+</p>
+
+<em class="filename">/cookie/index.html</em>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;쿠키 테스트&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;쿠키 테스트&lt;/h1&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;a href="setCookie.jsp"&gt;쿠키 굽기&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="viewCookie.jsp"&gt;쿠키 확인&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="editCookie.jsp"&gt;쿠키 변경&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="delCookie.jsp"&gt;쿠키 삭제&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<em class="filename">/cookie/setCookie.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.net.*"  %&gt;
+&lt;%
+Cookie cookie = new Cookie("name", URLEncoder.encode("홍길동", "UTF-8"));
+
+/*
+* setPath()로 사용하지 않으면 setCookie.jsp 가 있는 디렉토리로 경로가 설정된다.
+* path=/cookie
+*/ 
+response.addCookie(cookie);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;쿠키를 굽는 페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+Set-Cookie: &lt;%=cookie.getName() %&gt;=&lt;%=cookie.getValue() %&gt; 문자열을 응답 헤더에 추가&lt;br /&gt;
+&lt;a href="viewCookie.jsp"&gt;쿠키확인&lt;/a&gt; 
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<em class="filename">/cookie/viewCookie.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.net.*" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;요청과 함께 쿠키가 전송되는지 확인&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+Cookie[] cookies = request.getCookies();
+if (cookies != null &amp;&amp; cookies.length &gt; 1) {
+	int length = cookies.length;
+	for (int i = 0; i &lt; length; i++) {
+%&gt;
+	&lt;%=cookies[i].getName() %&gt;=&lt;%=URLDecoder.decode(cookies[i].getValue(), "UTF-8") %&gt;&lt;br /&gt;
+&lt;%			
+	}
+}
+%&gt;
+&lt;a href="./"&gt;index.html&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<em class="filename">/cookie/editCookie.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.net.*" %&gt;
+&lt;%
+Cookie[] cookies = request.getCookies();
+if (cookies != null &amp;&amp; cookies.length &gt; 1) {
+	int length = cookies.length;
+	for (int i = 0; i &lt; length; i++) {
+		if (cookies[i].getName().equals("name")) {
+			Cookie cookie = new Cookie("name", URLEncoder.encode("임꺽정" ,"UTF-8"));
+			response.addCookie(cookie);
+		}
+	}
+}
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;쿠키 값 변경&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+쿠키 값을 변경했습니다.&lt;br /&gt;
+&lt;a href="viewCookie.jsp"&gt;쿠키확인&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<em class="filename">/cookie/delCookie.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%
+Cookie[] cookies = request.getCookies();
+if (cookies != null &amp;&amp; cookies.length &gt; 1) {
+	int length = cookies.length;
+	for (int i = 0; i &lt; length; i++) {
+		if (cookies[i].getName().equals("name")) {
+			Cookie cookie = new Cookie("name", "");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+			break;
+		}
+	}
+}
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;쿠키 삭제&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+name 쿠키를 삭제했습니다.&lt;br /&gt;
+&lt;a href="viewCookie.jsp"&gt;쿠키확인&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3 id="include-directive-example">7.4 include 지시어를 이용하는 페이지 분리</h3>
+
+<p>
+<a href="src/example.zip">example.zip</a>을 다운로드한 후 ROOT 애플리케이션의 최상위 디렉토리에 압축을 푼다.
+http://localhost:port/example/ex1/index.jsp를 방문한다.
+/example/ex1/index.jsp 파일을 열고 다음을 확인한다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;%@ include file="../inc/subMenu.jsp" %&gt;
+</pre>
+
+<p>
+index.jsp는 subMenu.jsp를 인클루드한다.
+페이지의 부분을 별도의 파일로 분리하고 include 지시어을 사용하여 통합하면 유지 관리가 더 쉬워진다.
+subMenu.jsp 코드에서 파일, 이미지 , 스타일시트 등의 링크 경로는 인클루드하는 index.jsp를 기준으로 상대적 경로로 작성해야 한다.
+index.jsp를 기준으로 JSP 파일이 합쳐지기 때문이다.
+하지만, 스타일 시트에서 경로는 index.jsp가 아닌 스타일 시트 파일에 상대적이어야 한다.
+</p>
+
+<h3 id="login-process">7.5 자바 빈즈를 이용한 로그인(세션 이용)</h3>
+
+<p>
+이번 예제의 위치는 /example/ex2/이다.
+http://localhost:port/example/ex2/index.jsp를 방문한다.
+로그인을 테스트하기 위해선 해야 할 일이 있다.
+login_proc.jsp 페이지가 로그인을 처리하는 페이지이다.
+login_proc.jsp는 net.java_school.user.User.java 자바 빈즈를 이용한다.
+예제를 실행하기 위해서는 net.java_school.user.User.java를 아래와 같이 작성하고 WEB-INF/classes에 바이트 코드가 생성되도록 컴파일한다.
+</p>
+
+<em class="filename">User.java</em>
+<pre class="prettyprint">
+package net.java_school.user;
+
+public class User {
+
+  private String id;
+  private String passwd;
+	
+  public String getId() {
+      return id;
+  }
+	
+  public void setId(String id) {
+      this.id = id;
+  }
+	
+  public String getPasswd() {
+      return passwd;
+  }	
+	
+  public void setPasswd(String passwd) {
+      this.passwd = passwd;
+  }
+
+}
+</pre>
+
+<p>
+User.java를 작성하고 컴파일을 마쳤다면,
+http://localhost:port/example/ex2/index.jsp를 다시 방문하여 로그인을 테스트 한다.
+/example/ex2/index.jsp 파일을 열고 다음을 확인한다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;input type="text" name="<strong>id</strong>" /&gt;
+</pre>
+
+<p>
+id 파라미터가 login_proc.jsp로 전송된다.
+/example/ex2/login_proc.jsp 파일을 열고 아래 코드를 확인한다.
+</p>
+
+<pre class="prettyprint no-border">
+String id = request.getParameter("<strong>id</strong>");
+</pre>
+
+<p>
+login_proc.jsp에서 id 파라미터의 값은 내재 객체 request의 getParameter() 메서드를 사용해서 구할 수 있다.
+login_proc.jsp는 User 객체를 생성한 다음, 전달받은 id, passwd 파라미터를 사용해서 User 객체의 멤버 변수를 셋팅한다.
+이 User 객체를 세션에 저장하여 로그인을 완료한다.
+예제를 간단하게 하기 위해 데이터베이스 조회와 관련된 코드를 생략했다.
+따라서 어떤 아이디와 패스워드에 대해서도 로그인이 성공한다.
+</p>
+
+<em class="filename">login_proc.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+
+&lt;%
+String id = request.getParameter("id");
+String passwd = request.getParameter("passwd");
+
+/* 
+* 데이터베이스에 id, passwd 를 가진 회원정보가 있는지 조회하고 로직이 필요.
+*/
+User user = new User();
+user.setId(id);
+
+// 세션 객체 생성 후 User 객체를 user 란 이름으로 저장
+session.setAttribute("user", user);
+%&gt;
+
+&lt;jsp:forward page="index.jsp" /&gt;
+</pre>
+
+<h3 id="login-process-2">7.6 '자바 빈즈를 이용한 로그인(세션 이용)'을 액션을 사용하도록 수정</h3>
+
+<p>
+이번 예제의 위치는 /example/ex3/이다.
+이번 예제는 바로 전 예제와 기능이 같다.
+단지 login_proc.jsp가 액션을 사용하도록 변경했다.
+login_proc.jsp 파일은 아래처럼 간단해진다.
+</p>
+
+<em class="filename">login_proc.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;jsp:useBean id="user" scope="session" class="net.java_school.user.User" /&gt;
+&lt;jsp:setProperty name="user" property="*"/&gt;
+&lt;jsp:forward page="index.jsp" /&gt;
+</pre>
+
+<p>
+jsp:useBean 액션은 세션에서 키값이 "user"인 객체를 찾는다. 
+만약 그런 객체가 없으면 net.java_school.user.User 클래스로부터 User 객체를 생성하고, 객체를 jsp:userBean 액션의 id 속성값을 키값으로 해서 세션에 저장한다.
+jsp:setProperty 액션은 HTTP 요청안의 파라미터 값을 가지고 JSP 빈즈의 setter 메서드를 호출하면서 멤버 변수를 셋팅한다.
+</p>
+
+<pre class="prettyprint no-border">
+&lt;jsp:setProperty name="user" property="*"/&gt;
+</pre>
+
+<p>
+위 액션 태그는 User 빈의 setId() 메서드와 setPasswd() 메서드를 호출한다.
+setter 메서드 이름과 매칭되는 HTTP 요청 파라미터의 값이 setter 메서드의 인자값으로 전달된다.
+</p>
+
+<table class="table-in-article">
+<tr>
+	<th class="table-in-article-th">JSP 또는 JSP 빈즈</th>
+	<th class="table-in-article-th">코드</th>
+</tr>
+<tr>
+	<td class="table-in-article-td">index.jsp</td>
+	<td class="table-in-article-td"><pre class="prettyprint no-border">&lt;input type="text" name="<strong>id</strong>" /&gt;</pre></td>
+</tr>
+<tr>	
+	<td class="table-in-article-td">login_proc.jsp</td>
+	<td class="table-in-article-td"><pre class="prettyprint no-border">&lt;jsp:setProperty name="login" property="<strong>id</strong>" /&gt;</pre></td>
+</tr>
+<tr>
+	<td class="table-in-article-td">User.java</td>
+	<td class="table-in-article-td"><pre class="prettyprint no-border">set<strong>Id</strong>(String id)</pre></td>
+</tr>
+</table>
+
+<p>
+"setId()"메서드 이름에서 Id의 "I"는 대문자이다.
+(우리는 이미 자바 명명 규칙을 자바 장에서 공부했다)
+jsp:setProperty 액션을 사용할 때 JSP 빈즈가 자바 명명 규칙을 따르지 않는다면 액션은 작동하지 않는다.
+즉, 액션을 사용할 때 자바 명명 규칙은 권장 사항이 아니라 문법이다.
+</p>
+
+<h3 id="fileList-example">7.7 업로드된 파일을 보여주는 JSP</h3>
+
+<p>
+서블릿 장에서 파일 업로드 예제를 다루었다.
+다음 JSP는 upload 폴더에 업로드한 파일의 리스트를 보여준다.
+</p>
+
+<em class="filename">/fileList.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.io.*" %&gt;
+&lt;%@ page import="java.net.*" %&gt;
+&lt;%
+String upload = application.getRealPath("/upload");
+
+File dir = new File(upload);
+File[] files = dir.listFiles();
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;저장된 파일 리스트&lt;/title&gt;
+&lt;script type="text/javascript"&gt;
+function goDownload(filename) {
+	var form = document.getElementById("downForm");
+	form.filename.value = filename;
+	form.submit();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+int len = files.length;
+for (int i = 0; i &lt; len; i++) {
+	File file = files[i];
+	String filename = file.getName();
+%&gt;
+	&lt;a href="javascript:goDownload('&lt;%=filename %&gt;')"&gt;&lt;%=file.getName() %&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;%
+}
+%&gt;
+&lt;form id="downForm" action="download.jsp" method="post"&gt;
+	&lt;input type="hidden" name="filename" /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3 id="download-example">7.8 파일을 다운로드하는 JSP</h3>
+
+<p>
+다음은 위의 파일 목록 페이지에서 파일 이름를 클릭할 때 작동하는 JSP이다.
+</p>
+
+<em class="filename">/download.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+&lt;%@ page import="java.io.File" %&gt;
+&lt;%@ page import="java.net.URLEncoder" %&gt;
+&lt;%@ page import="java.io.OutputStream" %&gt;
+&lt;%@ page import="java.io.FileInputStream" %&gt;
+&lt;%@ page import="java.io.IOException" %&gt;
+&lt;%@ page import="org.apache.commons.io.FileUtils" %&gt;
+&lt;%
+request.setCharacterEncoding("UTF-8");
+String filename = request.getParameter("filename");
+
+String path = application.getRealPath("/upload");
+File file = new File(path + "/" + filename);
+
+response.setContentLength((int) file.length());
+
+String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
+if (filetype.trim().equalsIgnoreCase("txt")) {
+	response.setContentType("text/plain");
+} else {
+	response.setContentType("application/octet-stream");
+}
+
+String userAgent = request.getHeader("user-agent");
+boolean ie = userAgent.indexOf("MSIE") != -1;
+if (ie) {
+	filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+} else {
+	filename = new String(filename.getBytes("UTF-8"), "8859_1");
+}
+
+response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\";");
+/* response.setHeader("Content-Transfer-Encoding", "binary"); */
+
+OutputStream outputStream = response.getOutputStream();
+
+try {
+	FileUtils.copyFile(file, outputStream);
+} finally {
+	outputStream.flush();
+}
+%&gt;
+</pre>
+
+<h3 id="jsp-file-upload">7.9 JSP 파일 업로드</h3>
+
+<p>
+서블릿 예제에서 다루었던 파일을 업로드하는 서블릿을 JSP로 수정했다.
+</p>
+
+<em class="filename">fileupload_proc.jsp</em>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="
+java.util.Iterator,
+java.io.File,java.util.List,
+javax.servlet.http.HttpServletRequest,
+org.apache.commons.fileupload.FileItem,
+org.apache.commons.fileupload.FileItemFactory,
+org.apache.commons.fileupload.FileUploadException,
+org.apache.commons.fileupload.disk.DiskFileItemFactory,
+org.apache.commons.fileupload.servlet.ServletFileUpload" %&gt;
+&lt;%
+//Check that we have a file upload request
+boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+//Create a factory for disk-based file items
+DiskFileItemFactory factory = new DiskFileItemFactory();
+
+//Configure a repository (to ensure a secure temp location is used)
+File repository = (File) application.getAttribute("javax.servlet.context.tempdir");
+factory.setRepository(repository);
+
+//Create a new file upload handler
+ServletFileUpload upload = new ServletFileUpload(factory);
+upload.setHeaderEncoding("UTF-8");//한글파일명 처리위해 추가
+//Parse the request
+List&lt;FileItem&gt; items = upload.parseRequest(request);
+//Process a file upload
+Iterator&lt;FileItem&gt; iter = items.iterator();
+while (iter.hasNext()) {
+	FileItem item = iter.next();
+	String fileName = null;
+	if (!item.isFormField()) {
+		String fieldName = item.getFieldName();
+		out.println("fieldName : " + fieldName);out.println(",");
+		fileName = item.getName();
+		out.println("fileName : " + fileName);out.println(",");
+		String contentType = item.getContentType();
+		out.println("contentType : " + contentType);out.println(",");
+		boolean isInMemory = item.isInMemory();
+		out.println("isInMemory : " + isInMemory);out.println(",");
+		long sizeInBytes = item.getSize();
+		out.println("sizeInBytes : " + sizeInBytes);
+	}
+	// Process a file upload
+	String dir = application.getRealPath("/upload");
+	File uploadedFile = new File(dir + "/" + fileName);
+    item.write(uploadedFile);
+}
+response.sendRedirect("upload.html");
+%&gt;
+</pre>
+
+<span id="comments">주석</span>
+<ol>
+	<li>JSP가 바뀌어서 만들어지는 서블릿은 지난장에서 배운 서블릿과 닮았지만 같지 않다.</li>
+	<li>JSP 작성할 때 JSTL를 사용하면 HTML과 자바 코드를 함께 작성해야 하는 어려움을 좀 더 줄일 수 있다.</li>
+	<li>HTTP 상태코드 404는 찾을 수 없음을, 403는 금지됨을, 500은 내부 서버 오류를 의미한다.</li>
+	<li>JSTL에서는 다음과 같이 접근할 수 있다:<pre class="prettyprint no-border">	&lt;c:out value="${requestScope['javax.servlet.error.message']}" /&gt;</pre></li>
+</ol>
+</article>
