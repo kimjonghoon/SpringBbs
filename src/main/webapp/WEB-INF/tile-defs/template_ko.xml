@@ -1117,6 +1117,71 @@
 		<put-attribute name="prev-article-title" value="쿠키 다루기" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
 	</definition>
+	<!-- google-app-engine -->
+	<definition name="google-app-engine/building-gae-projects-with-maven" extends="lectureTemplate">
+		<put-attribute name="title" value="구글 앱 엔진 시작하기" />
+		<put-attribute name="keywords" value="java 8,maven,eclipse,guestbook archetype,mvn clean install,mvn appengine:devserver,mvn appengine:update,https://cloud.google.com,web console,create new project,create instance,your-app-id.appspot.com,datastore-indexes.xml,mvn appengine:update_indexes,git,https://git-scm.com,Cloud SDK install,gcloud source repos create ..,gcloud source repos clone ..," />
+		<put-attribute name="description" value="구글 앱 엔진을 시작하기" />
+		<put-attribute name="content" value="0950-building-gae-projects-with-maven" />
+		<put-attribute name="next-article" value="google-app-engine#Logging" />
+		<put-attribute name="next-article-title" value="구글 앱 엔진에서 로그 사용하는 방법" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+	<definition name="google-app-engine/Logging" extends="lectureTemplate">
+		<put-attribute name="title" value="구글 앱 엔진에서 로그 사용하기" />
+		<put-attribute name="keywords" value="appengine-web.xml,logging.properties,.level=INFO,import java.util.logging.Logger,https://console.cloud.google.com/logs" />
+		<put-attribute name="description" value="구글 앱 엔진에서 로그 사용하기" />
+		<put-attribute name="content" value="0960-Logging" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-MVC" />
+		<put-attribute name="next-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
+		<put-attribute name="prev-article" value="google-app-engine#building-gae-projects-with-maven" />
+		<put-attribute name="prev-article-title" value="구글 앱 엔진 시작하기" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+	<definition name="google-app-engine/Spring-MVC" extends="lectureTemplate">
+		<put-attribute name="title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
+		<put-attribute name="keywords" value="webapp/resources,spring-context,spring-webmvc,spring-jdbc,CharacterEncodingFilter,ObjectifyFilter,DispatcherServlet,guestbook-servlet.xml,mvc:resources mapping location,context:component-scan,InternalResourceViewResolver,GuestbookController.java,guestbook.jsp,runtime java8,mvn clean,mvn appengine:devserver,mvn appengine:update" />
+		<put-attribute name="description" value="구글 앱 엔진에서 Spring MVC 사용하기" />
+		<put-attribute name="content" value="0970-Spring-MVC" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-Security" />
+		<put-attribute name="next-article-title" value="구글 어카운트에 Spring Security 접목하기" />
+		<put-attribute name="prev-article" value="google-app-engine#Logging" />
+		<put-attribute name="prev-article-title" value="구글 앱 엔진에서 로그 사용하기" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+
+	<definition name="google-app-engine/Spring-Security" extends="lectureTemplate">
+		<put-attribute name="title" value="구글 어카운트에 Spring Security 접목하기" />
+		<put-attribute name="keywords" value="google account,spring security,Authentication,spring-security-web,spring-security-config,AppRole.java,GaeUser.java,GoogleAccountsAuthenticationEntryPoint.java,GaeUserAuthentication.java,GaeAuthenticationFilter,GoogleAccountsAuthenticationProvider.java,security.xml,applicationContext.xml,guestbook-servlet.xml,mvc:annotation-driven,web.xml,context-param,ContextLoaderListener,HttpSessionEventPublisher,DelegatingFilterProxy,CSRF,${_csrf.parameterName},${_csrf.token},session-enabled true,GuestbookController.java,mvn clean,mvn appengine:devserver" />
+		<put-attribute name="description" value="구글 앱 엔진에 Spring Security 접목하기" />
+		<put-attribute name="content" value="0980-Spring-Security" />
+		<put-attribute name="next-article" value="google-app-engine#Objectify" />
+		<put-attribute name="next-article-title" value="Objectify 다루기" />
+		<put-attribute name="prev-article" value="google-app-engine#Spring-MVC" />
+		<put-attribute name="prev-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+	<definition name="google-app-engine/Objectify" extends="lectureTemplate">
+		<put-attribute name="title" value="Objectify" />
+		<put-attribute name="keywords" value="Objectify,.load(),.type(),.ancestor(),.order(),.limit(),.list(),ofy().save().entity().now(),ofy().delete().key(key).now(),Key.create(),isAuthenticated(),principal,hasRole(),GuestbookService.java,GuestbookServiceImpl.java,Greeting.java,GuestbookController.java,mvn clean,mvn appengine:devserver" />
+		<put-attribute name="description" value="Objectify 다루기" />
+		<put-attribute name="content" value="0990-Objectify" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-optimization" />
+		<put-attribute name="next-article-title" value="구글 앱 엔진에서 스프링 최적화하기" />
+		<put-attribute name="prev-article" value="google-app-engine#Spring-Security" />
+		<put-attribute name="prev-article-title" value="구글 어카운트에 Spring Security 접목하기" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+	<definition name="google-app-engine/Spring-optimization" extends="lectureTemplate">
+		<put-attribute name="title" value="구글 앱 엔진에서 스프링 최적화하기" />
+		<put-attribute name="keywords" value="guestbook-servlet.xml,context:annotation-config" />
+		<put-attribute name="description" value="구글 앱 엔진 프로젝트에서 스프링 최적화하기" />
+		<put-attribute name="content" value="1000-Spring-optimization" />
+		<put-attribute name="prev-article" value="google-app-engine#Objectify" />
+		<put-attribute name="prev-article-title" value="Objectify 다루기" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
+	</definition>
+	<!-- 데이터스토어 블로그 -->
 	<definition name="datastore/*/*" extends="datastoreBlog">
 		<put-attribute name="content" value="/WEB-INF/views/datastore/content.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/{1}/{1}-sub_ko.jsp" />

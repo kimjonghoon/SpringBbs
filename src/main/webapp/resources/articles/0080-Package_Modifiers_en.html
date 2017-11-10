@@ -57,13 +57,7 @@ Most developers manage the source this way.<br />
 Package names are usually in reverse order of domain name.<br />
 The package name preferably includes two or more dots.<br />
 If you have applied the net.java_school.commons package to the Log class, create the directory and place the source files as shown below.<br />
-
-<pre style="margin-left: 40px;">
-src
- └── net
-      └── java_school
-              └── commons: Log.java
-</pre>
+<img src="https://lh3.googleusercontent.com/7IxYec5B9PFcSJVO1G8eUifIy909zozlxz08Ce4H9xpqYsDV2jVF479yxzGipLpcZXuRuAfrOpYET4cTT5tF4ap-bmf99tt8PjwuUl_EI6QwaBqb3zCL2b6n2Cn_S_ZuA6hiIFk_8-rUtCB0LuzcR4RuhL44MvMMK0zzUnWgvx9y_wioOK12oYM9zyH_TFBjY86oO_8fPkV9Mefpj5fylAkHGQgRfPpYpeIs6B7SRJomJ5w2UAsuw2zLZ66nnEe7PyYvrndOl9-qKpuqR5EAz0UuDV_SXrzm3pIiEnTbUvclFwvi_wivpyuNJS6Csi03LTSsxShi2mYWTxSgXjOaQMXaW3andFo-VJaBMSAWwesI0gQ3_cnwf-ba7kAnQ_Ymj5PqC77RctAkyyakg-3FSEyw5zwZbURKHvFQSci0lH2qKQowfYmXW5sesn4RYis-KzTMv7HA91gP9gE7VIQDgtb41c1wWXgtZBcdijdJuexmXTeZ1ljDtNC-59NXpziXgfpuqeG5lNNwu16zg3xa3POQC38Qge7G1Bn_x2LdYMS-_MW0ds05ymhEzBhDfXc8UB3XK_p6fJLsMJLwfoOp-nJPSab00049_tDB3ZErJg=w184-h125-no" alt="javaApp-Log.java" /><br />
 </dd>
 </dl>
 
@@ -94,26 +88,9 @@ You will not see the BankAccount.class file in the bin directory, instead you wi
 The BankAccount.class file can be found in this javabank subdirectory.<br />
 When you compile BankAccont.java, if you specify the C:\javaApp\bank\bin directory with the -d option.<br /> 
 a subdirectory with the same name as the package name is created in the C:\javaApp\bank\bin directory.<br />
-BankAccount.class is created in the javabank directory.
+BankAccount.class is created in the javabank directory.<br />
+<img alt="Account.class and Account.java" src="https://lh3.googleusercontent.com/NpXsGCGj5ogeggXJVFF5zZNKI7Rkv2P4E_W5FVeJxQQJZF5T4R5MyBfARrsy_zLVA0oj8uGvzA_lRF8yJNR0Dfa51qnx80v6aS_ULWEy7BXYfXPcygH2S_Y9ISwBqU1rGpoUZYdtpK2XFO4DOA5kw-vJ6nyCUDaAEiD-D1kJS-bcix4gZYjQnguCfo-4gXb_gN62pUeLAr_nnAWmd1e3g5LsGFR3VsaIoqT2hjkeWtFAhGhkMHTtp6CYJCxFcBEUakSGs8qmp6ytDHx_80suxB05Iiwp66Z_EYwI5rQeF-uDkr1R1tIMI9WR2QZKJgQ0zq_wYyqpYp3ne5cOioX5z6hDHOdu4ETpAJ6yV4ft_DXRHVbEG3YfHVHBHOTD9kQ17GoWWEUvtMYYJjW0qto_ipQh7cZLkVr-Y8cZXCOpkGm5wINT7AS9aB2TASNo5Dv0vFVAPQzigBM9PoJFeqZXoy9EbAtbIAPswfXk-euQfqANIH0b06_PQDqOjjf9PrfQRYp7ecxWXF3lLHAlhRj6eaFWKc91G-rbWJjr_SoLUrWdS5awwg0otIaL0gAlJlbRxK6ltAjqkFU3PsqYNauzLWmyoQx6hI4PRCkPXsUqQA=w206-h151-no" />
 </p>
-
-<div class="dtree">
-	<script type="text/javascript">
-		<!--
-		var javabank = new dTree('javabank');
-		javabank.add(0,-1,'C:\\javaApp');
-		javabank.add(1,0,'bank','javascript:void(0);');
-		javabank.add(2,1,'bin','javascript:void(0);');
-		javabank.add(3,2,'javabank','javascript:void(0);');
-		javabank.add(4,3,'BankAccount.class','javascript:void(0);');
-		javabank.add(5,1,'src','javascript:void(0);');
-		javabank.add(6,5,'javabank','javascript:void(0);');
-		javabank.add(7,6,'BankAccount.java','javascript:void(0);');
-		document.write(javabank);
-		javabank.openAll();
-		//-->
-	</script>
-</div>
 
 <p>
 The JVM understands that there is a javabank.BankAccount class in the C:\javaApp\bank\bin directory.<br />
@@ -164,35 +141,14 @@ If the class (bytecode) created by another user is in C:\javaApp\commons\bin, yo
 This is because the Java compiler verifies that the bytecodes used by the source is being used properly.<br />
 I will make an example of the above explanation.<br />
 For example, we need to create a new class, so we have the following directory structure.<br />
+<img alt="Log.class and Log.java" src="https://lh3.googleusercontent.com/oEjNKV3440WaNbNmZWjW4cWu23RJXLQREn3srfSuLw-BqVEiXuEGdujYuo0cEZ6eNpKElsnOKrGQeSViazfgCCmCB-ZRBB4X7FDAieiDnq1lfAmYGXjS1bMYb0MGJl5qXRSajBWqN9V79sdv-UpEJigd9xEfRoqO1lDetWRXTNpBeXdqWddY1QiJESGurHsSNZbrfxtzYG5wT2JUIhOtzoj5l8sgeag0qCCQiyxM3Nq9SBy3HteOu7BNuTksCS2WWy5ZksXe0X6h2TVNypkX9dNdHxFiGDdKpl24eKAf6_cSokauzHX_uJCKjx9yNIYV1418PI8U6cn0EXdRPACeLYvyK9r9e0vEoyKIBz39Ba_IZRYAr_n_JN9h4OPUGf61WBz5OLxDaFK_g7M5yVefEfVQkPCZqW18AsanYFSdTyuPLkCPihlZNhGTbaEp44WlspkDJlrZdEAdn3Mzc4H6vAU-OaCeXgAXtfzkUq_riVzXJKU-lkEKM2P7JmgeCkjgHpbhBIT1p3aM4tgO_eJ6vKZG0_IXIOoR5149mnUUpssywElYZo_iG4zhweQI9NeqNc1TpE9dHi1jwMfQpeA5jijFIJce4KhD9z7D1EZ7zw=w223-h226-no" />
 </p>
-
-<div class="dtree">
-	<script type="text/javascript">
-		<!--
-		var classpath = new dTree('classpath');
-		classpath.add(0,-1,'C:\\javaApp');
-		classpath.add(1,0,'commons','javascript:void(0);');
-		classpath.add(2,1,'bin','javascript:void(0);');
-		classpath.add(3,2,'net','javascript:void(0);');
-		classpath.add(4,3,'java_school','javascript:void(0);');
-		classpath.add(5,4,'commons','javascript:void(0);');
-		classpath.add(6,5,'Log.class','javascript:void(0)');
-		classpath.add(7,1,'src','javascript:void(0);');
-		classpath.add(8,7,'net','javascript:void(0);');
-		classpath.add(9,8,'java_school','javascript:void(0);');
-		classpath.add(10,9,'commons','javascript:void(0);');
-		classpath.add(11,10,'Log.java','javascript:void(0)');
-		document.write(classpath);
-		classpath.openAll();
-		//-->
-	</script>
-</div>
 
 <p>
 The following is a new class to create.<br />
 </p>
 
-<em class="filename">Log.java</em><a href="#comments"><sup>3</sup></a>
+<em class="filename">Log.java<a href="#comments"><sup>3</sup></a></em>
 <pre class="prettyprint">
 package net.java_school.commons;
 

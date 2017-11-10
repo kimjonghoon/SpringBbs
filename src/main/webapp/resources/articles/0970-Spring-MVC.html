@@ -3,67 +3,18 @@
 <h1>구글 앱 엔진 프로젝트에 Spring MVC 적용하기</h1>
 
 <p>
-guestbook 디렉터리 구조를 Spring MVC에 맞게 아래와 같이 바꾼다.
+guestbook 디렉터리 구조를 Spring MVC에 맞게 아래와 같이 바꾼다.<br />
+<img alt="before_after" src="https://lh3.googleusercontent.com/_U2-CnVyiw-HAakNmEHMHBAc9_2bJqZsHmsvUCGfmB2N2ilnVes_Q1kykNI-GHzQh4sTl_xPNmFZ37E2RdZ6GnBCoe9vdWain3BCf-SdiVMraqZzjRhfvvIzk4ndVEhMGIZ-fRpvmICbMViQrl1_NvpWNPr2PB6YD2HVxdj2USNaTqrdVsTTiuRuuvO4IhOaiqm8pf9-_bwJcfF6LBIDUGpgGyxAnyBjZkJP-k8XWVOXTa8a_riYp5LdTV-FjFHu_F9UBd-t_Dl6OnHPQ0ogPa6wX_i96ztdiTIjZoavzew4VvWEysMadaUxp5DaiLDet47xSjda_LcsFDF0ZsFwq_-JbhYEyL10jJMy6xnNvTZuBLduQFMTAUXcdTgTqFSdX68wppQ_5iv8v_doNozs0j7unyashJy-JRiAicGPC6PYxMsoozNYNlmHx-QEZ2mYR33-YMmipAgeHf6WxMpNgec-SPVg7E9sOnJCW7-XEfP0343Z4ZC23nCoDn3yerEbfceeMog8JQ_Hetet0J2Nx0yQu8TxvwupeJQTvG-d6TFYcPXyCEK4zvHNAEMOPkB2KcT3djWKryNyJAMBj6CcMWStpA-NqAjUlilsdgQ0_Q=w468-h291-no" />
 </p>
 
-<h6 class="dir">변경 전</h6>
-
-<div class="dtree">
-	<script type="text/javascript">
-		<!--
-		var gb1 = new dTree('gb1');
-		gb1.add(0,-1,'C:\\Lab\\guestbook');
-		gb1.add(1,0,'pom.xml','javascript:void(0);');
-		gb1.add(2,0,'src','javascript:void(0);');
-		gb1.add(3,2,'main','javascript:void(0);');
-		gb1.add(4,3,'webapp','javascript:void(0);');
-		gb1.add(5,4,'guestbook.jsp','javascript:void(0);');
-		gb1.add(6,4,'stylesheet','javascript:void(0);');
-		gb1.add(7,6,'main.css','javascript:void(0);');
-		gb1.add(8,4,'WEB-INF','javascript:void(0);');
-		gb1.add(9,8,'web.xml','javascript:void(0);');
-		gb1.add(10,8,'appengine-web.xml','javascript:void(0);');
-		gb1.add(11,8,'logging.properties','javascript:void(0);');
-		document.write(gb1);
-		gb1.openAll();
-		//-->
-	</script>
-</div>
-
-<h6 class="dir">변경 후</h6>
-
-<div class="dtree">
-	<script type="text/javascript">
-		<!--
-		var gb2 = new dTree('gb2');
-		gb2.add(0,-1,'C:\\Lab\\guestbook');
-		gb2.add(1,0,'pom.xml','javascript:void(0);');
-		gb2.add(2,0,'src','javascript:void(0);');
-		gb2.add(3,2,'main','javascript:void(0);');
-		gb2.add(4,3,'webapp','javascript:void(0);');
-		gb2.add(5,4,'resources','javascript:void(0);');
-		gb2.add(6,5,'stylesheet','javascript:void(0);');
-		gb2.add(7,6,'main.css','javascript:void(0);');
-		gb2.add(8,4,'WEB-INF','javascript:void(0);');
-		gb2.add(9,8,'web.xml','javascript:void(0);');
-		gb2.add(10,8,'appengine-web.xml','javascript:void(0);');
-		gb2.add(11,8,'logging.properties','javascript:void(0);');
-		gb2.add(12,8,'views','javascript:void(0);');
-		gb2.add(13,12,'guestbook','javascript:void(0);');
-		gb2.add(14,13,'guestbook.jsp','javascript:void(0);');
-		document.write(gb2);
-		gb2.openAll();
-		//-->
-	</script>
-</div>
 
 
 <p>
-webapp/resources/는 웹 애플리케이션의 정적 요소를 위해 만들었다.
-웹 애플리케이션에서 정적인 요소란 이미지, 스타일 시트, 자바스크립트, HTML 파일을 말한다.
-webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.
-그래서 guestbook.jsp 파일은 webapp/guestbook.jsp에서 webapp/WEB-INF/views/guestbook/guestbook.jsp로 옮겼다.
-스프링 프로젝트에선 src/main/webapp에는 favicon.ico 파일 외 어떤 파일도 두지 않는 게 좋다.
+webapp/resources/는 웹 애플리케이션의 정적 요소를 위해 만들었다.<br />
+웹 애플리케이션에서 정적인 요소란 이미지, 스타일 시트, 자바스크립트, HTML 파일을 말한다.<br />
+webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.<br />
+그래서 guestbook.jsp 파일은 webapp/guestbook.jsp에서 webapp/WEB-INF/views/guestbook/guestbook.jsp로 옮겼다.<br />
+스프링 프로젝트에선 src/main/webapp에는 favicon.ico 파일 외 어떤 파일도 두지 않는 게 좋다.<br />
 favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지를 말한다. 
 </p>
 
@@ -158,9 +109,9 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 </pre>
 
 <p>
-요청 문자열을 UTF-8으로 인코딩하는 필터를 추가했다.
-디스패처 서블릿을 guestbook이란 이름으로 추가했고 '/'로 매핑했다.
-이 밖에 welcome-file-list와 방명록 예제를 위한 서블릿을 제거했다.
+요청 문자열을 UTF-8으로 인코딩하는 필터를 추가했다.<br />
+디스패처 서블릿을 guestbook이란 이름으로 추가했고 '/'로 매핑했다.<br />
+이 밖에 welcome-file-list와 방명록 예제를 위한 서블릿을 제거했다.<br />
 제거된 서블릿 구현 내용은 스프링 컨트롤러 메서드에서 구현해야 한다. 
 </p>
 
@@ -288,14 +239,14 @@ guestbook.jsp에서 폼 action 속성을 GuestbookController의 요청 핸들러
 
 <p>
 guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutURL() 메서드와 createLoginURL() 메서드의 인자를 그대로 두면 
-두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환하고 결국 404 에러를 발생시킨다. 
+두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환하고 결국 404 에러를 발생시킨다.<br /> 
 두 메서드의 인자를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
 </p>
 
 <h3>appengine-web.xml 수정</h3>
 
 <p>
-자바 8 환경에서 앱을 실행하려면, 다음을 appengine-web.xml에 추가해야 한다.
+자바 8 환경에서 앱을 실행하려면, 다음을 appengine-web.xml에 추가해야 한다.<br />
 이 설정을 추가하지 않으면 Spring에서 에러가 발생한다.
 </p>
  

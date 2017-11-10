@@ -1115,6 +1115,70 @@
 		<put-attribute name="prev-article-title" value="Handling Cookie with JavaScript" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
 	</definition>
+	<!-- google-app-engine -->
+	<definition name="google-app-engine/building-gae-projects-with-maven" extends="lectureTemplate">
+		<put-attribute name="title" value="Building GAE Project With Maven" />
+		<put-attribute name="keywords" value="java 8,maven,eclipse,guestbook archetype,mvn clean install,mvn appengine:devserver,mvn appengine:update,https://cloud.google.com,web console,create new project,create instance,your-app-id.appspot.com,datastore-indexes.xml,mvn appengine:update_indexes,git,https://git-scm.com,Cloud SDK install,gcloud source repos create ..,gcloud source repos clone ..," />
+		<put-attribute name="description" value="Building GAE Project With Maven" />
+		<put-attribute name="content" value="0950-building-gae-projects-with-maven_en" />
+		<put-attribute name="next-article" value="google-app-engine#Logging" />
+		<put-attribute name="next-article-title" value="Logging" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>
+	<definition name="google-app-engine/Logging" extends="lectureTemplate">
+		<put-attribute name="title" value="Logging" />
+		<put-attribute name="keywords" value="appengine-web.xml,logging.properties,.level=INFO,import java.util.logging.Logger,https://console.cloud.google.com/logs" />
+		<put-attribute name="description" value="How to use log on gae project" />
+		<put-attribute name="content" value="0960-Logging_en" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-MVC" />
+		<put-attribute name="next-article-title" value="Spring MVC" />
+		<put-attribute name="prev-article" value="google-app-engine#building-gae-projects-with-maven" />
+		<put-attribute name="prev-article-title" value="Building GAE Project With Maven" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>
+	<definition name="google-app-engine/Spring-MVC" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring MVC" />
+		<put-attribute name="keywords" value="webapp/resources,spring-context,spring-webmvc,spring-jdbc,CharacterEncodingFilter,ObjectifyFilter,DispatcherServlet,guestbook-servlet.xml,mvc:resources mapping location,context:component-scan,InternalResourceViewResolver,GuestbookController.java,guestbook.jsp,runtime java8,mvn clean,mvn appengine:devserver,mvn appengine:update" />
+		<put-attribute name="description" value="How to use Spring MVC On GAE Project" />
+		<put-attribute name="content" value="0970-Spring-MVC_en" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-Security" />
+		<put-attribute name="next-article-title" value="Spring Security" />
+		<put-attribute name="prev-article" value="google-app-engine#Logging" />
+		<put-attribute name="prev-article-title" value="Logging" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>
+	<definition name="google-app-engine/Spring-Security" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Security" />
+		<put-attribute name="keywords" value="google account,spring security,Authentication,spring-security-web,spring-security-config,AppRole.java,GaeUser.java,GoogleAccountsAuthenticationEntryPoint.java,GaeUserAuthentication.java,GaeAuthenticationFilter,GoogleAccountsAuthenticationProvider.java,security.xml,applicationContext.xml,guestbook-servlet.xml,mvc:annotation-driven,web.xml,context-param,ContextLoaderListener,HttpSessionEventPublisher,DelegatingFilterProxy,CSRF,${_csrf.parameterName},${_csrf.token},session-enabled true,GuestbookController.java,mvn clean,mvn appengine:devserver" />
+		<put-attribute name="description" value="Google Accounts + Spring Security" />
+		<put-attribute name="content" value="0980-Spring-Security_en" />
+		<put-attribute name="next-article" value="google-app-engine#Objectify" />
+		<put-attribute name="next-article-title" value="Objectify" />
+		<put-attribute name="prev-article" value="google-app-engine#Spring-MVC" />
+		<put-attribute name="prev-article-title" value="Spring MVC" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>
+	<definition name="google-app-engine/Objectify" extends="lectureTemplate">
+		<put-attribute name="title" value="Objectify" />
+		<put-attribute name="keywords" value="Objectify,.load(),.type(),.ancestor(),.order(),.limit(),.list(),ofy().save().entity().now(),ofy().delete().key(key).now(),Key.create(),isAuthenticated(),principal,hasRole(),GuestbookService.java,GuestbookServiceImpl.java,Greeting.java,GuestbookController.java,mvn clean,mvn appengine:devserver" />
+		<put-attribute name="description" value="How to use Objectify" />
+		<put-attribute name="content" value="0990-Objectify_en" />
+		<put-attribute name="next-article" value="google-app-engine#Spring-optimization" />
+		<put-attribute name="next-article-title" value="Spring Optimization" />
+		<put-attribute name="prev-article" value="google-app-engine#Spring-Security" />
+		<put-attribute name="prev-article-title" value="Spring Security" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>
+	<definition name="google-app-engine/Spring-optimization" extends="lectureTemplate">
+		<put-attribute name="title" value="Spring Optimization" />
+		<put-attribute name="keywords" value="guestbook-servlet.xml,context:annotation-config" />
+		<put-attribute name="description" value="Spring Optimization On GAE Project" />
+		<put-attribute name="content" value="1000-Spring-optimization_en" />
+		<put-attribute name="prev-article" value="google-app-engine#Objectify" />
+		<put-attribute name="prev-article-title" value="Objectify" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
+	</definition>	
+	<!-- datastore blogs -->	
 	<definition name="datastore/*/*" extends="datastoreBlog">
 		<put-attribute name="content" value="/WEB-INF/views/datastore/content.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/{1}/{1}-sub.jsp" />
