@@ -100,7 +100,7 @@ Create all the JSP files in the DocumentBase C: / www / namecard.
 Make list.jsp as follows. (This practice is best done with a regular editor, not with Eclipse.)
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -205,7 +205,7 @@ In Eclipse, select Windows - Preferences - Web - JSP Files, select UTF-8 in the 
 The highlighted part of the write.jsp source below is what you need to type directly.
 </p>
  
-<em class="filename">/write.jsp</em>
+<h6 class="src">/write.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -235,7 +235,7 @@ This page adds a business card using information received from write.jsp.
 You will have to type in the highlighted part of the source below.
 </p>
 
-<em class="filename">/write_proc.jsp</em>
+<h6 class="src">/write_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -268,7 +268,7 @@ Let's implement the business card deletion function.
 First, edit the list.jsp as follows.
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 .. omit ..
 
@@ -297,7 +297,7 @@ delete.jsp receives the value corresponding to the primary key of the namecard i
 You will have to type in the highlighted part of the source below.
 </p>
 
-<em class="filename">/delete.jsp</em>
+<h6 class="src">/delete.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -325,7 +325,7 @@ Next, let's implement namecard modification.
 Below is a method to modify a namecard in NamecardDao.java.
 </p>
 
-<em class="filename">NamecardDao.java</em>
+<h6 class="src">NamecardDao.java</h6>
 <pre class="prettyprint">
 public void update(Namecard card) {
 	String sql = "UPDATE namecard " +
@@ -355,7 +355,7 @@ public void update(Namecard card) {
 Modify the list.jsp file as shown below.
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;td&gt;
 	&lt;a href="delete.jsp?no=&lt;%=card.getNo() %&gt;"&gt;Del&lt;/a&gt;
@@ -367,7 +367,7 @@ Modify the list.jsp file as shown below.
 Next, create a modify.jsp file.
 </p>
 
-<em class="filename">/modify.jsp</em>
+<h6 class="src">/modify.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -405,7 +405,7 @@ Create the modify_proc.jsp file.
 This JSP modifies the namecard using information sent from modify.jsp.
 </p>
 
-<em class="filename">modify_proc.jsp</em>
+<h6 class="src">modify_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -444,7 +444,7 @@ Let's add a search function to list.jsp.
 Open list.jsp and add the following before &lt;/body&gt;.
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;form action="list.jsp" method="post"&gt;
 	&lt;input type="text" name="keyword" /&gt;
@@ -456,7 +456,7 @@ Open list.jsp and add the following before &lt;/body&gt;.
 Add the selectByKeyword (String keyword) method to NamecardDao.java.
 </p>
 
-<em class="filename">NamecardDao.java</em>
+<h6 class="src">NamecardDao.java</h6>
 <pre class="prettyprint">
 public ArrayList&lt;Namecard&gt; selectByKeyword(String keyword) {
 	keyword = "%" + keyword + "%";
@@ -510,7 +510,7 @@ And if you did not put any value in the search field in list.jsp and clicked the
 Open list.jsp and modify it as shown below.
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%
 //Commented out the following code.

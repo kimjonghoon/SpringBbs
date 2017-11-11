@@ -96,7 +96,7 @@ JSP is a useful technique when you need to show your users the dynamically gener
 Create a hello.jsp file in the top-level directory of your ROOT application (C:/www/myapp) and visit http://localhost:port/hello.jsp. 
 </p>
 
-<em class="filename">/hello.jsp</em>
+<h6 class="src">/hello.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;body&gt;
@@ -639,7 +639,7 @@ It used to write data to the response stream.
 Create helloworld.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/helloWorld.jsp.
 </p>
 
-<em class="filename">/helloWorld.jsp</em>
+<h6 class="src">/helloWorld.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;body&gt;
@@ -668,7 +668,7 @@ This reference allows you to access request parameters, information sent by the 
 Create request.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/request.jsp?user=alison
 </p>
 
-<em class="filename">/request.jsp</em>
+<h6 class="src">/request.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;body&gt;
@@ -701,7 +701,7 @@ It is used to read and store session data.
 Create session.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/session.jsp several times.
 </p>
 
-<em class="filename">/session.jsp</em>
+<h6 class="src">/session.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;head&gt;
@@ -851,7 +851,7 @@ To make jsp error page, set the value of the page directive's isErrorPage attrib
 Create the following errorPage.jsp in the ROOT application's documentbase.
 </p>
 
-<em class="filename">/errorPage.jsp</em>
+<h6 class="src">/errorPage.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page <strong>isErrorPage="true"</strong> contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -876,7 +876,7 @@ The exception implicit object can only be referenced from a JSP page with the va
 To see how the error page works, write the following JSP page into the ROOT application's documentbase.
 </p>
 
-<em class="filename">/errorMaker.jsp</em>
+<h6 class="src">/errorMaker.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page <strong>errorPage="errorPage.jsp"</strong> contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -898,7 +898,7 @@ You can specify an error page in the web.xml file, by HTTP status code<sup>3</su
 This spec was added in Servlet 2.3.
 </p>
 
-<em class="filename">WEB-INF/web.xml</em>
+<h6 class="src">WEB-INF/web.xml</h6>
 <pre class="prettyprint">
 &lt;error-page&gt;
 	&lt;error-code&gt;404&lt;/error-code&gt;
@@ -968,7 +968,7 @@ All of them can be accessed in the same way as above.
 </tr>
 </table>
 
-<em class="filename">/error.jsp</em>
+<h6 class="src">/error.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1123,7 +1123,7 @@ Let's create a simple example of cookies.
 Create a cookie subdirectory under the document base and create the following files in it.
 </p>
 
-<em class="filename">/cookie/index.html</em>
+<h6 class="src">/cookie/index.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -1143,7 +1143,7 @@ Create a cookie subdirectory under the document base and create the following fi
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/setCookie.jsp</em>
+<h6 class="src">/cookie/setCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1169,7 +1169,7 @@ Set-Cookie: &lt;%=cookie.getName() %&gt;=&lt;%=cookie.getValue() %&gt;&lt;br /&g
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/viewCookie.jsp</em>
+<h6 class="src">/cookie/viewCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1197,7 +1197,7 @@ if (cookies != null &amp;&amp; cookies.length &gt; 1) {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/editCookie.jsp</em>
+<h6 class="src">/cookie/editCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1227,7 +1227,7 @@ Cookie value changed.&lt;br /&gt;
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/delCookie.jsp</em>
+<h6 class="src">/cookie/delCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1289,7 +1289,7 @@ The login_proc.jsp uses net.java_school.user.User.java JavaBeans.
 To run the example, write net.java_school.user.User.java as below and compile to generate bytecode in WEB-INF/classes.
 </p>
 
-<em class="filename">User.java</em>
+<h6 class="src">User.java</h6>
 <pre class="prettyprint">
 package net.java_school.user;
 
@@ -1344,7 +1344,7 @@ In order to simplify the example, I omitted the code related to the database que
 Therefore, login is successful for any ID and password.
 </p>
 
-<em class="filename">login_proc.jsp</em>
+<h6 class="src">login_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1376,7 +1376,7 @@ I just changed login_proc.jsp to use the action.
 If you open the login_proc.jsp file, you can see that the code has been simplified as shown below.
 </p>
 
-<em class="filename">/login_proc.jsp</em>
+<h6 class="src">/login_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1436,7 +1436,7 @@ We already covered the file upload example in the servlet chapter.
 The following JSP shows a list of uploaded files in the upload folder.
 </p>
 
-<em class="filename">/fileList.jsp</em>
+<h6 class="src">/fileList.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1485,7 +1485,7 @@ for (int i = 0; i &lt; len; i++) {
 The following is the JSP that works when you click the file name on the file list page above.
 </p>
 
-<em class="filename">/download.jsp</em>
+<h6 class="src">/download.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1539,7 +1539,7 @@ try {
 The following is a JSP replacement of the file upload servlet we covered in the Servlet chapter.
 </p>
 
-<em class="filename">fileupload_proc.jsp</em>
+<h6 class="src">fileupload_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

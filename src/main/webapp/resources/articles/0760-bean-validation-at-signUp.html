@@ -20,7 +20,7 @@ Spring MVC 프로젝트에서 폼 입력에 바인딩되는 빈을 검증하는 
 Hibernate Validator 의존 라이브러리를 pom.xml에 추가한다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator --&gt;
 &lt;dependency&gt;
@@ -42,7 +42,7 @@ web.xml에 요청 파라미터의 캐릭터 셋을 "UTF-8"로 바꾸는 필터�
 아래 어노테이션에서 @NotNull과 @Size(min=,max=)는 JSR-303 스펙에서, @Email은 hibernate-validator 구현체에서 제공한다.
 </p>
 
-<em class="filename">User.java</em>
+<h6 class="src">User.java</h6>
 <pre class="prettyprint">
 <strong>import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -70,7 +70,7 @@ private String mobile;
 그렇지 않으면 HTTP 400 에러가 발생한다.
 </p>
 
-<em class="filename">UsersController.java</em>
+<h6 class="src">UsersController.java</h6>
 <pre class="prettyprint">
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
@@ -99,7 +99,7 @@ JSP를 아래를 참고하여 수정한다.
 </p>
 
 
-<em class="filename">signUp.jsp</em>
+<h6 class="src">signUp.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
@@ -155,7 +155,7 @@ JSP를 아래를 참고하여 수정한다.
 에러 메시지를 위한 스타일을 CSS 파일에 추가한다.<br />
 </p>
 
-<em class="filename">screen.css</em>
+<h6 class="src">screen.css</h6>
 <pre class="prettyprint">
 .error {
 	color: red;

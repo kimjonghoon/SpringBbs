@@ -30,7 +30,7 @@ ReloadableResourceBundleMessageSource는 리소스가 파일 시스템에 있으
 SpringBbs 프로젝트의 스프링 설정 파일인 spring-bbs-servlet.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"&gt;
 	&lt;property name="basename" value="WEB-INF/classes/messages" /&gt;
@@ -58,7 +58,7 @@ SpringBbs 프로젝트의 스프링 설정 파일에 SessionLocaleResolver 설�
 LocalChangeInterceptor 설정을 추가한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"&gt;
     &lt;property name="defaultLocale" value="en" /&gt;
@@ -102,12 +102,12 @@ messages_en.properties와 messages_ko.properties 파일을 생성한다.<br />
 프로퍼티 파일을 다음과 같이 작성한다.
 </p>
 
-<em class="filename">messages_en.properties</em>
+<h6 class="src">messages_en.properties</h6>
 <pre class="prettyprint">
 global.search = Search
 </pre>
 
-<em class="filename">messages_ko.properties</em>
+<h6 class="src">messages_ko.properties</h6>
 <pre class="prettyprint">
 global.search = 검색
 </pre>
@@ -116,7 +116,7 @@ global.search = 검색
 header.jsp에 로케일 변경 링크를 추가한다.<br />
 </p>
 
-<em class="filename">header.jsp</em>
+<h6 class="src">header.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -258,7 +258,7 @@ qna       QnA       묻고 답하기
 data      Data      자료실
 </pre>
 
-<em class="filename">BoardMapper.xml</em>
+<h6 class="src">BoardMapper.xml</h6>
 <pre class="prettyprint">
 &lt;select id="selectOneBoard" parameterType="string" resultType="Board"&gt;
 	SELECT * FROM board WHERE boardcd = #{boardCd}
@@ -268,7 +268,7 @@ data      Data      자료실
 &lt;/select&gt;
 </pre>
 
-<em class="filename">BoardMapper.java</em>
+<h6 class="src">BoardMapper.java</h6>
 <pre class="prettyprint">
 //게시판
 public Board selectOneBoard(String boardCd);
@@ -276,7 +276,7 @@ public Board selectOneBoard(String boardCd);
 public List&lt;Board&gt; selectAllBoards();
 </pre>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 //게시판
 @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -287,7 +287,7 @@ public List&lt;Board&gt; getAllBoards();
 </pre>
 
 
-<em class="filename">BoardServiceImpl.java</em>
+<h6 class="src">BoardServiceImpl.java</h6>
 <pre class="prettyprint">
 //게시판
 @Override
@@ -301,7 +301,7 @@ public List&lt;Board&gt; getAllBoards() {
 }
 </pre>
 
-<em class="filename">bbs-sub.jsp</em>
+<h6 class="src">bbs-sub.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;
 &lt;%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%&gt;</strong>
@@ -315,7 +315,7 @@ public List&lt;Board&gt; getAllBoards() {
 &lt;!-- 중간 생략 --&gt;
 </pre>
 
-<em class="filename">bbs-sub_ko.jsp</em>
+<h6 class="src">bbs-sub_ko.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;
 &lt;%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%&gt;</strong>
@@ -329,7 +329,7 @@ public List&lt;Board&gt; getAllBoards() {
 &lt;!-- 중간 생략 --&gt;
 </pre>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 private String getBoardName(String boardCd, String lang) {
 	Board board = boardService.getBoard(boardCd);

@@ -13,7 +13,7 @@ http://localhost:8080을 방문하여 테스트한다.<br />
 
 <h3>의존성 추가</h3>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras --&gt;
 &lt;dependency&gt;
@@ -25,7 +25,7 @@ http://localhost:8080을 방문하여 테스트한다.<br />
 
 <h3>템플릿 JSP</h3>
 
-<em class="filename">/WEB-INF/views/template/template.jsp</em>
+<h6 class="src">/WEB-INF/views/template/template.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -78,7 +78,7 @@ http://localhost:8080을 방문하여 테스트한다.<br />
 
 <h3>타일즈 정의 파일</h3>
 
-<em class="filename">/WEB-INF/tile-defs/template.xml</em>
+<h6 class="src">/WEB-INF/tile-defs/template.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE tiles-definitions PUBLIC  
@@ -106,7 +106,7 @@ http://localhost:8080을 방문하여 테스트한다.<br />
 i18n을 위해선 template_ko.xml을 만들어야 한다.
 </p>
 
-<em class="filename">/WEB-INF/tile-defs/template_ko.xml</em>
+<h6 class="src">/WEB-INF/tile-defs/template_ko.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE tiles-definitions PUBLIC  
@@ -132,7 +132,7 @@ i18n을 위해선 template_ko.xml을 만들어야 한다.
 
 <h3>타일즈 뷰 리졸버 등록</h3>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;!-- ViewResolver --&gt;
 &lt;bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"&gt;
@@ -154,7 +154,7 @@ i18n을 위해선 template_ko.xml을 만들어야 한다.
 
 <h3>테스트</h3>
 
-<em class="filename">/index.jsp</em>
+<h6 class="src">/index.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -162,7 +162,7 @@ i18n을 위해선 template_ko.xml을 만들어야 한다.
 &lt;h1&gt;Home&lt;/h1&gt;
 </pre>
 
-<em class="filename">/index_ko.jsp</em>
+<h6 class="src">/index_ko.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -170,7 +170,7 @@ i18n을 위해선 template_ko.xml을 만들어야 한다.
 &lt;h1&gt;홈&lt;/h1&gt;
 </pre>
 
-<em class="filename">index-sub.jsp</em>
+<h6 class="src">index-sub.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -178,7 +178,7 @@ i18n을 위해선 template_ko.xml을 만들어야 한다.
 &lt;h1&gt;Home&lt;/h1&gt;
 </pre>
 
-<em class="filename">index-menu_ko.jsp</em>
+<h6 class="src">index-menu_ko.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;

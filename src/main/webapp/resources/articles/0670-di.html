@@ -163,7 +163,7 @@ mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojd
 pom.xml 파일을 아래와 같이 편집한다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -254,12 +254,12 @@ C:\java\bank&gt;<span class="prompt-selection">mvn exec:java -Dexec.mainClass=ne
 자바 소스에서 다음 부분을 수정한다.
 </p>
 
-<em class="filename">Bank.java</em>
+<h6 class="src">Bank.java</h6>
 <pre class="prettyprint">
 public void setDao(BankDao dao);//추가
 </pre>
 
-<em class="filename">ShinahanBank.java</em>
+<h6 class="src">ShinahanBank.java</h6>
 <pre class="prettyprint">
 //private BankDao dao = new ShinhanBankDao();
 
@@ -271,7 +271,7 @@ public void setDao(BankDao dao) {
 }
 </pre>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 //..중간 생략..
 
@@ -327,7 +327,7 @@ applicationContext.xml 파일도 같은 위치에 생성한다.
 appliactionContext.xml 파일을 다음과 같이 편집한다.
 </p>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -389,7 +389,7 @@ Maven - Update Project Configuration을 차례로 선택한다.
 빈 설정 클래스 테스트를 위해 applicationContext.xml에서 모든 설정을 주석 처리한다.
 </p>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -416,7 +416,7 @@ Maven - Update Project Configuration을 차례로 선택한다.
 다음과 같이 applicationContext.xml과 같은 내용의 빈 설정 클래스를 작성한다.
 </p>
 
-<em class="filename">BankConfig.java</em>
+<h6 class="src">BankConfig.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -453,7 +453,7 @@ public class BankConfig {
 BankUi 클래스의 메인 메서드를 다음과 같이 수정한다.
 </p>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 //import문 추가
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

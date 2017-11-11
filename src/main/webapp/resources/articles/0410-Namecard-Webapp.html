@@ -103,7 +103,7 @@ C:/www/namecard/WEB-INF/classes
 이클립스가 아닌 일반 에디터로 작업한다.<br />
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -210,7 +210,7 @@ http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
 아래 write.jsp 소스에서 강조된 부분이 여러분이 직접 입력해야 하는 부분이다.<br />
 </p>
  
-<em class="filename">/write.jsp</em>
+<h6 class="src">/write.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -240,7 +240,7 @@ http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
 아래 소스에서 강조된 부분이 여러분이 직접 입력해야 하는 부분이다.<br />
 </p>
 
-<em class="filename">/write_proc.jsp</em>
+<h6 class="src">/write_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -274,7 +274,7 @@ http://localhost:8989/namecard/list.jsp를 방문한다.<br />
 먼저 list.jsp 에서 아래를 참조해서 테이블의 열를 추가한다.<br />
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 .. 중간 생략 ..
 
@@ -303,7 +303,7 @@ delete.jsp 는 list.jsp에서 명함의 Primary key 에 해당하는 값을 전�
 아래 소스에서 강조된 부분이 직접 입력해야 하는 부분이다.<br />
 </p>
 
-<em class="filename">/delete.jsp</em>
+<h6 class="src">/delete.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -332,7 +332,7 @@ http://localhost:8989/namecard/list.jsp를 방문한다.<br />
 NamecardDao.java 에 수정을 담당하는 메서드는 아래와 같다.<br />
 </p>
 
-<em class="filename">NamecardDao.java</em>
+<h6 class="src">NamecardDao.java</h6>
 <pre class="prettyprint">
 public void update(Namecard card) {
 	String sql = "UPDATE namecard " +
@@ -363,7 +363,7 @@ list.jsp 파일에서 수정양식을 보여주는 페이지로 이동하는 링
 아래를 참고한다.<br />
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;td&gt;
 	&lt;a href="delete.jsp?no=&lt;%=card.getNo() %&gt;"&gt;삭제&lt;/a&gt;
@@ -377,7 +377,7 @@ list.jsp 파일에서 수정양식을 보여주는 페이지로 이동하는 링
 약간의 추가 작업을 하여 만들었다.<br />
 </p>
 
-<em class="filename">/modify.jsp</em>
+<h6 class="src">/modify.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -415,7 +415,7 @@ Namecard card = dao.selectOne(no);
 이 페이지는 modify.jsp에서 전송된 값으로 명함을 수정하는 페이지이다.<br />
 </p>
 
-<em class="filename">modify_proc.jsp</em>
+<h6 class="src">modify_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -454,7 +454,7 @@ http://localhost:8989/namecard/list.jsp를 방문하여 수정을 테스트한�
 list.jsp 열고 &lt;/body&gt; 전에 다음 폼을 추가한다.<br />
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;form action="list.jsp" method="post"&gt;
 	&lt;input type="text" name="keyword" /&gt;
@@ -466,7 +466,7 @@ list.jsp 열고 &lt;/body&gt; 전에 다음 폼을 추가한다.<br />
 검색을 위해서 NamecardDao.java 에 selectByKeyword(String keyword) 메서드를 추가한다.<br />
 </p>
 
-<em class="filename">NamecardDao.java</em>
+<h6 class="src">NamecardDao.java</h6>
 <pre class="prettyprint">
 public ArrayList&lt;Namecard&gt; selectByKeyword(String keyword) {
 	keyword = "%" + keyword + "%";
@@ -520,7 +520,7 @@ list.jsp 를 웹브라우저의 주소창에서 처음 방문할 때는 keyword 
 list.jsp 을 열고 아래 코드를 참고하여 수정한다.<br />
 </p>
 
-<em class="filename">/list.jsp</em>
+<h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%
 //기존 코드는 주석처리한다.

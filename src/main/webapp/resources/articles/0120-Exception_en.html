@@ -127,7 +127,7 @@ If you need to create a method with code that calls someMethod() on the method b
 you should choose one of the two below to avoid compilation errors.
 </p>
 
-<strong class="filename">1</strong>
+<h6 class="src">1</h6>
 <pre class="prettyprint">
 public void myMethod() <strong>throws SomeException</strong> {
 	someMethod();
@@ -135,7 +135,7 @@ public void myMethod() <strong>throws SomeException</strong> {
 }
 </pre>
 
-<strong class="filename">2</strong>
+<h6 class="src">2</h6>
 <pre class="prettyprint">
 public void myMethod() {
 	<strong>

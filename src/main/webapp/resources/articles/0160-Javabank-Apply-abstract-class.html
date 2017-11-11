@@ -12,7 +12,7 @@ Source - Generate Constructors form SuperClass...를 차례로 선택하여 생�
 <img alt="Using Eclipse Code Assistance 2" src="https://lh3.googleusercontent.com/-cghmWWIl6n0/VWKjEDyc0dI/AAAAAAAACIA/EkwIZL_GRmE/s720/source-Generate-Constructors-form-SuperClass.png"  style="display: block;">
 </p>
 
-<em class="filename">InsufficientBalanceException.java</em>
+<h6 class="src">InsufficientBalanceException.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -41,7 +41,7 @@ public class InsufficientBalanceException extends RuntimeException {
 중복된 계좌를 등록하려 할 때 발생시킬 예외 클래스를 위와 동일한 방법으로 생성한다.
 </p>
 
-<em class="filename">DuplicateAccountException.java</em>
+<h6 class="src">DuplicateAccountException.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -76,7 +76,7 @@ public class DuplicateAccountException extends RuntimeException {
 출금 메서드 withdraw()를 추상 메서드로 변경한다.
 </p>
 
-<em class="filename">Account.java</em>
+<h6 class="src">Account.java</h6>
 <pre class="prettyprint">
 public <strong>abstract</strong> class Account {
 
@@ -92,7 +92,7 @@ public <strong>abstract</strong> class Account {
 출금액이 잔액보다 클 수 없는 일반 계좌를 생성한다.
 </p>
 
-<em class="filename">NormalAccount.java</em>
+<h6 class="src">NormalAccount.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -131,7 +131,7 @@ public class NormalAccount extends Account {
 }
 </pre>
 
-<em class="filename">Bank.java</em>
+<h6 class="src">Bank.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

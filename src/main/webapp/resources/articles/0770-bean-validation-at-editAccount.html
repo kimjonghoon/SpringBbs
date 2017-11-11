@@ -7,7 +7,7 @@
 요청 핸들러의 매개 변수 리스트에서 @Valid User user 다음은 곧이어 BindingResult bindingResult를 선언해야 한다. 
 </p>
 
-<em class="filename">UsersController.java</em>
+<h6 class="src">UsersController.java</h6>
 <pre class="prettyprint">
 RequestMapping(value="/editAccount",method=RequestMethod.POST)
 public String editAccount(<strong>@Valid</strong> User user, <strong>BindingResult bindingResult</strong>, Principal principal) {
@@ -33,7 +33,7 @@ JSP 파일을 아래를 참조해 수정한다.
 &lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
 </p>
 
-<em class="filename">editAccount.jsp</em>
+<h6 class="src">editAccount.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 

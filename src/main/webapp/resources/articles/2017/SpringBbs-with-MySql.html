@@ -119,7 +119,7 @@ Uptime:			12 sec
 오라클용 스프링 MVC 게시판과 같은 artifactId를 사용하는 건 바람직하지 않으니 바꾼다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;artifactId&gt;<strong>spring-bbs-mysql</strong>&lt;/artifactId&gt;
 
@@ -133,7 +133,7 @@ MySql에서 테이블 이름을 member로 생성했다면 select * from MEMBER;�
 securty.xml을 열고 인증 쿼리를 아래를 참조해 수정한다.
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;jdbc-user-service
 	data-source-ref="dataSource"
@@ -147,7 +147,7 @@ securty.xml을 열고 인증 쿼리를 아래를 참조해 수정한다.
 데이터소스 설정을 MySql용으로 아래와 같이 수정한다.
 </p>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"&gt;
 	&lt;property name="driverClassName" value="<strong>com.mysql.jdbc.Driver</strong>"/&gt;
@@ -166,7 +166,7 @@ securty.xml을 열고 인증 쿼리를 아래를 참조해 수정한다.
 기존 BoardMapper.xml을 MySql용으로 아래와 같이 수정한다.
 </p>
 
-<em class="filename">BoardMapper.xml</em>
+<h6 class="src">BoardMapper.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 
@@ -355,7 +355,7 @@ UserMapper.xml은 오라클용과 내용이 같다.
 페이징 처리에 사용되는 다음 VO 클래스는 오라클용과 함께 사용해도 된다.
 </p>
 
-<em class="filename">NumbersForPaging.java</em>
+<h6 class="src">NumbersForPaging.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -411,7 +411,7 @@ public class NumbersForPaging {
 페이징 처리를 위한 숫자를 생산하는 다음 클래스는 오라클용과 함께 사용해도 된다.
 </p>
 
-<em class="filename">Paginator.java</em>
+<h6 class="src">Paginator.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -458,7 +458,7 @@ public class Paginator {
 페이지를 위한 숫자를 생산해야 하는 컨트롤러는 Paginator 클래스를 상속하게 한다.
 </p>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 @Controller
 @RequestMapping("/bbs")
@@ -470,7 +470,7 @@ public class BbsController <strong>extends Paginator</strong>
 아래 코드를 참조해 레코드을 그룹화하는 부분의 코드를 MySql에 맞게 수정한다. 
 </p>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 //목록
 @RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
@@ -619,7 +619,7 @@ cd /etc/tomcat7/Catalina/localhost
 sudo nano ROOT.xml
 </pre>
 
-<em class="filename">ROOT.xml</em>
+<h6 class="src">ROOT.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Context

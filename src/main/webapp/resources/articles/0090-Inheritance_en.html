@@ -17,7 +17,7 @@ Let's start with an example of a class that is not inherited.<br />
 The following are the Employee and Manager classes.<br />
 </p>
 
-<em class="filename">Employee.java</em>
+<h6 class="src">Employee.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -65,7 +65,7 @@ public class Employee {
 }
 </pre>
 
-<em class="filename">Manager.java</em>
+<h6 class="src">Manager.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -125,7 +125,7 @@ public class Manager {
 </pre>
 
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -158,7 +158,7 @@ The duplicate code will be inherited and will be deleted from the manager class 
 Modify the manager class to inherit the employee class as shown below.<br />
 </p>
 
-<em class="filename">Manager.java</em>
+<h6 class="src">Manager.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -286,7 +286,7 @@ The super keyword is used in the following cases:
 </dd>
 </dl>
 
-<em class="filename">Adding a constructor to Employee class</em>
+<h6 class="src">Adding a constructor to Employee class</h6>
 <pre class="prettyprint">
 public Employee() {} //if you need to create a constructor, it is a good idea to create a default constructor also.
 
@@ -297,7 +297,7 @@ public Employee(String name, String position, String telephone) {
 }
 </pre>
 
-<em class="filename">Adding a constructor to Manager class</em>
+<h6 class="src">Adding a constructor to Manager class</h6>
 <pre class="prettyprint">
 public Manager() {} //default constructor
 
@@ -307,7 +307,7 @@ public Manager(String name, String position, String telephone, String manageJob)
 }
 </pre>
 
-<em class="filename">Modify the main method of the Test class</em>
+<h6 class="src">Modify the main method of the Test class</h6>
 <pre class="prettyprint">
 Employee james = new Employee("JAMES", "CLERK", "19");
 System.out.println(james.toString());
@@ -326,7 +326,7 @@ It is up to you to decide which code you like better.<br />
 The above constructor code is changed by the compiler as shown below.<br />
 </p>
 
-<em class="filename">Code that the compiler added in Employee's Contructor</em>
+<h6 class="src">Code that the compiler added in Employee's Contructor</h6>
 <pre class="prettyprint">
 public Employee() {
 	<strong>super();</strong>
@@ -340,7 +340,7 @@ public Employee(String name, String position, String telephone) {
 }
 </pre>
 
-<em class="filename">Code that the compiler added in Manager's Contructor</em>
+<h6 class="src">Code that the compiler added in Manager's Contructor</h6>
 <pre class="prettyprint">
 public Manager() {
 	<strong>super();</strong>
@@ -386,7 +386,7 @@ Let's look at an example.<br />
 Add the following to the main method of the Test class:
 </p>
 
-<em class="filename">Add the following code to the main method of Test.java</em>
+<h6 class="src">Add the following code to the main method of Test.java</h6>
 <pre class="prettyprint">
 Object king = new Manager("KING", "MANAGER", "1", "SALES");
 System.out.println(king);
@@ -452,7 +452,7 @@ Create the abstract class AbstractEmployee.java class as shown below.<br />
 If you make it ambiguous like this, the portability is better.<br /> Of course, there must be a premise that the design is good.<br />
 </p>
 
-<em class="filename">AbstractEmployee.java</em>
+<h6 class="src">AbstractEmployee.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -485,7 +485,7 @@ Change the employee class to inherit the AbstractEmployee abstract class.<br />
 The employee class must implement the abstract method doWork () method of the AbstractEmployee class.<br />
 </p>
 
-<em class="filename">Employee.java</em>
+<h6 class="src">Employee.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -583,7 +583,7 @@ Because the driver is an employee, he inherited the employee class.<br />
 </p>
 
   
-<em class="filename">Driver.java</em>
+<h6 class="src">Driver.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -616,7 +616,7 @@ public class Driver <strong>extends Employee</strong> {
 }
 </pre>
 
-<em class="filename">Transportor.java</em>
+<h6 class="src">Transportor.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -648,7 +648,7 @@ This common function can be created as an interface.<br />
 The interface name is called Drivable.<br />
 </p>
 
-<em class="filename">Drivable.java</em>
+<h6 class="src">Drivable.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -664,7 +664,7 @@ public interface Drivable {
 Let's change the transporter and the driver class that implements this interface.
 </p>
 
-<em class="filename">Driver.java</em>
+<h6 class="src">Driver.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -699,7 +699,7 @@ public class Driver extends Employee implements Drivable {
 }
 </pre>
 
-<em class="filename">Transportor.java</em>
+<h6 class="src">Transportor.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -731,7 +731,7 @@ public class Transportor implements Drivable {
 Add the following code snippet to the main method of the Test class.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 Drivable a = new Driver("Michael","CLERK","ext:8","015000");
 System.out.println(a);

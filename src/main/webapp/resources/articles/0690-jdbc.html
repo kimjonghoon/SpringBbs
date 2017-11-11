@@ -20,7 +20,7 @@ ShinhanBankDao 클래스가 NamedParameterJdbcDaoSupport 클래스를 상속하�
 생성자와 getConnection(), close(rs,pstmt,con) 메서드는 제거한다.
 </p>
 
-<em class="filename">ShinhanBankDao.java</em>
+<h6 class="src">ShinhanBankDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -43,7 +43,7 @@ public class ShinhanBankDao <strong>extends NamedParameterJdbcDaoSupport</strong
 }
 </pre>
 
-<em class="filename">기존 insertAccount() 메서드</em>
+<h6 class="src">기존 insertAccount() 메서드</h6>
 <pre class="code">
 @Override
 public void insertAccount(String accountNo, String name, String kind) {
@@ -69,7 +69,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<em class="filename">수정 후 insertAccount() 메서드</em>
+<h6 class="src">수정 후 insertAccount() 메서드</h6>
 <pre class="prettyprint">
 private static final String INSERT_ACCOUNT = 
 		"INSERT INTO " +
@@ -87,7 +87,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<em class="filename">기존 selectOneAccount() 메서드</em>
+<h6 class="src">기존 selectOneAccount() 메서드</h6>
 <pre class="code">
 @Override
 public Account selectOneAccount(String accountNo) {
@@ -126,7 +126,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<em class="filename">수정 후 selectOneAccount() 메서드</em>
+<h6 class="src">수정 후 selectOneAccount() 메서드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ONE_ACCOUNT = 
 		"SELECT accountno,owner,balance,kind " +
@@ -156,7 +156,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<em class="filename">기존 selectAccountsByName() 메서드</em>
+<h6 class="src">기존 selectAccountsByName() 메서드</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAccountsByName(String name) {
@@ -196,7 +196,7 @@ public List&lt;Account&gt; selectAccountsByName(String name) {
 }
 </pre>
 
-<em class="filename">수정 후 selectAccountsByName() 메서드</em>
+<h6 class="src">수정 후 selectAccountsByName() 메서드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ACCOUNTS_BY_NAME = 
 		"SELECT accountno,owner,balance,kind " +
@@ -232,7 +232,7 @@ protected class AccountRowMapper implements RowMapper&lt;Account&gt; {
 }
 </pre>
 
-<em class="filename">기존 selectAllAccounts() 메서드</em>
+<h6 class="src">기존 selectAllAccounts() 메서드</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAllAccounts() {
@@ -271,7 +271,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<em class="filename">수정 후 selectAllAccounts() 메서드</em>
+<h6 class="src">수정 후 selectAllAccounts() 메서드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_ACCOUNTS = 
 		"SELECT accountNo,owner,balance,kind " +
@@ -285,7 +285,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<em class="filename">기존 deposit() 메서드</em>
+<h6 class="src">기존 deposit() 메서드</h6>
 <pre class="code">
 @Override
 public void deposit(String accountNo, long amount) {
@@ -311,7 +311,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<em class="filename">수정 후 deposit() 메서드</em>
+<h6 class="src">수정 후 deposit() 메서드</h6>
 <pre class="prettyprint">
 private static final String DEPOSIT = 
 		"UPDATE bankaccount " +
@@ -328,7 +328,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<em class="filename">기존 withdraw() 메서드</em>
+<h6 class="src">기존 withdraw() 메서드</h6>
 <pre class="code">
 @Override
 public void withdraw(String accountNo, long amount) {
@@ -353,7 +353,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<em class="filename">수정 후 withdraw() 메서드</em>
+<h6 class="src">수정 후 withdraw() 메서드</h6>
 <pre class="prettyprint">
 private static final String WITHDRAW = 
 		"UPDATE bankaccount " +
@@ -370,7 +370,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<em class="filename">기존 selectAllTransactions() 메서드</em>
+<h6 class="src">기존 selectAllTransactions() 메서드</h6>
 <pre class="code">
 @Override
 public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
@@ -414,7 +414,7 @@ public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
 }
 </pre>
 
-<em class="filename">수정 후 selectAllTransactions() 메서드</em>
+<h6 class="src">수정 후 selectAllTransactions() 메서드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_TRANSACTIONS = 
 		"SELECT transactionDate,kind,amount,balance " +
@@ -459,7 +459,7 @@ protected class TransactionRowMapper implements RowMapper&lt;Transaction&gt; {
 applicationContext.xml에 강조된 부분을 추가한다.
 </p>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -517,7 +517,7 @@ ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applica
 
 <h3>JavaConfig 설정</h3>
 
-<em class="filename">BankConfig.java</em>
+<h6 class="src">BankConfig.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

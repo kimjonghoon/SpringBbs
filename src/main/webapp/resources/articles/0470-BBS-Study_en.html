@@ -6,7 +6,7 @@
 After accessing the scott account with SQL*PLUS, use the following script to create the table and sequence for the bulletin board.
 </p>
 
-<em class="filename">board-schema.sql</em>
+<h6 class="src">board-schema.sql</h6>
 <pre class="prettyprint">
 create table board(
  no number primary key,
@@ -37,7 +37,7 @@ Run the following insert statement while logged in to SQL * PLUS with the scott 
 (A total of 100 insert statements are executed)
 </p>
 
-<em class="filename"><a href="board-data.sql">board-data.sql</a></em>
+<h6 class="src"><a href="board-data.sql">board-data.sql</a></h6>
 <pre class="prettyprint">
 insert into board values (board_no_seq.nextval, '000001','',sysdate);
 insert into board values (board_no_seq.nextval, '000002','',sysdate);
@@ -230,7 +230,7 @@ This listener is running in your ROOT application.
 The first step of the list page (list.jsp) shows all the records.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -304,7 +304,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -340,7 +340,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardWriter.java</em>
+<h6 class="src">BoardWriter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -426,7 +426,7 @@ Test in the following order.
 
 <h2>View Post</h2>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -526,7 +526,7 @@ Test in the following order.
 
 <h2>Edit Post</h2>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -619,7 +619,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier.java</em>
+<h6 class="src">BoardModifier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -712,7 +712,7 @@ Test in the following order.
 
 <h2>Delete Post</h2>
 
-<em class="filename">BoardDeleter.java</em>
+<h6 class="src">BoardDeleter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -815,7 +815,7 @@ If you have a lot of data, you need to show the records in groups without showin
 If you are grouping records by 10, the Oracle query statement that fetches the records for each group is as follows:
 </p>
 
-<em class="filename">Records belonging to group 1</em>
+<h6 class="src">Records belonging to group 1</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -823,7 +823,7 @@ SELECT no,title,wdate FROM (
 WHERE R BETWEEN 1 and 10;
 </pre>
 
-<em class="filename">Records belonging to group 2</em>
+<h6 class="src">Records belonging to group 2</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -831,7 +831,7 @@ SELECT no,title,wdate FROM (
 WHERE R BETWEEN 11 and 20;
 </pre>
 
-<em class="filename">Records belonging to group 3</em>
+<h6 class="src">Records belonging to group 3</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -847,7 +847,7 @@ When requesting list.jsp, if you pass the record group number as a parameter, yo
 Set the parameter corresponding to the record group number to be passed to list.jsp to curPage and modify list.jsp with reference to the following code.
 </p>
  
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%
 
@@ -975,7 +975,7 @@ The page partitioning algorithm is summarized as follows.
 The following is a list.jsp with page partitioning function.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1168,7 +1168,7 @@ If you restrict the number of links to 5 pages to be visible, then links [1] [2]
 If the page group unit is called pagePerBlock and the number of the page group to which curPage belongs is stored in a variable called block, the block can be obtained by the following code.
 </p>
 
-<em class="filename">Obtaining the block to which curPage belongs.</em>
+<h6 class="src">Obtaining the block to which curPage belongs.</h6>
 <pre class="prettyprint">
 //Declaring and initializing variables to store the number of the group to which curPage belongs.
 int block = 1;
@@ -1314,12 +1314,12 @@ To do so, you must pass the curPage parameter to all the components associated w
 Open the /board/list.jsp file and modify the query string of the link as shown below.
 </p>
 
-<em class="filename">Pass curPage parameter when moving from list.jsp to view.jsp</em>
+<h6 class="src">Pass curPage parameter when moving from list.jsp to view.jsp</h6>
 <pre class="prettyprint">
 &lt;a href="view.jsp?no=&lt;%=no %&gt;<strong>&amp;curPage=&lt;%=curPage %&gt;</strong>"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
 </pre>
 
-<em class="filename">Pass curPage parameter when moving from list.jsp to write_form.jsp</em>
+<h6 class="src">Pass curPage parameter when moving from list.jsp to write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;a href="write_form.jsp?<strong>curPage=&lt;%=curPage %&gt;</strong>"&gt;Add New Post&lt;/a&gt;
 </pre>
@@ -1328,7 +1328,7 @@ Open the /board/list.jsp file and modify the query string of the link as shown b
 Open the /board/view.jsp file and modify the query string for the move link to other components.
 </p>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1378,7 +1378,7 @@ I registered a new article on page 5, but if I go back to page 5, I can not see 
 Therefore, if you register a new article, it is correct to go to the first page of the list.
 </p>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1417,7 +1417,7 @@ Therefore, if you register a new article, it is correct to go to the first page 
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1469,7 +1469,7 @@ Log log = new Log();
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier</em>
+<h6 class="src">BoardModifier</h6>
 <pre class="prettyprint">
 @Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -1489,7 +1489,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 }
 </pre>
 
-<em class="filename">BoardDeleter</em>
+<h6 class="src">BoardDeleter</h6>
 <pre class="prettyprint">
 @Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -1610,7 +1610,7 @@ Modify the code so that view.jsp receives the curPage and keyword parameters, an
 Other components of the bulletin board, except for the writing process servlet, also receive the keyword parameter and modify it so that the keyword parameter is added to the link from the code to the other component.
 </p>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1659,7 +1659,7 @@ Modify the following components for the same reason as above.
 However, BoardWriter.java does not need to be modified.
 </p>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1700,7 +1700,7 @@ String curPage = request.getParameter("curPage");
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1753,7 +1753,7 @@ Log log = new Log();
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier</em>
+<h6 class="src">BoardModifier</h6>
 <pre class="prettyprint">@Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
@@ -1775,7 +1775,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 </pre>
 
 
-<em class="filename">BoardDeleter</em>
+<h6 class="src">BoardDeleter</h6>
 <pre class="prettyprint">@Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {

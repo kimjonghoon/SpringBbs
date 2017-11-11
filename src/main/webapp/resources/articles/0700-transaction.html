@@ -2,7 +2,7 @@
 
 <h1>Spring 트랜잭션</h1>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -55,7 +55,7 @@
 입금과 출금시 dao가 정수값을 리턴하도록 자바 클래스를 수정한다.
 </p>
 
-<em class="filename">BankDao.java</em>
+<h6 class="src">BankDao.java</h6>
 <pre class="prettyprint">
 //입금
 public <strong>int</strong> deposit(String accountNo, long amount);
@@ -65,7 +65,7 @@ public <strong>int</strong> withdraw(String accountNo, long amount);
 </pre>
 
 
-<em class="filename">ShinhanBankDao.java</em>
+<h6 class="src">ShinhanBankDao.java</h6>
 <pre class="prettyprint">
 @Override
 public <strong>int</strong> deposit(String accountNo, long amount) {
@@ -90,7 +90,7 @@ public <strong>int</strong> withdraw(String accountNo, long amount) {
 다음과 같이 어노테이션을 사용해 트랜잭션을 설정한다.
 </p>
 
-<em class="filename">ShinhanBank.java</em>
+<h6 class="src">ShinhanBank.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -139,7 +139,7 @@ ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applica
 
 <h3>JavaConfig 설정</h3>
 
-<em class="filename">BankConfig.java</em>
+<h6 class="src">BankConfig.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

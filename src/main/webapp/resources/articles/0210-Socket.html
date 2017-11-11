@@ -21,7 +21,7 @@
 서버 소켓은 외부에서 소켓 연결 요청이 오면 클라이언트 소켓과 통신할 서버 측 소켓을 만들고 서로 연결한다.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -49,7 +49,7 @@ Socket socket = serverSocket.accept();에서 프로그램은 멈추고 외부의
 여기서 특정 메시지는 서버 측 소켓의 포트 번호다.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -81,7 +81,7 @@ public class Server {
 서버 소켓이 3000번 포트를 이용하고 있으므로 두 번째 인자로 3000을 입력한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -104,7 +104,7 @@ public class Client {
 서버가 보낸 문자열을 읽기 위해서 아래 강조한 부분을 추가한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -146,7 +146,7 @@ Server를 먼저 실행하고 Client를 실행한다.
 서버가 종료되지 않도록 예제를 수정하자.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 public static void main(String[] args) throws IOException {
 	ServerSocket serverSocket = new ServerSocket(3000);
@@ -172,7 +172,7 @@ Server를 종료하려면 Ctrl + C를 동시에 눌러 강제 종료한다.
 다음 예제는 Client에서 보낸 메시지를 Server가 그대로 다시 Client에게 전송한다.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -198,7 +198,7 @@ Client의 메시지를 받아서 다시 Client로 그대로 보내는 코드가 
 Echo 클래스는 Server의 자원을 쉽게 접근할 수 있도록 서버의 내부 클래스를 만들자.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -266,7 +266,7 @@ Echo 객체를 담을 ArrayList를 추가한다.
 Echo의 close() 메서드 마지막에 Echo 객체 참조 값을 ArrayList에서 제거하는 코드를 추가한다.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -338,7 +338,7 @@ public class Server {
 메인 메서드에서 서버 객체 생성 후 이 메서드를 호출하도록 구현한다.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -429,7 +429,7 @@ public class Server {
 다음으로 Client를 작성한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -447,7 +447,7 @@ Client 역시 스레드가 필요할까?
 소켓 연결을 하는 코드를 추가한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -470,7 +470,7 @@ public class Client {
 사용자가 키보드에 입력한 문자열을 읽어 오는 입력 스트림이 필요하다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -496,7 +496,7 @@ public class Client {
 Server로 문자열을 보내기 위해서는 소켓을 목적지로 하는 출력 스트림이 필요하다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -531,7 +531,7 @@ public class Client {
 Server로부터 온 메시지를 읽기 위해서는 소켓을 근원지로 하는 입력 스트림이 필요하다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -572,7 +572,7 @@ public class Client {
 아니면 서버로부터 문자열을 기다리는 상태인지를 저장할 플래그를 둔다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -645,7 +645,7 @@ public class Client {
 먼저 클라이언트를 구현한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -658,7 +658,7 @@ public class Client {
 사용자가 키보드에 입력하는 동안에도 서버로부터 메시지가 전달될 수 있으니 스레드를 사용해야 한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -677,7 +677,7 @@ run() 메서드는 서버로부터 오는 메시지를 콘솔에 출력하는 �
 소켓을 근원지로 하는 입력 스트림을 필요하다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -714,7 +714,7 @@ public class Client extends Thread {
 run() 메서드를 구현하자.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -760,7 +760,7 @@ public class Client extends Thread {
 메시지를 보내려면 키보드를 근원지로 하는 입력 스트림과 소켓을 목적지로 하는 출력 스트림이 필요하다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -815,7 +815,7 @@ public class Client extends Thread {
 이 코드를 새로운 메서드 chatStart()에 구현한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -915,7 +915,7 @@ public void run() {
 클라이언트의 run() 메서드를 다음과 같이 수정한다.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 @Override
 public void run() {

@@ -43,13 +43,13 @@ If you have not seen the cat, try restarting Tomcat using this Tomcat Monitor.<s
 If you see the message <em>"Authentication Required Server http:/localhost:8080 requires a user name and a password. The server says: XDB"</em>.
 It is Oracle XDB, not Tomcat, that works with 8080.
 In this case, you need to change port 8080 to a different number in the {TOMCAT_HOME}/conf/server.xml.<br />
-<strong class="filename">Previous</strong>
+<h6 class="src">Previous</h6>
 <pre class="prettyprint">
 &lt;Connector port="<strong>8080</strong>" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443" /&gt;	
 </pre>
-<strong class="filename">Updated</strong>
+<h6 class="src">Updated</h6>
 <pre class="prettyprint">
 &lt;Connector port="<strong>8989</strong>" protocol="HTTP/1.1"
                connectionTimeout="20000"

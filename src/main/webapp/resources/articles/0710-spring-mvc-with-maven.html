@@ -45,7 +45,7 @@ C:\www\spring-bbs가 메이븐 프로젝트의 루트 디렉터리다.
 그다음 톰캣 컨텍스트 파일을 만들어야 하는데, /WEB-INF 바로 위인 src/main/webapp가 도큐먼트베이스(DocumentBase)이므로 아래와 같이 톰캣 컨텍스트를 생성한다.
 </p>
 
-<em class="filename">spring-bbs.xml</em>
+<h6 class="src">spring-bbs.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Context
@@ -65,7 +65,7 @@ C:\www\spring-bbs가 메이븐 프로젝트의 루트 디렉터리다.
 pom.xml 파일을 다음과 같이 수정한다. 
 </p>
  
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -226,7 +226,7 @@ pom.xml은 Spring MVC 과정의 최종 결과물이다.
 web.xml를 수정한다.
 </p>
 
-<em class="filename">web.xml</em> 
+<h6 class="src">web.xml</h6> 
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 &lt;!--
@@ -311,7 +311,7 @@ DispatcherServlet의 이름을 spring-bbs라고 정했기에,
 spring-bbs-servlet.xml 파일을 web.xml과 같은 위치인 /WEB-INF에 아래 내용으로 생성한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em> 
+<h6 class="src">spring-bbs-servlet.xml</h6> 
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans" 
@@ -331,7 +331,7 @@ Spring MVC 테스트를 위해 다음 자바 소스를 작성한다.
 src/main/java 폴더가 없으면 만들고 진행한다.
 </p>
  
-<em class="filename">Player.java</em>
+<h6 class="src">Player.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 
@@ -362,7 +362,7 @@ public class Player {
 }
 </pre>
 
-<em class="filename">PlayerDao.java</em>
+<h6 class="src">PlayerDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 
@@ -383,7 +383,7 @@ public class PlayerDao {
 }
 </pre>
 
-<em class="filename">PlayerService.java</em>
+<h6 class="src">PlayerService.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 
@@ -401,7 +401,7 @@ public class PlayerService {
 }
 </pre>
 
-<em class="filename">PlayerController.java</em>
+<h6 class="src">PlayerController.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 
@@ -450,7 +450,7 @@ public class PlayerController implements Controller {
 test.jsp 파일을 만들어 위치시킨다.
 </p>
 
-<em class="filename">test.jsp</em>
+<h6 class="src">test.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -489,7 +489,7 @@ spring-bbs-servlet.xml 파일을 열고 아래 코드를 참조하여 수정한�
 &lt;bean id="playerController" <span style="color: red;text-decoration: line-through">name="/player/test"</span>
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;!-- 중간 생략 --&gt;
 
@@ -523,7 +523,7 @@ InternalResourceViewResolver는 직관적이라 이해하기 쉬운 뷰리졸버
 spring-bbs-servlet.xml 파일을 열고 &lt;!-- ViewResolver --&gt; 부분에 다음을 추가한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em> 
+<h6 class="src">spring-bbs-servlet.xml</h6> 
 <pre class="prettyprint">
 &lt;!-- ViewResolver --&gt;
 &lt;bean id="internalResourceViewResolver" 
@@ -544,7 +544,7 @@ spring-bbs-servlet.xml 파일을 열고 &lt;!-- ViewResolver --&gt; 부분에 �
 PlayerController.java을 열고 강조된 부분을 수정한다.
 </p>
 
-<em class="filename">PlayerController.java</em>
+<h6 class="src">PlayerController.java</h6>
 <pre class="prettyprint">
 //반환값인 ModelAndView 인스턴스 생성
 ModelAndView modelAndView = new ModelAndView();
@@ -574,7 +574,7 @@ spring-bbs-servlet.xml 파일을 열고 강조된 부분을 추가한다.
 &lt;!-- HandlerMapping --&gt;부분은 모두 제거한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans" 
@@ -630,7 +630,7 @@ spring-bbs-servlet.xml 파일을 열고 강조된 부분을 추가한다.
 PlayerController.java 파일을 아래와 같이 다시 작성한다.
 </p>
 
-<em class="filename">PlayerController.java</em>
+<h6 class="src">PlayerController.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 <strong>
@@ -680,7 +680,7 @@ public class PlayerController {
 컴포넌트 스캔 기능이 동작하므로 서비스와 Dao에 어노테이션을 적용하면 spring-bbs-servlet.xml에서 이들의 설정을 생략할 수 있다.
 </p>
 
-<em class="filename">PlayerDao.java</em>
+<h6 class="src">PlayerDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 <strong>
@@ -704,7 +704,7 @@ public class PlayerDao {
 }
 </pre>
 
-<em class="filename">PlayerService.java</em>
+<h6 class="src">PlayerService.java</h6>
 <pre class="prettyprint">
 package net.java_school.soccer;
 <strong>
@@ -727,7 +727,7 @@ public class PlayerService {
 어노테이션을 적용하면 스프링 설정 파일은 다음과 같이 간단해진다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans" 

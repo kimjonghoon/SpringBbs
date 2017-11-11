@@ -15,7 +15,7 @@ This section introduces the configuration for Tomcat DataSource, and then modifi
 Open the ROOT.xml in {TOMCAT_HOME}/conf/Catalina/localhost and add the highlighted parts below.
 </p>
 
-<em class="filename">ROOT.xml</em>
+<h6 class="src">ROOT.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Context
@@ -40,7 +40,7 @@ Open the ROOT.xml in {TOMCAT_HOME}/conf/Catalina/localhost and add the highlight
 Create the following JSP file in the document base of myapp application.
 </p>
 
-<em class="filename">/dataSourceTest.jsp</em>
+<h6 class="src">/dataSourceTest.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page contentType="text/html;charset=UTF-8" %&gt;
 &lt;%@ page import="java.sql.*" %&gt;
@@ -108,7 +108,7 @@ If the test is successful, let's modify the source of the bulletin board.
 We implemented the JDBC code on BoardDao, so we only need to modify BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

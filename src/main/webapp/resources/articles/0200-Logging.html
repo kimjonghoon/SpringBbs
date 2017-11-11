@@ -10,7 +10,7 @@
 다음 클래스는 사용자 정의 로그 클래스이다.
 </p>
 
-<em class="filename">Log.java</em>
+<h6 class="src">Log.java</h6>
 <pre class="prettyprint">
 package net.java_school.util;
 
@@ -50,7 +50,7 @@ public class Log {
 아래 파일을 만들어 Log 클래스를 테스트한다.
 </p>
 
-<em class="filename">LogTest1.java</em>
+<h6 class="src">LogTest1.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -83,7 +83,7 @@ Log4j 2를 사용하기 위해서는 아래 경로에서 Log4j 2 바이너리 �
 그다음 아래 프로퍼티 파일을 역시 클래스로더가 찾을 수 있는 경로에 생성한다.
 </p>
 
-<em class="filename">log4j2.xml</em>
+<h6 class="src">log4j2.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Configuration&gt;
@@ -120,7 +120,7 @@ Log4j 2를 사용하기 위해서는 아래 경로에서 Log4j 2 바이너리 �
 	<li>아래 LogTest2.java 파일을 생성한다.</li>
 </ol>
 
-<em class="filename">LogTest2.java</em>
+<h6 class="src">LogTest2.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -216,7 +216,7 @@ commons-logging은 자체적으로 로깅을 지원한다기보다는 여러 로
 아래 프로퍼티 파일을 클래스 패스에 생성한다.
 </p>
 
-<em class="filename">commons-logging.properties</em>
+<h6 class="src">commons-logging.properties</h6>
 <pre class="prettyprint">
 org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 </pre>
@@ -225,7 +225,7 @@ org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 테스트 파일을 만들고 테스트한다.<br />
 </p>
 
-<em class="filename">LogTest3.java</em>
+<h6 class="src">LogTest3.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -273,7 +273,7 @@ log4j-jcl-2.8.jar는 압축을 푼 Log4j 2 디렉터리에서 찾을 수 있다.
 다음 예제를 작성하고 테스트한다.<br />
 </p>
 
-<em class="filename">LogTest4.java</em>
+<h6 class="src">LogTest4.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -297,7 +297,7 @@ slf4j의 디폴트 레벨은 INFO이다.<br />
 로깅 레벨을 DEBUG로 변경하려면 클래스 패스에 simplelogger.properties 파일을 아래 내용으로 만든다.<br />
 </p>
 
-<em class="filename">simplelogger.properties</em>
+<h6 class="src">simplelogger.properties</h6>
 <pre class="prettyprint">
 org.slf4j.simpleLogger.defaultLogLevel=DEBUG
 </pre>
@@ -309,7 +309,7 @@ slf4j-api-1.7.25.jar 와 slf4j-simple-1.7.25.jar 파일을 자바은행 클래�
 Account, NormalAccount, MinusAccount 클래스의 입금과 출금 메서드에 로깅을 적용한다.<br />
 </p>
 
-<em class="filename">Account.java</em>
+<h6 class="src">Account.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -343,7 +343,7 @@ public abstract class Account implements Serializable {
 }
 </pre>
 
-<em class="filename">NormalAccount.java</em>
+<h6 class="src">NormalAccount.java</h6>
 <pre class="prettyprint">
 @Override
 public synchronized void withdraw(long amount) {
@@ -365,7 +365,7 @@ public synchronized void withdraw(long amount) {
 }
 </pre>
 
-<em class="filename">MinusAccount.java</em>
+<h6 class="src">MinusAccount.java</h6>
 <pre class="prettyprint">
 @Override
 public synchronized void withdraw(long amount) {
@@ -389,7 +389,7 @@ public synchronized void withdraw(long amount) {
 로그 메시지를 콘솔이 아닌 파일에 출력하기를 원한다면 simplelogger.properties에 아래 설정을 추가한다.<br />
 </p>
 
-<em class="filename">simplelogger.properties</em>
+<h6 class="src">simplelogger.properties</h6>
 <pre class="prettyprint">
 <strong>org.slf4j.simpleLogger.logFile=C:/java/Bank/javabank.log</strong>
 org.slf4j.simpleLogger.defaultLogLevel=DEBUG
@@ -413,7 +413,7 @@ slf4j-simple-x.x.x.jar을 빌드 패스에서 제거한다.<br />
 (logbkack.xml은 웹 애플리케이션의 WEB-INF/classes 아래 생성되도록 작성한다)
 </p>
 
-<em class="filename" id="logback-xml-javabank">logback.xml</em>
+<h6 class="src" id="logback-xml-javabank">logback.xml</h6>
 <pre class="prettyprint">
 &lt;configuration&gt;
     &lt;appender name="FILE" class="ch.qos.logback.core.FileAppender"&gt;

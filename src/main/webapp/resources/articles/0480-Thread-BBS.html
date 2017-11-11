@@ -365,7 +365,7 @@ view.jsp 파일을 열고 답변쓰기 기능을 추가하기 위해 적절한 �
 답변쓰기 양식을 제공하는 JSP 페이지인 reply_form.jsp를 아래와 같이 만든다.
 </p>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -474,7 +474,7 @@ try {
 아래와 같이 BoardReplier.java를 생성한다.
 </p>
 
-<em class="filename">BoardReplier.java</em>
+<h6 class="src">BoardReplier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -614,7 +614,7 @@ web.xml이 변경했으니 톰캣을 재실행한다.
 삭제 대상 게시글의 no 값을 parent로 가지는 게시글이 있는지 검사한 후, 만약 그러한 게시글이 없다면 삭제한다.
 </p>
 
-<em class="filename">삭제 코드 힌트 (답변이 있는 글은 삭제할 수 없도록)</em>
+<h6 class="src">삭제 코드 힌트 (답변이 있는 글은 삭제할 수 없도록)</h6>
 <pre class="prettyprint">
 String sql1 = "SELECT count(*) FROM board WHERE parent = ?";
 String sql2 = "DELETE FROM board WHERE no = ?";
@@ -642,7 +642,7 @@ if (check == true) {
 }
 </pre>
 
-<em class="filename">BoardDeleter.java (답변이 있는 글은 삭제할 수 없도록)</em>
+<h6 class="src">BoardDeleter.java (답변이 있는 글은 삭제할 수 없도록)</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -829,7 +829,7 @@ public class BoardDeleter extends HttpServlet {
 	<li>삭제 리스트에 저장된 글을 삭제한다</li>
 </ol>
 
-<em class="filename">답변 글 삭제 알고리즘을 수행할 RecursiveDeleter.java</em>
+<h6 class="src">답변 글 삭제 알고리즘을 수행할 RecursiveDeleter.java</h6>
 <pre class="prettyprint">
 public class RecursiveDeleter {
 	String sql1 = "SELECT no FROM board WHERE parent = ?";
@@ -939,7 +939,7 @@ getDeleteList() 메서드는 삭제리스트에서 86을 꺼내어 86을 parent�
 getDeleteList() 재귀 메서드를 따라가면서 idx가 어떻게 변경되는지 확인해야 getDeleteList() 메서드를 완벽히 이해할 수 있다.
 </p>
 
-<em class="filename">BoardDeleter.java (자손 글 모두 삭제)</em>
+<h6 class="src">BoardDeleter.java (자손 글 모두 삭제)</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1253,7 +1253,7 @@ PRESIDENT		   7839 KING
 오라클 계층형 쿼리를 이용하여 계층형 게시판을 구현한다면, 부모 글의 고유번호를 저장할 parent 컬럼만 추가하면 된다.
 </p>
 
-<em class="filename">오라클 계층형 게시판을 위한 쿼리 힌트</em>
+<h6 class="src">오라클 계층형 게시판을 위한 쿼리 힌트</h6>
 <pre class="prettyprint">
 SELECT no, indent, parent, title, wdate FROM 
 (SELECT ROWNUM R, A.* 
@@ -1339,7 +1339,7 @@ String sql = "INSERT INTO board (no, title, content, wdate, parent) "
 
 <h3>계층형 쿼리를 사용하는 계층형 게시판으로 수정: 답변쓰기</h3>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1437,7 +1437,7 @@ try {
 전송 버튼을 클릭하면 no, title, content 파라미터가 BoardReplier 서블릿에 전달된다.
 </p>
 
-<em class="filename">BoardReplier.java</em>
+<h6 class="src">BoardReplier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1523,7 +1523,7 @@ public class BoardReplier extends HttpServlet {
 대부분의 게시판이 답변 글이 있으면 삭제하지 못하도록 하고 있으니 그렇게 구현한다.
 </p>
 
-<em class="filename">BoardDeleter 서블릿 - 답변 글이 있으면 삭제할 수 없도록</em>
+<h6 class="src">BoardDeleter 서블릿 - 답변 글이 있으면 삭제할 수 없도록</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

@@ -506,7 +506,7 @@ JSP는 C:/www/myapp 아래에, 자바는 C:/www/myapp/WEB-INF/src 아래 자바 
 이클립스를 사용하지 않고 에디트플러스와 같은 일반 에디터를 사용한다.
 </p>
 
-<em class="filename">SimpleServlet.java</em>
+<h6 class="src">SimpleServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -551,7 +551,7 @@ SimpleServlet은 서블릿 라이프 사이클 메서드 중 init()과 destroy()
 /WEB-INF/web.xml 파일을 열고 web-app 엘리먼트의 자식 엘리먼트로 servlet 엘리먼트와 내용을 아래와 같이 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
 	&lt;servlet-name&gt;SimpleServlet&lt;/servlet-name&gt;
@@ -846,7 +846,7 @@ submit 버튼을 누르면 문자열만 전송할 때와 다른 전송 규약으
 다음 HTML 파일을 도큐먼트 베이스/example 디렉터리에 작성한다.
 </p>
 
-<em class="filename">/example/join.html</em>
+<h6 class="src">/example/join.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -903,7 +903,7 @@ submit 버튼을 누르면 문자열만 전송할 때와 다른 전송 규약으
 RegisterServlet.java를 /WEB-INF/src/example 디렉터리에 아래와 같이 작성한다.
 </p>
 
-<em class="filename">RegisterServlet.java</em>
+<h6 class="src">RegisterServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -957,7 +957,7 @@ RegisterServlet.java
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;			
     &lt;servlet-name&gt;RegisterServlet&lt;/servlet-name&gt;
@@ -986,7 +986,7 @@ forward() 메서드 예제를 실습해 보자.<br />
 ControllerServlet.java 파일을 /WEB-INF/src/example 디렉터리에 다음과 같이 생성한다.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1047,7 +1047,7 @@ ControllerServlet.java
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;Controller&lt;/servlet-name&gt;
@@ -1118,7 +1118,7 @@ JDBC 장에서 실습했던 오라클 JDBC 연동 테스트 파일인, GetEmp.ja
 ROOT 애플리케이션의 /WEB-INF/src/example 디렉터리에 GetEmpServlet.java 파일을 생성한다.
 </p>
 
-<em class="filename" id="GetEmpServlet">GetEmpServlet.java</em>
+<h6 class="src" id="GetEmpServlet">GetEmpServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1232,7 +1232,7 @@ GetEmpServlet.java
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;GetEmpServlet&lt;/servlet-name&gt;
@@ -1285,7 +1285,7 @@ GetEmpServlet.java 예제를 서블릿 초기화 파라미터를 사용하는 �
 아래 서블릿을 /WEB-INF/src/example 디렉터리에 만든다. 
 </p>
 
-<em class="filename">InitParamServlet.java</em>
+<h6 class="src">InitParamServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1387,7 +1387,7 @@ public class InitParamServlet extends HttpServlet {
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
   &lt;servlet-name&gt;InitParamServlet&lt;/servlet-name&gt;
@@ -1446,7 +1446,7 @@ context-param은 servlet 보다는 앞서 선언해야 한다.<br />
 web.xml을 열고 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;context-param&gt;
     &lt;param-name&gt;url&lt;/param-name&gt;
@@ -1527,7 +1527,7 @@ HttpSessionListener 인터페이스는 다음 2개의 메서드로 구성되어 
 이 클래스는 웹 애플리케이션 시작 시 OracleConnectionManager 객체를 생성하고 ServletContext에 저장한다.
 </p>
 
-<em class="filename">MyServletContextListener.java</em>
+<h6 class="src">MyServletContextListener.java</h6>
 <pre class="prettyprint">
 package net.java_school.listener;
 
@@ -1559,7 +1559,7 @@ public class MyServletContextListener implements ServletContextListener {
 web.xml에 다음을, context-param 아래에 servlet보다는 위에, 추가한다. 
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;listener&gt;
     &lt;listener-class&gt;net.java_school.listener.MyServletContextListener&lt;/listener-class&gt;
@@ -1590,7 +1590,7 @@ configFile = "C:/www/myapp/WEB-INF/" + poolName + ".properties";
 테스트를 위해 GetEmpServlet.java 파일을 아래와 같이 수정한다.
 </p>
 
-<em class="filename">GetEmpServlet.java</em>
+<h6 class="src">GetEmpServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1690,7 +1690,7 @@ HttpSessionListener 인터페이스는 2개의 메서드로 구성된다.<br />
 다음은 HttpSessionListener 에 대한 예제이다.
 </p>
 
-<em class="filename">SessionCounterListener.java</em>
+<h6 class="src">SessionCounterListener.java</h6>
 <pre class="prettyprint">
 package net.java_school.listener;
 
@@ -1744,7 +1744,7 @@ web.xml에 필터1 다음에 필터2가 순서대로 선언되고 매핑되었�
 다음은 필터 매카니즘을 흉내 낸 순수 자바 애플리케이션 예이다.
 </p>
 
-<em class="filename">ChainFilter.java</em>
+<h6 class="src">ChainFilter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1775,7 +1775,7 @@ public class ChainFilter {
 }
 </pre>
 
-<em class="filename">Filter.java</em>
+<h6 class="src">Filter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1786,7 +1786,7 @@ public interface Filter {
 }
 </pre>
 
-<em class="filename">Filter1.java</em>
+<h6 class="src">Filter1.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1802,7 +1802,7 @@ public class Filter1 implements Filter {
 }
 </pre>
 
-<em class="filename">Filter2.java</em>
+<h6 class="src">Filter2.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1818,7 +1818,7 @@ public class Filter2 implements Filter {
 }
 </pre>
 
-<em class="filename">Tomcat.java</em>
+<h6 class="src">Tomcat.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1877,7 +1877,7 @@ FilterChain의 doFilter() 메서드 호출 다음이 응답 전에 호출되는 
 아래와 같이 CharsetFilter.java 파일을 작성한다.
 </p>
 
-<em class="filename">/WEB-INF/src/net/java_school/filter/CharsetFilter.java</em>
+<h6 class="src">/WEB-INF/src/net/java_school/filter/CharsetFilter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1934,7 +1934,7 @@ CharsetFilter.java
 다음 코드는 context-param 엘리먼트와 listener 엘리먼트 사이에 두어야 한다. 
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;filter&gt;
    &lt;filter-name&gt;CharsetFilter&lt;/filter-name&gt;
@@ -2063,7 +2063,7 @@ public MultipartRequest(
 다음 HTML 파일을 ROOT 애플리케이션의 최상위 디렉터리의 example 서브 디렉터리에 작성한다.
 </p>
 
-<em class="filename">/example/MultipartRequest.html</em>
+<h6 class="src">/example/MultipartRequest.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -2091,7 +2091,7 @@ public MultipartRequest(
 컴파일할 때에 자바 컴파일러가 cos.jar 파일 경로를 알아야 한다.
 </p>
 
-<em class="filename">UploadTest.java</em>
+<h6 class="src">UploadTest.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -2171,7 +2171,7 @@ public class UploadTest extends HttpServlet {
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;UploadTest&lt;/servlet-name&gt;
@@ -2210,7 +2210,7 @@ Commons-fileupload는 오픈 소스로 유명한 아파치에서 제공하는 �
 압축을 풀고 commons-fileupload-x.x.jar와 commons-io-x.x.jar를 ROOT 애플리케이션의 /WEB-INF/lib 디렉터리에 복사한다.
 </p>
 
-<em class="filename">/example/commons-fileupload.html</em>
+<h6 class="src">/example/commons-fileupload.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -2231,7 +2231,7 @@ Commons-fileupload는 오픈 소스로 유명한 아파치에서 제공하는 �
 &lt;/html&gt;
 </pre>
 
-<em class="filename">CommonsUpload.java</em>
+<h6 class="src">CommonsUpload.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -2309,7 +2309,7 @@ public class CommonsUpload extends HttpServlet {
 web.xml에 다음을 추가한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;commonsUpload&lt;/servlet-name&gt;

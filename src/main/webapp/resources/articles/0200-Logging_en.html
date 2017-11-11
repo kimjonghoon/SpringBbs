@@ -8,7 +8,7 @@ The easiest way to leave a log is to use the <em>System.out.println();</em>
 A better way to do this is to create a class that records the log.
 </p>
 
-<em class="filename">Log.java</em>
+<h6 class="src">Log.java</h6>
 <pre class="prettyprint">
 package net.java_school.util;
 
@@ -49,7 +49,7 @@ public class Log {
 Create the following file for testing.
 </p>
 
-<em class="filename">LogTest1.java</em>
+<h6 class="src">LogTest1.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -82,7 +82,7 @@ Copy log4j-api-2.8.jar and log4j-core-2.8.jar from the directory where you extra
 The following property file is created in the path that the class loader can find.
 </p>
 
-<em class="filename">log42.xml</em>
+<h6 class="src">log42.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Configuration&gt;
@@ -123,7 +123,7 @@ Follow these steps.
 	<li>Create the file LogTest2.java as shown below.</li>
 </ol>
 
-<em class="filename">LogTest2.java</em>
+<h6 class="src">LogTest2.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -219,7 +219,7 @@ Let's use Log4j 2 as the logging implementation.<br />
 Create the following commons-logging properties file in the classpath.
 </p>
 
-<em class="filename">commons-logging.properties</em>
+<h6 class="src">commons-logging.properties</h6>
 <pre class="prettyprint">
 org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 </pre>
@@ -228,7 +228,7 @@ org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 Create the following test file.
 </p>
 
-<em class="filename">LogTest3.java</em>
+<h6 class="src">LogTest3.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 
@@ -298,7 +298,7 @@ The default level for slf4j is INFO.<br />
 To change the logging level to DEBUG, make the simplelogger.properties file in the classpath as follows:<br />
 </p>
 
-<em class="filename">simplelogger.properties</em>
+<h6 class="src">simplelogger.properties</h6>
 <pre class="prettyprint">
 org.slf4j.simpleLogger.defaultLogLevel=DEBUG
 </pre>
@@ -310,7 +310,7 @@ Add the slf4j-api-1.7.25.jar and slf4j-simple-1.7.25.jar files to the Javabank c
 Apply logging to the deposit and withdrawal methods of the Account, NormalAccount, and MinusAccount classes.<br />
 </p>
 
-<em class="filename">Account.java</em>
+<h6 class="src">Account.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -344,7 +344,7 @@ public abstract class Account implements Serializable {
 }
 </pre>
 
-<em class="filename">NormalAccount.java</em>
+<h6 class="src">NormalAccount.java</h6>
 <pre class="prettyprint">
 @Override
 public synchronized void withdraw(long amount) {
@@ -366,7 +366,7 @@ public synchronized void withdraw(long amount) {
 }
 </pre>
 
-<em class="filename">MinusAccount.java</em>
+<h6 class="src">MinusAccount.java</h6>
 <pre class="prettyprint">
 @Override
 public synchronized void withdraw(long amount) {
@@ -390,7 +390,7 @@ public synchronized void withdraw(long amount) {
 If you want to output log messages to a file rather than the console, add the following setting to simplelogger.properties:
 </p>
 
-<em class="filename">simplelogger.properties</em>
+<h6 class="src">simplelogger.properties</h6>
 <pre class="prettyprint">
 <strong>org.slf4j.simpleLogger.logFile=C:/java/Bank/javabank.log</strong>
 org.slf4j.simpleLogger.defaultLogLevel=DEBUG
@@ -414,7 +414,7 @@ Remove slf4-simple-x.x.x.jar from the classpath.<br />
 Create a logback.xml file in the classpath.
 </p>
 
-<em class="filename" id="logback-xml-javabank">logback.xml</em>
+<h6 class="src" id="logback-xml-javabank">logback.xml</h6>
 <pre class="prettyprint">
 &lt;configuration&gt;
     &lt;appender name="FILE" class="ch.qos.logback.core.FileAppender"&gt;

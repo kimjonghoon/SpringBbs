@@ -173,12 +173,12 @@ function modifyCommentToggle(articleNo) {
 
 <h3>날짜, 작성자, 조회 수 스타일링</h3>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;span id="date-writer-hit&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>#date-writer-hit {
 	display: block;
@@ -196,7 +196,7 @@ function modifyCommentToggle(articleNo) {
 
 <h3>게시글 본문 스타일링</h3>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;div id="detail"&gt;
 	&lt;span id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
@@ -206,7 +206,7 @@ function modifyCommentToggle(articleNo) {
 	&lt;/p&gt;</strong>
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>#detail &gt; p {
 	margin: 0 0 15px 0;
@@ -221,7 +221,7 @@ function modifyCommentToggle(articleNo) {
 <img alt="게시판 상세보기 댓글 디자인 전" src="https://lh3.googleusercontent.com/-bOYv4mu4zLE/VYPndx6DK5I/AAAAAAAACfc/29dqUdM6hPA/s163/bbs-view-comments.png" style="display: block;" />
 </p>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;div class="comments"&gt;
 	<strong>&lt;span class="writer"&gt;xman&lt;/span&gt;
@@ -250,7 +250,7 @@ function modifyCommentToggle(articleNo) {
 &lt;/div&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>/* 댓글과 댓글을 테두리로 구분 */
 .comments {
@@ -316,7 +316,7 @@ function modifyCommentToggle(articleNo) {
 <img alt="게시판 상세보기 댓글 수정 폼 디자인 전" src="https://lh3.googleusercontent.com/-_2d0PBTFctU/VYPneMT2QsI/AAAAAAAACgQ/OAU0LDeRwKc/s598/bbs-view-modify-form.png" style="display: block;" />
 </p>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;div class="comments"&gt;
 	&lt;span class="writer"&gt;xman&lt;/span&gt;
@@ -346,7 +346,7 @@ function modifyCommentToggle(articleNo) {
 &lt;/div&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>.modify-comment {
 	clear: both; 
@@ -372,7 +372,7 @@ function modifyCommentToggle(articleNo) {
 <img alt="게시판 상세보기 댓글 쓰기 폼 디자인 전" src="https://lh3.googleusercontent.com/-G9VGAM5vZZE/VYPncTAz8sI/AAAAAAAACgY/Wz1eU4WULUQ/s598/bbs-view-addComments.png" style="display: block;" />
 </p>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
 	&lt;p style="margin: 0; padding: 0;"&gt;
@@ -390,7 +390,7 @@ function modifyCommentToggle(articleNo) {
 &lt;/form&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>#addComment {
 	margin-bottom: 5px;
@@ -416,7 +416,7 @@ function modifyCommentToggle(articleNo) {
 <img alt="게시판 상세보기 다음 글 이전 글 디자인 전" src="https://lh3.googleusercontent.com/-7ourJrdqanc/VYPnfKmtjFI/AAAAAAAACgA/JFZm59MyMMU/s197/bbs-view-next-prev.png" style="display: block;" />
 </p>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;div id="next-prev"&gt;
 	&lt;p&gt;다음 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
@@ -424,7 +424,7 @@ function modifyCommentToggle(articleNo) {
 &lt;/div&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>#next-prev {
 	margin: 7px 0;
@@ -457,7 +457,7 @@ function modifyCommentToggle(articleNo) {
 <img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 전" src="https://lh3.googleusercontent.com/--C_8xydabOo/VYPndYkt72I/AAAAAAAACgE/PZrb8qK256Q/s329/bbs-view-buttons.png" style="display: block;" />
 </p>
 
-<em class="filename">[HTML]</em>
+<h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
 &lt;div id="view-menu"&gt;
 	&lt;div class="fl"&gt;
@@ -473,7 +473,7 @@ function modifyCommentToggle(articleNo) {
 &lt;/div&gt;
 </pre>
 
-<em class="filename">[CSS]</em>
+<h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
 <strong>#view-menu {
     height: 22px;

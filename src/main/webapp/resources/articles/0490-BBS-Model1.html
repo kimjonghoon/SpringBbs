@@ -9,7 +9,7 @@
 모델 1 게시판으로 수정하기 위해 먼저 게시글 정보를 담기 위한 자바 빈즈를 다음과 같이 생성한다.
 </p>
 
-<em class="filename">Article.java</em>
+<h6 class="src">Article.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -101,7 +101,7 @@ LINE_SEPARATOR 상수는 getHtmlContent() 메서드에서 사용한다.
 여기서 자바 프로그램에서 상수를 관리하는 팁을 소개한다.
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -143,7 +143,7 @@ public class Article {
 WebContants 클래스를 enum으로 바꿀 수 있다.
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -192,7 +192,7 @@ public class Article {
 이를 DAO 패턴이라 한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -384,7 +384,7 @@ public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPa
 }    
 </pre>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -512,7 +512,7 @@ BoardService를 만들면 게시판 JSP는 BoardService만을 바라보게 된�
 위 list.jsp에 선언된 getNumbersForPaging() 메서드는 BoardService로 옮길 수 있다.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -579,7 +579,7 @@ public class BoardService {
 BoardService.java만을 사용하도록 list.jsp를 수정한다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -661,7 +661,7 @@ if (nextPage != 0) {
 /board/write_form.jsp 파일의 폼 태그의 action 속성값을 write.jsp로 수정한다.
 </p>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -705,7 +705,7 @@ String keyword = request.getParameter("keyword");
 BoardDao 클래스에 다음 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void insert(Article article) {
 	Log log = new Log();
@@ -738,7 +738,7 @@ public void insert(Article article) {
 BoardService에 다음 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardService.java 수정</em>
+<h6 class="src">BoardService.java 수정</h6>
 <pre class="prettyprint">
 public void write(Article article) {
 	dao.insert(article);
@@ -749,7 +749,7 @@ public void write(Article article) {
 새 글쓰기를 처리하는 write.jsp 파일을 만든다.
 </p>
 
-<em class="filename">/board/write.jsp</em>
+<h6 class="src">/board/write.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -775,7 +775,7 @@ response.sendRedirect("list.jsp");
 BoardDao에 selectOne() 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public Article selectOne(int no) {
 	Log log = new Log();
@@ -818,7 +818,7 @@ public Article selectOne(int no) {
 BoardService에 다음 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public Article getArticle(int no) {
 	return dao.selectOne(no);
@@ -829,7 +829,7 @@ public Article getArticle(int no) {
 view.jsp를 아래와 같이 수정한다.
 </p>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -879,7 +879,7 @@ function goDelete(no,curPage,keyword) {
 BoardDao 클래스에 update() 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void update(Article article) {
 	Log log = new Log();
@@ -906,7 +906,7 @@ public void update(Article article) {
 }
 </pre>
 
-<em class="filename">BoardService.java 수정</em>
+<h6 class="src">BoardService.java 수정</h6>
 <pre class="prettyprint">
 public void modify(Article article) {
 	dao.update(article);
@@ -917,7 +917,7 @@ public void modify(Article article) {
 modify_form.jsp가 BoardService를 사용하도록 수정한다.
 </p>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -971,7 +971,7 @@ Article article = service.getArticle(no);
 modify.jsp를 아래와 같이 생성한다.
 </p>
 
-<em class="filename">/board/modify.jsp</em>
+<h6 class="src">/board/modify.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1001,7 +1001,7 @@ response.sendRedirect("view.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;ke
 BoardDao 클래스에 delete() 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void delete(int no) {
 	Log log = new Log();
@@ -1053,7 +1053,7 @@ public void delete(int no) {
 BoardService에 다음 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void delete(int no) {
 	dao.delete(no);
@@ -1064,7 +1064,7 @@ public void delete(int no) {
 del.jsp를 다음과 같이 생성한다.
 </p>
 
-<em class="filename">/board/del.jsp</em>
+<h6 class="src">/board/del.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1087,7 +1087,7 @@ response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" +  keyword
 BoardDao에 다음 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void reply(Article article) {
 	Log log = new Log();
@@ -1124,14 +1124,14 @@ public void reply(Article article) {
 BoardService에 reply() 메서드를 추가한다.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void reply(Article article) {
 	dao.reply(article);
 }
 </pre>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1177,7 +1177,7 @@ content = WebContants.lineSeparator.value + WebContants.lineSeparator.value + "&
 reply.jsp를 아래와 같이 생성한다.
 </p>
 
-<em class="filename">/board/reply.jsp</em>
+<h6 class="src">/board/reply.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

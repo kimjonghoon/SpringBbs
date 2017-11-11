@@ -76,7 +76,7 @@ JSTL 중 core가 가장 많이 사용되는데 core를 사용하려면 taglib �
 도큐먼트 베이스에 만들고 테스트한다.
 </p>
 
-<em class="filename">/jstl.jsp</em>
+<h6 class="src">/jstl.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="java.util.*" %&gt;
@@ -164,7 +164,7 @@ EL과 JSTL를 사용하여 코드를 수정함과 동시에,
 인클루드 지시어에 사용된 jsp를 제외한 모든 .jsp를 .do로 바꾼다.
 </p>
 
-<em class="filename">header.jsp</em>
+<h6 class="src">header.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
@@ -183,7 +183,7 @@ EL과 JSTL를 사용하여 코드를 수정함과 동시에,
 &lt;/div&gt;
 </pre>
 
-<em class="filename">bbs-sub.jsp</em>
+<h6 class="src">bbs-sub.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;게시판&lt;/h1&gt;
@@ -207,7 +207,7 @@ loginCheck.jsp를 인클루드하는 부분은 없앤다.<br />
 logincheck.jsp가 담당하는 로직은 액션 클래스에서 담당하는 게 맞다.
 </p>
 
-<em class="filename">list.jsp</em>
+<h6 class="src">list.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
@@ -380,7 +380,7 @@ list.jsp 수정을 완료했다.<br />
 	<li>nextPage: [다음] 링크를 위한 페이지 번호</li>
 </ul>
 
-<em class="filename">view.jsp</em>
+<h6 class="src">view.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
@@ -756,7 +756,7 @@ view.jsp로 액션이 만들어서 전달해야 하는 데이터는 다음과 �
 모델 1의 write_form.jsp의 내용과 파일명을 아래와 같이 수정한다.
 </p>
 
-<em class="filename">write.jsp</em>
+<h6 class="src">write.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong> 
@@ -879,7 +879,7 @@ write.jsp에 액션이 만들어 전달할 데이터는 boardNm(게시판 이름
 모델 1의 modify_form.jsp를 내용과 파일명을 아래와 같이 수정한다.
 </p>
 
-<em class="filename">modify.jsp</em>
+<h6 class="src">modify.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 &lt;!DOCTYPE html&gt;
@@ -998,7 +998,7 @@ modify.jsp에 액션이 만들어서 전달할 데이터는 다음과 같다.
 인클루드 지시어에 쓰인 jsp를 제외한 모든 .jsp를 .do로 바꾼다.
 </p>
 
-<em class="filename">loginUsers-menu.jsp</em>
+<h6 class="src">loginUsers-menu.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;회원&lt;/h1&gt;
@@ -1014,7 +1014,7 @@ modify.jsp에 액션이 만들어서 전달할 데이터는 다음과 같다.
 &lt;/ul&gt;
 </pre>
 
-<em class="filename">notLoginUsers-menu.jsp</em>
+<h6 class="src">notLoginUsers-menu.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;회원&lt;/h1&gt;
@@ -1030,7 +1030,7 @@ modify.jsp에 액션이 만들어서 전달할 데이터는 다음과 같다.
 &lt;/ul&gt;
 </pre>
 
-<em class="filename">login.jsp</em>
+<h6 class="src">login.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
@@ -1113,7 +1113,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">signUp.jsp</em>
+<h6 class="src">signUp.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1205,7 +1205,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">welcome.jsp</em>
+<h6 class="src">welcome.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1259,7 +1259,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">editAccount.jsp</em>
+<h6 class="src">editAccount.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1341,7 +1341,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">changePasswd.jsp</em>
+<h6 class="src">changePasswd.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
@@ -1426,7 +1426,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">changePasswd_confirm.jsp</em>
+<h6 class="src">changePasswd_confirm.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1480,7 +1480,7 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">bye.jsp</em>
+<h6 class="src">bye.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1563,7 +1563,7 @@ function check() {
 인클루드 지시어에 쓰인 jsp를 제외한 모든 .jsp를 .do로 수정한다.
 </p>
 
-<em class="filename">/error.jsp</em>
+<h6 class="src">/error.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
@@ -1693,7 +1693,7 @@ ActionForward 객체에는 리다이렉트 여부와 이동하게 될 주소 정
 포워딩이나 리다이렉트되는 주소는 액션 클래스에서 만들고 ActionForward에 담겨 컨트롤러에 반환된다.
 </p>
 
-<em class="filename">ActionForward.java</em>
+<h6 class="src">ActionForward.java</h6>
 <pre class="prettyprint">package net.java_school.action;
 
 public class ActionForward {
@@ -1720,7 +1720,7 @@ public class ActionForward {
 Action 인터페이스는 모든 액션 클래스가 구현해야 한다.
 </p>
 
-<em class="filename">Action.java</em>
+<h6 class="src">Action.java</h6>
 <pre class="prettyprint">package net.java_school.action;
 
 import java.io.IOException;
@@ -1739,7 +1739,7 @@ public interface Action {
 런타임 예외를 상속하여 만든다.
 </p>
 
-<em class="filename">AuthenticationException.java</em>
+<h6 class="src">AuthenticationException.java</h6>
 <pre class="prettyprint">package net.java_school.exception;
 
 public class AuthenticationException extends RuntimeException {
@@ -1774,7 +1774,7 @@ public class AuthenticationException extends RuntimeException {
 *.do 요청을 처리할 컨트롤러를 만든다.
 </p>
 
-<em class="filename">Controller.java</em> 
+<h6 class="src">Controller.java</h6> 
 <pre class="prettyprint">package net.java_school.controller;
 
 import java.io.IOException;
@@ -1910,7 +1910,7 @@ public class Controller extends HttpServlet {
 컨트롤러 서블릿을 web.xml에 선언하고 URL 매핑한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">&lt;servlet&gt;
    &lt;servlet-name&gt;controller&lt;/servlet-name&gt;
    &lt;servlet-class&gt;net.java_school.controller.Controller&lt;/servlet-class&gt;
@@ -1927,7 +1927,7 @@ public class Controller extends HttpServlet {
 웹 애플리케이션에서 공통으로 사용할 상수를 추가한다.
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">package net.java_school.commons;
 
 public class WebContants {
@@ -1950,7 +1950,7 @@ public class WebContants {
 로그인이 실패하면 로그인 페이지로 되돌아간다.
 </p>
 
-<em class="filename">LoginAction.java</em>
+<h6 class="src">LoginAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2018,7 +2018,7 @@ public class LoginAction implements Action {
 로그아웃하면 홈페이지로 이동한다.
 </p>
 
-<em class="filename">LogoutAction.java</em>
+<h6 class="src">LogoutAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2058,7 +2058,7 @@ SignUpAction 액션 클래스는 회원 가입을 처리한다.<br />
 모델 1에서 signUp_proc.jsp의 구현 내용을 참조한다.
 </p>
 
-<em class="filename">SignUpAction.java</em>
+<h6 class="src">SignUpAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2107,7 +2107,7 @@ EditAccountFormAction 액션 클래스는 내 정보 수정 버튼을 클릭하�
 이 부분은 모델 1의 loginCheck.jsp 파일을 참조한다.
 </p>
 
-<em class="filename">EditAccountFormAction.java</em>
+<h6 class="src">EditAccountFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2159,7 +2159,7 @@ EditAccountAction 액션 클래스는 /users/editAccount.do POST 요청에 대�
 회원정보 수정을 처리한다.
 </p>
 
-<em class="filename">EditAccountAction.java</em>
+<h6 class="src">EditAccountAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2224,7 +2224,7 @@ public class EditAccountAction implements Action {
 ChangePasswdFormAction 액션 클래스는 /users/changePasswd.do 요청에 작동한다.
 </p>
 
-<em class="filename">ChangePasswdFormAction.java</em>
+<h6 class="src">ChangePasswdFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2274,7 +2274,7 @@ ChangePasswdAction 액션 클래스는 /users/changePasswd.do POST 요청에 작
 비밀번호 변경을 처리한다.
 </p>
 
-<em class="filename">ChangePasswdAction.java</em>
+<h6 class="src">ChangePasswdAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2329,7 +2329,7 @@ public class ChangePasswdAction implements Action {
 ByeFormAction 액션 클래스는 /users/bye.do GET 요청에 작동한다.
 </p>
 
-<em class="filename">ByeFormAction.java</em>
+<h6 class="src">ByeFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2378,7 +2378,7 @@ public class ByeFormAction implements Action {
 ByeAction 액션 클래스는 /users/bye.do POST 요청에 작동하여 회원 탈퇴를 처리한다.
 </p>
 
-<em class="filename">ByeAction.java</em>
+<h6 class="src">ByeAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
 
 import java.io.IOException;
@@ -2431,7 +2431,7 @@ ListAction 액션 클래스는 /bbs/list.do GET 요청에 작동한다.<br />
 목록 화면을 디자인할 때 화면에 전달된다고 가정했던 데이터를 이 액션 객체가 만들고 목록 화면에 전달해야 한다.
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -2544,7 +2544,7 @@ ViewAction 액션 클래스는 /bbs/view.do GET 요청에 작동한다.
 상세보기 페이지에서 필요한 데이터를 만들고 전달한다.<br />
 </p>
 
-<em class="filename">ViewAction.java</em>
+<h6 class="src">ViewAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -2690,7 +2690,7 @@ public class ViewAction implements Action {
 WriteFormAction 액션 클래스는 /bbs/write.do GET 요청에 작동한다.<br />
 </p>
 
-<em class="filename">WriteFormAction.java</em>
+<h6 class="src">WriteFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -2746,7 +2746,7 @@ public class WriteFormAction implements Action {
 WriteAction 액션 클래스는 /bbs/write.do POST 요청에 작동하여 글쓰기를 처리한다.<br />
 </p>
 
-<em class="filename">WriteAction.java</em>
+<h6 class="src">WriteAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.File;
@@ -2835,7 +2835,7 @@ public class WriteAction implements Action {
 ModifyFormAction 액션 클래스는 /bbs/modify.do GET 요청에 작동한다.<br />
 </p>
 
-<em class="filename">ModifyFormAction.java</em>
+<h6 class="src">ModifyFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -2892,7 +2892,7 @@ public class ModifyFormAction implements Action {
 ModifyAction 액션 클래스는 /bbs/modify.do POST 요청에 작동하여 글 수정을 처리한다.<br />
 </p>
 
-<em class="filename">ModifyAction.java</em>
+<h6 class="src">ModifyAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.File;
@@ -2989,7 +2989,7 @@ public class ModifyAction implements Action {
 DeleteAction 액션 클래스는 /bbs/del.do POST 요청에 작동하여 게시글 삭제를 처리한다.<br />
 </p>
 
-<em class="filename">DeleteAction.java</em>
+<h6 class="src">DeleteAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -3047,7 +3047,7 @@ public class DeleteAction implements Action {
 AddCommentAction 액션 클래스는 /bbs/addComment.do POST 요청에 작동하여 댓글 쓰기를 처리한다.<br />
 </p>
 
-<em class="filename">AddCommentAction.java</em>
+<h6 class="src">AddCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -3107,7 +3107,7 @@ public class AddCommentAction implements Action {
 UpdateCommentAction 액션 클래스는 /bbs/updateComment.do POST 요청에 작동하여 댓글 수정을 처리한다.<br />
 </p>
 
-<em class="filename">UpdateCommentAction.java</em>
+<h6 class="src">UpdateCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -3174,7 +3174,7 @@ public class UpdateCommentAction implements Action {
 DeleteCommentAction 액션 클래스는 /bbs/deleteComment.do POST 요청에 작동하여 댓글 삭제를 처리한다.<br />
 </p>
 
-<em class="filename">DeleteCommentAction.java</em>
+<h6 class="src">DeleteCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;
@@ -3231,7 +3231,7 @@ public class DeleteCommentAction implements Action {
 DeleteAttachFileAction 액션 클래스는 /bbs/deleteAttachFile.do POST 요청에 작동하여 첨부 파일 삭제를 처리한다.
 </p>
 
-<em class="filename">DeleteAttachFileAction.java</em>
+<h6 class="src">DeleteAttachFileAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
 
 import java.io.IOException;

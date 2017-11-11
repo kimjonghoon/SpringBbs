@@ -37,7 +37,7 @@ oracle.properties 에서 "oracle" 이란 문자열은 오라클용 커넥션풀 
 </p>
 
 <h3>2. Connection Pooling 관련 소스</h3>
-<em class="filename">Log.java</em>
+<h6 class="src">Log.java</h6>
 <pre class="prettyprint">
 package net.java_school.util;
 
@@ -93,7 +93,7 @@ public class Log {
 }
 </pre>
 
-<em class="filename">DBConnectionPool.java</em>
+<h6 class="src">DBConnectionPool.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool; 
 
@@ -238,7 +238,7 @@ class DBConnectionPool {
 }
 </pre>
 
-<em class="filename">DBConnectionPoolManager.java</em>
+<h6 class="src">DBConnectionPoolManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -346,7 +346,7 @@ public class DBConnectionPoolManager {
 }
 </pre>
 
-<em class="filename">ConnectionManager.java</em>
+<h6 class="src">ConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -409,7 +409,7 @@ public abstract class ConnectionManager {
 }
 </pre>
 
-<em class="filename">OracleConnectionManager.java</em>
+<h6 class="src">OracleConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -428,7 +428,7 @@ public class OracleConnectionManager extends ConnectionManager {
 }
 </pre>
 
-<em class="filename">oracle.properties</em>
+<h6 class="src">oracle.properties</h6>
 <pre class="prettyprint">
 ############################################ 
 # Database Connection Properties for Oracle
@@ -472,7 +472,7 @@ ConnectionManager.java 소스에서<br />
 컴파일이 완료되었다면 GetEmp.java 에 적용해 보자.<br />
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 
@@ -555,7 +555,7 @@ JDK 6 에서는 DBCP 1.4를, 6 이하의 JDK 에서는 DBCP 1.3를 사용해야 
 	<a href="http://commons.apache.org/proper/commons-logging/download_logging.cgi">http://commons.apache.org/proper/commons-logging/download_logging.cgi</a></li>
 </ul>
 
-<em class="filename">BasicDataSourceExample.java</em>
+<h6 class="src">BasicDataSourceExample.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -696,7 +696,7 @@ public class BasicDataSourceExample {
 위 예제를 참고하여 최대한 간단하게 컨텍션 풀에서 커넥션을 얻는 클래스를 예제로 만들어 본다.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -736,7 +736,7 @@ public class Test {
 예제를 지금까지 실습한 예제인 GetEmp.java에 적용해 보자.
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 
@@ -818,7 +818,7 @@ DBCP는 javax.sql.DataSource 인터페이스를 구현한다.<br />
 이 추상 클래스는 설정 파일을 읽어서 속성을 설정하는 역할과 커넥션을 얻는 메서드로 구성된다.<br />
 </p>
 
-<em class="filename">ConnectionManager.java</em>
+<h6 class="src">ConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -874,7 +874,7 @@ public abstract class ConnectionManager {
 다음으로 ConnectionManager 를 상속하는 OracleConnectionManager 클래스를 만든다.
 </p>
 
-<em class="filename">OracleConnectionManager.java</em>
+<h6 class="src">OracleConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -916,7 +916,7 @@ BasicDataSource 에 설정하는 방법은 이 부분은 공식 사이트의 문
 oracle.properties 파일을 이클립스 프로젝트의 루트 디렉토리에 복사한다.<br />
 </p>
 
-<em class="filename">oracle.properties</em>
+<h6 class="src">oracle.properties</h6>
 <pre class="prettyprint">
 ############################################ 
 # Database Connection Properties for Oracle
@@ -951,7 +951,7 @@ maxWait = 5
 다시 GetEmp 에 적용해 보자.
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 

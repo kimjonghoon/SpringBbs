@@ -15,7 +15,7 @@
 {톰캣홈}/conf/Catalina/localhost에 있는 ROOT.xml 파일을 열고 아래 강조된 부분을 추가한다.
 </p>
 
-<em class="filename">ROOT.xml</em>
+<h6 class="src">ROOT.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Context
@@ -45,7 +45,7 @@
 아래의 JSP 파일을 myapp 애플리케이션의 도큐먼트 베이스에 생성한다.
 </p>
 
-<em class="filename">/dataSourceTest.jsp</em>
+<h6 class="src">/dataSourceTest.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page contentType="text/html;charset=UTF-8" %&gt;
 &lt;%@ page import="java.sql.*" %&gt;
@@ -113,7 +113,7 @@ http://localhost:port/dataSourceTest.jsp 화면에서 숫자를 볼 수 있다�
 모델 1 게시판의 경우 JDBC 코드를 빈즈에 구현했으므로 BoardDao만 수정하면 된다.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

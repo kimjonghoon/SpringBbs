@@ -494,10 +494,6 @@ h6 {
 	margin: 0;
 	padding: 0;
 }
-.dir {
-	color: #999;
-	font-size: 0.8em;
-}
 .src {
 	margin: 0.7em 0 0 0;
 	font-weight: normal;
@@ -595,10 +591,6 @@ h6 {
 	margin-bottom: 3px;
 	color: #000;
 	background: #efefef url('../images/ref.png') no-repeat center left;
-}
-.filename {
-	display: block;
-	font-style: normal;
 }
 #last-modified {
 	padding-top: 3px;

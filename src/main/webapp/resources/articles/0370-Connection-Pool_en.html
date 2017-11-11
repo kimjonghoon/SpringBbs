@@ -40,7 +40,7 @@ It is advantageous for reuse and maintenance to manage the configuration as a fi
 </p>
 
 <h3>Connection Pooling Sources</h3>
-<em class="filename">Log.java</em>
+<h6 class="src">Log.java</h6>
 <pre class="prettyprint">
 package net.java_school.util;
 
@@ -95,7 +95,7 @@ public class Log {
 	
 }
 </pre>
-<em class="filename">DBConnectionPool.java</em>
+<h6 class="src">DBConnectionPool.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool; 
 
@@ -240,7 +240,7 @@ class DBConnectionPool {
 }
 </pre>
 
-<em class="filename">DBConnectionPoolManager.java</em>
+<h6 class="src">DBConnectionPoolManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -347,7 +347,7 @@ public class DBConnectionPoolManager {
 }
 </pre>
 
-<em class="filename">ConnectionManager.java</em>
+<h6 class="src">ConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -410,7 +410,7 @@ public abstract class ConnectionManager {
 }
 </pre>
 
-<em class="filename">OracleConnectionManager.java</em>
+<h6 class="src">OracleConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.db.dbpool;
 
@@ -429,7 +429,7 @@ public class OracleConnectionManager extends ConnectionManager {
 }
 </pre>
 
-<em class="filename">oracle.properties</em>
+<h6 class="src">oracle.properties</h6>
 <pre class="prettyprint">
 ############################################ 
 # Database Connection Properties for Oracle
@@ -470,7 +470,7 @@ configFile = "C:/jdbc/" + poolName + ".properties";<br />
 If compilation is complete, apply it to GetEmp.java.
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 
@@ -549,7 +549,7 @@ You should use DBCP 1.4 in JDK 6 and DBCP 1.3 in JDKs 6 and below.
 	<a href="http://commons.apache.org/proper/commons-logging/download_logging.cgi">http://commons.apache.org/proper/commons-logging/download_logging.cgi</a></li>
 </ul>
 
-<em class="filename">BasicDataSourceExample.java</em>
+<h6 class="src">BasicDataSourceExample.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -690,7 +690,7 @@ public class BasicDataSourceExample {
 Let's create a class that gets a connection from the connection pool by referring to the example above.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -730,7 +730,7 @@ public class Test {
 Apply the above class to GetEmp.java.
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 
@@ -806,7 +806,7 @@ The constructor of this abstract class reads the configuration file and sets the
 This abstract class has a method that is called to get a connection.
 </p>
 
-<em class="filename">ConnectionManager.java</em>
+<h6 class="src">ConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -862,7 +862,7 @@ public abstract class ConnectionManager {
 Next, create an OracleConnectionManager class that inherits ConnectionManager.
 </p>
 
-<em class="filename">OracleConnectionManager.java</em>
+<h6 class="src">OracleConnectionManager.java</h6>
 <pre class="prettyprint">
 package net.java_school.dbcp;
 
@@ -904,7 +904,7 @@ For instructions on how to set it in BasicDataSource, see the official site docu
 Copy the oracle.properties file to the root directory of your Eclipse project.
 </p>
 
-<em class="filename">oracle.properties</em>
+<h6 class="src">oracle.properties</h6>
 <pre class="prettyprint">
 ############################################ 
 # Database Connection Properties for Oracle
@@ -939,7 +939,7 @@ maxWait = 5
 Let's apply them to GetEmp.java again.
 </p>
 
-<em class="filename">GetEmp.java</em>
+<h6 class="src">GetEmp.java</h6>
 <pre class="prettyprint">
 package net.java_school.jdbc;
 

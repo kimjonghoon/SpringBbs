@@ -51,7 +51,7 @@ CSS 포지셔닝에서 작업했던 모든 HTML 파일 역시 복사하여 도�
 프로토타입에 로그인 로직을 넣기로 했으므로 다음 User 클래스가 필요하다.<br />
 </p>
 
-<em class="filename">User.java</em>
+<h6 class="src">User.java</h6>
 <pre class="prettyprint">package net.java_school.user;
 
 public class User {
@@ -127,7 +127,7 @@ User 클래스에 아이디가 없다.
 write_form.html를 열고 이클립스의 File - Save As... 메뉴를 선택하여 index.jsp라는 이름의 새 파일을 도큐먼트 베이스에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/index.jsp</em>
+<h6 class="src">/index.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ page import="net.java_school.user.User" %&gt;</strong>
@@ -235,7 +235,7 @@ if (loginUser == null) {
 홈페이지와 비교하여 서브 디렉터리에 있으므로 상대 경로에 주의한다.<br />
 </p>
     
-<em class="filename">/java/index.jsp</em>
+<h6 class="src">/java/index.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;    
@@ -384,7 +384,7 @@ inc 서브 디렉터리에 다음 JSP 파일을 생성한다.<br />
 /java/index.jsp에서 해당 부분을 찾아 복사하여 붙여넣기하면서 만든다.
 </p>
 
-<em class="filename">/inc/header.jsp</em>
+<h6 class="src">/inc/header.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
@@ -407,7 +407,7 @@ if (loginUser == null) {
 &lt;/div&gt;
 </pre>
 
-<em class="filename">/inc/main-menu.jsp</em>
+<h6 class="src">/inc/main-menu.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;ul id="nav"&gt;
@@ -422,7 +422,7 @@ if (loginUser == null) {
 &lt;/ul&gt;
 </pre>
 
-<em class="filename">/inc/extra.jsp</em>
+<h6 class="src">/inc/extra.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;a href="http://www.youtube.com"&gt;&lt;img src="../images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
@@ -432,7 +432,7 @@ if (loginUser == null) {
 &lt;a href="http://www.java-school.net"&gt;&lt;img src="../images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
 </pre>
 
-<em class="filename">/inc/footer.jsp</em>
+<h6 class="src">/inc/footer.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;ul&gt;
@@ -459,7 +459,7 @@ if (loginUser == null) {
 
 <h3>공통 인클루드 파일을 이용하여 서브 페이지 수정</h3>
 
-<em class="filename">/java/index.jsp</em>
+<h6 class="src">/java/index.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 &lt;!DOCTYPE html&gt;
@@ -532,7 +532,7 @@ if (loginUser == null) {
 이 페이지는 로그인 하지 않은 사용자가 사용할 수 있는 회원 메뉴(로그인, 회원 가입, ID 찾기, 비밀번호 찾기)를 보여준다.<br />
 </p>
 
-<em class="filename">/users/notLoginUsers-menu.jsp</em>
+<h6 class="src">/users/notLoginUsers-menu.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;회원&lt;/h1&gt;
@@ -553,7 +553,7 @@ if (loginUser == null) {
 /java/index.jsp를 연 상태에서 Save As... 메뉴를 이용하여 login.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/login.jsp</em>
+<h6 class="src">/users/login.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%
@@ -641,7 +641,7 @@ function check() {
 로그인을 처리하는 페이지를 만든다.<br />
 </p>
 
-<em class="filename">/users/login_proc.jsp</em>
+<h6 class="src">/users/login_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User"%&gt;
@@ -664,7 +664,7 @@ if (url != null &amp;&amp; !url.equals("")) {
 로그아웃 후 홈페이지로 이동하도록 구현한다.<br />
 </p>
 
-<em class="filename">/users/logout_proc.jsp</em>
+<h6 class="src">/users/logout_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -687,7 +687,7 @@ response.sendRedirect("../");
 web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.<br />
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
     <pre class="prettyprint">&lt;error-page&gt;
     &lt;error-code&gt;403&lt;/error-code&gt;
     &lt;location&gt;/error.jsp&lt;/location&gt;
@@ -716,7 +716,7 @@ web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.<br /
 홈페이지를 연 상태에서 Save As... 메뉴를 이용하여 error.jsp라는 새 파일을 도큐먼트 베이스에 만든 후 아래와 같이 수정한다.<br />
 </p>
     
-<em class="filename">/error.jsp</em>
+<h6 class="src">/error.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
@@ -852,7 +852,7 @@ error.jsp 소스에서 컨텍스트 패스를 구해 모든 경로를 재지정�
 bbs-sub.jsp 파일은 게시판에 대한 링크를 제공한다.<br />
 </p>
 
-<em class="filename">/bbs/bbs-sub.jsp</em>
+<h6 class="src">/bbs/bbs-sub.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;게시판&lt;/h1&gt;
@@ -876,7 +876,7 @@ bbs-sub.jsp 파일은 게시판에 대한 링크를 제공한다.<br />
 이 파일을 공통 인클루드 파일 디렉터리에 생성하는 이유는 게시판 모듈 외에도 사용될 수 있기 때문이다.<br />
 </p>
     
-<em class="filename">/inc/loginCheck.jsp</em>
+<h6 class="src">/inc/loginCheck.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.*"%&gt;
@@ -905,7 +905,7 @@ if (user == null) {
 CSS 포지셔닝에서의 만든 list.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 list.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/bbs/list.jsp</em>
+<h6 class="src">/bbs/list.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -1055,7 +1055,7 @@ function goWrite() {
 CSS 포지셔닝에서 만든 write_form.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 write_form.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
     
-<em class="filename">/bbs/write_form.jsp</em>
+<h6 class="src">/bbs/write_form.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -1176,7 +1176,7 @@ function goView() {
 이 페이지는 글쓰기 폼에서 전달받는 파라미터로 실제로 데이터베이스에 인서트를 담당한다.<br />
 </p>
 
-<em class="filename">/bbs/write_proc.jsp</em>
+<h6 class="src">/bbs/write_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1204,7 +1204,7 @@ response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1");
 CSS 포지셔닝에서 만든 view.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 view.jsp 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/bbs/view.jsp</em>
+<h6 class="src">/bbs/view.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -1517,7 +1517,7 @@ function deleteComment(commentNo) {
 댓글 쓰기 처리 페이지는 상세보기 페이지에서 새 댓글을 쓰고 확인을 클릭하면 실제 댓글을 데이터베이스에 인서트 하는 페이지이다.<br />
 </p>
 
-<em class="filename">/bbs/addComment_proc.jsp</em>
+<h6 class="src">/bbs/addComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1542,7 +1542,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;s
 이 페이지는 상세 보기에서 댓글의 작성자가 자신의 댓글 내용을 수정한 후 확인을 클릭하면 데이터베이스에 있는 댓글의 내용을 수정하는 페이지이다.<br />
 </p>
 
-<em class="filename">/bbs/updateComment_proc.jsp</em>
+<h6 class="src">/bbs/updateComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1568,7 +1568,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;s
 이 페이지는 상세 보기에서 댓글 삭제를 클릭하면 데이터베이스에 있는 해당 댓글을 삭제하는 페이지이다.<br />
 </p>
 
-<em class="filename">/bbs/deleteComment_proc.jsp</em>
+<h6 class="src">/bbs/deleteComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1595,7 +1595,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;s
 파일시스템의 파일은 삭제하지 않는다.<br />
 </p>
 
-<em class="filename">/bbs/deleteAttachFile_proc.jsp</em>
+<h6 class="src">/bbs/deleteAttachFile_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1621,7 +1621,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;s
 이 페이지는 상세보기 페이지에서 게시글을 삭제하는 삭제 버튼을 클릭하면 실제 게시글을 데이터베이스에서 삭제 처리한다.<br />
 </p>
 
-<em class="filename">/bbs/del_proc.jsp</em>
+<h6 class="src">/bbs/del_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1648,7 +1648,7 @@ response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1&amp;searchWord=무궁
 CSS 포지셔닝에서 만든 write_form.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 modify_form.jsp라는 이름의 새 파일을 /bbs 폴더에 만든 후 아래와 같이 수정한다.<br /> 
 </p>
 
-<em class="filename">/bbs/modify_form.jsp</em>
+<h6 class="src">/bbs/modify_form.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 <strong>&lt;%
@@ -1770,7 +1770,7 @@ function goView() {
 게시글 수정 폼에서 전달받은 파라미터를 가지고 실제로 게시글 수정을 처리하는 페이지이다.<br />
 </p>
 
-<em class="filename">/bbs/modify_proc.jsp</em>
+<h6 class="src">/bbs/modify_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1808,7 +1808,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=free&amp;s
 로그인 사용자가 이용할 수 있는 회원 메뉴 페이지인 loginUsers-menu.jsp 파일을 아래와 같이 작성한다.<br />
 </p>
 
-<em class="filename">/users/loginUsers-menu.jsp</em>
+<h6 class="src">/users/loginUsers-menu.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;회원&lt;/h1&gt;
@@ -1831,7 +1831,7 @@ response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=free&amp;s
 CSS 포지셔닝에서 만든 singUp.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 signUp.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/signUp.jsp</em>
+<h6 class="src">/users/signUp.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -1929,7 +1929,7 @@ function check() {
 회원을 데이터베이스에 등록 후 환영 페이지(welcome.jsp)로 이동하게 구현했다.<br />
 </p>
 
-<em class="filename">/users/signUp_proc.jsp</em>
+<h6 class="src">/users/signUp_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -1951,7 +1951,7 @@ response.sendRedirect("welcome.jsp");
 signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.jsp라는 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
  
-<em class="filename">/users/welcome.jsp</em>
+<h6 class="src">/users/welcome.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -2013,7 +2013,7 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
 signUp.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 editAccount.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/editAccount.jsp</em>
+<h6 class="src">/users/editAccount.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -2103,7 +2103,7 @@ function check() {
 내 정보 수정 폼 페이지에서 전달된 정보로 회원정보를 실제로 수정하는 페이지이다.<br />
 </p>
 
-<em class="filename">/users/editAccount_proc.jsp</em>
+<h6 class="src">/users/editAccount_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -2126,7 +2126,7 @@ response.sendRedirect("changePasswd.jsp");
 editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changePasswd.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/changePasswd.jsp</em>
+<h6 class="src">/users/changePasswd.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -2220,7 +2220,7 @@ function check() {
 비밀번호 변경 폼 페이지에서 전달된 비밀번호로 회원 테이블의 비밀번호를 수정하는 페이지이다.<br />
 </p>
 
-<em class="filename">/users/changePasswd_proc.jsp</em>
+<h6 class="src">/users/changePasswd_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -2243,7 +2243,7 @@ response.sendRedirect("changePasswd_confirm.jsp");
 welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changePasswd_confirm.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
     
-<em class="filename">/users/changePasswd_confirm.jsp</em>
+<h6 class="src">/users/changePasswd_confirm.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
@@ -2305,7 +2305,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
 editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/bye.jsp</em>
+<h6 class="src">/users/bye.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;
@@ -2387,7 +2387,7 @@ function check() {
 회원 탈퇴를 처리하는 페이지를 만든다.<br />
 </p>
 
-<em class="filename">/users/bye_proc.jsp</em>
+<h6 class="src">/users/bye_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
@@ -2411,7 +2411,7 @@ response.sendRedirect("bye_confirm.jsp");
 welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_confirm.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
 
-<em class="filename">/users/bye_confirm.jsp</em>
+<h6 class="src">/users/bye_confirm.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;

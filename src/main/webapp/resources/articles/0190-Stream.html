@@ -81,7 +81,7 @@ InputStream과 OutputStream은 추상 클래스로 모든 바이트 스트림 �
 </tr>
 </table> 
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -111,13 +111,13 @@ public class Test {
 다음 두 개의 파일로 테스트한다.
 </p>
 
-<em class="filename">test.txt</em>
+<h6 class="src">test.txt</h6>
 <pre class="prettyprint">
 a b c d e
 1 2 3 4 5
 </pre>
 
-<em class="filename">테스트.txt</em>
+<h6 class="src">테스트.txt</h6>
 <pre class="prettyprint">
 가 나 다 라 마
 1 2 3 4 5
@@ -127,7 +127,7 @@ a b c d e
 다음 예제는 복사본 파일을 만든다.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -261,7 +261,7 @@ Reader와 Writer는 문자 입출력 클래스의 최상위 클래스이다.
 </tr>
 </table>
  
-<em class="filename">Test2.java</em>
+<h6 class="src">Test2.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -291,7 +291,7 @@ BufferedReader/BufferedWriter 문자 입력 스트림으로부터 문자를 읽�
 버퍼링 기능을 제공하여 효율적으로 처리할 수 있도록 해준다.
 </p>
 
-<em class="filename">Test2.java</em>
+<h6 class="src">Test2.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -357,7 +357,7 @@ OutputStreamWriter는 이 출력 스트림에 쓰인 문자를 특정 문자 셋
 아래 예제는 InputStreamReader를 이용해서 표준 입력 기구인 키보드(System.in)로부터의 바이트 스트림을 문자 스트림으로 변환하는 예제이다.
 </p>
 
-<em class="filename">InputTest.java</em>
+<h6 class="src">InputTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -389,7 +389,7 @@ BufferedReader를 자바 문서에서 찾아 확인한다.
 다음 예제는 문자 데이터를 파일에 출력한다.
 </p>
 
-<em class="filename">OutputTest.java</em>
+<h6 class="src">OutputTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -424,7 +424,7 @@ FileWriter 클래스의 생성자의 첫 번째 인자는 목적지이고, 두 �
 이 예제는 <a href="Logging">'로깅(Logging)'</a>의 첫 번째 예제에서 쓰인다. 
 </p>
 
-<em class="filename">SubtitleToText.java - 자막 파일(확장자 srt)을 일반 문서로 변환</em>
+<h6 class="src">SubtitleToText.java - 자막 파일(확장자 srt)을 일반 문서로 변환</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -496,7 +496,7 @@ public class SubtitleToText {
 }
 </pre>
 
-<em class="filename">URLTest.java - URL 클래스:인터넷상의 URL을 참조하는 데 이용</em>
+<h6 class="src">URLTest.java - URL 클래스:인터넷상의 URL을 참조하는 데 이용</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -570,7 +570,7 @@ public class URLTest {
 예제는 객체 정보를 파일에 저장하고, 객체 정보가 저장된 파일로부터 객체를 생성한다. 
 </p>
 
-<em class="filename">Address.java</em>
+<h6 class="src">Address.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -618,7 +618,7 @@ Serializable 인터페이스는 클래스로부터 생성된 객체가 직렬화
 우리가 만드는 클래스가 직렬화가 필요하다면 Serializable 인터페이스를 구현한다고 선언을 해야 한다.
 </p>
 
-<em class="filename">Backup.java</em>
+<h6 class="src">Backup.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -657,7 +657,7 @@ Backup 클래스는 Address 객체를 하나 생성하고, 생성된 객체를 �
 다음은 파일에 저장된 객체 정보로부터 객체를 복구하는 예제이다.
 </p>
 
-<em class="filename">Recovery.java</em>
+<h6 class="src">Recovery.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -873,7 +873,7 @@ public void saveBank() throws Exception {
 }
 </pre>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 <strong>
 private Bank bank;
@@ -1127,7 +1127,7 @@ bw.close();
 데이터베이스에 저장하는 방법은 JDBC에서 구현한다.
 </p>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

@@ -6,7 +6,7 @@
 비밀번호 검증에 '빈 검증'을 사용하려면 비밀번호를 위한 클래스를 만들어야 한다.
 </p>
 
-<em class="filename">Password.java</em>
+<h6 class="src">Password.java</h6>
 <pre class="prettyprint">
 package net.java_school.user;
 
@@ -43,7 +43,7 @@ public class Password {
 그렇지 않으면 HTTP 400 에러가 발생한다. 
 </p>
 
-<em class="filename">UsersController.java</em>
+<h6 class="src">UsersController.java</h6>
 <pre class="prettyprint">
 @RequestMapping(value="/changePasswd", method=RequestMethod.GET)
 public String changePasswd(Principal principal, Model model) {
@@ -82,7 +82,7 @@ public String changePasswd(@Valid Password password,
 &lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
 </p>
 
-<em class="filename">changePasswd.jsp</em>
+<h6 class="src">changePasswd.jsp</h6>
 <pre class="prettyprint">
 <strong>
 &lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;

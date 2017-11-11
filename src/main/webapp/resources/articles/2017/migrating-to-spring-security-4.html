@@ -5,7 +5,7 @@
 
 <h3>pom.xml에서 스프링 시큐리티 버전 변경</h3>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;properties&gt;
 	&lt;spring.version&gt;4.3.9.RELEASE&lt;/spring.version&gt;
@@ -76,7 +76,7 @@ authentication-failure-url 속성의 기본값은 /login?error=1으로 변경되
 스프링 시큐리티 설정 파일을 열고 강조된 부분을 참고하여 수정한다.<br />
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;form-login 
 	login-page="/users/login"
@@ -111,7 +111,7 @@ http의 use-expressions의 속성 기본값이 false에서 true로 변경되었�
 명시하지 않은 설정은 디폴트 값이 적용됨을 고려하면서 /users/login.jsp를 수정한다.<br />
 </p>
 
-<em class="filename">/users/login.jsp</em>
+<h6 class="src">/users/login.jsp</h6>
 <pre class="prettyprint">
 &lt;c:if test="${<strong>param.error</strong> != null }"&gt;
         &lt;h2&gt;Username/Password not corrrect&lt;/h2&gt;
@@ -184,12 +184,12 @@ write.jsp와 modify.jsp 파일을 열고 <em class="path">&lt;input type="hidden
 아래와 같이 폼의 action 속성을 수정한다.<br />
 </p>
 
-<em class="filename">write.jsp의 action 속성</em>
+<h6 class="src">write.jsp의 action 속성</h6>
 <pre class="prettyprint">
 &lt;sf:form action="write?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
 </pre>
 
-<em class="filename">modify.jsp action 속성</em>
+<h6 class="src">modify.jsp action 속성</h6>
 <pre class="prettyprint">
 &lt;sf:form action="modify?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
 </pre>

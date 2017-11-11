@@ -20,7 +20,7 @@ The process of Model 2 is summarized as follows.
 The following sources provide hints to the controller.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -93,7 +93,7 @@ the last page number.
 We will call the execute () method of the action class to generate the data mentioned above.(This is also the naming convention used in Struts 2)
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -110,7 +110,7 @@ public class ListAction {
 Complete the execute () method as follows:
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -156,7 +156,7 @@ public class ListAction {
 If you modify the request.setCharacterEncoding ("UTF-8") to be performed by the controller, the ListAction and controller will change as follows:
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -195,7 +195,7 @@ public class ListAction {
 }
 </pre>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -227,7 +227,7 @@ public class ControllerServlet extends HttpServlet {
 Let's add code to the control with the list request.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -273,7 +273,7 @@ public class ControllerServlet extends HttpServlet {
 Modify the /board/list.jsp file as shown below.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -365,7 +365,7 @@ The problem with the above code is that you need to remember names like listItem
 So let's use a pattern called Value Object (VO) or Data Transfer Object (DTO) to store the transferred data.
 </p>
 
-<em class="filename">ListVo.java</em>
+<h6 class="src">ListVo.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -444,7 +444,7 @@ public class ListVo {
 Modify the BoardService to use the VO you just created.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -529,7 +529,7 @@ public class BoardService {
 }
 </pre>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -564,7 +564,7 @@ public class ListAction {
 Modify the list.jsp file as follows:
 </p>
 
-<em class="filename">list.jsp</em>
+<h6 class="src">list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -641,7 +641,7 @@ More action classes are needed.
 So when you create an action interface and apply it to an action, the controller's code becomes elegant.
 </p>
 
-<em class="filename">Action.java</em>
+<h6 class="src">Action.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -656,7 +656,7 @@ public interface Action {
 Modify the ListAction to implement the action interface.
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -678,7 +678,7 @@ public class ListAction <strong>implements Action</strong> {
 Modify the controller as follows.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -773,7 +773,7 @@ This model should be responsible for the logic that processes the writing.
 You can refer to the existing write.jsp file.
 </p>
 
-<em class="filename">WriteAction.java</em>
+<h6 class="src">WriteAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -814,7 +814,7 @@ view = "/board/view.jsp";
 ViewAction should handle the detail view logic.
 </p>
 
-<em class="filename">ViewAction.java</em>
+<h6 class="src">ViewAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -841,7 +841,7 @@ Open the view.jsp file and change the .jsp to .do in your code.
 Also, refer to the emphasized part and correct it.
 </p>
 
-<em class="filename">view.jsp</em>
+<h6 class="src">view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -897,7 +897,7 @@ view = "/board/modify_form.jsp";
 Create ModifyFormAction.java as shown below.
 </p>
 
-<em class="filename">ModifyFormAction.java</em>
+<h6 class="src">ModifyFormAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -921,7 +921,7 @@ Open the modify_form.jsp file and change the .jsp to .do in your code.
 Also, refer to the emphasized part and correct it.
 </p>
 
-<em class="filename">modify_form.jsp</em>
+<h6 class="src">modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -986,7 +986,7 @@ isRedirect = true;
 Create ModifyAction.java as follows.
 </p>
 
-<em class="filename">ModifyAction.java</em>
+<h6 class="src">ModifyAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1036,7 +1036,7 @@ isRedirect = true;
 Create DeleteAction.java as follows.
 </p>
 
-<em class="filename">DeleteAction.java</em>
+<h6 class="src">DeleteAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1071,7 +1071,7 @@ view = "/board/reply_form.jsp";
 Create ReplyFormAction.java as follows.
 </p>
 
-<em class="filename">ReplyFormAction.java</em>
+<h6 class="src">ReplyFormAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1106,7 +1106,7 @@ Open the reply_form.jsp file and change .jsp to .do in your code.
 Also, refer to the emphasized part and correct it.
 </p>
 
-<em class="filename">reply_form.jsp</em>
+<h6 class="src">reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1156,7 +1156,7 @@ isRedirect = true;
 Create ReplyAction.java as follows.
 </p>
 
-<em class="filename">ReplyAction.java</em>
+<h6 class="src">ReplyAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

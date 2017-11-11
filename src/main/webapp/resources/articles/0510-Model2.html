@@ -20,7 +20,7 @@
 다음 소스는 컨트롤러에 대한 힌트를 제공한다.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -52,7 +52,7 @@ public class ControllerServlet extends HttpServlet {
 새로운 서블릿을 만들었으니 web.xml에 다음과 같이 등록하고 매핑한다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
    &lt;servlet-name&gt;Controller&lt;/servlet-name&gt;
@@ -92,7 +92,7 @@ http://localhost:port/modify.do를 차례로 방문해 보자.
 (이 역시 Struts 2에서 사용하는 이름 규칙이다)
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -109,7 +109,7 @@ public class ListAction {
 이미 구현한 소스를 참조하여 //TODO를 완성한다.
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -157,7 +157,7 @@ public class ListAction {
 컨트롤러에서 request.setCharacterEncoding("UTF-8");를 수행하도록 수정하자.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -191,7 +191,7 @@ public class ControllerServlet extends HttpServlet {
 ListAction에는 request.setCharacterEncoding("UTF-8");가 필요없으니 다음과 같이 수정한다.
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -234,7 +234,7 @@ public class ListAction {
 게시판 목록 요청과 관련된 코드를 컨트롤러에 구현한다.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -281,7 +281,7 @@ public class ControllerServlet extends HttpServlet {
 /board/list.jsp 파일을 아래와 같이 수정한다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -374,7 +374,7 @@ listItemNo, list, prevPage, nextPage, firstPage, lastPage 이름을 기억해야
 그래서 전달되는 데이터를 저장할 용도로 Value Object(VO)나 Data Transfer Object(DTO)라고 불리는 패턴을 사용하기도 한다.
 </p>
 
-<em class="filename">ListVo.java</em>
+<h6 class="src">ListVo.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -453,7 +453,7 @@ public class ListVo {
 방금 생성한 VO를 사용하도록 BoardService를 수정해 보자.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -538,7 +538,7 @@ public class BoardService {
 }
 </pre>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -569,7 +569,7 @@ public class ListAction {
 }
 </pre>
 
-<em class="filename">list.jsp</em>
+<h6 class="src">list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -648,7 +648,7 @@ if (nextPage != 0) {
 액션 인터페이스를 만들면 확장성이 좋아진다.
 </p>
 
-<em class="filename">Action.java</em>
+<h6 class="src">Action.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -663,7 +663,7 @@ public interface Action {
 액션 인터페이스를 구현하도록 ListAction을 수정한다.
 </p>
 
-<em class="filename">ListAction.java</em>
+<h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -685,7 +685,7 @@ public class ListAction <strong>implements Action</strong> {
 다음과 같이 컨트롤러를 완성한다.
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -793,7 +793,7 @@ WriteAction.java 액션 클래스를 작성한다.
 기존 write.jsp 파일을 참고하여 만든다.
 </p>
 
-<em class="filename">WriteAction.java</em>
+<h6 class="src">WriteAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -840,7 +840,7 @@ ViewAction.java 액션 클래스를 작성한다.
 이 액션은 상세보기 로직을 담당한다.
 </p>
 
-<em class="filename">ViewAction.java</em>
+<h6 class="src">ViewAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -867,7 +867,7 @@ view.jsp에서 .jsp를 모두 .do로 바꾼다.
 또한, 강조된 부분을 참고하여 수정한다.
 </p>
 
-<em class="filename">view.jsp</em>
+<h6 class="src">view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -927,7 +927,7 @@ view = "/board/modify_form.jsp";
 기존의 modify_form.jsp를 참고하여 ModifyFormAction.java를 생성한다.
 </p>
 
-<em class="filename">ModifyFormAction.java</em>
+<h6 class="src">ModifyFormAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -951,7 +951,7 @@ modify_form.jsp에서 .jsp를 모두 .do로 바꾼다.
 또한, 아래 강조된 부분을 참고하여 수정한다.
 </p>
 
-<em class="filename">modify_form.jsp</em>
+<h6 class="src">modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1020,7 +1020,7 @@ isRedirect = true;
 modify.jsp 파일을 참고하여 ModifyAction.java를 생성한다.
 </p>
 
-<em class="filename">ModifyAction.java</em>
+<h6 class="src">ModifyAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1073,7 +1073,7 @@ isRedirect = true;
 del.jsp 파일을 참고하여 DeleteAction.java를 생성한다.
 </p>
 
-<em class="filename">DeleteAction.java</em>
+<h6 class="src">DeleteAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1112,7 +1112,7 @@ view = "/board/reply_form.jsp";
 reply_form.jsp 파일을 참고하여 ReplyFormAction.java를 만든다.
 </p>
 
-<em class="filename">ReplyFormAction.java</em>
+<h6 class="src">ReplyFormAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1147,7 +1147,7 @@ reply_form.jsp에서 .jsp를 모두 .do로 바꾼다.
 또한, 아래 강조된 부분을 참고하여 수정한다.
 </p>
 
-<em class="filename">reply_form.jsp</em>
+<h6 class="src">reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1201,7 +1201,7 @@ isRedirect = true;
 reply.jsp 파일을 참고하여 ReplyAction.java를 생성한다.
 </p>
 
-<em class="filename">ReplyAction.java</em>
+<h6 class="src">ReplyAction.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

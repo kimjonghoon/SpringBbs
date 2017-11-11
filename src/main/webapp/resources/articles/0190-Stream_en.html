@@ -60,7 +60,7 @@ InputStream and OutputStream are abstract classes and are the top-level classes 
 	<dd class="api-summary-dd-method-desc">It closes the output stream and returns the system resources associated with the stream.</dd>
 </dl>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -90,7 +90,7 @@ public class Test {
 Test with the following file:
 </p>
 
-<em class="filename">test.txt</em>
+<h6 class="src">test.txt</h6>
 <pre class="prettyprint">
 a b c d e
 1 2 3 4 5
@@ -100,7 +100,7 @@ a b c d e
 The following is an example of creating a copy file.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -192,7 +192,7 @@ All are abstract classes, and the unit of input and output data in the method is
 	<dd class="api-summary-dd-method-desc">It outputs characters as many as size of <em>len</em> from the <em>off</em> index of String <em>s</em>.</dd>
 </dl>
 
-<em class="filename">Test2.java</em>
+<h6 class="src">Test2.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -221,7 +221,7 @@ public class Test2 {
 BufferedReader/BufferedWriter provides a buffering function for character I/O.
 </p>
 
-<em class="filename">Test2.java</em>
+<h6 class="src">Test2.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -276,7 +276,7 @@ For more information, please visit <a href="https://docs.oracle.com/javase/8/doc
 The following example uses InputStreamReader to convert bytes input from the keyboard to characters.
 </p>
 
-<em class="filename">InputTest.java</em>
+<h6 class="src">InputTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -317,7 +317,7 @@ For more information about the BufferedReader, please visit <a href="https://doc
 <p>
 The following example prints character data to a file.
 </p>
-<em class="filename">OutputTest.java</em>
+<h6 class="src">OutputTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -351,7 +351,7 @@ It is important to close the output stream.
 fw.close(); closes the output stream.
 </p>
 
-<em class="filename">SubtitleToText.java</em>
+<h6 class="src">SubtitleToText.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -423,7 +423,7 @@ public class SubtitleToText {
 }
 </pre>
 
-<em class="filename">URLTest.java</em>
+<h6 class="src">URLTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.stream;
 
@@ -497,7 +497,7 @@ A deserialization process is required to reconstruct an object from a file or an
 The example stores object information in a file, and creates an object from the file where object information is stored. 
 </p>
 
-<em class="filename">Address.java</em>
+<h6 class="src">Address.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -537,7 +537,7 @@ These classes have implements Serializable in the class declaration.
 If the class we want to create needs serialization, we need implements Serializable in the class declaration.
 </p>
 
-<em class="filename">Backup.java</em>
+<h6 class="src">Backup.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -579,7 +579,7 @@ We used ObjectOutputStream to create the object stream and FileOutputStream to s
 The following example creates an object from the object information stored in a file.
 </p>
 
-<em class="filename">Recovery.java</em>
+<h6 class="src">Recovery.java</h6>
 <pre class="prettyprint">
 package net.java_school.serial;
 
@@ -793,7 +793,7 @@ public void saveBank() throws Exception {
 }
 </pre>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 <strong>
 private Bank bank;
@@ -1055,7 +1055,7 @@ bw.close();
 Saving to the database is described in the JDBC chapter.
 </p>
 
-<em class="filename">BankUi.java</em>
+<h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

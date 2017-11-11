@@ -23,7 +23,7 @@ SQL*PLUS를 사용해 scott 계정에 접속한 후 아래를 실습해 보자.
 (scott 계정이 없다면 다음을 참조하여 실습 환경을 만든다.)
 </p>
 
-<em class="filename">Oracle</em>
+<h6 class="src">Oracle</h6>
 <pre class="prettyprint">
 CREATE TABLE DEPT (
 	DEPTNO NUMBER(2) CONSTRAINT PK_DEPT PRIMARY KEY,
@@ -71,7 +71,7 @@ INSERT INTO SALGRADE VALUES (5,3001,9999);
 COMMIT;
 </pre>
 
-<em class="filename">MySQL</em>
+<h6 class="src">MySQL</h6>
 <pre class="prettyprint">
 CREATE TABLE DEPT (
 	DEPTNO DECIMAL(2),

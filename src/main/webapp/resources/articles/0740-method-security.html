@@ -7,7 +7,7 @@ BoardService.java와 UserService.java에 메서드 보안을 적용하겠다.<br
 다음 소스에는 import org.springframework.security.access.prepost.PreAuthorize; 임포트 문이 필요하다.
 </p>
 
-<em class="filename">UserService.java</em>
+<h6 class="src">UserService.java</h6>
 <pre class="prettyprint">
 //회원가입
 public int addUser(User user);
@@ -35,7 +35,7 @@ public void bye(User user);
 public User getUser(String email);
 </pre>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 //목록
 @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

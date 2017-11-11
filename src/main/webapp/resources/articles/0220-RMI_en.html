@@ -37,7 +37,7 @@ Remote methods on the remote interface must declare throws java.rmi.RemoteExcept
 In addition to RemoteException, other exceptions can be added.
 </p>
 
-<em class="filename">Hello.java</em>
+<h6 class="src">Hello.java</h6>
 <pre class="prettyprint">
 package example.hello;
 
@@ -57,7 +57,7 @@ You do not need a throws RemoteException when implementing sayHello().
 This is because the remote object's sayHello() does not throw a RemoteException object.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package example.hello;
 

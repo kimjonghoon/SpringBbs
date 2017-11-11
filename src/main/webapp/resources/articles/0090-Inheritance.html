@@ -22,7 +22,7 @@
 다음은 상속 관계가 아닌 사원(Employee)클래스와 관리자(Manager)클래스다.
 </p>
 
-<em class="filename">사원 클래스(Employee.java)</em>
+<h6 class="src">사원 클래스(Employee.java)</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -70,7 +70,7 @@ public class Employee {
 }
 </pre>
 
-<em class="filename">관리자 클래스(Manager.java)</em>
+<h6 class="src">관리자 클래스(Manager.java)</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -133,7 +133,7 @@ public class Manager {
 Test 클래스를 만든다.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -168,7 +168,7 @@ name, position, telephone 인스턴스 변수와 이 변수에 대한 게터와 
 중복되는 코드는 상속되므로 관리자 클래스 소스에서 삭제한다.
 </p>
 
-<em class="filename">Manager.java</em>
+<h6 class="src">Manager.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -296,7 +296,7 @@ super 키워드는 메서드 오버라이딩으로 숨겨진 부모 클래스의
 </dd>
 </dl>
 
-<em class="filename">사원 클래스에 생성자 추가</em>
+<h6 class="src">사원 클래스에 생성자 추가</h6>
 <pre class="prettyprint">
 public Employee() {} //생성자를 만들 때 디폴트 생성자도 함께 만드는 습관을 들이자.
 
@@ -307,7 +307,7 @@ public Employee(String name, String position, String telephone) {
 }
 </pre>
 
-<em class="filename">관리자 클래스에 생성자 추가</em>
+<h6 class="src">관리자 클래스에 생성자 추가</h6>
 <pre class="prettyprint">
 public Manager() {}
 
@@ -317,7 +317,7 @@ public Manager(String name, String position, String telephone, String manageJob)
 }
 </pre>
 
-<em class="filename">테스트의 메인메서드 구현부 수정</em>
+<h6 class="src">테스트의 메인메서드 구현부 수정</h6>
 <pre class="prettyprint">
 Employee im = new Employee("임꺽정", "대리", "19");
 System.out.println(im.toString());	
@@ -333,7 +333,7 @@ System.out.println(hong);에서 참조값을 전달받는 println()메서드는 
 어떤 코드를 더 좋아할지는 여러분 몫이다.
 </p>
 
-<em class="filename">컴파일러가 개입하여 바꾼 사원 클래스의 생성자 코드</em>
+<h6 class="src">컴파일러가 개입하여 바꾼 사원 클래스의 생성자 코드</h6>
 <pre class="prettyprint">
 public Employee() {
 	<strong>super();</strong>
@@ -347,7 +347,7 @@ public Employee(String name, String position, String telephone) {
 }
 </pre>
 
-<em class="filename">컴파일러가 개입하여 바꾼 관리자 클래스의 생성자 코드</em>
+<h6 class="src">컴파일러가 개입하여 바꾼 관리자 클래스의 생성자 코드</h6>
 <pre class="prettyprint">
 public Manager() {
 	<strong>super();</strong>
@@ -401,7 +401,7 @@ a.말하다();가 실행되는 시점(Runtime)에 니체나 스피노자가 말�
 사원 클래스와 관리자 클래스는 그대로 두고 테스트의 메인 메서드에 다음을 추가한다.
 </p>
 
-<em class="filename">Test.java 의 메인메서드 구현부 추가</em>
+<h6 class="src">Test.java 의 메인메서드 구현부 추가</h6>
 <pre class="prettyprint">
 Object jang = new Manager("장길산", "부장", "1", "영업");
 System.out.println(jang);
@@ -468,7 +468,7 @@ print()와 println() 메서드는 어떤 인자값이라도 모두 출력하는 
 물론 설계가 잘되었다는 전제가 있어야 한다.
 </p>
 
-<em class="filename">AbstractEmployee.java</em>
+<h6 class="src">AbstractEmployee.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -501,7 +501,7 @@ public abstract class AbstractEmployee {
 이때 사원 클래스는 AbstractEmployee클래스의 추상 메서드 doWork() 메서드를 구현해야 한다.
 </p>
 
-<em class="filename">Employee.java</em>
+<h6 class="src">Employee.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -600,7 +600,7 @@ implements 키워드 뒤에는 ,(콤마)로 구분하여 하나 이상의 인터
 운전기사는 직원이므로 사원 클래스를 상속한다.
 </p>
   
-<em class="filename">운전기사 클래스(Driver.java)</em>
+<h6 class="src">운전기사 클래스(Driver.java)</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -633,7 +633,7 @@ public class Driver <strong>extends Employee</strong> {
 }
 </pre>
 
-<em class="filename">배달맨 클래스(Transportor.java)</em>
+<h6 class="src">배달맨 클래스(Transportor.java)</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -665,7 +665,7 @@ public class Transportor {
 인터페이스 이름을 Drivable이라고 하자. 
 </p>
 
-<em class="filename">Drivable.java</em>
+<h6 class="src">Drivable.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -681,7 +681,7 @@ public interface Drivable {
 배달맨과 운전기사가 이 인터페이스를 구현하도록 수정한다.
 </p>
 
-<em class="filename">Driver.java</em>
+<h6 class="src">Driver.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -716,7 +716,7 @@ public class Driver extends Employee implements Drivable {
 }
 </pre>
 
-<em class="filename">Transportor.java</em>
+<h6 class="src">Transportor.java</h6>
 <pre class="prettyprint">
 package net.java_school.example;
 
@@ -748,7 +748,7 @@ public class Transportor implements Drivable {
 Test 클래스의 메인 메서드에 아래 코드를 추가한다.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 Drivable a = new Driver("슈마허","대리","ext:8","01거 5000");
 System.out.println(a);

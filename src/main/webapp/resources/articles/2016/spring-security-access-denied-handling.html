@@ -10,7 +10,7 @@ ROLE_USER 권한만 가진 사용자가 http://localhost:8080/admin를 요청할
 /WEB-INF/views/403.jsp 페이지로 포워딩하는 방법  
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;http&gt;
 	<strong>&lt;access-denied-handler error-page="/403" /&gt;</strong>
@@ -37,7 +37,7 @@ WEB-INF/views/403.jsp 파일을 만들고 HomeController에 다음 메서드를 
 스프링 시큐리티 태그를 사용할 수 있으므로 header.jsp 파일을 인클루드하고 있다.<br />
 </p>
 
-<em class="filename">/403.jsp</em>
+<h6 class="src">/403.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -91,7 +91,7 @@ String contextPath = request.getContextPath();
 &lt;/html&gt;
 </pre>
 
-<em class="filename">HomeController.java</em>
+<h6 class="src">HomeController.java</h6>
 <pre class="prettyprint">
 @RequestMapping(value="/403", method={RequestMethod.GET,RequestMethod.POST})
 public String error403() {
@@ -103,7 +103,7 @@ public String error403() {
 참고로, 다음은 web.xml의 에러 페이지 설정이다.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;error-page&gt;
 	&lt;error-code&gt;404&lt;/error-code&gt;
@@ -130,7 +130,7 @@ org.springframework.security.web.access.AccessDeniedHandler를 구현해야 한�
 security.xml 파일을 다음과 같이 수정한다.<br />
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;access-denied-handler <strong>ref="my403"</strong> /&gt;
 </pre>
@@ -139,7 +139,7 @@ security.xml 파일을 다음과 같이 수정한다.<br />
 security.xml에 다음을 추가한다.<br />
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler"&gt;
 	&lt;beans:property name="errorPage" value="403" /&gt;
@@ -150,7 +150,7 @@ security.xml에 다음을 추가한다.<br />
 security.xml에 추가한 설정대로 AccessDeniedHandler를 구현하는 MyAccessDeniedHandler를 생성한다.<br />
 </p>
 
-<em class="filename">MyAccessDeniedHandler.java</em>
+<h6 class="src">MyAccessDeniedHandler.java</h6>
 <pre class="prettyprint">
 package net.java_school.spring;
 
@@ -196,7 +196,7 @@ web.xml 설정으로 보이는 에러 페이지는 스프링 시큐리티 태그
 컨트롤러가 이들을 매핑할 필요는 없다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"&gt;
 	&lt;property name="defaultErrorView" value="error" /&gt;
@@ -214,7 +214,7 @@ web.xml 설정으로 보이는 에러 페이지는 스프링 시큐리티 태그
 im@gmail.org/1111로 로그인하고 탈퇴메뉴에서 hong@gmail.org와 1111를 입력하여 탈퇴를 시도하면
 </p>
 
-<em class="filename">UserService.java</em>
+<h6 class="src">UserService.java</h6>
 <pre class="prettyprint">
 @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER') and <strong>#user.email == principal.username</strong>")
 	public void bye(User user);
@@ -226,7 +226,7 @@ im@gmail.org/1111로 로그인하고 탈퇴메뉴에서 hong@gmail.org와 1111�
 다시 탈퇴메뉴에서 이번에는 im@gmail.org와 비밀번호를 틀리게 입력하면 
 </p>
 
-<em class="filename">UserServiceImpl.java</em>
+<h6 class="src">UserServiceImpl.java</h6>
 <pre class="prettyprint">
 @Override
 public void bye(User user) {

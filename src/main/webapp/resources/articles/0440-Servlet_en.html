@@ -504,7 +504,7 @@ Create JSPs in C:/www/myapp and java sources in C:/www/myapp/WEB-INF/src.
 Instead of using Eclipse, use a regular editor such as EditPlus.
 </p>
 
-<em class="filename">SimpleServlet.java</em>
+<h6 class="src">SimpleServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -549,7 +549,7 @@ These methods are already implemented in the GenericServlet and are not visible 
 Open the /WEB-INF/web.xml file and add the servlet element to the sub element of the web-app element as shown below.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
 	&lt;servlet-name&gt;SimpleServlet&lt;/servlet-name&gt;
@@ -848,7 +848,7 @@ Let's practice how to receive data from the user in the servlet through the belo
 Create SignUp.html in the documentbase/example diretory.
 </p>
 
-<em class="filename">/example/SignUp.html</em>
+<h6 class="src">/example/SignUp.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -905,7 +905,7 @@ About Me
 Create RegisterServlet.java in /WEB-INF/src/example directory as shown below.
 </p>
 
-<em class="filename">RegisterServlet.java</em>
+<h6 class="src">RegisterServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -959,7 +959,7 @@ RegisterServlet.java
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;			
     &lt;servlet-name&gt;RegisterServlet&lt;/servlet-name&gt;
@@ -991,7 +991,7 @@ Let's practice the forward () method example.
 Create the ControllerServlet.java file in the /WEB-INF/src/example directory as follows:
 </p>
 
-<em class="filename">ControllerServlet.java</em>
+<h6 class="src">ControllerServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1053,7 +1053,7 @@ ControllerServlet.java
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;Controller&lt;/servlet-name&gt;
@@ -1123,7 +1123,7 @@ This is an example of turning a pure Java application into a servlet.
 Create the GetEmpServlet.java file in the /WEB-INF/src/example directory of the ROOT application.
 </p>
 
-<em class="filename" id="GetEmpServlet">GetEmpServlet.java</em>
+<h6 class="src" id="GetEmpServlet">GetEmpServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1237,7 +1237,7 @@ GetEmpServlet.java
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;GetEmpServlet&lt;/servlet-name&gt;
@@ -1290,7 +1290,7 @@ Let's modify the GetEmpServlet example to use the ServletConfig initialization p
 Create the following servlet in the /WEB-INF/src/example directory.
 </p>
 
-<em class="filename">InitParamServlet.java</em>
+<h6 class="src">InitParamServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1391,7 +1391,7 @@ public class InitParamServlet extends HttpServlet {
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
 	&lt;servlet-name&gt;InitParamServlet&lt;/servlet-name&gt;
@@ -1449,7 +1449,7 @@ You can see that the context-param must be declared ahead of the servlet.
 Open web.xml and add the following:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;context-param&gt;
     &lt;param-name&gt;url&lt;/param-name&gt;
@@ -1527,7 +1527,7 @@ The HttpSessionListener interface consists of two methods:
 Write the following Listener class, which it,  right after the web application startup, creates an OracleConnectionManager object and stores it in the ServletContext. 
 </p>
 
-<em class="filename">MyServletContextListener.java</em>
+<h6 class="src">MyServletContextListener.java</h6>
 <pre class="prettyprint">
 package net.java_school.listener;
 
@@ -1559,7 +1559,7 @@ public class MyServletContextListener implements ServletContextListener {
 Add the following to web.xml, below the context-param, above the servlet declaration.
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;listener&gt;
 	&lt;listener-class&gt;net.java_school.listener.MyServletContextListener&lt;/listener-class&gt;
@@ -1590,7 +1590,7 @@ Now when the ROOT web application is started, an OracleConnectionManager object 
 To test it, modify the GetEmpServlet.java file as shown below.
 </p>
 
-<em class="filename">GetEmpServlet.java</em>
+<h6 class="src">GetEmpServlet.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -1689,7 +1689,7 @@ The HttpSessionListener interface consists of two methods. One for session creat
 The following is an example of an HttpSessionListener.
 </p>
 
-<em class="filename">SessionCounterListener.java</em>
+<h6 class="src">SessionCounterListener.java</h6>
 <pre class="prettyprint">
 package net.java_school.listener;
 
@@ -1743,7 +1743,7 @@ The filter class must implement the javax.servlet.Filter interface.
 The following is a pure Java application created to understand the filter mechanism.
 </p>
 
-<em class="filename">ChainFilter.java</em>
+<h6 class="src">ChainFilter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1774,7 +1774,7 @@ public class ChainFilter {
 }
 </pre>
 
-<em class="filename">Filter.java</em>
+<h6 class="src">Filter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1785,7 +1785,7 @@ public interface Filter {
 }
 </pre>
 
-<em class="filename">Filter1.java</em>
+<h6 class="src">Filter1.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1801,7 +1801,7 @@ public class Filter1 implements Filter {
 }
 </pre>
 
-<em class="filename">Filter2.java</em>
+<h6 class="src">Filter2.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1817,7 +1817,7 @@ public class Filter2 implements Filter {
 }
 </pre>
 
-<em class="filename">Tomcat.java</em>
+<h6 class="src">Tomcat.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1876,7 +1876,7 @@ The following is an example that runs req.setCharacterEncoding("UTF-8"); code be
 Create a CharsetFilter.java file as follows:
 </p>
 
-<em class="filename">/WEB-INF/src/net/java_school/filter/CharsetFilter.java</em>
+<h6 class="src">/WEB-INF/src/net/java_school/filter/CharsetFilter.java</h6>
 <pre class="prettyprint">
 package net.java_school.filter;
 
@@ -1933,7 +1933,7 @@ Note the order with existing elements.
 The following code should be placed between the context-param element and the listener element. 
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;filter&gt;
    &lt;filter-name&gt;CharsetFilter&lt;/filter-name&gt;
@@ -2062,7 +2062,7 @@ Suppose you upload the logo.gif image file using the &lt;input type="file" name=
 Create the following HTML file in the example subdirectory of the ROOT application's top-level directory:
 </p>
 
-<em class="filename">/example/MultipartRequest.html</em>
+<h6 class="src">/example/MultipartRequest.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -2090,7 +2090,7 @@ Create and compile the following servlet.
 When compiling, you need to tell the Java compiler the path to the cos.jar file.
 </p>
 
-<em class="filename">UploadTest.java</em>
+<h6 class="src">UploadTest.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -2170,7 +2170,7 @@ public class UploadTest extends HttpServlet {
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;UploadTest&lt;/servlet-name&gt;
@@ -2209,7 +2209,7 @@ Download the latest binary file from the following address.
 Uncompress and copy the commons-fileupload-x.x.jar and commons-io-x.x.jar files to the ROOT application's /WEB-INF/lib.
 </p>
 
-<em class="filename">/example/commons-fileupload.html</em>
+<h6 class="src">/example/commons-fileupload.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -2230,7 +2230,7 @@ Uncompress and copy the commons-fileupload-x.x.jar and commons-io-x.x.jar files 
 &lt;/html&gt;
 </pre>
 
-<em class="filename">CommonsUpload.java</em>
+<h6 class="src">CommonsUpload.java</h6>
 <pre class="prettyprint">
 package example;
 
@@ -2308,7 +2308,7 @@ public class CommonsUpload extends HttpServlet {
 Add the following to web.xml:
 </p>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;servlet&gt;
     &lt;servlet-name&gt;commonsUpload&lt;/servlet-name&gt;

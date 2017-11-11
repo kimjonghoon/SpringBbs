@@ -10,7 +10,7 @@ Bank 인터페이스를 구현한 구현체로 ShinhanBank라는 클래스를 �
 Bank.java를 다시 열고 아래 내용으로 수정한다. 
 </p>
 
-<em class="filename">Bank.java</em>
+<h6 class="src">Bank.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -41,7 +41,7 @@ public interface Bank {
 강조된 부분을 참고하여 ShinhanBank.java 파일을 수정한다.
 </p>
 
-<em class="filename">ShinhanBank.java</em>
+<h6 class="src">ShinhanBank.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -117,7 +117,7 @@ public class ShinhanBank <strong>implements Bank</strong> {
 테스트의 메인 메서드는 아랫부분만 수정하면 테스트할 수 있다.
 </p>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 Bank bank = <strong>new ShinhanBank();</strong>
 </pre>

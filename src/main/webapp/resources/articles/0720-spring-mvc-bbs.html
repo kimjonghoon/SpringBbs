@@ -112,7 +112,7 @@ view.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정�
 이 경우 웹 브라우저가 접근하지 못하는 경로에 첨부 파일이 있어도 상관없다.
 </p>
 
-<em class="filename">/WEB-INF/views/inc/download.jsp</em>
+<h6 class="src">/WEB-INF/views/inc/download.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;	  
@@ -177,7 +177,7 @@ WebContants.java에 첨부 파일이 저장되는 디렉터리의 전체 경로 
 따라서 단순히 링크로 파일을 내려받을 수 없다. view.jsp의 첨부 파일 다운로드 코드가 변경되어야 한다는 점을 기억하자.
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">package net.java_school.commons;
 
 public class WebContants {
@@ -215,7 +215,7 @@ MyBatis-Spring 공식 문서에는 스프링과 마이바티스의 연동에 관
 UserService.java를 인터페이스로 변경한다.
 </p>
 
-<em class="filename">UserService.java</em>
+<h6 class="src">UserService.java</h6>
 
 <pre class="prettyprint">package net.java_school.user;
 
@@ -247,7 +247,7 @@ net.java_school.mybatis 패키지에 UserMapper.java를 작성한다.
 (모델 2 게시판의 UserDao와 일관성을 위해 메서드 이름은 될 수 있으면 그대로 유지했다)
 </p>
 
-<em class="filename">UserMapper.java</em>
+<h6 class="src">UserMapper.java</h6>
 <pre class="prettyprint">package net.java_school.mybatis;
 
 import org.apache.ibatis.annotations.Param;
@@ -286,7 +286,7 @@ UserMapper.xml에 UserMapper.java의 메서드 이름으로 id를 설정해야 �
 net.java_school.user 패키지에 UserServiceImpl.java를 만든다.
 </p>
 
-<em class="filename">UserServiceImpl.java</em>
+<h6 class="src">UserServiceImpl.java</h6>
 <pre class="prettyprint">
 package net.java_school.user;
 
@@ -335,7 +335,7 @@ src/main/resources에 net.java_school.mybatis 패키지를 만들고, 이 패키
 설정 파일을 소스 디렉터리에 만들어도 클래스 패스에 복사되지 않기 때문이다. 
 </p>
 
-<em class="filename">Configuration.xml</em>
+<h6 class="src">Configuration.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE configuration 
@@ -365,7 +365,7 @@ Configuration.xml와 같은 위치에 UserMapper.xml 파일을 만든다.
 UserMapper.java의 메서드 이름과 id 값이 일치해야 한다.
 </p>
 
-<em class="filename">UserMapper.xml</em>
+<h6 class="src">UserMapper.xml</h6>
 <pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;!DOCTYPE mapper
@@ -414,7 +414,7 @@ net.java_school.controller 패키지에 UsersController.java를 작성한다.
 @Controller 어노테이션 바로 아래 @RequestMapping("users") 어노테이션을 적용하여 "/users로 시작하는 모든 요청을 담당한다고 표시한다.
 </p>
 
-<em class="filename">UsersController.java</em>
+<h6 class="src">UsersController.java</h6>
 <pre class="prettyprint">package net.java_school.controller;
 
 import java.net.URLEncoder;
@@ -618,7 +618,7 @@ POST 방식의 /users/signUp 요청 시 호출되는 메서드는 회원 가입�
 아래는 HomeController은 홈페이지 요청을 담당하는 컨트롤러이다.
 </p>
 
-<em class="filename">HomeController.java</em>
+<h6 class="src">HomeController.java</h6>
 <pre class="prettyprint">package net.java_school.controller;
 
 import org.springframework.stereotype.Controller;
@@ -639,7 +639,7 @@ public class HomeController {
 JavaController은 "/java"가 포함된 모든 요청을 처리하는 컨트롤러이다.
 </p>
 
-<em class="filename">JavaController.java</em>
+<h6 class="src">JavaController.java</h6>
 <pre class="prettyprint">package net.java_school.controller;
 
 import org.springframework.stereotype.Controller;
@@ -667,7 +667,7 @@ public class JavaController {
 JavascriptController은 "/javascrit"가 포함된 모든 요청을 처리하는 컨트롤러이다.
 </p>
 
-<em class="filename">JavascriptController.java</em>
+<h6 class="src">JavascriptController.java</h6>
 <pre class="prettyprint">package net.java_school.controller;
 
 import org.springframework.stereotype.Controller;
@@ -690,7 +690,7 @@ public class JavascriptController {
 web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng-bbs-servlet.xml라는 이름으로 web.xml과 같은 위치인 WEB-INF에 스프링 설정 파일을 생성한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -876,7 +876,7 @@ dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용
 Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 같은 위치에 만든다.
 </p>
 
-<em class="filename">BoardMapper.xml</em>
+<h6 class="src">BoardMapper.xml</h6>
 <pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 
 &lt;!DOCTYPE mapper
@@ -1124,7 +1124,7 @@ DELETE FROM article WHERE articleno = ?만 실행하는 것으로 구현한다.<
 BoardMapper.xml에 맞게 BoardMapper.java를 아래와 같이 만든다.
 </p>
 
-<em class="filename">BoardMapper.java</em>
+<h6 class="src">BoardMapper.java</h6>
 <pre class="prettyprint">package net.java_school.mybatis;
 
 import java.util.HashMap;
@@ -1200,7 +1200,7 @@ public interface BoardMapper {
 모델 2의 BoardService.java를 인터페이스로 바꾼다.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">package net.java_school.board;
 
 import java.util.List;
@@ -1272,7 +1272,7 @@ public interface BoardService {
 BoardService 인터페이스의 구현체 BoardServiceImpl.java를 net.java_school.board 패키지에 만든다.
 </p>
 
-<em class="filename">BoardServiceImpl.java</em>
+<h6 class="src">BoardServiceImpl.java</h6>
 <pre class="prettyprint">package net.java_school.board;
 
 import java.util.HashMap;
@@ -1431,7 +1431,7 @@ public class BoardServiceImpl implements BoardService {
 그 전에 페이징 처리를 위한 클래스를 작성한다.
 </p>
 
-<em class="filename">NumbersForPaging.java</em>
+<h6 class="src">NumbersForPaging.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -1483,7 +1483,7 @@ public class NumbersForPaging {
 }
 </pre>
 
-<em class="filename">Paginator.java</em>
+<h6 class="src">Paginator.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -1530,7 +1530,7 @@ public class Paginator {
 BbsController.java 클래스를 net.java_school.controller 패키지에 만든다.
 </p>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 package net.java_school.controller;
 
@@ -2883,7 +2883,7 @@ WEB-INF의 바로 위인 src/main/webapp가 DocumentBase이다.<br />
 메이븐 프로젝트 루트 디렉터리가 C:/www/spring-bbs라면 컨텍스트 파일을 아래와 같이 작성한다.<br />
 </p>
 
-<em class="filename">ROOT.xml</em>
+<h6 class="src">ROOT.xml</h6>
 <pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Context
     docBase="C:/www/spring-bbs/<strong>src/main/webapp</strong>"
@@ -2899,7 +2899,7 @@ JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일
 한글 검색이 되지 않는다면 TOMCAT_HOME/conf/server.xml 파일을 열고 다음 강조된 부분이 있는지 확인한다.<br />
 </p>
 
-<em class="filename">server.xml</em>
+<h6 class="src">server.xml</h6>
 <pre class="prettyprint">&lt;Connector port="8989" protocol="HTTP/1.1"
   connectionTimeout="20000"
   <strong>URIEncoding="UTF-8"</strong>

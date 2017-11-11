@@ -363,7 +363,7 @@ Open the view.jsp file and insert the following code in the appropriate location
 Create reply_form.jsp as shown below.
 </p>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -466,7 +466,7 @@ Title: &lt;input type="text" name="title" size="45" value="&lt;%=title %&gt;" /&
 Create BoardReplier.java.
 </p>
 
-<em class="filename">BoardReplier.java</em>
+<h6 class="src">BoardReplier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -631,7 +631,7 @@ if (check == true) {
 }
 </pre>
 
-<em class="filename">BoardDeleter.java</em>
+<h6 class="src">BoardDeleter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -780,7 +780,7 @@ public class BoardDeleter extends HttpServlet {
 	<li>Delete all posts stored in the delete list</li>
 </ol>
 
-<em class="filename"> RecursiveDeleter.java (perform the delete algorithm)</em>
+<h6 class="src"> RecursiveDeleter.java (perform the delete algorithm)</h6>
 <pre class="prettyprint">
 public class RecursiveDeleter {
 	String sql1 = "SELECT no FROM board WHERE parent = ?";
@@ -889,7 +889,7 @@ To do this, we used the idx as index.
 You need to know how the idx value changes to fully understand the getDeleteList() method.
 </p>
 
-<em class="filename">BoardDeleter.java - (Remove all descendant posts)</em>
+<h6 class="src">BoardDeleter.java - (Remove all descendant posts)</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1203,7 +1203,7 @@ PRESIDENT		   7839 KING
 If you implement a hierarchical bulletin board using Oracle hierarchical queries, you only need to add the parent column to store the unique number of the parent post.
 </p>
 
-<em class="filename">Query hints for Oracle hierarchical bulletin boards</em>
+<h6 class="src">Query hints for Oracle hierarchical bulletin boards</h6>
 <pre class="prettyprint">
 SELECT no, indent, parent, title, wdate FROM 
 (SELECT ROWNUM R, A.* 
@@ -1289,7 +1289,7 @@ String sql = "INSERT INTO board (no, title, content, wdate, parent) "
 
 <h3>Hierarchical bulletin board using hierarchical query: Reply</h3>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1381,7 +1381,7 @@ Title: &lt;input type="text" name="title" size="45" value="&lt;%=title %&gt;" /&
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardReplier.java</em>
+<h6 class="src">BoardReplier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -1466,7 +1466,7 @@ public class BoardReplier extends HttpServlet {
 We will not be able to delete postings with reply.
 </p>
 
-<em class="filename">BoardDeleter.java</em>
+<h6 class="src">BoardDeleter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 

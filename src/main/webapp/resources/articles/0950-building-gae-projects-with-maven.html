@@ -174,7 +174,7 @@ pom.xml에서 ${appengine.version}을 모두 1.9.57로 수정한다.
 pom.xml에서 플러그인을 아래와 같이 수정한다. 
 </p>
 
-<em class="filename">수정 전</em>
+<h6 class="src">수정 전</h6>
 <pre class="prettyprint">
 &lt;plugin&gt;
     &lt;groupId&gt;com.google.cloud.tools&lt;/groupId&gt;
@@ -185,7 +185,7 @@ pom.xml에서 플러그인을 아래와 같이 수정한다.
 &lt;/plugin&gt;
 </pre>
 
-<em class="filename">수정 후</em>
+<h6 class="src">수정 후</h6>
 <pre class="prettyprint">
 &lt;plugin&gt;
     &lt;groupId&gt;com.google.appengine&lt;/groupId&gt;
@@ -200,7 +200,7 @@ pom.xml에서 플러그인을 아래와 같이 수정한다.
 아래 강조한 부분을 참고해 수정한다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -468,7 +468,7 @@ mvn appengine:update를 다시 실행한다.<br />
 아래에서 강조한 부분은 서버의 콘솔 로그 항목에서 확인할 수 있다.<br />
 </p>
 
-<em class="filename">datastore-indexes.xml</em>
+<h6 class="src">datastore-indexes.xml</h6>
 <pre class="prettyprint">
 &lt;datastore-indexes autoGenerate="true"&gt;
 	<strong>&lt;datastore-index kind="Greeting" ancestor="true" source="manual"&gt;

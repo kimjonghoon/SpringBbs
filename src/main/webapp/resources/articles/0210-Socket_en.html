@@ -24,7 +24,7 @@ Server sockets act as a window to the server.
 When a socket connection request is received from the outside, the server socket creates a server-side socket to communicate with the client socket and connects them together.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -53,7 +53,7 @@ Let's write code that sends messages from the server to the client.
 This code tells the client the port number of the socket created on the server side.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -86,7 +86,7 @@ If you have two computers, replace localhost with the IP address where the serve
 The port number is 3000 because the server socket uses port 3000.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -109,7 +109,7 @@ When the sockets are connected, our Server will pass the string to the client.
 To read the string sent by the server, add the following code.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -151,7 +151,7 @@ Let's modify the example so that the server does not shut down.
 The current code is that when the client's connection request comes, the main method ends after the message is sent, and the server program is terminated, so the next client's connection request can not be serviced.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 public static void main(String[] args) throws IOException {
 	ServerSocket serverSocket = new ServerSocket(3000);
@@ -176,7 +176,7 @@ The next program we will implement is the echo program.
 The echo program sends the message sent by the client back to the client.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -198,7 +198,7 @@ I will name the class Echo.
 To make the Echo class easier to access the resources of the Server class, I will make the Echo class an inner class of the Server class.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -270,7 +270,7 @@ To do this, add an ArrayList to hold the Echo object.
 At the end of Echo's close () method, insert code to remove the Echo object reference value from the ArrayList.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -347,7 +347,7 @@ This method puts the accept () method of the server socket in an infinite loop.
 The main method calls this method just after creating the Server object.
 </p>
 
-<em class="filename">Server.java</em>
+<h6 class="src">Server.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -442,7 +442,7 @@ public class Server {
 Next, create a client program.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -461,7 +461,7 @@ In this case, if the response time of the server is not long, it is not necessar
 Let's start with the client implementation by adding the code to make a socket connection.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -484,7 +484,7 @@ public class Client {
 You need an input stream that reads the string you type on the keyboard.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -510,7 +510,7 @@ public class Client {
 To send a string to the server, you need an output stream whose destination is the socket.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -545,7 +545,7 @@ public class Client {
 To read a message from the server, you need an input stream whose source is a socket.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -584,7 +584,7 @@ public class Client {
 Because it is a single-threaded program with only the main thread, put a flag to store whether the user is waiting for input on the keyboard or waiting for a string from the server.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -657,7 +657,7 @@ Let's create a simple chat program by extending the example above.
 The difference with the echo program is that a message sent by one user to the server is delivered to all users.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -670,7 +670,7 @@ public class Client {
 You should use a thread because messages can be delivered from the server while the user is typing on the keyboard.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -689,7 +689,7 @@ I will implement code in the run() method that outputs a message to the console 
 The run () method requires an input stream whose source is a socket.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 <strong>
@@ -726,7 +726,7 @@ public class Client extends Thread {
 Now, let's implement the run () method.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -772,7 +772,7 @@ public class Client extends Thread {
 To send a message to the server, you need an input stream whose source is the keyboard and an output stream whose socket is the destination.
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 
@@ -826,7 +826,7 @@ public class Client extends Thread {
 Implement code that transfers input from the keyboard to the server in the new method chatStart().
 </p>
 
-<em class="filename">Client.java</em>
+<h6 class="src">Client.java</h6>
 <pre class="prettyprint">
 package net.java_school.socket;
 

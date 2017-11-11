@@ -89,7 +89,7 @@ ROLE_USER은 일반 사용자 권한, ROLE_ADMIN은 관리자 권한이다.
 스프링 시큐리티만을 위한 스프링 설정 파일을 /WEB-INF 폴더에 security.xml란 이름으로(이름에 제약은 없다) 아래와 같이 생성한다.
 </p>
 
-<em class="filename">security.xml</em>
+<h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
@@ -164,7 +164,7 @@ spring-bbs-servlet.xml 파일에서 빈의 특성별로 따로 스프링 설정 
 여기서는 아래와 같이 spring-bbs-servlet.xml에서 빈을 떼어내 applicationContext.xml 라는 이름으로 /WEB-INF 폴더에 생성한다.
 </p>
 
-<em class="filename">applicationContext.xml</em>
+<h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans" 
@@ -209,7 +209,7 @@ spring-bbs-servlet.xml 파일에서 빈의 특성별로 따로 스프링 설정 
 spring-bbs-servlet.xml 파일을 열고 아래 강조한 부분을 참고하여 스프링 시큐리티 설정을 추가한다.
 </p>
 
-<em class="filename">spring-bbs-servlet.xml</em>
+<h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -240,7 +240,7 @@ spring-bbs-servlet.xml 파일을 열고 아래 강조한 부분을 참고하여 
 
 <h3>5. web.xml 시큐리티 설정 추가</h3>
 
-<em class="filename">web.xml</em>
+<h6 class="src">web.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 &lt;!--
@@ -345,7 +345,7 @@ spring-bbs-servlet.xml 파일을 열고 아래 강조한 부분을 참고하여 
 UsersController.java에서 로그인과 로그아웃 메소드를 제거한다.
 </p>
 
-<em class="filename">UsersController.java</em>
+<h6 class="src">UsersController.java</h6>
 <pre class="prettyprint">
 /*
 @RequestMapping(value="/login", method=RequestMethod.POST)
@@ -374,7 +374,7 @@ public String logout(HttpSession session) {
 login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.
 </p>
 
-<em class="filename">/WEB-INF/views/users/login.jsp</em>
+<h6 class="src">/WEB-INF/views/users/login.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;c:if test="${not empty param.error }"&gt;
 	&lt;h2&gt;${SPRING_SECURITY_LAST_EXCEPTION.message }&lt;/h2&gt;
@@ -404,7 +404,7 @@ login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.
 스프링 폼 태그를 사용하는 경우, 자동으로 토큰 파라미터가 추가되므로 CSRF 토큰 파라미터를 추가하지 않는다.
 </p>
 
-<em class="filename">/WEB-INF/views/inc/header.jsp</em>
+<h6 class="src">/WEB-INF/views/inc/header.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -447,7 +447,7 @@ $(document).ready(function() {
 로그아웃을 위한 메뉴는 제거한다.
 </p>
 
-<em class="filename">/WEB-INF/views/users/loginUsers-menu.jsp</em>
+<h6 class="src">/WEB-INF/views/users/loginUsers-menu.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -469,7 +469,7 @@ $(document).ready(function() {
 테스트를 위해 권한이 없는 사용자가 잘못된 자원을 요청했을 때 보여줄 페이지를 작성한다.
 </p>
 
-<em class="filename">/WEB-INF/views/noAuthority.jsp</em>
+<h6 class="src">/WEB-INF/views/noAuthority.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -487,7 +487,7 @@ $(document).ready(function() {
 
 <h3>9. 스프링 시큐리티를 적용하는 코드 구현</h3>
 
-<em class="filename">UserMapper.xml</em>
+<h6 class="src">UserMapper.xml</h6>
 <pre class="prettyprint">
 &lt;insert id="insertAuthority"&gt;
     INSERT INTO authorities VALUES (#{email}, #{authority})
@@ -498,20 +498,20 @@ $(document).ready(function() {
 &lt;/delete&gt;
 </pre>
 
-<em class="filename">UserMapper.java</em>
+<h6 class="src">UserMapper.java</h6>
 <pre class="prettyprint">
 public void insertAuthority(@Param("email") String email, @Param("authority") String authority);
   
 public void deleteAuthority(@Param("email") String email);
 </pre>
 
-<em class="filename">UserService.java</em>
+<h6 class="src">UserService.java</h6>
 <pre class="prettyprint">
 //권한 추가
 public void addAuthority(String email, String authority);
 </pre>
 
-<em class="filename">UserServiceImpl.java</em>
+<h6 class="src">UserServiceImpl.java</h6>
 <pre class="prettyprint">
 @Override
 public void addAuthority(String email, String authority) {
@@ -525,7 +525,7 @@ public void bye(User user) {
 }
 </pre>
 
-<em class="filename">UsersController</em>
+<h6 class="src">UsersController</h6>
 <pre class="prettyprint">
 //중간 생략..
 
@@ -606,7 +606,7 @@ public String bye(String email, String passwd, HttpServletRequest req)
 }
 </pre>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 //중간 생략..
 
@@ -670,12 +670,12 @@ write.jsp와 modify.jsp 파일을 열고 <em class="path">&lt;input type="hidden
 아래와 같이 폼의 action 속성을 수정한다.<br />
 </p>
  
-<em class="filename">write.jsp</em>
+<h6 class="src">write.jsp</h6>
 <pre class="prettyprint">
 &lt;sf:form action="write?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
 </pre>
 
-<em class="filename">modify.jsp</em>
+<h6 class="src">modify.jsp</h6>
 <pre class="prettyprint">
 &lt;sf:form action="modify?<strong>${_csrf.parameterName}=${_csrf.token}</strong>" method="post" ...
 </pre>

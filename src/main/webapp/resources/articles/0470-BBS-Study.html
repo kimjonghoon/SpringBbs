@@ -6,7 +6,7 @@
 SQL*PLUS으로 scott 계정으로 접속한 후, 다음 스크립트를 사용하여 게시판을 위한 테이블과 시퀀스를 생성한다.
 </p>
 
-<em class="filename">board-schema.sql</em>
+<h6 class="src">board-schema.sql</h6>
 <pre class="prettyprint">
 -- 게시판 테이블
 create table board(
@@ -37,7 +37,7 @@ SQL&gt;@C:\board-schema.sql
 scott 계정으로 SQL*PLUS에 접속한 상태에서 다음 인서트 문을 실행한다. (총 100개의 인서트 문)
 </p>
 
-<em class="filename"><a href="board-data.sql">board-data.sql</a></em>
+<h6 class="src"><a href="board-data.sql">board-data.sql</a></h6>
 <pre class="prettyprint">
 insert into board values (board_no_seq.nextval, '000001','',sysdate);
 insert into board values (board_no_seq.nextval, '000002','',sysdate);
@@ -229,7 +229,7 @@ ROOT 애플리케이션의 최상위 디렉터리 아래 board 서브 디렉터�
 아래 목록 페이지 (list.jsp)는 모든 레코드를 보여준다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -303,7 +303,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -340,7 +340,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardWriter.java</em>
+<h6 class="src">BoardWriter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -428,7 +428,7 @@ public class BoardWriter extends HttpServlet {
 
 <h2>상세보기 페이지</h2>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -518,7 +518,7 @@ try {
 
 <h2>글 수정</h2>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -611,7 +611,7 @@ try {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier.java</em>
+<h6 class="src">BoardModifier.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -702,7 +702,7 @@ public class BoardModifier extends HttpServlet {
 
 <h2>글 삭제</h2>
 
-<em class="filename">BoardDeleter.java</em>
+<h6 class="src">BoardDeleter.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -804,7 +804,7 @@ public class BoardDeleter extends HttpServlet {
 레코드를 10개씩 묶는다면 각 그룹에 해당하는 레코드를 가져오는 오라클 쿼리문이다.
 </p>
 
-<em class="filename">그룹 1 레코드</em>
+<h6 class="src">그룹 1 레코드</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -812,7 +812,7 @@ SELECT no,title,wdate FROM (
 WHERE R BETWEEN 1 and 10;
 </pre>
 
-<em class="filename">그룹 2 레코드</em>
+<h6 class="src">그룹 2 레코드</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -820,7 +820,7 @@ SELECT no,title,wdate FROM (
 WHERE R BETWEEN 11 and 20;
 </pre>
 
-<em class="filename">그룹 3 레코드</em>
+<h6 class="src">그룹 3 레코드</h6>
 <pre class="prettyprint">
 SELECT no,title,wdate FROM (
 	SELECT ROWNUM R, A.* FROM (select no, title, wdate
@@ -835,7 +835,7 @@ list.jsp를 요청할 때 레코드 그룹 번호를 파라미터로 넘겨준�
 list.jsp에 전달할 레코드 그룹 번호에 해당하는 파라미터를 curPage라 정하고 list.jsp를 아래 코드를 참조하여 수정한다.<br />
 </p>
  
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%
 // .. 중간생략 ..
@@ -960,7 +960,7 @@ for (int i = 1; i &lt;= totalPage; i++) {
 다음은 페이지 분할 기능을 추가한 list.jsp이다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1156,7 +1156,7 @@ WHERE R BETWEEN 1 and 10;
 페이지 그룹 단위를 pagePerBlock라고 하고 curPage 페이지가 속한 페이지 그룹 번호를 block이라는 변수에 저장한다면, block은 다음 코드로 구할 수 있다.
 </p>
 
-<em class="filename">curPage가 속한 block 구하기</em>
+<h6 class="src">curPage가 속한 block 구하기</h6>
 <pre class="prettyprint">
 //페이지 그룹 번호를 저장할 변수 선언과 초기화
 int block = 1;
@@ -1175,7 +1175,7 @@ if (curPage % pagePerBlock == 0) {
 현재 페이지(curPage)가 속한 그룹 번호 block을 구했다면 block에 속한 첫 번째 페이지와 마지막 페이지 번호를 다음 코드로 구할 수 있다.
 </p>
 
-<em class="filename">block에 속한 첫 번째 페이지 번호와 마지막 페이지 번호 구하기</em>
+<h6 class="src">block에 속한 첫 번째 페이지 번호와 마지막 페이지 번호 구하기</h6>
 <pre class="prettyprint">
 //block에 속한 첫 번째 페이지 계산 
 int firstPage = (block - 1) * pagePerBlock + 1;
@@ -1202,7 +1202,7 @@ for (int i = firstPage; i &lt;= lastPage; i++) {
 위의 코드를 참고하여 기존의 list.jsp를 수정한다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1370,7 +1370,7 @@ block이 총 블록 수(마지막 블록 번호)보다 작다면 [다음] 링크
 [다음] 링크를 만들기 위해선 총 블록 수, 즉 마지막 블록을 구하는 코드가 추가로 필요하다.<br />
 </p>
 
-<em class="filename">총 블록 수 구하기 (마지막 블록 번호 구하기)</em>
+<h6 class="src">총 블록 수 구하기 (마지막 블록 번호 구하기)</h6>
 <pre class="prettyprint">
 //총 블록 수를 저장할 변수 선언과 초기화 
 int totalBlock = 0;
@@ -1388,7 +1388,7 @@ if (totalPage &gt; 0) {
 [이전]과 [다음] 링크를 아래 코드로 생성할 수 있다.
 </p>
 
-<em class="filename">[이전] 링크 생성 코드</em>
+<h6 class="src">[이전] 링크 생성 코드</h6>
 <pre class="prettyprint">
 &lt;%
 //현재 block &gt; 1이면 [이전] 링크를 만들고 firstPage - 1 페이지로 링크
@@ -1402,7 +1402,7 @@ if(block &gt; 1) {
 %&gt;
 </pre>
 
-<em class="filename">[다음] 링크 생성 코드</em>
+<h6 class="src">[다음] 링크 생성 코드</h6>
 <pre class="prettyprint">
 &lt;%
 //block &lt; totalBlock이면 [다음] 링크를 만들고  lastPage + 1 페이지로 링크  
@@ -1419,7 +1419,7 @@ if(block &lt; totalBlock) {
 위 설명대로 list.jsp를 수정한다.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1630,7 +1630,7 @@ if (block &gt;= totalBlock) {
 }
 </pre>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1840,12 +1840,12 @@ curPage를 전달받은 컴포넌트는 다른 컴포넌트로 이동하기 위�
 /board/list.jsp 파일을 열고 아래를 참고하여 다음과 같이 링크의 쿼리 스트링을 수정한다.
 </p>
 
-<em class="filename">list.jsp에서 view.jsp로 이동할 때 curPage 파라미터 전달</em>
+<h6 class="src">list.jsp에서 view.jsp로 이동할 때 curPage 파라미터 전달</h6>
 <pre class="prettyprint">
 &lt;a href="view.jsp?no=&lt;%=no %&gt;<strong>&amp;curPage=&lt;%=curPage %&gt;</strong>"&gt;&lt;%=title %&gt;&lt;/a&gt; &lt;%= wdate.toString() %&gt;
 </pre>
 
-<em class="filename">list.jsp에서 write_form.jsp로 이동할 때 curPage 파라미터 전달</em>
+<h6 class="src">list.jsp에서 write_form.jsp로 이동할 때 curPage 파라미터 전달</h6>
 <pre class="prettyprint">
 &lt;a href="write_form.jsp?<strong>curPage=&lt;%=curPage %&gt;</strong>"&gt;글쓰기&lt;/a&gt;
 </pre>
@@ -1854,7 +1854,7 @@ curPage를 전달받은 컴포넌트는 다른 컴포넌트로 이동하기 위�
 /board/view.jsp 파일을 열고 다른 컴포넌트로의 이동 링크의 쿼리 스트링을 수정한다.
 </p>
 
-<em class="filename">/board/view.jsp 수정</em>
+<h6 class="src">/board/view.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1903,7 +1903,7 @@ function goDelete(no, <strong>curPage</strong>) {
 따라서 새 글을 등록하면 목록 첫 페이지로 이동해야 한다.
 </p>
 
-<em class="filename">/board/write_form.jsp 수정</em>
+<h6 class="src">/board/write_form.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1944,7 +1944,7 @@ function goDelete(no, <strong>curPage</strong>) {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/modify_form.jsp 수정</em>
+<h6 class="src">/board/modify_form.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1998,7 +1998,7 @@ Log log = new Log();
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier 서블릿 수정</em>
+<h6 class="src">BoardModifier 서블릿 수정</h6>
 <pre class="prettyprint">
 @Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -2018,7 +2018,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 }
 </pre>
 
-<em class="filename">BoardDeleter 서블릿 수정</em>
+<h6 class="src">BoardDeleter 서블릿 수정</h6>
 <pre class="prettyprint">
 @Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -2142,7 +2142,7 @@ view.jsp에는 curPage와 keyword 파라미터를 수신하고 list.jsp로 돌�
 글쓰기를 제외한 게시판의 다른 컴포넌트 역시 keyword 파라미터를 수신하고 코드에서 다른 컴포넌트로의 링크를 수정한다.
 </p>
 
-<em class="filename">/board/view.jsp 수정</em>
+<h6 class="src">/board/view.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -2193,7 +2193,7 @@ function goDelete(no, curPage, <strong>keyword</strong>) {
 이때 BoardWriter.java는 수정할 필요가 없다.
 </p>
 
-<em class="filename">/board/write_form.jsp 수정</em>
+<h6 class="src">/board/write_form.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -2236,7 +2236,7 @@ String curPage = request.getParameter("curPage");
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/board/modify_form.jsp 수정</em>
+<h6 class="src">/board/modify_form.jsp 수정</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -2291,7 +2291,7 @@ Log log = new Log();
 &lt;/html&gt;
 </pre>
 
-<em class="filename">BoardModifier 서블릿 수정</em>
+<h6 class="src">BoardModifier 서블릿 수정</h6>
 <pre class="prettyprint">@Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
@@ -2313,7 +2313,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 </pre>
 
 
-<em class="filename">BoardDeleter 서블릿 수정</em>
+<h6 class="src">BoardDeleter 서블릿 수정</h6>
 <pre class="prettyprint">@Override
 public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
@@ -2364,7 +2364,7 @@ URIEncoding 속성이 없다면 아래처럼 추가한다.
 아래 파일을 ROOT 애플리케이션의 도큐먼트베이스에 생성한다.
 </p>
 
-<em class="filename">/sender.jsp</em>
+<h6 class="src">/sender.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -2387,7 +2387,7 @@ String name = "홍길동";
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/taker.jsp</em>
+<h6 class="src">/taker.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

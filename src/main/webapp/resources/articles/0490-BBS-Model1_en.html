@@ -9,7 +9,7 @@ This code is called a nightmare, at least the JDBC code should be in JavaBean.
 Create Article JavaBean for the posting information as follows.
 </p>
 
-<em class="filename">Article.java</em>
+<h6 class="src">Article.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -101,7 +101,7 @@ The LINE_SEPARATOR constant is used in the getHtmlContent() method.
 Here are some tips for managing constants in Java programs.
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -142,7 +142,7 @@ public class Article {
 You can change the WebContants class to an enum like this:
 </p>
 
-<em class="filename">WebContants.java</em>
+<h6 class="src">WebContants.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
 
@@ -193,7 +193,7 @@ Soon we will learn how to use open source connection pool.
 This section does not use the connection pool itself.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -412,7 +412,7 @@ public Map&lt;String, Integer&gt; getNumbersForPaging(int totalRecord, int curPa
 Apply the above method to list.jsp.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -540,7 +540,7 @@ These beans name will end up with Service.
 Create a BoardService bean as shown below.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 package net.java_school.board;
 
@@ -616,7 +616,7 @@ Notice that the getNumbersForPaging() method declared in list.jsp has been moved
 Modify the list.jsp to use only BoardService bean.
 </p>
 
-<em class="filename">/board/list.jsp</em>
+<h6 class="src">/board/list.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -697,7 +697,7 @@ if (nextPage != 0) {
 Modify the action attribute value of the form tag in /board/write_form.jsp file to write.jsp.
 </p>
 
-<em class="filename">/board/write_form.jsp</em>
+<h6 class="src">/board/write_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -742,7 +742,7 @@ String keyword = request.getParameter("keyword");
 Add the following method to BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void insert(Article article) {
 	Log log = new Log();
@@ -775,7 +775,7 @@ public void insert(Article article) {
 Add the following method to BoardService.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void write(Article article) {
 	dao.insert(article);
@@ -786,7 +786,7 @@ public void write(Article article) {
 Create write.jsp as shown below.
 </p>
 
-<em class="filename">/board/write.jsp</em>
+<h6 class="src">/board/write.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -812,7 +812,7 @@ Next, let's implement the details view.
 Add the selectOne() method to BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public Article selectOne(int no) {
 	Log log = new Log();
@@ -855,7 +855,7 @@ public Article selectOne(int no) {
 Add the following method to BoardService.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public Article getArticle(int no) {
 	return dao.selectOne(no);
@@ -866,7 +866,7 @@ public Article getArticle(int no) {
 Modify view.jsp as shown below.
 </p>
 
-<em class="filename">/board/view.jsp</em>
+<h6 class="src">/board/view.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -917,7 +917,7 @@ Next, let's implement the post modification.
 Add the following update() method to BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void update(Article article) {
 	Log log = new Log();
@@ -944,7 +944,7 @@ public void update(Article article) {
 }
 </pre>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void modify(Article article) {
 	dao.update(article);
@@ -955,7 +955,7 @@ public void modify(Article article) {
 Modify modify_form.jsp to use only BoardService.
 </p>
 
-<em class="filename">/board/modify_form.jsp</em>
+<h6 class="src">/board/modify_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1010,7 +1010,7 @@ Article article = service.getArticle(no);
 Create modify.jsp as shown below.
 </p>
 
-<em class="filename">/board/modify.jsp</em>
+<h6 class="src">/board/modify.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1040,7 +1040,7 @@ Next, let's implement delete the post.
 Add a delete() method to BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void delete(int no) {
 	Log log = new Log();
@@ -1106,7 +1106,7 @@ public void delete(int no) {
 Add the following delete() method to BoardService.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void delete(int no) {
 	dao.delete(no);
@@ -1117,7 +1117,7 @@ public void delete(int no) {
 Create del.jsp as follows.
 </p>
 
-<em class="filename">/board/del.jsp</em>
+<h6 class="src">/board/del.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1140,7 +1140,7 @@ Next, let's implement reply.
 Add the following reply() method to BoardDao.
 </p>
 
-<em class="filename">BoardDao.java</em>
+<h6 class="src">BoardDao.java</h6>
 <pre class="prettyprint">
 public void reply(Article article) {
 	Log log = new Log();
@@ -1189,14 +1189,14 @@ public void reply(Article article) {
 Add the following reply() method to BoardService.
 </p>
 
-<em class="filename">BoardService.java</em>
+<h6 class="src">BoardService.java</h6>
 <pre class="prettyprint">
 public void reply(Article article) {
 	dao.reply(article);
 }
 </pre>
 
-<em class="filename">/board/reply_form.jsp</em>
+<h6 class="src">/board/reply_form.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1244,7 +1244,7 @@ content = WebContants.lineSeparator.value + WebContants.lineSeparator.value + "&
 Create reply.jsp as shown below.
 </p>
 
-<em class="filename">/board/reply.jsp</em>
+<h6 class="src">/board/reply.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

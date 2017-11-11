@@ -6,7 +6,7 @@
 게시글을 표현하는 Article 클래스를 다음을 참조하여 수정한다.
 </p>
 
-<em class="filename">Article.java</em>
+<h6 class="src">Article.java</h6>
 <pre class="prettyprint">
 private Integer articleNo;//int에서 변경
 
@@ -38,7 +38,7 @@ public void setArticleNo(Integer articleNo) {
 그렇지 않으면 HTTP 400 에러가 발생한다.
 </p>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 //글쓰기 화면
 @RequestMapping(value="/write", method=RequestMethod.GET)
@@ -79,7 +79,7 @@ public String write(<strong>@Valid Article article, BindingResult bindingResult,
 &lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
 </p>
 
-<em class="filename">write.jsp</em>
+<h6 class="src">write.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 

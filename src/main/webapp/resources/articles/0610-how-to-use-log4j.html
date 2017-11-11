@@ -17,7 +17,7 @@ log4j 설정 파일을 작성한다.<br />
 아래 내용으로 log4j.xml 이름으로 /WEB-INF/classes에 복사한다.<br />
 이클립스에서 작업한다면 src 폴더에 log4j.xml 파일을 만들면 자동으로 /WEB-INF/classes에 log4j.xml 파일이 만들어진다.<br /> 
 
-<em class="filename">log4j.xml</em>
+<h6 class="src">log4j.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" &gt;
@@ -54,7 +54,7 @@ log4j 설정 파일을 작성한다.<br />
 commons-logging.properties라는 파일을 아래 내용으로 만들고 WEB-INF/classes에 복사한다.<br />
 이클립스에서 작업한다면 src 폴더에 파일을 복사한다.<br />
 
-<em class="filename">commons-logging.properties</em>
+<h6 class="src">commons-logging.properties</h6>
 <pre class="prettyprint">
 org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 </pre>
@@ -65,7 +65,7 @@ org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 이클립스에서 테스트하면 Console 뷰에 로그가 출력된다.<br />
 /WEB-INF/debug.log 파일에도 로그가 쌓인다.<br />
 
-<em class="filename">LogTest.java</em>
+<h6 class="src">LogTest.java</h6>
 <pre class="prettyprint">
 package net.java_school.logtest;
 

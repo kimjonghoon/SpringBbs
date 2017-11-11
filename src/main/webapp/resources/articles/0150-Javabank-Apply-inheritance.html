@@ -14,7 +14,7 @@ addAccount(String accountNo, String name, long balance, <strong>String kind</str
 kind란 매개변수를 추가하고 이 매개변수가 '일반' 또는 '마이너스'란 문자를 받도록 구현해 보자.
 </p>
 
-<em class="filename">Account.java</em>
+<h6 class="src">Account.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -145,7 +145,7 @@ public class Account {
 금액에 3 자리마다 ,(콤마)가 있도록 입출금 명세 클래스의 toString() 메서드를 다음과 같이 수정한다.
 </p>
 
-<em class="filename">Transaction.java</em>
+<h6 class="src">Transaction.java</h6>
 <pre class="prettyprint">
 @Override
 public String toString() {
@@ -164,7 +164,7 @@ public String toString() {
 }
 </pre>
 
-<em class="filename">MinusAccount.java</em>
+<h6 class="src">MinusAccount.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -200,7 +200,7 @@ public class MinusAccount <strong>extends Account</strong> {
 }
 </pre>
 
-<em class="filename">Bank.java</em>
+<h6 class="src">Bank.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 
@@ -264,7 +264,7 @@ public class Bank {
 }
 </pre>
 
-<em class="filename">Test.java</em>
+<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
 

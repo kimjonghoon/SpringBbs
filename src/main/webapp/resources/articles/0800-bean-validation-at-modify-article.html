@@ -14,7 +14,7 @@
 그렇지 않으면 HTTP 400 에러가 발생한다.
 </p>
 
-<em class="filename">BbsController.java</em>
+<h6 class="src">BbsController.java</h6>
 <pre class="prettyprint">
 //수정 페이지 포워딩
 @RequestMapping(value="/modify", method=RequestMethod.GET)
@@ -68,7 +68,7 @@ public String modify(<strong>@Valid Article article, BindingResult bindingResult
 &lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
 </p>
 
-<em class="filename">modify.jsp</em>
+<h6 class="src">modify.jsp</h6>
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 

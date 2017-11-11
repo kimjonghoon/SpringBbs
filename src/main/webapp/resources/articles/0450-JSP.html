@@ -96,7 +96,7 @@ JSP는 복잡한 디자인을 가진, 동적으로 만들어지는 HTML을 사�
 ROOT 애플리케이션의 최상위 디렉터리에 다음 hello.jsp 파일을 만들고 http://localhost:port/hello.jsp를 방문한다.
 </p>
 
-<em class="filename">/hello.jsp</em>
+<h6 class="src">/hello.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;body&gt;
@@ -693,7 +693,7 @@ javax.servlet.jsp.JspWriter 추상 클래스 타입 인스턴스의 레퍼런스
 아래와 같이 helloworld.jsp를 ROOT 애플리케이션의 최상위 디렉터리에 작성한 후 http://localhost:port/helloWorld.jsp를 방문한다.
 </p>
 
-<em class="filename">/helloWorld.jsp</em>
+<h6 class="src">/helloWorld.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;body&gt;
@@ -722,7 +722,7 @@ javax.servlet.http.HttpServletRequest 인터페이스 타입 인스턴스의 레
 아래와 같이 request.jsp를 작성하고 http://localhost:port/request.jsp?user=gildong를 방문한다.
 </p>
 
-<em class="filename">/request.jsp</em>
+<h6 class="src">/request.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;head&gt;
@@ -758,7 +758,7 @@ session 내재 객체는 서블릿의 javax.servlet.http.HttpSession 타입 인�
 아래와 같이 session.jsp를 ROOT 애플리케이션의 루트 디렉터리에 작성한 후 http://localhost:port/session.jsp를 여러 번 방문한다.
 </p>
 
-<em class="filename">/session.jsp</em>
+<h6 class="src">/session.jsp</h6>
 <pre class="prettyprint">
 &lt;html&gt;
 &lt;head&gt;
@@ -908,7 +908,7 @@ JSP 에러 페이지를 만들려면 page 지시어의 isErrorPage 속성을 tru
 다음 errorPage.jsp 파일을 ROOT 애플리케이션의 도큐먼트베이스에 생성한다.
 </p>
 
-<em class="filename">/errorPage.jsp</em>
+<h6 class="src">/errorPage.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page <strong>isErrorPage="true"</strong> contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -933,7 +933,7 @@ exception 내재 객체는 page 지시어에서 isErrorPage 속성이 true인 JS
 에러 페이지가 어떻게 작동하는지 알아보기 위해, 다음 JSP 페이지를 ROOT 애플리케이션의 도큐먼트베이스에 작성한다.
 </p>
 
-<em class="filename">/errorMaker.jsp</em>
+<h6 class="src">/errorMaker.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page errorPage="errorPage.jsp" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -955,7 +955,7 @@ web.xml 파일에 HTTP 상태코드<sup>3</sup>와 발생한 익셉션 유형별
 이 스펙은 서블릿 2.3에서 추가되었다. 
 </p>
 
-<em class="filename">/WEB-INF/web.xml</em>
+<h6 class="src">/WEB-INF/web.xml</h6>
 <pre class="prettyprint">
 &lt;error-page&gt;
 	&lt;error-code&gt;404&lt;/error-code&gt;
@@ -1025,7 +1025,7 @@ Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exce
 </tr>
 </table>
 
-<em class="filename">/error.jsp</em>
+<h6 class="src">/error.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1181,7 +1181,7 @@ cookie.setMaxAge(60*60*24*30); //30일동안 유효한 쿠키
 도큐먼트베이스에 /cookie 서브 디렉토리를 만들고 그 안에 다음 파일을 작성한다.
 </p>
 
-<em class="filename">/cookie/index.html</em>
+<h6 class="src">/cookie/index.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -1201,7 +1201,7 @@ cookie.setMaxAge(60*60*24*30); //30일동안 유효한 쿠키
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/setCookie.jsp</em>
+<h6 class="src">/cookie/setCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1228,7 +1228,7 @@ Set-Cookie: &lt;%=cookie.getName() %&gt;=&lt;%=cookie.getValue() %&gt; 문자열
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/viewCookie.jsp</em>
+<h6 class="src">/cookie/viewCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1256,7 +1256,7 @@ if (cookies != null &amp;&amp; cookies.length &gt; 1) {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/editCookie.jsp</em>
+<h6 class="src">/cookie/editCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1286,7 +1286,7 @@ if (cookies != null &amp;&amp; cookies.length &gt; 1) {
 &lt;/html&gt;
 </pre>
 
-<em class="filename">/cookie/delCookie.jsp</em>
+<h6 class="src">/cookie/delCookie.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1348,7 +1348,7 @@ login_proc.jsp는 net.java_school.user.User.java 자바 빈즈를 이용한다.
 예제를 실행하기 위해서는 net.java_school.user.User.java를 아래와 같이 작성하고 WEB-INF/classes에 바이트 코드가 생성되도록 컴파일한다.
 </p>
 
-<em class="filename">User.java</em>
+<h6 class="src">User.java</h6>
 <pre class="prettyprint">
 package net.java_school.user;
 
@@ -1403,7 +1403,7 @@ login_proc.jsp는 User 객체를 생성한 다음, 전달받은 id, passwd 파�
 따라서 어떤 아이디와 패스워드에 대해서도 로그인이 성공한다.
 </p>
 
-<em class="filename">login_proc.jsp</em>
+<h6 class="src">login_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1435,7 +1435,7 @@ session.setAttribute("user", user);
 login_proc.jsp 파일은 아래처럼 간단해진다.
 </p>
 
-<em class="filename">login_proc.jsp</em>
+<h6 class="src">login_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1493,7 +1493,7 @@ jsp:setProperty 액션을 사용할 때 JSP 빈즈가 자바 명명 규칙을 �
 다음 JSP는 upload 폴더에 업로드한 파일의 리스트를 보여준다.
 </p>
 
-<em class="filename">/fileList.jsp</em>
+<h6 class="src">/fileList.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1542,7 +1542,7 @@ for (int i = 0; i &lt; len; i++) {
 다음은 위의 파일 목록 페이지에서 파일 이름를 클릭할 때 작동하는 JSP이다.
 </p>
 
-<em class="filename">/download.jsp</em>
+<h6 class="src">/download.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -1596,7 +1596,7 @@ try {
 서블릿 예제에서 다루었던 파일을 업로드하는 서블릿을 JSP로 수정했다.
 </p>
 
-<em class="filename">fileupload_proc.jsp</em>
+<h6 class="src">fileupload_proc.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;

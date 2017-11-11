@@ -60,7 +60,7 @@ HelloWorld (프로젝트 루트)
 프로젝트 루트에 pom.xml 파일을 아래와 같이 작성한다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -90,7 +90,7 @@ HelloWorld (프로젝트 루트)
 아래 두 자바 소스 파일은 hello 디렉터리에 작성한다.
 </p>
 
-<em class="filename">HelloWorld/src/main/java/hello/HelloWorld.java</em>
+<h6 class="src">HelloWorld/src/main/java/hello/HelloWorld.java</h6>
 <pre class="prettyprint">
 package hello;
 
@@ -102,7 +102,7 @@ public class HelloWorld {
 }
 </pre>
 
-<em class="filename">HelloWorld/src/main/java/hello/Greeter.java</em>
+<h6 class="src">HelloWorld/src/main/java/hello/Greeter.java</h6>
 <pre class="prettyprint">
 package hello;
 
@@ -169,7 +169,7 @@ target/classes 폴더는 컴파일이 수행되면서 만들어진다.
 우리의 예제도 외부 라이브러리를 사용하도록, HelloWorld.java를 아래처럼 수정한다.
 </p>
 
-<em class="filename">HelloWorld/src/main/java/hello/HelloWorld.java</em>
+<h6 class="src">HelloWorld/src/main/java/hello/HelloWorld.java</h6>
 <pre class="prettyprint">
 package hello;
 
@@ -192,7 +192,7 @@ pom.xml에 의존 라이브러리 설정을 추가하지 않았기 때문이다.
 pom.xml 파일을 열고 아래와 같이 의존 라이브러리 설정을 추가한다.
 </p>
 
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -328,7 +328,7 @@ quick-start
 스프링 프레임워크를 의존 라이브러리 설정에 추가할 때는 http://projects.spring.io/spring-framework/에서 가장 최신 릴리스 버전을 선택한다.
 </p>
  
-<em class="filename">pom.xml</em>
+<h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -386,7 +386,7 @@ A만의 의존성 설정으로 A뿐 아니라 B 역시 저장소에 저장한다
 C:\maven\quick-start\src\main\java\hello&gt;notepad MessageService.java
 </pre>
 
-<em class="filename">MessageService.java</em>
+<h6 class="src">MessageService.java</h6>
 <pre class="prettyprint">
 package hello;
 
@@ -401,7 +401,7 @@ C:\maven\quick-start\src\main\java\hello&gt;notepad MessagePrinter.java
 </pre>
 
 
-<em class="filename">MessagePrinter.java</em>
+<h6 class="src">MessagePrinter.java</h6>
 <pre class="prettyprint">
 package hello;
 
@@ -425,7 +425,7 @@ public class MessagePrinter {
 C:\maven\quick-start\src\main\java\hello&gt;notepad Application.java
 </pre>
 
-<em class="filename">Application.java</em>
+<h6 class="src">Application.java</h6>
 <pre class="prettyprint">
 package hello;
 
