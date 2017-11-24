@@ -363,7 +363,70 @@ public class Test {
 }
 </pre>
 
-<?php require 'Javabank-Design-content-add.php';?>
+<h2>날짜와 시간</h2>
+
+<p>
+날짜와 시간을 위한 자바 API 클래스는 java.util.Date와 java.util.Calendar가 있다.<br />
+날짜와 시간을 위한 외부 라이브러리는 joda-Time과 apache 프로젝트인 FastDateFormat이 있다.<br />
+다음은 이들의 사용법에 관한 예제이다.<br />
+</p>
+ 
+<em class="filename">DateExample.java</em>
+<pre class="prettyprint">
+package net.java_school.example.basic;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
+public class DateExample {
+
+	public static void main(String[] args) {
+		
+		Date date = new Date();
+
+		// 1. Date object's toString() call
+		System.out.println("1: " + date);
+
+		// 2. JDK SimpleDateFormat
+		SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+		System.out.println("2-1: " + DATE_FORMAT1.format(date));
+
+		SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("yy/M/d H:m:s");
+		System.out.println("2-2: " + DATE_FORMAT2.format(date));
+
+		// 3. joda-Time 
+		DateTime dt = new DateTime(date);
+		System.out.println("3-1: " + dt.getYear() + "/" + dt.getMonthOfYear() + "/" + dt.getDayOfMonth());
+
+		DateTimeFormatter fmt1 = ISODateTimeFormat.dateTime();
+		System.out.println("3-2: " + fmt1.print(dt));
+
+		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy.MM.dd HH:mm:ss");
+		System.out.println("3-3: " + fmt2.print(dt));
+
+		// 4. apache FastDateFormat
+		System.out.println("4-1: " + DateFormatUtils.ISO_DATETIME_FORMAT.format(date));
+
+		System.out.println("4-2: " + DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(date));
+
+	}
+}
+</pre>
+
+<pre class="console"><strong class="console-result">1: Mon Dec 07 15:44:55 KST 2015
+2-1: 2015.12.07 15:44:55
+2-2: 15/12/7 15:44:55
+3-1: 2015/12/7
+3-2: 2015-12-07T15:44:55.440+09:00
+3-3: 2015.12.07 15:44:55
+4-1: 2015-12-07T15:44:55
+4-2: 2015-12-07T15:44:55+09:00</strong></pre>
 
 <h3>과제</h3>
 <ol>

@@ -272,7 +272,7 @@ C:\java\Bank\bin&gt;java net.java_school.bank.ThreadTest
 <p>
 The cause of this problem is that the thread proceeds as shown below.<br />
 <img src="https://lh3.googleusercontent.com/FKrn9umsNRAPT_AgDMW8abgdH16vcVJiMSERRVNFMCr1GCizONmgvmbHrZqcCrPW1KtfHETpANqK-yx0ciFSQGOgrdUgz_5WTQc8-0jo2dFs7pFdj8BUHd2KBgb9SA2fQPMS8eYg8wjLW7AAjx_lqjYqBpZKFIODA2M79pBJpv3CgycoqyOLj5olraWtqhXcLUCSaStnOkQGPOIMMXtgtG_kgI1PgCsovu6zwxVv7pMvmri82XRy9shX3lNgRP8_j8XnwCvQ1DmnthUcy8l2b-q4TyZUf82lemUeJAHDLDInHKsKixDBVW5CjP1InucOaMORlje17YIQnN8uMfWVOovantkUkxuQXiBvc3L3QCj1blv55DSwtZt7gQtEUL3bjrN-cp2_6l-cqcPswy8BPl3VcDDrUHo5jgFwpfbewG9YRimv3AtE-kuCC7JhztHGSL7fN21mlRfe7fdexbm20m0yOe6D3QqAdQmYSAi5lEHZddxOVbGl6GSYe0MXjxAYLL4xC0Tc_Cds68vgM8Rm4lEoUM2MyIu8lhmt-NCt1QROHwAWX6obMjf7YG1B0ak62B3WOIjiHPjSDUHaTFV7uo0qzwWC3jbTan8TwXp0XXDfF1jLmOMrXlf-=w609-h496-no" alt="This figure shows an example where the second thread goes through the logic of comparing the withdrawal amount and the balance before the first thread corrects the balance." /><br />
-To solve the problem, apply the synchronized keyword to the withdraw() method.
+To solve the problem, apply the synchronized keyword to the withdraw() method.<br />
 Applying synchronized to a method prevents other threads from entering until the thread entering the method exits the method.
 </p>
 

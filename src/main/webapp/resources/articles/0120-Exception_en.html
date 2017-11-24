@@ -63,11 +63,11 @@ You can not use finally blocks in multiple.
 <h2>Exception mechanism</h2>
 
 <p>
-Assume that method 1 calls method 2 and method 2 calls method 3, as shown below.<br />
-<img src="https://lh3.googleusercontent.com/-e9lY9rAqJ3s/VYEg9RM3gqI/AAAAAAAACO4/DrD7J9FkFsk/s600-Ic42/exception-mechanism.gif" alt="Exception Mechanism" /><br />
-If there is an exception in method 3 and there is a catch block that catches an exception in method 3 body, the program continues without stopping.
-If there is no catch block that catches the exception that occurred in method 3 body, the exception that occurred in method 3 is passed to method 2 that invoked method 3.
-If method 2 does not have a catch block catching exceptions passed in method 3, this exception is passed to method 1, which called method 2.
+Assume that method1 calls method2 and method2 calls method3, as shown below.<br />
+<img src="https://lh3.googleusercontent.com/K3UACunLKTLY7LVG-8at3eGtxnlN40lsoUY2zCQFR6unJVRHyyQCvVrEXsazAZWJFPt6JostjTrZAS_EtdpwFIHcuNNEBlgNj0ky8pK6NE9cV5jnTjFiVQJbnwpx9N9I_MXraOdHCLnHa2tc5gdtY1cyJPGEeBVDd-PpxHU7SzubLrmPlRvrxLOPgUtnwqf3aUfDwFON-WFCkw1gYfxQ7cyZFrn9sEfwZi9cvm1EbT0yy6ruf153sohkL65YPGgGJOyNc_hShiBsYqQ8ZRnpGGMDx1k37HssWwAEomhJlp1D1odAuX1q3p2ocgcxTYSBuG5o63KNyWntjRvhgfXtOfUbHBxmWmEdSpJzL-2xJsiOAVWvkcTXzZEg9nyIJvY4kPmKnAWGQKqItDZdxIH0yFEo6bLSoXpYnMp6eKI8C0DgMSmDr71DPOjhpGtcabfZIei0xquRXu_fzIQCZLl2xxEILZQih7pxxzUSlh0qMzKFzCL8zdDk4TrjXAuJMMDUQtMtSYRGSqITQOINH3qFRSfWAoAgaDxg9eBVd8Pz8hbs4YGHDB5ofMvm4Z86DyBNfPdiaDXv1QE-w-NsXIleTYSqV08TazMF2KSyNCTUXA=w600-h256-no" alt="Exception Mechanism" /><br />
+If there is an exception in method3 and there is a catch block that catches an exception in method3 body, the program continues without stopping.
+If there is no catch block that catches the exception that occurred in method3 body, the exception that occurred in method3 is passed to method2 that invoked method3.
+If method2 does not have a catch block catching exceptions passed in method3, this exception is passed to method1, which called method2.
 When this exception is passed to the JVM that called the main method, the program is terminated.
 Such termination is an abnormal termination.
 </p>

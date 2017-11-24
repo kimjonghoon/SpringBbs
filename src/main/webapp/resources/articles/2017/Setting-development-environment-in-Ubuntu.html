@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2017.10.31</div>
+<div class="last-modified">Last Modified 2017.11.13</div>
 
 <h1>우분투 개발환경 세팅</h1>
 
@@ -326,25 +326,16 @@ SQL> <strong>@/u01/app/oracle/product/11.2.0/xe/rdbms/admin/utlsampl.sql</strong
 
 <h2>JDK 설치</h2>
 
-<pre class="shell-prompt">
-sudo apt-get update
-</pre>
+<p>
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>에서 jdk 9를 내려받는다.<br />
+다운로드 폴더로 이동하여 압축을 풀고 /opt로 옮긴다.
+</p>
 
 <pre class="shell-prompt">
-sudo apt-get install default-jdk
+cd ~/다운로드/
+tar -xvzf jdk-9.0.1_linux-x64_bin.tar.gz
+mv jdk-9.0.1/ /opt/java
 </pre>
-
-<pre class="shell-prompt">
-cd /usr/lib/jvm 
-ls -al
-drwxr-xr-x   3 root root  4096 10월  7 15:22 .
-drwxr-xr-x 146 root root 12288 10월 29 12:46 ..
--rw-r--r--   1 root root  2600  7월 28 11:31 .java-1.8.0-openjdk-amd64.jinfo
-lrwxrwxrwx   1 root root    24  2월 26  2016 default-java -&gt; java-1.8.0-openjdk-amd64
-lrwxrwxrwx   1 root root    20  7월 28 11:31 java-1.8.0-openjdk-amd64 -&gt; java-8-openjdk-amd64
-drwxr-xr-x   7 root root  4096 10월  7 15:24 java-8-openjdk-amd64
-</pre>
-
 
 <p>
 gedit ~/.bashrc 로 .bashrc 파일을 연다.
@@ -359,12 +350,12 @@ gedit ~/.bashrc &amp;
 </p>
 
 <pre class="prettyprint">
-export JAVA_HOME=/usr/lib/jvm/default-java
+export JAVA_HOME=/opt/java
 export PATH=$JAVA_HOME/bin:$PATH
 </pre>
 
 <p>
-다음 명령으로 환경 변수를 갱신한다.
+환경 변수 설정을 적용한다.
 </p>
 
 <pre class="shell-prompt">
@@ -377,9 +368,9 @@ source ~/.bashrc
 
 <pre class="shell-prompt">
 java -version
-openjdk version "1.8.0_131"
-OpenJDK Runtime Environment (build 1.8.0_131-8u131-b11-2ubuntu1.16.04.3-b11)
-OpenJDK 64-Bit Server VM (build 25.131-b11, mixed mode)
+java version "9.0.1"
+Java(TM) SE Runtime Environment (build 9.0.1+11)
+Java HotSpot(TM) 64-Bit Server VM (build 9.0.1+11, mixed mode)
 </pre>
 
 <h3>JDBC 테스트</h3>
@@ -400,29 +391,65 @@ java -classpath \
 
 <h2>메이븐 설치</h2>
 
-<pre class="shell-prompt">
-sudo apt-get update
-</pre>
+<p>
+sudo apt 명령어로 설치하지 말자.<br />
+<a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a>에서 최신 바이너리 파일을 내려받는다.<br />
+내려받은 디렉터리로 이동하여 압축을 풀고 생성된 디렉터리를 /opt로 옮긴다.
+</p>
+
 
 <pre class="shell-prompt">
-sudo apt-get install maven
+cd ~/다운로드/
+tar -xvzf apache-maven-3.5.2-bin.tar.gz
+mv apache-maven-3.5.2/ /opt/maven
 </pre>
 
 <p>
-apt-get으로 설치하면 환경변수 설정이 따로 필요없다.<br />
-메이븐 버전을 확인한다.<br />
+gedit ~/.bashrc 로 .bashrc 파일을 연다.
+</p>
+
 <pre class="shell-prompt">
-mvn -v
-Apache Maven 3.3.9
-Maven home: /usr/share/maven
-Java version: 1.8.0_131, vendor: Oracle Corporation
-Java home: /usr/lib/jvm/java-8-openjdk-amd64/jre
-Default locale: ko_KR, platform encoding: UTF-8
-OS name: "linux", version: "4.4.0-97-generic", arch: "amd64", family: "unix"
+gedit ~/.bashrc &amp; 
 </pre>
 
+<p>
+.bashrc 파일에 다음을 추가한다.
+</p>
+
+<pre class="prettyprint">
+export MAVEN_HOME=/opt/maven
+export PATH=$MAVEN_HOME/bin:$PATH
+</pre>
+
+<p>
+환경 변수 설정을 적용한다.
+</p>
+
+<pre class="shell-prompt">
+source ~/.bashrc
+</pre>
+
+<p>
+메이븐 버전을 확인한다.
+</p>
+
+<pre class="shell-prompt">
+mvn -v
+Apache Maven 3.5.2 (138edd61fd100ec658bfa2d307c43b76940a5d7d; 2017-10-18T16:58:13+09:00)
+Maven home: /opt/maven
+Java version: 9.0.1, vendor: Oracle Corporation
+Java home: /opt/java
+Default locale: ko_KR, platform encoding: UTF-8
+OS name: "linux", version: "4.4.0-98-generic", arch: "amd64", family: "unix"
+</pre>
 
 <h2>이클립스 설치</h2>
+
+<p>
+자바 9를 설치한 시스템에 이클립스 최전 버전을 설치하고 테스트한 결과 메모리 누수 현상이 발생했다.
+따라서 2017.11.13일 현재 IDE로 이클립스를 추천할 수 없다.
+그럼에도 이클립스를 설치하려 한다며 다음을 참조할 것
+</p>
 
 <p>
 <a href="https://www.eclipse.org/downloads/eclipse-packages/">https://www.eclipse.org/downloads/eclipse-packages/</a>에서 Eclipse IDE for Java EE Developers 를 내려받는다.<br />

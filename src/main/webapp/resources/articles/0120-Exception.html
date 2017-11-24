@@ -3,23 +3,23 @@
 <h1>예외</h1>
 
 <p>
-예외(exception)란 일반적이지 않음을 의미한다.
+예외(exception)란 일반적이지 않음을 의미한다.<br />
 '에스컬레이터가 갑자기 멈추는 예외적인 상황'이라고 할 때 바로 그 예외다.
 </p>
 
 <p>
-자바 API를 사용하면서 발생할 수 있는 모든 예외 상황마다 그에 해당하는 예외 클래스가 있다.
-자바 API 클래스가 실행 도중 예외가 발생하면, JVM은 해당하는 예외 클래스로부터 객체를 생성하여 예외를 발생시킨 코드에 던진다.
-예외가 발생한 코드에 예외 객체를 생성하여 던지는 것까지가 JVM의 몫이고, 발생한 예외 객체를 어떻게 핸들링할지는 프로그래머의 몫이다.
+자바 API를 사용하면서 발생할 수 있는 모든 예외 상황마다 그에 해당하는 예외 클래스가 있다.<br />
+자바 API 클래스가 실행 도중 예외가 발생하면, JVM은 해당하는 예외 클래스로부터 객체를 생성하여 예외를 발생시킨 코드에 던진다.<br />
+예외가 발생한 코드에 예외 객체를 생성하여 던지는 것까지가 JVM의 몫이고, 발생한 예외 객체를 어떻게 핸들링할지는 프로그래머의 몫이다.<br />
 프로그래머는 생성된 예외 객체를 try와 catch 그리고 finally 블럭<a href="#comments"><sup>1</sup></a>을 적절히 사용하여 컨트롤 할 수 있다.
 </p>
 
 <dl class="note">
 <dt>자바 프로그램에서 에러(error)란?</dt>
 <dd>
-예외도 엄밀하게 에러이지만 자바에서는 예외와 에러를 구별한다.
-자바에서 에러는 "프로그램적으로 컨트롤 할 수 없는 에러"라고 볼 수 있다.
-에러가 발생할 때 프로그래머가 할 수 있는 일은 거의 없다.
+예외도 엄밀하게 에러이지만 자바에서는 예외와 에러를 구별한다.<br />
+자바에서 에러는 "프로그램적으로 컨트롤 할 수 없는 에러"라고 볼 수 있다.<br />
+에러가 발생할 때 프로그래머가 할 수 있는 일은 거의 없다.<br />
 에러가 발생하면 프로그램은 종료된다.
 </dd>
 </dl>
@@ -43,27 +43,29 @@ try {
 <dl class="note">
 <dt>try 블록</dt>
 <dd>
-예외가 발생할 수 있는 코드를 감싸는 블록으로 단독으로 쓸 수 없다.
+예외가 발생할 수 있는 코드를 감싸는 블록으로 단독으로 쓸 수 없다.<br />
 catch 블록이나 finally 블록과 함께 사용한다.
 </dd>
 <dt>catch 블록</dt>
 <dd>
-에러와 마찬가지로 예외 역시 아무런 조치가 없다면 프로그램은 멈추게 된다.
-try 블록에서 발생한 예외를 핸들링하려면 catch 블록을 적절하게 사용해야 한다.
-위처럼 catch 블록 여러 개를 중첩해서 발생한 익셉션에 따라 섬세한 컨트롤이 가능하다.
+에러와 마찬가지로 예외 역시 아무런 조치가 없다면 프로그램은 멈추게 된다.<br />
+try 블록에서 발생한 예외를 핸들링하려면 catch 블록을 적절하게 사용해야 한다.<br />
+위처럼 catch 블록 여러 개를 중첩해서 발생한 익셉션에 따라 섬세한 컨트롤이 가능하다.<br />
 만약 A_익셉션_클래스가 B_익셉션_클래스보다 상위에 있다면(익셉션 클래스는 상속을 이용해서 계층적으로 만들어졌다),
 B_익셉션_클래스 타입의 예외를 잡는 catch 문이 실행될 수 없다는 논리적 오류때문에 컴파일 에러가 발생한다.
 </dd>
 <dt>finally 블록</dt>
 <dd>
-익셉션이 발생하든 발생하지 않든 무조건 실행되는 블록이다.
+익셉션이 발생하든 발생하지 않든 무조건 실행되는 블록이다.<br />
 finally 블록은 사용하지 않거나 하나만 사용할 수 있다.
 </dd>
 </dl>
 
 <h3>익셉션 클래스 계층 구조</h3>
 
-<img src="https://lh3.googleusercontent.com/HxTwf_0OFEqI2B4LioJ7KjbK62ZvI0mvx0hLYD3bXci_m96ndspOwWfakVdQda37udd0efrC0hM7uW-kUMng1czT7OLGPNypLtk8ca__F6g3MQ7ar6mBNJJxaxRrhquT4or1ySOSzXusufwujhBXLR_yRy07qfepRNEf_r1D8UxhcMy9GvoMCKZEnH1CFY-bKKFWpFVxTL1vgHZDnv1PRza7udnRrDWLiZxhjwFswPaox-gMzJcMfwn5zLEPAsq5ru1Y1Kr1rsWJMtUr5wkgyICMbStXtiNzmL_jwoF8hftuGAVCJ_o3LNT7VyQKb57PGnSComNIDD5qMLBR277f14AtMNTLHDEwWiwTKpy4CXjnS7RqNRbnjvLLNkKPeRkI2iqI2uk4VulyUhooTR6Fsw6wuzMUJW-8gJxbh6qn4eTtT5DxYQ2vOzGRvUHVu7phWVCDpHGycXAJVX0ZHa9MeqzPG552pQHM0T7gJzJIIxK_45O6J9QlX1YeRaEiSIEX4eY01WMFzmhzHZQgQ99giaeoglCan7BsKbFcTFuxvDdiR2Slv62sw_ElrW6NU2MhVojYBKdIHNqIrjnws78T1MRHKU6VPGRmuKn8gmS9NEhSR6QWykjSer0L=w390-h141-no" alt="Exception API" />
+<p>
+<img src="https://lh3.googleusercontent.com/HxTwf_0OFEqI2B4LioJ7KjbK62ZvI0mvx0hLYD3bXci_m96ndspOwWfakVdQda37udd0efrC0hM7uW-kUMng1czT7OLGPNypLtk8ca__F6g3MQ7ar6mBNJJxaxRrhquT4or1ySOSzXusufwujhBXLR_yRy07qfepRNEf_r1D8UxhcMy9GvoMCKZEnH1CFY-bKKFWpFVxTL1vgHZDnv1PRza7udnRrDWLiZxhjwFswPaox-gMzJcMfwn5zLEPAsq5ru1Y1Kr1rsWJMtUr5wkgyICMbStXtiNzmL_jwoF8hftuGAVCJ_o3LNT7VyQKb57PGnSComNIDD5qMLBR277f14AtMNTLHDEwWiwTKpy4CXjnS7RqNRbnjvLLNkKPeRkI2iqI2uk4VulyUhooTR6Fsw6wuzMUJW-8gJxbh6qn4eTtT5DxYQ2vOzGRvUHVu7phWVCDpHGycXAJVX0ZHa9MeqzPG552pQHM0T7gJzJIIxK_45O6J9QlX1YeRaEiSIEX4eY01WMFzmhzHZQgQ99giaeoglCan7BsKbFcTFuxvDdiR2Slv62sw_ElrW6NU2MhVojYBKdIHNqIrjnws78T1MRHKU6VPGRmuKn8gmS9NEhSR6QWykjSer0L=w390-h141-no" alt="Exception API" style="width: 100%;" /><br />
+</p>
 
 <h3>자주 발생하는 익셉션</h3>
 
@@ -111,30 +113,30 @@ finally 블록은 사용하지 않거나 하나만 사용할 수 있다.
 <h2>예외 매커니즘</h2>
 
 <p>
-아래와 같이 MethodA에서 MethodB를, MethodB에서 MethodC을 호출한다고 가정하자.
-<img src="https://lh3.googleusercontent.com/-e9lY9rAqJ3s/VYEg9RM3gqI/AAAAAAAACO4/DrD7J9FkFsk/s600-Ic42/exception-mechanism.gif" alt="익셉션 매커니즘" />
-MethodC에서 익셉션이 발생했고 MethodC에 발생한 익셉션을 잡는 catch 문이 있다면 프로그램은 멈추지 않고 계속 진행된다.
-MethodC에서 해당 익셉션을 잡는 catch 문이 없다면 발생한 익셉션은 MethodC를 호출한 MethodB에 전달된다.
-MethodB에 전달된 익셉션을 잡는 catch 문이 없다면 MethodB를 호출한 MethodA로 익셉션이 전달된다.
+아래 그림처럼 method1에서 method2를, method2에서 method3을 호출한다고 가정하자.<br />
+<img src="https://lh3.googleusercontent.com/K3UACunLKTLY7LVG-8at3eGtxnlN40lsoUY2zCQFR6unJVRHyyQCvVrEXsazAZWJFPt6JostjTrZAS_EtdpwFIHcuNNEBlgNj0ky8pK6NE9cV5jnTjFiVQJbnwpx9N9I_MXraOdHCLnHa2tc5gdtY1cyJPGEeBVDd-PpxHU7SzubLrmPlRvrxLOPgUtnwqf3aUfDwFON-WFCkw1gYfxQ7cyZFrn9sEfwZi9cvm1EbT0yy6ruf153sohkL65YPGgGJOyNc_hShiBsYqQ8ZRnpGGMDx1k37HssWwAEomhJlp1D1odAuX1q3p2ocgcxTYSBuG5o63KNyWntjRvhgfXtOfUbHBxmWmEdSpJzL-2xJsiOAVWvkcTXzZEg9nyIJvY4kPmKnAWGQKqItDZdxIH0yFEo6bLSoXpYnMp6eKI8C0DgMSmDr71DPOjhpGtcabfZIei0xquRXu_fzIQCZLl2xxEILZQih7pxxzUSlh0qMzKFzCL8zdDk4TrjXAuJMMDUQtMtSYRGSqITQOINH3qFRSfWAoAgaDxg9eBVd8Pz8hbs4YGHDB5ofMvm4Z86DyBNfPdiaDXv1QE-w-NsXIleTYSqV08TazMF2KSyNCTUXA=w600-h256-no" alt="익셉션 매커니즘" /><br />
+method3에서 익셉션이 발생했고 method3에 발생한 익셉션을 잡는 catch 문이 있다면 프로그램은 멈추지 않고 계속 진행된다.<br />
+method3에서 해당 익셉션을 잡는 catch 문이 없다면 발생한 익셉션은 method3를 호출한 method2에 전달된다.<br />
+method2에 전달된 익셉션을 잡는 catch 문이 없다면 method2를 호출한 method1으로 익셉션이 전달된다.
 </p>
 
 
 <h3>메서드 선언 부에 쓰인 <em>throws 익셉션_클래스</em></h3>
 
 <p>
-메서드 선언 부에서 <em>throws 익셉션_클래스</em> 문은 메서드가 실행 중, throws 다음의 익셉션이 발생하면 발생한 익셉션이 메소드 밖으로 나올 수 있게 한다.
-따라서, 이 메서드를 호출하는 곳에서 throws 다음에 나오는 익셉션을 적절히 처리하는 코드가 없다면 컴파일 에러를 만나게 된다.
+메서드 선언 부에서 <em>throws 익셉션_클래스</em> 문은 메서드가 실행 중, throws 다음의 익셉션이 발생하면 발생한 익셉션이 메소드 밖으로 나올 수 있게 한다.<br />
+따라서, 이 메서드를 호출하는 곳에서 throws 다음에 나오는 익셉션을 적절히 처리하는 코드가 없다면 컴파일 에러를 만나게 된다.<br />
 익셉션을 적절히 처리하는 첫 번째 방법은,
-익셉션을 반환할 수 있는 메서드를 호출하는 메서드는 메서드 선언부에 throws 키워드를 사용하여 전달받은 익셉션을 자신을 호출한 메서드에 전달하는 방법이다.
-두 번째 방법은 자신에게 전달된 익셉션을 자신의 메서드 몸체에서 try ~ catch 문을 사용하여 직접 처리하는 방법이다.
-첫 번째나 두 번째 방법 중 하나를 선택하지 않으면 컴파일 에러가 난다.
+익셉션을 반환할 수 있는 메서드를 호출하는 메서드는 메서드 선언부에 throws 키워드를 사용하여 전달받은 익셉션을 자신을 호출한 메서드에 전달하는 방법이다.<br />
+두 번째 방법은 자신에게 전달된 익셉션을 자신의 메서드 몸체에서 try ~ catch 문을 사용하여 직접 처리하는 방법이다.<br />
+첫 번째나 두 번째 방법 중 하나를 선택하지 않으면 컴파일 에러가 난다.<br />
 발생하는 익셉션이 RuntimeException이거나 RuntimeException의 서브 클래스인 경우, 위 제약을 모두 무시해도 컴파일 에러는 발생하지 않는다.<a href="#comments"><sup>2</sup></a>
 </p>
 
 <h3>실습</h3>
 
 <p>
-RuntimeException이나 RuntimeException의 서브 클래스를 unchecked 익셉션이라 한다.
+RuntimeException이나 RuntimeException의 서브 클래스를 unchecked 익셉션이라 한다.<br />
 다음은 unchecked 익셉션이 발생하는 예제다.
 </p>
 
@@ -165,8 +167,8 @@ public class Test {
 </pre>
 
 <p>
-예제를 실행하면 ArithmeticException 익셉션이 JVM까지 도달한다.
-JVM은 아래처럼 익셉션이 발생한 스택을 위에서부터 차례로 출력한다.
+예제를 실행하면 ArithmeticException 익셉션이 JVM까지 도달한다.<br />
+JVM은 아래처럼 익셉션이 발생한 스택을 위에서부터 차례로 출력한다.<br />
 메인 메서드 마지막 줄이 실행돼서 '정상종료'을 출력하지 못했기에 정상적인 종료가 아니다.
 </p>
     
@@ -207,7 +209,7 @@ public class Test {
 </pre>
 
 <p>
-실행하면 catch 블록의 System.out.println(e.getMessage());문이 실행되어 '/ by zero'가 출력되고  method1()이 정상 종료된다.
+실행하면 catch 블록의 System.out.println(e.getMessage());문이 실행되어 '/ by zero'가 출력되고  method1()이 정상 종료된다.<br />
 그다음 메인 메소드의 마지막 줄이 실행되고 '정상종료'를 출력한다.
 </p>    
     
@@ -246,9 +248,9 @@ public class Test {
 </pre>
 
 <p>
-method3()에서 발생한 익셉션 객체가 method2()까지 전달된다.
-반환값이 있는 메서드가 반환값을 반환하는 것과 비슷하다.
-method2()의 catch 블록이 실행되어 method2()가 종료된다. 
+method3()에서 발생한 익셉션 객체가 method2()까지 전달된다.<br />
+반환값이 있는 메서드가 반환값을 반환하는 것과 비슷하다.<br />
+method2()의 catch 블록이 실행되어 method2()가 종료된다.<br /> 
 이어서 메인 메소드의 마지막 줄이 실행된다.
 </p>
     
@@ -338,9 +340,9 @@ public class Test {
 </strong></pre>
 
 <p>
-try 블록과 대부분 같이 쓰이지만 catch블록은 필수는 아니다.
-하지만 익셉션 객체를 잡을려면 반드시 필요하다.
-다음 예제는 catch 블록을 제거해 보았다.
+try 블록과 대부분 같이 쓰이지만 catch블록은 필수는 아니다.<br />
+하지만 익셉션 객체를 잡을려면 반드시 필요하다.<br />
+다음 예제는 catch 블록을 제거해 보았다.<br />
 try 블록은 단독으로 쓰일 수 없으므로 대신 finally 블록을 함께 사용했다.
 </p>
    
@@ -376,8 +378,8 @@ public class Test {
 </pre>
 
 <p>
-finally 블록은 익셉션이 발생하건 안 하건 실행된다.
-하지만 catch 블록이 없으니 익셉션 객체는 JVM까지 전달되고 프로그램은 비정상적으로 종료된다.
+finally 블록은 익셉션이 발생하건 안 하건 실행된다.<br />
+하지만 catch 블록이 없으니 익셉션 객체는 JVM까지 전달되고 프로그램은 비정상적으로 종료된다.<br />
 콘솔 화면에서 finally 블록이 실행되고 익셉션이 JVM까지 전달되는 것을 확인한다.
 </p>
     
@@ -390,7 +392,7 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
 </strong></pre>
 
 <p>
-다시 catch 블록을 사용했는데, 이번에는 Exception 형을 잡도록 catch 블록이 만들었다.
+다시 catch 블록을 사용했는데, 이번에는 Exception 형을 잡도록 catch 블록이 만들었다.<br />
 이러면 try 블록안의 어떠한 익셉션이 발생해도 이 catch 블록이 모두 잡을 수 있다.
 </p>    
 
@@ -428,7 +430,7 @@ public class Test {
 </pre>
 
 <p>
-익셉션이 발생했기에 catch 블록이 실행되고 finally 블록이 실행된다.
+익셉션이 발생했기에 catch 블록이 실행되고 finally 블록이 실행된다.<br />
 catch블록에서 발생한 익셉션을 잡았기 때문에 익셉션은 더 이상 어디에도 전달되지 않는다.
 </p>
     
@@ -438,9 +440,9 @@ finally블록 실행
 </strong></pre>
 
 <p>
-catch블록이 마치 if ~ else if문처럼 겹겹이 쓸 수 있다.
-하지만 이때 익셉션 클래스의 계층 관계에 주의해야 한다.
-다음 코드는 컴파일이 되지 않는다.
+catch블록이 마치 if ~ else if문처럼 겹겹이 쓸 수 있다.<br />
+하지만 이때 익셉션 클래스의 계층 관계에 주의해야 한다.<br />
+다음 코드는 컴파일이 되지 않는다.<br />
 익셉션이 try블록에서 발생하면 위에서 아래로 순서대로 catch블록이 해당 익셉션을 잡으려 하는데 먼저 나오는 익셉션이 나중에 나오는 익셉션에 비해 계층적으로 위에 있다면 아래까지 코드가 진행될 이유가 없다는 컴파일 에러이다.
 </p>
     
@@ -519,7 +521,7 @@ public class Test {
 </pre>
 
 <p>
-실행하면 catch(ArithmeticException e) {.. }블록이 실행되고 이 블록의 e.getMessage()가 표준출력메서드를 통해 콘솔에 출력된다.
+실행하면 catch(ArithmeticException e) {.. }블록이 실행되고 이 블록의 e.getMessage()가 표준출력메서드를 통해 콘솔에 출력된다.<br />
 그 다음 finally블록이 실행되고 메인의 마지막 라인이 실행된다.
 </p>
     
@@ -529,8 +531,8 @@ finally블록 실행
 </strong></pre>
 
 <p>
-같은 예제를  checked 익셉션 예제로 아래와 같이 수정한다.
-강조된 부분에서 컴파일 에러가 난다.
+같은 예제를  checked 익셉션 예제로 아래와 같이 수정한다.<br />
+강조된 부분에서 컴파일 에러가 난다.<br />
 이클립스의 컴파일 에러 메시지는 Unhandled exception type ClassNotFoundException이다.
 </p>    
 
@@ -560,24 +562,24 @@ public class Test {
 </pre>
 
 <p>
-Class.forName("<em>문자열</em>");은 새로운 자바 문법이 아니다.
-Class란 클래스가 있고 이 클래스에는 forName("<em>문자열</em>")이라는 static 메서드가 있다.
-forName() 메서드의 인자는 자바 클래스의 공식 이름<sup>FQCN</sup>을 표현하는 문자열이다.
-forName("<em>문자열</em>")는 "<em>문자열</em>"에 해당하는 클래스를 클래스 로더로 하여금 로딩하게 한다.
-그와같은 클래스를 찾지 못하면, JVM은 ClassNotFoundException 객체를 생성, Class.forName("<em>문자열</em>"); 라인에 던진다.
-위 예제에서 forName("<em>문자열</em>") 메서드에 전달한 문자열 "java.lang.Boolean"은 자바 API에 속한 클래스이니 별도의 환경설정 없이 클래스 로더가 이 클래스를 찾을 것이다.
+Class.forName("<em>문자열</em>");은 새로운 자바 문법이 아니다.<br />
+Class란 클래스가 있고 이 클래스에는 forName("<em>문자열</em>")이라는 static 메서드가 있다.<br />
+forName() 메서드의 인자는 자바 클래스의 공식 이름<sup>FQCN</sup>을 표현하는 문자열이다.<br />
+forName("<em>문자열</em>")는 "<em>문자열</em>"에 해당하는 클래스를 클래스 로더로 하여금 로딩하게 한다.<br />
+그와같은 클래스를 찾지 못하면, JVM은 ClassNotFoundException 객체를 생성, Class.forName("<em>문자열</em>"); 라인에 던진다.<br />
+위 예제에서 forName("<em>문자열</em>") 메서드에 전달한 문자열 "java.lang.Boolean"은 자바 API에 속한 클래스이니 별도의 환경설정 없이 클래스 로더가 이 클래스를 찾을 것이다.<br />
 이 예제에서 Boolean 클래스의 용도는 중요하지 않다.
 </p>
 
 <p>
-forName() 메서드는 throws ClassNotFoundException로 선언되어 있다.
-ClassNotFoundException은 RuntimeException을 상속하지 않은 checked 익셉션이다.
-따라서 forName()을 호출하는 메서드는 ClassNotFoundException 익셉션을 핸들링하지 않으면 컴파일 에러가 발생한다.
+forName() 메서드는 throws ClassNotFoundException로 선언되어 있다.<br />
+ClassNotFoundException은 RuntimeException을 상속하지 않은 checked 익셉션이다.<br />
+따라서 forName()을 호출하는 메서드는 ClassNotFoundException 익셉션을 핸들링하지 않으면 컴파일 에러가 발생한다.<br />
 컴파일러는 forName("<em>문자열</em>")에서 <em>문자열</em>에 해당하는 클래스가 클래스 패스에 있는지 검사하지 않는다.
 </p>
 
 <p>
-이클립스의 코드 어시스트 기능을 이용하여 ClassNotFoundException 익셉션을 핸들링하는 코드를 구현하자.
+이클립스의 코드 어시스트 기능을 이용하여 ClassNotFoundException 익셉션을 핸들링하는 코드를 구현하자.<br />
 Class.forName()에 커서를 올리면 이클립스가 해결책을 제시하는데 두번째 방법을 클릭하면 코드는 아래와 같이 바뀌면서 컴파일 에러는 사라진다.
 </p>
     
@@ -612,7 +614,7 @@ public class Test {
 </pre>
 
 <p>
-실행하면 어떠한 익셉션도 발생하지 않고 정상종료된다.
+실행하면 어떠한 익셉션도 발생하지 않고 정상종료된다.<br />
 java.lang.Boolean라는 클래스가 자바API에 존재하기 때문이다.
 </p>
     
@@ -620,8 +622,8 @@ java.lang.Boolean라는 클래스가 자바API에 존재하기 때문이다.
 </strong></pre>
 
 <p>
-Ctrl + Z<sup>Undo Text Change</sup>로 코드를 되돌된다.
-method2()에서 method3();에 컴파일 에러가 발생한다.
+Ctrl + Z<sup>Undo Text Change</sup>로 코드를 되돌된다.<br />
+method2()에서 method3();에 컴파일 에러가 발생한다.<br />
 이클립스에서 Unhandled exception type ClassNotFoundException 에러 메시지를 확인할 수 있다.
 </p>
     
@@ -652,8 +654,8 @@ public class Test {
 
 <p>
 method3()가 throws ClassNotFoundException로 선언했기 때문에 
-method3()을 호출하는 메서드는 반드시 ClassNotFoundException을 핸들링해야 한다. 
-이번에도 컴파일 에러가 나는 부분에 커서를 두고 이클립스가 제시하는 해결책 중 두번째 방법을 클릭한다.
+method3()을 호출하는 메서드는 반드시 ClassNotFoundException을 핸들링해야 한다.<br /> 
+이번에도 컴파일 에러가 나는 부분에 커서를 두고 이클립스가 제시하는 해결책 중 두번째 방법을 클릭한다.<br />
 그러면 소스는 아래처럼 변경되고 컴파일 에러는 사라진다.
 </p>
     
@@ -688,7 +690,7 @@ public class Test {
 </pre>
 
 <p>
-코드를 되돌리고 이번에는 이클립스가 제시하는 첫 번째 방법을 클릭한다.
+코드를 되돌리고 이번에는 이클립스가 제시하는 첫 번째 방법을 클릭한다.<br />
 그러면 소스는 아래처럼 변경되는데 method1() 메서드의 method2();에서 컴파일 에러가 발생한다.
 </p>
     
@@ -718,7 +720,7 @@ public class Test {
 </pre>
 
 <p>
-커서를 컴파일 에러가 발생하는 곳에 두고 이클립스가 제시하는 해결책 중 두 번째 방법을 클릭한다.
+커서를 컴파일 에러가 발생하는 곳에 두고 이클립스가 제시하는 해결책 중 두 번째 방법을 클릭한다.<br />
 코드는 아래처럼 변경된다.
 </p>
     
@@ -789,7 +791,7 @@ public class Test {
 </pre>
 
 <p>
-메인 메서드에서 컴파일 에러가 발생하는 곳에 커서를 두고 첫 번째 방법을 클릭한다.
+메인 메서드에서 컴파일 에러가 발생하는 곳에 커서를 두고 첫 번째 방법을 클릭한다.<br />
 소스는 다음과 같이 변경된다.
 </p>
     
@@ -826,8 +828,8 @@ public class Test {
 </strong></pre>
 
 <p>
-익셉션이 발생하도록 코드를 수정해 보자.
-java.lang.Boolean을 java.lang.Boolean2로 수정한다.
+익셉션이 발생하도록 코드를 수정해 보자.<br />
+java.lang.Boolean을 java.lang.Boolean2로 수정한다.<br />
 java.lang.Boolean2 클래스는 자바 API에 없다.
 </p>
     
@@ -857,7 +859,7 @@ public class Test {
 </pre>
 
 <p>
-실행하면 익셉션 객체가 메인 메서드까지 도달하고 메인 메서드에서도 익셉션을 잡지 않으므로 결국 JVM까지 전달된다.
+실행하면 익셉션 객체가 메인 메서드까지 도달하고 메인 메서드에서도 익셉션을 잡지 않으므로 결국 JVM까지 전달된다.<br />
 그 결과 비정상적으로 프로그램은 종료된다.
 </p>
     
@@ -931,9 +933,9 @@ public class Test {
 </strong></pre>
 
 <p>
-메인에서 다음과 같이 catch 블록을 제거하면 컴파일 에러를 만난다.
+메인에서 다음과 같이 catch 블록을 제거하면 컴파일 에러를 만난다.<br />
 ClassNotFoundException은 checked 익셉션이므로, 
-발생할 수 있는 익셉션을 처리하지 코드가 없으면 컴파일 에러가 발생한다.
+발생할 수 있는 익셉션을 처리하지 코드가 없으면 컴파일 에러가 발생한다.<br />
 checked 익셉션이 메서드 밖으로 나오려면, 메서드가 throws 익셉션_클래스로 선언해야 한다는 사실을 기억하자.
 </p>
     
@@ -1002,7 +1004,7 @@ public class Test {
 </pre>
 
 <p>
-실행하면 java.lang.Boolean2란 클래스는 없으므로 ClassNotFoundException 익셉션이 발생한다.
+실행하면 java.lang.Boolean2란 클래스는 없으므로 ClassNotFoundException 익셉션이 발생한다.<br />
 catch 블록에서 e.printStackTrace();가 실행되고 finally 블록이 실행되고 메인의 마지막 라인이 실행된다.
 </p>
 
@@ -1024,17 +1026,17 @@ finally블록 실행
 </strong></pre>
 
 <p>
-앞으로 e.printStackTrace();가 출력하는 형태의 메시지는 자주 보게 된다.
-이럴 때는 자바 문법을 토대로 추측해서 문제를 해결해 가야 한다.
+앞으로 e.printStackTrace();가 출력하는 형태의 메시지는 자주 보게 된다.<br />
+이럴 때는 자바 문법을 토대로 추측해서 문제를 해결해 가야 한다.<br />
 경우에 따라서는 구글이 답일 수 있다.
 </p>
     
 <h3>사용자 정의 익셉션</h3>
 
 <p>
-익셉션이 발생할 상황이 되면 JVM이 자바 API의 익셉션 클래스로부터 익셉션 객체를 생성하고 익셉션이 발생한 코드에 던진다고 했다.
-그런데 이런 익셉션 클래스를 프로그래머가 필요에 따라 만들 수 있다.
-이를 '사용자 정의 익셉션'이라 부른다.
+익셉션이 발생할 상황이 되면 JVM이 자바 API의 익셉션 클래스로부터 익셉션 객체를 생성하고 익셉션이 발생한 코드에 던진다고 했다.<br />
+그런데 이런 익셉션 클래스를 프로그래머가 필요에 따라 만들 수 있다.<br />
+이를 '사용자 정의 익셉션'이라 부른다.<br />
 아래는 사용자 정의 익셉션의 예제로, 은행 프로그램에서 잔고가 부족할 때 사용될 익셉션이다.<a href="#comments"><sup>3</sup></a>
 </p>
 
@@ -1068,8 +1070,8 @@ public class InsufficientBalanceException extends Exception {
 </pre>
 
 <p>
-사용자 정의 익셉션은 JVM이 객체를 만들어 던지지 않는다.
-그러므로 사용자 정의 익셉션은 코드로서 명시적으로 익셉션을 발생시켜야 한다.
+사용자 정의 익셉션은 JVM이 객체를 만들어 던지지 않는다.<br />
+그러므로 사용자 정의 익셉션은 코드로서 명시적으로 익셉션을 발생시켜야 한다.<br />
 사용자 정의 익셉션으로 부터 익셉션 객체를 만들어 던지는 코드는 다음과 같다.
 </p>
 
