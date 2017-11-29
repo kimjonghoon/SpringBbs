@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
-<script type="text/javascript">
+<script>
 function check() {
     //var form = document.getElementById("modifyForm");
     //TODO Validation 
@@ -22,9 +22,9 @@ function goView() {
 
 <h3><spring:message code="global.modify" /></h3>
 
-<sf:form id="modifyForm" action="modify?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">
-<input type="hidden" name="articleNo" value="${param.articleNo }" />
-<input type="hidden" name="boardCd" value="${param.boardCd }" />
+<sf:form id="modifyForm" action="/bbs/${boardCd}/${articleNo}?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check()">
+<input type="hidden" name="articleNo" value="${articleNo }" />
+<input type="hidden" name="boardCd" value="${boardCd }" />
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error"/>
@@ -54,10 +54,8 @@ function goView() {
 </sf:form>
 		
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="/bbs/${param.boardCd }/${param.articleNo }" method="get">
-    <div>
+    <form id="viewForm" action="/bbs/${boardCd }/${articleNo }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </div>
     </form>    
 </div>

@@ -56,6 +56,7 @@ public class BbsController extends Paginator {
 	//목록
 	@RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
 	public String list(@PathVariable String boardCd, Integer page, String searchWord, Locale locale, Model model) {
+
 		if (page == null) page = 1;
 		
 		int numPerPage = 20;
@@ -122,6 +123,7 @@ public class BbsController extends Paginator {
 	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
 	public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
 			Integer page, String searchWord, Locale locale, HttpServletRequest req, Model model) {
+
 		if(page == null) page = 1;
 		String lang = locale.getLanguage();
 		
@@ -230,8 +232,8 @@ public class BbsController extends Paginator {
 	}
 	
 	//글쓰기 양식
-	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String writeForm(String boardCd, Locale locale, Model model) {
+	@RequestMapping(value="/{boardCd}/new", method=RequestMethod.GET)
+	public String writeForm(@PathVariable String boardCd, Locale locale, Model model) {
 		String lang = locale.getLanguage();
 		String boardName = this.getBoardName(boardCd, lang);
 		List<Board> boards = boardService.getBoards();
@@ -239,15 +241,18 @@ public class BbsController extends Paginator {
 		model.addAttribute("boardName", boardName);
 		model.addAttribute("article", new Article());
 		model.addAttribute("boards", boards);
+		//boardCd 파라미터가 전달되지 않는다.
+		model.addAttribute("boardCd", boardCd);
 
 		return "bbs/write";
 		
 	}
 
 	//글쓰기
-	@RequestMapping(value="/write", method=RequestMethod.POST)
+	@RequestMapping(value="/{boardCd}", method=RequestMethod.POST)
 	public String write(@Valid Article article,
 			BindingResult bindingResult,
+			@PathVariable String boardCd,
 			Locale locale,
 			Model model,
 			MultipartHttpServletRequest mpRequest,
@@ -256,6 +261,11 @@ public class BbsController extends Paginator {
 		if (bindingResult.hasErrors()) {
 			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
 			model.addAttribute("boardName", boardName);
+			List<Board> boards = boardService.getBoards();
+			model.addAttribute("boards", boards);
+			//boardCd 파라미터가 전달되지 않는다.
+			model.addAttribute("boardCd", boardCd);
+
 			return "bbs/write";
 		}
 
@@ -289,93 +299,13 @@ public class BbsController extends Paginator {
 			boardService.addAttachFile(attachFile);
 		}
 
-		return "redirect:/bbs/" + article.getBoardCd() + "?page=1"; 
+		return "redirect:/bbs/" + article.getBoardCd() + "?page=1";
 		
 	}
 
-
-	@RequestMapping(value="/{boardCd}/{articleNo}/comments", method=RequestMethod.POST)
-	public String addComment(@PathVariable Integer articleNo, 
-			@PathVariable String boardCd, 
-			Integer page, 
-			String searchWord,
-			String memo,
-			Principal principal) throws Exception {
-
-		Comment comment = new Comment();
-		comment.setArticleNo(articleNo);
-		comment.setEmail(principal.getName());
-		comment.setMemo(memo);
-
-		boardService.addComment(comment);
-
-		searchWord = URLEncoder.encode(searchWord,"UTF-8");
-
-		return "redirect:/bbs/" 
-			+ boardCd 
-			+ "/" 
-			+ articleNo 
-			+ "?page=" 
-			+ page 
-			+ "&searchWord=" 
-			+ searchWord;
-
-	}
-
-	//댓글 수정
-	@RequestMapping(value="/{boardCd}/{articleNo}/comments/{commentNo}", method=RequestMethod.PUT)
-	public String updateComment(@PathVariable Integer commentNo, 
-			@PathVariable Integer articleNo, 
-			@PathVariable String boardCd, 
-			Integer page, 
-			String searchWord, 
-			String memo) throws Exception {
-
-		Comment comment = boardService.getComment(commentNo);
-		comment.setMemo(memo);
-		boardService.modifyComment(comment);
-
-		searchWord = URLEncoder.encode(searchWord, "UTF-8");
-
-		return "redirect:/bbs/" 
-			+ boardCd 
-			+ "/" 
-			+ articleNo 
-			+ "?page=" 
-			+ page 
-			+ "&searchWord=" 
-			+ searchWord;
-
-	}
-
-	@RequestMapping(value="/{boardCd}/{articleNo}/comments/{commentNo}", method=RequestMethod.DELETE)
-	public String deleteComment(@PathVariable Integer commentNo, 
-			@PathVariable Integer articleNo, 
-			@PathVariable String boardCd, 
-			Integer page, 
-			String searchWord) throws Exception {
-
-		Comment comment = boardService.getComment(commentNo);
-		boardService.removeComment(comment);
-
-		searchWord = URLEncoder.encode(searchWord,"UTF-8");
-
-		return "redirect:/bbs/" 
-			+ boardCd 
-			+ "/" 
-			+ articleNo 
-			+ "?page=" 
-			+ page 
-			+ "&searchWord=" + searchWord;
-
-	}
-
 	//수정 양식
-	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public String modifyForm(Integer articleNo,
-			String boardCd,
-			Locale locale,
-			Model model) {
+	@RequestMapping(value="/{boardCd}/{articleNo}/edit", method=RequestMethod.GET)
+	public String modifyForm(@PathVariable String boardCd, @PathVariable Integer articleNo, Locale locale, Model model) {
 		
 		String lang = locale.getLanguage();
 		Article article = boardService.getArticle(articleNo);
@@ -387,23 +317,33 @@ public class BbsController extends Paginator {
 		
 		List<Board> boards = boardService.getBoards();
 		model.addAttribute("boards", boards);
+		//파라미터로 전달하지 않는다.
+		model.addAttribute("boardCd", boardCd);
+		model.addAttribute("articleNo", articleNo);
 		
 		return "bbs/modify";
 	}
 
 	//수정
-	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modify(@Valid Article article,
-			BindingResult bindingResult,
-			Integer page,
-			String searchWord,
-			Locale locale,
-			Model model,
+	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.POST)
+	public String modify(@Valid Article article, 
+			BindingResult bindingResult, 
+			@PathVariable String boardCd, 
+			@PathVariable Integer articleNo, 
+			Integer page, 
+			String searchWord, 
+			Locale locale, 
+			Model model, 
 			MultipartHttpServletRequest mpRequest) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
 			model.addAttribute("boardName", boardName);
+			List<Board> boards = boardService.getBoards();
+			model.addAttribute("boards", boards);
+			model.addAttribute("boardCd", boardCd);
+			model.addAttribute("articleNo", articleNo);
+
 			return "bbs/modify";
 		}
 
@@ -453,6 +393,21 @@ public class BbsController extends Paginator {
 
 	}
 
+	//게시글 삭제
+	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.DELETE)
+	public String deleteArticle(@PathVariable String boardCd, @PathVariable Integer articleNo, Integer page, String searchWord) {
+		Article article = boardService.getArticle(articleNo);
+		boardService.removeArticle(article);
+		
+		return "redirect:/bbs/" 
+			+ boardCd 
+			+ "?page=" 
+			+ page 
+			+ "&searchWord=" 
+			+ searchWord;
+
+	}
+
 	@RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
 	public String deleteAttachFile(Integer attachFileNo, 
 			Integer articleNo, 
@@ -469,20 +424,6 @@ public class BbsController extends Paginator {
 			+ boardCd 
 			+ "/" 
 			+ articleNo 
-			+ "?page=" 
-			+ page 
-			+ "&searchWord=" 
-			+ searchWord;
-
-	}
-
-	@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.DELETE)
-	public String deleteArticle(@PathVariable String boardCd, @PathVariable Integer articleNo, Integer page, String searchWord) {
-		Article article = boardService.getArticle(articleNo);
-		boardService.removeArticle(article);
-		
-		return "redirect:/bbs/" 
-			+ boardCd 
 			+ "?page=" 
 			+ page 
 			+ "&searchWord=" 

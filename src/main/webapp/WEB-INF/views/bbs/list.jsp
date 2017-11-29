@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<script type="text/javascript">
+<script>
 function goList(page) {
 	var form = document.getElementById("listForm");
 	form.page.value = page;
@@ -83,32 +83,25 @@ function goWrite() {
 
 <div id="search">
 	<form id="searchForm" method="get">
-	<div>
 		<input type="hidden" name="page" value="1" />
-		<input type="text" name="searchWord" size="15" maxlength="30" />
-		<input type="submit" value="<spring:message code="global.search" />" />
-	</div>	
+		<div>
+			<input type="text" name="searchWord" size="15" maxlength="30" />
+			<input type="submit" value="<spring:message code="global.search" />" />
+		</div>	
 	</form>
 </div>
 
 <div id="form-group">
 	<form id="listForm" method="get">
-	<p>
 		<input type="hidden" name="page" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-	</p>
 	</form>
 	<form id="viewForm" action="/bbs/${boardCd }/" method="get">
-	<p>
 		<input type="hidden" name="page" value="${param.page }" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-	</p>
 	</form>
-	<form id="writeForm" action="/bbs/write" method="get">
-	<p>
-		<input type="hidden" name="boardCd" value="${boardCd }" />
+	<form id="writeForm" action="/bbs/${boardCd }/new" method="get">
 		<input type="hidden" name="page" value="${param.page }" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
-	</p>
 	</form>
 </div>

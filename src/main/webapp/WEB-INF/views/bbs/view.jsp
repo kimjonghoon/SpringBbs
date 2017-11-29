@@ -312,36 +312,25 @@ $(window).on('load', function() {
 
 <div id="form-group" style="display: none">
     <form id="listForm" action="/bbs/${boardCd }" method="get">
-    <p>
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
     </form>
     <form id="viewForm" action="/bbs/${boardCd }/" method="get">
-    <p>
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
     </form>
-    <form id="writeForm" action="/bbs/write" method="get">
-    <p>
+    <form id="writeForm" action="/bbs/${boardCd}/new" method="get">
         <input type="hidden" name="articleNo" value="${articleNo }" />
-        <input type="hidden" name="boardCd" value="${boardCd }" />
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </p>
     </form>
     <sf:form id="delForm" action="/bbs/${boardCd }/${articleNo }" method="delete">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </sf:form>
-    <form id="modifyForm" action="/bbs/modify" method="get">
-	<p>
-	    <input type="hidden" name="articleNo" value="${articleNo }" />
-	    <input type="hidden" name="boardCd" value="${boardCd }" />
+    <form id="modifyForm" action="/bbs/${boardCd }/${articleNo }/edit" method="get">
 	    <input type="hidden" name="page" value="${param.page }" />
 	    <input type="hidden" name="searchWord" value="${param.searchWord }" />
-	</p>
 	</form>
 	<sf:form id="deleteCommentForm" action="/comments/${articleNo }/" method="delete">
 		<input type="hidden" name="_method" value="DELETE" />

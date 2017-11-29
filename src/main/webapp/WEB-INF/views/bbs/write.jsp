@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<script type="text/javascript">
+
+<script>
 function check() {
     //var form = document.getElementById("writeForm");
     //TODO Validation login add 
@@ -25,12 +26,9 @@ function goView() {
 
 <h3><spring:message code="bbs.new.article" /></h3>
 
-<sf:form id="writeForm" action="write?${_csrf.parameterName}=${_csrf.token}" method="post" 
-		commandName="article" enctype="multipart/form-data" onsubmit="return check();">
+<sf:form id="writeForm" action="/bbs/${boardCd}?${_csrf.parameterName}=${_csrf.token}" method="post" commandName="article" enctype="multipart/form-data" onsubmit="return check();">
 <input type="hidden" name="articleNo" value="${param.articleNo }" />
-<input type="hidden" name="boardCd" value="${param.boardCd }" />
-<input type="hidden" name="page" value="${param.page }" />
-<input type="hidden" name="searchWord" value="${param.searchWord }" />
+<input type="hidden" name="boardCd" value="${boardCd }" />
 <sf:errors path="*" cssClass="error" />
 <table id="write-form" class="bbs-table">
 <tr>
@@ -54,23 +52,19 @@ function goView() {
 <div style="text-align: center;padding-bottom: 15px;">
     <input type="submit" value="<spring:message code="global.submit" />" />
     <input type="button" value="<spring:message code="global.list" />" onclick="goList()" />
-    <c:if test="${not empty param.articleNo }">    
+    <c:if test="${not empty param.articleNo }">
     <input type="button" value="<spring:message code="bbs.back.to.article" />" onclick="goView()" />
     </c:if>
 </div>
 </sf:form>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="/bbs/${param.boardCd }/${param.articleNo }" method="get">
-    <div>
+    <form id="viewForm" action="/bbs/${boardCd }/${param.articleNo }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </div>
     </form>    
-    <form id="listForm" action="/bbs/${param.boardCd }" method="get">
-    <div>
+    <form id="listForm" action="/bbs/${boardCd }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </div>
     </form>
 </div>
