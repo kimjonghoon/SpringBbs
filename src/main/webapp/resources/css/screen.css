@@ -227,7 +227,7 @@ ul#nav > li > a:hover {
 
 .bbs-table {
 	width: 100%;
-	margin: 1em 0;
+	margin: 0.7em 0 0 0;
 }
 
 .bbs-table th {
@@ -281,7 +281,7 @@ ul#nav > li > a:hover {
 	text-align: center;
 }
 
-#detail span#date-writer-hit {
+#date-writer-hit {
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -603,4 +603,12 @@ h6 {
 .comment-p {
 	font-size: 1em;
 	line-height: 1.2em;
+}
+.attach-files {
+	font-size: 11px;
+	line-height: 1.3;
+}
+#article-content {
+	font-size: 0.9em;
+	color: #333;
 }

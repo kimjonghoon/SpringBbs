@@ -63,7 +63,6 @@ $(document).ready(function() {
 	$('title').empty();
 	var title = $('#bbs-title').html();
 	$('title').append(title);
-
 });
 
 $('body').on('click', '#all-comments', function(e) {
@@ -180,22 +179,21 @@ $(window).on('load', function() {
 </tr>
 </table>
 <div id="detail">
-    <span id="date-writer-hit">
-    	edited <fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${regdate }" />
-		by ${name } hit ${hit }</span>
-    <p id="article-content">${content }</p>
-    <p id="file-list" style="text-align: right">
+    <div id="date-writer-hit">edited <fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${regdate }" /> by ${name } hit ${hit }</div>
+    <div id="article-content">${content }</div>
+    <div id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
+		<div id="attachfile${file.attachFileNo }" class="attach-files">
     	   <a href="#" title="${file.filename }" class="download">${file.filename }</a>
 			<security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
-	    	<a href="#" title="${file.attachFileNo }">x</a>
+	    	<a href="#" title="${file.attachFileNo }"><spring:message code="global.delete" /></a>
 			</security:authorize>
-			<br />
+		</div>
 		</c:forEach>
-    </p>
+    </div>
 </div>
 
-<sf:form id="addCommentForm" action="/comments/${articleNo }" method="post" style="margin-bottom: 10px;">
+<sf:form id="addCommentForm" action="/comments/${articleNo }" method="post" style="margin: 10px 0;">
 	<div id="addComment">
 		<textarea id="addComment-ta" name="memo" rows="7" cols="50"></textarea>
 	</div>
