@@ -37,7 +37,7 @@ function goWrite() {
 	<td>
 		<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">
-			<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" />
+			<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" style="vertical-align: middle;" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">
 			<span class="bbs-strong">[${article.commentNum }]</span>

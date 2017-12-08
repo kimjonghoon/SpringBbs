@@ -37,9 +37,11 @@
 	</http>
 	
 	<!-- http에 access-denied-handler ref="my403"와 같이 설정했다면 다음이 필요	-->
-<!-- 	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
+<!-- 	
+	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
 		<beans:property name="errorPage" value="403" />
-	</beans:bean> -->
+	</beans:bean> 
+-->
 	
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	</beans:bean>

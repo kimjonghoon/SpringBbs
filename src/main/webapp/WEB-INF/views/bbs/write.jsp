@@ -20,9 +20,7 @@ function goView() {
 }
 </script>
 
-<div id="url-navi"><spring:message code="global.bbs" /></div>
-
-<h2>${boardName }</h2>
+<div id="url-navi">${boardName }</div>
 
 <h3><spring:message code="bbs.new.article" /></h3>
 

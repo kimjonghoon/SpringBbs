@@ -183,7 +183,7 @@ $(window).on('load', function() {
     <div id="article-content">${content }</div>
     <div id="file-list" style="text-align: right">
     	<c:forEach var="file" items="${attachFileList }" varStatus="status">
-		<div id="attachfile${file.attachFileNo }" class="attach-files">
+		<div id="attachfile${file.attachFileNo }" class="attach-file">
     	   <a href="#" title="${file.filename }" class="download">${file.filename }</a>
 			<security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')">
 	    	<a href="#" title="${file.attachFileNo }"><spring:message code="global.delete" /></a>
@@ -259,7 +259,7 @@ $(window).on('load', function() {
 	<td>
 		<a href="#" title="${article.articleNo }">${article.title }</a>
 		<c:if test="${article.attachFileNum > 0 }">		
-		<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" />
+		<img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" style="vertical-align: middle;" />
 		</c:if>
 		<c:if test="${article.commentNum > 0 }">		
 		<span class="bbs-strong">[${article.commentNum }]</span>
