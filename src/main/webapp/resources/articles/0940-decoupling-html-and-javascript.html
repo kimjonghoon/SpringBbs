@@ -78,8 +78,8 @@ view.jsp 파일에서 첨부파일 링크와 첨부 파일 삭제 링크에 관�
 </p>
 
 <pre class="prettyprint">
-&lt;div id="gul-content"&gt;
-  &lt;span id="date-writer-hit"&gt;edited ${articleAddInfo.article.regDateForView } 
+&lt;div id="detail"&gt;
+  &lt;div id="date-writer-hit"&gt;edited ${articleAddInfo.article.regDateForView } 
   	by ${articleAddInfo.article.name } 
   	hit ${articleAddInfo.hit }&lt;/span&gt;
   &lt;p&gt;${articleAddInfo.article.htmlContent }&lt;/p&gt;
@@ -168,7 +168,7 @@ view.jsp에서 댓글 관련 디자인을 아래 강조된 부분을 참고하�
   &lt;/span&gt;
   &lt;/c:if&gt;
   &lt;p&gt;${comment.htmlMemo }&lt;/p&gt;
-  &lt;form class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none"&gt;
+  &lt;form class="comment-form" action="updateComment_proc.jsp" method="post" style="display: none"&gt;
     &lt;p&gt;
       &lt;input type="hidden" name="commentNo" value="${comment.commentNo }" /&gt;
       &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
@@ -180,7 +180,7 @@ view.jsp에서 댓글 관련 디자인을 아래 강조된 부분을 참고하�
       <strong>&lt;a href="#"&gt;수정하기&lt;/a&gt; | &lt;a href="#"&gt;취소&lt;/a&gt;</strong>
     &lt;/div&gt;
     &lt;div&gt;
-      &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
+      &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/div&gt;
@@ -196,7 +196,7 @@ bbs-view.js 파일에 다음 함수를 추가한다.
 function commentUpdate(e) {
   var me = getActivatedObject(e);
   var form = me.parentNode;
-  while (form.className != "modify-comment") {
+  while (form.className != "comment-form") {
     form = form.parentNode;
   }
   form.submit();
@@ -357,7 +357,7 @@ view.jsp 파일에서 "수정, 삭제, 다음글, 이전글, 목록, 새글쓰�
 </p>
 
 <pre class="prettyprint">
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" .. &gt;
 	&lt;c:if test="${user.username == articleAddInfo.article.username }"&gt;
 	&lt;div class="fl"&gt;
 		&lt;input type="button" value="수정" <strong>id="goModify"</strong> /&gt;
@@ -606,8 +606,8 @@ view.jsp에서 첨부파일 링크와 첨부 파일 삭제 링크에 관한 코�
 </p>
 
 <pre class="prettyprint">
-&lt;div id="gul-content"&gt;
-  &lt;span id="date-writer-hit"&gt;
+&lt;div id="detail"&gt;
+  &lt;div id="date-writer-hit"&gt;
     edited ${articleAddInfo.article.regDateForView } 
     by ${articleAddInfo.article.name } 
     hit ${articleAddInfo.hit }
@@ -687,7 +687,7 @@ view.jsp 파일에서 댓글 관련 디자인을 아래와 같다.
   &lt;/span&gt;
   &lt;/c:if&gt;
   &lt;p <strong>class="view-comment"</strong>&gt;${comment.htmlMemo }&lt;/p&gt;
-  &lt;form class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none"&gt;
+  &lt;form class="comment-form" action="updateComment_proc.jsp" method="post" style="display: none"&gt;
     &lt;p&gt;
       &lt;input type="hidden" name="commentNo" value="${comment.commentNo }" /&gt;
       &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
@@ -699,7 +699,7 @@ view.jsp 파일에서 댓글 관련 디자인을 아래와 같다.
       &lt;a href="#"&gt;수정하기&lt;/a&gt; | &lt;a href="#"&gt;취소&lt;/a&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
+      &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/div&gt;
@@ -716,7 +716,7 @@ bbs-view.js에서 <em class="path">$(document).ready(function() {...}</em>
 //댓글반복
 $('.comments').click(function(e) {
 	if ($(e.target).is('.comment-toggle')) {
-		var $form = $(e.target).parent().parent().find('.modify-comment');
+		var $form = $(e.target).parent().parent().find('.comment-form');
 		var $p = $(e.target).parent().parent().find('.view-comment');
 		if ($form.is(':hidden') == true) {
 			$form.show();
@@ -737,12 +737,12 @@ $('.comments').click(function(e) {
 	}
 });
 //form 안의 수정하기 링크
-$('.modify-comment a:contains("수정하기")').click(function(e) {
+$('.comment-form a:contains("수정하기")').click(function(e) {
 	$(e.target).parent().parent().submit();
 	return false;
 });
 //form 안의 취소 링크
-$('.modify-comment a:contains("취소")').click(function(e) {
+$('.comment-form a:contains("취소")').click(function(e) {
 	var $form = $(e.target).parent().parent();
 	var $p = $(e.target).parent().parent().parent().find('.view-comment');
 	if ($form.is(':hidden') == true) {
@@ -829,7 +829,7 @@ view.jsp에서 다음 부분으로 디자인은 전과 같다.
 </p>
 
 <pre class="prettyprint">
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" .. &gt;
 	&lt;c:if test="${user.username == articleAddInfo.article.username }"&gt;
 	&lt;div class="fl"&gt;
 		&lt;input type="button" value="수정" id="goModify" /&gt;

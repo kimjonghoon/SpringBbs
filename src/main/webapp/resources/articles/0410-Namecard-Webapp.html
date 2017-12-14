@@ -227,7 +227,7 @@ http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
 손전화 : &lt;input type="text" name="mobile" /&gt;&lt;br /&gt;
 이메일 : &lt;input type="text" name="email" /&gt;&lt;br /&gt;
 회사 : &lt;input type="text" name="company" /&gt;&lt;br /&gt;
-&lt;input type="submit" value="확인" /&gt;
+&lt;input type="submit" value="전송" /&gt;
 &lt;input type="button" value="취소" onclick="location.href='list.jsp'" /&gt;
 &lt;/form&gt;</strong>
 &lt;/body&gt;
@@ -401,7 +401,7 @@ Namecard card = dao.selectOne(no);
 손전화 : &lt;input type="text" name="mobile" value="&lt;%=card.getMobile() %&gt;" /&gt;&lt;br /&gt;
 이메일 : &lt;input type="text" name="email" value="&lt;%=card.getEmail() %&gt;" /&gt;&lt;br /&gt;
 이메일 : &lt;input type="text" name="company" value="&lt;%=card.getCompany() %&gt;" /&gt;&lt;br /&gt;
-&lt;input type="submit" value="확인" /&gt;
+&lt;input type="submit" value="전송" /&gt;
 &lt;input type="button" value="취소" onclick="location.href='list.jsp'" /&gt;
 &lt;/form&gt;</strong>
 &lt;/body&gt;

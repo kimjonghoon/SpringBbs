@@ -8,17 +8,12 @@
 
 <pre class="prettyprint">
 &lt;div id="sidebar"&gt;
-
 	<strong>&lt;h1&gt;Eclipse&lt;/h1&gt;
 	&lt;ul&gt;
-		&lt;li&gt;&lt;a href="#"&gt;Eclipse Tutorial&lt;/a&gt;
-			&lt;ul&gt;
-				&lt;li&gt;&lt;a href="#"&gt;Eclipse 설치&lt;/a&gt;&lt;/li&gt;
-				&lt;li&gt;&lt;a href="#"&gt;WTP 설치&lt;/a&gt;&lt;/li&gt;
-			&lt;/ul&gt;
-		&lt;/li&gt;
+		&lt;li class="sub-heading"&gt;자바 소개&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;자바의 특징&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;객체와 클래스&lt;/a&gt;&lt;/li&gt;
 	&lt;/ul&gt;</strong>
-	
 &lt;/div&gt;
 </pre>
 
@@ -27,7 +22,7 @@
 </p>
 
 <p>
-<img src="https://lh3.googleusercontent.com/-ZXSg849T0Gs/VYJuJDZgplI/AAAAAAAACbg/xssrQYA8EA0/s332/sub-menu-01.png" alt="예제보기 1" style="display: block;" />
+<img src="https://lh3.googleusercontent.com/P6CE53c1KGX4n6OZtME1oHGEJFf5CTP8w_zYpYEvc1DWEMlXHOKfBiH5-bRtR05GhGHW24P1MH4eggPukiTvoeX4ehztrha3e9D0czkqri5O_I-ES5MBqIPbY_7sPscS0dNHkPYBxP7FCQINFH6Z9ixn1GkoboeoXRWtX5MLr7zRlIWiQ9_GaQKMrxVP7QXK8IVaz0B_AJrzC1tFUQy6orBfS1IOSt8lu5HZZTBQGV3W_4AoRhInpW7fUFvi1doATaAFq4MjNZtTkiLhegMNodBS-wu-wffnQSOz5flKQ0UsFnV63M7upNqGBrfdSDQvjHp3K0zZwcVC2ISWVS6g1osnXjCUqIHHq0L6h5hK0hfK2UsrpSOafvN6qj8hxCK2Hj_7AkuM4T8tKu71jFmaNP-RO769Wrmvj1CpACBMy9cEwaH9-g4m6CiNazwmDvTYhvUhX8WI79I620WyaCDdvC69ijMetN3zaqIVw-Au0lZsD0cEfztU5DXxx-3Kv2zW0EUTWTBFpQPqrMy185J_2ki8cQn8BLpB3RpQAwvfEvE_5uMGCFV3GZ2LT4dBtA6cxYLWRLRNl6uSol7UVrG0Vx4lmU48ueg5R3mj73GA9A=w1006-h369-no" alt="예제보기 1" style="display: block;" />
 </p>
 
 <h3>서브 메뉴의 보더(border)와 폰트(font)</h3>
@@ -36,46 +31,52 @@
 #sidebar {
 	float: left;
 	width: <strong>173px;</strong>
-	margin-left: -1000px;
-	<strong>border: 1px solid #DAEAAA;</strong>
-	<strong>font-family: Verdana, sans-serif;</strong>
-	<strong>font-size: 12px;</strong>
+	margin-left: -1000px;<strong>
+	margin-bottom: 20px;
+	border: 1px solid #DAEAAA;
+	font-family: Verdana, sans-serif;
+	font-size: 12px;
+	position: relative;
+	top: 7px;</strong>
 }
 </pre>
 
 <p>
-마진과 패딩이 없는 엘리먼트가 실제 차지하는 넓이는 'width + 좌우 보더 합'으로 계산된다.
-#sidebar가 175px의 넓이여야 한다면, 좌우 보더 합이 2px이므로 175px에서 173px로 width를 변경했다.
+마진과 패딩이 없는 엘리먼트가 실제 차지하는 넓이는 'width + 좌우 보더 합'으로 계산된다.<br />
+#sidebar가 175px의 넓이여야 한다면, 좌우 보더 합이 2px이므로 175px에서 173px로 width를 변경했다.<br />
+position: relative;와 top: 7px;은 #sidebar 박스를 #container 위 경계에서 아래로 7px만큼 아래로 이동시킨다.<br />
+박스를 아래로 움직이면 #sidebar가 #footer를 침범할 수 있다.<br />
+#sidebar가 #footer를 침범하지 않도록 margin-bottom: 20px을 추가했다.
 </p>
 
-<h3>#sidebar h1</h3>
+<h3>#sidebar &gt; h1</h3>
 
 <p>
 서브 메뉴 머릿말에 해당하는 h1 엘리먼트의 스타일을 다음과 같이 추가한다.
 </p>
 
 <pre class="prettyprint">
-#sidebar h1 {
+<strong>#sidebar &gt; h1 {
 	margin: 0;
 	padding: 14px;
 	background: #92B91C;
 	color: #FFF;
 	font-size: 16px;
-}
+}</strong>
 </pre>
 
 <p>
-<img src="https://lh3.googleusercontent.com/-VFFA-Zm6DSY/VYJuJCETf_I/AAAAAAAACbw/EFwxwl7XMBg/s300/sub-menu-02.png" alt="예제보기 2" />
+<img src="https://lh3.googleusercontent.com/-rAeuMCb3S7f1b7vGuFUxOQ4qEepCx_e1XhZ7L0sOs85TEUJYp0pCuQOFuOmcB-ccifKl0CmpuUJ2Rw2ktCUme8zFRuK0ie8pKuNY_ir40g4nAt80dCGqQdXFpgORNvNin2A9m85sW9C9CwGA3rZEd6LxI_FrA23-F2J4fV3e1b6Uajy9eQcK8S_JB7pjQMclECyEX9L2tIC1_wc6JImDqi8q6fwV7SSZ6iyurrqNbxle7pUL5Bzjkp0LtFQTPIFLuoRAA0JM0hfPMvK5Fd95sJFMdfpTgHsBHDGD5KL6zsxECI9DvPy7t7XfkmkF09jN97zb_1ifz9uViVvXUpFCvkQf2m7mK9fbRkn1pBwmcLUr-PI9kU38tYKawfRCVSXY4ejq2FD2w7P8BYBU9PzieQ3_6EkmMxWRG05rf560lk50gcVPTFBLHn7iVDF0hr56AoBaxueZOxSNvhpxHlLcQ40mv2eE1HX-CH6tWM2JsJ-gBSUOvb12ftLBKN7otae294nCjEYZfY_TJRsKW3cgkCPlprCevgeHpbtTM3ABaZESSn-Z4bgWPhcHrpSGcCLnx3fnWiZC5F4EelLK6Ef5Tg4F6rk2k0cW2q9EXKuJw=w1005-h342-no" alt="예제보기 2" />
 </p>
 
-<h3>#sidebar ul</h3>
+<h3>#sidebar &gt; ul</h3>
 
 <p>
-서브 메뉴 리스트 항목의 마진과 패딩과 디폴트 스타일을 제거한다. 
+다음을 /*** The Essential Code ***/에 추가한다.
 </p>
 
 <pre class="prettyprint">
-#sidebar ul {
+#sidebar &gt; ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -83,46 +84,21 @@
 </pre>
 
 <p>
-<img src="https://lh3.googleusercontent.com/-Y70qUqs0gdw/VYJuJKJOS6I/AAAAAAAACbk/fRiI5jD0jcw/s284/submenu-03.png" alt="예제보기 3" />
+<img src="https://lh3.googleusercontent.com/2pAqTcMb_k87-vmBd1zXhgcZnRMbGlVZIDZW_jBOUbd-6d6vqtS69vrMVcZM0dpt6_MqwKm76D0mlAT3BUZ-aqGWqlKhUneHnyol_gBtuYq5fYKZkkYLAwwGn648-KwSv2TA0uR-1adDe6zz1xOuKCjilDFAnWr3uLa_QUzXuMo9fxJMpePNX2A1fVDQBKd9cz2ThF6hZveAU_PnFSzrZRsP70qJ05jo0Lv4BToh4Y1XncJZY8KPrHZ-hX0c5445peDgOVrjRNgUA3trs4QiszlCkAOAZnzl65BLESBkcTVibPMra3N0VE1NimcmPa5yS702DEHrKQdhqXazM62ZV8RxBORFrMPXqKmgPKHdW4glL9bpm5ernKG_zsY-iXLJme6NR31ATpVx24jb2beMzwTQ08-d5zgcpdZEL0SKrfx1OzIfTox645hMic0pQkaOrbpfDRrtkHkaQsVlYMEUgnk64XCopUojAsCwDRt0gA7xb9hAhZEbaIGCvzBHGxHvBiREZXrYWZeUvTnP5jRBV8lQqoQ_0KAmJPWUHWmZZMvHb0FHZjHz1v_BSfVzAvyURFpXdKjuuyFSiVKVg95ipy_QP9HeshH0VDpJHlD1Tg=w1007-h316-no" alt="예제보기 3" />
 </p>
 
-<h3>#sidebar a</h3>
+<h3>#sidebar &gt; ul &gt; li.sub-heading</h3>
 
 <p>
-서브 메뉴의 링크에 대한 스타일을 아래와 같이 추가한다.
+/*** The Essential Code ***/에 다음을 추가한다.
 </p>
 
 <pre class="prettyprint">
-<strong>#sidebar a {
-	display: block;
-	padding: 6px 10px 6px 10px;
-	color: #64615D;
-	background: #DAEAAA;
-	text-decoration: none;
-	font-weight: bold;
-}
-#sidebar a:hover {
+<strong>sidebar &gt; ul &gt; li &gt; a:hover {
 	background-color: #EDFEBA;
 	color: #64615D;
-}</strong>
-</pre>
-
-<p>
-<img src="https://lh3.googleusercontent.com/-E-OJDZeWjIM/VYJuJ1YbCuI/AAAAAAAACbo/fo9FOxeRMOI/s311/submenu-04.png" alt="예제보기 4" />
-</p>
-
-<p>
-a는 인라인(inline) 엘리먼트지만 display: block으로 설정하면 상자(box)가 되어 상자 영역 전체에 링크가 걸리게 된다.
-</p>
-
-<h3>#sidebar li li a</h3>
-
-<p>
-마지막으로 실제적인 서브 메뉴 아이템의 안의 링크에 대한 스타일을 아래와 같이 추가한다.
-</p>
-
-<pre class="prettyprint">
-<strong>#sidebar li li a {
+}
+#sidebar &gt; ul &gt; li &gt; a {
 	display: block;
 	color: #64615D;
 	padding: 5px 3px 4px 17px;
@@ -134,7 +110,11 @@ a는 인라인(inline) 엘리먼트지만 display: block으로 설정하면 상�
 </pre>
 
 <p>
-<img src="https://lh3.googleusercontent.com/-86nh0BS0H48/VYJuJyBVkYI/AAAAAAAACbs/qMW22B2dNfY/s308/submenu-05.png" alt="예제보기 5" />
+a는 인라인(inline) 엘리먼트지만 display: block으로 설정하면 상자(box)가 되어 상자 영역 전체에 링크가 된다.
+</p>
+
+<p>
+<img src="https://lh3.googleusercontent.com/kKPMTAewsXgtiEd2y7XLE3wQZ7xfqT132gnKdf_tuhE09cyM5NoffZfeSJBfMoZ7yzadfBSn7N6lyhpRLE8ZsfuUUSZ7dTBvFFPhA-MoJOueBWhhpEWpEZSIeNOwXuL5cL4UTeRmcooSdmnGDNAQEAxjBrZymvAtINNIXEjlZyTT9McUEerkXDW6egYYJPW3q6tqRx2u824nJ-hsPbk3sM0o80zuYO444MPXzlMfXsPgl2DhYIYJitfDlA40e4UtgWYzAo_HXUyaS-u0-kIH1K_tzGSjPVgEattJmd9WaHYg4uh8TM9cnaUzg8BvbkWar9s2uWX30qO8Gig9Wkuy4kMuWlc0w0h_lypk0jVZK3-rIytZmx4rR_XgpvabUX2mzwztBr1nlaiON6l33QcqasBVau21gwOyldNvrXCvb1h4k-lBcYnwaKgiXnURbFqwA8N6Ve6nGqNMdwSWnjG8VL3pg9TQMNL0dUOhUAKFcvfzz8AxsqfyxGgBxB7yDNC_zbols9BMKjatd6USlbQJTdwcKse2vNsP2pctv09rDUIfgcUTLnWMFFWoqsOWh-5QJkVWt5Mx5mJB-iA8v-W0Fai40xif7kHRXhVChSchdA=w1006-h348-no" alt="예제보기 5" />
 </p>
 
 <span id="refer">참고</span>

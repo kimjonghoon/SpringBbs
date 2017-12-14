@@ -164,7 +164,7 @@ if (loginUser == null) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;Main&lt;/div&gt;
@@ -269,7 +269,7 @@ if (loginUser == null) {
 
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;Java Home&lt;/div&gt;
@@ -446,7 +446,7 @@ if (loginUser == null) {
 &lt;meta name="Keywords" content="자바 홈" /&gt;
 &lt;meta name="Description" content="자바 홈" /&gt;
 &lt;title&gt;자바 홈&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -461,7 +461,7 @@ if (loginUser == null) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;Java Home&lt;/div&gt;
@@ -505,24 +505,34 @@ if (loginUser == null) {
 
 <p>
 로그인 테스트를 위해 로그인 폼, 로그인 처리, 로그아웃 처리 페이지를 생성한다.<br />
-먼저 로그인 폼 페이지가 인클루드하는 notLoginUsers-menu.jsp를 /users 디렉터리에 만든다.<br />
-이 페이지는 로그인 하지 않은 사용자가 사용할 수 있는 회원 메뉴(로그인, 회원 가입, ID 찾기, 비밀번호 찾기)를 보여준다.<br />
+모든 회원 관련 페이지가 인클루드해야 하는 회원 메뉴 페이지, user-sub.jsp를 /users 디렉터리에 생성한다.<br />
 </p>
 
-<h6 class="src">/users/notLoginUsers-menu.jsp</h6>
+<h6 class="src">/users/user-sub.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;h1&gt;회원&lt;/h1&gt;
+&lt;%
+User loginUser = (User) session.getAttribute("user");
+if (loginUser == null) {
+%&gt;
 &lt;ul&gt;
-    &lt;li&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="login.jsp"&gt;로그인&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="signUp.jsp"&gt;회원 가입&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;ID 찾기&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;비밀번호 찾기&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="login.jsp"&gt;로그인&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="signUp.jsp"&gt;회원 가입&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;ID 찾기&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;비밀번호 찾기&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;%
+} else {
+%&gt;
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href="editAccount.jsp"&gt;내 정보 수정&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="changePasswd.jsp"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="bye.jsp"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;%
+}
+%&gt;
 </pre>
 
 <p>
@@ -545,14 +555,7 @@ if (url == null) url = "";
 &lt;meta name="Keywords" content="로그인" /&gt;
 &lt;meta name="Description" content="로그인" /&gt;
 &lt;title&gt;로그인&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;<strong>
-&lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("loginForm");
-    //TODO 유효성 검사
-    return true;
-}        
-&lt;/script&gt;</strong>
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -567,16 +570,13 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;로그인&lt;/h1&gt;
-&lt;form id="loginForm" action="login_proc.jsp" method="post" onsubmit="return check()"&gt;
-&lt;p style="margin: 0; padding: 0;"&gt;
+&lt;h2&gt;로그인&lt;/h2&gt;
+&lt;form id="loginForm" action="login_proc.jsp" method="post"&gt;
 <strong>&lt;input type="hidden" name="url" value="&lt;%=url %&gt;" /&gt;</strong>
-&lt;/p&gt;
 &lt;table&gt;
 &lt;tr&gt;
     &lt;td style="width: 200px;"&gt;Email&lt;/td&gt;
@@ -588,7 +588,7 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-top: 15px;"&gt;
-    &lt;input type="submit" value="확인" /&gt;
+    &lt;input type="submit" value="전송" /&gt;
     &lt;input type="button" value="회원 가입" onclick="location.href='signUp.jsp'" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
@@ -597,7 +597,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;<strong>
-        &lt;%@ include file="notLoginUsers-menu.jsp" %&gt;</strong>
+        &lt;%@ include file="user-sub.jsp" %&gt;</strong>
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;<strong>
@@ -762,12 +762,11 @@ if (loginUser == null) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 820px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;Error&lt;/div&gt;
-            
-&lt;h1&gt;Error Page&lt;/h1&gt;
+&lt;h2&gt;Error Page&lt;/h2&gt;
 &lt;%
 if(statusCode != 500){
     out.write("&lt;h3&gt;Error Details&lt;/h3&gt;");
@@ -892,7 +891,7 @@ CSS 포지셔닝에서의 만든 list.html 파일을 연 상태에서 Save As...
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 목록" /&gt;
 &lt;meta name="Description" content="게시판 목록" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
+&lt;title&gt;자유 게시판&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;<strong>
 &lt;script type="text/javascript"&gt;
 function goList(curPage) {
@@ -926,59 +925,58 @@ function goWrite() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" <strong>style="min-height: 800px;"</strong>&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
+&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
             
-&lt;h1&gt;자유 게시판&lt;/h1&gt;
-    &lt;table class="bbs-table"&gt;
-    &lt;!--  게시판 목록 머리말 --&gt;
-    &lt;tr&gt;
-        &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
-        &lt;th&gt;TITLE&lt;/th&gt;
-        &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
-        &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;!--  반복 구간 시작 --&gt;
-    &lt;tr&gt;
-        &lt;td style="text-align: center;"&gt;11&lt;/td&gt;
-        &lt;td&gt;
-            &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
-            &lt;img src="<strong>../</strong>images/attach.png" alt="첨부 파일" /&gt;
-            &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
-        &lt;/td&gt;
-        &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
-        &lt;td style="text-align: center;"&gt;4555&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;!--  반복 구간 끝 --&gt;
-    &lt;/table&gt;
-        
-    &lt;div id="paging"&gt;
-        &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[이전]&lt;/a&gt;
-        &lt;span class="bbs-strong"&gt;6&lt;/span&gt;
-        &lt;a href="<strong>javascript:goList('7')</strong>"&gt;7&lt;/a&gt;
-        &lt;a href="<strong>javascript:goList('8')</strong>"&gt;8&lt;/a&gt;
-        &lt;a href="<strong>javascript:goList('9')</strong>"&gt;9&lt;/a&gt;
-        &lt;a href="<strong>javascript:goList('10')</strong>"&gt;10&lt;/a&gt;
-        &lt;a href="<strong>javascript:goList('11')</strong>"&gt;[다음]&lt;/a&gt;  
-    &lt;/div&gt;
+&lt;table class="bbs-table"&gt;
+&lt;!--  게시판 목록 머리말 --&gt;
+&lt;tr&gt;
+    &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
+    &lt;th&gt;TITLE&lt;/th&gt;
+    &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
+    &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
+&lt;/tr&gt;
+&lt;!--  반복 구간 시작 --&gt;
+&lt;tr&gt;
+    &lt;td style="text-align: center;"&gt;11&lt;/td&gt;
+    &lt;td&gt;
+        &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
+        &lt;img src="<strong>../</strong>images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+        &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
+    &lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;4555&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!--  반복 구간 끝 --&gt;
+&lt;/table&gt;
+&lt;div id="paging"&gt;
+    &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[이전]&lt;/a&gt;
+    &lt;span class="bbs-strong"&gt;6&lt;/span&gt;
+    &lt;a href="<strong>javascript:goList('7')</strong>"&gt;7&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('8')</strong>"&gt;8&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('9')</strong>"&gt;9&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('10')</strong>"&gt;10&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('11')</strong>"&gt;[다음]&lt;/a&gt;  
+&lt;/div&gt;
 
-    &lt;div id="list-menu"&gt;
-        &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
-    &lt;/div&gt;
+&lt;div id="list-menu"&gt;
+    &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+&lt;/div&gt;
 
-    &lt;div id="search"&gt;
-        &lt;form action="list.jsp" method="get"&gt;
-            &lt;p style="margin: 0;padding: 0;"&gt;
-                &lt;input type="hidden" name="boardCd" value="free" /&gt;
-                &lt;input type="hidden" name="curPage" value="1" /&gt;
-                &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-                &lt;input type="submit" value="검색" /&gt;
-            &lt;/p&gt;
-        &lt;/form&gt;
-    &lt;/div&gt;
+&lt;div id="search"&gt;
+    &lt;form action="list.jsp" method="get"&gt;
+        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="boardCd" value="free" /&gt;
+        &lt;div&gt;
+            &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+            &lt;input type="submit" value="검색" /&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
 &lt;!--  본문 끝 --&gt;
+
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -1042,20 +1040,13 @@ CSS 포지셔닝에서 만든 write_form.html 파일을 연 상태에서 Save As
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="글쓰기 화면" /&gt;
 &lt;meta name="Description" content="글쓰기 화면" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
+&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 <strong>&lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("writeForm");
-    //유효성 검사 로직 추가
-    return true;
-}
-
 function goList() {
     var form = document.getElementById("listForm");
     form.submit();
 }
-
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -1075,16 +1066,13 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!--  본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;자유 게시판&lt;/h1&gt;
-&lt;h2&gt;글쓰기&lt;/h2&gt;
-&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data" <strong>onsubmit="return check();"</strong>&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
+&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
+&lt;h3&gt;새 글쓰기&lt;/h3&gt;
+&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="free" /&gt;
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -1107,6 +1095,7 @@ function goView() {
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;!-- 본문 끝 --&gt;
+
         &lt;/div&gt;
     &lt;/div&gt;
     
@@ -1126,19 +1115,15 @@ function goView() {
 <strong>
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="5" /&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
         &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
         &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;   
 &lt;/div&gt;
 </strong>
@@ -1191,7 +1176,7 @@ CSS 포지셔닝에서 만든 view.html 파일을 연 상태에서 Save As... �
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 상세보기" /&gt;
 &lt;meta name="Description" content="게시판 상세보기" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
+&lt;title&gt;자유 게시판&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
@@ -1277,78 +1262,11 @@ function deleteComment(commentNo) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;자유 게시판&lt;/h1&gt;
-&lt;table class="bbs-table"&gt;
-&lt;tr&gt;
-    &lt;th style="width: 37px;text-align: left;vertical-align: top;"&gt;TITLE&lt;/th&gt;
-    &lt;th style="text-align: left;color: #555;"&gt;무궁화꽃이피었습니다&lt;/th&gt;
-&lt;/tr&gt; 
-&lt;/table&gt;
-&lt;div id="gul-content"&gt;
-    &lt;span id="date-writer-hit"&gt;<strong>edited 2014-10-09 17:55:30 by 홍길동 hit 1330</strong>&lt;/span&gt;
-    &lt;p&gt;
-    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
-    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
-    &lt;/p&gt;
-    <strong>&lt;p id="file-list" style="text-align: right"&gt;
-        &lt;a href="#"&gt;abc.zip&lt;/a&gt;
-        &lt;a href="javascript:deleteAttachFile('23')"&gt;x&lt;/a&gt;
-    &lt;/p&gt;</strong>
-&lt;/div&gt;
-
-&lt;!--  댓글 반복 시작 --&gt;
-&lt;div class="comments"&gt;
-    &lt;span class="writer"&gt;xman&lt;/span&gt;
-    &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
-    &lt;span class="modify-del"&gt;
-        &lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
-         | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
-    &lt;/span&gt;
-    &lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
-    &lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="commentNo" value="5" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="articleNo" value="12" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
-    &lt;div class="fr"&gt;
-            &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
-            | &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;/form&gt;
-&lt;/div&gt;
-&lt;!--  댓글 반복 끝 --&gt;
-
-&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
-    &lt;p style="margin: 0; padding: 0;"&gt;
-        &lt;input type="hidden" name="articleNo" value="5"/&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
-    &lt;div id="addComment"&gt;
-        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;div style="text-align: right;"&gt;
-        &lt;input type="submit" value="댓글 남기기" /&gt;
-    &lt;/div&gt;
-&lt;/form&gt;
-
-&lt;div id="next-prev"&gt;
-    &lt;p&gt;다음 글 : &lt;a href="<strong>javascript:goView('6')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
-    &lt;p&gt;이전 글 : &lt;a href="<strong>javascript:goView('4')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div id="view-menu"&gt;
+&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     &lt;div class="fl"&gt;
         &lt;input type="button" value="수정" <strong>onclick="goModify()</strong>" /&gt;
         &lt;input type="button" value="삭제" <strong>onclick="goDelete()</strong>"/&gt;
@@ -1360,28 +1278,98 @@ function deleteComment(commentNo) {
         &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 37px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;무궁화꽃이피었습니다&lt;/th&gt;
+&lt;/tr&gt; 
+&lt;/table&gt;
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;<strong>edited 2014-10-09 17:55:30 by 홍길동 hit 1330</strong>&lt;/div&gt;
+    &lt;div id="article-content"&gt;
+    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+    무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+    &lt;/div&gt;
+    &lt;div id="file-list" style="text-align: right"&gt;
+        &lt;div class="attach-file"&gt;
+            &lt;a href="#" &gt;TEST.png&lt;/a&gt;
+            &lt;a href="javascript:deleteAttachFile('23')"&gt;x&lt;/a&gt;
+		&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;!--  댓글 쓰기 --&gt;
+&lt;form id="addCommentForm" style="margin: 10px 0;" action="addComment.jsp" method="post"&gt;
+    &lt;input type="hidden" name="articleNo" value="5"/&gt;
+    &lt;input type="hidden" name="boardCd" value="free" /&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea id="addComment-ta" name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="댓글 남기기" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+&lt;!--  댓글 반복 시작 --&gt;
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;xman&lt;/span&gt;
+    &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+    &lt;/span&gt;
+    &lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
+    &lt;form id="modifyCommentForm5" class="comment-form" action="updateComment.jsp" method="post" style="display: none;"&gt;
+    &lt;input type="hidden" name="commentNo" value="5" /&gt;
+    &lt;input type="hidden" name="boardCd" value="free" /&gt;
+    &lt;input type="hidden" name="articleNo" value="12" /&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;div class="fr"&gt;
+            &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
+            | &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+&lt;!--  댓글 반복 끝 --&gt;
+&lt;div id="next-prev"&gt;
+    &lt;p&gt;다음 글 : &lt;a href="<strong>javascript:goView('6')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;이전 글 : &lt;a href="<strong>javascript:goView('4')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" <strong>onclick="goModify()</strong>" /&gt;
+        &lt;input type="button" value="삭제" <strong>onclick="goDelete()</strong>"/&gt;
+    &lt;/div&gt;
+    &lt;div class="fr"&gt;
+        &lt;input type="button" value="다음 글" <strong>onclick="goView('6')"</strong> /&gt;
+        &lt;input type="button" value="이전 글" <strong>onclick="goView('4')"</strong> /&gt;
+        &lt;input type="button" value="목록" <strong>onclick="goList('1')"</strong> /&gt;
+        &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 &lt;!-- 목록 --&gt;
-&lt;table&gt;
+&lt;table class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
     &lt;th&gt;TITLE&lt;/th&gt;
     &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
     &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
-    
 &lt;tr&gt;
-    &lt;td style="text-align: center;"&gt;<strong>&lt;img src="../images/arrow.gif" alt="현재 글" /&gt;</strong>&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;&lt;img src="/images/arrow.gif" alt="현재 글" /&gt;&lt;/td&gt;
     &lt;td&gt;
         &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
-        &lt;img src="<strong>../</strong>images/attach.png" alt="첨부 파일" /&gt;
+        &lt;img src="/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
         &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
     &lt;/td&gt;
     &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
     &lt;td style="text-align: center;"&gt;4555&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
-    
 &lt;div id="paging"&gt;
     &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[이전]&lt;/a&gt;
     &lt;span class="bbs-strong"&gt;6&lt;/span&gt;
@@ -1391,19 +1379,17 @@ function deleteComment(commentNo) {
     &lt;a href="<strong>javascript:goList('10')"</strong>&gt;10&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('11')"</strong>&gt;[다음]&lt;/a&gt;
 &lt;/div&gt;
-
 &lt;div id="list-menu"&gt;
     &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
 &lt;/div&gt;
-
 &lt;div id="search"&gt;
     &lt;form action="list.jsp" method="get"&gt;
-        &lt;p style="margin: 0;padding: 0;"&gt;
-            &lt;input type="hidden" name="boardCd" value="free" /&gt;
-            &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="curPage" value="1" /&gt;
+        &lt;input type="hidden" name="boardCd" value="free" /&gt;
+        &lt;div&gt;
             &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
             &lt;input type="submit" value="검색" /&gt;
-        &lt;/p&gt;
+        &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 &lt;!--  본문 끝 --&gt;
@@ -1426,61 +1412,47 @@ function deleteComment(commentNo) {
 <strong>
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="articleNo" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="articleNo" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="1" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="articleNo" value="5" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="12" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="articleNo" value="5" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="12" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
     &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="articleNo" value="5" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="articleNo" value="5" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="1" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
     &lt;form id="delForm" action="del_proc.jsp" method="post"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="articleNo" value="5" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="articleNo" value="5" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="1" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
     &lt;form id="deleteCommentForm" action="deleteComment_proc.jsp" method="post"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="commentNo" /&gt;
-        &lt;input type="hidden" name="articleNo" value="12" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="commentNo" /&gt;
+      &lt;input type="hidden" name="articleNo" value="12" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="1" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;   
     &lt;form id="deleteAttachFileForm" action="deleteAttachFile_proc.jsp" method="post"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="attachFileNo" /&gt;
-        &lt;input type="hidden" name="articleNo" value="23" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+      &lt;input type="hidden" name="attachFileNo" /&gt;
+      &lt;input type="hidden" name="articleNo" value="23" /&gt;
+      &lt;input type="hidden" name="boardCd" value="free" /&gt;
+      &lt;input type="hidden" name="curPage" value="1" /&gt;
+      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;       
 &lt;/div&gt;
 </strong>
@@ -1648,14 +1620,8 @@ String searchWord = request.getParameter("searchWord");
 &lt;meta name="Keywords" content="게시판 수정하기 폼" /&gt;
 &lt;meta name="Description" content="게시판 수정하기 폼" /&gt;
 &lt;title&gt;자유 게시판&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("writeForm");
-    //유효성 검사 로직 추가
-    return true;
-}
-
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -1675,19 +1641,16 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;자유 게시판&lt;/h1&gt;
-&lt;h2&gt;수정&lt;/h2&gt;
-&lt;form id="writeForm" action="<strong>modify_proc.jsp</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
-<strong>&lt;input type="hidden" name="articleNo" value="5" /&gt;</strong>
+&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
+&lt;h3&gt;수정&lt;/h3&gt;
+&lt;form id="writeForm" action="<strong>modify_proc.jsp</strong>" method="post" enctype="multipart/form-data"&gt;
+<strong>&lt;input type="hidden" name="articleNo" value="5" /&gt;
 &lt;input type="hidden" name="boardCd" value="free" /&gt;
-<strong>&lt;input type="hidden" name="curPage" value="1" /&gt;
+&lt;input type="hidden" name="curPage" value="1" /&gt;
 &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;</strong>
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -1774,33 +1737,6 @@ response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=free&amp;s
 
 <h2>회원</h2>
 
-<p>
-회원 관련 페이지를 작성한다.<br />
-</p>
-
-<h3>로그인 사용자를 위한 회원 메뉴 페이지</h3>
-
-<p>
-이미 로그인하지 않은 사용자가 사용할 수 있는 회원 메뉴 페이지인 notLoginUsers-menu.jsp는 작성했다.<br />
-로그인 사용자가 이용할 수 있는 회원 메뉴 페이지인 loginUsers-menu.jsp 파일을 아래와 같이 작성한다.<br />
-</p>
-
-<h6 class="src">/users/loginUsers-menu.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;
-&lt;h1&gt;회원&lt;/h1&gt;
-&lt;ul&gt;
-    &lt;li&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="logout_proc.jsp"&gt;로그아웃&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="editAccount.jsp"&gt;내 정보 수정&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="changePasswd.jsp"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="bye.jsp"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
-</pre>
-
 <h3>회원 가입 폼 페이지</h3>
 
 <p>
@@ -1840,7 +1776,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1874,7 +1810,7 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="확인" /&gt;
+    &lt;input type="submit" value="전송" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;!--  본문 끝 --&gt;
@@ -1882,7 +1818,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        <strong>&lt;%@ include file="notLoginUsers-menu.jsp" %&gt;</strong>
+        <strong>&lt;%@ include file="user-sub.jsp" %&gt;</strong>
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -1938,7 +1874,7 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
 &lt;meta name="Keywords" content="회원 가입 환영" /&gt;
 &lt;meta name="Description" content="회원 가입 환영" /&gt;
 &lt;title&gt;회원 가입이 완료되었습니다.&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -1953,7 +1889,7 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -2001,7 +1937,7 @@ signUp.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 editAcco
 &lt;meta name="Keywords" content="내 정보 수정" /&gt;
 &lt;meta name="Description" content="내 정보 수정" /&gt;
 &lt;title&gt;내 정보 수정&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("editAccountForm");
@@ -2023,7 +1959,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -2057,7 +1993,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -2114,7 +2050,7 @@ editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 cha
 &lt;meta name="Keywords" content="비밀번호 변경" /&gt;
 &lt;meta name="Description" content="비빌번호 변경" /&gt;
 &lt;title&gt;비밀번호 변경&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 <strong>           
 function check() {
@@ -2142,7 +2078,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -2165,7 +2101,7 @@ function check() {
     &lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt; 
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="확인" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
@@ -2174,7 +2110,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -2230,7 +2166,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
 &lt;meta name="Keywords" content="비밀번호 변경 확인" /&gt;
 &lt;meta name="Description" content="비밀번호 변경 확인" /&gt;
 &lt;title&gt;비밀번호 변경 확인&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -2245,7 +2181,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -2258,7 +2194,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        <strong>&lt;%@ include file="loginUsers-menu.jsp" %&gt;</strong>
+        <strong>&lt;%@ include file="user-sub.jsp" %&gt;</strong>
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -2293,7 +2229,7 @@ editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye
 &lt;meta name="Keywords" content="탈퇴" /&gt;
 &lt;meta name="Description" content="탈퇴" /&gt;
 &lt;title&gt;탈퇴&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("byeForm");
@@ -2315,12 +2251,12 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
 
-&lt;h1&gt;탈퇴&lt;/h1&gt;
+&lt;h2&gt;탈퇴&lt;/h2&gt;
 &lt;form id="byeForm" action="bye_proc.jsp" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -2332,7 +2268,7 @@ function check() {
     &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;  
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="확인" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
@@ -2341,7 +2277,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
 
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
 
     &lt;div id="extra"&gt;
@@ -2398,7 +2334,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
 &lt;meta name="Keywords" content="탈퇴 확인" /&gt;
 &lt;meta name="Description" content="탈퇴 확인" /&gt;
 &lt;title&gt;탈퇴 확인&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -2413,7 +2349,7 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;

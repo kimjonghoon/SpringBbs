@@ -16,11 +16,8 @@ if (requestUri == null) {
   requestUri = "Unknown";
 }
 %>
-
 <div id="url-navi">Error</div>
-
-<h1>Error Page</h1>
-
+<h2>Error Page</h2>
 <%
 if(statusCode != null && statusCode != 500){
     out.write("<h3>Error Details</h3>");

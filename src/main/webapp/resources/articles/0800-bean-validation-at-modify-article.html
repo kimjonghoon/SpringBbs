@@ -72,14 +72,12 @@ public String modify(<strong>@Valid Article article, BindingResult bindingResult
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
-&lt;sf:form id="modifyForm" action="modify" method="post" commandName="article" 
+&lt;sf:form id="modifyForm" action="modify" method="post" modelAttribute="article" 
         enctype="multipart/form-data" onsubmit="return check()"&gt;</strong>
-&lt;p style="margin: 0;padding: 0;"&gt;
     &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
     &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
     &lt;input type="hidden" name="page" value="${param.page }" /&gt;
     &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
-&lt;/p&gt;
 <strong>&lt;sf:errors path="*" cssClass="error" /&gt;</strong>
 &lt;table id="write-form"&gt;
 &lt;tr&gt;

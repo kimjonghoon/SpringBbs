@@ -88,7 +88,7 @@ public String changePasswd(@Valid Password password,
 &lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
 &lt;sf:form id="changePasswordForm" action="changePasswd" method="post"
-        commandName="password" onsubmit="return check();"&gt;</strong>
+        modelAttribute="password" onsubmit="return check();"&gt;</strong>
 &lt;table&gt;
 &lt;tr&gt;
     &lt;td&gt;현재 비밀번호&lt;/td&gt;
@@ -111,7 +111,7 @@ public String changePasswd(@Valid Password password,
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="확인" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 <strong>&lt;/sf:form&gt;</strong>

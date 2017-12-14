@@ -9,19 +9,46 @@ view.html 문서를 열고 #content 사이 &lt;h1&gt;Eclipse 설치&lt;/h1&gt; �
 </p>
 
 <pre class="prettyprint">
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" /&gt;
+        &lt;input type="button" value="삭제" /&gt;
+    &lt;/div&gt;
+    &lt;div class="fr"&gt;
+        &lt;input type="button" value="다음 글" /&gt;
+        &lt;input type="button" value="이전 글" /&gt;
+        &lt;input type="button" value="목록" /&gt;
+        &lt;input type="button" value="새 글쓰기" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 &lt;table class="bbs-table"&gt;
 &lt;tr&gt;
-    &lt;th style="width: 37px;text-align: left;vertical-align: top;"&gt;TITLE&lt;/th&gt;
-    &lt;th style="text-align: left;color: #555;"&gt;무궁화꽃이피었습니다&lt;/th&gt;
+    &lt;th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;무궁화꽃이피었습니다&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div id="detail"&gt;
-    &lt;span id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
-    &lt;p&gt;
+    &lt;div id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/div&gt;
+    &lt;div id="article-content"&gt;
     무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
     무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
-    &lt;/p&gt;
+    &lt;/div&gt;
+	&lt;div id="file-list" style="text-align: right;"&gt;
+		&lt;div class="attach-file"&gt;
+			&lt;a href="#" title="filename" class="download"&gt;TEST.png&lt;/a&gt;
+			&lt;a href="#" title="filekey"&gt;삭제&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
+&lt;!--  댓글 쓰기 --&gt;
+&lt;form id="addCommentForm" style="margin: 10px 0;" action="addComment.jsp" method="post"&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea id="addComment-ta" name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="댓글 남기기" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
 &lt;!--  댓글 반복 시작 --&gt;
 &lt;div class="comments"&gt;
     &lt;span class="writer"&gt;xman&lt;/span&gt;
@@ -31,68 +58,27 @@ view.html 문서를 열고 #content 사이 &lt;h1&gt;Eclipse 설치&lt;/h1&gt; �
          | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
     &lt;/span&gt;
     &lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
-    &lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="commentNo" value="5" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="articleNo" value="12" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+    &lt;form id="modifyCommentForm5" class="comment-form" action="updateComment.jsp" method="post" style="display: none;"&gt;
+    &lt;input type="hidden" name="commentNo" value="5" /&gt;
+    &lt;input type="hidden" name="boardCd" value="free" /&gt;
+    &lt;input type="hidden" name="articleNo" value="12" /&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;div class="fr"&gt;
             &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
             | &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
     &lt;/div&gt;
     &lt;div&gt;
-        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;/form&gt;
-&lt;/div&gt;
-&lt;div class="comments"&gt;
-    &lt;span class="writer"&gt;xman&lt;/span&gt;
-    &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
-    &lt;span class="modify-del"&gt;
-        &lt;a href="javascript:modifyCommentToggle('4')"&gt;수정&lt;/a&gt;
-         | &lt;a href="javascript:deleteComment('4')"&gt;삭제&lt;/a&gt;
-    &lt;/span&gt;
-    &lt;p id="comment4"&gt;무궁화꽃이피었습니다&lt;/p&gt;
-    &lt;form id="modifyCommentForm4" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-    &lt;p&gt;
-        &lt;input type="hidden" name="commentNo" value="4" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="articleNo" value="12" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
-    &lt;div class="fr"&gt;
-        &lt;a href="javascript:document.forms.modifyCommentForm4.submit()"&gt;수정하기&lt;/a&gt;
-        | &lt;a href="javascript:modifyCommentToggle('4')"&gt;취소&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
+        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
     &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 &lt;!--  댓글 반복 끝 --&gt;
-&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
-    &lt;p style="margin: 0; padding: 0;"&gt;
-        &lt;input type="hidden" name="articleNo" value="5"/&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
-    &lt;div id="addComment"&gt;
-        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;div style="text-align: right;"&gt;
-        &lt;input type="submit" value="댓글 남기기" /&gt;
-    &lt;/div&gt;
-&lt;/form&gt;
 &lt;div id="next-prev"&gt;
     &lt;p&gt;다음 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
     &lt;p&gt;이전 글 : &lt;a href="#"&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
     &lt;div class="fl"&gt;
         &lt;input type="button" value="수정" /&gt;
         &lt;input type="button" value="삭제" /&gt;
@@ -112,7 +98,7 @@ view.html 문서를 열고 #content 사이 &lt;h1&gt;Eclipse 설치&lt;/h1&gt; �
 </p>
 
 <p>
-<img alt="bbs-view-01" src="https://lh3.googleusercontent.com/-spM9lCbDwXc/VYPncRaiXOI/AAAAAAAACgU/zSstUAGRxFo/s656/bbs-view-01.png" style="display: block;" />
+<img alt="bbs-view-01" src="https://lh3.googleusercontent.com/9CA4ctrdcVnyTuguCKz0fRUxrAeRDhQ6QCQBcbgFu0Aw4i_EQmBGGhgG6a026OkkTgSshIWmwTkLqDVmD-admpZzo41t1BTsJ1Ijazh7r91_3DbC73AKVccX80sycRw23cPPz7st65Ku4N008qih7jSCG04LjBNNLz9foxoZ20-n3y3oPU1OBnxA2TQC87HLv3PoOX983Iacf1Do_giPCPK7phgG52w3trxNUK2Cx0GzPemW35qsSe3bpOTkXSXXhFVRXkXUROwDTxK2BPcrp5U-tOcCRWuSlUIqMvh72RDh9N4x5CjtdqNLW6xpFzcAb3X_DjvnKBnDnGzLvKYJXeToRqpRz9kfMDOIcexXvdXfcznR0w11v_SkYiH_XxZQ0uKxwN-a4VP_n5IJMzCAJx9ndVVpo6HHQQlz861t0TdWUKzBcUw6-gtJTIigS7EUf8kTOJhh_kchqAIVsmRcwLw7p3BZwfgpa2WRT0kcct5INyr-RpQU86fTCejYc7cRBKI7VJWlnbeWMrbIZDC0TTPLAeMgx4DMMb2NnXdxLG7AT7NSTU8WxqQEl_iqU7FBHXSsmjSVXZS5u_PoVfjVH-rXxgg7L62-PWzBJpn6mQ=w899-h868-no" style="display: block;" />
 </p>
 
 <h3>댓글 수정을 위한 자바 스크립트 토글 함수</h3>
@@ -122,7 +108,15 @@ view.html 문서를 열고 #content 사이 &lt;h1&gt;Eclipse 설치&lt;/h1&gt; �
 </p>
 
 <p>
-<img alt="댓글 수정 링크" src="https://lh3.googleusercontent.com/-IXhhRvu_r64/VYPpuvOQByI/AAAAAAAACgk/KL1la-qwyac/s59/bbs-view-modify-link.png" style="display: block;" />
+<img alt="댓글 수정 링크" src="https://lh3.googleusercontent.com/JeumcyHfvuTjlsSmPiKWHc5hfI9ObfQgxRiSB4hHdDapUfovYqxtdjVV5HZj94akT2R7WuJL0WcZZI0aQDddgseBWWV0Hv3mgdenQK2dJsvlrSDpLIKOm0fyQXzP2sv60not-yXxThY5MuY2emgiEm-MqsDvBbMJPpwvFhVmpNfDFqfToJAwqfI7_lExWPA6eWBcBmkCtAr8GX6qhvnEXTR2WKVRP7dtD6MJgkI4nZmOsvVU3gQHIaTWB2yhQBODEI5J7uurzwPb9rO-XHa2Qz8TqooVoozXN7hUCnho8fK2n39t2bCMtEZJBxGpV4thAe_KVkVxFwu_TLNIx1oaRaYLNX4AcTTEX0Gh9B_hYDgo96uwdAmCOZ3xS380YaDX7tMEXIWhUaQXSccLJE03ks3NlYUFQB-F9GfDw0n3DgW-22MKeIJL2DhsDm8oeY7aRNqPGO_tZUb7mIZQpIKAvWqidAxUfgfaaQxs-etGnoo7eIsWBv6PlFnltqqaP1K7_PiP-fZ3RkQnnDARRkwGtqIspnw4C1ImaaBVIJv1j2PzWdAxc6OrpsyjdFRO-r93rg2wlAcqfLoYaES3oym5q2s1KEOWKAH2Yh15FFporw=w526-h70-no" style="display: block;" />
+</p>
+
+<p>
+<img alt="댓글 수정 링크" src="https://lh3.googleusercontent.com/ZJZmtgHNdzJBw-D3ZDDxjlPdogJZnnjND1t4cSY5uVTxtkETykrN8_dSNu6t6HSBGAKUakstc3OPrXNmDXTzCL64fz3x8NVYSAKh-q9OSaiGiFHxZrkYum5Y6moPti8drYAPRaGMsuq6pUSFnUapXSkH_PP2ZmrwT25T0uEwCckSarTUXNizyekvpeXUeM7eTbQCwq5gk53YT0PHyInT5BJw5hdFPmZJvKdTYletXjKh62KlULp6vu8B802c_UC_ty4nLS2yqbkKY-wB5IqGVVssCXxZGxi1lOXiUZxZHuLMTpiJg9WCvBiz0um0VIAropLooHXczzJcNl7eFI6BUYGVNolZmZptB3SKBzW9x7kJE8KCyebdbAXpHHRchhBirR1kWf7r0hQVIro_1XrBBH9orRX9oVJgm6gGlxwZlU9j2hxwcx0swFJY3PhpqtVJJ2l9Chm9tU_zJ4WuYayE--atf_y9GH5jmDzgqIR0Ri4nJZdsEE8tm3uOcl44uaCFgb6heU_pBem1NeIx9ggI3aWFOjJYKbnVz3qifYO9oDSLaxCoQYnlZSbATxHw7M6IeZJ8mqie-WUVeuAwQCI5rrk5vzcrJc6QY2ArG3XFzg=w549-h159-no" style="display: block;" />
+</p>
+
+<p>
+<img alt="댓글 수정 링크" src="https://lh3.googleusercontent.com/JeumcyHfvuTjlsSmPiKWHc5hfI9ObfQgxRiSB4hHdDapUfovYqxtdjVV5HZj94akT2R7WuJL0WcZZI0aQDddgseBWWV0Hv3mgdenQK2dJsvlrSDpLIKOm0fyQXzP2sv60not-yXxThY5MuY2emgiEm-MqsDvBbMJPpwvFhVmpNfDFqfToJAwqfI7_lExWPA6eWBcBmkCtAr8GX6qhvnEXTR2WKVRP7dtD6MJgkI4nZmOsvVU3gQHIaTWB2yhQBODEI5J7uurzwPb9rO-XHa2Qz8TqooVoozXN7hUCnho8fK2n39t2bCMtEZJBxGpV4thAe_KVkVxFwu_TLNIx1oaRaYLNX4AcTTEX0Gh9B_hYDgo96uwdAmCOZ3xS380YaDX7tMEXIWhUaQXSccLJE03ks3NlYUFQB-F9GfDw0n3DgW-22MKeIJL2DhsDm8oeY7aRNqPGO_tZUb7mIZQpIKAvWqidAxUfgfaaQxs-etGnoo7eIsWBv6PlFnltqqaP1K7_PiP-fZ3RkQnnDARRkwGtqIspnw4C1ImaaBVIJv1j2PzWdAxc6OrpsyjdFRO-r93rg2wlAcqfLoYaES3oym5q2s1KEOWKAH2Yh15FFporw=w526-h70-no" style="display: block;" />
 </p>
 
 <p>
@@ -161,17 +155,18 @@ function modifyCommentToggle(articleNo) {
 </p>
 
 <p>
-<img alt="게시판 상세보기 댓글 수정 토글 자바스크립트 함수 작성하기" src="https://lh3.googleusercontent.com/-35Fwmda0d2c/VYPneSHd3ZI/AAAAAAAACfs/Yv_nJcA-MUU/s335/bbs-view-modify-javascript.png" style="display: block;" />
-</p>
-
-<p>
 위에서 강조된 수정과 취소 링크는 같은 동작을 한다.
 수정 폼이 보이면 안 보이게, 안 보이면 보이게 한다.
 댓글 본문을 담는 p 엘리먼트는 정확히 이와 반대로 동작한다.
 이를 토글(toggle)이라 한다.
 </p>
 
-<h3>날짜, 작성자, 조회 수 스타일링</h3>
+<h3>날짜, 작성자, 조회 수 스타일</h3>
+
+<p>
+[디자인 전]<br />
+<img alt="게시판 상세보기 작성자, 조회 수 디자인 결과" src="https://lh3.googleusercontent.com/ZZueP9w-KtvM_h3jfMw5wlhc8NQXoBzW57Ma5SX-gWe1gmuLcGo7kbrxQ2BRzL6NxGOID3RoPFna7MAo_1EVSCbwyRlHJ9uiNuR8GEV1-Qijef6oLRxWF4WCSLEw58p31gzSkQ9MVEeRCfV_AFRUFAKY8bEr3hKOV5jB_-DVpyWsf2Dwa4toz9cgOTWEi4J7CRA_ktXodhZ03km9FGmI-4ni6OvglJ-IJglrYAyTmnjWgd3aVZiRJtSddReNLV6xXK6NreBV1Zo49DYI6OG8-q6iMQS9STVbZyWfdmrXeEhGBAQALinPRKxSHJP4i_GP47J55arpWdb6I4QT_MnGdzDvNVMcVj0neIXnxMm3m6HwApTLTj7qF3xKVXa4yjxp7MT-IMB7uW1oWj3DqgS1IMr-q6pz3cw6HM5BOPj1AP03VCGbZ6K5pEqcVFE5ktf0rMiQBMP0bGKMO9e6IS1QVzxHK7xhro6ofajlmOVDLWrBztl1xfEc5NWVKdeMayWn61b0LobvSA5X91d8M4X4gNwuP-ebsMCouxABV1TdHaWMPHHc4E0flVElIqJf4Zhw_VgHwlVCcEX_rmt6AUSal5sGoO6uOng0v0hEg1Zgmg=w543-h121-no" style="display: block;" />
+</p>
 
 <h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
@@ -191,168 +186,157 @@ function modifyCommentToggle(articleNo) {
 </pre>
 
 <p>
-<img alt="게시판 상세보기 작성자, 조회 수 디자인 결과" src="https://lh3.googleusercontent.com/--9Qsc-ApwwI/VYPnfeXKn_I/AAAAAAAACgM/hmJjO56M_qs/s596/bbs-view-writer-hit-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 작성자, 조회 수 디자인 결과" src="https://lh3.googleusercontent.com/Y0sPhozbVD9DTS8M2tq-1BFkkOHUV4vkzSPZfJiYWR_Cif0jsxubjFhqvYUaR50D0AZ1xB1pMrURgRXaDjydbNaSuyLzItXAd6S1jm8xoilWbCBe7sfRAUTUXruUKOIFMq76mR2xM0i5mNkUPXL6uGrFwvi-tw95DdrZtKBAbf8roHoOhCSGEsLsvD8RaXg1-I2BbHZ18OvD7YS0x-APM02_jyA_JbaVRA4hjXMMsePofq-UmSEIffK1wNIQK_srNDgfzYTuphsPeDjlK8cIiMrlCw76yhYjUVKidGsCxRR1bD1_P_VbXu7zTSuAS9ZyRhanhXei0NxXKw4uGk4JZ9N0x0X5kKNDG2POHfGR8gmxYiLEsRI5zDF5QHOr-Z-qU0YoiW2jIXHTtMX_KxP-NnIoVWDmFZWv61SPdc_x8kQJ8ucW48cJQW8gxmr3bwUAYTaO1EPfKGq4o51L_a8ucYfRgnc0ACUF-bHPujaTCufPat1gvZeok4aLlsmvHuKWEEESmIpe-XZ-yIutA7CFYlgQOqt5qgqzcUKGFEmTJqRtCIscElrDgHMWWQjxSI1T1H9Z9VuEDmSRYMLefhsOsMSNVWwqP7BvE3T_f8Zeyw=w1004-h896-no" style="display: block;" />
 </p>
 
-<h3>게시글 본문 스타일링</h3>
-
-<h6 class="src">[HTML]</h6>
-<pre class="prettyprint">
-&lt;div id="detail"&gt;
-	&lt;span id="date-writer-hit"&gt;2014 10-09 17:50:30 by 홍길동 hit 1330&lt;/span&gt;
-	<strong>&lt;p&gt;
-	무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
-	무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
-	&lt;/p&gt;</strong>
-</pre>
-
-<h6 class="src">[CSS]</h6>
-<pre class="prettyprint">
-<strong>#detail &gt; p {
-	margin: 0 0 15px 0;
-	padding: 0;
-	color: #333;
-}</strong>
-</pre>
-
-<h3>댓글 작성자, 댓글 작성일, 수정|삭제 링크, 댓글 본문 스타일링</h3>
+<h3>게시글 본문, 첨부 파일 스타일</h3>
 
 <p>
-<img alt="게시판 상세보기 댓글 디자인 전" src="https://lh3.googleusercontent.com/-bOYv4mu4zLE/VYPndx6DK5I/AAAAAAAACfc/29dqUdM6hPA/s163/bbs-view-comments.png" style="display: block;" />
+[디자인 전]<br />
+<img alt="게시글 본문, 첨부 파일 디자인 전" src="https://lh3.googleusercontent.com/4izv6pHGjjZbyF9g8eHp5bMk_cHh4FZreH0YIj-YjS1NNf1YcyrywbRurLOGXMpBIWLiYYgqoQrPFFQhiOocOUrAFYzDrsBJNa7Z-3QOTvosGqRBW7FtTQQ74C8qAqd1DMM-Tl79kSUQjBvpSLR9hZt4zuRt2H3INZd3zMLIGGVQpqW27az3JTHrX4Cb-BdhEFdsjc4biq8EgKaumhlJvvjfHgraDRdfQ7vVqoAPjRc_JoMOOPdQezTCvAzCjj84k5yhQNKkP2hGUDtr2P3cwwZjxQBQInGtuCClDJFZKH0I7O2VuxQrJfClJVbzte50SoAJVOS436Jc005sOkzCScLvICxqSH3kORl4Uw0SoX57XsSTfnRDG-5Jzc6MfYUqa5hAHN3iYvHH1NYE76llv6HQ_SO5vH5GCrKZdFm8bN2-lhsYAWcaocvuJS3U8aPa4ZTF5rs4pBr34obk6Ph1qwZRp_agwXD_LQH8Elc_i3b6egW_uHDu6mEuxReaKxMuVug2YyirFYMLafyMqSPTCS76fpnrdb9ddAg2gypV6ALmoXSbUvazjKqsBcQcEFeeTkDw5xEr3joVy5SpMjex7naodlv1yj2aTy9kebRliA=w534-h66-no" style="border: 1px solid grey;" />
 </p>
 
 <h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
-&lt;div class="comments"&gt;
-	<strong>&lt;span class="writer"&gt;xman&lt;/span&gt;
-	&lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
-	&lt;span class="modify-del"&gt;
-		&lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
-		| &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
-	&lt;/span&gt;
-	&lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;</strong>
-	&lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-		&lt;p&gt;
-			&lt;input type="hidden" name="commentNo" value="5" /&gt;
-			&lt;input type="hidden" name="boardCd" value="free" /&gt;
-			&lt;input type="hidden" name="articleNo" value="12" /&gt;
-			&lt;input type="hidden" name="curPage" value="1" /&gt;
-			&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-		&lt;/p&gt;
-		&lt;div class="fr"&gt;
-			&lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
-			| &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
-		&lt;/div&gt;
-		&lt;div&gt;
-			&lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이피었습니다.&lt;/textarea&gt;
-		&lt;/div&gt;
-	&lt;/form&gt;
+&lt;div id="article-content"&gt;
+무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+무궁화꽃이피었습니다무궁화꽃이피었습니다무궁화꽃이피었습니다&lt;br /&gt;
+&lt;/div&gt;
+&lt;div id="file-list" style="text-align: right;"&gt;
+	&lt;div class="attach-file"&gt;
+		&lt;a href="#" title="filename" class="download"&gt;TEST.png&lt;/a&gt;
+		&lt;a href="#" title="filekey"&gt;삭제&lt;/a&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
 <h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
-<strong>/* 댓글과 댓글을 테두리로 구분 */
+<strong>#article-content {
+	font-size: 0.9em;
+	color: #333;
+}
+.attach-file {
+	font-size: 11px;
+	line-height: 1.3;
+}</strong>
+</pre>
+
+<p>
+[결과 화면]<br />
+<img alt="게시글 본문, 첨부 파일 결과 화면" src="https://lh3.googleusercontent.com/bUPOpBRFJz4ntAlrhOoogeOdEkndJA8s3p0M3-55YJaxm4K_lrAGwJ1FWo90VO6hXn20G6aDAucgTsxeRK0zwfoLUlcgXFudeOkAYQp0NmjrV0S-mIwlor7QFfd4NuiFK9qqCTAfvPnnM4l85KfV4tBZ45ldOtQPQwoMNptPndD_2RBbLzPoNsLo0ffQpQwMfQf3IiqnAeH-DqfMLdu-qhu6I_MMRgyyMTSmuWnB7yz_dxsdgQgSncAYxzLywRqxvy6s3XlZcWqpgMedUu6LWgOqCP0bNA23iThEljlo3koAg0SU6Er3DWENBSbYaIYz4dY4N4iCA12ATWjaf2aRAy4aC8bOzd3h8WNmsdT4bmWrsPdq24d14C-0F1Qt_QK-xvi_CK9NLzDcORA0F4aazrX78SLJNyj-JpYFdW9XLkj10uGJ8XCkANd1q-yFCj77BKsRCtFZscGYLOCivtvzmREhcIVdL86fSOwr1QJx-jQn3V-eACC_GRKwzZJ3LJFKTaMhmsGmifDBFkfpn3kw6n_tWfgE3GPogp0_1K11FGILMiRTNC8oqlkUi_wh8LsmT4NZb9K-ZqRaLmHsAy2HxcdD0gg4770joXjegbj4jA=w599-h60-no" style="border: 1px solid grey;"/>
+</p>
+
+<h3>댓글 작성자, 댓글 작성일, 수정|삭제 링크, 댓글 본문 스타일</h3>
+
+<p>
+[디자인 전]<br />
+<img alt="게시판 상세보기 댓글 디자인 전" src="https://lh3.googleusercontent.com/sPo8MmI8F4-_G1U-VlgGfyLjTrV1_U0zmBWEp_Ii9bX5x08v5Oik8WXwkYJkpZQLjTgeIs6yYk3SKbsf49Cnml87dVmR6ZOPbLFCyAC3A8h3JXrBSqQ8AEsiPLW7cLP-JytrhF1Yb31lSyjen288vGootgASRX9jurASFJs5QhOWk-zFD2giRWLQzHqBY8PQajXaLtgAah6a5Kj3GjqQQFbMpL4n40ZTAPK4YPrBD4Ur769fT8TEIyzTMsOKtTFu2pUDmdIF_USqVmUlq1ZzyQ34pYWlSpa8EqRthkpmTaUrvu3BgzL9jhclzcfMw1JmVce8MK5_Qi5qdSyKxVqd_hNSEEIq-Wct3HH3JegRzcv-US8MecvJ7fTDRptmTfDGxNHCnL-OnnRoVniyygk7iaAHo5aptp8Ea-wPBI-OjhBJNe8tlgMPKpr2SQwnC7667A_paEQQSRoQalUTIAMTzKPidw2lODFNU4ZJVTjTmlS9uZyuc-VokeFeVEWNY2rl3Ae-xjj6O6zw7fAt7-spG4UrF_7vL_l_Rpbxm7tcvTDB45A8zWITG5n5G7ekK_pTTcL3rqlpfv3USbdNceZ2mEr_q2sph4WY2zRwPt-l-A=w532-h70-no" style="border: 1px solid grey;" />
+</p>
+
+<h6 class="src">[HTML]</h6>
+<pre class="prettyprint">
+&lt;span class="writer"&gt;xman&lt;/span&gt;
+&lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
+&lt;span class="modify-del"&gt;
+&lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
+ | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+&lt;/span&gt;
+&lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
+</pre>
+
+<h6 class="src">[CSS]</h6>
+<pre class="prettyprint">
+/* 댓글과 댓글을 테두리로 구분 */
 .comments {
-	border-top: 1px solid #ebebeb;
-	border-right: 1px solid #ebebeb;
-	border-left: 1px solid #ebebeb;
+    border-top: 1px solid #ebebeb;
 }
 /* 댓글 작성자 ID */
 .comments &gt; span.writer {
-	display: block;
-	float: left;
-	margin: 3px;
-	padding: 0;
-	font-size: 12px;
-	font-weight: bold;
-	color: #555;
+    display: block;
+    float: left;
+    margin: 3px;
+    padding: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
 }
 /* 댓글 작성일 */
 .comments &gt; span.date {
-	display: block;
-	float: left;
-	margin: 3px;
-	padding: 0;
-	font-size: 12px;
-	color: #555;
+    display: block;
+    float: left;
+    margin: 3px;
+    padding: 0;
+    font-size: 12px;
+    color: #555;
 }
 /* 댓글 수정|삭제 */
 .comments &gt; span.modify-del {
-	display: block;
-	float: right;
-	margin: 3px;
-	padding: 0;
-	font-size: 12px;
-	color: #555;
+    display: block;
+    float: right;
+    margin: 3px;
+    padding: 0;
+    font-size: 12px;
+    color: #555;
 }
 /* 댓글 수정|삭제 링크 */
 .comments a {
-	color: #555;
-	text-decoration: none;
-	font-size: 11px;
+    color: #555;
+    text-decoration: none;
+    font-size: 11px;
 }
 .comments a:hover {
-	color: #555;
-	text-decoration: underline;
+    color: #555;
+    text-decoration: underline;
 }
 /* 댓글 내용 */
 .comments &gt; p {
-	clear: both;
-	margin: 0;
-	padding: 0 3px 3px 3px;
-	color: #555;
-	font-size: 11px;
-}</strong>
+    clear: both;
+    margin: 0;
+    padding: 0 3px 3px 3px;
+    color: #555;
+    font-size: 11px;
+}
 </pre>
 
 <p>
-<img alt="게시판 상세보기 댓글 디자인 결과" src="https://lh3.googleusercontent.com/-7QuRC_gSH2A/VYPnds5VcdI/AAAAAAAACfY/geZAjEzaOYE/s602/bbs-view-comments-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 댓글 디자인 결과" src="https://lh3.googleusercontent.com/6veMzlJ0a-TgUm3KByqciHCENkYef4Z8wKWo3HAm3VZfQibN1XwKQSiouUq_IxdNs11c9hE3NJoJbnebUe8X1xQAyGYSioBFXthD1cA2XSU9rGx_QZ2veb0qRjh-A3_PMUi6QjBdoF3wRDk8Cuguo0M0QqMkiWiU9b3FPIpZ7a4qMX4StkvJt6FUUUEJhgE4G-EUN8cyO2cLHveBdrKnu5cie2TGNSMXWc9Mm1Y0ZKY2y24geFMvUyhXuCt9vf0MprHFHPteESkGC0eK_hQ1BkWehGPzh0-BzvTySeVh820cfWuhzWkidnDTnhOtz8BRD5pi5GKq08nYzEL-dytcidUjktMfD4pPIAsga9XUa8RVIesbt5vdD9RAGwXQ227i5Tr7eM9sMCjlWY8qDS99nn9qWBP8v-Ak__bdVDoLukbWiM0uf-GWycB_x5_47Zd_0tAqBzpvWrhTs2dJkHxKkDeYdrY7B3XAKtoytWt-r4lhJAfz4Il2_LBYqHDl4oAZXNT4ygFCgjyB0bBlpfvvzfmw8t7RwWh4p_ni2SquFObSLyRLYR-Lu6B1RlaENYlUoC9C--k46xZVJq6Li-GmsSsY0eS8vDVnsPF7RLPaNQ=w601-h55-no" style="border: 1px solid grey" /><br />
 </p>
 
-<h3>댓글 수정 폼 스타일링</h3>
+<h3>댓글 수정 폼 스타일</h3>
 
 <p>
-<img alt="게시판 상세보기 댓글 수정 폼 디자인 전" src="https://lh3.googleusercontent.com/-_2d0PBTFctU/VYPneMT2QsI/AAAAAAAACgQ/OAU0LDeRwKc/s598/bbs-view-modify-form.png" style="display: block;" />
+[디자인 전]<br />
+<img alt="게시판 상세보기 댓글 수정 폼 디자인 전" src="https://lh3.googleusercontent.com/NiGU_4Gl-j86wygkiAeKGRrEBkmG8u91H62jjBXHbvpHkc_mAVWoieEp4V4oWXyWmaOJol_Sxvm-Nr2SF2WUKOWfWebSqHPFZyEDlDg0TXtG7e3nbu1mYHyejmdKspofNmqIZXoXhz4LrrfPhwX5qhkjInK8ZyHtzR9rxe06jh092WC9EfN6UuNrFdCSWM6ukmotsMFOHazmcU8OdpzBaml6W0TUeBRtUa53lc6H_qpikE4G6ediHGol0WkJdPuthXmeQ_O0YdYAwJtV-0Re-OYjAhvjG-a79t_H9GqYHevNLAyYRoodX1kL7ZvkTq23IvAiRaeHOjbs8UaLuoSOl4Sw0na9es4QdLXaL1kthJF214yIiQzfOmA0TWEJLp8x1GlgRrsVwtqcYzF89kWTT5WZr5TH2mVhNndSMjTENoV0BuepIfI-PS33etxq1P-j99F0jpC5L0htSnJat1zmhsgLOZZQOCbkHiBn3idoag5dbsrUg6Y6S8qI0UTr2oBcPg9d2XtFTNL5QDneOuSUBxkehUzlkOZRDt3Ib_NUiuAlesECTyRr0qUQCpqYqiITfSUgrka1PIuXr0M2QTkpOgtsvyDsfOw1zROvMybm_Q=w604-h142-no" style="border: 1px solid grey" /><br />
 </p>
 
 <h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
-&lt;div class="comments"&gt;
-	&lt;span class="writer"&gt;xman&lt;/span&gt;
-	&lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
-	&lt;span class="modify-del"&gt;
-		&lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
-		| &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
-	&lt;/span&gt;
-	&lt;p id="comment5"&gt;무궁화꽃이피었습니다&lt;/p&gt;
-	<strong>&lt;form id="modifyCommentForm5" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-	&lt;p&gt;
-		&lt;input type="hidden" name="commentNo" value="5" /&gt;
-		&lt;input type="hidden" name="boardCd" value="free" /&gt;
-		&lt;input type="hidden" name="articleNo" value="12" /&gt;
-		&lt;input type="hidden" name="curPage" value="1" /&gt;
-		&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-	&lt;/p&gt;
-	&lt;div class="fr"&gt;
-		&lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
-		| &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
-	&lt;/div&gt;
-	&lt;div&gt;
-		&lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;무궁화꽃이피었습니다.&lt;/textarea&gt;
-	&lt;/div&gt;
-	&lt;/form&gt;
-    </strong>
+&lt;form id="modifyCommentForm5" class="comment-form" action="updateComment.jsp" method="post" style="display: none;"&gt;
+&lt;input type="hidden" name="commentNo" value="5" /&gt;
+&lt;input type="hidden" name="boardCd" value="free" /&gt;
+&lt;input type="hidden" name="articleNo" value="12" /&gt;
+&lt;input type="hidden" name="curPage" value="1" /&gt;
+&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+&lt;div style="text-align: right;"&gt;
+	&lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
+	| &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
 &lt;/div&gt;
+&lt;div&gt;
+	&lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;무궁화꽃이피었습니다.&lt;/textarea&gt;
+&lt;/div&gt;
+&lt;/form&gt;
 </pre>
 
 <h6 class="src">[CSS]</h6>
 <pre class="prettyprint">
-<strong>.modify-comment {
+<strong>.comment-form {
 	clear: both; 
 	padding: 0.22em 2.22em 0.22em 3.22em; 
 }
-.modify-comment-ta {
+.comment-textarea {
 	border: 1px solid silver;
 	padding: 3px;
 	width: 99%;
@@ -363,29 +347,25 @@ function modifyCommentToggle(articleNo) {
 </pre>
 
 <p>
-<img alt="게시판 상세보기 댓글 수정 폼 디자인 결과" src="https://lh3.googleusercontent.com/-6c8yr8M8Ceg/VYPnd_9xc-I/AAAAAAAACfo/U-J7YACnkfA/s597/bbs-view-modify-form-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 댓글 수정 폼 디자인 결과" src="https://lh3.googleusercontent.com/JlIQF7LkvZz3dXCn6IsfvRAV_GBa-4zTVm97fWEdw46g42vGL4SeYhLpw2CH1IbRpvsUGorzzyPPsNXsK_B762hl_kbR-ly-UiUNIj4C1_YsqT48e1iL-NPw9XWSzZA9uJQpr5omPIey5qoezo_oMdsDhgazRBtSPyMKdTrXWAAwM9SocFo63uEO8iGoKyLK_Mds41colL5zti5Cw_Cok_JsSZYifevyt998io7cmDevQk76tZzQt86U6OOr6ju_gu172lT1Fi1yADLKX_bxZH7gqmyuVeHw_42f6dHlKVVDYmeMUG_bOh_RRPGjrPgabQMPJRdxLmIDQtjvoz6L482nNWW3MPRaLb32j7qXOrO4k81xGNYQxXuV9TMhSs59GKozUejZLV5iTrjoKdRc8wN-Mpxrc06NkscHP8wc7mssM2aFtVtuXun7xtG3bYBEJOesCdyHIOPzjcsI3y0XnsSJqK4WKT5hI_qnxaexkrmRIj2sYvQgpftjz6uIJnOQIufivmGbqNaOyqPCDVjiEl2uDy2g47UXzO2kmBeWJW0GVeOKpNA0eOP2OYKAPWhzGoZR8HtrNemAiYkPvO8h5IZXFttzLRlcLzHFZbWgIQ=w585-h146-no" style="border: 1px solid grey;" /><br />
 </p>
 
-<h3>댓글 쓰기 폼 스타일링</h3>
+<h3>댓글 쓰기 폼 스타일</h3>
 
 <p>
-<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 전" src="https://lh3.googleusercontent.com/-G9VGAM5vZZE/VYPncTAz8sI/AAAAAAAACgY/Wz1eU4WULUQ/s598/bbs-view-addComments.png" style="display: block;" />
+[디자인 전]<br />
+<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 전" src="https://lh3.googleusercontent.com/LXbR1I7hqGCzi_OIsfyBc_RXWPFBNqwpl5cuVbQWMKVY4aXafcbnDmsD_OG_c0ESpgcJV91HnzmRZGWOyTuspn-4Ktpz8K2-1aPr9swdMWZ4025EUJZkdjDfYj1O5rbG01fkRjaZ0BHOtwWpSMqHXE8iggI2xYXnnFAyRWH9ZRYktceH72S_fr75esbFv3G1WX3chZtuo5bKpI0mxu9v1zDbC1f5MF8Yo6oAMkZdOVz8UAAVZj8KUEMWJAwxyTrJWh_5RbP4QEtvUnLrjrtzRanRNcB7A7kciQBUjGuSf6Ico8v7M-kmU9zVT1LtvEC8BIgYjv1Ej7_1-PK69_3CF6Y_OnZ6Hd28iWnaFb7pSmD1hQIecDiSjYi1xJI-m-n9vkhQI2vfWzQU9AYzt33SpaDUIskd8_4-AJgi_yhx7430aTYH-ZNAa2eUlvHnZ7F-KzvliKk8BDIbkospZO_As59_xdOfSPjY6SzHKzsNlFrvqi9GILiUm_tCfPd05WMV9YtUvsZkQTgAqKQUoJs-iG-Ma9E2eWDk5-wCXhzfzS9NGGcbblGv8-EOdtMUzVmnEtZQiC6jM6jNNSLwTONRUWbFKL8Bmqyoe8sQJwXDnA=w606-h149-no" style="border: 1px solid grey;" /><br />
 </p>
 
 <h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
-&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
-	&lt;p style="margin: 0; padding: 0;"&gt;
-		&lt;input type="hidden" name="articleNo" value="5"/&gt;
-		&lt;input type="hidden" name="boardCd" value="free" /&gt;
-		&lt;input type="hidden" name="curPage" value="1" /&gt;
-		&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-	&lt;/p&gt;
+&lt;form id="addCommentForm" style="margin: 10px 0;" action="addComment.jsp" method="post"&gt;
 	&lt;div id="addComment"&gt;
-		&lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+		&lt;textarea style="addComment-ta" name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
 	&lt;/div&gt;
 	&lt;div style="text-align: right;"&gt;
-		&lt;input type="submit" value="댓글 남기기" /&gt;
+		&lt;input type="submit" value="댓글 쓰기" /&gt;
 	&lt;/div&gt;
 &lt;/form&gt;
 </pre>
@@ -402,18 +382,20 @@ function modifyCommentToggle(articleNo) {
 	width: 99%;
 	padding: 3px;
 	border: 0;
-	color: #555;    
+	color: #555;
 }</strong>
 </pre>
 
 <p>
-<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 결과" src="https://lh3.googleusercontent.com/-3eCDFB4lAWE/VYPncbyPU8I/AAAAAAAACfI/CsFQ5ZqjN_A/s601/bbs-view-addComments-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 댓글 쓰기 폼 디자인 결과" src="https://lh3.googleusercontent.com/4Crv1ZuVDJydfYsP0TvrY-O4iKscMxWjM3oSQQYVxWtY7W56aNK8XCi-3nMUoq8USGHwF82ZXJNP4X-XHNFSof2yqmCCxdSc3TQYcQ_XoItKR5w2HaD56xpC8WvWjw4biE0X1Ow2M-sAJ_eY3Khhr8mGjvBI-hN1hqLIIXNJmcwFPYtZODeRzcj74UDRCdHHg9QiZL0yaBUBGfkVXT5zbGmIMFQuCiMFThg8x6qGUh8oktuLTBrcdoX2NNL0lKZQpkcag9ELrRieVvJ6jhuy21aY2xPLFtffAfV1AgrbU_bwiZc3dcxbhm4McVtevp9fWtwAQPN-gQD90drlgKBEMiTrkmW3dr79v5ijh16QnLz8tiPBosB4CBy0B4ozFG-3rx2kttgrJkEEOH7EdPqnYi4ctNyBKCD1IkZYayPLI1VIv7ojtDrhfsARn12hIS6X0SzpnImbGLvYJCyGl_HviIQvqkbeev5nlxq4hlEKH9mlH1hdCEIRx5TLGQgA4B9EDUnRzvwHkDhJzCvMf3gxKtsPqsqJbtG-sPBCz2L6ZRPcDmf5-wWOLeQaTYKlHU5F7yNpHcwr17RkI3sbdGBUqGeIbR5R_ahl6ANdxfDaZQ=w603-h172-no" style="border: 1px solid grey;" /><br />
 </p>
 
-<h3>다음 글, 이전 글 스타일링</h3>
+<h3>다음 글, 이전 글 스타일</h3>
 
 <p>
-<img alt="게시판 상세보기 다음 글 이전 글 디자인 전" src="https://lh3.googleusercontent.com/-7ourJrdqanc/VYPnfKmtjFI/AAAAAAAACgA/JFZm59MyMMU/s197/bbs-view-next-prev.png" style="display: block;" />
+[디자인 전]<br />
+<img alt="게시판 상세보기 다음 글 이전 글 디자인 전" src="https://lh3.googleusercontent.com/33BfhU98s_oWL9NlbiTUhfTwYabTKxj4IAK7BT9LuOeuQVJ1b2etaoG3EjKDcoc-zgysRsVfiIiRY7TxsCJS-z0sqDOWhphkUjft6DpxkslpnvUt1DIYWbQ5x1jzokDV8ysrcpiGqV_Ox4S_fq31-0t-XMPCp4iDmCXxi-QEs2z4ekCR9pp4lXof0etqiRaqLwJ61-WI6cPwvlLXNSvl63MpVMIJC5p8mwCy8LV0RRRw019Vp0kjQqtRtLNzVqHy-lS9pauXDppuPg_KE1IB32HsLkyprX3sgBGrdiLCPm1ytHSYA5FkPAPzlGO06meIzdVrpeXrF5i0OmOU3oOzeeGWm0l2zknffNqMFc6jZSLw61t7cv2Z0n9kPd02QXGGGAdK7eXHATBkbSsFaEAZC_VrUQtuG-fdxXMLxuVeemwKUUGvreQZ4sI483xdvBYL60VxR00Xog5TphRi-MBnUrg0GG4f0sm6bEWC7-v_LmrQXq5IKud3RtrvvXnbkU8FX3AdQ2cfWjFyErnypyPgzTi4I70WVbjLHsOBWAcBp56J-7K6GLFcE_KwfBZnG-XAhRLkFxgr9iGrI9nDANdQuvUwT8LsDlQ3bZ3NNSoFBg=w600-h77-no" style="border: 1px solid grey;" /><br />
 </p>
 
 <h6 class="src">[HTML]</h6>
@@ -448,18 +430,24 @@ function modifyCommentToggle(articleNo) {
 </pre>
 
 <p>
-<img alt="게시판 상세보기 다음 글 이전 글 디자인 결과" src="https://lh3.googleusercontent.com/-wU4qc8o8FU0/VYPnetPkSxI/AAAAAAAACf0/wfTFhBLbgUc/s601/bbs-view-next-prev-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 다음 글 이전 글 디자인 결과" src="https://lh3.googleusercontent.com/3tlRSDqjAPxsK6QRAcVZtD09rESpTFrPfLVp1QlrfY_pPAzG7hqXJ73vji2dB7EfjF_2nbncsJ7MeWyRGSv2cdljucOb4seaekFScTx4AUhTnU8kP8pLaZtLB1jx3mVorYs4Dv2ARY3qRQct2RNXB4AisXEAno3q8qlRrQTF5urdDi2YRVHamZmjwmPk2SJ2pkm6f2ZkXvm7OYEW1BUsHt7q_-w-LUcAQDwd2PA8vcjaG6lVEpB7kb4t_A0-zaD6-8Zl5bAhMzWqdy89On8uLrWyJIaWgO2njd5G_xYK1KjlvUX5t5T5s8I5rf1uqFHtUoyLo-NDK5tTHsoQs73I55DL4nQQWYkgM2sJFik5o5ZZEMapr1DAMmJC-anhk5407XivdZWIt_5kJxcA90-QWFd51ao20kkw3kqJD7qSPDHXOm5S_wZ1BwRdCodJpduuKU3xZYEjuVmAGMS79PEEfySjICH9V9nHmP9Q6x8uw8cxGLAdh12vL9DhtVlvewxGuyDgfG80baKw42CMpMUmaE0uBn8xivtth0QHR1Jpeql56O6KVW3qFPHa0P9DyYOJ6DvHly-NCAnbJCwW7OlBqzBfkTLLRzyTAl3NvTgvrA=w602-h75-no" style="border: 1px solid grey;" /><br />
 </p>
 
 <h3>수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼 위치 조정</h3>
 
 <p>
-<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 전" src="https://lh3.googleusercontent.com/--C_8xydabOo/VYPndYkt72I/AAAAAAAACgE/PZrb8qK256Q/s329/bbs-view-buttons.png" style="display: block;" />
+[디자인 전]<br />
+<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 전" src="https://lh3.googleusercontent.com/3mj5hWKEOr5Zoo6oqTI80AgA7rgqx49PvUHUP33a7frzrf2PvlqaUuYZBOJ-hSZFLMWKLoNFktVG5iQyvnBuDL9y7vaap3SbbdPYJYB4bWwGAJr0FfqJY1ewHmIOqCnRIgfGEVTvnEwyBEZBYn4Hi1vTKpABW-wZ_D1ffMSlD1pSeOEgV-JQihm65NaMTZayUygPVb8cfXiHdRvQ_tdsp0EcL0wPXISUG5d-pjr2yl5RxjHx9JCApPE_IVbK-RKLvxJTMkUZWrKYrocw3BbiYybCqpfBGC3y6XiJtP2RneS040on3_JieaqT-h3TDnHmXX56a4L82_JNv3gl0r70Xkl_Ht_3VaaNna6jKLJ09ddYgVYNdLnCZXrQRq7Kv8AZ8EqGQDa5vhbLn4wzbTvVylFMcviNwtI_moBbDhE9f_BaYku4Dx7RPZq8CFHBDfkZufWdN3GSm5gKYUMlhohxLUYa0YbhmWbiX3MkJPVz46lXepEj6BgC2lNPqpJ-guIoCLoOx6Ytx3Jd1hOIhL_gNe1jcFEIIEaPVnOuVrYCtWFeeti732FyxpqG5JNct1eD9aeOteLSxFnwanotQCe7KpjYApuk2gqv6psJsqf1Lw=w582-h75-no" style="border: 1px solid grey;" /><br />
+</p>
+
+<p>
+HTML에서 아래와 같은 코드가 두 군데가 있다.
 </p>
 
 <h6 class="src">[HTML]</h6>
 <pre class="prettyprint">
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" ..&gt;
 	&lt;div class="fl"&gt;
 		&lt;input type="button" value="수정" /&gt;
 		&lt;input type="button" value="삭제" /&gt;
@@ -477,7 +465,6 @@ function modifyCommentToggle(articleNo) {
 <pre class="prettyprint">
 <strong>#view-menu {
     height: 22px;
-    margin-bottom: 47px;
 }
 .fl {
     float: left;
@@ -488,7 +475,8 @@ function modifyCommentToggle(articleNo) {
 </pre>
 
 <p>
-<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 결과" src="https://lh3.googleusercontent.com/-6j4_CK9ayTg/VYPndPZTiUI/AAAAAAAACgI/fE3YUhtI-MY/s599/bbs-view-buttons-result.png" style="display: block;" />
+[결과 화면]<br />
+<img alt="게시판 상세보기 수정*삭제*다음 글*이전 글*목록*새 글쓰기 버튼 디자인 결과" src="https://lh3.googleusercontent.com/U7p1ej9E5jheJ7toUvVmO6YLlVTic5B-eWwnz9oES5oChemeU9FyQVZIY-pS-qaVxNcylbQJ7dTubdtAqCHvW_PzaKA2mKvNebRiduvCILw0oupJVYmLaVbJ0L7QSuJP0RNcbQQj21NvdNIb0qcoWpI6DdtZ0m33izMs9eKLnjK5n5EZuJ4aQxVWnl22-GOvh-2QEp3Dg7U_fch27vROETX3RUxPqRlrKI70wfwDbl1JymaWFIWWuzVp1XsTY-Os0D3nFe300cxvI7DHzWxkGCbNRenySd_NxPPy0z-piM8S2UNbe9lSqh1zE3Jql4MZLaxGzX1bSZxs1u7ZnCpnRlmBOTYAwuPEFC16-e3n5FZt1tZl5HqlVmxJ3XIW3kf9QOan7ngZlq9remtDFTwRfJOEriF7imzKpqoHHlYMaKtJm1-av6m2ou_SLahcrENwwdhrCuArwr2nIO1zaV9YCV3BraTCMkaWNw73YaPK1r1UQEDzEpOA8hmaUNho4-XlI9ixJj2gO_wsGRTBY4tCE23q37J3KxOc0Blm_evvPKf1Lw_dMQ3d2oVjMNE-Qmb5REFJJv2eIA5tnuzgQqtGhwFtkmU1ZtEhk9WYwiNDsQ=w1006-h636-no" style="display: block;" />
 </p>
 
 <span id="refer">참고</span>

@@ -23,7 +23,7 @@
 	<div id="container">
 		<div id="content">
 			<div id="url-navi">404</div>
-			<h1>404</h1>
+			<h2>404</h2>
 			그런 페이지가 없습니다.
 		</div>
     </div>

@@ -38,7 +38,7 @@ JSP 파일을 아래를 참조해 수정한다.
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
 &lt;sf:form id="editAccountForm" action="editAccount" method="post" 
-        commandName="user" onsubmit="return check();"&gt;
+        modelAttribute="user" onsubmit="return check();"&gt;
     &lt;sf:hidden path="email" value="abc@def.ghi" /&gt;
     &lt;sf:errors path="*" cssClass="error" /&gt;</strong>
 &lt;table&gt;

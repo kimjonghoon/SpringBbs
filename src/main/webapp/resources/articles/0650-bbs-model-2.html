@@ -217,8 +217,8 @@ logincheck.jsp가 담당하는 로직은 액션 클래스에서 담당하는 게
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 목록" /&gt;
 &lt;meta name="Description" content="게시판 목록" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function goList(page) {
     var form = document.getElementById("listForm");
@@ -249,76 +249,75 @@ function goWrite() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-            
-&lt;h1&gt;<strong>${boardNm }</strong>&lt;/h1&gt;
-    &lt;!--  게시판 목록 머리말 --&gt;
-    &lt;table class="bbs-table"&gt;
-    &lt;tr&gt;
-        &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
-        &lt;th&gt;TITLE&lt;/th&gt;
-        &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
-        &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;!--  반복 구간 시작 --&gt;
-    <strong>&lt;c:forEach var="article" items="${list }" varStatus="status"&gt;</strong>
-    &lt;tr&gt;
-        &lt;td style="text-align: center;"&gt;<strong>${listItemNo - status.index }</strong>&lt;/td&gt;
-        &lt;td&gt;
-            &lt;a href="javascript:goView('<strong>${article.articeNo }</strong>')"&gt;<strong>${article.title }</strong>&lt;/a&gt;
-            <strong>&lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;</strong>
-            &lt;img src="../images/attach.png" alt="첨부 파일" /&gt;
-            <strong>&lt;/c:if&gt;</strong>
-            <strong>&lt;c:if test="${article.commentNum &gt; 0 }"&gt;</strong>
-            &lt;span class="bbs-strong"&gt;[<strong>${article.commentNum }</strong>]&lt;/span&gt;
-            <strong>&lt;/c:if&gt;</strong>
-        &lt;/td&gt;
-        &lt;td style="text-align: center;"&gt;<strong>${article.regdate }</strong>&lt;/td&gt;
-        &lt;td style="text-align: center;"&gt;<strong>${article.hit }</strong>&lt;/td&gt;
-    &lt;/tr&gt;
-    <strong>&lt;/c:forEach&gt;</strong>
-    &lt;!--  반복 구간 끝 --&gt;
-    &lt;/table&gt;
-        
-    &lt;div id="paging"&gt;
-        <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
-            &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[이전]&lt;/a&gt;
+&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
+&lt;!--  게시판 목록 머리말 --&gt;
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
+    &lt;th&gt;TITLE&lt;/th&gt;
+    &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
+    &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
+&lt;/tr&gt;
+&lt;!--  반복 구간 시작 --&gt;
+<strong>&lt;c:forEach var="article" items="${list }" varStatus="status"&gt;</strong>
+&lt;tr&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${listItemNo - status.index }</strong>&lt;/td&gt;
+    &lt;td&gt;
+        &lt;a href="javascript:goView('<strong>${article.articeNo }</strong>')"&gt;<strong>${article.title }</strong>&lt;/a&gt;
+        <strong>&lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;</strong>
+        &lt;img src="../images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
         <strong>&lt;/c:if&gt;</strong>
-        
-        <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
-            <strong>&lt;c:choose&gt;
-                &lt;c:when test="${param.page == i }"&gt;</strong>
-                &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
-                <strong>&lt;/c:when&gt;
-                &lt;c:otherwise&gt;</strong>
-                &lt;a href="javascript:goList('<strong>${i }</strong>')"&gt;<strong>${i }</strong>&lt;/a&gt;
-                <strong>&lt;/c:otherwise&gt;
-            &lt;/c:choose&gt;
-        &lt;/c:forEach&gt;</strong>
-
-        <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
-            &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[다음]&lt;/a&gt;
+        <strong>&lt;c:if test="${article.commentNum &gt; 0 }"&gt;</strong>
+        &lt;span class="bbs-strong"&gt;[<strong>${article.commentNum }</strong>]&lt;/span&gt;
         <strong>&lt;/c:if&gt;</strong>
-    &lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.regdate }</strong>&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.hit }</strong>&lt;/td&gt;
+&lt;/tr&gt;
+<strong>&lt;/c:forEach&gt;</strong>
+&lt;!--  반복 구간 끝 --&gt;
+&lt;/table&gt;
+    
+&lt;div id="paging"&gt;
+    <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[이전]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    
+    <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
+        <strong>&lt;c:choose&gt;
+            &lt;c:when test="${param.page == i }"&gt;</strong>
+            &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
+            <strong>&lt;/c:when&gt;
+            &lt;c:otherwise&gt;</strong>
+            &lt;a href="javascript:goList('<strong>${i }</strong>')"&gt;<strong>${i }</strong>&lt;/a&gt;
+            <strong>&lt;/c:otherwise&gt;
+        &lt;/c:choose&gt;
+    &lt;/c:forEach&gt;</strong>
 
-    &lt;div id="list-menu"&gt;
-        &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
-    &lt;/div&gt;
+    <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[다음]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+&lt;/div&gt;
 
-    &lt;div id="search"&gt;
-        &lt;form action="list<strong>.do</strong>" method="get" style="margin: 0;padding: 0;"&gt;
-            &lt;p style="margin: 0;padding: 0;"&gt;
-                &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-                &lt;input type="hidden" name="page" value="1" /&gt;
-                &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-                &lt;input type="submit" value="검색" /&gt;
-            &lt;/p&gt;
-        &lt;/form&gt;
-    &lt;/div&gt;
+&lt;div id="list-menu"&gt;
+    &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
+&lt;/div&gt;
+
+&lt;div id="search"&gt;
+    &lt;form action="list<strong>.do</strong>" method="get" style="margin: 0;padding: 0;"&gt;
+        &lt;input type="hidden" name="page" value="1" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;div&gt;
+        &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+        &lt;input type="submit" value="검색" /&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
 &lt;!--  본문 끝 --&gt;
+
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -338,26 +337,20 @@ function goWrite() {
 
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="page" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form<strong>.do</strong>" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 
@@ -390,8 +383,8 @@ list.jsp 수정을 완료했다.<br />
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 상세보기" /&gt;
 &lt;meta name="Description" content="게시판 상세보기" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
     var p_id = "comment" + articleNo;
@@ -413,29 +406,24 @@ function modifyCommentToggle(articleNo) {
     p.style.display = p_display;
     form.style.display = form_display;
 }
-
 function goList(page) {
     var form = document.getElementById("listForm");
     form.page.value = page;
     form.submit();
 }
-
 function goView(articleNo) {
     var form = document.getElementById("viewForm");
     form.articleNo.value = articleNo;
     form.submit();
 }
-
 function goWrite() {
     var form = document.getElementById("writeForm");
     form.submit();
 }
-
 function goModify() {
     var form = document.getElementById("modifyForm");
     form.submit();
 }
-
 function goDelete() {
     var check = confirm("정말로 삭제하시겠습니까?");
     if (check) {
@@ -443,7 +431,6 @@ function goDelete() {
         form.submit();
     }
 }
-
 function deleteAttachFile(attachFileNo) {
     var check = confirm("첨부 파일을 정말로 삭제하시겠습니까?");
     if (check) {
@@ -452,7 +439,6 @@ function deleteAttachFile(attachFileNo) {
         form.submit();
     }
 }
-
 function deleteComment(commentNo) {
     var check = confirm("댓글을 정말로 삭제하시겠습니까?");
     if (check) {
@@ -476,30 +462,48 @@ function deleteComment(commentNo) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
+
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>${boardNm }</strong>&lt;/h1&gt;
+&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
+    <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" onclick="goModify()" /&gt;
+        &lt;input type="button" value="삭제" onclick="goDelete()"/&gt;
+    &lt;/div&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    &lt;div class="fr"&gt;
+        <strong>&lt;c:if test="${nextArticle != null }"&gt;</strong>
+        &lt;input type="button" value="다음 글" onclick="goView('<strong>${nextArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        <strong>&lt;c:if test="${prevArticle != null }"&gt;</strong>
+        &lt;input type="button" value="이전 글" onclick="goView('<strong>${prevArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        &lt;input type="button" value="목록" onclick="goList('<strong>${param.page }</strong>')" /&gt;
+        &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 &lt;table class="bbs-table"&gt;
 &lt;tr&gt;
-    &lt;th style="width: 37px;text-align: left;vertical-align: top;"&gt;TITLE&lt;/th&gt;
-    &lt;th style="text-align: left;color: #555;"&gt;<strong>${title }</strong>&lt;/th&gt;
+    &lt;th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;<strong>${title }</strong>&lt;/th&gt;
 &lt;/tr&gt; 
 &lt;/table&gt;
-&lt;div id="gul-content"&gt;
-    &lt;span id="date-writer-hit"&gt;edited <strong>${regdate }</strong> by <strong>${name }</strong> hit <strong>${hit }</strong>&lt;/span&gt;
-    &lt;p&gt;<strong>${content }</strong>&lt;/p&gt;
-    &lt;p id="file-list" style="text-align: right"&gt;
-        <strong>&lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;</strong>
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited <strong>${regdate }</strong> by <strong>${name }</strong> hit <strong>${hit }</strong>&lt;/div&gt;
+    &lt;div id="article-content"&gt;<strong>${content }</strong>&lt;/div&gt;
+    &lt;div id="file-list" style="text-align: right"&gt;
+    <strong>&lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;</strong>
+        &lt;div id="attach-file"&gt;
             &lt;a href="<strong>${uploadPath }${file.filename }</strong>"&gt;<strong>${file.filename }</strong>&lt;/a&gt;
             <strong>&lt;c:if test="${user.email == file.email }"&gt;</strong>
             &lt;a href="javascript:deleteAttachFile('<strong>${file.attachFileNo }</strong>')"&gt;x&lt;/a&gt;
             <strong>&lt;/c:if&gt;</strong>
-            &lt;br /&gt;
-        <strong>&lt;/c:forEach&gt;</strong>
+         &lt;/div&gt;
+    <strong>&lt;/c:forEach&gt;</strong>
     &lt;/p&gt;
 &lt;/div&gt;
-
 &lt;!--  댓글 반복 시작 --&gt;
 <strong>&lt;c:forEach var="comment" items="${commentList }" varStatus="status"&gt;</strong>
 &lt;div class="comments"&gt;
@@ -512,7 +516,7 @@ function deleteComment(commentNo) {
     &lt;/span&gt;
     <strong>&lt;/c:if&gt;</strong>
     &lt;p id="comment<strong>${comment.commentNo }</strong>"&gt;<strong>${comment.memo }</strong>&lt;/p&gt;
-    &lt;form id="modifyCommentForm<strong>${comment.commentNo }</strong>" class="modify-comment" action="updateComment<strong>.do</strong>" method="post" style="display: none;"&gt;
+    &lt;form id="modifyCommentForm<strong>${comment.commentNo }</strong>" class="comment-form" action="updateComment<strong>.do</strong>" method="post" style="display: none;"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="commentNo" value="<strong>${comment.commentNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
@@ -525,7 +529,7 @@ function deleteComment(commentNo) {
             | &lt;a href="javascript:modifyCommentToggle('<strong>${comment.commentNo }</strong>')"&gt;취소&lt;/a&gt;
     &lt;/div&gt;
     &lt;div&gt;
-        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;<strong>${comment.memo }</strong>&lt;/textarea&gt;
+        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>${comment.memo }</strong>&lt;/textarea&gt;
     &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
@@ -555,8 +559,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;이전 글 : &lt;a href="javascript:goView('<strong>${prevArticle.articleNo }</strong>')"&gt;<strong>${prevArticle.title }</strong>&lt;/a&gt;&lt;/p&gt;
     <strong>&lt;/c:if&gt;</strong>
 &lt;/div&gt;
-
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
     <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
     &lt;div class="fl"&gt;
         &lt;input type="button" value="수정" onclick="goModify()" /&gt;
@@ -574,16 +577,14 @@ function deleteComment(commentNo) {
         &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-
 &lt;!-- 목록 --&gt;
-&lt;table&gt;
+&lt;table class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
     &lt;th&gt;TITLE&lt;/th&gt;
     &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
     &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
-    
 <strong>&lt;c:forEach var="article" items="${list }" varStatus="status"&gt;</strong>
 &lt;tr&gt;
     &lt;td style="text-align: center;"&gt;
@@ -599,7 +600,7 @@ function deleteComment(commentNo) {
     &lt;td&gt;
         &lt;a href="javascript:goView('<strong>${article.articleNo }</strong>')"&gt;<strong>${article.title }</strong>&lt;/a&gt;
         <strong>&lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;</strong>
-        &lt;img src="../images/attach.png" alt="첨부 파일" /&gt;
+        &lt;img src="/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
         <strong>&lt;/c:if&gt;</strong>
         <strong>&lt;c:if test="${article.commentNum &gt; 0 }"&gt;</strong>
         &lt;span class="bbs-strong"&gt;[<strong>${article.commentNum }</strong>]&lt;/span&gt;
@@ -638,15 +639,16 @@ function deleteComment(commentNo) {
 
 &lt;div id="search"&gt;
     &lt;form action="list<strong>.do</strong>" method="get"&gt;
-        &lt;p style="margin: 0;padding: 0;"&gt;
-            &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-            &lt;input type="hidden" name="page" value="1" /&gt;
+        &lt;input type="hidden" name="page" value="1" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;div&gt;
             &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
             &lt;input type="submit" value="검색" /&gt;
-        &lt;/p&gt;
+        &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 &lt;!--  본문 끝 --&gt;
+
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -766,20 +768,13 @@ view.jsp로 액션이 만들어서 전달해야 하는 데이터는 다음과 �
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="글쓰기 화면" /&gt;
 &lt;meta name="Description" content="글쓰기 화면" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("writeForm");
-    //유효성 검사로직 추가
-    return true;
-}
-
 function goList() {
     var form = document.getElementById("listForm");
     form.submit();
 }
-
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -799,16 +794,13 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>${boardNm }</strong>&lt;/h1&gt;
-&lt;h2&gt;글쓰기&lt;/h2&gt;
-&lt;form id="writeForm" action="write<strong>.do</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
+&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;h3&gt;새 글쓰기&lt;/h3&gt;
+&lt;form id="writeForm" action="write<strong>.do</strong>" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -833,6 +825,7 @@ function goView() {
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;!-- 본문 끝 --&gt;
+
         &lt;/div&gt;
     &lt;/div&gt;
     
@@ -852,21 +845,18 @@ function goView() {
 
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;   
 &lt;/div&gt;
+
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -888,15 +878,14 @@ write.jsp에 액션이 만들어 전달할 데이터는 boardNm(게시판 이름
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 수정하기 폼" /&gt;
 &lt;meta name="Description" content="게시판 수정하기 폼" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("modifyForm");
     //유효성 검사로직 추가
     return true;
 }
-
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -916,19 +905,16 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>${boardNm }</strong>&lt;/h1&gt;
-&lt;h2&gt;수정&lt;/h2&gt;
+&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;h3&gt;수정&lt;/h3&gt;
 &lt;form id="modifyForm" action="modify<strong>.do</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
 &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
 &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -998,35 +984,23 @@ modify.jsp에 액션이 만들어서 전달할 데이터는 다음과 같다.
 인클루드 지시어에 쓰인 jsp를 제외한 모든 .jsp를 .do로 바꾼다.
 </p>
 
-<h6 class="src">loginUsers-menu.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;
-&lt;h1&gt;회원&lt;/h1&gt;
+<h6 class="src">user-sub.jsp</h6>
+<pre class="prettyprint">
+&lt;h1&gt;&lt;회원&lt;/h1&gt;
 &lt;ul&gt;
-    &lt;li&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="logout<strong>.do</strong>"&gt;로그아웃&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="editAccount<strong>.do</strong>"&gt;내 정보 수정&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="changePasswd<strong>.do</strong>"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="bye<strong>.do</strong>"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
-</pre>
-
-<h6 class="src">notLoginUsers-menu.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;
-&lt;h1&gt;회원&lt;/h1&gt;
-&lt;ul&gt;
-    &lt;li&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="login<strong>.do</strong>"&gt;로그인&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="signUp<strong>.do</strong>"&gt;회원 가입&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;ID(email) 찾기&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;비밀번호 찾기&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
+  &lt;c:choose&gt;
+      &lt;c:when test="${empty check}"&gt;
+        &lt;li&gt;&lt;a href="/users/login"&gt;로그인&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/signUp"&gt;회원 가입&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;ID 찾기&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;비밀번호 찾기&lt;/a&gt;&lt;/li&gt;
+      &lt;/c:when&gt;
+      &lt;c:otherwise&gt;
+        &lt;li&gt;&lt;a href="/users/editAccount"&gt;내 정보 수정&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/changePasswd"&gt;비빌번호 변경&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/bye"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
+      &lt;/c:otherwise&gt;
+  &lt;/c:choose&gt;
 &lt;/ul&gt;
 </pre>
 
@@ -1041,7 +1015,7 @@ modify.jsp에 액션이 만들어서 전달할 데이터는 다음과 같다.
 &lt;meta name="Keywords" content="로그인" /&gt;
 &lt;meta name="Description" content="로그인" /&gt;
 &lt;title&gt;로그인&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("loginForm");
@@ -1063,11 +1037,11 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
-&lt;h1&gt;로그인&lt;/h1&gt;
+&lt;h2&gt;로그인&lt;/h2&gt;
 <strong>&lt;c:if test="${not empty param.msg }"&gt;
 &lt;p style="color: red;"&gt;로그인에 실패했습니다.&lt;/p&gt;
 &lt;/c:if&gt;</strong>      
@@ -1087,7 +1061,7 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding: 15px 0;"&gt;
-    &lt;input type="submit" value="확인" /&gt;
+    &lt;input type="submit" value="전송" /&gt;
     &lt;input type="button" value="회원 가입" onclick="location.href='signUp<strong>.do</strong>'" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
@@ -1096,7 +1070,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="notLoginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -1123,7 +1097,7 @@ function check() {
 &lt;meta name="Keywords" content="회원 가입" /&gt;
 &lt;meta name="Description" content="회원 가입" /&gt;
 &lt;title&gt;회원 가입&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("signUpForm");
@@ -1145,7 +1119,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1180,7 +1154,7 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="확인" /&gt;
+    &lt;input type="submit" value="전송" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;!--  본문 끝 --&gt;
@@ -1188,7 +1162,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="notLoginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -1215,7 +1189,7 @@ function check() {
 &lt;meta name="Keywords" content="회원 가입 환영" /&gt;
 &lt;meta name="Description" content="회원 가입 환영" /&gt;
 &lt;title&gt;회원 가입이 완료되었습니다.&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -1230,7 +1204,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1269,7 +1243,7 @@ function check() {
 &lt;meta name="Keywords" content="내 정보 수정" /&gt;
 &lt;meta name="Description" content="내 정보 수정" /&gt;
 &lt;title&gt;내 정보 수정&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("editAccountForm");
@@ -1291,7 +1265,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1324,7 +1298,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -1352,7 +1326,7 @@ function check() {
 &lt;meta name="Keywords" content="비밀번호 변경" /&gt;
 &lt;meta name="Description" content="비빌번호 변경" /&gt;
 &lt;title&gt;비밀번호 변경&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     var form = document.getElementById("changePasswordForm");
@@ -1378,7 +1352,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1400,7 +1374,7 @@ function check() {
     &lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="확인" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
@@ -1409,7 +1383,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
 
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
 
     &lt;div id="extra"&gt;
@@ -1436,7 +1410,7 @@ function check() {
 &lt;meta name="Keywords" content="비밀번호 변경 확인" /&gt;
 &lt;meta name="Description" content="비밀번호 변경 확인" /&gt;
 &lt;title&gt;비밀번호 변경 확인&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -1451,7 +1425,7 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
@@ -1463,7 +1437,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
@@ -1490,7 +1464,7 @@ function check() {
 &lt;meta name="Keywords" content="탈퇴" /&gt;
 &lt;meta name="Description" content="탈퇴" /&gt;
 &lt;title&gt;탈퇴&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("byeForm");
@@ -1512,12 +1486,11 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;탈퇴&lt;/h1&gt;
+&lt;h2&gt;탈퇴&lt;/h2&gt;
 &lt;form id="byeForm" action="bye<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -1529,7 +1502,7 @@ function check() {
     &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;  
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="확인" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
@@ -1538,7 +1511,7 @@ function check() {
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
 
     &lt;div id="sidebar"&gt;
-        &lt;%@ include file="loginUsers-menu.jsp" %&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
     &lt;/div&gt;
 
     &lt;div id="extra"&gt;
@@ -1632,12 +1605,11 @@ if (loginUser == null) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 820px;"&gt;
+        &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="url-navi"&gt;Error&lt;/div&gt;
-            
-&lt;h1&gt;Error Page&lt;/h1&gt;
+&lt;h2&gt;Error Page&lt;/h2&gt;
 &lt;%
 if(statusCode != 500){
     out.write("&lt;h3&gt;Error Details&lt;/h3&gt;");

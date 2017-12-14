@@ -27,8 +27,8 @@ pom.xml에 다음과 같이 스프링 시큐리티의 의존성을 추가한다.
 
 <pre class="prettyprint">
 &lt;properties&gt;
-	&lt;spring.version&gt;4.3.9.RELEASE&lt;/spring.version&gt;
-	&lt;spring.security.version&gt;<strong>4.2.3.RELEASE</strong>&lt;/spring.security.version&gt;
+	&lt;spring.version&gt;5.0.2.RELEASE&lt;/spring.version&gt;
+	&lt;spring.security.version&gt;<strong>5.0.0.RELEASE</strong>&lt;/spring.security.version&gt;
 	&lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
 &lt;/properties&gt;
 </pre>
@@ -371,7 +371,7 @@ public String logout(HttpSession session) {
 <h2>7. 로그인 페이지 수정과 로그아웃 링크 수정</h2>
 
 <p>
-login.jsp, header.jsp, loginUsers-menu.jsp를 수정한다.
+login.jsp, header.jsp를 수정한다.
 </p>
 
 <h6 class="src">/WEB-INF/views/users/login.jsp</h6>
@@ -447,21 +447,6 @@ $(document).ready(function() {
 로그아웃을 위한 메뉴는 제거한다.
 </p>
 
-<h6 class="src">/WEB-INF/views/users/loginUsers-menu.jsp</h6>
-<pre class="prettyprint">
-&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;
-&lt;h1&gt;회원&lt;/h1&gt;
-&lt;ul&gt;
-    &lt;li&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="/users/editAccount"&gt;내정보 수정&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="/users/changePasswd"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="/users/bye"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
-</pre>
 
 <h3>8. 권한이 없는 사용자에게 보여줄 페이지 생성</h3>
 

@@ -15,8 +15,8 @@
 
 &lt;!-- 중간 생략 --&gt;
 
-&lt;div id="gul-content"&gt;
-    &lt;span id="date-writer-hit"&gt;edited ${regdate } by ${name } hit ${hit }&lt;/span&gt;
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited ${regdate } by ${name } hit ${hit }&lt;/span&gt;
     &lt;p&gt;${content }&lt;/p&gt;
     &lt;p id="file-list" style="text-align: right;"&gt;
         &lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;
@@ -43,7 +43,7 @@
 
 &lt;!-- 중간 생략 --&gt;
 
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" .. &gt;
     <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
     &lt;div class="fl"&gt;
         &lt;input type="button" value="수정" onclick="goModify();" /&gt;

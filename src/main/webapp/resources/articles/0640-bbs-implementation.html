@@ -89,7 +89,7 @@ if (user == null) {
 
 <h6 class="src">login.jsp</h6>
 <pre class="prettyprint">&lt;!-- 본문 시작 --&gt;
-&lt;h1&gt;로그인&lt;/h1&gt;
+&lt;h2&gt;로그인&lt;/h2&gt;
 <strong>&lt;%
 String msg = request.getParameter("msg");
 
@@ -322,12 +322,12 @@ NumbersForPaing numbers = service.getNumbersForPaging(totalRecord, curPage, numP
 </p>
 
 <pre class="prettyprint">&lt;form action="list.jsp" method="get"&gt;
-    &lt;p style="margin: 0;padding: 0;"&gt;
-        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+    &lt;div&gt;
         &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
         &lt;input type="submit" value="검색" /&gt;
-    &lt;/p&gt;
+    &lt;/div&gt;
 &lt;/form&gt;
 </pre>
 
@@ -382,7 +382,7 @@ for (int i = 0; i &lt; size; i++) {
         &lt;td style="text-align: center;"&gt;<strong>&lt;%=listItemNo %&gt;</strong>&lt;/td&gt;
         &lt;td&gt;
             &lt;a href="javascript:goView('<strong>&lt;%=articleNo %&gt;</strong>')"&gt;<strong>&lt;%=title %&gt;</strong>&lt;/a&gt;
-            <strong>&lt;% if (attachFileNum &gt; 0) { %&gt;</strong>&lt;img src="images/attach.png" alt="첨부 파일" /&gt;<strong>&lt;% } %&gt;</strong>
+            <strong>&lt;% if (attachFileNum &gt; 0) { %&gt;</strong>&lt;img src="images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;<strong>&lt;% } %&gt;</strong>
             <strong>&lt;% if (commentNum &gt; 0) { %&gt;</strong>&lt;span class="bbs-strong"&gt;[&lt;%=commentNum %&gt;]&lt;/span&gt;<strong>&lt;% } %&gt;</strong>
         &lt;/td&gt;
         &lt;td style="text-align: center;"&gt;<strong>&lt;%=regdate %&gt;</strong>&lt;/td&gt;
@@ -452,20 +452,13 @@ String boardName = service.getBoardName(boardCd);
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="글쓰기 화면" /&gt;
 &lt;meta name="Description" content="글쓰기 화면" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("writeForm");
-    //유효성 검사 로직 추가
-    return true;
-}
-
 function goList() {
     var form = document.getElementById("listForm");
     form.submit();
 }
-
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -485,16 +478,13 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;        
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/h1&gt;
-&lt;h2&gt;글쓰기&lt;/h2&gt;
-&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
+&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;h3&gt;새 글쓰기&lt;/h3&gt;
+&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -542,19 +532,15 @@ if (articleNo != null) {
 
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 
@@ -693,8 +679,8 @@ String articleOwnerName = detailedArticle.getName();//게시글 작성자 이름
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 상세보기" /&gt;
 &lt;meta name="Description" content="게시판 상세보기" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css" /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
     var p_id = "comment" + articleNo;
@@ -772,33 +758,58 @@ function deleteComment(commentNo) {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/h1&gt;
-&lt;!--  목록에서 추가되는 부분 begin --&gt;
+&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
+    &lt;div class="fl"&gt;
+<strong>&lt;%
+if (user.getEmail().equals(detailedArticle.getEmail())) {
+%&gt;</strong>      
+        &lt;input type="button" value="수정" onclick="goModify();" /&gt;
+        &lt;input type="button" value="삭제" onclick="goDelete()" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>
+    &lt;/div&gt;
+    &lt;div class="fr"&gt;
+<strong>&lt;%
+if (nextArticle != null) {
+%&gt;</strong>       
+        &lt;input type="button" value="다음 글" onclick="goView(<strong>'&lt;%=nextArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+if (prevArticle != null) {
+%&gt;</strong>           
+        &lt;input type="button" value="이전 글" onclick="goView(<strong>'&lt;%=prevArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>           
+        &lt;input type="button" value="목록" onclick="goList(<strong>'&lt;%=curPage %&gt;'</strong>)" /&gt;
+        &lt;input type="button" value="새 글쓰기" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 &lt;table class="bbs-table"&gt;
 &lt;tr&gt;
-    &lt;th style="width: 37px;text-align: left;vertical-align: top;"&gt;TITLE&lt;/th&gt;
-    &lt;th style="text-align: left;color: #555;"&gt;<strong>&lt;%=detailedArticle.getTitle() %&gt;</strong>&lt;/th&gt;
+    &lt;th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;<strong>&lt;%=detailedArticle.getTitle() %&gt;</strong>&lt;/th&gt;
 &lt;/tr&gt; 
 &lt;/table&gt;
 
-&lt;div id="gul-content"&gt;
-    &lt;span id="date-writer-hit"&gt;edited <strong>&lt;%=detailedArticle.getRegdate() %&gt;</strong> by <strong>&lt;%=articleOwnerName %&gt;</strong> hit <strong>&lt;%=detailedArticle.getHit() %&gt;</strong>&lt;/span&gt;<strong>
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited <strong>&lt;%=detailedArticle.getRegdate() %&gt;</strong> by <strong>&lt;%=articleOwnerName %&gt;</strong> hit <strong>&lt;%=detailedArticle.getHit() %&gt;</strong>&lt;/div&gt;<strong>
 &lt;%
 String content = detailedArticle.getContent();
 content = content.replaceAll(System.getProperty("line.separator"), "&lt;br /&gt;");
 %&gt;</strong>
-    &lt;p&gt;<strong>&lt;%=content %&gt;</strong>&lt;/p&gt;<strong>
+    &lt;div id="article-content"&gt;<strong>&lt;%=content %&gt;</strong>&lt;/div&gt;<strong>
 &lt;%       
 int size = attachFileList.size();
 if (size &gt; 0) {
 %&gt;</strong>
-    &lt;p id="file-list" style="text-align: right"&gt;
+    &lt;div id="file-list" style="text-align: right"&gt;
 <strong>&lt;%
-
     String path = request.getContextPath();
     String uploadPath = path + "/upload/";
     
@@ -807,26 +818,38 @@ if (size &gt; 0) {
         String filename = attachFile.getFilename();
         int attachFileNo = attachFile.getAttachFileNo();
         String fileFullPath = uploadPath + filename;
-        
 %&gt;</strong>
-        &lt;a href="<strong>&lt;%=fileFullPath %&gt;"&gt;&lt;%=filename %&gt;</strong>&lt;/a&gt;
+        &lt;div id="attach-file"&gt;		
+            &lt;a href="<strong>&lt;%=fileFullPath %&gt;"&gt;&lt;%=filename %&gt;</strong>&lt;/a&gt;
 <strong>&lt;% 
         if (user.getEmail().equals(detailedArticle.getEmail())) { 
 %&gt;</strong>
-        &lt;a href="javascript:deleteAttachFile('<strong>&lt;%=attachFileNo %&gt;</strong>')"&gt;x&lt;/a&gt;
+            &lt;a href="javascript:deleteAttachFile('<strong>&lt;%=attachFileNo %&gt;</strong>')"&gt;x&lt;/a&gt;
 <strong>&lt;%
         }//if문 끝
 %&gt;</strong>
-        <strong>&lt;br /&gt;</strong>
+        &lt;/div&gt;
 <strong>&lt;%       
     }//for문 끝
 %&gt;</strong>       
-    &lt;/p&gt;
+    &lt;/div&gt;
 <strong>&lt;%
 }//if문 끝
 %&gt;</strong>      
 &lt;/div&gt;
-&lt;!--  댓글 반복 시작 --&gt;
+&lt;!--  댓글 쓰기 --&gt;
+&lt;form id="addCommentForm" action="addComment.jsp" method="post"&gt;
+     &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="댓글 남기기" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
 <strong>&lt;%
 size = commentList.size();
 for (int i = 0; i &lt; size; i++ ) {
@@ -851,44 +874,25 @@ for (int i = 0; i &lt; size; i++ ) {
     }//if문 끝
 %&gt;</strong>   
     &lt;p id="comment<strong>&lt;%=commentNo %&gt;</strong>"&gt;<strong>&lt;%=memo %&gt;</strong>&lt;/p&gt;
-    &lt;form id="modifyCommentForm<strong>&lt;%=commentNo %&gt;</strong>" class="modify-comment" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
-    &lt;p&gt;
+    &lt;form id="modifyCommentForm<strong>&lt;%=commentNo %&gt;</strong>" class="comment-form" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
         &lt;input type="hidden" name="commentNo" value="<strong>&lt;%=commentNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
-    &lt;div class="fr"&gt;
+        &lt;div class="fr"&gt;
             &lt;a href="javascript:document.forms.modifyCommentForm<strong>&lt;%=commentNo %&gt;</strong>.submit()"&gt;수정하기&lt;/a&gt;
             | &lt;a href="javascript:goCommentModify(<strong>'&lt;%=commentNo %&gt;'</strong>)"&gt;취소&lt;/a&gt;
-
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;textarea class="modify-comment-ta" name="memo" rows="7" cols="50"&gt;<strong>&lt;%=memo %&gt;</strong>&lt;/textarea&gt;
-    &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>&lt;%=memo %&gt;</strong>&lt;/textarea&gt;
+        &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 <strong>&lt;%
 }//for문 끝
 %&gt;</strong>
 &lt;!--  댓글 반복 끝 --&gt;
-    
-&lt;form id="addCommentForm" action="addComment_proc.jsp" method="post"&gt;
-    &lt;p style="margin: 0;padding: 0;"&gt;
-        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
-    &lt;div id="addComment"&gt;
-        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;div style="text-align: right;"&gt;
-        &lt;input type="submit" value="댓글 남기기" /&gt;
-    &lt;/div&gt;
-&lt;/form&gt;
-    
 &lt;div id="next-prev"&gt;
 <strong>&lt;%
 if (nextArticle != null) {
@@ -903,8 +907,7 @@ if (prevArticle != null) {
 }
 %&gt;</strong>       
 &lt;/div&gt;
-    
-&lt;div id="view-menu"&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
     &lt;div class="fl"&gt;
 <strong>&lt;%
 if (user.getEmail().equals(detailedArticle.getEmail())) {
@@ -973,7 +976,7 @@ if (articleNo == aNo) {
 <strong>&lt;%
 if (attachFileNum &gt; 0) { 
 %&gt;</strong>
-        &lt;img src="../images/attach.png" alt="첨부 파일" /&gt;
+        &lt;img src="../images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
 <strong>&lt;%
 }
 if (commentNum &gt; 0 ) {
@@ -1029,15 +1032,16 @@ if (service.getNextPage() != 0) {
 
 &lt;div id="search"&gt;
     &lt;form action="list.jsp" method="get"&gt;
-    &lt;p style="margin: 0;padding: 0;"&gt;
-        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+    &lt;div&gt;
         &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
         &lt;input type="submit" value="검색" /&gt;
-    &lt;/p&gt;  
+    &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 &lt;!--  본문 끝 --&gt;
+
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -1057,61 +1061,47 @@ if (service.getNextPage() != 0) {
 
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="delForm" action="del_proc.jsp" method="post"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="deleteCommentForm" action="deleteComment_proc.jsp" method="post"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="commentNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;   
     &lt;form id="deleteAttachFileForm" action="deleteAttachFile.jsp" method="post"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="attachFileNo" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;   
 &lt;/div&gt;
 
@@ -1351,14 +1341,9 @@ String boardName = service.getBoardName(boardCd);</strong>
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="게시판 수정하기 폼" /&gt;
 &lt;meta name="Description" content="게시판 수정하기 폼" /&gt;
-&lt;title&gt;BBS&lt;/title&gt;
-&lt;link rel="stylesheet" href="../css/screen.css" type="text/css"  /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
-function check() {
-    //var form = document.getElementById("modifyForm");
-    //유효성 검사 로직 추가
-    return true;
-}
 function goView() {
     var form = document.getElementById("viewForm");
     form.submit();
@@ -1378,19 +1363,16 @@ function goView() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content" style="min-height: 800px;"&gt;
+        &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;BBS&lt;/div&gt;
-&lt;h1&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/h1&gt;
-&lt;h2&gt;수정&lt;/h2&gt;
-&lt;form id="modifyForm" action="modify_proc.jsp" method="post" enctype="multipart/form-data" onsubmit="return checking();"&gt;
-&lt;p style="margin: 0;padding: 0;"&gt;
+&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;h3&gt;수정&lt;/h3&gt;
+&lt;form id="modifyForm" action="modify_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
 &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
 &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-&lt;/p&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;td&gt;제목&lt;/td&gt;
@@ -1412,6 +1394,7 @@ function goView() {
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;!--  본문 끝 --&gt;
+
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -1431,12 +1414,10 @@ function goView() {
 
 &lt;div id="form-group" style="display: none;"&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
-    &lt;/p&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 

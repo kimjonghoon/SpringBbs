@@ -103,7 +103,7 @@ JSP를 아래를 참고하여 수정한다.
 <pre class="prettyprint">
 <strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
-&lt;sf:form id="signUpForm" action="signUp" method="post" commandName="user" 
+&lt;sf:form id="signUpForm" action="signUp" method="post" modelAttribute="user" 
         onsubmit="return check();"&gt;
 &lt;sf:errors path="*" cssClass="error" /&gt;</strong>
 &lt;table&gt;
@@ -146,7 +146,7 @@ JSP를 아래를 참고하여 수정한다.
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="확인" /&gt;
+    &lt;input type="submit" value="전송" /&gt;
 &lt;/div&gt;
 &lt;/sf:form&gt;
 </pre>

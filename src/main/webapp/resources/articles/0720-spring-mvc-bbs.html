@@ -194,13 +194,39 @@ public class WebContants {
 </pre>
 
 
-<h2>로그 관련 파일 복사</h2>
+<h2>로그</h2>
+
+<h6 class="src">commons-logging.properties</h6>
+<pre class="prettyprint">
+org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
+</pre>
+
+<h6 class="src">log4j2.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Configuration&gt;
+	&lt;Appenders&gt;
+		&lt;File name="A1" fileName="A1.log" append="true"&gt;
+			&lt;PatternLayout pattern="%t %-5p %c{2} - %m%n" /&gt;
+		&lt;/File&gt;
+		&lt;Console name="STDOUT" target="SYSTEM_OUT"&gt;
+			&lt;PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" /&gt;
+		&lt;/Console&gt;
+	&lt;/Appenders&gt;
+	&lt;Loggers&gt;
+		&lt;Logger name="net.java_school" level="debug"&gt;
+			&lt;AppenderRef ref="A1" /&gt;
+		&lt;/Logger&gt;
+		&lt;Root level="debug"&gt;
+			&lt;AppenderRef ref="STDOUT" /&gt;
+		&lt;/Root&gt;
+	&lt;/Loggers&gt;
+&lt;/Configuration&gt;
+</pre>
 
 <p>
-모델 2 게시판의 C:/www/model2/src에서 log4j.xml과 commons-logging.properties 파일을 복사하여 C:/www/spring-bbs/src/main/resources에 붙여넣는다.
-C:/www/spring-bbs/src/main/resources 폴더가 없다면 만들고, 컨텍스트 메뉴에서 Maven - Update Project... 를 실행하여 동기화한다.
-C:/www/spring-bbs/src/main/resources/log4j.xml 파일을 열고, 로그 파일의 위치를 C:/www/spring-bbs/logs/debug.log로 수정한다.
-로그 파일의 위치는 웹 브라우저로 접근할 수 없는 곳이어야 보안 측면에서 안전하다.
+위 두 개의 파일을 C:/www/spring-bbs/src/main/resources에 생성한다.<br />
+C:/www/spring-bbs/src/main/resources 폴더가 없다면 만들고, 컨텍스트 메뉴에서 Maven - Update Project... 를 실행하여 동기화한 후 작업한다.<br />
 </p>
 
 <h2>회원</h2>
@@ -343,7 +369,11 @@ src/main/resources에 net.java_school.mybatis 패키지를 만들고, 이 패키
     "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;
 
 &lt;configuration&gt; 
-    
+
+  &lt;settings&gt;
+    &lt;setting name="logImpl" value="LOG4J2"/&gt;
+  &lt;/settings&gt;
+  	    
   &lt;typeAliases&gt;
     &lt;typeAlias type="net.java_school.board.AttachFile" alias="AttachFile" /&gt;
     &lt;typeAlias type="net.java_school.board.Comment" alias="Comment" /&gt;
@@ -3079,4 +3109,9 @@ TOMCAT_HOME/logs에 있는 로그 파일을 뒤져서 해결해야 한다.<br />
 	<li>게시글로 유튜브 동영상 소스 코드를 올렸을 때, 동영상를 보면서 댓글은 작성하거나 수정하거나 삭제하면 다시 상세보기 /bbs/view를 요청하므로 동영상이 중지된다. 애이잭스를 이용하여 동영상을 중지시키지 않으면서 댓글을 등록, 수정, 삭제할 수 있게 한다.</li>
 	<li>조회 수 증가를 유명 포탈 사이트에서와 같이 구현한다.</li>
 </ol>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://www.mybatis.org/mybatis-3/logging.html">http://www.mybatis.org/mybatis-3/logging.html</a></li>
+</ul>
 </article>

@@ -1,48 +1,79 @@
 <article>
 
-<h1>목록</h1>
+<h1>게시판 디자인</h1>
 
 <p>
-게시판뿐 아니라 웹사이트에 전체에 적용될 스타일을 설정한다.<br />
-/*** The Essential Code ***/에 아래 강조된 부분을 추가한다.
+웹사이트에 전체에 적용될 스타일을 설정한다.<br />
+아래 코드를 /*** The Essential Code ***/의 html, body 설정 다음에 추가한다.<br />
 </p>
 
 <pre class="prettyprint">
-<strong>@CHARSET "UTF-8";
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);</strong>
-/*** The Essential Code ***/
-html, body {
-	margin: 0;
-	padding: 0;
-	<strong>font-family: "Noto Sans KR", "Liberation Sans", Helvetica, dotum, sans-serif;
+<strong>pre {
+    margin: 0 0 0.7em 0;
+    font-family: Consolas, "Noto Sans KR", dotum, "Liberation Mono", Courier, monospace;	
 }
-div, input, select, textarea, td {
-	color: #646464;
-	font-size: 12px;
+input, select, textarea, td, th {
+    color: #646464; 
+    font-size: 12px;
+    font-family: "돋움", dotum, sans-serif; 
 }
 table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 img {
-	border: 0;
+    border: 0; 
 }
-form {
-	margin: 0;
-	padding: 0;
+form { 
+    margin: 0;
+	padding: 0; 
+}
+a:link {
+    color: #2C80D0;
+    text-decoration: none;
+}
+a:visited {
+    color: #2C80D0;
+    text-decoration: none;
+}
+a:active {
+    color: #2C80D0;
+    text-decoration: none;
+}
+a:hover {
+    color: #2C80D0;
+    text-decoration: underline;
 }</strong>
 </pre>
 
 <p>
-지금까지 예제를 따라 하면서 작성한 index.html을 열고 
-'다른 이름으로 저장하기' 메뉴를 이용해서 list.html 파일을 생성한다.<br />
-/*** Just for Looks ***/에서 #content을 삭제한다.<br />
-list.html의 #content에 다음을 붙여넣는다.
+html, body에 설정한 폰트가 모든 엘리먼트에 적용된다고 생각해선 안 된다.<br />
+다음 줄에 html과 body에 설정한 폰트가 적용되지 않은 엘리먼트(input, select, textarea, td)의 폰트를 지정하고 있다.<br />
+div역시 html, body에서 설정한 폰트를 상속하지 않지만 div 폰트를 일괄적으로 설정하는 것은 필요치 않아 뺐다.<br />
+</p>
+
+<p>
+table의 border-collapse: collapse; 설정은 셀(td를 의미)과 셀의 테두리를 서로 겹치게 하여 셀이 서로 붙어 보이게 한다.<br />
+img의 border: 0; 설정은 img에 디폴트 border 값을 주는 옛 브라우저가 있어 추가했다.<br />
+</p>
+
+<p>
+form 엘리먼트의 margin과 padding은 디폴트 값이 있다.<br />
+form 엘리먼트의 margin과 padding이 필요하지 않아 모두 0으로 설정했다.
+</p>
+
+
+<h2>게시판 목록 디자인</h2>
+
+<p>
+/*** Just for Looks ***/에서 #content를 삭제한다.<br />
+index.html을 열고 '다른 이름으로 저장하기' 메뉴를 사용해 list.html 파일을 만든다.<br />
+list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <pre class="prettyprint">
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;Eclipse &amp;gt; Eclipse Tutorial&lt;/div&gt;
-&lt;h1&gt;Eclipse 설치&lt;/h1&gt;
+&lt;div id="url-navi"&gt;Eclipse &amp;gt;자유 게시판&lt;/div&gt;
+
 &lt;table class="bbs-table"&gt;
 &lt;!--  게시판 목록 머리말 --&gt;
 &lt;tr&gt;
@@ -56,38 +87,10 @@ list.html의 #content에 다음을 붙여넣는다.
 	&lt;td&gt;11&lt;/td&gt; &lt;!--번호--&gt;
 	&lt;td&gt;
 		&lt;a href="#"&gt;제목&lt;/a&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt; &lt;!--첨부 파일이 있으면 표시--&gt;
-		[5] &lt;!--댓글 개수표시--&gt;
-		&lt;/td&gt;
-		&lt;td&gt;2011.11.15&lt;/td&gt; &lt;!--등록일--&gt;
-		&lt;td&gt;4555&lt;/td&gt; &lt;!--조회 수--&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-	&lt;td&gt;11&lt;/td&gt; &lt;!--번호--&gt;
-	&lt;td&gt;
-		&lt;a href="#"&gt;제목&lt;/a&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt; &lt;!--첨부 파일이 있으면 표시--&gt;
-		[5] &lt;!--댓글 개수표시--&gt;
-		&lt;/td&gt;
-		&lt;td&gt;2011.11.15&lt;/td&gt; &lt;!--등록일--&gt;
-		&lt;td&gt;4555&lt;/td&gt; &lt;!--조회 수--&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-	&lt;td&gt;11&lt;/td&gt; &lt;!--번호--&gt;
-	&lt;td&gt;
-		&lt;a href="#"&gt;제목&lt;/a&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt; &lt;!--첨부 파일이 있으면 표시--&gt;
-		[5] &lt;!--댓글 개수표시--&gt;
-		&lt;/td&gt;
-		&lt;td&gt;2011.11.15&lt;/td&gt; &lt;!--등록일--&gt;
-		&lt;td&gt;4555&lt;/td&gt; &lt;!--조회 수--&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-	&lt;td&gt;11&lt;/td&gt; &lt;!--번호--&gt;
-	&lt;td&gt;
-		&lt;a href="#"&gt;제목&lt;/a&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt; &lt;!--첨부 파일이 있으면 표시--&gt;
-		[5] &lt;!--댓글 개수표시--&gt;
+		&lt;!--첨부 파일이 있으면 표시--&gt;
+		&lt;img src="images/attach.png" alt="첨부 파일" /&gt;
+		&lt;!--댓글 개수표시--&gt;
+		[5] 
 		&lt;/td&gt;
 		&lt;td&gt;2011.11.15&lt;/td&gt; &lt;!--등록일--&gt;
 		&lt;td&gt;4555&lt;/td&gt; &lt;!--조회 수--&gt;
@@ -95,22 +98,26 @@ list.html의 #content에 다음을 붙여넣는다.
 &lt;!--  반복 구간 끝 --&gt;             
 &lt;/table&gt;
 &lt;div id="paging"&gt;
-	&lt;span class="bbs-strong"&gt;1&lt;/span&gt; &lt;!--현재 페이지--&gt;
-	&lt;a href="#"&gt;[2]&lt;/a&gt;
-	&lt;a href="#"&gt;[3]&lt;/a&gt;
-	&lt;a href="#"&gt;[4]&lt;/a&gt;
-	&lt;a href="#"&gt;[5]&lt;/a&gt;
+	&lt;a href="#"&gt;[이전]&lt;/a&gt;
+	&lt;span class="bbs-strong"&gt;6&lt;/span&gt; &lt;!--현재 페이지--&gt;
+	&lt;a href="#"&gt;[7]&lt;/a&gt;
+	&lt;a href="#"&gt;[8]&lt;/a&gt;
+	&lt;a href="#"&gt;[9]&lt;/a&gt;
+	&lt;a href="#"&gt;[10]&lt;/a&gt;
+	&lt;a href="#"&gt;[다음]&lt;/a&gt;
 &lt;/div&gt;
 &lt;div id="list-menu"&gt;
 	&lt;input type="button" value="새 글쓰기" /&gt;
 &lt;/div&gt;
 &lt;div id="search"&gt;
-	&lt;form action="list.jsp" method="get"&gt;
+	&lt;form method="get"&gt;
 	&lt;p style="margin: 0;padding: 0;" &gt;
+		&lt;input type="hidden" name="curPage" value="1" /&gt;
 		&lt;input type="hidden" name="boardCd" value="free" /&gt;
-		&lt;input type="hidden" name="curPage" value="1" /&gt;                               
-		&lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-		&lt;input type="submit" value="검색" /&gt;
+		&lt;div&gt;
+			&lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+			&lt;input type="submit" value="검색" /&gt;
+		&lt;/div&gt;
 	&lt;/p&gt;
 	&lt;/form&gt;
 &lt;/div&gt;
@@ -118,7 +125,7 @@ list.html의 #content에 다음을 붙여넣는다.
 </pre>
 
 <p>
-<img alt="게시판 디자인 1" src="https://lh3.googleusercontent.com/-O6uvKRmmCbE/VYLFqU8MyLI/AAAAAAAACdI/cOzIxPn1cVs/s1036/bbs-list-01.png" />
+<img alt="게시판 디자인 1" src="https://lh3.googleusercontent.com/4Jb4Fx9gvKiIcp1kHQVZ2-TP-NNsR53GXOm3M_lk_7yX2N8nEit3H9E_yyr0Fy0P2jQRZnFcaCT7yFS0z37DovAlB35XCb4zQF4jhVywGnm3qRqAIepiz0wzkC8Q4MKXXXwRD8mROnKUbOQiZ-sc3WrzAnGPsX7M47C7VAR3CabGfQKErmUyEZb4V3ECE-_NIW5wmb-CSJXKX_yTX1_0Dtd8c9qtEitsxx_14fNwR0HLQ7CCtHxeA_OecSz8FBrY9j0-DL8vykaXJN0a4fRAnXihM7nFc8_eV86UzWs5KHs6_U5y_Bem82v44IbAu9G1f5qIhP8FkSIj6MB_UH5hx4ptQ9jjlxq3RKHDhqJhdGfaF8j8s8D4hlk8m5J-f3ntRwTiVcufk6v6_QvbaBLrWgIRkJWVtgjKkSZNcubtz2ejlGpJSUP0wqk5hFUXzca2IVXzjpM8QvakMBYpTquTZGWVMvcgzIdnHJPXidX2yfh3oDN2Qal2NJgKATc3usM_ov0kcZih5tm-xFB6N5O3BSORfVeAInp9QEGWaJ1J8n8W3HEGbsoZWmfnpC5qnhg1NSnyb5VdPb2B7sVzyfGQ1Gro_uBr070psjWaMCJFGg=w1005-h358-no" />
 </p>
 
 <h3>#content 패딩, 폰트 크기, 줄 간격 설정</h3>
@@ -127,78 +134,47 @@ list.html의 #content에 다음을 붙여넣는다.
 #content {
 	margin-left: 180px;
 	margin-right: 210px;
-	<strong>padding-left: 9px;</strong>
-	<strong>padding-right: 9px;</strong>
-	border-left: 1px solid #DAEAAA;
-	border-right: 1px solid #DAEAAA;
-	<strong>font-size: 13px;</strong>
-	<strong>line-height: 19px;</strong>
+	<strong>padding-left: 9px;
+	padding-right: 9px;
+	font-size: 0.9em;
+	line-height: 1.6;</strong>
 }
 </pre>
 
-<dl class="note">
-<dt>#content 좌우 패딩 9px</dt>
-<dd>
-608에서 18을 뺀 590px이 #content의 width가 된다.
-</dd>
-</dl> 
-
 <p>
-<img alt="게시판 디자인 2" src="https://lh3.googleusercontent.com/-GlYv3s8McTw/VYLFqUq5BbI/AAAAAAAACdc/9bOWjKBqzBw/s1031/bbs-list-02.png" />
+패딩을 추가했으므로 #content의 width는 592px이다.<br />
+1000 - 마진 390(180 + 210) - 패딩 18(9+9) = 592
 </p>
 
-<h3>#url-navi 추가</h3>
+<p>
+<img alt="게시판 디자인 2" src="https://lh3.googleusercontent.com/gzaFaBdmB4tVdwx2jApJVEEenrJshXMWwBn0-t49UvX1lQXJKdp94PPgaqCh0eWIGultYE1rjgzz-BvZtlixZvO_TT_bwmoHXMpZZx1tvlIT1u5zaKn-gnMvVo-svvm1QyWy7FU8KPZJ9k7PHYrsNb2k4pX6EI6bkR2TAsWkgt4ZKSY3gTcM1H8ihYvCQRPrn5eIBICulJ7IWmvXWsPS5aL8h47lfOPBVrMW4UtuOJVO3ld4POH-qYcU1hajuE3-RrUqWpSSdvZWTwreFCxzPbq2uaQtgWLVhPjwA6CU0FdQUhpxQYUuMoFXD4mZi3PpsdPZq9Sva5gbZOQyuCAEO8kxf4UEu-yP3nLnXWhcrZS-fULmNLZzHScPjO9SnUqyKu5T9LWodnkeaZIIGk-nKarAKdhGLSU5Sr9uY1rl61-XGqIHHQPZn2OjguHIPctGj10JZ5sNHTKdRFfqqOXxvFRb1VJdEFWUaWTPircJIdHO7wypLqTBzAFzdvOSc4E4n56lQOVoAwhM_xfmO-pY_JJt-92Z5CetnVLVuKurv5jWNB_qJWo9nrqYGxiDcE01DZMrVA7iPkPuZWjtiQ8RT0Th0B-gMgnCBcM5B1vE2A=w1005-h361-no" />
+</p>
 
 <p>
-Eclipse &gt; Eclipse Tutorial 부분의 스타일을 위해 다음을 CSS 파일에 추가한다.
+#url-navi는 #content의 가장 위에서 사용자에게 문서 위치를 알려준다.<br />
+다음을 스타일 시트에 추가한다.
 </p>
 
 <pre class="prettyprint">
 <strong>#url-navi {
 	margin: 0;
 	padding-top: 10px;
-	padding-bottom: 8px;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 11px;
-	color: #666;
-	border-bottom: 1px solid #DAEAAA;</strong>
+	color: #666;</strong>
 }
 </pre>
 
 <p>
-<img alt="게시판 디자인 3" src="https://lh3.googleusercontent.com/-Bo-rpGzAJJo/VYLFqWtvvWI/AAAAAAAACdM/KBcnQZJPXsM/s1034/bbs-list-03.png" />
+<img alt="게시판 디자인 3" src="https://lh3.googleusercontent.com/JosFUKA6dx8DfpZes90pia_3ELSQSn4Z3JJssliGzlhd0MkQ14ja0zSOWlOxhioMvUvZ032pE-HUpZTyQ3cFgSwQgfDz6Uhr1UhwhuSjC4RvBDB1ixGmnjAhzU-O8pMuZRW6aldGEG3axdO6gbIHP2cgkoeZcTh3CbTkoP0H4-G0AW4zxiyumWVS8nuWXIqWW66oIyBBfMEYSYHq7aAQgYNdHsUjh4SStpIGAO2F9giphyTde3LqKckFXouyDuZDm9ufmzc-tgCEN7POWE6N0xJbnXpsYx2cGiD62GJ4exswQtVw7Vhb2ioyITcGbfw1Cy21nKGoZ4YKyUlvqIOyDKgm73r_biYya2IMNDDZnAISVd9Vus_ZgHXqa9UW1bzJehgIte8CxVkBj8UfMViR7fT7QNus4m3T2ALPI9DzHR9un41CqKcHiOC0SGCPY7rljJ8Foq3U3uSLqRpo9JOspRyiegJGCjWMlhVjafdBICbYKH_loIWkxDeoR_QuUG9DY0m3VHfCkKQEFNRuwsfQLMYF1ZRJj8IdSva5JJFfwAMMWNKHynS0niWmB3Q0ruAqIoT3vwlwBwfzZZhUGPEhPqw6smrjFUOi0apaDrGtpg=w1002-h352-no" />
 </p>
 
-<h3>게시판 제목 스타일</h3>
-
-<p>
-게시판 제목에 해당하는 #content h1을 추가한다.
-</p>
-
-<pre class="prettyprint">
-<strong>#content h1 {
-	margin: 9px 0;
-	padding: 7px 0x;
-	font-size: 15px;</strong>
-}
-</pre>
-
-<p>
-<img alt="게시판 디자인 4" src="https://lh3.googleusercontent.com/-3PxH2IIHliY/VYLFrOMMZQI/AAAAAAAACdY/564yq1o3jkE/s1027/bbs-list-04.png" />
-</p>
-
-<h3>목록 머릿글 스타일</h3>
-
-<p>
-사실 여기까지는 게시판 디자인이 아니라 일반적인 content 디자인이다.<br />
-bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
-게시판 목록 머릿글에 해당하는 th 스타일을 지정한다.
-</p>
+<h3>게시판 테이블 셀 헤더 스타일</h3>
 
 <pre class="prettyprint">
 <strong>.bbs-table {
 	width: 100%;
-	margin: 1em 0;
+	margin: 0.7em 0 0 0;
 }
 .bbs-table th {
 	color: #92B91C;
@@ -208,20 +184,17 @@ bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
 </pre>
 
 <p>
-<img alt="게시판 디자인 5" src="https://lh3.googleusercontent.com/-cEVUzFpbsdU/VYLFrXNIKvI/AAAAAAAACd4/PkyBlw5pBcs/s1039/bbs-list-05.png" />
+<img alt="게시판 디자인 5" src="https://lh3.googleusercontent.com/QUGHIccLY7lYj7SEOKz24oPbqiNZ8vuQWEML2wvk_PFPLOD1F2nbFUal6Jep-2HhhgzmGSpxp9P7KP-Papa86LlcUHBQOoG2Ez64_xefmQYvBzzMOIJsipla2KnetraTiXI4JEoCqEFc_Zz9kB_GFqgzUR-6EsN7H7UcaphvvLZsr_tJbJveIMwCTS6TO3XhngIA9UX7N_u5feTgYZVkHEv87HDJ5B32H0djyxqm_ppu3_6SyfDfFCfUfJa3hh3R2omFknlso7HwrHbN-cm2QWUP8YUUXd0i9FxQ46y78ndlVxElUCqUCDP30gzmgMj0DSseW6lSpNWDW0uWDBwupRYg52vGGxXbOuAg8KbvmpZc4KYLECrNMOmhzkszKg3tdD-W30jx_bd3rJnybv5RqhiyJrH0jk3tjUXTGGwtUdSq8Ira9m_cucd1TyEYj_2qacJdz1JRdL4BKpFXMIGvQze3zgQmgxqvKz69qzXF3zRZ3KHifeuJDCs5DQM8swc2Fy_QGsVfe8tggST358PTXrqK01ggozJJtQ-mNtTZJHJupnuFieU3wmAcpYoCOVC-Z6ETVF2NUr-JxhQJd4E0s286PobgYDhRRg_Fj8-3eg=w1006-h353-no" />
 </p>
 
-<h3>게시판 목록 아이템 디자인</h3>
-
-<p>
-번호, 제목, 등록일, 조회 수 부분에 대한 스타일을 지정한다.
-</p>
+<h3>게시판 테이블 셀 스타일</h3>
 
 <pre class="prettyprint">
 <strong>.bbs-table td {
 	padding-top: 3px;
 	padding-bottom: 3px;
-	border-bottom: silver 1px solid;
+	border-bottom: 1px solid silver;
+	line-height: 1.45;
 }
 .bbs-table td a {
 	color: #555;
@@ -234,7 +207,7 @@ bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
 </pre>
 
 <p>
-<img alt="게시판 디자인 6" src="https://lh3.googleusercontent.com/-inQBJriLy5o/VYLFrc6PXVI/AAAAAAAACdg/Y---V-TvFAE/s1029/bbs-list-06.png" />
+<img alt="게시판 디자인 6" src="https://lh3.googleusercontent.com/nLwOi7UtMqz_x-5WUYA2Tcjssg4kpho82QAK9neS5JsSAaaWe-4t7klIYOwiMfmGj8I1uvu0p2bUOVIQck58n2-mD36RN95s9lO_w9dAVyPwOynt8F8Gg3Q2DEpYFcKcHGjDMQ92h5SmMDRTbePsnT-cgj4BBBwovw5DXGUXEsQGI1JpvlQRqZtIqeC6NSSiz1AZKpkH9eWkai6tPpF1fOIgXOPiqmP0qhvdGbbvBeRrmASKFQJLgJG_sCpg1DwDRmIZtELewiF1KPTi6H_6N75AOrT9AnSF6JslH3x8pKv1V51KkC4VSY0FA3lxk3vOc0H1MBc08M1_x7aLgw2KD7Hf_9Nn7aZngdDd0IoQ10vHhIXzTQkS9Qs5OuY251yIETJH6q2YLse_Yfs26phqXqpRsGMFiEr1XSuZem3j1dtxa8NtMMw4_2FCkY8Txeq1cG9PIp2d7S-XjcUBSMkDv0em16gK6ZIjSk8uVDQXfC_agn7ANJRgzEpqFdWSmsxfZilsmh53Zmz93OMcJ8MRhyuRyUSQnJ_fPw-DrR5nnc3mGFaBTQBD8Q4h7khwvfd2_gtcbc5JCQ9f8kraw9j9GlIQd0Zq9T7Zaw9KB5VeYg=w1005-h356-no" />
 </p>
 
 <p>
@@ -252,7 +225,7 @@ bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
 </pre>
 
 <p>
-<img alt="게시판 디자인 7" src="https://lh3.googleusercontent.com/-D4emmLucNsw/VYLFruuOJEI/AAAAAAAACdw/HG6T44YWMfA/s1039/bbs-list-07.png" />
+<img alt="게시판 디자인 7" src="https://lh3.googleusercontent.com/jP6_rfSnAkbznZARzGmgMFkKR-Xdgfk7CH1RMNRChusWVmZSf881INSpqw_vozahjjKol-eaZIDboHXvAA1puyEoVhqs67arKD4otaJhvoyng6c3hAUT9KQRp8M19rWufiT5KezxPkqak07ticzFRH5RLsBEh5o_geunCw2J9sVGUAQrzpfdUOybutXi6yPC5D4RuJGBF1-lWzmad732iDIo_X96KU7Nt-9s4GXv-Ord4bzQFTfOZqK3XZs7YsdRcNVGhyvfto8q3DT72kTIvF766NspUPC6uEKr5uE2crRyK0kkU30LdQ5dAD0RIZPqPvMdcN1CoWUHGK_ch1TMS9EkVnxaJEfIBq8CcvvfHbDZ6f-z26kJWPN8LNW_7k-HpYFR5mAew0fgTI5doZc-PbtBIzWn4tEqzSDJTILWKlT6hV5J-gWdQgsVHfHpaPj345w8LvUC_TwLvMbPsHYdxNbv02gEVbrnoMWYcoh87TG3mPChnF9JBygcZBg4Ctap7MGnAkvnRHdL9oU6eE4g_R5lnlMbA67nu4OlxGBIvPc2M6T-fh8FOY3aDQ_4RNVpFep6WTs2CyUIG6Pz51SG053B8kRe9ufVRtTTP78hoQ=w1006-h362-no" />
 </p>
 
 <p>
@@ -260,41 +233,45 @@ bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
 </p>
 
 <pre class="prettyprint">
+&lt;!-- 반복 구간 시작 --&gt;
 &lt;tr&gt;
-	&lt;td <strong>style="text-align: center;"</strong>&gt;11&lt;/td&gt;
+	&lt;td <strong>style="text-align: center;"</strong>&gt;11&lt;/td&gt;&lt;!-- 번호 --&gt;
 	&lt;td&gt;
 		&lt;a href="#"&gt;제목&lt;/a&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt;
+		&lt;!-- 첨부 파일이 있으면 표시 --&gt;
+		&lt;img src="images/attach.png" alt="첨부 파일" <strong>style="vertical-align: middle;"</strong> /&gt;
+		&lt;!-- 댓글 개수표시 --&gt;
 		[5]
 	&lt;/td&gt;
 	&lt;td <strong>style="text-align: center;"</strong>&gt;2011.11.15&lt;/td&gt;
 	&lt;td <strong>style="text-align: center;"</strong>&gt;4555&lt;/td&gt;
 &lt;/tr&gt;
+&lt;!-- 반복 구간 끝 --&gt;
 </pre>
 
 <p>
-<img alt="게시판 디자인 8" src="https://lh3.googleusercontent.com/-XxjTX59J-pQ/VYLFsXhjucI/AAAAAAAACd8/sahK93njaVk/s1036/bbs-list-08.png" />
+<img alt="게시판 디자인 8" src="https://lh3.googleusercontent.com/PoJKMU5QZ3693Q1TGThJLmplOVJG_S5tyz_ZaVUktNWcMsw58efFf4f5HlyL_TFiGmw5ow_rhX4xWAnK_Avs0TrU0MijDzMd8hn7mGcsDNkokdmMf0zAZcMrg5FwEke_voVlwAIKjolPgKRBFlGVRbxWw1ECqZoQ2V09EQVV6JKhzgeCxb8QYvekbxq3sVfSwZo9upGqtmAjVPxuyt0qz2SytKd-03oLdWRUynSYI9MohNu51KD_zn15nlbMU3eDC9YUNuojiClE_3UTBifgnML5K5gWg41W6JJqeKWGmr-O6_bpIr2Y2XMdaWBnA5vhABdVM7rdRgNSlfuWRqzjABFvbtQ1_kfr8n2GdESo0EHw3dbhkfORsJI73ap5VdlZTB6EX3apsBX8BbLpeU7PzOjTcC9hkajJFZghcZZylUYi4rYKZim3JGl3iGZM5fMNWr6Aue9iktPQo2qmFfScQphMtO8fZKtOraReaCKY-nXmSRsQGLwQaEgOQI2x1kS9ptfoL-8HYiA3ea1rSXhe9M4euds4D5ZtOl_lbDmDM0-RV3vwSKVKaGBAu6y8WFf3LDNzOU_eh00T00LxKyBeujB2-e7JLwZxR2qNFLqqWg=w1006-h361-no" />
 </p>
 
-<h3>페이지 이동 링크 스타일 지정</h3>
+<h3>페이지 이동 링크 스타일</h3>
 
 <pre class="prettyprint">
 <strong>#paging {
     text-align: center;
+    font-size: 13px;
 }
-#paging a {
+#paging &gt; a {
     color: #555;
     text-decoration: none;
-    font-weight: bold;
 }
-#paging a:hover {
+#paging &gt; a:hover {
     color: #555;
     text-decoration: underline;
 }</strong>
 </pre>
 
 <p>
-<img alt="게시판 디자인 9" src="https://lh3.googleusercontent.com/-HJhSKPdy648/VYLFsmBKvqI/AAAAAAAACeM/9mk6zcfX_Mo/s1026/bbs-list-09.png" />
+<img alt="게시판 디자인 9" src="https://lh3.googleusercontent.com/qycWTKdp9Fa_ws8sVnlx763dO-1gexC70mAMyN9XLK66lnxApZ857buTryrrHqBkh_S4X4MsfP-vSxCixxDF2pqjC7BfOHe3If79Vv4-hNyIDTWXthFCxrZ2Q-2m-GkU-Eerodeu-t90wvC-l7uv3BOp7P6gD9_jPdK3-5H0KzGcyqeDiOA9AJexyJIv-MfnDWEZqLgrfxXvFXkRCXXZPGort2RxOctfbG2SWzf3yHXA997MjQf9Gphn0K9qwWbew0Zncv9rNzaAlxix7Wm2-GIAAMIfKS9zy_XlTo9WuVhG2UAJwhMpY-DXQEJ-IjQK8q4JaOCuuymU-QzRTaHGxhJ1N0KL4p3L5nQiET3X4-Ij5U8AJvNL1lPPxgROLbBM22fihh8443skYPYbKH_TQD4c__h6iFIwtCx5Exj_V7IZgkS19SOW6T-P7q_FriN7p3OWp5u3Z1DkjBMCi3QN2vkzZj5aUgTBjCvxGSlseJOu7RWIebdy2Vw9hlN2dSvlYgQ6dR0jnFzwWEbLR6sksK-BZxQ4LULVn1nq6Z6ahR9dAEfKhRjhKVrag3LJepRa25aSTYnXxESogiUNzTQKQnSbdhDMiN00h1Plh0RxYA=w1006-h358-no" />
 </p>
 
 <p>
@@ -309,7 +286,9 @@ bbs 엘리먼트가 감싸고 있는 부분이 게시판 부분이다.<br />
 </pre>
 
 <p>
-bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다.
+bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다.<br />
+목록 아이템에서 댓글 개수에 스타일을 적용한다.<br />
+현재 페이지 번호는 이미 되어 있다.
 </p>
  
 <pre class="prettyprint">
@@ -318,7 +297,7 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 	&lt;td&gt;
 		&lt;a href="#"&gt;제목&lt;/a&gt;
 		&lt;!--첨부 파일이 있으면 표시--&gt;
-		&lt;img src="images/attach.png" alt="첨부 파일" /&gt;
+		&lt;img src="images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
 		&lt;!--댓글 개수표시--&gt;<strong>
 		&lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;</strong>
 	&lt;/td&gt;
@@ -326,25 +305,13 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 	&lt;td style="text-align: center;"&gt;4555&lt;/td&gt; &lt;!--조회 수--&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
-
-&lt;div id="paging"&gt;<strong>
-&lt;span class="bbs-strong"&gt;1&lt;/span&gt;</strong>
-&lt;a href="#"&gt;[2]&lt;/a&gt;
-&lt;a href="#"&gt;[3]&lt;/a&gt;
-&lt;a href="#"&gt;[4]&lt;/a&gt;
-&lt;a href="#"&gt;[5]&lt;/a&gt;
-&lt;/div&gt;
 </pre>
 
 <p>
-<img alt="게시판 디자인 10" src="https://lh3.googleusercontent.com/-v0E_e_JDtak/VYLFtOpuREI/AAAAAAAACeE/TfdfXoeT-BE/s1036/bbs-list-10.png" />
+<img alt="게시판 디자인 10" src="https://lh3.googleusercontent.com/eiRE_MTj5_mygHSNo9tA7DHXWPwKymv6CvCIIWYuUzz428U9iH5uAMY8xQeJjE5KsAW-XjunnUQ5SEj4Hkoe7TpSDeOAsc-V5OBfmxEruJu1kSlN_ZZrImCY2YENcRXShCvm4XU8o-zRMi0yXjOvvVD7qN89GKaqs-K8AowJtwLg5eC9zUoMQ5kaQv1WxF9d0DtP7q0PabFSNltJQl0RXNCcIlBDix0roySxOnuZb-CrBrkMFhmi4VRM41rrOnTeczbfh4XgeNvV94ZeyDsYiKxlRBFnuILxQUKv-GM2EwpsJvgoRp1sgNPoyzbcuyMIc6vQfgNmQYnvNkU6CW6-heSb9c1eiEl2llcTde6KarnnRv8yCAdBJa4vBQ32YUXp8sXkfkhmykBpNhs-cWR_GlhXK2j6b9Iw0Qx7RwInxQ1G9xxOz8uYpSudmakw3jB5_29ap4-cg1rXW3yg7DBbw_Dl6N-qP5kgSu46RCtaLUn-H2tVUxjwR2A7lDNhY3sTaXC81fDQb5CG1RWaKU1VUbJKk0VKt9TOlSOYBkhFxUKF8mOpmXEMYPZXlmRCK7axYfn9uxwQ20dzWdtjbz_f3g-pD-X104aetc_fEFv9yg=w1005-h356-no" />
 </p>
 
-<h3>새 글쓰기 버튼 위치 조정</h3>
-
-<p>
-새 글쓰기 버튼이 화면 오른쪽에 있도록 스타일을 지정한다.
-</p>
+<h3>새 글쓰기 버튼을 오른쪽에 배치</h3>
 
 <pre class="prettyprint">
 <strong>#list-menu {
@@ -353,14 +320,10 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 </pre>
 
 <p>
-<img alt="게시판 디자인 11" src="https://lh3.googleusercontent.com/-TVEzMSPCsoE/VYLFtZ3vH2I/AAAAAAAACec/DVoKJoCmjhE/s1035/bbs-list-11.png" />
+<img alt="게시판 디자인 11" src="https://lh3.googleusercontent.com/sVoZyNHNQwLWeR6hkJ-ZW_pe38ZmtygX8JZZ1Es9o5QnnGDMsvxhzLfBA8CBSkjBM2CDgFXPXhrmjrqfIIynkesIpv4UMtDrp4P88w-DnF2OWI93mANKuBweaelTipmdUhHWL_T82bKqHAlFVrH6M5XviBdzRDE7wTu_LGCRsPiw2vePmMyUf5fGYUt0hN1fVei9vHKENrTC472oHHrXQGOI7Zn6uBYtsGi9-rsb5Scu1a5_lvDemSAj_4VgBfhbuo77sEHXTqa-2tiJB_ZKr_QinK5LhvMd3KvsldqqkSGQfHERXsFm7bHoXtifFbywjy8fOm5ptDDeq5mfGTBnEzRtQnkIqCSSVMyOrF5qRL1_FVA5d3cjbzkjz8OAA6xDMJOTM8e2KCVK4rMd_reCVhaNOIhVBfPW5yhDsEKli6ibyREOpo8Ze2C_6uem90WFbtGp4MKCutjK86WHbciml4hmB8tuUC-facjImU1XYfZm_cDzTiWrO3-WZFqrCA3EeecR52lcQug6NwSHdurYmhgIZlWW80GsOKOmAInYM51mg453f54XbUhgV-PI2jZvKnx3-XSIl_Ie4Q4zNmUsyFrEeGwXoyMVVPdQdm2keg=w1006-h352-no" />
 </p>
 
-<h3>검색을 중앙으로</h3>
-
-<p>
-검색을 화면 중앙으로 이동시킨다.
-</p>
+<h3>검색을 중앙에 배치</h3>
 
 <pre class="prettyprint">
 <strong>#search {
@@ -369,25 +332,7 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 </pre>
 
 <p>
-<img alt="게시판 디자인 12" src="https://lh3.googleusercontent.com/-iPXtwDabEUA/VYLFtZ0VLBI/AAAAAAAACeY/j6d37Rs7KUg/s1030/bbs-list-12.png" />
-</p>
-
-<h3>화면 간격 조정</h3>
-
-<p>
-#search와 #footer의 간격도 조정한다.<br />
-기존 #search에 다음 강조된 부분을 추가한다.
-</p>
-
-<pre class="prettyprint">
-#search {
-	text-align: center;
-	<strong>padding-bottom: 15px;</strong>
-}
-</pre>
-
-<p>
-<img alt="게시판 디자인 13" src="https://lh3.googleusercontent.com/-G6pgpPH3rWk/VYLFtyTQJDI/AAAAAAAACeU/MOlCFxsJVKs/s1032/bbs-list-13.png" />
+<img alt="게시판 디자인 12" src="https://lh3.googleusercontent.com/wnYVw3qAumZWIqBQ1Pj59S3we7gsSwq33KV_UkEky4dl8RFPGdjuuWNH8PJSXwbr-E_GpjFIEzIoXLIK4QIQkBDr5OcFZeA7nKu1QsRV_A5S9cJ1Laudr8HFa5t1PleHBWbqVn-jUY9a9UsMXX3O4k0lvw2kG8e6uuX69hz4J9lPMvbE3HQK40yiCTv8bFZjWI06rFABxMtyae-cdTB4lfFC6MpDivzfS0mBmLy9W9PGTF-4fQvGKqesl_qfGpmylFmj_uunk7OgTOewTv2hM2ysGa1jjobA0EEJAL1ZjfvWusPfmyEx2PLaRkxT6snhZEhs02iVWKpMmgL-8ltW8Tddq7qpmw8Dgo8T7St5hPijVvshGtgMwInl2Cksmg6xbU3UUFXrgVY2jyDZlTufpcm8rF-8Ty-0y9YBnUrGppkrre_Om65ePmjN7igNVAo5jtms1h8k6YQoVkp4Pc_r4I4dmJvVUEKD9v3l9wej1IHzoq-3FDmSPQJBQH2fuMEwAwyZjXke47QZdlaxDpujHioABSUAC3Mfnb0JQdY5-hXkBBPLPJ8o8rb72JEiOxHIVUpithY6vY3sAsSL2ZiNR9OvI9VgdN8EJU1xFYzm2A=w1003-h354-no" />
 </p>
 
 <span id="refer">참고</span>
