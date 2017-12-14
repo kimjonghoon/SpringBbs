@@ -23,7 +23,7 @@ function check() {
 ${user.name }<br />
 ${user.mobile }<br />
 
-<sf:form id="changePassworddForm" action="changePasswd" method="post" commandName="password" onsubmit="return check()">
+<sf:form id="changePassworddForm" action="changePasswd" method="post" modelAttribute="password" onsubmit="return check()">
 <table>
 <tr>
 	<td><spring:message code="user.changePasswd.current.passwd" /></td>

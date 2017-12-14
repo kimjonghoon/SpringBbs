@@ -12,7 +12,7 @@ function delAuthority(authority) {
 </script>
 <h2><spring:message code="user.modify" /></h2>
 
-<sf:form id="editAccountForm" action="editAccount" method="post" commandName="user">
+<sf:form id="editAccountForm" action="editAccount" method="post" modelAttribute="user">
 <sf:hidden path="email" value="${user.email }" />
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="search" value="${param.search }" />
@@ -40,7 +40,7 @@ function delAuthority(authority) {
 
 <hr />
 
-<sf:form id="changePasswdForm" action="changePasswd" method="post" commandName="user">
+<sf:form id="changePasswdForm" action="changePasswd" method="post" modelAttribute="user">
 <sf:hidden path="email" value="${user.email }" />
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="search" value="${param.search }" />

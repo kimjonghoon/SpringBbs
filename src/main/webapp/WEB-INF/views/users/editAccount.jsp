@@ -20,7 +20,7 @@ function check() {
 <a href="changePasswd"><spring:message code="user.change.password" /></a><br />
 </p>
 
-<sf:form id="editAccountForm" action="editAccount" method="post" commandName="user" onsubmit="return check();">
+<sf:form id="editAccountForm" action="editAccount" method="post" modelAttribute="user" onsubmit="return check();">
 <sf:hidden path="email" value="abc@def.ghi" />
 <sf:errors path="*" cssClass="error" />
 <table>

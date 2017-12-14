@@ -14,7 +14,7 @@ function check() {
 
 <h2><spring:message code="user.signup.heading" /></h2>
 
-<sf:form id="signUpForm" action="signUp" method="post" commandName="user" onsubmit="return check();">
+<sf:form id="signUpForm" action="signUp" method="post" modelAttribute="user" onsubmit="return check();">
 <sf:errors path="*" cssClass="error" />
 <table>
 <tr>
