@@ -5,7 +5,7 @@
 
 <configuration>
 	<settings>
-    	<setting name="logImpl" value="LOG4J"/>
+    	<setting name="logImpl" value="LOG4J2"/>
   	</settings>
   	
 	<typeAliases>
@@ -16,11 +16,13 @@
 		<typeAlias type="net.java_school.user.User" alias="User" />
 	</typeAliases>
 	
-<!-- 	<mappers>
+<!-- 	
+	<mappers>
 		<mapper resource="net/java_school/mybatis/oracle/BoardMapper.xml" />
 		<mapper resource="net/java_school/mybatis/oracle/UserMapper.xml" />
 		<mapper resource="net/java_school/mybatis/mysql/BoardMapper.xml" />
 		<mapper resource="net/java_school/mybatis/mysql/UserMapper.xml" />
-	</mappers> -->
+	</mappers> 
+-->
 
 </configuration>
