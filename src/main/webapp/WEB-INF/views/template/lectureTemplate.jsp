@@ -54,7 +54,7 @@ $(document).ready(function() {
 					</li>
 					<li>
 						<spring:message code="global.prev" /> : 
-						<a href="#" title="<tiles:insertAttribute name="prev-article" />""><tiles:insertAttribute name="prev-article-title" /></a>
+						<a href="#" title="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
 					</li>
 				</ul>
 				</div>

@@ -18,7 +18,6 @@ import net.java_school.board.Article;
 import net.java_school.board.AttachFile;
 import net.java_school.board.Board;
 import net.java_school.board.BoardService;
-import net.java_school.board.Comment;
 import net.java_school.commons.NumbersForPaging;
 import net.java_school.commons.Paginator;
 import net.java_school.commons.WebContants;

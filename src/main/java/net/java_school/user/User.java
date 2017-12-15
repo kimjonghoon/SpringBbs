@@ -2,14 +2,12 @@ package net.java_school.user;
 
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
 public class User {
-	@NotBlank(message="이메일 형식이 아닙니다.")
-	@Email(message="이메일 형식이 아닙니다.")
+	@Size(min=5, message="{email.validation.error}")
+	@Email(message="{email.validation.error}")
 	private String email;
 	@Size(min=4, message="{passwd.validation.error}")
 	private String passwd;
@@ -20,11 +18,6 @@ public class User {
 	private List<String> authorities;
 	
 	public User() {}
-	
-	public User(String email, String passwd) {
-		this.email = email;
-		this.passwd = passwd;
-	}
 	
 	public User(String email, String passwd, String name, String mobile, List<String> authorities) {
 		this.email = email;
