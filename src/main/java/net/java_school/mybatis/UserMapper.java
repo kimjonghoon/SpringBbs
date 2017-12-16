@@ -1,4 +1,4 @@
-package net.java_school.mybatis.oracle;
+package net.java_school.mybatis;
 
 import java.util.List;
 
@@ -29,8 +29,8 @@ public interface UserMapper {
 
 	public List<User> selectAll(
 			@Param("search") String search, 
-			@Param("startRecord") Integer startRecord, 
-			@Param("endRecord") Integer endRecord);
+			@Param("offset") Integer offset, 
+			@Param("rowCount") Integer rowCount);	
 
 	public int selectTotalCount(@Param("search") String search);
 

@@ -6,8 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.java_school.mybatis.oracle.BoardMapper;
-//import net.java_school.mybatis.mysql.BoardMapper;
+import net.java_school.mybatis.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {

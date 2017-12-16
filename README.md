@@ -37,7 +37,7 @@ SpringBbs
 	    title varchar2(200) NOT NULL,
 	    content clob NOT NULL,
 	    email varchar2(60),
-	    hit number,    
+	    hit number,
 	    regdate date,
 	    constraint PK_ARTICLE PRIMARY KEY(articleno),
 	    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
@@ -49,8 +49,8 @@ SpringBbs
 	
 	create table comments (
 	    commentno number,
-	    articleno number,    
-	    email varchar2(60),    
+	    articleno number,
+	    email varchar2(60),
 	    memo varchar2(4000) NOT NULL,
 	    regdate date, 
 	    constraint PK_COMMENTS PRIMARY KEY(commentno)
@@ -82,23 +82,23 @@ SpringBbs
 	
 	CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority); 
 	
-	-- for test records  
+	-- for test records
 	insert into board values ('free', 'Free', '자유게시판');
 	
 	commit;
 	
 	create table views (
-		no number,
-		articleNo number,
-		ip varchar(60),
-		yearMonthDayHour char(10),
-		constraint PK_VIEWS PRIMARY KEY(no),
-		constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
+	  no number,
+	  articleNo number,
+	  ip varchar(60),
+	  yearMonthDayHour char(10),
+	  constraint PK_VIEWS PRIMARY KEY(no),
+	  constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
 	);
 
 	create sequence SEQ_VIEWS
-		increment by 1
-		start with 1;
+	increment by 1
+	start with 1;
 	
 
 ## Database Design (MySql)
@@ -141,7 +141,7 @@ SpringBbs
 	    title varchar(200) NOT NULL,
 	    content text NOT NULL,
 	    email varchar(60),
-	    hit bigint,    
+	    hit bigint,
 	    regdate datetime,
 	    constraint PK_ARTICLE PRIMARY KEY(articleno),
 	    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
@@ -149,8 +149,8 @@ SpringBbs
 	
 	create table comments (
 	    commentno int NOT NULL AUTO_INCREMENT,
-	    articleno int,    
-	    email varchar(60),    
+	    articleno int,
+	    email varchar(60),
 	    memo varchar(4000) NOT NULL,
 	    regdate datetime,
 	    constraint PK_COMMENTS PRIMARY KEY(commentno)
@@ -172,17 +172,16 @@ SpringBbs
 	commit;
 	
 	create table views (
-		no int primary key AUTO_INCREMENT,
-		articleNo int,
-		ip varchar(60),
-		yearMonthDayHour char(10),
-		unique key (articleNo, ip, yearMonthDayHour)
+	  no int primary key AUTO_INCREMENT,
+	  articleNo int,
+	  ip varchar(60),
+	  yearMonthDayHour char(10),
+	  unique key (articleNo, ip, yearMonthDayHour)
 	);
 
 ## Have to do
  
-1. Edit **UPLOAD_PATH** in net.java_school.commons.WebContants.java
-2. Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
+Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
  
 > mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 
@@ -192,12 +191,7 @@ $ mvn jetty:run
 
 ## Oracle -> MySql
 
-### 1. spring-bbs-servlet.xml
-
-> <!-- <mybatis:scan base-package="net.java_school.mybatis.oracle" /> -->
-> <mybatis:scan base-package="net.java_school.mybatis.mysql" />
-
-### 2. applicationContext.xml
+### 1. applicationContext.xml
 	
 	<!--
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -263,15 +257,15 @@ $ mvn jetty:run
 	map.put("rowCount", rowCount.toString());
 	List<Article> list = boardService.getArticleList(map);
 
-### 5. UserServiceImpl.java
+### 5. BoardMapper.xml
 	
-	//import net.java_school.mybatis.oracle.UserMapper;
-	import net.java_school.mybatis.mysql.UserMapper;
+	Comment out the code of &lt;!-- Oracle --&gt;
+	Uncomment the code of &lt;!-- MySql --&gt;
 	
-### 6. BoardServiceImpl.java
+### 6. UserMapper.xml
 
-	//import net.java_school.mybatis.oracle.BoardMapper;
-	import net.java_school.mybatis.mysql.BoardMapper;
+	Comment out the code of &lt;!-- Oracle --&gt;
+	Uncomment the code of &lt;!-- MySql --&gt;
 	
 ## for Admin Test
 After sign up, add admin role as following.

@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.java_school.mybatis.oracle.UserMapper">
+<mapper namespace="net.java_school.mybatis.UserMapper">
 
 	<insert id="insert" parameterType="User">
 		INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
@@ -43,7 +43,63 @@
 		<id property="email" column="email" />
 		<collection property="authorities" javaType="ArrayList" column="email" ofType="string" select="selectAuthoritiesOfUser" />
 	</resultMap>
+
+	<update id="updatePasswdByAdmin" parameterType="User">
+		UPDATE member SET passwd = #{passwd}
+		WHERE email = #{email}
+	</update>
+
+	<select id="selectAuthoritiesOfUser" resultType="string">
+		SELECT authority
+		FROM authorities
+		WHERE email = #{email}
+	</select>
+
+	<delete id="deleteAuthorityOfUser">
+		DELETE FROM authorities
+		WHERE email = #{email} AND authority = #{authority}
+	</delete>
+
+	<!-- MySql -->
+	<select id="selectTotalCount" resultType="int">
+		SELECT count(*)
+		FROM member
+		<if test="search != null and search != ''">
+		WHERE
+			email LIKE concat('%', #{search}, '%')
+			OR name LIKE concat('%', #{search}, '%')
+			OR mobile LIKE concat('%', #{search}, '%')
+		</if>
+	</select>
+		
+	<select id="selectAll" resultMap="UserResult">
+		SELECT	email, name, mobile
+		FROM
+		member
+		<if test="search != null and search != ''">
+		WHERE
+			email LIKE concat('%', #{search}, '%')
+			OR name LIKE concat('%', #{search}, '%')
+			OR mobile LIKE concat('%', #{search}, '%')
+		</if>
+		ORDER BY name ASC
+		LIMIT #{offset}, #{rowCount}
+	</select>
+
 	
+	<!-- Oracle -->
+	<!-- 
+	<select id="selectTotalCount" resultType="int">
+		SELECT count(*)
+		FROM member
+		<if test="search != null and search != ''">
+		WHERE 
+			email LIKE '%' || #{search} || '%'
+			OR name LIKE '%' || #{search} || '%'
+			OR mobile LIKE '%' || #{search} || '%'
+		</if>
+	</select>
+		
 	<select id="selectAll" resultMap="UserResult">
 		SELECT email, name, mobile
 		FROM (
@@ -62,32 +118,5 @@
 		)
 		WHERE R BETWEEN #{startRecord} AND #{endRecord}
 	</select>
-
-	<select id="selectTotalCount" resultType="int">
-		SELECT count(*)
-		FROM member
-		<if test="search != null and search != ''">
-		WHERE 
-			email LIKE '%' || #{search} || '%'
-			OR name LIKE '%' || #{search} || '%'
-			OR mobile LIKE '%' || #{search} || '%'
-		</if>
-	</select>
-
-	<update id="updatePasswdByAdmin" parameterType="User">
-		UPDATE member SET passwd = #{passwd}
-		WHERE email = #{email}
-	</update>
-
-	<select id="selectAuthoritiesOfUser" resultType="string">
-		SELECT authority
-		FROM authorities
-		WHERE email = #{email}
-	</select>
-
-	<delete id="deleteAuthorityOfUser">
-		DELETE FROM authorities
-		WHERE email = #{email} AND authority = #{authority}
-	</delete>
-
+	-->
 </mapper>

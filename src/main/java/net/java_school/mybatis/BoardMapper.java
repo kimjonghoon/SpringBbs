@@ -1,4 +1,4 @@
-package net.java_school.mybatis.mysql;
+package net.java_school.mybatis;
 
 import java.util.HashMap;
 import java.util.List;
