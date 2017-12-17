@@ -73,7 +73,7 @@
 		</if>
 	</select>
 		
-	<select id="selectAll" resultMap="UserResult">
+	<select id="selectAll" parameterType="hashmap" resultMap="UserResult">
 		SELECT	email, name, mobile
 		FROM
 		member
@@ -102,7 +102,7 @@
 		</if>
 	</select>
 		
-	<select id="selectAll" resultMap="UserResult">
+	<select id="selectAll" parameterType="hashmap" resultMap="UserResult">
 		SELECT email, name, mobile
 		FROM (
 		SELECT ROWNUM R, a.*

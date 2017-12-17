@@ -1,5 +1,6 @@
 package net.java_school.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +31,7 @@ public interface UserService {
 
 	//회원목록
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public List<User> getAllUser(String search, Integer startRecord, Integer endRecord);
+	public List<User> getAllUser(HashMap<String, String> hashmap);
 
 	//회원수
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

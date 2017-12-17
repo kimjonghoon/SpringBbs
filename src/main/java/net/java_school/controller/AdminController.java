@@ -1,6 +1,7 @@
 package net.java_school.controller;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 
 import net.java_school.board.Board;
@@ -26,7 +27,7 @@ public class AdminController extends Paginator {
 	
 	@Autowired
 	private BoardService boardService;
-	
+
 	@RequestMapping(method=RequestMethod.GET)
 	public String index(Integer page, String search, Model model) {
 		if (page == null) page = 1;
@@ -38,15 +39,25 @@ public class AdminController extends Paginator {
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 		
 		//oracle
-		int startRecord = (page - 1) * numPerPage + 1;
-		int endRecord = page * numPerPage;
-		List<User> list = userService.getAllUser(search, startRecord, endRecord);
+		Integer startRecord = (page - 1) * numPerPage + 1;
+		Integer endRecord = page * numPerPage;
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("startRecord", startRecord.toString());
+		map.put("endRecord", endRecord.toString());
+		
+		List<User> list = userService.getAllUser(map);
 
 /*
 		//mysql
-		int offset = (page - 1) * numPerPage;
-		List<User> list = userService.getAllUser(search, offset, numPerPage);
-
+		Integer offset = (page - 1) * numPerPage;
+		Integer rowCount = numPerPage;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("offset", offset.toString());
+		map.put("rowCount", rowCount.toString());
+		
+		List<User> list = userService.getAllUser(map);
 */
 		
 		Integer listItemNo = numbers.getListItemNo();
@@ -58,7 +69,7 @@ public class AdminController extends Paginator {
 		model.addAttribute("list", list);
 		model.addAttribute("listItemNo", listItemNo);
 		model.addAttribute("prev", prev);
-		model.addAttribute("nexte", next);
+		model.addAttribute("next", next);
 		model.addAttribute("firstPage", firstPage);
 		model.addAttribute("lastPage", lastPage);
 		

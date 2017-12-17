@@ -1,5 +1,6 @@
 package net.java_school.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +77,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUser(String search, Integer startRecord, Integer endRecord) {
-		return userMapper.selectAll(search, startRecord, endRecord);
+	public List<User> getAllUser(HashMap<String, String> hashmap) {
+		return userMapper.selectAll(hashmap);
 	}
 	
 	@Override

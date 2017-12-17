@@ -1,5 +1,6 @@
 package net.java_school.mybatis;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -27,11 +28,6 @@ public interface UserMapper {
 
 	public User selectOne(@Param("email") String email);
 
-	public List<User> selectAll(
-			@Param("search") String search, 
-			@Param("offset") Integer offset, 
-			@Param("rowCount") Integer rowCount);	
-
 	public int selectTotalCount(@Param("search") String search);
 
 	public String selectOneAuthority(String email);
@@ -41,5 +37,7 @@ public interface UserMapper {
 	public List<String> selectAuthoritiesOfUser(@Param("email") String email);
 
 	public void deleteAuthorityOfUser(@Param("email") String email, @Param("authority") String authority);
+	
+	public List<User> selectAll(HashMap<String, String> hashmap);	
 
 }
