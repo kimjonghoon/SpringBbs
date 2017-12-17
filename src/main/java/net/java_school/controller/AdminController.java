@@ -39,16 +39,17 @@ public class AdminController extends Paginator {
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 		
 		//oracle
+/*		
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("startRecord", startRecord.toString());
 		map.put("endRecord", endRecord.toString());
-		
-		List<User> list = userService.getAllUser(map);
 
-/*
+		List<User> list = userService.getAllUser(map);
+*/
+
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
@@ -58,7 +59,7 @@ public class AdminController extends Paginator {
 		map.put("rowCount", rowCount.toString());
 		
 		List<User> list = userService.getAllUser(map);
-*/
+
 		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prev = numbers.getPrevBlock();
