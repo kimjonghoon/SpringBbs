@@ -45,11 +45,12 @@ public class AdminController extends Paginator {
 
 
 /*
+
 		//mysql
 		int offset = (page - 1) * numPerPage;
 		List<User> list = userService.getAllUser(search, offset, numPerPage);
-*/		
-		
+
+*/
 		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prev = numbers.getPrevBlock();

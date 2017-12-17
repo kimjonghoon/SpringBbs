@@ -91,6 +91,7 @@
 	</select>
 
 	<!-- MySql -->
+<!-- 	
 	<select id="selectListOfComments" parameterType="int" resultType="Comment">
 		SELECT 
 			commentno, 
@@ -185,10 +186,11 @@
 			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
 			</if>
 	</select>
-	
+	 -->
 	
 	<!-- Oracle -->
-	<!-- 
+	
+	
 	<select id="selectListOfComments" parameterType="int" resultType="Comment">
 		SELECT 
 			commentno, 
@@ -304,7 +306,7 @@
 		)
 	WHERE R BETWEEN #{start} AND #{end}
 	</select>	
-	-->
+	
 	
 	
  </mapper>
