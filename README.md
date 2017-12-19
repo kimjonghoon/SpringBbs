@@ -83,7 +83,7 @@ SpringBbs
 	CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority); 
 	
 	-- for test records
-	insert into board values ('free', 'Free', '자유게시판');
+	insert into board values ('free', 'Free', '�옄�쑀寃뚯떆�뙋');
 	
 	commit;
 	
@@ -101,7 +101,7 @@ SpringBbs
 	start with 1;
 	
 
-## Database Design (MySql)
+## Database Design (MySql or MariaDB)
 
 	mysql --user=root --password mysql
 	
@@ -168,7 +168,7 @@ SpringBbs
 	    constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
 	);
 	
-	insert into board values ('free','Free','자유 게시판');
+	insert into board values ('free','Free','�옄�쑀 寃뚯떆�뙋');
 	commit;
 	
 	create table views (
@@ -192,7 +192,7 @@ $ mvn jetty:run
 ## Oracle -> MySql
 
 ### 1. applicationContext.xml
-	
+
 	<!--
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
@@ -259,13 +259,13 @@ $ mvn jetty:run
 
 ### 5. BoardMapper.xml
 	
-	Comment out the code of &lt;!-- Oracle --&gt;
-	Uncomment the code of &lt;!-- MySql --&gt;
+	Comment out the code of <!-- Oracle -->
+	Uncomment the code of <!-- MySql -->
 	
 ### 6. UserMapper.xml
 
-	Comment out the code of &lt;!-- Oracle --&gt;
-	Uncomment the code of &lt;!-- MySql --&gt;
+	Comment out the code of <!-- Oracle -->
+	Uncomment the code of <!-- MySql -->
 	
 ## for Admin Test
 After sign up, add admin role as following.
