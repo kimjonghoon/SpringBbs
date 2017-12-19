@@ -193,44 +193,32 @@ $ mvn jetty:run
 
 ### 1. applicationContext.xml
 
-	<!--
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
-		<property name="username" value="java" />
-		<property name="password" value="school" />
-		<property name="maxActive" value="100" />
-		<property name="maxWait" value="1000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value=" SELECT 1 FROM DUAL" />
-	</bean>
-	-->
-	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;characterEncoding=UTF-8" />
-		<property name="username" value="java" />
-		<property name="password" value="school" />
-		<property name="maxActive" value="100" />
-		<property name="maxWait" value="1000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value="SELECT 1" />
-	</bean>
+Comment out Oracle datasource.
+Comment out MariaDB dataource.
 
 ### 3. AdminController.java
 
 	/*
 	//oralce
-	int startRecord = (page - 1) * numPerPage + 1;
-	int endRecord = page * numPerPage;
-	List<User> list = userService.getAllUser(search, startRecord, endRecord);
+	Integer startRecord = (page - 1) * numPerPage + 1;
+	Integer endRecord = page * numPerPage;
+	
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("startRecord", startRecord.toString());
+	map.put("endRecord', endRecrod.toString());
+	
+	List<User> list = userService.getAllUser(map);
 	*/
 	
 	//mysql
-	int offset = (page - 1) * numPerPage;
-	List<User> list = userService.getAllUser(search, offset, numPerPage);
+	Integer offset = (page - 1) * numPerPage;
+	Integer rowCount = numPerPage;
+	
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("offset", offset.toString());
+	map.put("rowCount", rowCount.toString());
+	
+	List<User> list = userService.getAllUser();
 
 ### 4. BbsController.java (in list() and view() methods)
 
