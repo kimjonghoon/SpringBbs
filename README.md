@@ -83,7 +83,7 @@ SpringBbs
 	CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority); 
 	
 	-- for test records
-	insert into board values ('free', 'Free', '�옄�쑀寃뚯떆�뙋');
+	insert into board values ('free', 'Free', '자유 게시판');
 	
 	commit;
 	
@@ -168,7 +168,7 @@ SpringBbs
 	    constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
 	);
 	
-	insert into board values ('free','Free','�옄�쑀 寃뚯떆�뙋');
+	insert into board values ('free','Free','자유 게시판');
 	commit;
 	
 	create table views (
