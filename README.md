@@ -218,7 +218,7 @@ Comment out MariaDB dataource.
 	map.put("offset", offset.toString());
 	map.put("rowCount", rowCount.toString());
 	
-	List<User> list = userService.getAllUser();
+	List<User> list = userService.getAllUser(map);
 
 ### 4. BbsController.java (in list() and view() methods)
 
