@@ -63,7 +63,7 @@
 		<put-attribute name="content" value="/WEB-INF/views/users/{1}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/users/user-sub.jsp" />
 	</definition>
-	<!-- 게시판 -->		
+	<!-- 게시판 -->
 	<definition name="bbs/*" extends="defaultTemplate">
 		<put-attribute name="title" value="게시판" />
 		<put-attribute name="keywords" value="게시판" />
@@ -1318,6 +1318,13 @@
 		<put-attribute name="keywords" value="DownloadController" />
 		<put-attribute name="description" value="DownloadController Example" />
 		<put-attribute name="content" value="2017/downloadController" />
+		<put-attribute name="sidebar" value="" />
+	</definition>	
+	<definition name="blog/2017/ajax-fileupload" extends="blogTemplate">
+		<put-attribute name="title" value="애이젝스 파일업로드" />
+		<put-attribute name="keywords" value="에이젝스,ajax,파일 업로드,fileupload" />
+		<put-attribute name="description" value="Fileupload using Ajax" />
+		<put-attribute name="content" value="2017/ajax-fileupload" />
 		<put-attribute name="sidebar" value="" />
 	</definition>
 </tiles-definitions>

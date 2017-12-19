@@ -1317,4 +1317,11 @@
 		<put-attribute name="content" value="2017/downloadController" />
 		<put-attribute name="sidebar" value="" />
 	</definition>
+	<definition name="blog/2017/ajax-fileupload" extends="blogTemplate">
+		<put-attribute name="title" value="Ajax FileUpload" />
+		<put-attribute name="keywords" value="ajax,fileupload" />
+		<put-attribute name="description" value="Fileupload using Ajax" />
+		<put-attribute name="content" value="2017/ajax-fileupload" />
+		<put-attribute name="sidebar" value="" />
+	</definition>	
  </tiles-definitions>

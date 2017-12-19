@@ -59,5 +59,13 @@ $(document).ready(function() {
 		</div>
 
 	</div>
+
+<div id="form-group" style="display: none">
+ 	<form id="downForm" action="/download" method="post">
+		<input type="hidden" name="filename" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+</div>
+	
 </body>
 </html>

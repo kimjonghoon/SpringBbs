@@ -31,24 +31,21 @@ Hibernate Validator 의존 라이브러리를 pom.xml에 추가한다.
 </pre>
 
 <p>
-pom.xml의 내용이 변경되었으니 이클립스와 동기화한다. 
-컨텍스트 메뉴의 Maven - Update Project Cofiguraion을 실행한다.
-스프링 설정 파일에 &lt;mvc:annotation-driven /&gt; 설정이 있는지 확인한다. 
+pom.xml의 내용이 변경되었으니 컨텍스트 메뉴의 Maven - Update Project Cofiguraion을 실행하여 이클립스와 동기화한다.<br /> 
+빈 검증은 스프링 설정 파일에 &lt;mvc:annotation-driven /&gt; 설정이 필요하다.<br /> 
 web.xml에 요청 파라미터의 캐릭터 셋을 "UTF-8"로 바꾸는 필터가 설정되어 있는지 확인한다.
 </p>
 
 <p>
-회원 가입 폼 입력에 바인딩되는 빈에, JSR-303의 빈 검증 어노테이션 또는 hibernate-validator 구현체에서 제공하는 빈 검증 어노테이션을 사용하여, 검사 규칙을 선언한다.
-아래 어노테이션에서 @NotNull과 @Size(min=,max=)는 JSR-303 스펙에서, @Email은 hibernate-validator 구현체에서 제공한다.
+회원 가입 폼 입력에 바인딩되는 빈에 빈 검증 어노테이션을 사용하여 검사 규칙을 선언한다.
 </p>
 
 <h6 class="src">User.java</h6>
 <pre class="prettyprint">
-<strong>import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+<strong>import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
-@NotBlank(message="이메일 형식이 아닙니다.")
+@Size(min=5, message="이메일 형식이 아닙니다.")
 @Email(message="이메일 형식이 아닙니다.")</strong>
 private String email;
 <strong>
@@ -63,10 +60,10 @@ private String mobile;
 </pre>
 
 <p>
-회원 가입 폼 페이지로 포워딩하는 요청 핸들러 메서드(아래 첫 번째 signUp() 메서드)에 내용이 없는 빈 객체(User 객체)를 생성해 뷰에 전달해야 한다. 
-이건 스펙이니 따라야 한다.
-회원 가입을 처리하는 요청 핸들러 메서드(아래 두 번재 signUp() 메서드)에 빈 검증 로직을 추가한다.
-두 번재 signUp() 메서드의 매개 변수 리스트에서 @Valid 어노테이션이 적용된 매개 변수 다음에는 반드시 BindingResult 타입의 매개 변수를 선언해야 한다.
+회원 가입 폼 페이지로 포워딩하는 요청 핸들러 메서드(아래 첫 번째 signUp() 메서드)에 내용이 없는 빈 객체(User 객체)를 생성해 뷰에 전달해야 한다.<br /> 
+(이건 스펙이니 따라야 한다)<br />
+회원 가입을 처리하는 요청 핸들러 메서드(아래 두 번재 signUp() 메서드)에 빈 검증 로직을 추가한다.<br />
+두 번재 signUp() 메서드의 매개 변수 리스트에서 @Valid 어노테이션이 적용된 매개 변수 다음에는 반드시 BindingResult 타입의 매개 변수를 선언해야 한다.<br />
 그렇지 않으면 HTTP 400 에러가 발생한다.
 </p>
 
@@ -94,7 +91,7 @@ public String signUp(<strong>@Valid</strong> User user, <strong>BindingResult bi
 </pre>
 
 <p>
-JSP를 아래를 참고하여 수정한다.
+JSP를 아래를 참고하여 수정한다.<br />
 &lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
 </p>
 
@@ -152,10 +149,9 @@ JSP를 아래를 참고하여 수정한다.
 </pre>
 
 <p>
-에러 메시지를 위한 스타일을 CSS 파일에 추가한다.<br />
+스타일 시트에 에러 메시지를 위한 스타일을 추가한다.<br />
 </p>
 
-<h6 class="src">screen.css</h6>
 <pre class="prettyprint">
 .error {
 	color: red;
