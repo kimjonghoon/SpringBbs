@@ -15,9 +15,7 @@
 		<intercept-url pattern="/user/welcome" access="permitAll" />
 		<intercept-url pattern="/user/signUp" access="permitAll" />
 		<intercept-url pattern="/user/login" access="permitAll" />
-		<intercept-url pattern="/images/**" access="permitAll" />
-		<intercept-url pattern="/css/**" access="permitAll" />
-		<intercept-url pattern="/js/**" access="permitAll" />
+		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />

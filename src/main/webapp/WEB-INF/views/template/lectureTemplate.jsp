@@ -20,13 +20,6 @@ $(document).ready(function() {
 	$('#main-article').load('/resources/articles/' + url + '.html', function() {
 		runAfterLoadArticle();
 	});
- 	$('#next-prev a').click(function(e) {
-		e.preventDefault();
-		var url = "/" + this.title;
-		url = url.replace('#','/');
-		$("#lectureForm").attr("action", url);
-		$('#lectureForm').submit();
-	});
 });
 </script>
 </head>
@@ -50,11 +43,11 @@ $(document).ready(function() {
 				<ul>
 					<li>
 						<spring:message code="global.next" /> : 
-						<a href="#" title="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
+						<a href="<tiles:insertAttribute name="next-article" />"><tiles:insertAttribute name="next-article-title" /></a>
 					</li>
 					<li>
 						<spring:message code="global.prev" /> : 
-						<a href="#" title="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
+						<a href="<tiles:insertAttribute name="prev-article" />"><tiles:insertAttribute name="prev-article-title" /></a>
 					</li>
 				</ul>
 				</div>
@@ -74,9 +67,6 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-<div style="display:none;">
-	<form id="lectureForm">
-	</form>
-</div>
+
 </body>
 </html>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +21,7 @@
     
 	<div id="container">
 		<div id="content">
-			<div id="url-navi">404</div>
+			<div id="url-navi">Error</div>
 			<h2>404</h2>
 			그런 페이지가 없습니다.
 		</div>
