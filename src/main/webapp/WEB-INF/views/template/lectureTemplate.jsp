@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<tiles:importAttribute name="javascripts"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,18 +15,9 @@
 <title><tiles:insertAttribute name="title" /></title>
 <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
 <link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
-<script src="/resources/js/jquery-3.2.1.min.js"></script>
-<script src="/resources/js/prettify.js"></script>
-<script src="/resources/js/commons.js"></script>
-<script>
-$(document).ready(function() {
-	var url = $('#main-article').attr('title');
-	$('#main-article').load('/resources/articles/' + url + '.html', function() {
-		runAfterLoadArticle();
-	});
-});
-</script>
-</head>
+<c:forEach var="script" items="${javascripts}">
+	<script src="<c:url value="${script}"/>"></script>
+</c:forEach>
 </head>
 <body>
 

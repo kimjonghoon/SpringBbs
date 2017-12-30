@@ -9,7 +9,7 @@
 	<li><a href="/java/Class-Object">객체와 클래스</a></li>
 	
 	<li class="sub-heading">자바 기초</li>
-	<li><a href="/java/Keyword_Indentifiers_Comment">키워드, 식별자, 주석</a></li>
+	<li><a href="/java/Keyword_Identifiers_Comment">키워드, 식별자, 주석</a></li>
 	<li><a href="/java/DataType_Casting">자료형과 형변환</a></li>
 	<li><a href="/java/Arrays">배열</a></li>
 	<li><a href="/java/Operators_if_loops">연산자,if,루프,스위치 문</a></li>

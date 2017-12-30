@@ -9,7 +9,7 @@
 	<li><a href="/java/Class-Object">Class and Object</a></li>
 	
 	<li class="sub-heading">Java Basic</li>
-	<li><a href="/java/Keyword_Indentifiers_Comment">Indentifiers</a></li>
+	<li><a href="/java/Keyword_Identifiers_Comment">Indentifiers</a></li>
 	<li><a href="/java/DataType_Casting">Data Type</a></li>
 	<li><a href="/java/Arrays">Arrays</a></li>
 	<li><a href="/java/Operators_if_loops">Operators,if, loops, switch</a></li>

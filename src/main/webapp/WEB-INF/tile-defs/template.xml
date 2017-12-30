@@ -24,6 +24,12 @@
 		<put-attribute name="prev-article-title" value="" />
 		<put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/resources/js/jquery-3.2.1.min.js" />
+			<add-attribute value="/resources/js/prettify.js" />
+			<add-attribute value="/resources/js/commons.js" />
+			<add-attribute value="/resources/js/loadArticle.js" />
+		</put-list-attribute>
 	</definition>
 	<definition name="blogTemplate" template="/WEB-INF/views/template/blogTemplate.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
@@ -973,6 +979,9 @@
 		<put-attribute name="prev-article" value="/spring/bean-validation-at-modify-article" type="string" />
 		<put-attribute name="prev-article-title" value="Bean validation at modify article" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/dataType" extends="lectureTemplate">
 		<put-attribute name="title" value="JavaScript Data Type" />
@@ -984,6 +993,9 @@
 		<put-attribute name="prev-article" value="/javascript/introduction" type="string" />
 		<put-attribute name="prev-article-title" value="JavaScript Introduction" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/handling-select-items" extends="lectureTemplate">
 		<put-attribute name="title" value="Handling select element with javascript" />
@@ -995,6 +1007,9 @@
 		<put-attribute name="prev-article" value="/javascript/dataType" type="string" />
 		<put-attribute name="prev-article-title" value="JavaScript Data Type" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/difference-between-javascript-and-java" extends="lectureTemplate">
 		<put-attribute name="title" value="Difference between javascript and java" />
@@ -1006,6 +1021,9 @@
 		<put-attribute name="prev-article" value="/javascript/handling-select-items" type="string" />
 		<put-attribute name="prev-article-title" value="Handling select element with javascript" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Number" extends="lectureTemplate">
 		<put-attribute name="title" value="Number" />
@@ -1017,6 +1035,9 @@
 		<put-attribute name="prev-article" value="/javascript/difference-between-javascript-and-java" type="string" />
 		<put-attribute name="prev-article-title" value="Difference between javascript and java" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/String" extends="lectureTemplate">
 		<put-attribute name="title" value="String" />
@@ -1028,6 +1049,9 @@
 		<put-attribute name="prev-article" value="/javascript/Number" type="string" />
 		<put-attribute name="prev-article-title" value="Number" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/RegExp" extends="lectureTemplate">
 		<put-attribute name="title" value="RegExp" />
@@ -1039,6 +1063,9 @@
 		<put-attribute name="prev-article" value="/javascript/String" type="string" />
 		<put-attribute name="prev-article-title" value="String" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Date" extends="lectureTemplate">
 		<put-attribute name="title" value="Date" />
@@ -1050,6 +1077,9 @@
 		<put-attribute name="prev-article" value="/javascript/RegExp" type="string" />
 		<put-attribute name="prev-article-title" value="RegExp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Array" extends="lectureTemplate">
 		<put-attribute name="title" value="Array" />
@@ -1061,6 +1091,9 @@
 		<put-attribute name="prev-article" value="/javascript/Date" type="string" />
 		<put-attribute name="prev-article-title" value="Date" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Math" extends="lectureTemplate">
 		<put-attribute name="title" value="Math" />
@@ -1072,6 +1105,9 @@
 		<put-attribute name="prev-article" value="/javascript/Array" type="string" />
 		<put-attribute name="prev-article-title" value="Array" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Function" extends="lectureTemplate">
 		<put-attribute name="title" value="Function" />
@@ -1083,6 +1119,9 @@
 		<put-attribute name="prev-article" value="/javascript/Math" type="string" />
 		<put-attribute name="prev-article-title" value="Math" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/javascript-form-validation" extends="lectureTemplate">
 		<put-attribute name="title" value="Form Validation with JavaScript" />
@@ -1094,6 +1133,9 @@
 		<put-attribute name="prev-article" value="/javascript/Function" type="string" />
 		<put-attribute name="prev-article-title" value="Function" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/Cookie" extends="lectureTemplate">
 		<put-attribute name="title" value="Handling Cookie with JavaScript" />
@@ -1105,6 +1147,9 @@
 		<put-attribute name="prev-article" value="/javascript/javascript-form-validation" type="string" />
 		<put-attribute name="prev-article-title" value="Form Validation with JavaScript" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<definition name="javascript/decoupling-html-and-javascript" extends="lectureTemplate">
 		<put-attribute name="title" value="Decoupling HTML and JavaScript" />
@@ -1114,6 +1159,9 @@
 		<put-attribute name="prev-article" value="/javascript/Cookie" type="string" />
 		<put-attribute name="prev-article-title" value="Handling Cookie with JavaScript" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
+    	</put-list-attribute>
 	</definition>
 	<!-- google-app-engine -->
 	<definition name="google-app-engine/building-gae-projects-with-maven" extends="lectureTemplate">
