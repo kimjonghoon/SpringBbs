@@ -4,7 +4,7 @@
 
 <p>
 게시글 보기 화면에서 글 소유자가 아닌 사용자가 아래 그림에서 박스로 강조된 메뉴를 봐서는 안 된다.<br />
-<img alt="Before applying spring security at viewlayer" src="images/before-applying-security-at-view-layer.png">
+<img alt="Before applying spring security at viewlayer" src="https://lh3.googleusercontent.com/Wdf7wwF1RPB-tPcmTFuvxe5fYdhLwQih-Q9t5EaNF0E15wBaM7BKUNruYCczilLV5D3QavWUib_m-5z8_BXLzlyqaJiajQr2MZqVuxmUqx3dLUSZi8zK7DVNgvuU_AzgBuWsfkNhPNBICZXTds6BbSnWDikQuKmIelTsDirLauhuaOturKv-Rm4DetWAfPArPWfTJYU_NUg09p1cLU7MLZ5aVr6zsbueS0EE_vuYSaJKlK6fPJOmmdBQl1qoEao40dhNqI9i_Q9OTdBY7yLPxjY_uY3X9j9eRuSt-sMyhbbrddaDjLtHrkKIqBRTtI_DBrpIGapyA2GAbEPSIpFSlX801M0SQiTFQVVUzit8RfJzPjPxETLTrmpw1eYeYxjb_30eiJwtg0h_Fw7HKNR0DqnKL0bZ0XDASEzb1rpwKV1U0tIQtId-y722cxPoyO6c-woxf4fBJ6GZ8digUNsHq653W9q8rnQpkdd-i1zPoHGRfJmqmHqZUO07Uj5pqmqXUHvEAjNeG8HpJol6_ANrDa-dOFogUQrYM0KDFzOm33m01Cc8URNO98jJGsfizhb9q4G4TRfnuwbajvGW8eyxmd_Cdwb_xZoC5k_afY4=w612-h507-no">
 </p>
 
 <h6 class="src">/WEB-INF/views/bbs/view.jsp</h6>
@@ -22,7 +22,7 @@
         &lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;
         &lt;a href="javascript:download('${file.filename }')"&gt;${file.filename }&lt;/a&gt;
         <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
-            &lt;a href="javascript:deleteAttachFile('${file.attachFileNo }')"&gt;x&lt;/a&gt;
+            &lt;a href="javascript:deleteAttachFile('${file.attachFileNo }')"&gt;삭제&lt;/a&gt;
         <strong>&lt;/security:authorize&gt;</strong>
         &lt;br /&gt;
         &lt;/c:forEach&gt;	
