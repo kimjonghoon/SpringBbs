@@ -15,17 +15,31 @@
 
 &lt;!-- 중간 생략 --&gt;
 
+&lt;div class="view-menu" .. &gt;
+    <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" onclick="goModify();" /&gt;
+        &lt;input type="button" value="삭제" onclick="goDelete()" /&gt;
+    &lt;/div&gt;
+    <strong>&lt;/security:authorize&gt;</strong>
+
+
+&lt;!-- 중간 생략 --&gt;
+
 &lt;div id="detail"&gt;
-    &lt;div id="date-writer-hit"&gt;edited ${regdate } by ${name } hit ${hit }&lt;/span&gt;
-    &lt;p&gt;${content }&lt;/p&gt;
-    &lt;p id="file-list" style="text-align: right;"&gt;
+    &lt;div id="date-writer-hit"&gt;edited ${regdate } by ${name } hit ${hit }&lt;/div&gt;
+    &lt;div id="article-content"&gt;${content }&lt;/div&gt;
+    &lt;div id="file-list" style="text-align: right;"&gt;
+        &lt;div id="file-list" style="text-align: right;"&gt;
         &lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;
-        &lt;a href="javascript:download('${file.filename }')"&gt;${file.filename }&lt;/a&gt;
-        <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
-            &lt;a href="javascript:deleteAttachFile('${file.attachFileNo }')"&gt;삭제&lt;/a&gt;
-        <strong>&lt;/security:authorize&gt;</strong>
-        &lt;br /&gt;
+            &lt;div class="attach-file"&gt;			
+                &lt;a href="javascript:download('${file.filename }')"&gt;${file.filename }&lt;/a&gt;
+                <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
+                &lt;a href="javascript:deleteAttachFile('${file.attachFileNo }')"&gt;삭제&lt;/a&gt;
+                <strong>&lt;/security:authorize&gt;</strong>
+            &lt;/div&gt;
         &lt;/c:forEach&gt;	
+        &lt;/div&gt;
     &lt;/p&gt;		
 &lt;/div&gt;
 
@@ -39,16 +53,6 @@
         &lt;a href="javascript:updateComment('${comment.commentNo }')"&gt;수정&lt;/a&gt; |
         &lt;a href="javascript:deleteComment('${comment.commentNo }')"&gt;삭제&lt;/a&gt;
     &lt;/span&gt;
-    <strong>&lt;/security:authorize&gt;</strong>
-
-&lt;!-- 중간 생략 --&gt;
-
-&lt;div class="view-menu" .. &gt;
-    <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
-    &lt;div class="fl"&gt;
-        &lt;input type="button" value="수정" onclick="goModify();" /&gt;
-        &lt;input type="button" value="삭제" onclick="goDelete()" /&gt;
-    &lt;/div&gt;
     <strong>&lt;/security:authorize&gt;</strong>
 
 &lt;!-- 중간 생략 --&gt;
