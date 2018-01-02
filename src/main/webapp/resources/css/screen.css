@@ -540,3 +540,19 @@ h6 {
 	padding: 5px;
 	border: 1px solid grey;
 }
+article > ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+article > ul > li {
+	padding: 0.2em 0 0.2em 0.5em;
+	background: url('../images/circle.gif') no-repeat 0% 50%;
+}
+#next-prev > ul {
+	list-style-type: none;
+}
+#next-prev > ul > li {
+	padding: 0.2em 0 0.2em 0.5em;
+	background: url('../images/circle.gif') no-repeat 0% 50%;
+}
