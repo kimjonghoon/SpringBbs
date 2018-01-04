@@ -23,7 +23,7 @@
  
 <!-- MySql -->
 
-	
+<!-- 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;characterEncoding=UTF-8" />
@@ -34,11 +34,11 @@
 		<property name="poolPreparedStatements" value="true" />
 		<property name="defaultAutoCommit" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
-	</bean> 
+	</bean>  -->
 
 
 <!-- MariaDB -->
-<!-- 
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
 		<property name="url" value="jdbc:mariadb://localhost:3306/javaskool" />
@@ -49,7 +49,7 @@
 		<property name="poolPreparedStatements" value="true" />
 		<property name="defaultAutoCommit" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
-	</bean> -->
+	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

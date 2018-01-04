@@ -8,7 +8,8 @@
 <meta name="Keywords" content="<tiles:insertAttribute name="keywords" />" />
 <meta name="Description" content="<tiles:insertAttribute name="description" />" />
 <title><tiles:insertAttribute name="title" /></title>
-<link rel="stylesheet" href="/resources/css/screen.css" type="text/css" />
+<link rel="stylesheet" href="/resources/css/screen.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/resources/css/print.css" type="text/css" media="print" />
 <link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
 <style type="text/css">
 #sidebar {
