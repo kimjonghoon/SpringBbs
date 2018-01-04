@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <script>
 function goEdit(boardCd, boardNm, boardNm_ko) {
@@ -11,13 +12,13 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 }
 </script>
 
-<h2>Board List</h2>
+<h2><spring:message code="board.list" /></h2>
 
 <table class="bbs-table">
 <tr>
-	<th style="text-align: left;">Board Code</th>
-	<th style="text-align: left;">Board Name</th>
-	<th style="text-align: left;">Board Korean Name</th>
+	<th style="text-align: left;"><spring:message code="board.code" /></th>
+	<th style="text-align: left;"><spring:message code="board.name" /></th>
+	<th style="text-align: left;"><spring:message code="board.korean.name" /></th>
 </tr>
 <c:forEach var="board" items="${boards }" varStatus="status">
 <tr>
@@ -28,48 +29,48 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 </c:forEach>
 </table>
 
-<h2>Edit Board</h2>
+<h2><spring:message code="board.edit" /></h2>
 
 <form id="editBoard" action="/admin/editBoard" method="post">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 <table class="bbs-table">
 <tr>
-	<td>Board Code</td>
-	<td><input type="text" name="boardCd" readonly=readonly />
+	<td><spring:message code="board.code" /></td>
+	<td><input type="text" name="boardCd" readonly=readonly /></td>
 </tr>
 <tr>
-	<td>Board Name</td>
-	<td><input type="text" name="boardNm" />
+	<td><spring:message code="board.name" /></td>
+	<td><input type="text" name="boardNm" /></td>
 </tr>
 <tr>
-	<td>Board Korean Name</td>
-	<td><input type="text" name="boardNm_ko" />
+	<td><spring:message code="board.korean.name" /></td>
+	<td><input type="text" name="boardNm_ko" /></td>
 </tr>
 </table>
 <div>
-	<input type="submit" value="Submit" />
+	<input type="submit" value="<spring:message code="global.submit" />" />
 </div>
 </form>
 
-<h2>New Board</h2>
+<h2><spring:message code="board.new" /></h2>
 
 <form id="createBoard" action="/admin/createBoard" method="post">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 <table class="bbs-table">
 <tr>
-	<td>Board Code</td>
+	<td><spring:message code="board.code" /></td>
 	<td><input type="text" name="boardCd" />
 </tr>
 <tr>
-	<td>Board Name</td>
+	<td><spring:message code="board.name" /></td>
 	<td><input type="text" name="boardNm" />
 </tr>
 <tr>
-	<td>Board Korean Name</td>
+	<td><spring:message code="board.korean.name" /></td>
 	<td><input type="text" name="boardNm_ko" />
 </tr>
 </table>
 <div>
-	<input type="submit" value="Submit" />
+	<input type="submit" value="<spring:message code="global.submit" />" />
 </div>
 </form>
