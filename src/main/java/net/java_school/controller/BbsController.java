@@ -36,7 +36,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RequestMapping("/bbs")
 public class BbsController extends Paginator {
 
-	static final String UPLOAD_PATH = "./data/";
+	static final String UPLOAD_PATH = "./download/data/";
 	
 	@Autowired
 	private BoardService boardService;

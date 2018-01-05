@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DownloadController {
 
 	private static final String FILE_DIR = "./download/";
-	private static final String BOARD_DATA_DIR = "./data/";
+	private static final String BOARD_DATA_DIR = "./download/data/";
 
 	@GetMapping("/download/{filename:.+}")
 	public ResponseEntity<InputStreamResource> download(@PathVariable String filename, HttpServletRequest req) throws IOException {
