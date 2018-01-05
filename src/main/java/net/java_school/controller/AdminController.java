@@ -40,20 +40,20 @@ public class AdminController extends Paginator {
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 
-		//oracle
+/*		//oracle
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("startRecord", startRecord.toString());
 		map.put("endRecord", endRecord.toString());
+*/
 
 
-/*
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
 		map.put("offset", offset.toString());
 		map.put("rowCount", rowCount.toString());
-*/
+
 
 		List<User> list = userService.getAllUser(map);
 		
