@@ -185,6 +185,8 @@ Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the fol
  
 > mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 
+Create 'data' subdirectory in the root directory where the pom.xml file is located.
+
 ## How to run
 
 $ mvn jetty:run
