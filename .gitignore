@@ -84,5 +84,5 @@ hs_err_pid*
 *.log
 
 ### Board Upload Data ###
-
+**/download/data/
 
