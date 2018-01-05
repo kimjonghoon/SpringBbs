@@ -38,28 +38,24 @@ public class AdminController extends Paginator {
 		int totalRecord = userService.getTotalCount(search);
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 		
+		HashMap<String, String> map = new HashMap<String, String>();
+
 		//oracle
-/*		
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
-
-		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("startRecord", startRecord.toString());
 		map.put("endRecord", endRecord.toString());
 
-		List<User> list = userService.getAllUser(map);
-*/
 
+/*
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
-		
-		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("offset", offset.toString());
 		map.put("rowCount", rowCount.toString());
-		
-		List<User> list = userService.getAllUser(map);
+*/
 
+		List<User> list = userService.getAllUser(map);
 		
 		Integer listItemNo = numbers.getListItemNo();
 		Integer prev = numbers.getPrevBlock();

@@ -61,7 +61,7 @@
 	</delete>
 
 	<!-- MySql -->
-	
+<!-- 	
 	<select id="selectTotalCount" resultType="int">
 		SELECT count(*)
 		FROM member
@@ -86,11 +86,11 @@
 		ORDER BY name ASC
 		LIMIT ${offset}, ${rowCount}
 	</select>
-
+ -->
 
 	
 	<!-- Oracle -->
-<!-- 	
+	
 	<select id="selectTotalCount" resultType="int">
 		SELECT count(*)
 		FROM member
@@ -120,5 +120,5 @@
 		)
 		WHERE R BETWEEN #{startRecord} AND #{endRecord}
 	</select>
- -->
+
 </mapper>

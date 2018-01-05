@@ -36,6 +36,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RequestMapping("/bbs")
 public class BbsController extends Paginator {
 
+	static final String UPLOAD_PATH = "./data/";
+	
 	@Autowired
 	private BoardService boardService;
 	
@@ -72,18 +74,18 @@ public class BbsController extends Paginator {
 		
 		
 		//oracle
-/*		Integer startRecord = (page - 1) * numPerPage + 1;
+		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
-*/
+
 
 		
 		//mysql
-		Integer offset = (page - 1) * numPerPage;
+/*		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
 		map.put("offset", offset.toString());
-		map.put("rowCount", rowCount.toString());
+		map.put("rowCount", rowCount.toString());*/
 		
 
 		
@@ -184,21 +186,21 @@ public class BbsController extends Paginator {
 		map.put("searchWord", searchWord);
 		
 
-/*		
+		
 		//oracle
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
-*/
+
 		
-		
+/*		
 		//mysql
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
 		map.put("offset", offset.toString());
 		map.put("rowCount", rowCount.toString());
-
+*/
 		
 		
 		List<Article> list = boardService.getArticleList(map);
@@ -268,7 +270,7 @@ public class BbsController extends Paginator {
 		article.setEmail(principal.getName());
 
 		boardService.addArticle(article);
-
+		
 		//파일 업로드
 		Iterator<String> it = mpRequest.getFileNames();
 		List<MultipartFile> fileList = new ArrayList<MultipartFile>();
@@ -276,7 +278,7 @@ public class BbsController extends Paginator {
 			MultipartFile multiFile = mpRequest.getFile((String) it.next());
 			if (multiFile.getSize() > 0) {
 				String filename = multiFile.getOriginalFilename();
-				multiFile.transferTo(new File(WebContants.UPLOAD_PATH + filename));
+				multiFile.transferTo(new File(UPLOAD_PATH + filename));
 				fileList.add(multiFile);
 			}
 		}
@@ -357,7 +359,7 @@ public class BbsController extends Paginator {
 			MultipartFile multiFile = mpRequest.getFile((String) it.next());
 			if (multiFile.getSize() > 0) {
 				String filename = multiFile.getOriginalFilename();
-				multiFile.transferTo(new File(WebContants.UPLOAD_PATH + filename));
+				multiFile.transferTo(new File(UPLOAD_PATH + filename));
 				fileList.add(multiFile);
 			}
 		}

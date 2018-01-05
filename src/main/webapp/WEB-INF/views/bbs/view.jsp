@@ -341,7 +341,7 @@ $(window).on('load', function() {
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
-	<form id="downForm" action="/download" method="post">
+	<form id="downForm" action="/data" method="post">
 		<input type="hidden" name="filename" />
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </form>
