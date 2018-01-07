@@ -101,7 +101,7 @@ SpringBbs
 	start with 1;
 	
 
-## Database Design (MySql or MariaDB)
+## Database Design (MySQL or MariaDB)
 
 	mysql --user=root --password mysql
 	
@@ -189,73 +189,70 @@ Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the fol
 
 $ mvn jetty:run
 
-## Oracle -> MySql
+## Oracle -> MySQL
 
 ### 1. applicationContext.xml
 
 Comment out Oracle datasource.
-Comment out MariaDB dataource.
+Comment out MariaDB datasource.
 
 ### 3. AdminController.java
 
+	HashMap<String, String> map = new HashMap<String, String>();
+
 	/*
-	//oralce
+	//Oralce start
 	Integer startRecord = (page - 1) * numPerPage + 1;
 	Integer endRecord = page * numPerPage;
-	
-	HashMap<String, String> map = new HashMap<String, String>();
 	map.put("startRecord", startRecord.toString());
 	map.put("endRecord', endRecrod.toString());
-	
-	List<User> list = userService.getAllUser(map);
+	//Oracle end
 	*/
 	
-	//mysql
+	//MySQL and MariaDB start
 	Integer offset = (page - 1) * numPerPage;
 	Integer rowCount = numPerPage;
-	
-	HashMap<String, String> map = new HashMap<String, String>();
 	map.put("offset", offset.toString());
 	map.put("rowCount", rowCount.toString());
+	//MySQL and MariaDB end
 	
 	List<User> list = userService.getAllUser(map);
 
 ### 4. BbsController.java (in list() and view() methods)
 
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("boardCd", boardCd);
+	map.put("searchWord", searchWord);
+
 	/*
-	//oracle
+	//Oracle start
 	Integer startRecord = (page - 1) * numPerPage + 1;
 	Integer endRecord = page * numPerPage;
-		
-	HashMap<String, String> map = new HashMap<String, String>();
-	map.put("boardCd", boardCd);
-	map.put("searchWord", searchWord);
 	map.put("start", startRecord.toString());
 	map.put("end", endRecord.toString());
-	List<Article> list = boardService.getArticleList(map);
+	//Oracle end
 	*/
 	
-	//mysql
+	//MySQL and MariaDB start
 	Integer offset = (page - 1) * numPerPage;
-	HashMap<String, String> map = new HashMap<String, String>();
-	map.put("boardCd", boardCd);
-	map.put("searchWord", searchWord);
-	map.put("offset", offset.toString());
 	Integer rowCount = numPerPage;
+	map.put("offset", offset.toString());
 	map.put("rowCount", rowCount.toString());
+	//MySQL and MariaDB end
+	
 	List<Article> list = boardService.getArticleList(map);
 
 ### 5. BoardMapper.xml
 	
 	Comment out the code of <!-- Oracle -->
-	Uncomment the code of <!-- MySql -->
+	Uncomment the code of <!-- MySQL and MariaDB -->
 	
 ### 6. UserMapper.xml
 
 	Comment out the code of <!-- Oracle -->
-	Uncomment the code of <!-- MySql -->
+	Uncomment the code of <!-- MySQL and MariaDB -->
 	
 ## for Admin Test
 After sign up, add admin role as following.
 
-	insert into authorities values ('your email','ROLE_ADMIN');	
+	insert into authorities values ('user email','ROLE_ADMIN');	

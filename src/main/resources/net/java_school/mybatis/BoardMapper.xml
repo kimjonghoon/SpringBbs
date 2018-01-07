@@ -90,7 +90,8 @@
 			articleNo = #{articleNo}
 	</select>
 
-	<!-- MySql -->
+	<!-- MySQL and MariaDB start -->
+	
 	
 	<select id="selectListOfComments" parameterType="int" resultType="Comment">
 		SELECT 
@@ -186,9 +187,13 @@
 			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
 			</if>
 	</select>
+
 	
+	<!-- MySQL and MariaDB end -->
+
 	
-	<!-- Oracle -->
+	<!-- Oracle start -->
+
 <!-- 	
 	<select id="selectListOfComments" parameterType="int" resultType="Comment">
 		SELECT 
@@ -305,7 +310,8 @@
 		)
 	WHERE R BETWEEN #{start} AND #{end}
 	</select>	
-	 -->
-	
+-->
+
+	<!-- Oracle end -->	
 	
  </mapper>

@@ -73,19 +73,22 @@ public class BbsController extends Paginator {
 		map.put("searchWord", searchWord);
 		
 /*		
-		//oracle
+		//Oracle start
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
-		map.put("end", endRecord.toString());*/
+		map.put("end", endRecord.toString());
+		//Oracle end
+*/
 
 
 		
-		//mysql
+		//MySQL and MariaDB start
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
 		map.put("offset", offset.toString());
 		map.put("rowCount", rowCount.toString());
+		//MySQL and MariaDB end
 		
 
 		
@@ -187,19 +190,21 @@ public class BbsController extends Paginator {
 		
 
 /*		
-		//oracle
+		//Oracle start
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
+		//Oracle end
 */
 		
 		
-		//mysql
+		//MySQL and MariaDB start
 		Integer offset = (page - 1) * numPerPage;
 		Integer rowCount = numPerPage;
 		map.put("offset", offset.toString());
 		map.put("rowCount", rowCount.toString());
+		//MySQL and MariaDB end
 
 		
 		

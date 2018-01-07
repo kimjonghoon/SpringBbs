@@ -60,7 +60,8 @@
 		WHERE email = #{email} AND authority = #{authority}
 	</delete>
 
-	<!-- MySql -->
+	<!-- MySQL and MariaDB start -->
+	
 	
 	<select id="selectTotalCount" resultType="int">
 		SELECT count(*)
@@ -86,10 +87,13 @@
 		ORDER BY name ASC
 		LIMIT ${offset}, ${rowCount}
 	</select>
+	
 
+	<!-- MySQL and MariaDB end -->
 
 	
-	<!-- Oracle -->
+	<!-- Oracle start-->
+	
 <!-- 	
 	<select id="selectTotalCount" resultType="int">
 		SELECT count(*)
@@ -119,6 +123,9 @@
 		) a
 		)
 		WHERE R BETWEEN #{startRecord} AND #{endRecord}
-	</select> -->
+	</select>
+-->
+
+	<!-- Oracle end -->
 
 </mapper>
