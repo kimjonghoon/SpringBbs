@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/resources/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
+
 <div id="wrap">
 
     <div id="header">
@@ -20,12 +21,12 @@
     </div>
     
 	<div id="container">
-		<div id="content">
-			<div id="url-navi">Error</div>
-			<h2>404</h2>
-			그런 페이지가 없습니다.
-		</div>
-    </div>
+            <div id="content">
+                <div id="url-navi">Error</div>
+                <h2>404</h2>
+                그런 페이지가 없습니다.
+            </div>
+        </div>
     
 	<div id="sidebar">
 		<h1>Error</h1>
