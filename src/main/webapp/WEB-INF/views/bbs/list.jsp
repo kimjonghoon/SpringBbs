@@ -55,7 +55,7 @@
 <div id="paging">
 
     <c:if test="${prevPage > 0 }">
-        <a href="javascript:goList('1')"><spring:message code="global.first" /></a>
+        <a href="javascript:goList('1')">[ <spring:message code="global.first" /> ]</a>
         <a href="javascript:goList('${prevPage }')">[ <spring:message code="global.prev" /> ]</a>
     </c:if>
 
