@@ -1,7 +1,6 @@
 package net.java_school.board;
 
 import java.util.Date;
-
 import javax.validation.constraints.Size;
 
 public class Article {

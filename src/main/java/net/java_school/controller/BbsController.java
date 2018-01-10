@@ -212,13 +212,15 @@ public class BbsController extends Paginator {
         int nextPage = numbers.getNextBlock();
         int firstPage = numbers.getFirstPage();
         int lastPage = numbers.getLastPage();
-
+        int totalPage = numbers.getTotalPage();
+        
         model.addAttribute("list", list);
         model.addAttribute("listItemNo", listItemNo);
         model.addAttribute("prevPage", prevPage);
         model.addAttribute("firstPage", firstPage);
         model.addAttribute("lastPage", lastPage);
         model.addAttribute("nextPage", nextPage);
+        model.addAttribute("totalPage", totalPage);
         model.addAttribute("boardName", boardName);
 
         List<Board> boards = boardService.getBoards();
