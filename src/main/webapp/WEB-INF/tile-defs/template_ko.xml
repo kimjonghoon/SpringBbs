@@ -36,6 +36,12 @@
         <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
         <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/resources/js/jquery-3.2.1.min.js" />
+            <add-attribute value="/resources/js/prettify.js" />
+            <add-attribute value="/resources/js/commons.js"  />
+            <add-attribute value="/resources/js/loadBlog.js" />
+        </put-list-attribute>
     </definition>
     <!-- 에러 페이지 -->
     <definition name="403" extends="errorTemplate">
