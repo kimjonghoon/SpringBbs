@@ -48,7 +48,7 @@ a:hover {
 	width: 1000px;
 }
 #header {
-	width: 1000px;
+	width: 100%;;
 	height: 48px;
 }
 #header > h1 {
@@ -59,12 +59,11 @@ a:hover {
 }
 #main-menu {
 	margin: 15px 0;
-	width: 996px;
 	height: 35px;
 	font-family: Verdana, sans-serif;
 	font-weight: bold;
 	font-size: 12px;
-	background: #92B91C;	
+	background: #92B91C;
 	border: 2px solid #DAEAAA;
 }
 #container {
@@ -83,7 +82,7 @@ a:hover {
 #sidebar {
 	float: left;
 	width: 173px;
-	margin-left: -1000px;
+	margin-left: -100%;
 	margin-bottom: 20px;
 	font-family: Verdana, sans-serif;
 	font-size: 12px;
@@ -103,7 +102,7 @@ a:hover {
 }
 #footer {
 	clear: both;
-	width: 1000px;
+	width: 100%;
 	height: 70px;
 	font-size: 11px;
 	color: #8d8d8d;
@@ -252,7 +251,6 @@ ul#nav > li > a:hover {
 	text-align: right;
 }
 #detail {
-/* 	border-bottom: 1px solid #ebebeb; */
 }
 .comments {
 	border-top: 1px solid #ebebeb;
@@ -266,7 +264,7 @@ ul#nav > li > a:hover {
 	font-weight: bold;
 	color: #555;
 }
-.comments > span.date {
+.comments  > span.date {
 	display: block;
 	float: left;
 	margin: 3px;
@@ -274,7 +272,7 @@ ul#nav > li > a:hover {
 	font-size: 12px;
 	color: #555;
 }
-.comments > span.modify-del {
+.comments  > span.modify-del {
 	display: block;
 	float: right;
 	margin: 3px;
@@ -282,16 +280,16 @@ ul#nav > li > a:hover {
 	font-size: 12px;
 	color: #555;
 }
-.comments a {
+.comments  a {
 	color: #555;
 	text-decoration: none;
 	font-size: 11px;
 }
-.comments a:hover {
+.comments  a:hover {
 	color: #555;
 	text-decoration: underline;
 }
-.comments p {
+.comments  p {
 	clear: both;
 	margin: 0;
 	padding: 0 3px 3px 3px;
@@ -316,13 +314,13 @@ ul#nav > li > a:hover {
     border: 1px solid #eee;
     background-color: #fafbf7;
 }
-#addComment textarea {
+#addComment  textarea {
     width: 99%;
     padding: 3px;
     border: 0;
     color: #555;    
 }
-.next-prev {
+.next-prev  {
 	margin: 7px 0;
 	border-top: 1px solid #e1e1e1;
 }
@@ -356,7 +354,7 @@ ul#nav > li > a:hover {
 #write-form textarea {
 	width: 99%;
 }
-#extra img {
+#extra  img {
 	width: 203px;
 }
 #extra a {

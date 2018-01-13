@@ -134,8 +134,7 @@
         }
     });
 
-
-    $(window).on('load', function () {
+    $(document).ready(function () {
         var originWidth = $('#article-content > iframe').width();
         var originHeight = $('#article-content > iframe').height();
 
@@ -147,7 +146,6 @@
 
         $('#article-content > iframe').attr('allowFullScreen', '');
     });
-
 </script>
 
 
