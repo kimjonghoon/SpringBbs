@@ -243,11 +243,8 @@ guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutU
 두 메서드의 인자를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
 </p>
 
-<h3>appengine-web.xml 수정</h3>
-
 <p>
-자바 8 환경에서 앱을 실행하려면, 다음을 appengine-web.xml에 추가해야 한다.<br />
-이 설정을 추가하지 않으면 Spring에서 에러가 발생한다.
+자바 8 환경에서 앱을 실행하려면, appengine-web.xml에 다음 설정이 있어야 한다.
 </p>
  
 <pre class="prettyprint">
@@ -262,7 +259,7 @@ guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutU
 
 <pre class="screen">
 mvn clean
-mvn appengine:devserver
+mvn appengine:run
 </pre>
 
 <p>
@@ -272,7 +269,7 @@ http://localhost:8080/guestbook을 방문한다.
 <h3>서버 테스트</h3>
 
 <pre class="screen">
-mvn appengine:update
+mvn appengine:deploy
 </pre>
 
 <p>
