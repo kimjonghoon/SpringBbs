@@ -3,62 +3,22 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="errorTemplate" template="/WEB-INF/views/template/errorTemplate.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
-        <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
-        <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
-        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-    </definition>
-    <definition name="defaultTemplate" template="/WEB-INF/views/template/template.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
-        <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
-        <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
-        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-    </definition>
-    <definition name="lectureTemplate" template="/WEB-INF/views/template/lectureTemplate.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
-        <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
-        <put-attribute name="next-article" value="" />
-        <put-attribute name="next-article-title" value="" />
-        <put-attribute name="prev-article" value="" />
-        <put-attribute name="prev-article-title" value="" />
-        <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
-        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-        <put-list-attribute name="javascripts">
-            <add-attribute value="/resources/js/jquery-3.2.1.min.js" />
-            <add-attribute value="/resources/js/prettify.js" />
-            <add-attribute value="/resources/js/commons.js" />
-            <add-attribute value="/resources/js/loadArticle.js" />
-        </put-list-attribute>
-    </definition>
-    <definition name="blogTemplate" template="/WEB-INF/views/template/blogTemplate.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
-        <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
-        <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
-        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-        <put-list-attribute name="javascripts">
-            <add-attribute value="/resources/js/jquery-3.2.1.min.js" />
-            <add-attribute value="/resources/js/prettify.js" />
-            <add-attribute value="/resources/js/commons.js"  />
-            <add-attribute value="/resources/js/loadBlog.js" />
-        </put-list-attribute>
-    </definition>
     <!-- 에러 페이지 -->
-    <definition name="403" extends="errorTemplate">
+    <definition name="403" extends="defaultTemplate">
         <put-attribute name="title" value="403 에러 - 스프링 시큐리티 필터" />
         <put-attribute name="keywords" value="403 에러 - 스프링 시큐리티 필터" />
         <put-attribute name="description" value="스프링 시큐리티 필터 설정에 의한 403" />
         <put-attribute name="content" value="/WEB-INF/views/403.jsp" />
         <put-attribute name="sidebar" value="/WEB-INF/views/error-sub.jsp" />
     </definition>
-    <definition name="error-403" extends="errorTemplate">
+    <definition name="error-403" extends="defaultTemplate">
         <put-attribute name="title" value="403 에러 - 스프링 MVC" />
         <put-attribute name="keywords" value="403 에러 - 스프링 MVC" />
         <put-attribute name="description" value="스프링 MVC에서 발생한 403" />
         <put-attribute name="content" value="/WEB-INF/views/error-403.jsp" />
         <put-attribute name="sidebar" value="/WEB-INF/views/error-sub.jsp" />
     </definition>
-    <definition name="error" extends="errorTemplate">
+    <definition name="error" extends="defaultTemplate">
         <put-attribute name="title" value="에러 - 스프링 MVC" />
         <put-attribute name="keywords" value="에러 - 스프링 MVC" />
         <put-attribute name="description" value="스프링 MVC에서 발생한 에러" />
@@ -94,241 +54,241 @@
         <put-attribute name="title" value="자바 설치" />
         <put-attribute name="keywords" value="JDK 설치,자바 9,JDK 9 인스톨러,Java SE 9,PATH,CLASSPATH,JAVA_HOME,javac,java,-cp,editplus" />
         <put-attribute name="description" value="Java 9 설치와 PATH 설정을 설명합니다." />
-        <put-attribute name="content" value="0010-JDK-Install" />
-        <put-attribute name="next-article" value="/java/Features" type="string" />
-        <put-attribute name="next-article-title" value="자바의 특징" />
+        <put-attribute name="article" value="0010-JDK-Install" cascade="true" />
+        <put-attribute name="next-article" value="/java/Features" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바의 특징" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/index-sub.jsp" />
     </definition>	
     <!-- 자바 스쿨 강좌 -->
     <definition name="java/Features" extends="lectureTemplate">
-        <put-attribute name="title" value="Features" />
+        <put-attribute name="title" value="자바의 특징" />
         <put-attribute name="keywords" value="자바의 특징,플랫폼 독립적,JVM,OOP,JRE,자바 실행 환경,바이트 코드,JDK,객체 지향 프로그래밍,객체,캡슐화,상속,다형성" />
         <put-attribute name="description" value="자바의 특징을 설명합니다." />
-        <put-attribute name="content" value="0020-Features" />
-        <put-attribute name="next-article" value="/java/Class-Object" type="string" />
-        <put-attribute name="next-article-title" value="객체와 클래스" />
-        <put-attribute name="prev-article" value="/" type="string" />
-        <put-attribute name="prev-article-title" value="자바 설치" />
+        <put-attribute name="article" value="0020-Features" cascade="true" />
+        <put-attribute name="next-article" value="/java/Class-Object" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="객체와 클래스" cascade="true" />
+        <put-attribute name="prev-article" value="/" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바 설치" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Class-Object" extends="lectureTemplate">
-        <put-attribute name="title" value="Class and Object" />
+        <put-attribute name="title" value="객체와 클래스" />
         <put-attribute name="keywords" value="Class,클래스,Object,객체,속성,행위,유일성,클래스 만드는 법,메인 메소드,new,System.out.println(),System.out.prnt()" />
         <put-attribute name="description" value="객체와 클래스에 대해 설명합니다." />
-        <put-attribute name="content" value="0030-Class_Object" />
-        <put-attribute name="next-article" value="/java/Keyword_Identifiers_Comment" type="string" />
-        <put-attribute name="next-article-title" value="키워드, 식별자, 주석" />
-        <put-attribute name="prev-article" value="/java/Features" type="string" />
-        <put-attribute name="prev-article-title" value="자바의 특징" />
+        <put-attribute name="article" value="0030-Class_Object" cascade="true" />
+        <put-attribute name="next-article" value="/java/Keyword_Identifiers_Comment" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="키워드, 식별자, 주석" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Features" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바의 특징" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Keyword_Identifiers_Comment" extends="lectureTemplate">
         <put-attribute name="title" value="키워드, 식별자, 주석" />
         <put-attribute name="keywords" value="Keyword,키워드,Identifiers,식별자,Comment,주석,//,/* ~ */,/** ~ */,자바 작명 관례," />
         <put-attribute name="description" value="키워드와 주석, 식별자를 만드는 방법을 설명합니다." />
-        <put-attribute name="content" value="0040-Keyword_Identifiers_Comment" />
-        <put-attribute name="next-article" value="/java/DataType_Casting" type="string" />
-        <put-attribute name="next-article-title" value="자료형과 형변환" />
-        <put-attribute name="prev-article" value="/java/Class-Object" type="string" />
-        <put-attribute name="prev-article-title" value="객체와 클래스" />
+        <put-attribute name="article" value="0040-Keyword_Identifiers_Comment" cascade="true" />
+        <put-attribute name="next-article" value="/java/DataType_Casting" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자료형과 형변환" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Class-Object" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="객체와 클래스" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/DataType_Casting" extends="lectureTemplate">
         <put-attribute name="title" value="자료형과 형변환" />
         <put-attribute name="keywords" value="자료형,Data Type,리터럴,Literal,변수,Variable,원시 자료형,Primitive Type,참조 자료형,Reference Type,boolean,char,byte,short,int,long,float,double,null,형변환Casting,업 캐스팅,Up-Casting,다운 캐스팅,Down-Casting" />
         <put-attribute name="description" value="자료형과 형변환을 설명합니다." />
-        <put-attribute name="content" value="0050-DataType_Casting" />
-        <put-attribute name="next-article" value="/java/Arrays" type="string" />
-        <put-attribute name="next-article-title" value="배열" />
-        <put-attribute name="prev-article" value="/java/Keyword_Identifiers_Comment" type="string" />
-        <put-attribute name="prev-article-title" value="키워드, 식별자, 주석" />
+        <put-attribute name="article" value="0050-DataType_Casting" cascade="true" />
+        <put-attribute name="next-article" value="/java/Arrays" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="배열" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Keyword_Identifiers_Comment" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="키워드, 식별자, 주석" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Arrays" extends="lectureTemplate">
         <put-attribute name="title" value="배열" />
         <put-attribute name="keywords" value="배열,Java Arrays,원시 자료형 배열,Array of primitive type,참조 자료형 배열,Array of reference type,배열 크기,length,메인 메서드의 문자 배열 타입 매개변수,String[] parameter in main method" />
         <put-attribute name="description" value="자바 배열을 설명합니다." />
-        <put-attribute name="content" value="0060-Arrays" />
-        <put-attribute name="next-article" value="/java/Operators_if_loops" type="string" />
-        <put-attribute name="next-article-title" value="연산자, if문과 반복문" />
-        <put-attribute name="prev-article" value="/java/DataType_Casting" type="string" />
-        <put-attribute name="prev-article-title" value="자료형과 형변환" />
+        <put-attribute name="article" value="0060-Arrays" cascade="true" />
+        <put-attribute name="next-article" value="/java/Operators_if_loops" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="연산자, if문과 반복문" cascade="true" />
+        <put-attribute name="prev-article" value="/java/DataType_Casting" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자료형과 형변환" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Operators_if_loops" extends="lectureTemplate">
         <put-attribute name="title" value="연산자" />
         <put-attribute name="keywords" value="연산자,Operators,switch 문,if 문,반복문,for, while, do ~ while" />
         <put-attribute name="description" value="연산자,스위치 문, if 문, 반복문을 설명합니다." />
-        <put-attribute name="content" value="0070-Operators_if_loops" />
-        <put-attribute name="next-article" value="/java/Package_Modifiers" type="string" />
-        <put-attribute name="next-article-title" value="패키지와 접근자" />
-        <put-attribute name="prev-article" value="/java/Arrays" type="string" />
-        <put-attribute name="prev-article-title" value="배열" />
+        <put-attribute name="article" value="0070-Operators_if_loops" cascade="true" />
+        <put-attribute name="next-article" value="/java/Package_Modifiers" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="패키지와 접근자" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Arrays" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="배열" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Package_Modifiers" extends="lectureTemplate">
         <put-attribute name="title" value="패키지와 접근자" />
         <put-attribute name="keywords" value="패키지,package,접근자,modifiers,public,protected,default,private,-d 옵션,이클립스 설치," />
         <put-attribute name="description" value="패키지와 접근자, 이클립스 설치를 설명합니다." />
-        <put-attribute name="content" value="0080-Package_Modifiers" />
-        <put-attribute name="next-article" value="/java/Inheritance" type="string" />
-        <put-attribute name="next-article-title" value="상속" />
-        <put-attribute name="prev-article" value="/java/Operators_if_loops" type="string" />
-        <put-attribute name="prev-article-title" value="연산자, if문과 반복문, switch 문" />
+        <put-attribute name="article" value="0080-Package_Modifiers" cascade="true" />
+        <put-attribute name="next-article" value="/java/Inheritance" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="상속" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Operators_if_loops" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="연산자, if문과 반복문, switch 문" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Inheritance" extends="lectureTemplate">
         <put-attribute name="title" value="상속" />
         <put-attribute name="keywords" value="객체 지향 프로그래밍,OOP,상속,Inheritance,수퍼 클래스,super class,서브 클래스,sub class,메소드 오버라이딩,method overriding,생성자,constructor,this,super,다형성,Polymorphism,메소드 오버로딩,method overloading,final,추상 클래스,abstract class,인터페이스,interface,implements" />
         <put-attribute name="description" value="상속과 자바 인터페이스를 설명합니다." />
-        <put-attribute name="content" value="0090-Inheritance" />
-        <put-attribute name="next-article" value="/java/Static" type="string" />
-        <put-attribute name="next-article-title" value="static 키워드" />
-        <put-attribute name="prev-article" value="/java/Package_Modifiers" type="string" />
-        <put-attribute name="prev-article-title" value="패키지와 접근자" />
+        <put-attribute name="article" value="0090-Inheritance" cascade="true" />
+        <put-attribute name="next-article" value="/java/Static" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="static 키워드" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Package_Modifiers" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="패키지와 접근자" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Static" extends="lectureTemplate">
         <put-attribute name="title" value="static 키워드" />
         <put-attribute name="keywords" value="정적,static,클래스 로더,Class Loader,싱글톤 패턴,Singleton Pattern,초기화 순서,Java order of Initialization" />
         <put-attribute name="description" value="자바에서 클래스 차원의 변수와 메서드를 만드는 데 쓰이는 static 키워드를 설명합니다." />
-        <put-attribute name="content" value="0100-Static" />
-        <put-attribute name="next-article" value="/java/Collection" type="string" />
-        <put-attribute name="next-article-title" value="Collection" />
-        <put-attribute name="prev-article" value="/java/Inheritance" type="string" />
-        <put-attribute name="prev-article-title" value="상속" />
+        <put-attribute name="article" value="0100-Static" cascade="true" />
+        <put-attribute name="next-article" value="/java/Collection" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Collection" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Inheritance" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="상속" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Collection" extends="lectureTemplate">
         <put-attribute name="title" value="컬렉션" />
         <put-attribute name="keywords" value="컬렉션,Java Collection,List,Set,SortedSet,Map,SortedMap,HashSet,TreeSet,Generic,ArrayList,LinkedList,Vector,Java Properties,Enumeration,hasMoreElements(),nextElement(),Iterator,hasNext(),next(),remove(),Wrapper Class,Boolean,Byte,Character,Short,Integer,Long,Float,Double" />
         <put-attribute name="description" value="자바 컬렉션과 랩퍼 클래스를 설명합니다." />
-        <put-attribute name="content" value="0110-Collection" />
-        <put-attribute name="next-article" value="/java/Exception" type="string" />
-        <put-attribute name="next-article-title" value="예외" />
-        <put-attribute name="prev-article" value="/java/Static" type="string" />
-        <put-attribute name="prev-article-title" value="static 키워드" />
+        <put-attribute name="article" value="0110-Collection" cascade="true" />
+        <put-attribute name="next-article" value="/java/Exception" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="예외" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Static" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="static 키워드" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Exception" extends="lectureTemplate">
         <put-attribute name="title" value="예외" />
         <put-attribute name="keywords" value="예외,Exception,try catch finally,예외를 다루는 방법,Exception Handling Mechanisms in Java	,예외 클래스 계층도,The exception hierarchy in Java,런타임 익셉션,RuntimeException,IOException,ArithmeticException,NullPointerException,IndexOutOfBoundException,EOFException,FileNotFoundException,NegativeArraySizeException,ArrayIndexOutOfBoundException,throws,throw,사용자 정의 예외,Java Custom Exception" />
         <put-attribute name="description" value="This chapter describes that Java Exception" />
-        <put-attribute name="content" value="0120-Exception" />
-        <put-attribute name="next-article" value="/java/Javabank-Requirements-analysis" type="string" />
-        <put-attribute name="next-article-title" value="자바은행 분석/설계" />
-        <put-attribute name="prev-article" value="/java/Collection" type="string" />
-        <put-attribute name="prev-article-title" value="컬렉션" />
+        <put-attribute name="article" value="0120-Exception" cascade="true" />
+        <put-attribute name="next-article" value="/java/Javabank-Requirements-analysis" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행 분석/설계" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Collection" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="컬렉션" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Javabank-Requirements-analysis" extends="lectureTemplate">
         <put-attribute name="title" value="자바 은행 요구사항 분석" />
         <put-attribute name="keywords" value="자바 은행 요구사항 분석, 시나리오, 클래스 다이어그램" />
         <put-attribute name="description" value="자바 은행 구현을 위한 사전 작업을 설명합니다." />
-        <put-attribute name="content" value="0130-Javabank-Requirements-analysis" />
-        <put-attribute name="next-article" value="/java/Javabank-Design" type="string" />
-        <put-attribute name="next-article-title" value="자바은행 구현" />
-        <put-attribute name="prev-article" value="/java/Exception" type="string" />
-        <put-attribute name="prev-article-title" value="예외" />
+        <put-attribute name="article" value="0130-Javabank-Requirements-analysis" cascade="true" />
+        <put-attribute name="next-article" value="/java/Javabank-Design" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행 구현" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Exception" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="예외" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Javabank-Design" extends="lectureTemplate">
         <put-attribute name="title" value="자바은행 구현" />
         <put-attribute name="keywords" value="자바은행 예제,Account.java,Bank.java,Transaction.java,BankUI.java" />
         <put-attribute name="description" value="자바은행 예제에 필요한 자바빈즈를 설계합니다." />
-        <put-attribute name="content" value="0140-Javabank-Design" />
-        <put-attribute name="next-article" value="/java/Javabank-Apply-inheritance" type="string" />
-        <put-attribute name="next-article-title" value="자바은행 - 상속 적용" />
-        <put-attribute name="prev-article" value="/java/Javabank-Requirements-analysis" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 분석/설계" />
+        <put-attribute name="article" value="0140-Javabank-Design" cascade="true" />
+        <put-attribute name="next-article" value="/java/Javabank-Apply-inheritance" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행 - 상속 적용" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Javabank-Requirements-analysis" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 분석/설계" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Javabank-Apply-inheritance" extends="lectureTemplate">
         <put-attribute name="title" value="자바은행 예제에 상속 적용" />
         <put-attribute name="keywords" value="Javabank 예제,Transaction,Account,Bank,Inheritance" />
         <put-attribute name="description" value="자바은행 예제에 상속 개념을 어떻게 적용하는지 설명합니다." />
-        <put-attribute name="content" value="0150-Javabank-Apply-inheritance" />
-        <put-attribute name="next-article" value="/java/Javabank-Apply-abstract-class" type="string" />
-        <put-attribute name="next-article-title" value="자바은행 - 추상클래스 적용" />
-        <put-attribute name="prev-article" value="/java/Javabank-Design" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 구현" />
+        <put-attribute name="article" value="0150-Javabank-Apply-inheritance" cascade="true" />
+        <put-attribute name="next-article" value="/java/Javabank-Apply-abstract-class" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행 - 추상클래스 적용" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Javabank-Design" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 구현" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Javabank-Apply-abstract-class" extends="lectureTemplate">
         <put-attribute name="title" value="자바은행 예제에 추상 클래스 적용" />
         <put-attribute name="keywords" value="자바은행,Javabank example,Transaction,Account,Bank,abstract" />
         <put-attribute name="description" value="자바은행 예제에 추상 클래스를 적용합니다." />
-        <put-attribute name="content" value="0160-Javabank-Apply-abstract-class" />
-        <put-attribute name="next-article" value="/java/Javabank-Apply-interface" type="string" />
-        <put-attribute name="next-article-title" value="자바은행 - 인터페이스 적용" />
-        <put-attribute name="prev-article" value="/java/Javabank-Apply-inheritance" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 - 상속 적용" />
+        <put-attribute name="article" value="0160-Javabank-Apply-abstract-class" cascade="true" />
+        <put-attribute name="next-article" value="/java/Javabank-Apply-interface" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행 - 인터페이스 적용" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Javabank-Apply-inheritance" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 - 상속 적용" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Javabank-Apply-interface" extends="lectureTemplate">
         <put-attribute name="title" value="자바은행 예제에 인터페이스 적용" />
         <put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,interface" />
         <put-attribute name="description" value="자바은행 예제에 인터페이스를 적용합니다." />
-        <put-attribute name="content" value="0170-Javabank-Apply-interface" />
-        <put-attribute name="next-article" value="/java/Thread" type="string" />
-        <put-attribute name="next-article-title" value="스레드" />
-        <put-attribute name="prev-article" value="/java/Javabank-Apply-abstract-class" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 - 추상클래스 적용" />
+        <put-attribute name="article" value="0170-Javabank-Apply-interface" cascade="true" />
+        <put-attribute name="next-article" value="/java/Thread" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="스레드" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Javabank-Apply-abstract-class" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 - 추상클래스 적용" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Thread" extends="lectureTemplate">
         <put-attribute name="title" value="스레드" />
         <put-attribute name="keywords" value="스레드,Thread,Runnable,싱글 스레드,Single Thread,멀티 스레드,Multi Thread" />
         <put-attribute name="description" value="자바 스레드를 설명합니다." />
-        <put-attribute name="content" value="0180-Thread" />
-        <put-attribute name="next-article" value="/java/Stream" type="string" />
-        <put-attribute name="next-article-title" value="스트림" />
-        <put-attribute name="prev-article" value="/java/Javabank-Apply-interface" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 - 인터페이스 적용" />
+        <put-attribute name="article" value="0180-Thread" cascade="true" />
+        <put-attribute name="next-article" value="/java/Stream" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="스트림" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Javabank-Apply-interface" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 - 인터페이스 적용" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Stream" extends="lectureTemplate">
         <put-attribute name="title" value="스레드" />
         <put-attribute name="keywords" value="스트림,Java Stream,입력 스트림,Input Stream,출력 스트림,Output Stream,근원지,Source,목적지,Destination,입력 스트림 리더,InputStreamReader,BufferedReader,FileWriter,객체스트림,Serializable,ObjectOutputStream,FileOutputStream,writeObject(),FileInputStream,readObject()" />
         <put-attribute name="description" value="자바 스트림을 설명합니다." />
-        <put-attribute name="content" value="0190-Stream" />
-        <put-attribute name="next-article" value="/java/Logging" type="string" />
-        <put-attribute name="next-article-title" value="로깅" />
-        <put-attribute name="prev-article" value="/java/Thread" type="string" />
-        <put-attribute name="prev-article-title" value="스레드" />
+        <put-attribute name="article" value="0190-Stream" cascade="true" />
+        <put-attribute name="next-article" value="/java/Logging" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="로깅" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Thread" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="스레드" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Logging" extends="lectureTemplate">
         <put-attribute name="title" value="로깅" />
         <put-attribute name="keywords" value="로그,Log,로깅,Logging,FileWriter(),log4j,Logger,rootLogger,appender,ConsoleAppender,SimpleLayout,DailyRollingFileAppender,DatePattern,PatternLayout,ConversionPattern,isInfoEnabled(),info(),log4j.properties,log4j.rootLogger,log4j.appender.console,log4j.appender.console.layout,log4j.appender.file,fatal,error,warn,info,debug,trace,log4j.xml,jakarta Commons logging,commons-logging.properties" />
         <put-attribute name="description" value="로깅을 설명합니다." />
-        <put-attribute name="content" value="0200-Logging" />
-        <put-attribute name="next-article" value="/java/Socket" type="string" />
-        <put-attribute name="next-article-title" value="소켓" />
-        <put-attribute name="prev-article" value="/java/Stream" type="string" />
-        <put-attribute name="prev-article-title" value="스트림" />
+        <put-attribute name="article" value="0200-Logging" cascade="true" />
+        <put-attribute name="next-article" value="/java/Socket" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="소켓" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Stream" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="스트림" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/Socket" extends="lectureTemplate">
         <put-attribute name="title" value="소켓" />
         <put-attribute name="keywords" value="자바 소켓,Java Socket Programming,EchoServer,EchoClient,Socket,ServerSocket,accept()" />
         <put-attribute name="description" value="자바 소켓을 설명합니다." />
-        <put-attribute name="content" value="0210-Socket" />
-        <put-attribute name="next-article" value="/java/RMI" type="string" />
-        <put-attribute name="next-article-title" value="RMI" />
-        <put-attribute name="prev-article" value="/java/Logging" type="string" />
-        <put-attribute name="prev-article-title" value="로깅" />
+        <put-attribute name="article" value="0210-Socket" cascade="true" />
+        <put-attribute name="next-article" value="/java/RMI" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="RMI" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Logging" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="로깅" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <definition name="java/RMI" extends="lectureTemplate">
         <put-attribute name="title" value="RMI" />
         <put-attribute name="keywords" value="RMI,Hello.java,Server.java,Remote,RemoteException,UnicastRemoteOjbect,exportObject(),LocateRegistry,getRegistry(),bind(),start rmiregistry,rmiregistry &amp;,EJB 기반기술" />
         <put-attribute name="description" value="RMI를 설명합니다." />
-        <put-attribute name="content" value="0220-RMI" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Intro" type="string" />
-        <put-attribute name="next-article-title" value="JDBC 소개" />
-        <put-attribute name="prev-article" value="/java/Socket" type="string" />
-        <put-attribute name="prev-article-title" value="소켓" />
+        <put-attribute name="article" value="0220-RMI" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Intro" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC 소개" cascade="true" />
+        <put-attribute name="prev-article" value="/java/Socket" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="소켓" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub_ko.jsp" />
     </definition>
     <!-- JDBC -->
@@ -336,187 +296,187 @@
         <put-attribute name="title" value="JDBC 소개" />
         <put-attribute name="keywords" value="Database,RDBMS,SQL,JDBC" />
         <put-attribute name="description" value="RDBMS와 SQL, JDBC를 소개합니다." />
-        <put-attribute name="content" value="0230-JDBC-Intro" />
-        <put-attribute name="next-article" value="/jdbc/How-to-install-Oracle" type="string" />
-        <put-attribute name="next-article-title" value="오라클 설치" />
-        <put-attribute name="prev-article" value="/java/RMI" type="string" />
-        <put-attribute name="prev-article-title" value="RMI" />
+        <put-attribute name="article" value="0230-JDBC-Intro" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/How-to-install-Oracle" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="오라클 설치" cascade="true" />
+        <put-attribute name="prev-article" value="/java/RMI" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="RMI" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/How-to-install-Oracle" extends="lectureTemplate">
         <put-attribute name="title" value="오라클 설치" />
         <put-attribute name="keywords" value="오라클 10g XE,Oracle 10g XE,오라클 10g XE를 윈도 10에 설치,Oracle 10g Windows XP install" />
         <put-attribute name="description" value="윈도 시스템에 오라클 10g XE를 설치합니다." />
-        <put-attribute name="content" value="0240-How-to-install-Oracle" />
-        <put-attribute name="next-article" value="/jdbc/Login-to-the-scott-account" type="string" />
-        <put-attribute name="next-article-title" value="SQL 연습 - SCOTT 계정" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Intro" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC?" />
+        <put-attribute name="article" value="0240-How-to-install-Oracle" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/Login-to-the-scott-account" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="SQL 연습 - SCOTT 계정" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Intro" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC?" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/Login-to-the-scott-account" extends="lectureTemplate">
         <put-attribute name="title" value="SCOTT 계정에 접속하여 SQL 실습" />
         <put-attribute name="keywords" value="SCOTT 계정,Oracle SCOTT account,SQL*PLUS,EMP,DEPT,NULL,NUMBER,DATE,VARCHAR2,desc" />
         <put-attribute name="description" value="SCOTT 계정에 접속하여 SQL를 실습합니다." />
-        <put-attribute name="content" value="0250-Login-to-the-scott-account" />
-        <put-attribute name="next-article" value="/jdbc/SQL-SELECT-Statement" type="string" />
-        <put-attribute name="next-article-title" value="SELECT 문" />
-        <put-attribute name="prev-article" value="/jdbc/How-to-install-Oracle" type="string" />
-        <put-attribute name="prev-article-title" value="오라클 설치" />
+        <put-attribute name="article" value="0250-Login-to-the-scott-account" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/SQL-SELECT-Statement" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="SELECT 문" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/How-to-install-Oracle" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="오라클 설치" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/SQL-SELECT-Statement" extends="lectureTemplate">
         <put-attribute name="title" value="SELECT 문 실습" />
         <put-attribute name="keywords" value="SQL,SELECT statement,SELECT" />
         <put-attribute name="description" value="SELECT 문을 설명합니다." />
-        <put-attribute name="content" value="0260-SQL-SELECT-Statement" />
-        <put-attribute name="next-article" value="/jdbc/SQL-DML-Statement" type="string" />
-        <put-attribute name="next-article-title" value="DML 문" />
-        <put-attribute name="prev-article" value="/jdbc/Login-to-the-scott-account" type="string" />
-        <put-attribute name="prev-article-title" value="SCOTT 계정에 접속하여 SQL 실습" />
+        <put-attribute name="article" value="0260-SQL-SELECT-Statement" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/SQL-DML-Statement" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="DML 문" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/Login-to-the-scott-account" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="SCOTT 계정에 접속하여 SQL 실습" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/SQL-DML-Statement" extends="lectureTemplate">
         <put-attribute name="title" value="DML 문" />
         <put-attribute name="keywords" value="SQL,DML,INSERT,UPDATE,DELETE" />
         <put-attribute name="description" value="DML 문을 설명합니다." />
-        <put-attribute name="content" value="0270-SQL-DML-Statement" />
-        <put-attribute name="next-article" value="/jdbc/Oracle-JDBC-Test" type="string" />
-        <put-attribute name="next-article-title" value="오라클 JDBC 테스트" />
-        <put-attribute name="prev-article" value="/jdbc/SQL-SELECT-Statement" type="string" />
-        <put-attribute name="prev-article-title" value="SELECT 문" />
+        <put-attribute name="article" value="0270-SQL-DML-Statement" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/Oracle-JDBC-Test" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="오라클 JDBC 테스트" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/SQL-SELECT-Statement" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="SELECT 문" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/Oracle-JDBC-Test" extends="lectureTemplate">
         <put-attribute name="title" value="Oracle JDBC Test" />
         <put-attribute name="keywords" value="Oracle JDBC Driver,오라클 JDBC 드라이버 설치방법,오라클 JDBC 드라이버 테스트,GetEmp.java" />
         <put-attribute name="description" value="JDBC 드라이버를 어떻게 사용하는지 설명합니다." />
-        <put-attribute name="content" value="0280-Oracle-JDBC-Test" />
-        <put-attribute name="next-article" value="/jdbc/Guide-to-using-JDBC" type="string" />
-        <put-attribute name="next-article-title" value="JDBC 프로그래밍 방법" />
-        <put-attribute name="prev-article" value="/jdbc/SQL-DML-Statement" type="string" />
-        <put-attribute name="prev-article-title" value="DML 문" />
+        <put-attribute name="article" value="0280-Oracle-JDBC-Test" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/Guide-to-using-JDBC" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC 프로그래밍 방법" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/SQL-DML-Statement" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="DML 문" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/Guide-to-using-JDBC" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC 프로그래밍 방법" />
         <put-attribute name="keywords" value="JDBC 프로그래밍 방법,Guide to using JDBC,Class.forName(),DriverManager.getConnection(,,)" />
         <put-attribute name="description" value="JDBC 프로그래밍 방법을 설명합니다." />
-        <put-attribute name="content" value="0290-Guide-to-using-JDBC" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Create-Table" type="string" />
-        <put-attribute name="next-article-title" value="테이블 생성" />
-        <put-attribute name="prev-article" value="/jdbc/Oracle-JDBC-Test" type="string" />
-        <put-attribute name="prev-article-title" value="오라클 JDBC 테스트" />
+        <put-attribute name="article" value="0290-Guide-to-using-JDBC" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Create-Table" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="테이블 생성" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/Oracle-JDBC-Test" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="오라클 JDBC 테스트" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Create-Table" extends="lectureTemplate">
         <put-attribute name="title" value="테이블 생성" />
         <put-attribute name="keywords" value="JDBC,Create table" />
         <put-attribute name="description" value="JDBC를 사용해 테이블을 생성합니다." />
-        <put-attribute name="content" value="0300-JDBC-Create-Table" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Insert" type="string" />
-        <put-attribute name="next-article-title" value="JDBC로 INSERT" />
-        <put-attribute name="prev-article" value="/jdbc/Guide-to-using-JDBC" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC 프로그래밍 방법" />
+        <put-attribute name="article" value="0300-JDBC-Create-Table" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Insert" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC로 INSERT" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/Guide-to-using-JDBC" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC 프로그래밍 방법" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Insert" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC로 INSERT" />
         <put-attribute name="keywords" value="JDBC,INSERT" />
         <put-attribute name="description" value="JDBC를 사용해 레코드를 인서트합니다." />
-        <put-attribute name="content" value="0310-JDBC-Insert" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Select" type="string" />
-        <put-attribute name="next-article-title" value="JDBC로 SELECT" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Create-Table" type="string" />
-        <put-attribute name="prev-article-title" value="테이블 생성" />
+        <put-attribute name="article" value="0310-JDBC-Insert" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Select" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC로 SELECT" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Create-Table" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="테이블 생성" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Select" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC로 SELECT" />
         <put-attribute name="keywords" value="JDBC,SELECT" />
         <put-attribute name="description" value="JDBC를 사용해 레코드를 가져옵니다." />
-        <put-attribute name="content" value="0320-JDBC-Select" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Update" type="string" />
-        <put-attribute name="next-article-title" value="JDBC로 UPDATE" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Insert" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC로 INSERT" />
+        <put-attribute name="article" value="0320-JDBC-Select" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Update" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC로 UPDATE" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Insert" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC로 INSERT" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Update" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC로 UPDATE" />
         <put-attribute name="keywords" value="JDBC UPDATE" />
         <put-attribute name="description" value="JDBC를 사용해 레코드를 업데이트합니다." />
-        <put-attribute name="content" value="0330-JDBC-Update" />
-        <put-attribute name="next-article" value="/jdbc/PreparedStatement" type="string" />
-        <put-attribute name="next-article-title" value="PreparedStatement" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Select" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC로 UPDATE" />
+        <put-attribute name="article" value="0330-JDBC-Update" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/PreparedStatement" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="PreparedStatement" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Select" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC로 UPDATE" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/PreparedStatement" extends="lectureTemplate">
         <put-attribute name="title" value="PreparedStatement" />
         <put-attribute name="keywords" value="JDBC PreparedStatement" />
         <put-attribute name="description" value="PreparedStatement 클래스를 설명합니다." />
-        <put-attribute name="content" value="0340-PreparedStatement" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Join" type="string" />
-        <put-attribute name="next-article-title" value="JDBC로 테이블 조인하기" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Update" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC로 UPDATE" />
+        <put-attribute name="article" value="0340-PreparedStatement" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Join" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC로 테이블 조인하기" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Update" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC로 UPDATE" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Join" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC로 테이블 조인하기" />
         <put-attribute name="keywords" value="JDBC,Join" />
         <put-attribute name="description" value="JDBC 테이블 조인 실습을 합니다." />
-        <put-attribute name="content" value="0350-JDBC-Join" />
-        <put-attribute name="next-article" value="/jdbc/JDBC-Transaction" type="string" />
-        <put-attribute name="next-article-title" value="JDBC 트랜잭션" />
-        <put-attribute name="prev-article" value="/jdbc/PreparedStatement" type="string" />
-        <put-attribute name="prev-article-title" value="PreparedStatement" />
+        <put-attribute name="article" value="0350-JDBC-Join" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JDBC-Transaction" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JDBC 트랜잭션" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/PreparedStatement" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="PreparedStatement" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JDBC-Transaction" extends="lectureTemplate">
         <put-attribute name="title" value="JDBC 트랜잭션" />
         <put-attribute name="keywords" value="JDBC,Transaction" />
         <put-attribute name="description" value="JDBC 트랜잭션을 설명합니다." />
-        <put-attribute name="content" value="0360-JDBC-Transaction" />
-        <put-attribute name="next-article" value="/jdbc/Connection-Pool" type="string" />
-        <put-attribute name="next-article-title" value="Connection Pool" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Join" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC로 테이블 조인하기" />
+        <put-attribute name="article" value="0360-JDBC-Transaction" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/Connection-Pool" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Connection Pool" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Join" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC로 테이블 조인하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/Connection-Pool" extends="lectureTemplate">
         <put-attribute name="title" value="커넥션 풀링" />
         <put-attribute name="keywords" value="Connection Pooling,DBCP" />
         <put-attribute name="description" value="커넥션 풀링을 설명합니다." />
-        <put-attribute name="content" value="0370-Connection-Pool" />
-        <put-attribute name="next-article" value="/jdbc/Namecard" type="string" />
-        <put-attribute name="next-article-title" value="명함관리" />
-        <put-attribute name="prev-article" value="/jdbc/JDBC-Transaction" type="string" />
-        <put-attribute name="prev-article-title" value="JDBC 트랜잭션" />
+        <put-attribute name="article" value="0370-Connection-Pool" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/Namecard" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="명함관리" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JDBC-Transaction" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JDBC 트랜잭션" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/Namecard" extends="lectureTemplate">
         <put-attribute name="title" value="명함관리" />
         <put-attribute name="keywords" value="JDBC,명함관리,Namecard" />
         <put-attribute name="description" value="JDBC 명함관리 예제를 실습합니다." />
-        <put-attribute name="content" value="0380-Namecard" />
-        <put-attribute name="next-article" value="/jdbc/JavaBank" type="string" />
-        <put-attribute name="next-article-title" value="자바은행" />
-        <put-attribute name="prev-article" value="/jdbc/Connection-Pool" type="string" />
-        <put-attribute name="prev-article-title" value="Connection Pool" />
+        <put-attribute name="article" value="0380-Namecard" cascade="true" />
+        <put-attribute name="next-article" value="/jdbc/JavaBank" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바은행" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/Connection-Pool" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Connection Pool" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <definition name="jdbc/JavaBank" extends="lectureTemplate">
         <put-attribute name="title" value="자바은행" />
         <put-attribute name="keywords" value="JDBC,JavaBank Mini Project" />
         <put-attribute name="description" value="JDBC 자바은행 에제를 실습합니다." />
-        <put-attribute name="content" value="0390-JavaBank" />
-        <put-attribute name="next-article" value="/jsp/How-to-install-Tomcat" type="string" />
-        <put-attribute name="next-article-title" value="톰캣 설치" />
-        <put-attribute name="prev-article" value="/jdbc/Namecard" type="string" />
-        <put-attribute name="prev-article-title" value="명함관리" />
+        <put-attribute name="article" value="0390-JavaBank" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/How-to-install-Tomcat" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="톰캣 설치" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/Namecard" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="명함관리" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub_ko.jsp" />
     </definition>
     <!-- JSP -->
@@ -524,132 +484,132 @@
         <put-attribute name="title" value="톰캣 설치" />
         <put-attribute name="keywords" value="톰캣,Tomcat,루트 애플리케이션,ROOT Application,ROOT.xml,web.xml" />
         <put-attribute name="description" value="톰캣 설치를 설명합니다." />
-        <put-attribute name="content" value="0400-How-to-install-Tomcat" />
-        <put-attribute name="next-article" value="/jsp/Namecard-Webapp" type="string" />
-        <put-attribute name="next-article-title" value="명함관리를 웹 애플리케이션으로 변경하기" />
-        <put-attribute name="prev-article" value="/jdbc/JavaBank" type="string" />
-        <put-attribute name="prev-article-title" value="자바은행 예제" />
+        <put-attribute name="article" value="0400-How-to-install-Tomcat" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Namecard-Webapp" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="명함관리를 웹 애플리케이션으로 변경하기" cascade="true" />
+        <put-attribute name="prev-article" value="/jdbc/JavaBank" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바은행 예제" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Namecard-Webapp" extends="lectureTemplate">
         <put-attribute name="title" value="명함관리를 웹 애플리케이션으로 변경하기" />
         <put-attribute name="keywords" value="Namecard Web Application" />
         <put-attribute name="description" value="JDBC 명함관리 예제를 웹 애플리케이션으로 변경합니다." />
-        <put-attribute name="content" value="0410-Namecard-Webapp" />
-        <put-attribute name="next-article" value="/jsp/Web-Application" type="string" />
-        <put-attribute name="next-article-title" value="웹 애플리케이션이란?" />
-        <put-attribute name="prev-article" value="/jsp/How-to-install-Tomcat" type="string" />
-        <put-attribute name="prev-article-title" value="Tomcat 설치" />
+        <put-attribute name="article" value="0410-Namecard-Webapp" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Web-Application" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="웹 애플리케이션이란?" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/How-to-install-Tomcat" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Tomcat 설치" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Web-Application" extends="lectureTemplate">
         <put-attribute name="title" value="웹 애플리케이션이란?" />
         <put-attribute name="keywords" value="서블릿 컨테이너,Servlet Container,웹 애플리케이션,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,패킹,Packing" />
         <put-attribute name="description" value="웹 애플리케이션을 설명합니다." />
-        <put-attribute name="content" value="0420-Web-Application" />
-        <put-attribute name="next-article" value="/jsp/Creating-a-new-web-application" type="string" />
-        <put-attribute name="next-article-title" value="웹 애플리케이션 만들기 실습" />
-        <put-attribute name="prev-article" value="/jsp/Namecard-Webapp" type="string" />
-        <put-attribute name="prev-article-title" value="명함관리를 웹 애플리케이션으로" />
+        <put-attribute name="article" value="0420-Web-Application" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Creating-a-new-web-application" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="웹 애플리케이션 만들기 실습" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Namecard-Webapp" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="명함관리를 웹 애플리케이션으로" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Creating-a-new-web-application" extends="lectureTemplate">
         <put-attribute name="title" value="웹 애플리케이션 만들기 실습" />
         <put-attribute name="keywords" value="웹 애플리케이션을 만드는 방법, 웹 애플리케이션 디렉터리 구조, 톰캣 어드민,tomcat-users.xml,Context file,ROOT 애플리케이션 변경" />
         <put-attribute name="description" value="자바 웹 애플리케이션의 디렉터리 구조를 설명합니다." />
-        <put-attribute name="content" value="0430-Creating-a-new-web-application" />
-        <put-attribute name="next-article" value="/jsp/Servlet" type="string" />
-        <put-attribute name="next-article-title" value="서블릿" />
-        <put-attribute name="prev-article" value="/jsp/Web-Application" type="string" />
-        <put-attribute name="prev-article-title" value="웹 애플리케이션이란?" />
+        <put-attribute name="article" value="0430-Creating-a-new-web-application" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Servlet" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="서블릿" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Web-Application" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="웹 애플리케이션이란?" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Servlet" extends="lectureTemplate">
         <put-attribute name="title" value="서블릿" />
         <put-attribute name="keywords" value="Servlet Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
         <put-attribute name="description" value="서블릿 스펙을 설명합니다." />
-        <put-attribute name="content" value="0440-Servlet" />
-        <put-attribute name="next-article" value="/jsp/JSP" type="string" />
-        <put-attribute name="next-article-title" value="JSP" />
-        <put-attribute name="prev-article" value="/jsp/Creating-a-new-web-application" type="string" />
-        <put-attribute name="prev-article-title" value="웹 애플리케이션 만들기 실습" />
+        <put-attribute name="article" value="0440-Servlet" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/JSP" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="JSP" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Creating-a-new-web-application" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="웹 애플리케이션 만들기 실습" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/JSP" extends="lectureTemplate">
         <put-attribute name="title" value="JSP" />
         <put-attribute name="keywords" value="JSP 스펙,JSP Spec,지시어,Directives,스크립팅,Scripting,선언,Declarations,표현식,Expressions,스크립틀릿,Scriptlet,EL,JSP 액션,Actions,내재 객체,Implicit Objects" />
         <put-attribute name="description" value="JSP 스펙을 설명합니다." />
-        <put-attribute name="content" value="0450-JSP" />
-        <put-attribute name="next-article" value="/jsp/Accessing-database-from-JSP_Servlets" type="string" />
-        <put-attribute name="next-article-title" value="데이터베이스 연동" />
-        <put-attribute name="prev-article" value="/jsp/Servlet" type="string" />
-        <put-attribute name="prev-article-title" value="서블릿" />
+        <put-attribute name="article" value="0450-JSP" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Accessing-database-from-JSP_Servlets" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="데이터베이스 연동" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Servlet" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="서블릿" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Accessing-database-from-JSP_Servlets" extends="lectureTemplate">
         <put-attribute name="title" value="데이터베이스 연동" />
         <put-attribute name="keywords" value="데이터베이스 연동,오라클 연동,Accessing database from JSP and Servlets" />
         <put-attribute name="description" value="웹 애플리케이션에서 데이터베이스 연동을 설명합니다." />
-        <put-attribute name="content" value="0460-Accessing-database-from-JSP_Servlets" />
-        <put-attribute name="next-article" value="/jsp/BBS-Study" type="string" />
-        <put-attribute name="next-article-title" value="게시판 연구" />
-        <put-attribute name="prev-article" value="/jsp/JSP" type="string" />
-        <put-attribute name="prev-article-title" value="JSP" />
+        <put-attribute name="article" value="0460-Accessing-database-from-JSP_Servlets" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/BBS-Study" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시판 연구" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/JSP" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="JSP" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/BBS-Study" extends="lectureTemplate">
         <put-attribute name="title" value="게시판 연구" />
         <put-attribute name="keywords" value="BBS,Board Program,게시판" />
         <put-attribute name="description" value="게시판 기본 기능을 설명합니다." />
-        <put-attribute name="content" value="0470-BBS-Study" />
-        <put-attribute name="next-article" value="/jsp/Thread-BBS" type="string" />
-        <put-attribute name="next-article-title" value="계층형 게시판" />
-        <put-attribute name="prev-article" value="/jsp/Accessing-database-from-JSP_Servlets" type="string" />
-        <put-attribute name="prev-article-title" value="데이터베이스 연동" />
+        <put-attribute name="article" value="0470-BBS-Study" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Thread-BBS" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="계층형 게시판" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Accessing-database-from-JSP_Servlets" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="데이터베이스 연동" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Thread-BBS" extends="lectureTemplate">
         <put-attribute name="title" value="계층형 게시판" />
         <put-attribute name="keywords" value="계층형 게시판,Thread BBS" />
         <put-attribute name="description" value="계층형 게시판을 설명합니다." />
-        <put-attribute name="content" value="0480-Thread-BBS" />
-        <put-attribute name="next-article" value="/jsp/BBS-Model1" type="string" />
-        <put-attribute name="next-article-title" value="모델 1 게시판" />
-        <put-attribute name="prev-article" value="/jsp/BBS-Study" type="string" />
-        <put-attribute name="prev-article-title" value="게시판 연구" />
+        <put-attribute name="article" value="0480-Thread-BBS" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/BBS-Model1" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="모델 1 게시판" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/BBS-Study" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="게시판 연구" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/BBS-Model1" extends="lectureTemplate">
         <put-attribute name="title" value="모델 1 게시판" />
         <put-attribute name="keywords" value="모델 1 게시판,Model 1 Board Program" />
         <put-attribute name="description" value="모델 1으로 게시판을 구현합니다." />
-        <put-attribute name="content" value="0490-BBS-Model1" />
-        <put-attribute name="next-article" value="/jsp/DataSource" type="string" />
-        <put-attribute name="next-article-title" value="데이터소스" />
-        <put-attribute name="prev-article" value="/jsp/Thread-BBS" type="string" />
-        <put-attribute name="prev-article-title" value="계층형 게시판" />
+        <put-attribute name="article" value="0490-BBS-Model1" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/DataSource" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="데이터소스" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Thread-BBS" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="계층형 게시판" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/DataSource" extends="lectureTemplate">
         <put-attribute name="title" value="데이터소스" />
         <put-attribute name="keywords" value="데이터소스,DataSource,톰캣 데이터소스 설정,Set Up DataSource in Tomcat" />
         <put-attribute name="description" value="데이터소스 인터페이스를 설명합니다." />
-        <put-attribute name="content" value="0500-DataSource" />
-        <put-attribute name="next-article" value="/jsp/Model2" type="string" />
-        <put-attribute name="next-article-title" value="모델 2" />
-        <put-attribute name="prev-article" value="/jsp/BBS-Model1" type="string" />
-        <put-attribute name="prev-article-title" value="모델 1 게시판" />
+        <put-attribute name="article" value="0500-DataSource" cascade="true" />
+        <put-attribute name="next-article" value="/jsp/Model2" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="모델 2" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/BBS-Model1" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="모델 1 게시판" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <definition name="jsp/Model2" extends="lectureTemplate">
         <put-attribute name="title" value="모델 2" />
         <put-attribute name="keywords" value="Model2,BBS,Model,View,Controller" />
         <put-attribute name="description" value="Model 2을 설명합니다." />
-        <put-attribute name="content" value="0510-Model2" />
-        <put-attribute name="next-article" value="/css-layout/div-element-arrangement" type="string" />
-        <put-attribute name="next-article-title" value="주요 엘리먼트 배치" />
-        <put-attribute name="prev-article" value="/jsp/DataSource" type="string" />
-        <put-attribute name="prev-article-title" value="데이터소스" />
+        <put-attribute name="article" value="0510-Model2" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/div-element-arrangement" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="주요 엘리먼트 배치" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/DataSource" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="데이터소스" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub_ko.jsp" />
     </definition>
     <!-- CSS-Layout -->
@@ -657,77 +617,77 @@
         <put-attribute name="title" value="주요 엘리먼트 배치" />
         <put-attribute name="keywords" value="주요 엘리먼트 배치,CSS positioning, CSS layout, negative margin" />
         <put-attribute name="description" value="CSS로 주요 엘리먼트 배치하는 방법을 소개합니다." />
-        <put-attribute name="content" value="0520-div-element-arrangement" />
-        <put-attribute name="next-article" value="/css-layout/main-menu-styling" type="string" />
-        <put-attribute name="next-article-title" value="메인 메뉴 스타일링" />
-        <put-attribute name="prev-article" value="/jsp/Model2" type="string" />
-        <put-attribute name="prev-article-title" value="모델 2" />
+        <put-attribute name="article" value="0520-div-element-arrangement" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/main-menu-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="메인 메뉴 스타일링" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp/Model2" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="모델 2" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/main-menu-styling" extends="lectureTemplate">
         <put-attribute name="title" value="메인 메뉴 스타일링" />
         <put-attribute name="keywords" value="CSS menu,main menu styling" />
         <put-attribute name="description" value="메인 메뉴를 디자인합니다." />
-        <put-attribute name="content" value="0530-main-menu-styling" />
-        <put-attribute name="next-article" value="/css-layout/sub-menu-styling" type="string" />
-        <put-attribute name="next-article-title" value="서브 메뉴 스타일링" />
-        <put-attribute name="prev-article" value="/css-layout/div-element-arrangement" type="string" />
-        <put-attribute name="prev-article-title" value="주요 엘리먼트 배치" />
+        <put-attribute name="article" value="0530-main-menu-styling" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/sub-menu-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="서브 메뉴 스타일링" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/div-element-arrangement" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="주요 엘리먼트 배치" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/sub-menu-styling" extends="lectureTemplate">
         <put-attribute name="title" value="서브 메뉴 스타일링" />
         <put-attribute name="keywords" value="css menu,sub menu" />
         <put-attribute name="description" value="서브 메뉴를 디자인합니다." />
-        <put-attribute name="content" value="0540-sub-menu-styling" />
-        <put-attribute name="next-article" value="/css-layout/header-footer-content-styling" type="string" />
-        <put-attribute name="next-article-title" value="header, footer, #content 스타일링" />
-        <put-attribute name="prev-article" value="/css-layout/main-menu-styling" type="string" />
-        <put-attribute name="prev-article-title" value="메인 메뉴 스타일링" />
+        <put-attribute name="article" value="0540-sub-menu-styling" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/header-footer-content-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="header, footer, #content 스타일링" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/main-menu-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="메인 메뉴 스타일링" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/header-footer-content-styling" extends="lectureTemplate">
         <put-attribute name="title" value="header, footer, #content 스타일링" />
         <put-attribute name="keywords" value="header, footer, #content" />
         <put-attribute name="description" value="header, footer, #content를 디자인합니다." />
-        <put-attribute name="content" value="0550-header-footer-content-styling" />
-        <put-attribute name="next-article" value="/css-layout/bbs-list-styling" type="string" />
-        <put-attribute name="next-article-title" value="게시판 목록 디자인" />
-        <put-attribute name="prev-article" value="/css-layout/sub-menu-styling" type="string" />
-        <put-attribute name="prev-article-title" value="서브 메뉴" />
+        <put-attribute name="article" value="0550-header-footer-content-styling" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/bbs-list-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시판 목록 디자인" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/sub-menu-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="서브 메뉴" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/bbs-list-styling" extends="lectureTemplate">
         <put-attribute name="title" value="게시판 목록 디자인" />
         <put-attribute name="keywords" value="css styling,board list styling" />
         <put-attribute name="description" value="게시판 목록을 디자인합니다." />
-        <put-attribute name="content" value="0560-bbs-list-styling" />
-        <put-attribute name="next-article" value="/css-layout/bbs-view-styling" type="string" />
-        <put-attribute name="next-article-title" value="게시판 상세보기 디자인" />
-        <put-attribute name="prev-article" value="/css-layout/header-footer-content-styling" type="string" />
-        <put-attribute name="prev-article-title" value="header, footer, #content 스타일링" />
+        <put-attribute name="article" value="0560-bbs-list-styling" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/bbs-view-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시판 상세보기 디자인" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/header-footer-content-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="header, footer, #content 스타일링" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/bbs-view-styling" extends="lectureTemplate">
         <put-attribute name="title" value="게시판 상세보기 디자인" />
         <put-attribute name="keywords" value="css styling,board detailed view" />
         <put-attribute name="description" value="게시판 상세보기를 디자인합니다." />
-        <put-attribute name="content" value="0570-bbs-view-styling" />
-        <put-attribute name="next-article" value="/css-layout/bbs-write_form-styling" type="string" />
-        <put-attribute name="next-article-title" value="글쓰기, 회원가입 디자인" />
-        <put-attribute name="prev-article" value="/css-layout/bbs-list-styling" type="string" />
-        <put-attribute name="prev-article-title" value="게시판 목록 디자인" />
+        <put-attribute name="article" value="0570-bbs-view-styling" cascade="true" />
+        <put-attribute name="next-article" value="/css-layout/bbs-write_form-styling" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="글쓰기, 회원가입 디자인" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/bbs-list-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="게시판 목록 디자인" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <definition name="css-layout/bbs-write_form-styling" extends="lectureTemplate">
         <put-attribute name="title" value="글쓰기, 회원가입 디자인" />
         <put-attribute name="keywords" value="write form, sign up, css styling" />
         <put-attribute name="description" value="글쓰기, 회원가입을 디자인합니다." />
-        <put-attribute name="content" value="0580-bbs-write_form-styling" />
-        <put-attribute name="next-article" value="/jsp-pjt/Dynamic-Web-Project-Set-Up" type="string" />
-        <put-attribute name="next-article-title" value="다이나믹 웹 프로젝트 생성" />
-        <put-attribute name="prev-article" value="/css-layout/bbs-view-styling" type="string" />
-        <put-attribute name="prev-article-title" value="게시판 상세보기 디자인" />
+        <put-attribute name="article" value="0580-bbs-write_form-styling" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/Dynamic-Web-Project-Set-Up" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="다이나믹 웹 프로젝트 생성" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/bbs-view-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="게시판 상세보기 디자인" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub_ko.jsp" />
     </definition>
     <!-- JSP Project -->
@@ -735,77 +695,77 @@
         <put-attribute name="title" value="이클립스에서 다이나믹 웹 프로젝트 생성하기" />
         <put-attribute name="keywords" value="이클립스,eclipse,JSP mini Project,How to create Dynamic Web Project in eclipse" />
         <put-attribute name="description" value="이클립스에서 다이나믹 웹 프로젝트 생성하기" />
-        <put-attribute name="content" value="0590-Dynamic-Web-Project-Set-Up" />
-        <put-attribute name="next-article" value="/jsp-pjt/database-design" type="string" />
-        <put-attribute name="next-article-title" value="데이터베이스 설계" />
-        <put-attribute name="prev-article" value="/css-layout/bbs-write_form-styling" type="string" />
-        <put-attribute name="prev-article-title" value="글쓰기, 회원가입 디자인" />
+        <put-attribute name="article" value="0590-Dynamic-Web-Project-Set-Up" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/database-design" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="데이터베이스 설계" cascade="true" />
+        <put-attribute name="prev-article" value="/css-layout/bbs-write_form-styling" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="글쓰기, 회원가입 디자인" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/database-design" extends="lectureTemplate">
         <put-attribute name="title" value="데이터베이스 설계" />
         <put-attribute name="keywords" value="데이터베이스 설계,미니 프로젝트,게시판 회원 테이블,JSP mini project,BBS member table,database design" />
         <put-attribute name="description" value="게시판 프로젝트를 위한 데이터베이스를 설계합니다." />
-        <put-attribute name="content" value="0600-database-design" />
-        <put-attribute name="next-article" value="/jsp-pjt/how-to-use-log4j" type="string" />
-        <put-attribute name="next-article-title" value="로깅" />
-        <put-attribute name="prev-article" value="/jsp-pjt/Dynamic-Web-Project-Set-Up" type="string" />
-        <put-attribute name="prev-article-title" value="이클립스에서 다이나믹 웹 프로젝트 생성하기" />
+        <put-attribute name="article" value="0600-database-design" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/how-to-use-log4j" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="로깅" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/Dynamic-Web-Project-Set-Up" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="이클립스에서 다이나믹 웹 프로젝트 생성하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/how-to-use-log4j" extends="lectureTemplate">
         <put-attribute name="title" value="로깅" />
         <put-attribute name="keywords" value="로깅,로깅 정책,JSP 미니 프로젝트,JSP mini project,logging policy" />
         <put-attribute name="description" value="Log4j를 사용하는 방법을 소개합니다." />
-        <put-attribute name="content" value="0610-how-to-use-log4j" />
-        <put-attribute name="next-article" value="/jsp-pjt/bbs-prototype" type="string" />
-        <put-attribute name="next-article-title" value="게시판 프로토타입" />
-        <put-attribute name="prev-article" value="/jsp-pjt/database-design" type="string" />
-        <put-attribute name="prev-article-title" value="데이터베이스 설계" />
+        <put-attribute name="article" value="0610-how-to-use-log4j" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/bbs-prototype" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시판 프로토타입" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/database-design" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="데이터베이스 설계" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/bbs-prototype" extends="lectureTemplate">
         <put-attribute name="title" value="게시판 프로토타입" />
         <put-attribute name="keywords" value="게시판 프로토타입,JSP mini project's prototype" />
         <put-attribute name="description" value="게시판 미니 프로젝트의 프로토타입을 만듭니다." />
-        <put-attribute name="content" value="0620-bbs-prototype" />
-        <put-attribute name="next-article" value="/jsp-pjt/bbs-javabeans" type="string" />
-        <put-attribute name="next-article-title" value="자바빈즈" />
-        <put-attribute name="prev-article" value="/jsp-pjt/how-to-use-log4j" type="string" />
-        <put-attribute name="prev-article-title" value="로깅" />
+        <put-attribute name="article" value="0620-bbs-prototype" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/bbs-javabeans" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바빈즈" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/how-to-use-log4j" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="로깅" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/bbs-javabeans" extends="lectureTemplate">
         <put-attribute name="title" value="자바빈즈" />
         <put-attribute name="keywords" value="게시판 자바빈즈,BBS mini project's javabeans" />
         <put-attribute name="description" value="JSP 미니 프로젝트를 위한 자바빈즈를 생성합니다." />
-        <put-attribute name="content" value="0630-bbs-javabeans" />
-        <put-attribute name="next-article" value="/jsp-pjt/bbs-implementation" type="string" />
-        <put-attribute name="next-article-title" value="게시판 구현" />
-        <put-attribute name="prev-article" value="/jsp-pjt/bbs-prototype" type="string" />
-        <put-attribute name="prev-article-title" value="게시판 프로토타입" />
+        <put-attribute name="article" value="0630-bbs-javabeans" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/bbs-implementation" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시판 구현" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/bbs-prototype" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="게시판 프로토타입" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/bbs-implementation" extends="lectureTemplate">
         <put-attribute name="title" value="게시판 구현" />
         <put-attribute name="keywords" value="게시판 구현,BBS mini project" />
         <put-attribute name="description" value="게시판을 구현합니다." />
-        <put-attribute name="content" value="0640-bbs-implementation" />
-        <put-attribute name="next-article" value="/jsp-pjt/bbs-model-2" type="string" />
-        <put-attribute name="next-article-title" value="모델 2로 바꾸기" />
-        <put-attribute name="prev-article" value="/jsp-pjt/bbs-javabeans" type="string" />
-        <put-attribute name="prev-article-title" value="자바빈즈" />
+        <put-attribute name="article" value="0640-bbs-implementation" cascade="true" />
+        <put-attribute name="next-article" value="/jsp-pjt/bbs-model-2" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="모델 2로 바꾸기" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/bbs-javabeans" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바빈즈" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <definition name="jsp-pjt/bbs-model-2" extends="lectureTemplate">
         <put-attribute name="title" value="모델 2로 바꾸기" />
         <put-attribute name="keywords" value="모델 2,BBS mini project,model2" />
         <put-attribute name="description" value="게시판을 모델 2로 수정합니다." />
-        <put-attribute name="content" value="0650-bbs-model-2" />
-        <put-attribute name="next-article" value="/spring/building-java-projects-with-maven" type="string" />
-        <put-attribute name="next-article-title" value="메이븐으로 자바 프로젝트 생성" />
-        <put-attribute name="prev-article" value="/jsp-pjt/bbs-implementation" type="string" />
-        <put-attribute name="prev-article-title" value="구현" />
+        <put-attribute name="article" value="0650-bbs-model-2" cascade="true" />
+        <put-attribute name="next-article" value="/spring/building-java-projects-with-maven" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="메이븐으로 자바 프로젝트 생성" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/bbs-implementation" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="구현" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub_ko.jsp" />
     </definition>
     <!-- Spring -->
@@ -813,165 +773,165 @@
         <put-attribute name="title" value="메이븐으로 자바 프로젝트 생성" />
         <put-attribute name="keywords" value="maven,메이븐,자바 프로젝트 생성" />
         <put-attribute name="description" value="메이븐으로 자바 프로젝트를 생성합니다." />
-        <put-attribute name="content" value="0660-building-java-projects-with-maven" />
-        <put-attribute name="next-article" value="/spring/di" type="string" />
-        <put-attribute name="next-article-title" value="Spring DI" />
-        <put-attribute name="prev-article" value="/jsp-pjt/bbs-model-2" type="string" />
-        <put-attribute name="prev-article-title" value="모델 2로 바꾸기" />
+        <put-attribute name="article" value="0660-building-java-projects-with-maven" cascade="true" />
+        <put-attribute name="next-article" value="/spring/di" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Spring DI" cascade="true" />
+        <put-attribute name="prev-article" value="/jsp-pjt/bbs-model-2" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="모델 2로 바꾸기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/di" extends="lectureTemplate">
         <put-attribute name="title" value="Spring DI" />
         <put-attribute name="keywords" value="spring di" />
         <put-attribute name="description" value="Spring DI를 설명합니다." />
-        <put-attribute name="content" value="0670-di" />
-        <put-attribute name="next-article" value="/spring/aop" type="string" />
-        <put-attribute name="next-article-title" value="Spring AOP" />
-        <put-attribute name="prev-article" value="/spring/building-java-projects-with-maven" type="string" />
-        <put-attribute name="prev-article-title" value="메이븐으로 자바 프로젝트 생성" />
+        <put-attribute name="article" value="0670-di" cascade="true" />
+        <put-attribute name="next-article" value="/spring/aop" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Spring AOP" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/building-java-projects-with-maven" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="메이븐으로 자바 프로젝트 생성" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/aop" extends="lectureTemplate">
         <put-attribute name="title" value="Spring AOP" />
         <put-attribute name="keywords" value="Spring AOP" />
         <put-attribute name="description" value="Spring AOP를 설명합니다." />
-        <put-attribute name="content" value="0680-aop" />
-        <put-attribute name="next-article" value="/spring/jdbc" type="string" />
-        <put-attribute name="next-article-title" value="Spring JDBC" />
-        <put-attribute name="prev-article" value="/spring/di" type="string" />
-        <put-attribute name="prev-article-title" value="Spring DI" />
+        <put-attribute name="article" value="0680-aop" cascade="true" />
+        <put-attribute name="next-article" value="/spring/jdbc" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Spring JDBC" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/di" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Spring DI" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/jdbc" extends="lectureTemplate">
         <put-attribute name="title" value="Spring JDBC" />
         <put-attribute name="keywords" value="Spring JDBC" />
         <put-attribute name="description" value="Spring JDBC를 설명합니다." />
-        <put-attribute name="content" value="0690-jdbc" />
-        <put-attribute name="next-article" value="/spring/transaction" type="string" />
-        <put-attribute name="next-article-title" value="Spring 트랜잭션" />
-        <put-attribute name="prev-article" value="/spring/aop" type="string" />
-        <put-attribute name="prev-article-title" value="Spring AOP" />
+        <put-attribute name="article" value="0690-jdbc" cascade="true" />
+        <put-attribute name="next-article" value="/spring/transaction" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Spring 트랜잭션" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/aop" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Spring AOP" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/transaction" extends="lectureTemplate">
         <put-attribute name="title" value="Spring 트랜잭션" />
         <put-attribute name="keywords" value="Spring Transaction" />
         <put-attribute name="description" value="Spring 트랜잭션을 설명합니다." />
-        <put-attribute name="content" value="0700-transaction" />
-        <put-attribute name="next-article" value="/spring/spring-mvc-with-maven" type="string" />
-        <put-attribute name="next-article-title" value="메이븐으로 스프링 실습" />
-        <put-attribute name="prev-article" value="/spring/jdbc" type="string" />
-        <put-attribute name="prev-article-title" value="Spring JDBC" />
+        <put-attribute name="article" value="0700-transaction" cascade="true" />
+        <put-attribute name="next-article" value="/spring/spring-mvc-with-maven" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="메이븐으로 스프링 실습" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/jdbc" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Spring JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/spring-mvc-with-maven" extends="lectureTemplate">
         <put-attribute name="title" value="메이븐으로 스프링 실습" />
         <put-attribute name="keywords" value="Spring MVC" />
         <put-attribute name="description" value="This chapter describes about Spring MVC" />
-        <put-attribute name="content" value="0710-spring-mvc-with-maven" />
-        <put-attribute name="next-article" value="/spring/spring-mvc-bbs" type="string" />
-        <put-attribute name="next-article-title" value="메이븐으로 Spring MVC 실습" />
-        <put-attribute name="prev-article" value="/spring/transaction" type="string" />
-        <put-attribute name="prev-article-title" value="Spring 트랜잭션" />
+        <put-attribute name="article" value="0710-spring-mvc-with-maven" cascade="true" />
+        <put-attribute name="next-article" value="/spring/spring-mvc-bbs" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="메이븐으로 Spring MVC 실습" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/transaction" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Spring 트랜잭션" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/spring-mvc-bbs" extends="lectureTemplate">
         <put-attribute name="title" value="메이븐으로 Spring MVC 실습" />
         <put-attribute name="keywords" value="BBS,Spring MVC,메이븐,maven" />
         <put-attribute name="description" value="메이븐으로 Spring MVC 게시판을 실습합니다." />
-        <put-attribute name="content" value="0720-spring-mvc-bbs" />
-        <put-attribute name="next-article" value="/spring/spring-security-config" type="string" />
-        <put-attribute name="next-article-title" value="시큐리티 설정과 웹 요청 보안" />
-        <put-attribute name="prev-article" value="/spring/spring-mvc-with-maven" type="string" />
-        <put-attribute name="prev-article-title" value="메이븐으로 Spring MVC 실습" />
+        <put-attribute name="article" value="0720-spring-mvc-bbs" cascade="true" />
+        <put-attribute name="next-article" value="/spring/spring-security-config" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="시큐리티 설정과 웹 요청 보안" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/spring-mvc-with-maven" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="메이븐으로 Spring MVC 실습" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/spring-security-config" extends="lectureTemplate">
         <put-attribute name="title" value="시큐리티 설정과 웹 요청 보안" />
         <put-attribute name="keywords" value="Spring Security Configuration" />
         <put-attribute name="description" value="스프링 시큐리티 설정과 웹 요청 보안을 설명합니다." />
-        <put-attribute name="content" value="0730-spring-security-config" />
-        <put-attribute name="next-article" value="/spring/method-security" type="string" />
-        <put-attribute name="next-article-title" value="메서드 보안" />
-        <put-attribute name="prev-article" value="/spring/spring-mvc-bbs" type="string" />
-        <put-attribute name="prev-article-title" value="Spring MVC 게시판" />
+        <put-attribute name="article" value="0730-spring-security-config" cascade="true" />
+        <put-attribute name="next-article" value="/spring/method-security" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="메서드 보안" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/spring-mvc-bbs" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Spring MVC 게시판" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/method-security" extends="lectureTemplate">
         <put-attribute name="title" value="메서드 보안" />
         <put-attribute name="keywords" value="스프링 시큐리티 메서드 보안,spring,spring security,method security" />
         <put-attribute name="description" value="스프링 시큐리티 메서드 보안을 설명합니다." />
-        <put-attribute name="content" value="0740-method-security" />
-        <put-attribute name="next-article" value="/spring/security-at-view-layer" type="string" />
-        <put-attribute name="next-article-title" value="뷰 레벨 보안" />
-        <put-attribute name="prev-article" value="/spring/spring-security-config" type="string" />
-        <put-attribute name="prev-article-title" value="시큐리티 설정과 웹 요청 보안" />
+        <put-attribute name="article" value="0740-method-security" cascade="true" />
+        <put-attribute name="next-article" value="/spring/security-at-view-layer" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="뷰 레벨 보안" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/spring-security-config" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="시큐리티 설정과 웹 요청 보안" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/security-at-view-layer" extends="lectureTemplate">
         <put-attribute name="title" value="뷰 레벨 보안" />
         <put-attribute name="keywords" value="뷰 레벨 보안,spring,spring security,security at view layer" />
         <put-attribute name="description" value="스프링 시큐리티 뷰 레벨 보안을 설명합니다." />
-        <put-attribute name="content" value="0750-security-at-view-layer" />
-        <put-attribute name="next-article" value="/spring/bean-validation-at-signUp" type="string" />
-        <put-attribute name="next-article-title" value="회원가입에서 빈 검증" />
-        <put-attribute name="prev-article" value="/spring/method-security" type="string" />
-        <put-attribute name="prev-article-title" value="메소드 보안" />
+        <put-attribute name="article" value="0750-security-at-view-layer" cascade="true" />
+        <put-attribute name="next-article" value="/spring/bean-validation-at-signUp" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="회원가입에서 빈 검증" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/method-security" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="메소드 보안" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/bean-validation-at-signUp" extends="lectureTemplate">
         <put-attribute name="title" value="회원가입에서 빈 검증" />
         <put-attribute name="keywords" value="회원가입에서 빈 검증,spring,bean validation" />
         <put-attribute name="description" value="회원가입에서 빈 검증을 실습합니다." />
-        <put-attribute name="content" value="0760-bean-validation-at-signUp" />
-        <put-attribute name="next-article" value="/spring/bean-validation-at-editAccount" type="string" />
-        <put-attribute name="next-article-title" value="내정보 수정에서 빈 검증" />
-        <put-attribute name="prev-article" value="/spring/security-at-view-layer" type="string" />
-        <put-attribute name="prev-article-title" value="뷰 레벨 보안" />
+        <put-attribute name="article" value="0760-bean-validation-at-signUp" cascade="true" />
+        <put-attribute name="next-article" value="/spring/bean-validation-at-editAccount" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="내정보 수정에서 빈 검증" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/security-at-view-layer" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="뷰 레벨 보안" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/bean-validation-at-editAccount" extends="lectureTemplate">
         <put-attribute name="title" value="내 정보 수정에서 빈 검증" />
         <put-attribute name="keywords" value="내 정보 수정에서 빈 검증,spring,bean validation" />
         <put-attribute name="description" value="내 정보 수정에서 빈 검증을 실습합니다." />
-        <put-attribute name="content" value="0770-bean-validation-at-editAccount" />
-        <put-attribute name="next-article" value="/spring/bean-validation-at-changePasswd" type="string" />
-        <put-attribute name="next-article-title" value="비밀번호 변경에서 빈 검증" />
-        <put-attribute name="prev-article" value="/spring/bean-validation-at-signUp" type="string" />
-        <put-attribute name="prev-article-title" value="회원가입" />
+        <put-attribute name="article" value="0770-bean-validation-at-editAccount" cascade="true" />
+        <put-attribute name="next-article" value="/spring/bean-validation-at-changePasswd" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="비밀번호 변경에서 빈 검증" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/bean-validation-at-signUp" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="회원가입" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/bean-validation-at-changePasswd" extends="lectureTemplate">
         <put-attribute name="title" value="비밀번호 변경에서 빈 검증" />
         <put-attribute name="keywords" value="비밀번호 변경에서 빈 검증,spring,bean validation" />
         <put-attribute name="description" value="비밀번호 변경에서 빈 검증을 실습합니다." />
-        <put-attribute name="content" value="0780-bean-validation-at-changePasswd" />
-        <put-attribute name="next-article" value="/spring/bean-validation-at-write-article" type="string" />
-        <put-attribute name="next-article-title" value="글쓰기에서 빈 검증" />
-        <put-attribute name="prev-article" value="/spring/bean-validation-at-editAccount" type="string" />
-        <put-attribute name="prev-article-title" value="내 정보 수정에서 빈 검증" />
+        <put-attribute name="article" value="0780-bean-validation-at-changePasswd" cascade="true" />
+        <put-attribute name="next-article" value="/spring/bean-validation-at-write-article" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="글쓰기에서 빈 검증" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/bean-validation-at-editAccount" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="내 정보 수정에서 빈 검증" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/bean-validation-at-write-article" extends="lectureTemplate">
         <put-attribute name="title" value="글쓰기에서 빈 검증" />
         <put-attribute name="keywords" value="글쓰기에서 빈 검증,spring,bean validation" />
         <put-attribute name="description" value="글쓰기에서 빈 검증을 실습합니다." />
-        <put-attribute name="content" value="0790-bean-validation-at-write-article" />
-        <put-attribute name="next-article" value="/spring/bean-validation-at-modify-article" type="string" />
-        <put-attribute name="next-article-title" value="게시글 수정에서 빈 검증" />
-        <put-attribute name="prev-article" value="/spring/bean-validation-at-changePasswd" type="string" />
-        <put-attribute name="prev-article-title" value="비밀번호 변경에서 빈 검증" />
+        <put-attribute name="article" value="0790-bean-validation-at-write-article" cascade="true" />
+        <put-attribute name="next-article" value="/spring/bean-validation-at-modify-article" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="게시글 수정에서 빈 검증" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/bean-validation-at-changePasswd" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="비밀번호 변경에서 빈 검증" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <definition name="spring/bean-validation-at-modify-article" extends="lectureTemplate">
         <put-attribute name="title" value="게시글 수정에서 빈 검증" />
         <put-attribute name="keywords" value="게시글 수정에서 빈 검증,bean validation" />
         <put-attribute name="description" value="게시글 수정에서 빈 검증을 실습합니다." />
-        <put-attribute name="content" value="0800-bean-validation-at-modify-article" />
-        <put-attribute name="next-article" value="/javascript/introduction" type="string" />
-        <put-attribute name="next-article-title" value="자바스크립트 소개" />
-        <put-attribute name="prev-article" value="/spring/bean-validation-at-write-article" type="string" />
-        <put-attribute name="prev-article-title" value="글쓰기에서 빈 검증" />
+        <put-attribute name="article" value="0800-bean-validation-at-modify-article" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/introduction" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바스크립트 소개" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/bean-validation-at-write-article" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="글쓰기에서 빈 검증" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub_ko.jsp" />
     </definition>
     <!-- JavaScript -->
@@ -979,11 +939,11 @@
         <put-attribute name="title" value="자바스크립트 소개" />
         <put-attribute name="keywords" value="javascript,ECMA,이벤트 핸들러,입력값 검증,동적 메뉴,CSS 속성 동적으로 변경,내용 추가" />
         <put-attribute name="description" value="자바스크립트를 소개합나다." />
-        <put-attribute name="content" value="0810-introduction" />
-        <put-attribute name="next-article" value="/javascript/dataType" type="string" />
-        <put-attribute name="next-article-title" value="기본 데이터형" />
-        <put-attribute name="prev-article" value="/spring/bean-validation-at-modify-article" type="string" />
-        <put-attribute name="prev-article-title" value="글 수정에서 빈 유효성 검사" />
+        <put-attribute name="article" value="0810-introduction" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/dataType" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="기본 데이터형" cascade="true" />
+        <put-attribute name="prev-article" value="/spring/bean-validation-at-modify-article" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="글 수정에서 빈 유효성 검사" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -993,11 +953,11 @@
         <put-attribute name="title" value="기본 데이터형" />
         <put-attribute name="keywords" value="javascript,data type" />
         <put-attribute name="description" value="자바스크립트 기본 데이터형을 설명합니다." />
-        <put-attribute name="content" value="0820-dataType" />
-        <put-attribute name="next-article" value="/javascript/handling-select-items" type="string" />
-        <put-attribute name="next-article-title" value="select 엘리먼트 다루기" />
-        <put-attribute name="prev-article" value="/javascript/introduction" type="string" />
-        <put-attribute name="prev-article-title" value="자바스크립트 소개" />
+        <put-attribute name="article" value="0820-dataType" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/handling-select-items" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="select 엘리먼트 다루기" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/introduction" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바스크립트 소개" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1007,11 +967,11 @@
         <put-attribute name="title" value="select 엘리먼트 다루기" />
         <put-attribute name="keywords" value="자바스크립트 select 엘리먼트 다루기,javascript,select element" />
         <put-attribute name="description" value="자바스크립트로 select 엘리먼트를 다루는 방법을 설명합니다." />
-        <put-attribute name="content" value="0830-handling-select-items" />
-        <put-attribute name="next-article" value="/javascript/difference-between-javascript-and-java" type="string" />
-        <put-attribute name="next-article-title" value="자바와 다른점" />
-        <put-attribute name="prev-article" value="/javascript/dataType" type="string" />
-        <put-attribute name="prev-article-title" value="기본 데이터형" />
+        <put-attribute name="article" value="0830-handling-select-items" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/difference-between-javascript-and-java" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="자바와 다른점" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/dataType" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="기본 데이터형" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1021,11 +981,11 @@
         <put-attribute name="title" value="자바와 다른점" />
         <put-attribute name="keywords" value="javascript" />
         <put-attribute name="description" value="자바스크립트가 자바와 다른점을 설명합니다." />
-        <put-attribute name="content" value="0840-difference-between-javascript-and-java" />
-        <put-attribute name="next-article" value="/javascript/Number" type="string" />
-        <put-attribute name="next-article-title" value="Number" />
-        <put-attribute name="prev-article" value="/javascript/handling-select-items" type="string" />
-        <put-attribute name="prev-article-title" value="select 엘리먼트 다루기" />
+        <put-attribute name="article" value="0840-difference-between-javascript-and-java" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Number" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Number" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/handling-select-items" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="select 엘리먼트 다루기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1035,11 +995,11 @@
         <put-attribute name="title" value="Number" />
         <put-attribute name="keywords" value="javascript,Number Object" />
         <put-attribute name="description" value="자바스크립트의 Number 객체를 설명합니다." />
-        <put-attribute name="content" value="0850-Number" />
-        <put-attribute name="next-article" value="/javascript/String" type="string" />
-        <put-attribute name="next-article-title" value="String" />
-        <put-attribute name="prev-article" value="/javascript/difference-between-javascript-and-java" type="string" />
-        <put-attribute name="prev-article-title" value="자바와 다른점" />
+        <put-attribute name="article" value="0850-Number" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/String" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="String" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/difference-between-javascript-and-java" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="자바와 다른점" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1049,11 +1009,11 @@
         <put-attribute name="title" value="String" />
         <put-attribute name="keywords" value="javascript,String" />
         <put-attribute name="description" value="자바스크립트의 String 객체를 설명합니다." />
-        <put-attribute name="content" value="0860-String" />
-        <put-attribute name="next-article" value="/javascript/RegExp" type="string" />
-        <put-attribute name="next-article-title" value="정규표현식" />
-        <put-attribute name="prev-article" value="/javascript/Number" type="string" />
-        <put-attribute name="prev-article-title" value="Number" />
+        <put-attribute name="article" value="0860-String" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/RegExp" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="정규표현식" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Number" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Number" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1063,11 +1023,11 @@
         <put-attribute name="title" value="정규표현식" />
         <put-attribute name="keywords" value="RegExp" />
         <put-attribute name="description" value="자바스크립트의 정규표현식 객체를 설명합니다." />
-        <put-attribute name="content" value="0870-RegExp" />
-        <put-attribute name="next-article" value="/javascript/Date" type="string" />
-        <put-attribute name="next-article-title" value="Date" />
-        <put-attribute name="prev-article" value="/javascript/String" type="string" />
-        <put-attribute name="prev-article-title" value="String" />
+        <put-attribute name="article" value="0870-RegExp" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Date" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Date" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/String" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="String" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1077,11 +1037,11 @@
         <put-attribute name="title" value="Date" />
         <put-attribute name="keywords" value="javascript Date Object" />
         <put-attribute name="description" value="자바스크립트의 Date 객체를 설명합니다." />
-        <put-attribute name="content" value="0880-Date" />
-        <put-attribute name="next-article" value="/javascript/Array" type="string" />
-        <put-attribute name="next-article-title" value="배열" />
-        <put-attribute name="prev-article" value="/javascript/RegExp" type="string" />
-        <put-attribute name="prev-article-title" value="정규표현식" />
+        <put-attribute name="article" value="0880-Date" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Array" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="배열" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/RegExp" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="정규표현식" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1091,11 +1051,11 @@
         <put-attribute name="title" value="배열" />
         <put-attribute name="keywords" value="javascript Array Object" />
         <put-attribute name="description" value="자바스크립트의 배열 객체를 설명합니다." />
-        <put-attribute name="content" value="0890-Array" />
-        <put-attribute name="next-article" value="/javascript/Math" type="string" />
-        <put-attribute name="next-article-title" value="Math" />
-        <put-attribute name="prev-article" value="/javascript/Date" type="string" />
-        <put-attribute name="prev-article-title" value="Date" />
+        <put-attribute name="article" value="0890-Array" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Math" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Math" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Date" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Date" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1105,11 +1065,11 @@
         <put-attribute name="title" value="Math" />
         <put-attribute name="keywords" value="javascript Math Object" />
         <put-attribute name="description" value="자바스크립트의 Math 객체를 설명합니다." />
-        <put-attribute name="content" value="0900-Math" />
-        <put-attribute name="next-article" value="/javascript/Function" type="string" />
-        <put-attribute name="next-article-title" value="함수" />
-        <put-attribute name="prev-article" value="/javascript/Array" type="string" />
-        <put-attribute name="prev-article-title" value="배열" />
+        <put-attribute name="article" value="0900-Math" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Function" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="함수" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Array" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="배열" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1119,11 +1079,11 @@
         <put-attribute name="title" value="함수" />
         <put-attribute name="keywords" value="javascript Function Object" />
         <put-attribute name="description" value="자바스크립트의 Function 객체를 소개합니다." />
-        <put-attribute name="content" value="0910-Function" />
-        <put-attribute name="next-article" value="/javascript/javascript-form-validation" type="string" />
-        <put-attribute name="next-article-title" value="유효성 검사" />
-        <put-attribute name="prev-article" value="/javascript/Math" type="string" />
-        <put-attribute name="prev-article-title" value="Math" />
+        <put-attribute name="article" value="0910-Function" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/javascript-form-validation" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="유효성 검사" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Math" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Math" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1133,11 +1093,11 @@
         <put-attribute name="title" value="유효성 검사" />
         <put-attribute name="keywords" value="javascript form validation" />
         <put-attribute name="description" value="자바스크립트 폼 검증을 설명합니다." />
-        <put-attribute name="content" value="0920-javascript-form-validation" />
-        <put-attribute name="next-article" value="/javascript/Cookie" type="string" />
-        <put-attribute name="next-article-title" value="쿠키 다루기" />
-        <put-attribute name="prev-article" value="/javascript/Function" type="string" />
-        <put-attribute name="prev-article-title" value="함수" />
+        <put-attribute name="article" value="0920-javascript-form-validation" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/Cookie" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="쿠키 다루기" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Function" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="함수" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1147,11 +1107,11 @@
         <put-attribute name="title" value="쿠키 다루기" />
         <put-attribute name="keywords" value="javascript,Cookie" />
         <put-attribute name="description" value="자바스크립트로 쿠키를 다루는 방법을 설명합니다." />
-        <put-attribute name="content" value="0930-Cookie" />
-        <put-attribute name="next-article" value="/javascript/decoupling-html-and-javascript" type="string" />
-        <put-attribute name="next-article-title" value="HTML에서 자바스크립트 분리" />
-        <put-attribute name="prev-article" value="/javascript/javascript-form-validation" type="string" />
-        <put-attribute name="prev-article-title" value="유효성 검사" />
+        <put-attribute name="article" value="0930-Cookie" cascade="true" />
+        <put-attribute name="next-article" value="/javascript/decoupling-html-and-javascript" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="HTML에서 자바스크립트 분리" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/javascript-form-validation" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="유효성 검사" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1161,9 +1121,9 @@
         <put-attribute name="title" value="HTML에서 자바스크립트 분리" />
         <put-attribute name="keywords" value="javascript,DOM,Decoupling HTML and JavaScript" />
         <put-attribute name="description" value="HTML에서 자바스크립트 분리를 실습합니다." />
-        <put-attribute name="content" value="0940-decoupling-html-and-javascript" />
-        <put-attribute name="prev-article" value="/javascript/Cookie" type="string" />
-        <put-attribute name="prev-article-title" value="쿠키 다루기" />
+        <put-attribute name="article" value="0940-decoupling-html-and-javascript" cascade="true" />
+        <put-attribute name="prev-article" value="/javascript/Cookie" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="쿠키 다루기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
@@ -1174,63 +1134,62 @@
         <put-attribute name="title" value="구글 앱 엔진 시작하기" />
         <put-attribute name="keywords" value="java 8,maven,eclipse,guestbook archetype,mvn clean install,mvn appengine:devserver,mvn appengine:update,https://cloud.google.com,web console,create new project,create instance,your-app-id.appspot.com,datastore-indexes.xml,mvn appengine:update_indexes,git,https://git-scm.com,Cloud SDK install,gcloud source repos create ..,gcloud source repos clone ..," />
         <put-attribute name="description" value="구글 앱 엔진을 시작하기" />
-        <put-attribute name="content" value="0950-building-gae-projects-with-maven" />
-        <put-attribute name="next-article" value="/google-app-engine/Logging" type="string" />
-        <put-attribute name="next-article-title" value="구글 앱 엔진에서 로그 사용하는 방법" />
+        <put-attribute name="article" value="0950-building-gae-projects-with-maven" cascade="true" />
+        <put-attribute name="next-article" value="/google-app-engine/Logging" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="구글 앱 엔진에서 로그 사용하는 방법" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
     <definition name="google-app-engine/Logging" extends="lectureTemplate">
         <put-attribute name="title" value="구글 앱 엔진에서 로그 사용하기" />
         <put-attribute name="keywords" value="appengine-web.xml,logging.properties,.level=INFO,import java.util.logging.Logger,https://console.cloud.google.com/logs" />
         <put-attribute name="description" value="구글 앱 엔진에서 로그 사용하기" />
-        <put-attribute name="content" value="0960-Logging" />
-        <put-attribute name="next-article" value="/google-app-engine/Spring-MVC" type="string" />
-        <put-attribute name="next-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
-        <put-attribute name="prev-article" value="/google-app-engine/building-gae-projects-with-maven" type="string" />
-        <put-attribute name="prev-article-title" value="구글 앱 엔진 시작하기" />
+        <put-attribute name="article" value="0960-Logging" cascade="true" />
+        <put-attribute name="next-article" value="/google-app-engine/Spring-MVC" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" cascade="true" />
+        <put-attribute name="prev-article" value="/google-app-engine/building-gae-projects-with-maven" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="구글 앱 엔진 시작하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
     <definition name="google-app-engine/Spring-MVC" extends="lectureTemplate">
         <put-attribute name="title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
         <put-attribute name="keywords" value="webapp/resources,spring-context,spring-webmvc,spring-jdbc,CharacterEncodingFilter,ObjectifyFilter,DispatcherServlet,guestbook-servlet.xml,mvc:resources mapping location,context:component-scan,InternalResourceViewResolver,GuestbookController.java,guestbook.jsp,runtime java8,mvn clean,mvn appengine:devserver,mvn appengine:update" />
         <put-attribute name="description" value="구글 앱 엔진에서 Spring MVC 사용하기" />
-        <put-attribute name="content" value="0970-Spring-MVC" />
-        <put-attribute name="next-article" value="/google-app-engine/Spring-Security" type="string" />
-        <put-attribute name="next-article-title" value="구글 어카운트에 Spring Security 접목하기" />
-        <put-attribute name="prev-article" value="/google-app-engine/Logging" type="string" />
-        <put-attribute name="prev-article-title" value="구글 앱 엔진에서 로그 사용하기" />
+        <put-attribute name="article" value="0970-Spring-MVC" cascade="true" />
+        <put-attribute name="next-article" value="/google-app-engine/Spring-Security" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="구글 어카운트에 Spring Security 접목하기" cascade="true" />
+        <put-attribute name="prev-article" value="/google-app-engine/Logging" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="구글 앱 엔진에서 로그 사용하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
-
     <definition name="google-app-engine/Spring-Security" extends="lectureTemplate">
         <put-attribute name="title" value="구글 어카운트에 Spring Security 접목하기" />
         <put-attribute name="keywords" value="google account,spring security,Authentication,spring-security-web,spring-security-config,AppRole.java,GaeUser.java,GoogleAccountsAuthenticationEntryPoint.java,GaeUserAuthentication.java,GaeAuthenticationFilter,GoogleAccountsAuthenticationProvider.java,security.xml,applicationContext.xml,guestbook-servlet.xml,mvc:annotation-driven,web.xml,context-param,ContextLoaderListener,HttpSessionEventPublisher,DelegatingFilterProxy,CSRF,${_csrf.parameterName},${_csrf.token},session-enabled true,GuestbookController.java,mvn clean,mvn appengine:devserver" />
         <put-attribute name="description" value="구글 앱 엔진에 Spring Security 접목하기" />
-        <put-attribute name="content" value="0980-Spring-Security" />
-        <put-attribute name="next-article" value="/google-app-engine/Objectify" type="string" />
-        <put-attribute name="next-article-title" value="Objectify 다루기" />
-        <put-attribute name="prev-article" value="/google-app-engine/Spring-MVC" type="string" />
-        <put-attribute name="prev-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" />
+        <put-attribute name="article" value="0980-Spring-Security" cascade="true" />
+        <put-attribute name="next-article" value="/google-app-engine/Objectify" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="Objectify 다루기" cascade="true" />
+        <put-attribute name="prev-article" value="/google-app-engine/Spring-MVC" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="구글 앱 엔진에서 Spring MVC 사용하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
     <definition name="google-app-engine/Objectify" extends="lectureTemplate">
         <put-attribute name="title" value="Objectify" />
         <put-attribute name="keywords" value="Objectify,.load(),.type(),.ancestor(),.order(),.limit(),.list(),ofy().save().entity().now(),ofy().delete().key(key).now(),Key.create(),isAuthenticated(),principal,hasRole(),GuestbookService.java,GuestbookServiceImpl.java,Greeting.java,GuestbookController.java,mvn clean,mvn appengine:devserver" />
         <put-attribute name="description" value="Objectify 다루기" />
-        <put-attribute name="content" value="0990-Objectify" />
-        <put-attribute name="next-article" value="/google-app-engine/Spring-optimization" type="string" />
-        <put-attribute name="next-article-title" value="구글 앱 엔진에서 스프링 최적화하기" />
-        <put-attribute name="prev-article" value="/google-app-engine/Spring-Security" type="string" />
-        <put-attribute name="prev-article-title" value="구글 어카운트에 Spring Security 접목하기" />
+        <put-attribute name="article" value="0990-Objectify" cascade="true" />
+        <put-attribute name="next-article" value="/google-app-engine/Spring-optimization" type="string" cascade="true" />
+        <put-attribute name="next-article-title" value="구글 앱 엔진에서 스프링 최적화하기" cascade="true" />
+        <put-attribute name="prev-article" value="/google-app-engine/Spring-Security" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="구글 어카운트에 Spring Security 접목하기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
     <definition name="google-app-engine/Spring-optimization" extends="lectureTemplate">
         <put-attribute name="title" value="구글 앱 엔진에서 스프링 최적화하기" />
         <put-attribute name="keywords" value="guestbook-servlet.xml,context:annotation-config" />
         <put-attribute name="description" value="구글 앱 엔진 프로젝트에서 스프링 최적화하기" />
-        <put-attribute name="content" value="1000-Spring-optimization" />
-        <put-attribute name="prev-article" value="/google-app-engine/Objectify" type="string" />
-        <put-attribute name="prev-article-title" value="Objectify 다루기" />
+        <put-attribute name="article" value="1000-Spring-optimization" cascade="true" />
+        <put-attribute name="prev-article" value="/google-app-engine/Objectify" type="string" cascade="true" />
+        <put-attribute name="prev-article-title" value="Objectify 다루기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub_ko.jsp" />
     </definition>
     <!-- 데이터스토어 블로그 -->
@@ -1243,147 +1202,126 @@
         <put-attribute name="title" value="Blog Index" />
         <put-attribute name="keywords" value="Blog Index" />
         <put-attribute name="description" value="Blog Index" />
-        <put-attribute name="content" value="blog-index" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="blog-index" cascade="true" />
     </definition>
     <definition name="blog/2015/spring-security-password-encoder" extends="blogTemplate">
         <put-attribute name="title" value="Spring Security Password Encoder" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="content" value="2015/spring-security-password-encoder" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2015/spring-security-password-encoder" cascade="true" />
     </definition>
     <definition name="blog/2016/spring-security-access-denied-handling" extends="blogTemplate">
         <put-attribute name="title" value="Spring Security Access Denied Handling" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="content" value="2016/spring-security-access-denied-handling" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2016/spring-security-access-denied-handling" cascade="true" />
     </definition>
     <definition name="blog/2017/migrating-to-spring-security-4" extends="blogTemplate">
         <put-attribute name="title" value="Migrating to Spring Security 4" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="content" value="2017/migrating-to-spring-security-4" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/migrating-to-spring-security-4" cascade="true" />
     </definition>
     <definition name="blog/2017/SpringBbs-with-MySql" extends="blogTemplate">
         <put-attribute name="title" value="SpringBbs with MySql" />
         <put-attribute name="keywords" value="spring mvc" />
         <put-attribute name="description" value="spring mvc, board," />
-        <put-attribute name="content" value="2017/SpringBbs-with-MySql" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/SpringBbs-with-MySql" cascade="true" />
     </definition>
     <definition name="blog/2017/jetty-maven-plugin" extends="blogTemplate">
         <put-attribute name="title" value="Jetty Maven Plugin" />
         <put-attribute name="keywords" value="jetty maven plugin" />
         <put-attribute name="description" value="jetty maven plugin" />
-        <put-attribute name="content" value="2017/jetty-maven-plugin" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/jetty-maven-plugin" cascade="true" />
     </definition>
     <definition name="blog/2017/basic-board" extends="blogTemplate">
         <put-attribute name="title" value="Basic Board Program" />
         <put-attribute name="keywords" value="Basic Board Program" />
         <put-attribute name="description" value="Basic Board Program" />
-        <put-attribute name="content" value="2017/basic-board" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/basic-board" cascade="true" />
     </definition>
     <definition name="blog/2017/thread-board" extends="blogTemplate">
         <put-attribute name="title" value="Thread Board" />
         <put-attribute name="keywords" value="Thread Board" />
         <put-attribute name="description" value="Thread Board" />
-        <put-attribute name="content" value="2017/thread-board" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/thread-board" cascade="true" />
     </definition>
     <definition name="blog/2017/board-using-oracle-hierarchical-query" extends="blogTemplate">
         <put-attribute name="title" value="board,oracle hierarchical query" />
         <put-attribute name="keywords" value="board,oracle hierarchical query" />
         <put-attribute name="description" value="board,oracle hierarchical query" />
-        <put-attribute name="content" value="2017/board-using-oracle-hierarchical-query" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/board-using-oracle-hierarchical-query" cascade="true" />
     </definition>
     <definition name="blog/2017/model1-board" extends="blogTemplate">
         <put-attribute name="title" value="board,model 1" />
         <put-attribute name="keywords" value="board,model 1" />
         <put-attribute name="description" value="board,model 1" />
-        <put-attribute name="content" value="2017/model1-board" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/model1-board" cascade="true" />
     </definition>
     <definition name="blog/2017/model2-board" extends="blogTemplate">
         <put-attribute name="title" value="board,model 2" />
         <put-attribute name="keywords" value="board,model 2" />
         <put-attribute name="description" value="board,model 2" />
-        <put-attribute name="content" value="2017/model2-board" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/model2-board" cascade="true" />
     </definition>
     <definition name="blog/2017/model2-board-using-DBCP" extends="blogTemplate">
         <put-attribute name="title" value="board,model 2,DBCP" />
         <put-attribute name="keywords" value="board,model 2,DBCP" />
         <put-attribute name="description" value="board,model 2" />
-        <put-attribute name="content" value="2017/model2-board-using-DBCP" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/model2-board-using-DBCP" cascade="true" />
     </definition>
     <definition name="blog/2017/REST-example" extends="blogTemplate">
         <put-attribute name="title" value="REST" />
         <put-attribute name="keywords" value="REST" />
         <put-attribute name="description" value="REST" />
-        <put-attribute name="content" value="2017/REST-example" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/REST-example" cascade="true" />
     </definition>
     <definition name="blog/2017/model2mysqlboard-using-DBCP" extends="blogTemplate">
         <put-attribute name="title" value="Model 2 Board on MySql using DBCP" />
         <put-attribute name="keywords" value="model 2" />
         <put-attribute name="description" value="model 2" />
-        <put-attribute name="content" value="2017/model2mysqlboard-using-DBCP" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/model2mysqlboard-using-DBCP" cascade="true" />
     </definition>
     <definition name="blog/2017/spring-mvc-ajax-example" extends="blogTemplate">
         <put-attribute name="title" value="Ajax Example on Spring MVC" />
         <put-attribute name="keywords" value="ajax,spring mvc" />
         <put-attribute name="description" value="simple ajax example" />
-        <put-attribute name="content" value="2017/spring-mvc-ajax-example" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/spring-mvc-ajax-example" cascade="true" />
     </definition>
     <definition name="blog/2017/i18n" extends="blogTemplate">
         <put-attribute name="title" value="i18n" />
         <put-attribute name="keywords" value="i18n" />
         <put-attribute name="description" value="simple i18n example" />
-        <put-attribute name="content" value="2017/i18n" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/i18n" cascade="true" />
     </definition>
     <definition name="blog/2017/spring-mvc-apache-tiles" extends="blogTemplate">
         <put-attribute name="title" value="Apache Tiles on Spring MVC" />
         <put-attribute name="keywords" value="apache tiles,spring mvc" />
         <put-attribute name="description" value="simple apache tiles example" />
-        <put-attribute name="content" value="2017/spring-mvc-apache-tiles" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/spring-mvc-apache-tiles" cascade="true" />
     </definition>
     <definition name="blog/2017/Setting-development-environment-in-Ubuntu" extends="blogTemplate">
         <put-attribute name="title" value="Setting development environment in Ubuntu" />
         <put-attribute name="keywords" value="ubuntu,mysql" />
         <put-attribute name="description" value="ubuntu" />
-        <put-attribute name="content" value="2017/Setting-development-environment-in-Ubuntu" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/Setting-development-environment-in-Ubuntu" cascade="true" />
     </definition>
     <definition name="blog/2017/downloadController" extends="blogTemplate">
         <put-attribute name="title" value="DownloadController" />
         <put-attribute name="keywords" value="DownloadController" />
         <put-attribute name="description" value="DownloadController Example" />
-        <put-attribute name="content" value="2017/downloadController" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/downloadController" cascade="true" />
     </definition>	
     <definition name="blog/2017/ajax-fileupload" extends="blogTemplate">
         <put-attribute name="title" value="애이젝스 파일업로드" />
         <put-attribute name="keywords" value="에이젝스,ajax,파일 업로드,fileupload" />
         <put-attribute name="description" value="Fileupload using Ajax" />
-        <put-attribute name="content" value="2017/ajax-fileupload" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2017/ajax-fileupload" cascade="true" />
     </definition>
     <definition name="blog/2018/ajax-like" extends="blogTemplate">
         <put-attribute name="title" value="애이젝스 좋아요" />
         <put-attribute name="keywords" value="에이젝스,ajax,파일 업로드,fileupload,like" />
         <put-attribute name="description" value="Like using Ajax" />
-        <put-attribute name="content" value="2018/ajax-like" />
-        <put-attribute name="sidebar" value="" />
+        <put-attribute name="article" value="2018/ajax-like" cascade="true" />
     </definition>
 </tiles-definitions>
