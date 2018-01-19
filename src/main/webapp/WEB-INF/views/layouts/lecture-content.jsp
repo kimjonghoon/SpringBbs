@@ -4,7 +4,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<div id="main-article" title="<tiles:insertAttribute name="article" />"></div>			
+<div id="main-article" title="<tiles:insertAttribute name="article" />"></div>
 <div id="next-prev">
     <ul>
         <li>

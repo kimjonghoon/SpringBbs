@@ -3,23 +3,22 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="defaultTemplate" template="/WEB-INF/views/layouts/template.jsp">
+    <definition name="app.default" template="/WEB-INF/views/layouts/main-layout.jsp">
         <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
         <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
         <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
         <put-list-attribute name="styles">
-        </put-list-attribute>        
+        </put-list-attribute>
         <put-list-attribute name="javascripts">
             <add-attribute value="/resources/js/jquery-3.2.1.min.js" />
             <add-attribute value="/resources/js/commons.js" />
-        </put-list-attribute>        
+        </put-list-attribute>
     </definition>
     
-    <definition name="blog.content" template="/WEB-INF/views/layouts/article.jsp">
-    </definition>
-        
-    <definition name="blogTemplate" extends="defaultTemplate">
+    <definition name="blog.content" template="/WEB-INF/views/layouts/blog-content.jsp" />
+
+    <definition name="app.blog" extends="app.default">
         <put-attribute name="sidebar" value="" />
         <put-attribute name="content" value="blog.content"/>
         <put-list-attribute name="styles" inherit="true">
@@ -32,35 +31,34 @@
         </put-list-attribute>
     </definition>
 
-    <definition name="lecture.content" template="/WEB-INF/views/layouts/lecture.jsp">
-    </definition>
+    <definition name="lecture.content" template="/WEB-INF/views/layouts/lecture-content.jsp" />
     
-    <definition name="lectureTemplate" extends="defaultTemplate">
+    <definition name="app.lecture" extends="app.default">
         <put-attribute name="content" value="lecture.content" />
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/resources/css/prettify.css" />
-        </put-list-attribute>        
+        </put-list-attribute>
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/js/prettify.js" />
             <add-attribute value="/resources/js/loadArticle.js" />
         </put-list-attribute>
     </definition>
     <!-- Error Page -->
-    <definition name="403" extends="defaultTemplate">
+    <definition name="403" extends="app.default">
         <put-attribute name="title" value="403 Error from Spring Security Filter" />
         <put-attribute name="keywords" value="403 Eoor from Spring Security Filter" />
         <put-attribute name="description" value="403 from Spring Security Filter Control" />
         <put-attribute name="content" value="/WEB-INF/views/403.jsp" />
         <put-attribute name="sidebar" value="/WEB-INF/views/error-sub.jsp" />
     </definition>
-    <definition name="error-403" extends="defaultTemplate">
+    <definition name="error-403" extends="app.default">
         <put-attribute name="title" value="403 Error from Spring MVC" />
         <put-attribute name="keywords" value="403 Error from Spring MVC" />
         <put-attribute name="description" value="403 from Spring MVC" />
         <put-attribute name="content" value="/WEB-INF/views/error-403.jsp" />
         <put-attribute name="sidebar" value="/WEB-INF/views/error-sub.jsp" />
     </definition>
-    <definition name="error" extends="defaultTemplate">
+    <definition name="error" extends="app.default">
         <put-attribute name="title" value="Error" />
         <put-attribute name="keywords" value="Error" />
         <put-attribute name="description" value="Errors at Spring MVC" />
@@ -68,7 +66,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/error-sub.jsp" />
     </definition>
     <!-- User -->		
-    <definition name="users/*" extends="defaultTemplate">
+    <definition name="users/*" extends="app.default">
         <put-attribute name="title" value="Membership" />
         <put-attribute name="keywords" value="Membership" />
         <put-attribute name="description" value="Membership" />
@@ -76,7 +74,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/users/user-sub.jsp" />
     </definition>
     <!-- BBS -->		
-    <definition name="bbs/*" extends="defaultTemplate">
+    <definition name="bbs/*" extends="app.default">
         <put-attribute name="title" value="BBS" />
         <put-attribute name="keywords" value="BBS" />
         <put-attribute name="description" value="BBS" />
@@ -84,7 +82,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/bbs/bbs-sub.jsp" />
     </definition>
     <!-- admin -->
-    <definition name="admin/*" extends="defaultTemplate">
+    <definition name="admin/*" extends="app.default">
         <put-attribute name="title" value="Admin" />
         <put-attribute name="keywords" value="Admin" />
         <put-attribute name="description" value="Admin" />
@@ -92,7 +90,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/admin/admin-sub.jsp" />
     </definition>
     <!-- homepage -->
-    <definition name="index" extends="lectureTemplate">
+    <definition name="index" extends="app.lecture">
         <put-attribute name="title" value="Java Install" />
         <put-attribute name="keywords" value="Java 9, JDK Install" />
         <put-attribute name="description" value="Java Install" />
@@ -102,7 +100,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/index-sub.jsp" />
     </definition>
     <!-- Java Web Programming Lectures -->
-    <definition name="java/Features" extends="lectureTemplate">
+    <definition name="java/Features" extends="app.lecture">
         <put-attribute name="title" value="Features" />
         <put-attribute name="keywords" value="Java Features,JVM,OOP" />
         <put-attribute name="description" value="This Chapter dicusses Java Features" />
@@ -113,7 +111,7 @@
         <put-attribute name="prev-article-title" value="Java Install" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>	
-    <definition name="java/Class-Object" extends="lectureTemplate">
+    <definition name="java/Class-Object" extends="app.lecture">
         <put-attribute name="title" value="Class and Object" />
         <put-attribute name="keywords" value="Class, Object" />
         <put-attribute name="description" value="Class and Object" />
@@ -124,7 +122,7 @@
         <put-attribute name="prev-article-title" value="Java Features" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Keyword_Identifiers_Comment" extends="lectureTemplate">
+    <definition name="java/Keyword_Identifiers_Comment" extends="app.lecture">
         <put-attribute name="title" value="Keyword, Identifiers, Comment" />
         <put-attribute name="keywords" value="Keyword, Identifiers, Comment" />
         <put-attribute name="description" value="Keyword, Identifiers, Comment" />
@@ -135,7 +133,7 @@
         <put-attribute name="prev-article-title" value="Class and Object" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/DataType_Casting" extends="lectureTemplate">
+    <definition name="java/DataType_Casting" extends="app.lecture">
         <put-attribute name="title" value="Data Type and Type Casting" />
         <put-attribute name="keywords" value="Data Type,Literal,Variable,Primitive Type,Reference Type,boolean,char,byte,short,int,long,float,double,null,Casting,Up-Casting,Down-Casting" />
         <put-attribute name="description" value="This chapter describes about Java Data Type and Type Casting" />
@@ -146,7 +144,7 @@
         <put-attribute name="prev-article-title" value="Keyword, Identifiers, Comment" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Arrays" extends="lectureTemplate">
+    <definition name="java/Arrays" extends="app.lecture">
         <put-attribute name="title" value="Java Arrays" />
         <put-attribute name="keywords" value="Java Arrays,Array of primitive type,Array of reference type,length,String[] parameter in main method" />
         <put-attribute name="description" value="This chapter describes about Java Arrays" />
@@ -157,7 +155,7 @@
         <put-attribute name="prev-article-title" value="Data Type and Type Casting" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Operators_if_loops" extends="lectureTemplate">
+    <definition name="java/Operators_if_loops" extends="app.lecture">
         <put-attribute name="title" value="Operators, if, loops, switch" />
         <put-attribute name="keywords" value="Operators,if,loops,for,while,do ~ while" />
         <put-attribute name="description" value="This chapter describes that Java Operators" />
@@ -168,7 +166,7 @@
         <put-attribute name="prev-article-title" value="Java Arrays" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Package_Modifiers" extends="lectureTemplate">
+    <definition name="java/Package_Modifiers" extends="app.lecture">
         <put-attribute name="title" value="Package and Modifiers" />
         <put-attribute name="keywords" value="package and modifiers" />
         <put-attribute name="description" value="This chapter describes that package and access modifiers" />
@@ -179,7 +177,7 @@
         <put-attribute name="prev-article-title" value="Operators, if, loops, switch" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Inheritance" extends="lectureTemplate">
+    <definition name="java/Inheritance" extends="app.lecture">
         <put-attribute name="title" value="Inheritance" />
         <put-attribute name="keywords" value="OOP,Inheritance,super class,sub class,method overriding,constructor,this,super,Polymorphism,method overloading,final,abstract class,interface,implements" />
         <put-attribute name="description" value="This chapter describes that Java Inheritance and interface" />
@@ -190,7 +188,7 @@
         <put-attribute name="prev-article-title" value="Package and Modifiers" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Static" extends="lectureTemplate">
+    <definition name="java/Static" extends="app.lecture">
         <put-attribute name="title" value="static keyword" />
         <put-attribute name="keywords" value="static,Class Loader,Singleton Pattern,Java order of Initialization" />
         <put-attribute name="description" value="This chapter describes that Java static keyword and order of initialization" />
@@ -201,7 +199,7 @@
         <put-attribute name="prev-article-title" value="Inheritance" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Collection" extends="lectureTemplate">
+    <definition name="java/Collection" extends="app.lecture">
         <put-attribute name="title" value="Collection" />
         <put-attribute name="keywords" value="Java Collection,List,Set,SortedSet,Map,SortedMap,HashSet,TreeSet,Generic,ArrayList,LinkedList,Vector,Java Properties,Enumeration,hasMoreElements(),nextElement(),Iterator,hasNext(),next(),remove(),Wrapper Class,Boolean,Byte,Character,Short,Integer,Long,Float,Double" />
         <put-attribute name="description" value="This chapter describes that Java Collection and Wrapper Classes" />
@@ -212,7 +210,7 @@
         <put-attribute name="prev-article-title" value="static" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Exception" extends="lectureTemplate">
+    <definition name="java/Exception" extends="app.lecture">
         <put-attribute name="title" value="Exception" />
         <put-attribute name="keywords" value="Exception,try catch finally,Exception Handling Mechanisms in Java	,The exception hierarchy in Java,RuntimeException,IOException,ArithmeticException,NullPointerException,IndexOutOfBoundException,EOFException,FileNotFoundException,NegativeArraySizeException,ArrayIndexOutOfBoundException,throws,throw,Java Custom Exception" />
         <put-attribute name="description" value="This chapter describes that Java Exception" />
@@ -223,7 +221,7 @@
         <put-attribute name="prev-article-title" value="Collection" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Javabank-Requirements-analysis" extends="lectureTemplate">
+    <definition name="java/Javabank-Requirements-analysis" extends="app.lecture">
         <put-attribute name="title" value="Java bank Requirements analysis" />
         <put-attribute name="keywords" value="Java Bank Requirements analysis" />
         <put-attribute name="description" value="This chapter discusses Requirements analysis of Java Bank Project" />
@@ -234,7 +232,7 @@
         <put-attribute name="prev-article-title" value="Exception" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Javabank-Design" extends="lectureTemplate">
+    <definition name="java/Javabank-Design" extends="app.lecture">
         <put-attribute name="title" value="Javabank Design" />
         <put-attribute name="keywords" value="Javabank example,Java bank,Account.java,Bank.java,Transaction.java,BankUI.java" />
         <put-attribute name="description" value="This chapter discusses Design of Java Bank Project" />
@@ -245,7 +243,7 @@
         <put-attribute name="prev-article-title" value="Java bank Requirements analysis" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Javabank-Apply-inheritance" extends="lectureTemplate">
+    <definition name="java/Javabank-Apply-inheritance" extends="app.lecture">
         <put-attribute name="title" value="Put inheritance concepts to pratical use in the javabank example" />
         <put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,Inheritance" />
         <put-attribute name="description" value="This chapter discusses How to put inheritance concepts to pratical use in the javabank example" />
@@ -256,7 +254,7 @@
         <put-attribute name="prev-article-title" value="Javabank Design" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Javabank-Apply-abstract-class" extends="lectureTemplate">
+    <definition name="java/Javabank-Apply-abstract-class" extends="app.lecture">
         <put-attribute name="title" value="Put abstract class to pratical use in the javabank example" />
         <put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,abstract" />
         <put-attribute name="description" value="This chapter discusses How to put abstract class to pratical use in the javabank example" />
@@ -267,7 +265,7 @@
         <put-attribute name="prev-article-title" value="Put inheritance concepts to pratical use in the javabank example" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Javabank-Apply-interface" extends="lectureTemplate">
+    <definition name="java/Javabank-Apply-interface" extends="app.lecture">
         <put-attribute name="title" value="Put interface to pratical use in the javabank example" />
         <put-attribute name="keywords" value="Javabank example,Transaction,Account,Bank,interface" />
         <put-attribute name="description" value="This chapter discusses How to put interface to pratical use in the javabank example" />
@@ -278,7 +276,7 @@
         <put-attribute name="prev-article-title" value="Put abstract class concepts to pratical use in the javabank example" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Thread" extends="lectureTemplate">
+    <definition name="java/Thread" extends="app.lecture">
         <put-attribute name="title" value="Thread" />
         <put-attribute name="keywords" value="Thread,Runnable,Single Thread,Multi Thread" />
         <put-attribute name="description" value="This chapter describes that Java Thread" />
@@ -289,7 +287,7 @@
         <put-attribute name="prev-article-title" value="Put abstract interface to pratical use in the javabank example" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Stream" extends="lectureTemplate">
+    <definition name="java/Stream" extends="app.lecture">
         <put-attribute name="title" value="Stream" />
         <put-attribute name="keywords" value="Java Stream,Input Stream,Output Stream,Source,Destination,InputStreamReader,BufferedReader,FileWriter,객체스트림,Serializable,ObjectOutputStream,FileOutputStream,writeObject(),FileInputStream,readObject()" />
         <put-attribute name="description" value="This chapter describes that Java Stream" />
@@ -300,7 +298,7 @@
         <put-attribute name="prev-article-title" value="Thread" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Logging" extends="lectureTemplate">
+    <definition name="java/Logging" extends="app.lecture">
         <put-attribute name="title" value="Logging" />
         <put-attribute name="keywords" value="Log,Logging,FileWriter(),log4j,Logger,rootLogger,appender,ConsoleAppender,SimpleLayout,DailyRollingFileAppender,DatePattern,PatternLayout,ConversionPattern,isInfoEnabled(),info(),log4j.properties,log4j.rootLogger,log4j.appender.console,log4j.appender.console.layout,log4j.appender.file,fatal,error,warn,info,debug,trace,log4j.xml,jakarta Commons logging,commons-logging.properties" />
         <put-attribute name="description" value="This chapter describes Logging" />
@@ -311,7 +309,7 @@
         <put-attribute name="prev-article-title" value="Stream" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/Socket" extends="lectureTemplate">
+    <definition name="java/Socket" extends="app.lecture">
         <put-attribute name="title" value="Socket" />
         <put-attribute name="keywords" value="Java Socket Programming,EchoServer,EchoClient,Socket,ServerSocket,accept()" />
         <put-attribute name="description" value="This chapter describes Java Socket" />
@@ -322,7 +320,7 @@
         <put-attribute name="prev-article-title" value="Logging" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
-    <definition name="java/RMI" extends="lectureTemplate">
+    <definition name="java/RMI" extends="app.lecture">
         <put-attribute name="title" value="RMI" />
         <put-attribute name="keywords" value="RMI,Hello.java,Server.java,Remote,RemoteException,UnicastRemoteOjbect,exportObject(),LocateRegistry,getRegistry(),bind(),start rmiregistry,rmiregistry &amp;,EJB 기반기술" />
         <put-attribute name="description" value="This chapter describes RMI" />
@@ -334,7 +332,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/java/java-sub.jsp" />
     </definition>
     <!-- JDBC -->
-    <definition name="jdbc/JDBC-Intro" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Intro" extends="app.lecture">
         <put-attribute name="title" value="JDBC Introduction" />
         <put-attribute name="keywords" value="Database,RDBMS,SQL,JDBC" />
         <put-attribute name="description" value="This chapter introduces RDBMS,SQL,JDBC" />
@@ -345,7 +343,7 @@
         <put-attribute name="prev-article-title" value="RMI" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/How-to-install-Oracle" extends="lectureTemplate">
+    <definition name="jdbc/How-to-install-Oracle" extends="app.lecture">
         <put-attribute name="title" value="Oracle Install" />
         <put-attribute name="keywords" value="Oracle 10g,Oracle 10g Windows XP install" />
         <put-attribute name="description" value="This chapter describes How to install Oracle RDBMS in Windows System" />
@@ -356,7 +354,7 @@
         <put-attribute name="prev-article-title" value="How to install Oracle" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/Login-to-the-scott-account" extends="lectureTemplate">
+    <definition name="jdbc/Login-to-the-scott-account" extends="app.lecture">
         <put-attribute name="title" value="To practice sql from scott account" />
         <put-attribute name="keywords" value="Oracle SCOTT account,SQL*PLUS,EMP,DEPT,NULL,NUMBER,DATE,VARCHAR2,desc" />
         <put-attribute name="description" value="This chapter describes SQL practices from scott account" />
@@ -367,7 +365,7 @@
         <put-attribute name="prev-article-title" value="How to install Oracle" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/SQL-SELECT-Statement" extends="lectureTemplate">
+    <definition name="jdbc/SQL-SELECT-Statement" extends="app.lecture">
         <put-attribute name="title" value="To practice SELECT Statement " />
         <put-attribute name="keywords" value="SQL,SELECT statement,SELECT" />
         <put-attribute name="description" value="This chapter describes SELECT statement" />
@@ -378,7 +376,7 @@
         <put-attribute name="prev-article-title" value="Login to the scott accout" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/SQL-DML-Statement" extends="lectureTemplate">
+    <definition name="jdbc/SQL-DML-Statement" extends="app.lecture">
         <put-attribute name="title" value="DML" />
         <put-attribute name="keywords" value="SQL,DML,INSERT,UPDATE,DELETE" />
         <put-attribute name="description" value="This chapter introduces DML" />
@@ -389,7 +387,7 @@
         <put-attribute name="prev-article-title" value="SELECT Statement" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/Oracle-JDBC-Test" extends="lectureTemplate">
+    <definition name="jdbc/Oracle-JDBC-Test" extends="app.lecture">
         <put-attribute name="title" value="Oracle JDBC Test" />
         <put-attribute name="keywords" value="Oracle JDBC Driver,오라클 JDBC 드라이버 설치방법,오라클 JDBC 드라이버 테스트,GetEmp.java" />
         <put-attribute name="description" value="This chapter describes how to use JDBC Driver" />
@@ -400,7 +398,7 @@
         <put-attribute name="prev-article-title" value="SQL DML Statement" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/Guide-to-using-JDBC" extends="lectureTemplate">
+    <definition name="jdbc/Guide-to-using-JDBC" extends="app.lecture">
         <put-attribute name="title" value="Guide to using JDBC" />
         <put-attribute name="keywords" value="Guide to using JDBC,Class.forName(),DriverManager.getConnection(,,)" />
         <put-attribute name="description" value="This chapter discusses JDBC Programming" />
@@ -411,7 +409,7 @@
         <put-attribute name="prev-article-title" value="Oracle JDBC Test" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Create-Table" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Create-Table" extends="app.lecture">
         <put-attribute name="title" value="JDBC Introduction" />
         <put-attribute name="keywords" value="JDBC,Create table" />
         <put-attribute name="description" value="This chapter describes How to create table using JDBC" />
@@ -422,7 +420,7 @@
         <put-attribute name="prev-article-title" value="Guide to using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Insert" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Insert" extends="app.lecture">
         <put-attribute name="title" value="To insert records using JDBC" />
         <put-attribute name="keywords" value="JDBC,INSERT" />
         <put-attribute name="description" value="How to insert records using JDBC.Do not connect SQL*PLUS when you test JDBC" />
@@ -433,7 +431,7 @@
         <put-attribute name="prev-article-title" value="Create table using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Select" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Select" extends="app.lecture">
         <put-attribute name="title" value="Select records using JDBC" />
         <put-attribute name="keywords" value="JDBC,SELECT" />
         <put-attribute name="description" value="This chapter describes How to select records using JDBC" />
@@ -444,7 +442,7 @@
         <put-attribute name="prev-article-title" value="Insert record using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Update" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Update" extends="app.lecture">
         <put-attribute name="title" value="Update records using JDBC" />
         <put-attribute name="keywords" value="JDBC UPDATE" />
         <put-attribute name="description" value="This chapter describes How to update records using JDBC" />
@@ -455,7 +453,7 @@
         <put-attribute name="prev-article-title" value="Select records using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/PreparedStatement" extends="lectureTemplate">
+    <definition name="jdbc/PreparedStatement" extends="app.lecture">
         <put-attribute name="title" value="PreparedStatement" />
         <put-attribute name="keywords" value="JDBC PreparedStatement" />
         <put-attribute name="description" value="This chapter introduces JDBC PreparedStatement" />
@@ -466,7 +464,7 @@
         <put-attribute name="prev-article-title" value="Update records using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Join" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Join" extends="app.lecture">
         <put-attribute name="title" value="How to join tables using JDBC" />
         <put-attribute name="keywords" value="JDBC Join example" />
         <put-attribute name="description" value="This chapter introduces Join example using JDBC" />
@@ -477,7 +475,7 @@
         <put-attribute name="prev-article-title" value="PreparedStatement" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JDBC-Transaction" extends="lectureTemplate">
+    <definition name="jdbc/JDBC-Transaction" extends="app.lecture">
         <put-attribute name="title" value="Transaction using JDBC" />
         <put-attribute name="keywords" value="JDBC,Transaction" />
         <put-attribute name="description" value="This chapter describes JDBC Transaction" />
@@ -488,7 +486,7 @@
         <put-attribute name="prev-article-title" value="Join tables using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/Connection-Pool" extends="lectureTemplate">
+    <definition name="jdbc/Connection-Pool" extends="app.lecture">
         <put-attribute name="title" value="Connection Pool" />
         <put-attribute name="keywords" value="Connection Pooling,DBCP" />
         <put-attribute name="description" value="This chapter introduces JDBC Connection Pooling" />
@@ -499,7 +497,7 @@
         <put-attribute name="prev-article-title" value="Transaction using JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/Namecard" extends="lectureTemplate">
+    <definition name="jdbc/Namecard" extends="app.lecture">
         <put-attribute name="title" value="JDBC,Namecard Mini Project" />
         <put-attribute name="keywords" value="JDBC Namecard example" />
         <put-attribute name="description" value="This chapter introduces JDBC Namecard Project" />
@@ -510,7 +508,7 @@
         <put-attribute name="prev-article-title" value="Connection Pool" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
-    <definition name="jdbc/JavaBank" extends="lectureTemplate">
+    <definition name="jdbc/JavaBank" extends="app.lecture">
         <put-attribute name="title" value="JavaBank" />
         <put-attribute name="keywords" value="JDBC,JavaBank Mini Project" />
         <put-attribute name="description" value="This chapter introduces JDBC JavaBank Project" />
@@ -522,7 +520,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/jdbc/jdbc-sub.jsp" />
     </definition>
     <!-- JSP -->
-    <definition name="jsp/How-to-install-Tomcat" extends="lectureTemplate">
+    <definition name="jsp/How-to-install-Tomcat" extends="app.lecture">
         <put-attribute name="title" value="Tomcat Install" />
         <put-attribute name="keywords" value="Tomcat,ROOT Application,ROOT.xml,web.xml" />
         <put-attribute name="description" value="How to install Tomcat" />
@@ -533,7 +531,7 @@
         <put-attribute name="prev-article-title" value="JavaBank" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Namecard-Webapp" extends="lectureTemplate">
+    <definition name="jsp/Namecard-Webapp" extends="app.lecture">
         <put-attribute name="title" value="Namecard Webapp" />
         <put-attribute name="keywords" value="Namecard Web Application" />
         <put-attribute name="description" value="Convert JDBC Namecard example to Web Application" />
@@ -544,7 +542,7 @@
         <put-attribute name="prev-article-title" value="How to install Tomcat" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Web-Application" extends="lectureTemplate">
+    <definition name="jsp/Web-Application" extends="app.lecture">
         <put-attribute name="title" value="Web Application" />
         <put-attribute name="keywords" value="Servlet Container,Web Application,WEB-INF,WEB-INF/classes,WEB-INF/lib,WEB-INF/web.xml,Packing" />
         <put-attribute name="description" value="This chapter describes about Web Application?" />
@@ -555,7 +553,7 @@
         <put-attribute name="prev-article-title" value="Namecard Webapp" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Creating-a-new-web-application" extends="lectureTemplate">
+    <definition name="jsp/Creating-a-new-web-application" extends="app.lecture">
         <put-attribute name="title" value="Creating a new web application" />
         <put-attribute name="keywords" value="How to create a new Web Application,Web Application Directory Structure,Tomcat Admin Tool,tomcat-users.xml,Context file,How to change ROOT Application" />
         <put-attribute name="description" value="This chapter describes about Web Application Directory Structure" />
@@ -566,7 +564,7 @@
         <put-attribute name="prev-article-title" value="Web Application" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Servlet" extends="lectureTemplate">
+    <definition name="jsp/Servlet" extends="app.lecture">
         <put-attribute name="title" value="Servlet" />
         <put-attribute name="keywords" value="Servlet Spec,init(),service(),destroy(),ServletConfig,GenericServlet,HttpServlet,Servlet mapping" />
         <put-attribute name="description" value="This chapter describes about Servlet Spec" />
@@ -577,7 +575,7 @@
         <put-attribute name="prev-article-title" value="Creating a new web application" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/JSP" extends="lectureTemplate">
+    <definition name="jsp/JSP" extends="app.lecture">
         <put-attribute name="title" value="JSP" />
         <put-attribute name="keywords" value="JSP Spec,Directives,Scriptlet,Declarations,EL,Actions,Implicit Objects" />
         <put-attribute name="description" value="This chapter describes about JSP spec" />
@@ -588,7 +586,7 @@
         <put-attribute name="prev-article-title" value="Servlet" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Accessing-database-from-JSP_Servlets" extends="lectureTemplate">
+    <definition name="jsp/Accessing-database-from-JSP_Servlets" extends="app.lecture">
         <put-attribute name="title" value="Accessing database from JSP and Servlets" />
         <put-attribute name="keywords" value="Accessing database from JSP and Servlets" />
         <put-attribute name="description" value="This chapter describes that how to access a database using JSP and Servlets" />
@@ -599,7 +597,7 @@
         <put-attribute name="prev-article-title" value="JSP" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/BBS-Study" extends="lectureTemplate">
+    <definition name="jsp/BBS-Study" extends="app.lecture">
         <put-attribute name="title" value="BBS Study" />
         <put-attribute name="keywords" value="BBS" />
         <put-attribute name="description" value="This chapter describes about BBS" />
@@ -610,7 +608,7 @@
         <put-attribute name="prev-article-title" value="Accessing database from JSP, Servlets" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Thread-BBS" extends="lectureTemplate">
+    <definition name="jsp/Thread-BBS" extends="app.lecture">
         <put-attribute name="title" value="Thread BBS" />
         <put-attribute name="keywords" value="Thread BBS" />
         <put-attribute name="description" value="This chapter describes about Thread BBS" />
@@ -621,7 +619,7 @@
         <put-attribute name="prev-article-title" value="BBS Study" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/BBS-Model1" extends="lectureTemplate">
+    <definition name="jsp/BBS-Model1" extends="app.lecture">
         <put-attribute name="title" value="To create BBS in the Model1" />
         <put-attribute name="keywords" value="Model1 BBS" />
         <put-attribute name="description" value="This chapter describes that how to make a BBS using Model1" />
@@ -632,7 +630,7 @@
         <put-attribute name="prev-article-title" value="Thread BBS" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/DataSource" extends="lectureTemplate">
+    <definition name="jsp/DataSource" extends="app.lecture">
         <put-attribute name="title" value="DataSource" />
         <put-attribute name="keywords" value="DataSource,Set Up DataSource in Tomcat" />
         <put-attribute name="description" value="This chapter describes about DataSource" />
@@ -643,7 +641,7 @@
         <put-attribute name="prev-article-title" value="BBS Model1" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
-    <definition name="jsp/Model2" extends="lectureTemplate">
+    <definition name="jsp/Model2" extends="app.lecture">
         <put-attribute name="title" value="Model2" />
         <put-attribute name="keywords" value="Model2,BBS,Model,View,Controller" />
         <put-attribute name="description" value="This chapter describes about Model2" />
@@ -655,7 +653,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp/jsp-sub.jsp" />
     </definition>
     <!-- CSS-Layout -->
-    <definition name="css-layout/div-element-arrangement" extends="lectureTemplate">
+    <definition name="css-layout/div-element-arrangement" extends="app.lecture">
         <put-attribute name="title" value="Main Elements Arrangement" />
         <put-attribute name="keywords" value="CSS positioning, CSS layout, negative margin" />
         <put-attribute name="description" value="This chapter describes about CSS Positioning" />
@@ -666,7 +664,7 @@
         <put-attribute name="prev-article-title" value="Model 2" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/main-menu-styling" extends="lectureTemplate">
+    <definition name="css-layout/main-menu-styling" extends="app.lecture">
         <put-attribute name="title" value="main-menu styling" />
         <put-attribute name="keywords" value="CSS menu,main menu" />
         <put-attribute name="description" value="This chapter describes about css menu styling" />
@@ -677,7 +675,7 @@
         <put-attribute name="prev-article-title" value="Main Elements Arrangement" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/sub-menu-styling" extends="lectureTemplate">
+    <definition name="css-layout/sub-menu-styling" extends="app.lecture">
         <put-attribute name="title" value="sub-menu styling" />
         <put-attribute name="keywords" value="css menu,sub menu" />
         <put-attribute name="description" value="This chapter describes about css menu styling" />
@@ -688,7 +686,7 @@
         <put-attribute name="prev-article-title" value="main-menu styling" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/header-footer-content-styling" extends="lectureTemplate">
+    <definition name="css-layout/header-footer-content-styling" extends="app.lecture">
         <put-attribute name="title" value="header,footer,content styling" />
         <put-attribute name="keywords" value="header, footer, content styling" />
         <put-attribute name="description" value="This chapter describes about css styling" />
@@ -699,7 +697,7 @@
         <put-attribute name="prev-article-title" value="sub-menu styling" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/bbs-list-styling" extends="lectureTemplate">
+    <definition name="css-layout/bbs-list-styling" extends="app.lecture">
         <put-attribute name="title" value="bbs list styling" />
         <put-attribute name="keywords" value="css styling,bbs list" />
         <put-attribute name="description" value="This chapter describes about css styling" />
@@ -710,7 +708,7 @@
         <put-attribute name="prev-article-title" value="header, footer, content styling" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/bbs-view-styling" extends="lectureTemplate">
+    <definition name="css-layout/bbs-view-styling" extends="app.lecture">
         <put-attribute name="title" value="bbs view styling" />
         <put-attribute name="keywords" value="css styling" />
         <put-attribute name="description" value="This chapter describes about css styling" />
@@ -721,7 +719,7 @@
         <put-attribute name="prev-article-title" value="bbs list styling" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
-    <definition name="css-layout/bbs-write_form-styling" extends="lectureTemplate">
+    <definition name="css-layout/bbs-write_form-styling" extends="app.lecture">
         <put-attribute name="title" value="bbs write_form styling" />
         <put-attribute name="keywords" value="css styling" />
         <put-attribute name="description" value="This chapter describes about css styling" />
@@ -733,7 +731,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/css-layout/css-layout-sub.jsp" />
     </definition>
     <!-- JSP Project -->
-    <definition name="jsp-pjt/Dynamic-Web-Project-Set-Up" extends="lectureTemplate">
+    <definition name="jsp-pjt/Dynamic-Web-Project-Set-Up" extends="app.lecture">
         <put-attribute name="title" value="Dynamic Web Project Set Up" />
         <put-attribute name="keywords" value="JSP mini Project,Dynamic Web Project" />
         <put-attribute name="description" value="This chapter describes about How to create a dynamic web project in eclipse" />
@@ -744,7 +742,7 @@
         <put-attribute name="prev-article-title" value="bbs write_form styling" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/database-design" extends="lectureTemplate">
+    <definition name="jsp-pjt/database-design" extends="app.lecture">
         <put-attribute name="title" value="Database Design" />
         <put-attribute name="keywords" value="JSP mini project,BBS member table,database design" />
         <put-attribute name="description" value="This chapter describes about Database Design" />
@@ -755,7 +753,7 @@
         <put-attribute name="prev-article-title" value="Dynamic Web Project SetUp" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/how-to-use-log4j" extends="lectureTemplate">
+    <definition name="jsp-pjt/how-to-use-log4j" extends="app.lecture">
         <put-attribute name="title" value="How to use log4j" />
         <put-attribute name="keywords" value="JSP mini project,logging policy" />
         <put-attribute name="description" value="This chapter describes about the log4j" />
@@ -766,7 +764,7 @@
         <put-attribute name="prev-article-title" value="Database Design" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/bbs-prototype" extends="lectureTemplate">
+    <definition name="jsp-pjt/bbs-prototype" extends="app.lecture">
         <put-attribute name="title" value="BBS project's prototype" />
         <put-attribute name="keywords" value="JSP mini project's prototype" />
         <put-attribute name="description" value="This chapter describes about BBS mini project's prototype" />
@@ -777,7 +775,7 @@
         <put-attribute name="prev-article-title" value="How to use log4j" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/bbs-javabeans" extends="lectureTemplate">
+    <definition name="jsp-pjt/bbs-javabeans" extends="app.lecture">
         <put-attribute name="title" value="BBS project's javabeans" />
         <put-attribute name="keywords" value="BBS mini project's javabeans" />
         <put-attribute name="description" value="This chapter describes about JSP mini project's javabeans" />
@@ -788,7 +786,7 @@
         <put-attribute name="prev-article-title" value="BBS project's prototype" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/bbs-implementation" extends="lectureTemplate">
+    <definition name="jsp-pjt/bbs-implementation" extends="app.lecture">
         <put-attribute name="title" value="BBS mini project implementation" />
         <put-attribute name="keywords" value="BBS mini project" />
         <put-attribute name="description" value="This chapter implementates BBS mini project" />
@@ -799,7 +797,7 @@
         <put-attribute name="prev-article-title" value="BBS'project's javabeans" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
-    <definition name="jsp-pjt/bbs-model-2" extends="lectureTemplate">
+    <definition name="jsp-pjt/bbs-model-2" extends="app.lecture">
         <put-attribute name="title" value="Migrate Model1 to Model2" />
         <put-attribute name="keywords" value="BBS mini project,model2" />
         <put-attribute name="description" value="This chapter migrates Model1 to Model2" />
@@ -811,7 +809,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/jsp-pjt/jsp-pjt-sub.jsp" />
     </definition>
     <!-- Spring -->
-    <definition name="spring/building-java-projects-with-maven" extends="lectureTemplate">
+    <definition name="spring/building-java-projects-with-maven" extends="app.lecture">
         <put-attribute name="title" value="Building java projects with maven" />
         <put-attribute name="keywords" value="maven" />
         <put-attribute name="description" value="This chapter describles how to build java projects with maven" />
@@ -822,7 +820,7 @@
         <put-attribute name="prev-article-title" value="Migrate Model1 to Model2" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/di" extends="lectureTemplate">
+    <definition name="spring/di" extends="app.lecture">
         <put-attribute name="title" value="Spring DI" />
         <put-attribute name="keywords" value="spring di" />
         <put-attribute name="description" value="This chapter describes about Spring DI" />
@@ -833,7 +831,7 @@
         <put-attribute name="prev-article-title" value="Building java projects with maven" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/aop" extends="lectureTemplate">
+    <definition name="spring/aop" extends="app.lecture">
         <put-attribute name="title" value="Spring AOP" />
         <put-attribute name="keywords" value="Spring AOP" />
         <put-attribute name="description" value="This chapter describes about Spring AOP" />
@@ -844,7 +842,7 @@
         <put-attribute name="prev-article-title" value="Spring DI" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/jdbc" extends="lectureTemplate">
+    <definition name="spring/jdbc" extends="app.lecture">
         <put-attribute name="title" value="Spring JDBC" />
         <put-attribute name="keywords" value="Spring JDBC" />
         <put-attribute name="description" value="This chapter describes about Spring JDBC" />
@@ -855,7 +853,7 @@
         <put-attribute name="prev-article-title" value="Spring AOP" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/transaction" extends="lectureTemplate">
+    <definition name="spring/transaction" extends="app.lecture">
         <put-attribute name="title" value="Spring Transaction" />
         <put-attribute name="keywords" value="Spring Transaction" />
         <put-attribute name="description" value="This chapter describes about Spring Transaction" />
@@ -866,7 +864,7 @@
         <put-attribute name="prev-article-title" value="Spring JDBC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/spring-mvc-with-maven" extends="lectureTemplate">
+    <definition name="spring/spring-mvc-with-maven" extends="app.lecture">
         <put-attribute name="title" value="Spring MVC with maven" />
         <put-attribute name="keywords" value="Spring MVC" />
         <put-attribute name="description" value="This chapter describes about Spring MVC" />
@@ -877,7 +875,7 @@
         <put-attribute name="prev-article-title" value="Spring Transaction" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/spring-mvc-bbs" extends="lectureTemplate">
+    <definition name="spring/spring-mvc-bbs" extends="app.lecture">
         <put-attribute name="title" value="BBS with Spring MVC" />
         <put-attribute name="keywords" value="BBS,Spring MVC" />
         <put-attribute name="description" value="This chapter describes BBS project with Spring MVC" />
@@ -888,7 +886,7 @@
         <put-attribute name="prev-article-title" value="Spring MVC with maven" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/spring-security-config" extends="lectureTemplate">
+    <definition name="spring/spring-security-config" extends="app.lecture">
         <put-attribute name="title" value="Spring Security Configuration" />
         <put-attribute name="keywords" value="Spring Security Configuration" />
         <put-attribute name="description" value="This chapter describes about Spring Security Configuration" />
@@ -899,7 +897,7 @@
         <put-attribute name="prev-article-title" value="BBS with Spring MVC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/method-security" extends="lectureTemplate">
+    <definition name="spring/method-security" extends="app.lecture">
         <put-attribute name="title" value="Method Security" />
         <put-attribute name="keywords" value="spring,spring security,method security" />
         <put-attribute name="description" value="This chapter describes about method security" />
@@ -910,7 +908,7 @@
         <put-attribute name="prev-article-title" value="Spring Security Configuration" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/security-at-view-layer" extends="lectureTemplate">
+    <definition name="spring/security-at-view-layer" extends="app.lecture">
         <put-attribute name="title" value="Spring Security at view layer" />
         <put-attribute name="keywords" value="spring,spring security,security at view layer" />
         <put-attribute name="description" value="This chapter describes about spring security at view layer" />
@@ -921,7 +919,7 @@
         <put-attribute name="prev-article-title" value="Method Security" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/bean-validation-at-signUp" extends="lectureTemplate">
+    <definition name="spring/bean-validation-at-signUp" extends="app.lecture">
         <put-attribute name="title" value="Bean validation at signUp" />
         <put-attribute name="keywords" value="spring,bean validation" />
         <put-attribute name="description" value="This chapter describes about bean validation" />
@@ -932,7 +930,7 @@
         <put-attribute name="prev-article-title" value="Security at view layer" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/bean-validation-at-editAccount" extends="lectureTemplate">
+    <definition name="spring/bean-validation-at-editAccount" extends="app.lecture">
         <put-attribute name="title" value="Bean validation at editAccount" />
         <put-attribute name="keywords" value="spring,bean validation" />
         <put-attribute name="description" value="This chapter describes about bean validation" />
@@ -943,7 +941,7 @@
         <put-attribute name="prev-article-title" value="Bean validation at signUp" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/bean-validation-at-changePasswd" extends="lectureTemplate">
+    <definition name="spring/bean-validation-at-changePasswd" extends="app.lecture">
         <put-attribute name="title" value="Bean validation at changePasswd" />
         <put-attribute name="keywords" value="spring,bean validation" />
         <put-attribute name="description" value="This chapter describes about bean validation" />
@@ -954,7 +952,7 @@
         <put-attribute name="prev-article-title" value="Bean validation at editAccount" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/bean-validation-at-write-article" extends="lectureTemplate">
+    <definition name="spring/bean-validation-at-write-article" extends="app.lecture">
         <put-attribute name="title" value="Bean validation at write article" />
         <put-attribute name="keywords" value="spring,bean validation" />
         <put-attribute name="description" value="This chapter describes about bean validation" />
@@ -965,7 +963,7 @@
         <put-attribute name="prev-article-title" value="Bean validation at changePasswd" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
-    <definition name="spring/bean-validation-at-modify-article" extends="lectureTemplate">
+    <definition name="spring/bean-validation-at-modify-article" extends="app.lecture">
         <put-attribute name="title" value="Bean validation at modify article" />
         <put-attribute name="keywords" value="bean validation" />
         <put-attribute name="description" value="This chapter describes about bean validation" />
@@ -977,7 +975,7 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/spring/spring-sub.jsp" />
     </definition>
     <!-- JavaScript -->
-    <definition name="javascript/introduction" extends="lectureTemplate">
+    <definition name="javascript/introduction" extends="app.lecture">
         <put-attribute name="title" value="JavaScript Introduction" />
         <put-attribute name="keywords" value="javascript" />
         <put-attribute name="description" value="javascript" />
@@ -991,7 +989,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/dataType" extends="lectureTemplate">
+    <definition name="javascript/dataType" extends="app.lecture">
         <put-attribute name="title" value="JavaScript Data Type" />
         <put-attribute name="keywords" value="javascript,data type" />
         <put-attribute name="description" value="javascript's data type" />
@@ -1005,7 +1003,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/handling-select-items" extends="lectureTemplate">
+    <definition name="javascript/handling-select-items" extends="app.lecture">
         <put-attribute name="title" value="Handling select element with javascript" />
         <put-attribute name="keywords" value="javascript,select element" />
         <put-attribute name="description" value="handling a select element with javascript" />
@@ -1019,7 +1017,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/difference-between-javascript-and-java" extends="lectureTemplate">
+    <definition name="javascript/difference-between-javascript-and-java" extends="app.lecture">
         <put-attribute name="title" value="Difference between javascript and java" />
         <put-attribute name="keywords" value="javascript" />
         <put-attribute name="description" value="Difference between javascript and java" />
@@ -1033,7 +1031,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Number" extends="lectureTemplate">
+    <definition name="javascript/Number" extends="app.lecture">
         <put-attribute name="title" value="Number" />
         <put-attribute name="keywords" value="javascript,Number Object" />
         <put-attribute name="description" value="JavaScript's Number Object" />
@@ -1047,7 +1045,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/String" extends="lectureTemplate">
+    <definition name="javascript/String" extends="app.lecture">
         <put-attribute name="title" value="String" />
         <put-attribute name="keywords" value="javascript,String" />
         <put-attribute name="description" value="JavaScript's String Object" />
@@ -1061,7 +1059,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/RegExp" extends="lectureTemplate">
+    <definition name="javascript/RegExp" extends="app.lecture">
         <put-attribute name="title" value="RegExp" />
         <put-attribute name="keywords" value="RegExp" />
         <put-attribute name="description" value="JavaScript's RegExp Object" />
@@ -1075,7 +1073,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Date" extends="lectureTemplate">
+    <definition name="javascript/Date" extends="app.lecture">
         <put-attribute name="title" value="Date" />
         <put-attribute name="keywords" value="Date" />
         <put-attribute name="description" value="JavaScript's Date Object" />
@@ -1089,7 +1087,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Array" extends="lectureTemplate">
+    <definition name="javascript/Array" extends="app.lecture">
         <put-attribute name="title" value="Array" />
         <put-attribute name="keywords" value="javascript,Array" />
         <put-attribute name="description" value="JavaScript's Array Object" />
@@ -1103,7 +1101,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Math" extends="lectureTemplate">
+    <definition name="javascript/Math" extends="app.lecture">
         <put-attribute name="title" value="Math" />
         <put-attribute name="keywords" value="javascript,Math" />
         <put-attribute name="description" value="JavaScript's Math Object" />
@@ -1117,7 +1115,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Function" extends="lectureTemplate">
+    <definition name="javascript/Function" extends="app.lecture">
         <put-attribute name="title" value="Function" />
         <put-attribute name="keywords" value="javascript,Function" />
         <put-attribute name="description" value="JavaScript's Function Object" />
@@ -1131,7 +1129,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/javascript-form-validation" extends="lectureTemplate">
+    <definition name="javascript/javascript-form-validation" extends="app.lecture">
         <put-attribute name="title" value="Form Validation with JavaScript" />
         <put-attribute name="keywords" value="javascript,form validation" />
         <put-attribute name="description" value="form validation with javascript" />
@@ -1145,7 +1143,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/Cookie" extends="lectureTemplate">
+    <definition name="javascript/Cookie" extends="app.lecture">
         <put-attribute name="title" value="Handling Cookie with JavaScript" />
         <put-attribute name="keywords" value="javascript,Cookie" />
         <put-attribute name="description" value="Handling Cookie with JavaScript" />
@@ -1159,7 +1157,7 @@
             <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
         </put-list-attribute>
     </definition>
-    <definition name="javascript/decoupling-html-and-javascript" extends="lectureTemplate">
+    <definition name="javascript/decoupling-html-and-javascript" extends="app.lecture">
         <put-attribute name="title" value="Decoupling HTML and JavaScript" />
         <put-attribute name="keywords" value="javascript,DOM" />
         <put-attribute name="description" value="Decoupling HTML and JavaScript" />
@@ -1172,7 +1170,7 @@
         </put-list-attribute>
     </definition>
     <!-- google-app-engine -->
-    <definition name="google-app-engine/building-gae-projects-with-maven" extends="lectureTemplate">
+    <definition name="google-app-engine/building-gae-projects-with-maven" extends="app.lecture">
         <put-attribute name="title" value="Building GAE Project With Maven" />
         <put-attribute name="keywords" value="java 8,maven,eclipse,guestbook archetype,mvn clean install,mvn appengine:devserver,mvn appengine:update,https://cloud.google.com,web console,create new project,create instance,your-app-id.appspot.com,datastore-indexes.xml,mvn appengine:update_indexes,git,https://git-scm.com,Cloud SDK install,gcloud source repos create ..,gcloud source repos clone ..," />
         <put-attribute name="description" value="Building GAE Project With Maven" />
@@ -1181,7 +1179,7 @@
         <put-attribute name="next-article-title" value="Logging" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
     </definition>
-    <definition name="google-app-engine/Logging" extends="lectureTemplate">
+    <definition name="google-app-engine/Logging" extends="app.lecture">
         <put-attribute name="title" value="Logging" />
         <put-attribute name="keywords" value="appengine-web.xml,logging.properties,.level=INFO,import java.util.logging.Logger,https://console.cloud.google.com/logs" />
         <put-attribute name="description" value="How to use log on gae project" />
@@ -1192,7 +1190,7 @@
         <put-attribute name="prev-article-title" value="Building GAE Project With Maven" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
     </definition>
-    <definition name="google-app-engine/Spring-MVC" extends="lectureTemplate">
+    <definition name="google-app-engine/Spring-MVC" extends="app.lecture">
         <put-attribute name="title" value="Spring MVC" />
         <put-attribute name="keywords" value="webapp/resources,spring-context,spring-webmvc,spring-jdbc,CharacterEncodingFilter,ObjectifyFilter,DispatcherServlet,guestbook-servlet.xml,mvc:resources mapping location,context:component-scan,InternalResourceViewResolver,GuestbookController.java,guestbook.jsp,runtime java8,mvn clean,mvn appengine:devserver,mvn appengine:update" />
         <put-attribute name="description" value="How to use Spring MVC On GAE Project" />
@@ -1203,7 +1201,7 @@
         <put-attribute name="prev-article-title" value="Logging" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
     </definition>
-    <definition name="google-app-engine/Spring-Security" extends="lectureTemplate">
+    <definition name="google-app-engine/Spring-Security" extends="app.lecture">
         <put-attribute name="title" value="Spring Security" />
         <put-attribute name="keywords" value="google account,spring security,Authentication,spring-security-web,spring-security-config,AppRole.java,GaeUser.java,GoogleAccountsAuthenticationEntryPoint.java,GaeUserAuthentication.java,GaeAuthenticationFilter,GoogleAccountsAuthenticationProvider.java,security.xml,applicationContext.xml,guestbook-servlet.xml,mvc:annotation-driven,web.xml,context-param,ContextLoaderListener,HttpSessionEventPublisher,DelegatingFilterProxy,CSRF,${_csrf.parameterName},${_csrf.token},session-enabled true,GuestbookController.java,mvn clean,mvn appengine:devserver" />
         <put-attribute name="description" value="Google Accounts + Spring Security" />
@@ -1214,7 +1212,7 @@
         <put-attribute name="prev-article-title" value="Spring MVC" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
     </definition>
-    <definition name="google-app-engine/Objectify" extends="lectureTemplate">
+    <definition name="google-app-engine/Objectify" extends="app.lecture">
         <put-attribute name="title" value="Objectify" />
         <put-attribute name="keywords" value="Objectify,.load(),.type(),.ancestor(),.order(),.limit(),.list(),ofy().save().entity().now(),ofy().delete().key(key).now(),Key.create(),isAuthenticated(),principal,hasRole(),GuestbookService.java,GuestbookServiceImpl.java,Greeting.java,GuestbookController.java,mvn clean,mvn appengine:devserver" />
         <put-attribute name="description" value="How to use Objectify" />
@@ -1225,7 +1223,7 @@
         <put-attribute name="prev-article-title" value="Spring Security" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/google-app-engine/google-app-engine-sub.jsp" />
     </definition>
-    <definition name="google-app-engine/Spring-optimization" extends="lectureTemplate">
+    <definition name="google-app-engine/Spring-optimization" extends="app.lecture">
         <put-attribute name="title" value="Spring Optimization" />
         <put-attribute name="keywords" value="guestbook-servlet.xml,context:annotation-config" />
         <put-attribute name="description" value="Spring Optimization On GAE Project" />
@@ -1240,127 +1238,127 @@
         <put-attribute name="sidebar" value="/WEB-INF/views/{1}/{1}-sub.jsp" />
     </definition>	
     <!-- Blogs -->
-    <definition name="blog" extends="blogTemplate">
+    <definition name="blog" extends="app.blog">
         <put-attribute name="title" value="Blog Index" />
         <put-attribute name="keywords" value="Blog Index" />
         <put-attribute name="description" value="Blog Index" />
         <put-attribute name="article" value="blog-index" cascade="true" />
     </definition>
-    <definition name="blog/2015/spring-security-password-encoder" extends="blogTemplate">
+    <definition name="blog/2015/spring-security-password-encoder" extends="app.blog">
         <put-attribute name="title" value="Spring Security Password Encoder" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
         <put-attribute name="article" value="2015/spring-security-password-encoder" cascade="true" />
     </definition>
-    <definition name="blog/2016/spring-security-access-denied-handling" extends="blogTemplate">
+    <definition name="blog/2016/spring-security-access-denied-handling" extends="app.blog">
         <put-attribute name="title" value="Spring Security Access Denied Handling" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
         <put-attribute name="article" value="2016/spring-security-access-denied-handling" cascade="true" />
     </definition>
-    <definition name="blog/2017/migrating-to-spring-security-4" extends="blogTemplate">
+    <definition name="blog/2017/migrating-to-spring-security-4" extends="app.blog">
         <put-attribute name="title" value="Migrating to Spring Security 4" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
         <put-attribute name="article" value="2017/migrating-to-spring-security-4" cascade="true" />
     </definition>
-    <definition name="blog/2017/SpringBbs-with-MySql" extends="blogTemplate">
+    <definition name="blog/2017/SpringBbs-with-MySql" extends="app.blog">
         <put-attribute name="title" value="SpringBbs with MySql" />
         <put-attribute name="keywords" value="spring mvc" />
         <put-attribute name="description" value="spring mvc, board," />
         <put-attribute name="article" value="2017/SpringBbs-with-MySql" cascade="true" />
     </definition>
-    <definition name="blog/2017/jetty-maven-plugin" extends="blogTemplate">
+    <definition name="blog/2017/jetty-maven-plugin" extends="app.blog">
         <put-attribute name="title" value="Jetty Maven Plugin" />
         <put-attribute name="keywords" value="jetty maven plugin" />
         <put-attribute name="description" value="jetty maven plugin" />
         <put-attribute name="article" value="2017/jetty-maven-plugin" cascade="true" />
     </definition>
-    <definition name="blog/2017/basic-board" extends="blogTemplate">
+    <definition name="blog/2017/basic-board" extends="app.blog">
         <put-attribute name="title" value="Basic Board Program" />
         <put-attribute name="keywords" value="Basic Board Program" />
         <put-attribute name="description" value="Basic Board Program" />
         <put-attribute name="article" value="2017/basic-board" cascade="true" />
     </definition>
-    <definition name="blog/2017/thread-board" extends="blogTemplate">
+    <definition name="blog/2017/thread-board" extends="app.blog">
         <put-attribute name="title" value="Thread Board" />
         <put-attribute name="keywords" value="Thread Board" />
         <put-attribute name="description" value="Thread Board" />
         <put-attribute name="article" value="2017/thread-board" cascade="true" />
     </definition>
-    <definition name="blog/2017/board-using-oracle-hierarchical-query" extends="blogTemplate">
+    <definition name="blog/2017/board-using-oracle-hierarchical-query" extends="app.blog">
         <put-attribute name="title" value="board,oracle hierarchical query" />
         <put-attribute name="keywords" value="board,oracle hierarchical query" />
         <put-attribute name="description" value="board,oracle hierarchical query" />
         <put-attribute name="article" value="2017/board-using-oracle-hierarchical-query" cascade="true" />
     </definition>
-    <definition name="blog/2017/model1-board" extends="blogTemplate">
+    <definition name="blog/2017/model1-board" extends="app.blog">
         <put-attribute name="title" value="board,model 1" />
         <put-attribute name="keywords" value="board,model 1" />
         <put-attribute name="description" value="board,model 1" />
         <put-attribute name="article" value="2017/model1-board" cascade="true" />
     </definition>
-    <definition name="blog/2017/model2-board" extends="blogTemplate">
+    <definition name="blog/2017/model2-board" extends="app.blog">
         <put-attribute name="title" value="board,model 2" />
         <put-attribute name="keywords" value="board,model 2" />
         <put-attribute name="description" value="board,model 2" />
         <put-attribute name="article" value="2017/model2-board" cascade="true" />
     </definition>
-    <definition name="blog/2017/model2-board-using-DBCP" extends="blogTemplate">
+    <definition name="blog/2017/model2-board-using-DBCP" extends="app.blog">
         <put-attribute name="title" value="board,model 2,DBCP" />
         <put-attribute name="keywords" value="board,model 2,DBCP" />
         <put-attribute name="description" value="board,model 2" />
         <put-attribute name="article" value="2017/model2-board-using-DBCP" cascade="true" />
     </definition>
-    <definition name="blog/2017/REST-example" extends="blogTemplate">
+    <definition name="blog/2017/REST-example" extends="app.blog">
         <put-attribute name="title" value="REST" />
         <put-attribute name="keywords" value="REST" />
         <put-attribute name="description" value="REST" />
         <put-attribute name="article" value="2017/REST-example" cascade="true" />
     </definition>
-    <definition name="blog/2017/model2mysqlboard-using-DBCP" extends="blogTemplate">
+    <definition name="blog/2017/model2mysqlboard-using-DBCP" extends="app.blog">
         <put-attribute name="title" value="Model 2 Board on MySql using DBCP" />
         <put-attribute name="keywords" value="model 2" />
         <put-attribute name="description" value="model 2" />
         <put-attribute name="article" value="2017/model2mysqlboard-using-DBCP" cascade="true" />
     </definition>
-    <definition name="blog/2017/spring-mvc-ajax-example" extends="blogTemplate">
+    <definition name="blog/2017/spring-mvc-ajax-example" extends="app.blog">
         <put-attribute name="title" value="Ajax Example on Spring MVC" />
         <put-attribute name="keywords" value="ajax,spring mvc" />
         <put-attribute name="description" value="simple ajax example" />
         <put-attribute name="article" value="2017/spring-mvc-ajax-example" cascade="true" />
     </definition>
-    <definition name="blog/2017/i18n" extends="blogTemplate">
+    <definition name="blog/2017/i18n" extends="app.blog">
         <put-attribute name="title" value="i18n" />
         <put-attribute name="keywords" value="i18n" />
         <put-attribute name="description" value="simple i18n example" />
         <put-attribute name="article" value="2017/i18n" cascade="true" />
     </definition>
-    <definition name="blog/2017/spring-mvc-apache-tiles" extends="blogTemplate">
+    <definition name="blog/2017/spring-mvc-apache-tiles" extends="app.blog">
         <put-attribute name="title" value="Apache Tiles on Spring MVC" />
         <put-attribute name="keywords" value="apache tiles,spring mvc" />
         <put-attribute name="description" value="simple apache tiles example" />
         <put-attribute name="article" value="2017/spring-mvc-apache-tiles" cascade="true" />
     </definition>
-    <definition name="blog/2017/Setting-development-environment-in-Ubuntu" extends="blogTemplate">
+    <definition name="blog/2017/Setting-development-environment-in-Ubuntu" extends="app.blog">
         <put-attribute name="title" value="Setting development environment in Ubuntu" />
         <put-attribute name="keywords" value="ubuntu,mysql" />
         <put-attribute name="description" value="ubuntu" />
         <put-attribute name="article" value="2017/Setting-development-environment-in-Ubuntu" cascade="true" />
     </definition>
-    <definition name="blog/2017/downloadController" extends="blogTemplate">
+    <definition name="blog/2017/downloadController" extends="app.blog">
         <put-attribute name="title" value="DownloadController" />
         <put-attribute name="keywords" value="DownloadController" />
         <put-attribute name="description" value="DownloadController Example" />
         <put-attribute name="article" value="2017/downloadController" cascade="true" />
     </definition>
-    <definition name="blog/2017/ajax-fileupload" extends="blogTemplate">
+    <definition name="blog/2017/ajax-fileupload" extends="app.blog">
         <put-attribute name="title" value="Ajax FileUpload" />
         <put-attribute name="keywords" value="ajax,fileupload" />
         <put-attribute name="description" value="Fileupload using Ajax" />
         <put-attribute name="article" value="2017/ajax-fileupload" cascade="true" />
     </definition>	
-    <definition name="blog/2018/ajax-like" extends="blogTemplate">
+    <definition name="blog/2018/ajax-like" extends="app.blog">
         <put-attribute name="title" value="Ajax Like" />
         <put-attribute name="keywords" value="ajax,like" />
         <put-attribute name="description" value="Like using Ajax" />
