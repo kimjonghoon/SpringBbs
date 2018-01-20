@@ -2,7 +2,7 @@ package net.java_school.user;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.Email;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class User {
