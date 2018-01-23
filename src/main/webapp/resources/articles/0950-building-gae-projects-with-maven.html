@@ -19,7 +19,6 @@
 
 <h2>프로젝트 생성</h2>
 
-
 <p>
 신청을 완료하고 다시 <a href="https://cloud.google.com">https://cloud.google.com</a>을 방문하면 GO TO CONSOLE 버튼이 보일 것이다.<br />
 이 버튼을 클릭하면 웹 콘솔 화면으로 이동하게 된다.
@@ -76,8 +75,6 @@
 .\google-cloud-sdk\install.bat
 </pre>
 
-
-
 <p>
 gcloud components list 명령으로 설치된 컴포넌트를 확인한다.<br />
 app-engine-java 컴포넌트를 설치한다.
@@ -91,7 +88,6 @@ gcloud components install app-engine-java
 어느 디렉터리에서나 상관없으나 윈도의 경우 명령 프롬프트를 관리자 권한으로 열고 실행해야 한다.
 </p>
 
-
 <p>
 gcloud 초기화를 진행한다.<br />
 어느 디렉터리에서 행하는지 상관없다.
@@ -102,9 +98,11 @@ gcloud init
 </pre>
 
 <p>
-초기화 작업을 통해 사용할 프로젝트와 Google Compute Engine의 존(zone) 지정한다.
+초기화 작업을 통해 사용할 프로젝트와 Google Compute Engine의 존(zone) 지정한다.<br />
+(명령을 실행하기 전에 구글 클라우드 콘솔에서 프로젝트를 생성해야 한다. 우리는 이 작업을 이미 했다)<br />
+존 지정은 인스턴스가 생성될 지역을 설정하는 것으로, 주로 서비스되는 지역과 가까운 곳을 지정한다.<br />
+존에 대한 자세한 내용은 <a href="https://cloud.google.com/compute/docs/regions-zones/">https://cloud.google.com/compute/docs/regions-zones/</a>를 참조한다.
 </p>
-
 
 <h3>4. IDE 설치</h3>
 
@@ -218,7 +216,6 @@ guestbook 폴더로 이동하여 다음 명령을 실행한다.
 C:\Lab\guestbook&gt;<span class="prompt-selection">mvn clean package</span>
 </pre>
 
-
 <h3>로컬 테스트</h3>
 
 <p>
@@ -241,7 +238,8 @@ Dev App Server is now running이 보이면, 웹 브라우저로 http://localhost
 <h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
 
   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
   &lt;packaging&gt;war&lt;/packaging&gt;
@@ -442,7 +440,7 @@ pom.xml을 열고   &lt;!-- &lt;app.deploy.project&gt;your-app-id&lt;/app.deploy
 </pre>
 
 <p>
-명령 프롬프트에서 다음 명령을 실행한다.
+서버로 앱을 배포하려면 명령 프롬프트에서 mvn appengine:deploy 를 실행한다.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -477,7 +475,7 @@ This application does not exist(project_id=u'')...
 </p>
 
 <p>
-mvn appengine:deploy를 다시 실행한다.<br />
+mvn appengine:deploy 를 다시 실행한다.<br />
 처음으로 앱을 올리는 경우, 웹 브라우저 실행되고 웹 브라우저의 내용을 명령 프롬프트에 복사하는 절차가 있다.<br />
 <img alt="Copy this code" src="https://lh3.googleusercontent.com/O2zWW7NNUcTHzIvOMMIksKCIhpL0LevU9X1zjipnNg5sU9xtjTaM2g6rHO79fi0M6uAtL-KTOnDbOXBoirzXAGt6hrsnbtv5yiaGozqjpLYNsG5L85Ts0x8G-rZ_AvDjZbU8N09R4i6d1IRfWoapbtjmNW6yl0a51dLeCzbpTMzZZUKZOTPWtriYB8GoqvRj9gfhKBgJ0YBreEMylVeM-2__UJL-4VeKWWyRpDHyojwfT76goFiGJw6BhSwbmLHw4rTHCZyrm433O4gCPlAoxVgvaF2YJlF9KeYkRq9f1vdoaUhA5sjTPOp1xbNLZuYclEyX5x88EJLCvIETX_OSUTHR2eLSWYd9ebHWJDoJbuFUWK3mRPs5mFtOQgjYl3jkK47ia7qf18j6s5aaBomKr60q7by9zbyDWNvbl-UOeC8PkrxZ4ZIBqDN7qFK8Gm0vKlcUovS27JsmTrA59PLiaKhxp76Hhegt0oDXXSaALny2bYJ2zCcCVnNxC2qgkDmYk5eE-JUq2joHd0V5NRyAqnp7wfkIJ8KcSU8j70sVy7i7GSw5Aslh5vhh89Hlpnl510rmiqsZAGOTpoTXD_6RvGaKTI5Ux4WoU0j_gZheMPVSc6iUcv2zk6oq=w631-h290-no" style="display: block;" />
 </p>
@@ -494,8 +492,6 @@ mvn appengine:deploy를 다시 실행한다.<br />
 <p>
 처음에 보았던 에러의 원인은 데이터스토어 인덱스가 생성되기 전에 방문했기 때문이다.<br />
 데이터스토어 인덱스는 생성되는 데 몇 분 정도 소요된다.<br />
-만약 인덱스가 생성되지 않아 500 Server Error가 계속된다면(그럴 경우는 거의 없지만),
-WEB-INF/ 디렉터리에 datastore-indexes.xml 파일을 생성한 후,  mvn appengine:update_indexes 명령으로 인덱스를 생성할 수 있다.<br />
 인덱스가 없어서 발생하는 서버 에러의 경우, 구글 클라우드는 로그 메시지를 통해 자세한 내용을 알려준다.<br />
 <img src="https://lh3.googleusercontent.com/0v5LYyJLB1vPfrBSVQnJP36YVmteWiilewxxoeDgbxgD3EH7Bsr79jnGeqnyPAbei3IalH53P5YjoIv9vmSLIujligLMpMtXiiJuXzLHl7VaPbTrYPNOfLlKSPOXIbfyrZstE_kUhKut3H-wqkodd-u3aYzlQJqwcJCcMYPNqQInhLUNE9aFz7kywaj3NnLl6L6IyuA3So_gBEH7C8Te1DPP5JqhAxZfKrbwe_fpexsGO7d54Gxz41wSuTGpWiZfHaJQ2DHfTChXxrOAByT9VALF4jZjvM8Kvn28AMGTyvzfGb2XQLpLBT3OTPy-2BFz9VSBQHXZ6hsMv875E1hfyQFJAb-zGdQeb5glEss5N01FeoLbfDrI7JAMjZ8T-SeTrKj164j-Gw5G8wejS2bIQLzkNPwRmE4apJQT80URAoacQiJ5edhaThjf87SVxAHaoPxK6j9lbB-lrL0ILe-PmIpqpuLtAZEBm2huBWUg-HecNXx7jrJvbBm8TNm8FReTerMbuZO0BmD4MQXklu__HLhmgPJjMbboWib6ViWPsQ44xL6u1z29yrQR-4NJhx17JMWtLcEbYuAniraSJU2y53z5PhGh13ymUdVrGpP1pw=w884-h596-no" alt="log message" /><br />  
 </p>
@@ -527,7 +523,7 @@ gcloud source repos clone <em>로컬 저장소 이름</em> 명령으로 로컬 �
 </p>
 
 <pre class="screen">
-gcloud source repos clone firstGaePjt
+C:\Lab&gt;gcloud source repos clone firstGaePjt
 </pre>
 
 <p>
@@ -556,8 +552,6 @@ git push origin master
 	<li><a href="https://cloud.google.com/free/docs/always-free-usage-limits">https://cloud.google.com/free/docs/always-free-usage-limits</a></li>
 	<li><a href="https://cloud.google.com/free/docs/frequently-asked-questions#free-trial">https://cloud.google.com/free/docs/frequently-asked-questions#free-trial</a></li>
 	<li><a href="https://cloud.google.com/source-repositories/docs/quickstart">https://cloud.google.com/source-repositories/docs/quickstart</a></li>
-	<li><a href="https://cloud.google.com/free/docs/frequently-asked-questions#free-trial">https://cloud.google.com/free/docs/frequently-asked-questions#free-trial</a></li>
-	<li><a href="https://cloud.google.com/appengine/docs/standard/java/tools/maven">https://cloud.google.com/appengine/docs/standard/java/tools/maven</a></li>
 	<li><a href="https://cloud.google.com/appengine/docs/standard/java/download">https://cloud.google.com/appengine/docs/standard/java/download</a></li>
 	<li><a href="https://cloud.google.com/appengine/docs/java/">https://cloud.google.com/appengine/docs/java/</a></li>
 	<li><a href="https://cloud.google.com/appengine/docs/standard/java/">https://cloud.google.com/appengine/docs/standard/java/</a></li>
