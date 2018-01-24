@@ -1,17 +1,26 @@
 package net.java_school.board;
 
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Article {
 	private Integer articleNo;
+        
+        @NotNull
 	@Size(min=2,max=20,message="{bbs.boardCd.validation.error}")
 	private String boardCd;
-	@Size(min=1,max=100,message="{bbs.title.validation.error}")
+	
+        @NotNull
+        @Size(min=1,max=100,message="{bbs.title.validation.error}")
 	private String title;
+        
+        @NotNull
 	@Size(min=2,message="{bbs.content.validation.error}")
 	private String content;
-	private String email;
+	
+        private String email;
 	private String name;
 	private int hit;
 	private Date regdate;

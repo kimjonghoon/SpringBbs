@@ -2,19 +2,27 @@ package net.java_school.user;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class User {
-	@Size(min=5, message="{email.validation.error}")
+	@NotNull
 	@Email(message="{email.validation.error}")
 	private String email;
-	@Size(min=4, message="{passwd.validation.error}")
+	
+        @NotNull
+        @Size(min=4, message="{passwd.validation.error}")
 	private String passwd;
+        
+        @NotNull
 	@Size(min=2, message="{fullname.validation.error}")
 	private String name;
-	@Size(min=6, message="{mobile.validation.error}")
+	
+        @NotNull
+        @Size(min=6, message="{mobile.validation.error}")
 	private String mobile;
+        
 	private List<String> authorities;
 	
 	public User() {}

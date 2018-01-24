@@ -9,7 +9,7 @@
 	<name>spring-bbs Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<spring.version>5.0.2.RELEASE</spring.version>
+		<spring.version>5.0.3.RELEASE</spring.version>
 		<spring.security.version>5.0.0.RELEASE</spring.security.version>
 		<jdk.version>1.8</jdk.version>
 	</properties>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.5.Final</version>
+			<version>6.0.7.Final</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
