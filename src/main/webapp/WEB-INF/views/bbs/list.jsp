@@ -44,7 +44,7 @@
                 </c:if>
             </td>
             <td style="text-align: center;">
-                <fmt:formatDate pattern="yyyy.MM.dd" value="${article.regdate }" />
+                <fmt:formatDate pattern="yy.MM.dd" value="${article.regdate }" />
             </td>
             <td style="text-align: center;">${article.hit }</td>
         </tr>

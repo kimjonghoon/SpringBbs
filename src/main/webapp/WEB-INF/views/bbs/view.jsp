@@ -16,7 +16,7 @@
                 var comments = '<div class="comments">'
                         + '<span class="writer">' + item.name + '</span>'
                         + '<span class="date">' + creation.toLocaleString() + '</span>';
-                if (item.editable == true) {
+                if (item.editable === true) {
                     comments = comments
                             + '<span class="modify-del">'
                             + '<a href="#" class="comment-modify-link">' + $('#global-modify').attr('title') + '</a> |'
@@ -48,7 +48,7 @@
             var $form = $(this);
             var memo = $('#addComment-ta').val();
             memo = $.trim(memo);
-            if (memo.length == 0) {
+            if (memo.length === 0) {
                 $('#addComment-ta').val('');
                 return false;
             }
@@ -71,7 +71,7 @@
             var $form = $(e.target).parent().parent().find('.comment-form');
             var $p = $(e.target).parent().parent().find('.comment-p');
 
-            if ($form.is(':hidden') == true) {
+            if ($form.is(':hidden') === true) {
                 $form.show();
                 $p.hide();
             } else {
@@ -83,7 +83,7 @@
             var $form = $(e.target).parent().parent().parent().find('.comment-form');
             var $p = $(e.target).parent().parent().parent().find('.comment-p');
 
-            if ($form.is(':hidden') == true) {
+            if ($form.is(':hidden') === true) {
                 $form.show();
                 $p.hide();
             } else {
@@ -113,7 +113,7 @@
             e.preventDefault();
             var msg = $('#delete-confirm').attr('title');
             var chk = confirm(msg);
-            if (chk == false) {
+            if (chk === false) {
                 return;
             }
             var $commentNo = $(e.target).attr('title');
@@ -263,7 +263,7 @@
                     <span class="bbs-strong">[${article.commentNum }]</span>
                 </c:if>		
             </td>
-            <td style="text-align: center;"><fmt:formatDate pattern="yyyy.MM.dd" value="${article.regdate }" /></td>
+            <td style="text-align: center;"><fmt:formatDate pattern="yy.MM.dd" value="${article.regdate }" /></td>
             <td style="text-align: center;">${article.hit }</td>
         </tr>
     </c:forEach>
