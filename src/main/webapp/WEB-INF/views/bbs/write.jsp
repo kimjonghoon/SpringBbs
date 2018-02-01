@@ -25,8 +25,6 @@ function goView() {
 <h3><spring:message code="bbs.new.article" /></h3>
 
 <sf:form id="writeForm" action="/bbs/${boardCd}?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="article" enctype="multipart/form-data" onsubmit="return check();">
-<input type="hidden" name="articleNo" value="${param.articleNo }" />
-<input type="hidden" name="boardCd" value="${boardCd }" />
 <sf:errors path="*" cssClass="error" />
 <table id="write-form" class="bbs-table">
 <tr>
@@ -57,10 +55,10 @@ function goView() {
 </sf:form>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="/bbs/${boardCd }/${param.articleNo }" method="get">
+    <form id="viewForm" action="/bbs/${boardCd }/${articleNo }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </form>    
+    </form>
     <form id="listForm" action="/bbs/${boardCd }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />

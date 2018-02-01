@@ -20,6 +20,7 @@
         pre-post-annotations="enabled" />
 
     <mvc:resources location="/resources/" mapping="/resources/**" />
+    <mvc:resources location="/favicon.ico" mapping="/favicon.ico" />
 
     <mvc:annotation-driven validator="validator" />
 

@@ -69,7 +69,7 @@ public class BbsController extends Paginator {
 
         NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
 
         map.put("boardCd", boardCd);
         map.put("searchWord", searchWord);
@@ -184,7 +184,7 @@ public class BbsController extends Paginator {
 
         NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("boardCd", boardCd);
         map.put("searchWord", searchWord);
 
@@ -261,7 +261,7 @@ public class BbsController extends Paginator {
             Principal principal) throws Exception {
 
         if (bindingResult.hasErrors()) {
-            String boardName = this.getBoardName(article.getBoardCd(), locale.getLanguage());
+            String boardName = this.getBoardName(boardCd, locale.getLanguage());
             model.addAttribute("boardName", boardName);
             List<Board> boards = boardService.getBoards();
             model.addAttribute("boards", boards);
@@ -271,16 +271,17 @@ public class BbsController extends Paginator {
             return "bbs/write";
         }
 
+        article.setBoardCd(boardCd);
         article.setEmail(principal.getName());
 
         boardService.addArticle(article);
 
         //파일 업로드
         Iterator<String> it = mpRequest.getFileNames();
-        List<MultipartFile> fileList = new ArrayList<MultipartFile>();
+        List<MultipartFile> fileList = new ArrayList<>();
         while (it.hasNext()) {
             MultipartFile multiFile = mpRequest.getFile((String) it.next());
-            if (multiFile.getSize() > 0) {
+            if (multiFile != null && multiFile.getSize() > 0) {
                 String filename = multiFile.getOriginalFilename();
                 multiFile.transferTo(new File(UPLOAD_PATH + filename));
                 fileList.add(multiFile);
@@ -348,7 +349,9 @@ public class BbsController extends Paginator {
 
             return "bbs/modify";
         }
-
+        
+        article.setArticleNo(articleNo);
+        article.setBoardCd(boardCd);
         //관리자가 수정하더라도 원글 소유자를 그대로 유지하기 위해서 
         String email = boardService.getArticle(article.getArticleNo()).getEmail();
         article.setEmail(email);
@@ -358,10 +361,10 @@ public class BbsController extends Paginator {
 
         //파일업로드
         Iterator<String> it = mpRequest.getFileNames();
-        List<MultipartFile> fileList = new ArrayList<MultipartFile>();
+        List<MultipartFile> fileList = new ArrayList<>();
         while (it.hasNext()) {
             MultipartFile multiFile = mpRequest.getFile((String) it.next());
-            if (multiFile.getSize() > 0) {
+            if (multiFile != null && multiFile.getSize() > 0) {
                 String filename = multiFile.getOriginalFilename();
                 multiFile.transferTo(new File(UPLOAD_PATH + filename));
                 fileList.add(multiFile);
@@ -385,9 +388,9 @@ public class BbsController extends Paginator {
         searchWord = URLEncoder.encode(searchWord, "UTF-8");
 
         return "redirect:/bbs/"
-                + article.getBoardCd()
+                + boardCd
                 + "/"
-                + article.getArticleNo()
+                + articleNo
                 + "?page="
                 + page
                 + "&searchWord="
