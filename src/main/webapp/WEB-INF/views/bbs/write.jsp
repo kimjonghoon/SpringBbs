@@ -55,7 +55,7 @@ function goView() {
 </sf:form>
 
 <div id="form-group" style="display: none">
-    <form id="viewForm" action="/bbs/${boardCd }/${articleNo }" method="get">
+    <form id="viewForm" action="/bbs/${boardCd }/${param.articleNo }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </form>
