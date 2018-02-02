@@ -25,8 +25,6 @@ public class Article {
     private int attachFileNum;
     private int commentNum;
 
-    public static final String ENTER = System.getProperty("line.separator");
-
     public Integer getArticleNo() {
         return articleNo;
     }
@@ -53,13 +51,6 @@ public class Article {
 
     public String getContent() {
         return content;
-    }
-
-    public String getHtmlContent() {
-        if (content != null) {
-            return content.replaceAll(ENTER, "<br />");
-        }
-        return null;
     }
 
     public void setContent(String content) {

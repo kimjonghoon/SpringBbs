@@ -5,6 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
+<script src="/resources/js/prettify.js"></script>
 <script src="/resources/js/bbs-view.js"></script>
 <script>
     function displayComments() {
@@ -24,7 +26,7 @@
                             + '</span>';
                 }
                 comments = comments
-                        + '<p class="comment-p">' + item.htmlMemo + '</p>'
+                        + '<div class="comment-memo">' + item.memo + '</div>'
                         + '<form class="comment-form" action="/comments/' + ${articleNo } + '/' + item.commentNo + '" method="put" style="display: none;">'
                         + '<div style="text-align: right;">'
                         + '<a href="#" class="comment-modify-submit-link">' + $('#global-submit').attr('title') + '</a> | <a href="#" class="comment-modify-cancel-link">' + $('#global-cancel').attr('title') + '</a>'
@@ -37,6 +39,8 @@
                 $('#all-comments').append(comments);
                 //console.log(item);
             });
+        }).done(function() {
+            runAfterLoadArticle();
         });
     }
 
@@ -69,26 +73,26 @@
         if ($(e.target).is('.comment-modify-link')) {
             e.preventDefault();
             var $form = $(e.target).parent().parent().find('.comment-form');
-            var $p = $(e.target).parent().parent().find('.comment-p');
+            var $div = $(e.target).parent().parent().find('.comment-memo');
 
             if ($form.is(':hidden') === true) {
                 $form.show();
-                $p.hide();
+                $div.hide();
             } else {
                 $form.hide();
-                $p.show();
+                $div.show();
             }
         } else if ($(e.target).is('.comment-modify-cancel-link')) {
             e.preventDefault();
             var $form = $(e.target).parent().parent().parent().find('.comment-form');
-            var $p = $(e.target).parent().parent().parent().find('.comment-p');
+            var $div = $(e.target).parent().parent().parent().find('.comment-memo');
 
             if ($form.is(':hidden') === true) {
                 $form.show();
-                $p.hide();
+                $div.hide();
             } else {
                 $form.hide();
-                $p.show();
+                $div.show();
             }
         } else if ($(e.target).is('.comment-modify-submit-link')) {
             e.preventDefault();

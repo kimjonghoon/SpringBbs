@@ -1,1 +1,0 @@
-isJavaScriptArticle = true;

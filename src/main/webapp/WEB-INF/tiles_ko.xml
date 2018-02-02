@@ -945,9 +945,6 @@
         <put-attribute name="prev-article" value="/spring/bean-validation-at-modify-article" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="글 수정에서 빈 유효성 검사" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/dataType" extends="app.lecture">
         <put-attribute name="title" value="기본 데이터형" />
@@ -959,9 +956,6 @@
         <put-attribute name="prev-article" value="/javascript/introduction" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="자바스크립트 소개" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/handling-select-items" extends="app.lecture">
         <put-attribute name="title" value="select 엘리먼트 다루기" />
@@ -973,9 +967,6 @@
         <put-attribute name="prev-article" value="/javascript/dataType" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="기본 데이터형" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>	
     </definition>
     <definition name="javascript/difference-between-javascript-and-java" extends="app.lecture">
         <put-attribute name="title" value="자바와 다른점" />
@@ -987,9 +978,6 @@
         <put-attribute name="prev-article" value="/javascript/handling-select-items" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="select 엘리먼트 다루기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Number" extends="app.lecture">
         <put-attribute name="title" value="Number" />
@@ -1001,9 +989,6 @@
         <put-attribute name="prev-article" value="/javascript/difference-between-javascript-and-java" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="자바와 다른점" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>	
     </definition>
     <definition name="javascript/String" extends="app.lecture">
         <put-attribute name="title" value="String" />
@@ -1015,9 +1000,6 @@
         <put-attribute name="prev-article" value="/javascript/Number" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Number" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>	
     </definition>
     <definition name="javascript/RegExp" extends="app.lecture">
         <put-attribute name="title" value="정규표현식" />
@@ -1029,9 +1011,6 @@
         <put-attribute name="prev-article" value="/javascript/String" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="String" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/Date" extends="app.lecture">
         <put-attribute name="title" value="Date" />
@@ -1043,9 +1022,6 @@
         <put-attribute name="prev-article" value="/javascript/RegExp" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="정규표현식" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/Array" extends="app.lecture">
         <put-attribute name="title" value="배열" />
@@ -1057,9 +1033,6 @@
         <put-attribute name="prev-article" value="/javascript/Date" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Date" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/Math" extends="app.lecture">
         <put-attribute name="title" value="Math" />
@@ -1071,9 +1044,6 @@
         <put-attribute name="prev-article" value="/javascript/Array" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="배열" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/Function" extends="app.lecture">
         <put-attribute name="title" value="함수" />
@@ -1085,9 +1055,6 @@
         <put-attribute name="prev-article" value="/javascript/Math" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Math" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/javascript-form-validation" extends="app.lecture">
         <put-attribute name="title" value="유효성 검사" />
@@ -1099,9 +1066,6 @@
         <put-attribute name="prev-article" value="/javascript/Function" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="함수" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/Cookie" extends="app.lecture">
         <put-attribute name="title" value="쿠키 다루기" />
@@ -1113,9 +1077,6 @@
         <put-attribute name="prev-article" value="/javascript/javascript-form-validation" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="유효성 검사" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <definition name="javascript/decoupling-html-and-javascript" extends="app.lecture">
         <put-attribute name="title" value="HTML에서 자바스크립트 분리" />
@@ -1125,9 +1086,6 @@
         <put-attribute name="prev-article" value="/javascript/Cookie" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="쿠키 다루기" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub_ko.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>		
     </definition>
     <!-- google-app-engine -->
     <definition name="google-app-engine/building-gae-projects-with-maven" extends="app.lecture">

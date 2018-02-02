@@ -985,9 +985,6 @@
         <put-attribute name="prev-article" value="/spring/bean-validation-at-modify-article" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Bean validation at modify article" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/dataType" extends="app.lecture">
         <put-attribute name="title" value="JavaScript Data Type" />
@@ -999,9 +996,6 @@
         <put-attribute name="prev-article" value="/javascript/introduction" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="JavaScript Introduction" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/handling-select-items" extends="app.lecture">
         <put-attribute name="title" value="Handling select element with javascript" />
@@ -1013,9 +1007,6 @@
         <put-attribute name="prev-article" value="/javascript/dataType" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="JavaScript Data Type" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/difference-between-javascript-and-java" extends="app.lecture">
         <put-attribute name="title" value="Difference between javascript and java" />
@@ -1027,9 +1018,6 @@
         <put-attribute name="prev-article" value="/javascript/handling-select-items" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Handling select element with javascript" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Number" extends="app.lecture">
         <put-attribute name="title" value="Number" />
@@ -1041,9 +1029,6 @@
         <put-attribute name="prev-article" value="/javascript/difference-between-javascript-and-java" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Difference between javascript and java" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/String" extends="app.lecture">
         <put-attribute name="title" value="String" />
@@ -1055,9 +1040,6 @@
         <put-attribute name="prev-article" value="/javascript/Number" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Number" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/RegExp" extends="app.lecture">
         <put-attribute name="title" value="RegExp" />
@@ -1069,9 +1051,6 @@
         <put-attribute name="prev-article" value="/javascript/String" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="String" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Date" extends="app.lecture">
         <put-attribute name="title" value="Date" />
@@ -1083,9 +1062,6 @@
         <put-attribute name="prev-article" value="/javascript/RegExp" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="RegExp" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Array" extends="app.lecture">
         <put-attribute name="title" value="Array" />
@@ -1097,9 +1073,6 @@
         <put-attribute name="prev-article" value="/javascript/Date" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Date" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Math" extends="app.lecture">
         <put-attribute name="title" value="Math" />
@@ -1111,9 +1084,6 @@
         <put-attribute name="prev-article" value="/javascript/Array" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Array" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Function" extends="app.lecture">
         <put-attribute name="title" value="Function" />
@@ -1125,9 +1095,6 @@
         <put-attribute name="prev-article" value="/javascript/Math" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Math" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/javascript-form-validation" extends="app.lecture">
         <put-attribute name="title" value="Form Validation with JavaScript" />
@@ -1139,9 +1106,6 @@
         <put-attribute name="prev-article" value="/javascript/Function" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Function" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/Cookie" extends="app.lecture">
         <put-attribute name="title" value="Handling Cookie with JavaScript" />
@@ -1153,9 +1117,6 @@
         <put-attribute name="prev-article" value="/javascript/javascript-form-validation" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Form Validation with JavaScript" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <definition name="javascript/decoupling-html-and-javascript" extends="app.lecture">
         <put-attribute name="title" value="Decoupling HTML and JavaScript" />
@@ -1165,9 +1126,6 @@
         <put-attribute name="prev-article" value="/javascript/Cookie" type="string" cascade="true" />
         <put-attribute name="prev-article-title" value="Handling Cookie with JavaScript" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/javascript/javascript-sub.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/js/onlyJavaScriptArticle.js" />
-        </put-list-attribute>
     </definition>
     <!-- google-app-engine -->
     <definition name="google-app-engine/building-gae-projects-with-maven" extends="app.lecture">

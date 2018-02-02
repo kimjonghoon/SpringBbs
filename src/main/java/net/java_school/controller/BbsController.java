@@ -156,7 +156,6 @@ public class BbsController extends Paginator {
         //상세보기에서 볼 게시글 관련 정보
         String title = article.getTitle();//제목
         String content = article.getContent();//내용
-        content = content.replaceAll(WebContants.LINE_SEPARATOR, "<br />");
         //int hit = article.getHit();//조회수
         String name = article.getName();//작성자 이름
         String email = article.getEmail();//작성자 ID
