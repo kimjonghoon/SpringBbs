@@ -5,22 +5,42 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
 <script>
-function check() {
-    //var form = document.getElementById("modifyForm");
-    //TODO Validation 
-    return true;
-}
-function goView() {
-    var form = document.getElementById("viewForm");
-    form.submit();
-}
+$(document).ready(function() {
+   $('#modifyForm').submit(function() {
+      var title = $('#modifyForm input[name*=title]').val();
+      var content = $('#modifyForm textarea').val();
+      title = $.trim(title);
+      content = $.trim(content);
+      
+      if (title.length === 0) {
+          var msg = $('#title-empty').attr('title');
+          alert(msg);
+          $('#modifyForm input[name*=title]').val('');
+          return false;
+      }
+      
+      if (content.length === 0) {
+          var msg = $('#content-empty').attr('title');
+          alert(msg);
+          $('#modifyForm textarea').val('');
+          return false;
+      }
+      
+      $('#modifyForm input[name*=title]').val(title);
+      $('#modifyForm textarea').val(content);
+   });
+   
+   $('#goView').click(function(){
+      $('#viewForm').submit(); 
+   });
+});
 </script>
 
 <div id="url-navi">${boardName }</div>
 
 <h3><spring:message code="global.modify" /></h3>
 
-<sf:form id="modifyForm" action="/bbs/${boardCd}/${articleNo}?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="article" enctype="multipart/form-data" onsubmit="return check()">
+<sf:form id="modifyForm" action="/bbs/${boardCd}/${articleNo}?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="article" enctype="multipart/form-data">
 <input type="hidden" name="page" value="${param.page }" />
 <input type="hidden" name="searchWord" value="${param.searchWord }" />
 <sf:errors path="*" cssClass="error"/>
@@ -45,7 +65,7 @@ function goView() {
 </table>
 <div style="text-align: center;padding-bottom: 15px;">
     <input type="submit" value="<spring:message code="global.submit" />" />
-    <input type="button" value="<spring:message code="bbs.back.to.article" />" onclick="goView()" />
+    <input type="button" value="<spring:message code="bbs.back.to.article" />" id="goView" />
 </div>
 </sf:form>
 		
@@ -53,5 +73,7 @@ function goView() {
     <form id="viewForm" action="/bbs/${boardCd }/${articleNo }" method="get">
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
-    </form>    
+    </form>
+    <div id="title-empty" title="<spring:message code="title.empty" />"></div>
+    <div id="content-empty" title="<spring:message code="content.empty" />"></div>
 </div>
