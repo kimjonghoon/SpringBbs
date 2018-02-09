@@ -4,17 +4,22 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <script>
-function goEdit(boardCd, boardNm, boardNm_ko) {
-	var form = document.getElementById("editBoard");
-	form.boardCd.value = boardCd;
-	form.boardNm.value = boardNm;
-	form.boardNm_ko.value = boardNm_ko;
-}
+    $(document).ready(function() {
+       $('#board-list a').click(function(e) {
+           e.preventDefault();
+           var boardCd = this.text;
+           var boardNm = this.title;
+           var boardNm_ko = this.className;
+           $('#editBoard input[name*=boardCd]').val(boardCd);
+           $('#editBoard input[name*=boardNm]').val(boardNm);
+           $('#editBoard input[name*=boardNm_ko]').val(boardNm_ko);
+       }); 
+    });
 </script>
 
 <h2><spring:message code="board.list" /></h2>
 
-<table class="bbs-table">
+<table class="bbs-table" id="board-list">
 <tr>
 	<th style="text-align: left;"><spring:message code="board.code" /></th>
 	<th style="text-align: left;"><spring:message code="board.name" /></th>
@@ -22,7 +27,7 @@ function goEdit(boardCd, boardNm, boardNm_ko) {
 </tr>
 <c:forEach var="board" items="${boards }" varStatus="status">
 <tr>
-	<td><a href="javascript:goEdit('${board.boardCd }','${board.boardNm }','${board.boardNm_ko }')">${board.boardCd }</a></td>
+	<td><a href="#" title="${board.boardNm }" class="${board.boardNm_ko }">${board.boardCd }</a></td>
 	<td>${board.boardNm }</td>
 	<td>${board.boardNm_ko }</td>
 </tr>

@@ -8,7 +8,7 @@
 $(document).ready(function() {
    $('#writeForm').submit(function() {
       var title = $('#writeForm input[name*=title]').val();
-      var content = $('#writeForm textarea').val();
+      var content = $('#writeForm-ta').val();
       title = $.trim(title);
       content = $.trim(content);
       
@@ -22,12 +22,12 @@ $(document).ready(function() {
       if (content.length === 0) {
           var msg = $('#content-empty').attr('title'); 
           alert(msg);
-          $('#writeForm textarea').val('');
+          $('#writeForm-ta').val('');
           return false;
       }
       
       $('#writeForm input[name*=title]').val(title);
-      $('#writeForm textarea').val(content);
+      $('#writeForm-ta').val(content);
    });
    
    $('#goList').click(function() {
@@ -56,7 +56,7 @@ $(document).ready(function() {
 </tr>
 <tr>
     <td colspan="2">
-        <textarea name="content" rows="17" cols="50"></textarea><br />
+        <textarea name="content" rows="17" cols="50" id="writeForm-ta"></textarea><br />
         <sf:errors path="content" cssClass="error" />
     </td>
 </tr>

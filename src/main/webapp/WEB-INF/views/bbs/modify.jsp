@@ -11,7 +11,7 @@ $(document).ready(function() {
       var content = $('#modifyForm textarea').val();
       title = $.trim(title);
       content = $.trim(content);
-      
+
       if (title.length === 0) {
           var msg = $('#title-empty').attr('title');
           alert(msg);
@@ -25,7 +25,7 @@ $(document).ready(function() {
           $('#modifyForm textarea').val('');
           return false;
       }
-      
+
       $('#modifyForm input[name*=title]').val(title);
       $('#modifyForm textarea').val(content);
    });

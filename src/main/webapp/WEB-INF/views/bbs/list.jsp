@@ -5,20 +5,25 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <script>
-    function goList(page) {
-        var form = document.getElementById("listForm");
-        form.page.value = page;
-        form.submit();
-    }
-    function goView(articleNo) {
-        var form = document.getElementById("viewForm");
-        form.action += articleNo;
-        form.submit();
-    }
-    function goWrite() {
-        var form = document.getElementById("writeForm");
-        form.submit();
-    }
+    $(document).ready(function() {
+        $('#paging a').click(function(e) {
+            e.preventDefault();
+            var page = this.title;
+            $('#listForm input[name*=page]').val(page);
+            $('#listForm').submit();
+        });
+        $('.view-link').click(function(e){
+            e.preventDefault();
+            var articleNo = this.title;
+            var action = $('#viewForm').attr('action');
+            action += articleNo;
+            $('#viewForm').attr('action', action);
+            $('#viewForm').submit();
+        });
+        $('#write-btn').click(function() {
+            $('#writeForm').submit();
+        });
+    });
 </script>
 
 <div id="url-navi">${boardName }</div>
@@ -35,7 +40,7 @@
         <tr>
             <td style="text-align: center;">${listItemNo - status.index}</td>
             <td>
-                <a href="javascript:goView('${article.articleNo }')">${article.title }</a>
+                <a href="#" title="${article.articleNo }" class="view-link">${article.title }</a>
                 <c:if test="${article.attachFileNum > 0 }">
                     <img src="/resources/images/attach.png" alt="<spring:message code="global.attach.file" />" style="vertical-align: middle;" />
                 </c:if>
@@ -55,8 +60,8 @@
 <div id="paging">
 
     <c:if test="${prevPage > 0 }">
-        <a href="javascript:goList('1')">[ <spring:message code="global.first" /> ]</a>
-        <a href="javascript:goList('${prevPage }')">[ <spring:message code="global.prev" /> ]</a>
+        <a href="#" title="1">[ <spring:message code="global.first" /> ]</a>
+        <a href="#" title="${prevPage }">[ <spring:message code="global.prev" /> ]</a>
     </c:if>
 
     <c:forEach var="i" begin="${firstPage }" end="${lastPage }" varStatus="stat">
@@ -65,20 +70,20 @@
                 <span class="bbs-strong">${i }</span>
             </c:when>
             <c:otherwise>
-                <a href="javascript:goList('${i }')">[ ${i } ]</a>
+                <a href="#" title="${i }">[ ${i } ]</a>
             </c:otherwise>
         </c:choose>
     </c:forEach>
 
     <c:if test="${nextPage > 0 }">
-        <a href="javascript:goList('${nextPage }')">[ <spring:message code="global.next" /> ]</a>
-        <a href="javascript:goList('${totalPage }')">[ <spring:message code="global.last" /> ]</a>
+        <a href="#" title="${nextPage }">[ <spring:message code="global.next" /> ]</a>
+        <a href="#" title="${totalPage }">[ <spring:message code="global.last" /> ]</a>
     </c:if>
 
 </div>
 
 <div id="list-menu">
-    <input type="button" value="<spring:message code="bbs.new.article" />" onclick="goWrite()" />
+    <input type="button" value="<spring:message code="bbs.new.article" />" id="write-btn" />
 </div>
 
 <div id="search">
