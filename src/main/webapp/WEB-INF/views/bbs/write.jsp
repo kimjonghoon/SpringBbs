@@ -13,15 +13,13 @@ $(document).ready(function() {
       content = $.trim(content);
       
       if (title.length === 0) {
-          var msg = $('#title-empty').attr('title');
-          alert(msg);
+          alert('<spring:message code="title.empty" />');
           $('#writeForm input[name*=title]').val('');
           return false;
       }
       
       if (content.length === 0) {
-          var msg = $('#content-empty').attr('title'); 
-          alert(msg);
+          alert('<spring:message code="content.empty" />');
           $('#writeForm-ta').val('');
           return false;
       }

@@ -8,26 +8,24 @@
 $(document).ready(function() {
    $('#modifyForm').submit(function() {
       var title = $('#modifyForm input[name*=title]').val();
-      var content = $('#modifyForm textarea').val();
+      var content = $('#modifyForm-ta').val();
       title = $.trim(title);
       content = $.trim(content);
 
       if (title.length === 0) {
-          var msg = $('#title-empty').attr('title');
-          alert(msg);
+          alert('<spring:message code="title.empty" />');
           $('#modifyForm input[name*=title]').val('');
           return false;
       }
       
       if (content.length === 0) {
-          var msg = $('#content-empty').attr('title');
-          alert(msg);
-          $('#modifyForm textarea').val('');
+          alert('<spring:message code="content.empty" />');
+          $('#modifyForm-ta').val('');
           return false;
       }
 
       $('#modifyForm input[name*=title]').val(title);
-      $('#modifyForm textarea').val(content);
+      $('#modifyForm-ta').val(content);
    });
    
    $('#goView').click(function(){
@@ -54,7 +52,7 @@ $(document).ready(function() {
 </tr>
 <tr>
     <td colspan="2">
-        <textarea name="content" rows="17" cols="50">${article.content }</textarea><br />
+        <textarea name="content" rows="17" cols="50" id="modifyForm-ta">${article.content }</textarea><br />
         <sf:errors path="content" cssClass="error" />
     </td>
 </tr>
@@ -74,6 +72,4 @@ $(document).ready(function() {
         <input type="hidden" name="page" value="${param.page }" />
         <input type="hidden" name="searchWord" value="${param.searchWord }" />
     </form>
-    <div id="title-empty" title="<spring:message code="title.empty" />"></div>
-    <div id="content-empty" title="<spring:message code="content.empty" />"></div>
 </div>

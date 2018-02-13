@@ -7,8 +7,104 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <link rel="stylesheet" href="/resources/css/prettify.css" type="text/css" />
 <script src="/resources/js/prettify.js"></script>
-<script src="/resources/js/bbs-view.js"></script>
 <script>
+    $(document).ready(function () {
+        prettyPrint();
+        $('pre.prettyprint').html(function () {
+            return this.innerHTML.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+        });
+        $('pre.prettyprint').dblclick(function () {
+            selectRange(this);
+        });
+        $('pre.script-result-display').each(function () {
+            var $result = "";
+            function println(str) {
+                $result += str + "\n";
+            }
+            var $convert = $(this).text().replace(/alert/g, "println");
+            (new Function($convert))();
+            $(this).after('<pre class="result">' + $result + '</pre>');
+        });
+        $('#file-list a.download').click(function (e) {
+            e.preventDefault();
+            var filename = this.title;
+            $('#downForm input[name*=filename]').val(filename);
+            $('#downForm').submit();
+        });
+        $('#file-list a:not(.download)').click(function (e) {
+            e.preventDefault();
+            var chk = confirm('<spring:message code="delete.confirm" />');
+            if (chk === true) {
+                var attachFileNo = this.title;
+                $('#deleteAttachFileForm input[name*=attachFileNo]').val(attachFileNo);
+                $('#deleteAttachFileForm').submit();
+            }
+        });
+        $('.next-prev a').click(function (e) {
+            e.preventDefault();
+            var articleNo = this.title;
+            var action = $('#viewForm').attr('action');
+            action += articleNo;
+            $('#viewForm').attr('action', action);
+            $('#viewForm').submit();
+        });
+        //Modify Button
+        $('.goModify').click(function () {
+            $('#modifyForm').submit();
+        });
+        //Del Button
+        $('.goDelete').click(function () {
+            var chk = confirm('<spring:message code="delete.confirm" />');
+            if (chk === true) {
+                $('#delForm').submit();
+            }
+        });
+        //Next Article Button
+        $('.next-article').click(function () {
+            var articleNo = this.title;
+            var action = $('#viewForm').attr('action');
+            action += articleNo;
+            $('#viewForm').attr('action', action);
+            $('#viewForm').submit();
+        });
+        //Prev Article Button
+        $('.prev-article').click(function () {
+            var articleNo = this.title;
+            var action = $('#viewForm').attr('action');
+            action += articleNo;
+            $('#viewForm').attr('action', action);
+            $('#viewForm').submit();
+        });
+        //List Button
+        $('.goList').click(function () {
+            $('#listForm').submit();
+        });
+        //Write Button
+        $('.goWrite').click(function () {
+            $('#writeForm').submit();
+        });
+        //Title Link in view.jsp
+        $('#list-table a').click(function (e) {
+            e.preventDefault();
+            var articleNo = this.title;
+            var action = $('#viewForm').attr('action');
+            action += articleNo;
+            $('#viewForm').attr('action', action);
+            $('#viewForm').submit();
+        });
+        //Paging
+        $('#paging a').click(function (e) {
+            e.preventDefault();
+            var page = this.title;
+            $('#listForm input[name*=page]').val(page);
+            $('#listForm').submit();
+        });
+        //Write Button on Search Button
+        $('#list-menu > input').click(function () {
+            $('#writeForm').submit();
+        });
+
+    });
     function displayComments() {
         var url = '/comments/' + ${articleNo};
         $.getJSON(url, function (data) {
@@ -21,15 +117,15 @@
                 if (item.editable === true) {
                     comments = comments
                             + '<span class="modify-del">'
-                            + '<a href="#" class="comment-modify-link">' + $('#global-modify').attr('title') + '</a> |'
-                            + '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">' + $('#global-delete').attr('title') + '</a>'
+                            + '<a href="#" class="comment-modify-link">' + '<spring:message code="global.modify" />' + '</a> |'
+                            + '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">' + '<spring:message code="global.delete" />' + '</a>'
                             + '</span>';
                 }
                 comments = comments
                         + '<div class="comment-memo">' + item.memo + '</div>'
                         + '<form class="comment-form" action="/comments/' + ${articleNo } + '/' + item.commentNo + '" method="put" style="display: none;">'
                         + '<div style="text-align: right;">'
-                        + '<a href="#" class="comment-modify-submit-link">' + $('#global-submit').attr('title') + '</a> | <a href="#" class="comment-modify-cancel-link">' + $('#global-cancel').attr('title') + '</a>'
+                        + '<a href="#" class="comment-modify-submit-link">' + '<spring:message code="global.submit" />' + '</a> | <a href="#" class="comment-modify-cancel-link">' + '<spring:message code="global.cancel" />' + '</a>'
                         + '</div>'
                         + '<div>'
                         + '<textarea class="comment-textarea" name="memo" rows="7" cols="50">' + item.memo + '</textarea>'
@@ -115,8 +211,7 @@
             });
         } else if ($(e.target).is('.comment-delete-link')) {
             e.preventDefault();
-            var msg = $('#delete-confirm').attr('title');
-            var chk = confirm(msg);
+            var chk = confirm('<spring:message code="delete.confirm" />');
             if (chk === false) {
                 return;
             }
@@ -351,10 +446,4 @@
         <input type="hidden" name="_method" value="PUT" />
         <input type="hidden" name="memo" />
     </sf:form>
-    <!-- For JavaScript i18n -->
-    <div id="delete-confirm" title="<spring:message code="delete.confirm" />"></div>
-    <div id="global-modify" title="<spring:message code="global.modify" />"></div>
-    <div id="global-delete" title="<spring:message code="global.delete" />"></div>
-    <div id="global-submit" title="<spring:message code="global.submit" />"></div>
-    <div id="global-cancel" title="<spring:message code="global.cancel" />"></div>    
 </div>
