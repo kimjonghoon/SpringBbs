@@ -24,7 +24,7 @@ function displayJavaScriptResult() {
             $result += str + "\n";
         }
         var $convert = $(this).text().replace(/alert/g, "println");
-        (new Function($convert))();
+        eval($convert);
         $(this).after('<pre class="result">' + $result + '</pre>');
     });
 }
