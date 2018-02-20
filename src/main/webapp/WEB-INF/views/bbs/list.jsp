@@ -23,11 +23,37 @@
         $('#write-btn').click(function() {
             $('#writeForm').submit();
         });
+        $('#numPerPage').change(function() {
+            var numPerPage = $('#numPerPage option:selected').val();
+            if (numPerPage) {
+                createCookie('numPerPage', numPerPage, '30');
+                $('#listForm input[name*=page]').val('1');
+                $('#listForm').submit();
+            }
+        });
     });
+    
+    function createCookie(name, value, days) {
+        var newCookie = name + "=" + escape(value);
+        if (days) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+            newCookie += "; expires=" + expires.toGMTString();
+        }
+        document.cookie = newCookie;
+    }
 </script>
 
 <div id="url-navi">${boardName }</div>
-
+<div style="text-align: right;">
+    <select id="numPerPage">
+        <option value=""><spring:message code="num.per.page" /></option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+</div>
 <table class="bbs-table">
     <tr>
         <th style="width: 60px;">NO</th>
@@ -36,7 +62,7 @@
         <th style="width: 60px;">HIT</th>
     </tr>
     <!--  bbs list begin-->
-    <c:forEach var="article" items="${list }" varStatus="status">	
+    <c:forEach var="article" items="${list }" varStatus="status">
         <tr>
             <td style="text-align: center;">${listItemNo - status.index}</td>
             <td>

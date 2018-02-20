@@ -117,7 +117,7 @@
                 if (item.editable === true) {
                     comments = comments
                             + '<span class="modify-del">'
-                            + '<a href="#" class="comment-modify-link">' + '<spring:message code="global.modify" />' + '</a> |'
+                            + '<a href="#" class="comment-modify-link">' + '<spring:message code="global.modify" />' + '</a> | '
                             + '<a href="#" class="comment-delete-link" title="' + item.commentNo + '">' + '<spring:message code="global.delete" />' + '</a>'
                             + '</span>';
                 }

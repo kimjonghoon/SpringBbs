@@ -20,12 +20,12 @@ import net.java_school.board.Board;
 import net.java_school.board.BoardService;
 import net.java_school.commons.NumbersForPaging;
 import net.java_school.commons.Paginator;
-import net.java_school.commons.WebContants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,13 +56,13 @@ public class BbsController extends Paginator {
 
     //목록
     @RequestMapping(value = "/{boardCd}", method = RequestMethod.GET)
-    public String list(@PathVariable String boardCd, Integer page, String searchWord, Locale locale, Model model) {
+    public String list(@CookieValue(value="numPerPage", defaultValue="10") String num, @PathVariable String boardCd, Integer page, String searchWord, Locale locale, Model model) {
 
         if (page == null) {
             page = 1;
         }
 
-        int numPerPage = 20;
+        int numPerPage = Integer.parseInt(num);
         int pagePerBlock = 10;
 
         int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
@@ -122,7 +122,7 @@ public class BbsController extends Paginator {
 
     //상세보기
     @RequestMapping(value = "/{boardCd}/{articleNo}", method = RequestMethod.GET)
-    public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,
+    public String view(@CookieValue(value="numPerPage", defaultValue="10") String num, @PathVariable String boardCd, @PathVariable Integer articleNo,
             Integer page, String searchWord, Locale locale, HttpServletRequest req, Model model) {
 
         if (page == null) {
@@ -176,7 +176,7 @@ public class BbsController extends Paginator {
         //model.addAttribute("commentList", commentList);
 
         //목록관련
-        int numPerPage = 20;//페이지당 레코드 수
+        int numPerPage = Integer.parseInt(num);//페이지당 레코드 수
         int pagePerBlock = 10;//블록당 페이지 링크수
 
         int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
