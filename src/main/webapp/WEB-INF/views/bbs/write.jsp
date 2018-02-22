@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-
-<script>
+<script>/*
 $(document).ready(function() {
    $('#writeForm').submit(function() {
       var title = $('#writeForm input[name*=title]').val();
@@ -35,7 +34,7 @@ $(document).ready(function() {
    $('#goView').click(function() {
       $('#viewForm').submit(); 
    });
-});
+});*/
 </script>
 
 <div id="url-navi">${boardName }</div>

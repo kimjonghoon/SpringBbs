@@ -547,10 +547,10 @@ article > ul > li {
     padding: 0.2em 0 0.2em 0.5em;
     background: url('../images/circle.gif') no-repeat 0% 50%;
 }
-#next-prev > ul {
+.next-prev > ul {
     list-style-type: none;
 }
-#next-prev > ul > li {
+.next-prev > ul > li {
     padding: 0.2em 0 0.2em 0.5em;
     background: url('../images/circle.gif') no-repeat 0% 50%;
 }

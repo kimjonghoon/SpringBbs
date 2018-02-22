@@ -9,8 +9,8 @@
     <name>spring-bbs Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <spring.version>5.0.3.RELEASE</spring.version>
-        <spring.security.version>5.0.1.RELEASE</spring.security.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
+        <spring.security.version>5.0.2.RELEASE</spring.security.version>
         <jdk.version>1.8</jdk.version>
     </properties>
     <dependencies>

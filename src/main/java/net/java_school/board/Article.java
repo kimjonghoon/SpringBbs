@@ -46,7 +46,7 @@ public class Article {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.trim();
     }
 
     public String getContent() {
@@ -54,7 +54,7 @@ public class Article {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content.trim();
     }
 
     public String getEmail() {
