@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+             xmlns:beans="http://www.springframework.org/schema/beans" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http>
-		<access-denied-handler error-page="/403" />
-		<intercept-url pattern="/download/**" access="permitAll" />
-		<intercept-url pattern="/user/bye_confirm" access="permitAll" />
-		<intercept-url pattern="/user/welcome" access="permitAll" />
-		<intercept-url pattern="/user/signUp" access="permitAll" />
-		<intercept-url pattern="/user/login" access="permitAll" />
-		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-		<intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+    <http>
+        <access-denied-handler error-page="/403" />
+        <intercept-url pattern="/download/**" access="permitAll" />
+        <intercept-url pattern="/user/bye_confirm" access="permitAll" />
+        <intercept-url pattern="/user/welcome" access="permitAll" />
+        <intercept-url pattern="/user/signUp" access="permitAll" />
+        <intercept-url pattern="/user/login" access="permitAll" />
+        <intercept-url pattern="/resources/**" access="permitAll" />
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/bbs/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 
-		<form-login
-			login-page="/users/login"
-			authentication-failure-url="/users/login?error=1"
-			default-target-url="/bbs/free?page=1" />
+        <form-login
+            login-page="/users/login"
+            authentication-failure-url="/users/login?error=1"
+            default-target-url="/bbs/free?page=1" />
 
-		<logout logout-success-url="/" invalidate-session="true" />
+        <logout logout-success-url="/" invalidate-session="true" />
 
-		<session-management>
-			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
-		</session-management>
+        <session-management>
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
 
-	</http>
+    </http>
 	
-	<!-- http에 access-denied-handler ref="my403"와 같이 설정했다면 다음이 필요	-->
-	<!-- 	
-	<beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
-		<beans:property name="errorPage" value="403" />
-	</beans:bean> 
-	-->
+    <!-- http에 access-denied-handler ref="my403"와 같이 설정했다면 다음이 필요	-->
+    <!-- 	
+    <beans:bean id="my403" class="net.java_school.spring.MyAccessDeniedHandler">
+            <beans:property name="errorPage" value="403" />
+    </beans:bean> 
+    -->
 	
-	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-	</beans:bean>
+    <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </beans:bean>
 	
-	<authentication-manager>
-		<authentication-provider>
-			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select email as username,passwd as password,1 as enabled
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+                                           users-by-username-query="select email as username,passwd as password,1 as enabled
           from member where email = ?"
-				authorities-by-username-query="select email as username,authority
+                                           authorities-by-username-query="select email as username,authority
           from authorities where email = ?" />
-			<password-encoder ref="bcryptPasswordEncoder" />          
-		</authentication-provider>
-	</authentication-manager>
+            <password-encoder ref="bcryptPasswordEncoder" />          
+        </authentication-provider>
+    </authentication-manager>
 
 </beans:beans>

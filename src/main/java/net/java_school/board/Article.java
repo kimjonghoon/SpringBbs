@@ -104,4 +104,5 @@ public class Article {
     public void setCommentNum(int commentNum) {
         this.commentNum = commentNum;
     }
+    
 }

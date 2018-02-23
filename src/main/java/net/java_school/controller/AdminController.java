@@ -40,7 +40,7 @@ public class AdminController extends Paginator {
         int totalRecord = userService.getTotalCount(search);
         NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         
 
         /*

@@ -22,127 +22,127 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DownloadController {
 
-	private static final String FILE_DIR = "./download/";
-	private static final String BOARD_DATA_DIR = "./download/data/";
+    private static final String FILE_DIR = "./download/";
+    private static final String BOARD_DATA_DIR = "./download/data/";
 
-	@GetMapping("/download/{filename:.+}")
-	public ResponseEntity<InputStreamResource> download(@PathVariable String filename, HttpServletRequest req) throws IOException {
+    @GetMapping("/download/{filename:.+}")
+    public ResponseEntity<InputStreamResource> download(@PathVariable String filename, HttpServletRequest req) throws IOException {
 
-		File file = new File(FILE_DIR + filename);
+        File file = new File(FILE_DIR + filename);
 
-		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-		boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-		if (ie) {
-			filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-		} else {
-			filename = new String(filename.getBytes("UTF-8"), "8859_1");
-		}
+        boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
+        if (ie) {
+            filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+        } else {
+            filename = new String(filename.getBytes("UTF-8"), "8859_1");
+        }
 
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"")
-				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length())
-				.body(resource);
-	}
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length())
+                .body(resource);
+    }
 
-	//blog example zip file download
-	@PostMapping("/download")
-	public void download(String filename, HttpServletRequest req, HttpServletResponse resp) {
-		OutputStream outputStream = null;
+    //blog example zip file download
+    @PostMapping("/download")
+    public void download(String filename, HttpServletRequest req, HttpServletResponse resp) {
+        OutputStream outputStream = null;
 
-		try {
-			File file = new File(FILE_DIR + filename);
+        try {
+            File file = new File(FILE_DIR + filename);
 
-			String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
+            String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
 
-			if (filetype.trim().equalsIgnoreCase("txt")) {
-				resp.setContentType("text/plain");
-			} else {
-				resp.setContentType("application/octet-stream");
-			}
+            if (filetype.trim().equalsIgnoreCase("txt")) {
+                resp.setContentType("text/plain");
+            } else {
+                resp.setContentType("application/octet-stream");
+            }
 
-			resp.setContentLength((int) file.length());
+            resp.setContentLength((int) file.length());
 
-			boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-			if (ie) {
-				filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-			} else {
-				filename = new String(filename.getBytes("UTF-8"), "8859_1");
-			}
+            boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
+            if (ie) {
+                filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+            } else {
+                filename = new String(filename.getBytes("UTF-8"), "8859_1");
+            }
 
-			resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+            resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-			outputStream = resp.getOutputStream();
-			FileInputStream fis = null;
+            outputStream = resp.getOutputStream();
+            FileInputStream fis = null;
 
-			try {
-				fis = new FileInputStream(file);
-				FileCopyUtils.copy(fis, outputStream);
-			} finally {
-				if (fis!= null) {
-					fis.close();
-				}
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				outputStream.close();
-				resp.flushBuffer();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            try {
+                fis = new FileInputStream(file);
+                FileCopyUtils.copy(fis, outputStream);
+            } finally {
+                if (fis != null) {
+                    fis.close();
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                outputStream.close();
+                resp.flushBuffer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	//Board Upload Data Download
-	@PostMapping("/data")
-	public void boardDataDownload(String filename, HttpServletRequest req, HttpServletResponse resp) {
-		OutputStream outputStream = null;
+    //Board Upload Data Download
+    @PostMapping("/data")
+    public void boardDataDownload(String filename, HttpServletRequest req, HttpServletResponse resp) {
+        OutputStream outputStream = null;
 
-		try {
-			File file = new File(BOARD_DATA_DIR + filename);
+        try {
+            File file = new File(BOARD_DATA_DIR + filename);
 
-			String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
+            String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
 
-			if (filetype.trim().equalsIgnoreCase("txt")) {
-				resp.setContentType("text/plain");
-			} else {
-				resp.setContentType("application/octet-stream");
-			}
+            if (filetype.trim().equalsIgnoreCase("txt")) {
+                resp.setContentType("text/plain");
+            } else {
+                resp.setContentType("application/octet-stream");
+            }
 
-			resp.setContentLength((int) file.length());
+            resp.setContentLength((int) file.length());
 
-			boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-			if (ie) {
-				filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-			} else {
-				filename = new String(filename.getBytes("UTF-8"), "8859_1");
-			}
+            boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
+            if (ie) {
+                filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+            } else {
+                filename = new String(filename.getBytes("UTF-8"), "8859_1");
+            }
 
-			resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+            resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-			outputStream = resp.getOutputStream();
-			FileInputStream fis = null;
+            outputStream = resp.getOutputStream();
+            FileInputStream fis = null;
 
-			try {
-				fis = new FileInputStream(file);
-				FileCopyUtils.copy(fis, outputStream);
-			} finally {
-				if (fis!= null) {
-					fis.close();
-				}
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				outputStream.close();
-				resp.flushBuffer();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
+            try {
+                fis = new FileInputStream(file);
+                FileCopyUtils.copy(fis, outputStream);
+            } finally {
+                if (fis != null) {
+                    fis.close();
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                outputStream.close();
+                resp.flushBuffer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

@@ -7,59 +7,58 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface UserService {
 
-	//회원가입
-	public void addUser(User user);
+    //회원가입
+    public void addUser(User user);
 
-	//회원권한 추가
-	public void addAuthority(String email, String authority);
+    //회원권한 추가
+    public void addAuthority(String email, String authority);
 
-	//내 정보 수정
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public int editAccount(User user);
+    //내 정보 수정
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public int editAccount(User user);
 
-	//비밀번호 변경
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public int changePasswd(String currentPasswd, String newPasswd, String email);
+    //비밀번호 변경
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public int changePasswd(String currentPasswd, String newPasswd, String email);
 
-	//탈퇴
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER') and #user.email == principal.username")
-	public void bye(User user);
+    //탈퇴
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER') and #user.email == principal.username")
+    public void bye(User user);
 
-	//회원찾기
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public User getUser(String email);
+    //회원찾기
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public User getUser(String email);
 
-	//회원목록
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public List<User> getAllUser(HashMap<String, String> hashmap);
+    //회원목록
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<User> getAllUser(HashMap<String, String> hashmap);
 
-	//회원수
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public int getTotalCount(String search);
-	
-	//권한구하기
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String getAuthority(String email);
-	
-	//사용자 정보 수정
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void editAccountByAdmin(User user);
-	
-	//비밀번호 변경 by 관리자
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void changePasswdByAdmin(User user);
+    //회원수
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public int getTotalCount(String search);
 
-	//사용자 삭제
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void delUser(User user);
-	
-	//사용자 권한
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public List<String> getAuthoritiesOfUser(String email);
-	
-	//사용자 권한 삭제
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void delAuthorityOfUser(String email, String authority);
-	
-	
+    //권한구하기
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String getAuthority(String email);
+
+    //사용자 정보 수정
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void editAccountByAdmin(User user);
+
+    //비밀번호 변경 by 관리자
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void changePasswdByAdmin(User user);
+
+    //사용자 삭제
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void delUser(User user);
+
+    //사용자 권한
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<String> getAuthoritiesOfUser(String email);
+
+    //사용자 권한 삭제
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void delAuthorityOfUser(String email, String authority);
+
 }

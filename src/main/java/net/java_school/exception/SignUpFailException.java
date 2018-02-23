@@ -25,5 +25,4 @@ public class SignUpFailException extends RuntimeException {
         super(cause);
     }
 
-    
 }

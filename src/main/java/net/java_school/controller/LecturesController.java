@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LecturesController {
 
-	@RequestMapping(value="{category}/{lecture}", method=RequestMethod.GET)
-	public String getPosts(@PathVariable String category, @PathVariable String lecture) {
-		return category + "/" + lecture;
-	}
+    @RequestMapping(value = "{category}/{lecture}", method = RequestMethod.GET)
+    public String getPosts(@PathVariable String category, @PathVariable String lecture) {
+        return category + "/" + lecture;
+    }
 }

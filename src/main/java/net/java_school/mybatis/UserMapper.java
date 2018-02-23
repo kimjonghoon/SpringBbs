@@ -9,35 +9,35 @@ import net.java_school.user.User;
 
 public interface UserMapper {
 
-	public void insert(User user);
+    public void insert(User user);
 
-	public void insertAuthority(
-			@Param("email") String email, 
-			@Param("authority") String authority);
+    public void insertAuthority(
+            @Param("email") String email,
+            @Param("authority") String authority);
 
-	public int update(User user);
+    public int update(User user);
 
-	public int updatePasswd(
-			@Param("currentPasswd") String currentPasswd, 
-			@Param("newPasswd") String newPasswd, 
-			@Param("email") String email);
+    public int updatePasswd(
+            @Param("currentPasswd") String currentPasswd,
+            @Param("newPasswd") String newPasswd,
+            @Param("email") String email);
 
-	public int delete(User user);
+    public int delete(User user);
 
-	public void deleteAuthority(@Param("email") String email);
+    public void deleteAuthority(@Param("email") String email);
 
-	public User selectOne(@Param("email") String email);
+    public User selectOne(@Param("email") String email);
 
-	public int selectTotalCount(@Param("search") String search);
+    public int selectTotalCount(@Param("search") String search);
 
-	public String selectOneAuthority(String email);
+    public String selectOneAuthority(String email);
 
-	public void updatePasswdByAdmin(User user);
+    public void updatePasswdByAdmin(User user);
 
-	public List<String> selectAuthoritiesOfUser(@Param("email") String email);
+    public List<String> selectAuthoritiesOfUser(@Param("email") String email);
 
-	public void deleteAuthorityOfUser(@Param("email") String email, @Param("authority") String authority);
-	
-	public List<User> selectAll(HashMap<String, String> hashmap);	
+    public void deleteAuthorityOfUser(@Param("email") String email, @Param("authority") String authority);
+
+    public List<User> selectAll(HashMap<String, String> hashmap);
 
 }

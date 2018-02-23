@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-<!-- Oracle -->
+    <!-- Oracle -->
 
-<!-- 	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
-		<property name="username" value="java" />
-		<property name="password" value="school" />
-		<property name="maxActive" value="100" />
-		<property name="maxWait" value="1000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value=" SELECT 1 FROM DUAL" />
-	</bean>
- -->
+    <!-- 	
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+            <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+            <property name="username" value="java" />
+            <property name="password" value="school" />
+            <property name="maxActive" value="100" />
+            <property name="maxWait" value="1000" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="defaultAutoCommit" value="true" />
+            <property name="validationQuery" value=" SELECT 1 FROM DUAL" />
+    </bean>
+    -->
  
-<!-- MySQL -->
+    <!-- MySQL -->
 
-<!-- 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;characterEncoding=UTF-8" />
-		<property name="username" value="java" />
-		<property name="password" value="school" />
-		<property name="maxActive" value="100" />
-		<property name="maxWait" value="1000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value="SELECT 1" />
-	</bean> 
- -->
+    <!-- 
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;characterEncoding=UTF-8" />
+            <property name="username" value="java" />
+            <property name="password" value="school" />
+            <property name="maxActive" value="100" />
+            <property name="maxWait" value="1000" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="defaultAutoCommit" value="true" />
+            <property name="validationQuery" value="SELECT 1" />
+    </bean> 
+    -->
 
-<!-- MariaDB -->
+    <!-- MariaDB -->
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url" value="jdbc:mariadb://localhost:3306/javaskool" />
-		<property name="username" value="java" />
-		<property name="password" value="school" />
-		<property name="maxActive" value="100" />
-		<property name="maxWait" value="1000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value="SELECT 1" />
-	</bean> 
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+        <property name="url" value="jdbc:mariadb://localhost:3306/javaskool" />
+        <property name="username" value="java" />
+        <property name="password" value="school" />
+        <property name="maxActive" value="100" />
+        <property name="maxWait" value="1000" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="defaultAutoCommit" value="true" />
+        <property name="validationQuery" value="SELECT 1" />
+    </bean> 
 
  
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
-	</bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:net/java_school/mybatis/Configuration.xml" />
+    </bean>
 
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1000000" />
-	</bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1000000" />
+    </bean>
 
 </beans>

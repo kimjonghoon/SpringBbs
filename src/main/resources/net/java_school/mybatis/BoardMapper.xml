@@ -6,312 +6,311 @@
 
 <mapper namespace="net.java_school.mybatis.BoardMapper">
 
-	<select id="selectOneBoard" resultType="Board">
-	    SELECT * FROM board WHERE boardcd = #{boardCd}
-	</select>
+    <select id="selectOneBoard" resultType="Board">
+        SELECT * FROM board WHERE boardcd = #{boardCd}
+    </select>
 
-	<select id="selectAllBoard" resultType="Board">
-	    SELECT * FROM board
-	</select>
-	
-	<update id="updateBoard" parameterType="Board">
-		UPDATE board SET boardnm = #{boardNm}, boardnm_ko = #{boardNm_ko}
-		WHERE boardcd = #{boardCd}
-	</update>
-	
-	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO board VALUES (#{boardCd}, #{boardNm}, #{boardNm_ko})
-	</insert>
-	
-	<update id="update" parameterType="Article">
-		UPDATE article 
-		SET title = #{title}, content = #{content} 
-		WHERE articleno = #{articleNo}
-	</update>
+    <select id="selectAllBoard" resultType="Board">
+        SELECT * FROM board
+    </select>
 
-	<delete id="delete" parameterType="int">
-		DELETE FROM article WHERE articleno = #{articleNo}
-	</delete>
+    <update id="updateBoard" parameterType="Board">
+        UPDATE board SET boardnm = #{boardNm}, boardnm_ko = #{boardNm_ko}
+        WHERE boardcd = #{boardCd}
+    </update>
 
-	<select id="selectListOfAttachFiles" parameterType="int" resultType="AttachFile">
-		SELECT 
-			attachfileno,
-			filename,
-			filetype,
-			filesize,
-			articleno,
-			email 
-		FROM attachfile 
-		WHERE articleno = #{articleNo} 
-		ORDER BY attachfileno
-	</select>
+    <insert id="insertBoard" parameterType="Board">
+        INSERT INTO board VALUES (#{boardCd}, #{boardNm}, #{boardNm_ko})
+    </insert>
 
-	<delete id="deleteFile" parameterType="int">
-		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
-	</delete>
+    <update id="update" parameterType="Article">
+        UPDATE article 
+        SET title = #{title}, content = #{content} 
+        WHERE articleno = #{articleNo}
+    </update>
 
-	<update id="updateComment" parameterType="Comment">
-		UPDATE comments SET memo = #{memo} WHERE commentno = #{commentNo}
-	</update>
-	
-	<delete id="deleteComment" parameterType="int">
-		DELETE FROM comments WHERE commentno = #{commentNo}
-	</delete>
+    <delete id="delete" parameterType="int">
+        DELETE FROM article WHERE articleno = #{articleNo}
+    </delete>
 
-	<select id="selectOneAttachFile" parameterType="int" resultType="AttachFile">
-		SELECT
-			attachfileno,
-			filename,
-			filetype,
-			filesize,
-			articleno,
-			email
-		FROM
-			attachfile
-		WHERE
-			attachfileno = #{attachfileno}
-	</select>
+    <select id="selectListOfAttachFiles" parameterType="int" resultType="AttachFile">
+        SELECT 
+            attachfileno,
+            filename,
+            filetype,
+            filesize,
+            articleno,
+            email 
+        FROM attachfile 
+        WHERE articleno = #{articleNo} 
+        ORDER BY attachfileno
+    </select>
 
-	<select id="selectOneComment" parameterType="int" resultType="Comment">
-		SELECT 
-			commentno,
-			articleno,
-			email,
-			memo,
-			regdate 
-		FROM comments 
-		WHERE
-			commentno = #{commentNo}
-	</select>
+    <delete id="deleteFile" parameterType="int">
+        DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
+    </delete>
 
-	<select id="selectCountOfViews" parameterType="int" resultType="int">
-		SELECT count(*) FROM views 
-		WHERE 
-			articleNo = #{articleNo}
-	</select>
+    <update id="updateComment" parameterType="Comment">
+        UPDATE comments SET memo = #{memo} WHERE commentno = #{commentNo}
+    </update>
 
-	<!-- MySQL and MariaDB start -->
-	
-	
-	<select id="selectListOfComments" parameterType="int" resultType="Comment">
-		SELECT 
-			commentno, 
-			articleno, 
-			c.email, 
-			ifNull(name, 'Anonymous') name,
-			memo, 
-			regdate
-		FROM comments as c left join member as m on c.email = m.email
-		WHERE 
-			articleno = #{articleNo}
-		ORDER BY commentno DESC
-	</select>	
-	<insert id="insertComment" parameterType="Comment">
-		INSERT INTO comments (articleno, email, memo, regdate)
-		VALUES (#{articleNo}, #{email}, #{memo}, now())
-	</insert>	
-	<select id="selectNextOne" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title 
-		FROM article 
-		WHERE 
-			boardCd = #{boardCd} 
-			AND articleno &gt; #{articleNo}
-		<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
-		</if> 
-		ORDER BY articleno
-		LIMIT 1
-	</select>
-	<select id="selectPrevOne" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title 
-		FROM article 
-		WHERE 
-			boardCd = #{boardCd} 
-			AND articleno &lt; #{articleNo}
-		<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
-		</if> 
-		ORDER BY articleno DESC
-		LIMIT 1
-	</select>	
-	<select id="selectOne" parameterType="int" resultType="Article">
-		SELECT 
-			a.articleno,
-			title,
-			content,
-			a.email,
-			ifNull(name, 'Anonymous') name,
-			regdate
-		FROM 
-			article as a left join member as m on a.email = m.email
-		WHERE 
-			a.articleno = #{articleNo}
-	</select>	
-	<insert id="insertOneViews" parameterType="hashmap">
-		INSERT INTO views (articleNo, ip, yearMonthDayHour) values (#{articleNo}, #{ip}, #{yearMonthDayHour})
-	</insert>	
-	<insert id="insertAttachFile" parameterType="AttachFile">
-		INSERT INTO attachfile (filename, filetype, filesize, articleno, email)
-		VALUES
-		(#{filename}, #{filetype}, #{filesize}, #{articleNo}, #{email})
-	</insert>
-	<insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleNo">
-		INSERT INTO article (boardcd, title, content, email, regdate)
-		VALUES
-		(#{boardCd}, #{title}, #{content}, #{email}, now())
-	</insert>
-	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
-		SELECT 
-			a.articleno, a.title, a.regdate,
-			count(distinct(v.no)) hit, 
-			count(distinct(f.attachfileno)) attachfileNum, 
-			count(distinct(c.commentno)) commentNum
-		FROM 
-			article as a left join attachfile as f on a.articleno = f.articleno
-				left join comments as c on a.articleno = c.articleno
-				left join views as v on a.articleno = v.articleNo
-		WHERE
-			a.boardcd = #{boardCd}
-			<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
-			</if>
-		GROUP BY a.articleno, title, a.regdate
-		ORDER BY articleno DESC
-		LIMIT ${offset}, ${rowCount}
-	</select>
-	<select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
-		SELECT count(*) FROM article 
-		WHERE 
-			boardcd = #{boardCd}
-			<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
-			</if>
-	</select>
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comments WHERE commentno = #{commentNo}
+    </delete>
 
-	
-	<!-- MySQL and MariaDB end -->
+    <select id="selectOneAttachFile" parameterType="int" resultType="AttachFile">
+        SELECT
+            attachfileno,
+            filename,
+            filetype,
+            filesize,
+            articleno,
+            email
+        FROM
+            attachfile
+        WHERE
+            attachfileno = #{attachfileno}
+    </select>
 
-	
-	<!-- Oracle start -->
+    <select id="selectOneComment" parameterType="int" resultType="Comment">
+        SELECT 
+            commentno,
+            articleno,
+            email,
+            memo,
+            regdate 
+        FROM comments 
+        WHERE
+            commentno = #{commentNo}
+    </select>
+
+    <select id="selectCountOfViews" parameterType="int" resultType="int">
+        SELECT count(*) FROM views 
+        WHERE 
+                articleNo = #{articleNo}
+    </select>
+
+    <!-- MySQL and MariaDB start -->
+
+
+    <select id="selectListOfComments" parameterType="int" resultType="Comment">
+        SELECT 
+            commentno, 
+            articleno, 
+            c.email, 
+            ifNull(name, 'Anonymous') name,
+            memo, 
+            regdate
+        FROM comments as c left join member as m on c.email = m.email
+        WHERE 
+            articleno = #{articleNo}
+        ORDER BY commentno DESC
+    </select>	
+    <insert id="insertComment" parameterType="Comment">
+        INSERT INTO comments (articleno, email, memo, regdate)
+        VALUES (#{articleNo}, #{email}, #{memo}, now())
+    </insert>	
+    <select id="selectNextOne" parameterType="hashmap" resultType="Article">
+        SELECT articleno, title 
+        FROM article 
+        WHERE 
+            boardCd = #{boardCd} 
+            AND articleno &gt; #{articleNo}
+        <if test="searchWord != null and searchWord != ''">
+            AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+        </if> 
+        ORDER BY articleno
+        LIMIT 1
+    </select>
+    <select id="selectPrevOne" parameterType="hashmap" resultType="Article">
+        SELECT articleno, title 
+        FROM article 
+        WHERE 
+            boardCd = #{boardCd} 
+            AND articleno &lt; #{articleNo}
+        <if test="searchWord != null and searchWord != ''">
+            AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+        </if> 
+        ORDER BY articleno DESC
+        LIMIT 1
+    </select>	
+    <select id="selectOne" parameterType="int" resultType="Article">
+        SELECT 
+            a.articleno,
+            title,
+            content,
+            a.email,
+            ifNull(name, 'Anonymous') name,
+            regdate
+        FROM 
+            article as a left join member as m on a.email = m.email
+        WHERE 
+            a.articleno = #{articleNo}
+    </select>	
+    <insert id="insertOneViews" parameterType="hashmap">
+        INSERT INTO views (articleNo, ip, yearMonthDayHour) values (#{articleNo}, #{ip}, #{yearMonthDayHour})
+    </insert>	
+    <insert id="insertAttachFile" parameterType="AttachFile">
+        INSERT INTO attachfile (filename, filetype, filesize, articleno, email)
+        VALUES
+        (#{filename}, #{filetype}, #{filesize}, #{articleNo}, #{email})
+    </insert>
+    <insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleNo">
+        INSERT INTO article (boardcd, title, content, email, regdate)
+        VALUES
+        (#{boardCd}, #{title}, #{content}, #{email}, now())
+    </insert>
+    <select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
+        SELECT 
+            a.articleno, a.title, a.regdate,
+            count(distinct(v.no)) hit, 
+            count(distinct(f.attachfileno)) attachfileNum, 
+            count(distinct(c.commentno)) commentNum
+        FROM 
+            article as a left join attachfile as f on a.articleno = f.articleno
+            left join comments as c on a.articleno = c.articleno
+            left join views as v on a.articleno = v.articleNo
+        WHERE
+            a.boardcd = #{boardCd}
+            <if test="searchWord != null and searchWord != ''">
+            AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+            </if>
+        GROUP BY a.articleno, title, a.regdate
+        ORDER BY articleno DESC
+        LIMIT ${offset}, ${rowCount}
+    </select>
+    <select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
+        SELECT count(*) FROM article 
+        WHERE 
+            boardcd = #{boardCd}
+            <if test="searchWord != null and searchWord != ''">
+            AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+            </if>
+    </select>
+
+
+    <!-- MySQL and MariaDB end -->
+
+
+    <!-- Oracle start -->
 
 <!-- 	
-	<select id="selectListOfComments" parameterType="int" resultType="Comment">
-		SELECT 
-			commentno, 
-			articleno, 
-			c.email, 
-			NVL(name, 'Anonymous') name,
-			memo, 
-			regdate
-		FROM 
-			comments c left join member m on c.email = m.email
-		WHERE 
-			articleno = #{articleNo}
-		ORDER BY commentno DESC
-	</select>	
-	<insert id="insertComment" parameterType="Comment">
-		INSERT INTO comments (commentno, articleno, email, memo, regdate)
-		VALUES (seq_comments.nextval, #{articleNo}, #{email}, #{memo}, sysdate)
-	</insert>	
-	<select id="selectNextOne" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title
-		FROM
-			(SELECT rownum r,a.*
-			FROM
-				(SELECT articleno, title 
-				FROM article 
-				WHERE 
-					boardCd = #{boardCd} 
-					AND articleno &gt; #{articleNo}
-				<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
-				</if> 
-				ORDER BY articleno) 
-			a)
-		WHERE r = 1
-	</select>
-	<select id="selectPrevOne" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title
-		FROM
-			(SELECT rownum r,a.*
-			FROM
-				(SELECT articleno, title 
-				FROM article 
-				WHERE 
-					boardCd = #{boardCd} 
-					AND articleno &lt; #{articleNo}
-				<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
-				</if> 
-				ORDER BY articleno DESC)
-				a)
-		WHERE r = 1
-	</select>	
-	<select id="selectOne" parameterType="int" resultType="Article">
-		SELECT 
-			a.articleno,
-			title,
-			content,
-			a.email,
-			NVL(name, 'Anonymous') name,
-			regdate
-		FROM 
-			article a left join member m on a.email = m.email
-		WHERE 
-			articleno = #{articleNo}
-	</select>
-	<insert id="insertOneViews" parameterType="hashmap">
-		INSERT INTO views values (seq_views.nextval, #{articleNo}, #{ip}, #{yearMonthDayHour})
-	</insert>	
-	<insert id="insertAttachFile" parameterType="AttachFile">
-		INSERT INTO attachFile (attachfileno, filename, filetype, filesize, articleno, email)
-		VALUES
-		(seq_attachfile.nextval, #{filename}, #{filetype}, #{filesize}, #{articleNo}, #{email})
-	</insert>
-		
-	<insert id="insert" parameterType="Article" useGeneratedKeys="true">
-		<selectKey keyProperty="articleNo" resultType="int" order="BEFORE">
-			SELECT seq_article.nextval FROM dual
-		</selectKey>
-		INSERT INTO article (articleno, boardcd, title, content, email, regdate)
-		VALUES
-		(#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, sysdate)
-	</insert>
-	<select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
-		SELECT count(*) FROM article 
-		WHERE 
-			boardcd = #{boardCd}
-			<if test="searchWord != null and searchWord != ''">
-			AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
-			</if>
-	</select>
-	<select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
-	SELECT articleno, title, regdate, hit, attachfileNum, commentNum 
-	FROM (
-		SELECT rownum R,A.* 
-			FROM (
-				SELECT 
-					a.articleno, a.title, a.regdate,
-					count(distinct(v.no)) hit, 
-					count(distinct(f.attachfileno)) attachfileNum, 
-					count(distinct(c.commentno)) commentNum
-				FROM 
-					article a left join attachfile f on a.articleno = f.articleno
-					left join comments c on a.articleno = c.articleno
-					left join views v on a.articleno = v.articleNo
-				WHERE
-					a.boardcd = #{boardCd}
-					<if test="searchWord != null and searchWord != ''">
-					AND (title LIKE '%${searchWord}%' 	OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
-					</if>
-				GROUP BY a.articleno, title, a.regdate
-				ORDER BY articleno DESC
-				) A
-		)
-	WHERE R BETWEEN #{start} AND #{end}
-	</select>	
--->
+    <select id="selectListOfComments" parameterType="int" resultType="Comment">
+        SELECT 
+            commentno, 
+            articleno, 
+            c.email, 
+            NVL(name, 'Anonymous') name,
+            memo, 
+            regdate
+        FROM 
+            comments c left join member m on c.email = m.email
+        WHERE 
+            articleno = #{articleNo}
+        ORDER BY commentno DESC
+    </select>	
+    <insert id="insertComment" parameterType="Comment">
+        INSERT INTO comments (commentno, articleno, email, memo, regdate)
+        VALUES (seq_comments.nextval, #{articleNo}, #{email}, #{memo}, sysdate)
+    </insert>	
+    <select id="selectNextOne" parameterType="hashmap" resultType="Article">
+        SELECT articleno, title
+        FROM
+            (SELECT rownum r,a.*
+            FROM
+                (SELECT articleno, title 
+                FROM article 
+                WHERE 
+                    boardCd = #{boardCd} 
+                    AND articleno &gt; #{articleNo}
+                <if test="searchWord != null and searchWord != ''">
+                    AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
+                </if> 
+                ORDER BY articleno) 
+            a)
+        WHERE r = 1
+    </select>
+    <select id="selectPrevOne" parameterType="hashmap" resultType="Article">
+        SELECT articleno, title
+        FROM
+            (SELECT rownum r,a.*
+            FROM
+                (SELECT articleno, title 
+                FROM article 
+                WHERE 
+                    boardCd = #{boardCd} 
+                    AND articleno &lt; #{articleNo}
+                <if test="searchWord != null and searchWord != ''">
+                    AND (title LIKE '%${searchWord}%' OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
+                </if> 
+                ORDER BY articleno DESC)
+                a)
+        WHERE r = 1
+    </select>	
+    <select id="selectOne" parameterType="int" resultType="Article">
+        SELECT 
+            a.articleno,
+            title,
+            content,
+            a.email,
+            NVL(name, 'Anonymous') name,
+            regdate
+        FROM 
+            article a left join member m on a.email = m.email
+        WHERE 
+            articleno = #{articleNo}
+    </select>
+    <insert id="insertOneViews" parameterType="hashmap">
+        INSERT INTO views values (seq_views.nextval, #{articleNo}, #{ip}, #{yearMonthDayHour})
+    </insert>	
+    <insert id="insertAttachFile" parameterType="AttachFile">
+        INSERT INTO attachFile (attachfileno, filename, filetype, filesize, articleno, email)
+        VALUES
+        (seq_attachfile.nextval, #{filename}, #{filetype}, #{filesize}, #{articleNo}, #{email})
+    </insert>
+    <insert id="insert" parameterType="Article" useGeneratedKeys="true">
+        <selectKey keyProperty="articleNo" resultType="int" order="BEFORE">
+            SELECT seq_article.nextval FROM dual
+        </selectKey>
+        INSERT INTO article (articleno, boardcd, title, content, email, regdate)
+        VALUES
+        (#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, sysdate)
+    </insert>
+    <select id="selectCountOfArticles" parameterType="hashmap" resultType="int">
+            SELECT count(*) FROM article 
+            WHERE 
+                    boardcd = #{boardCd}
+                    <if test="searchWord != null and searchWord != ''">
+                    AND (title LIKE '%${searchWord}%' 	OR 	DBMS_LOB.INSTR(content, #{searchWord}) > 0)
+                    </if>
+    </select>
+    <select id="selectListOfArticles" parameterType="hashmap" resultType="Article">
+        SELECT articleno, title, regdate, hit, attachfileNum, commentNum 
+        FROM (
+            SELECT rownum R,A.* 
+                FROM (
+                    SELECT 
+                        a.articleno, a.title, a.regdate,
+                        count(distinct(v.no)) hit, 
+                        count(distinct(f.attachfileno)) attachfileNum, 
+                        count(distinct(c.commentno)) commentNum
+                    FROM 
+                        article a left join attachfile f on a.articleno = f.articleno
+                        left join comments c on a.articleno = c.articleno
+                        left join views v on a.articleno = v.articleNo
+                    WHERE
+                        a.boardcd = #{boardCd}
+                        <if test="searchWord != null and searchWord != ''">
+                        AND (title LIKE '%${searchWord}%' 	OR DBMS_LOB.INSTR(content, #{searchWord}) > 0)
+                        </if>
+                    GROUP BY a.articleno, title, a.regdate
+                    ORDER BY articleno DESC
+                    ) A
+            )
+        WHERE R BETWEEN #{start} AND #{end}
+    </select>	
+    -->
 
-	<!-- Oracle end -->	
+    <!-- Oracle end -->	
 	
- </mapper>
+</mapper>

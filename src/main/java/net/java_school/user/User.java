@@ -42,7 +42,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getPasswd() {
@@ -50,7 +50,7 @@ public class User {
     }
 
     public void setPasswd(String passwd) {
-        this.passwd = passwd;
+        this.passwd = passwd.trim();
     }
 
     public String getName() {
@@ -58,7 +58,7 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getMobile() {
@@ -66,7 +66,7 @@ public class User {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile;
+        this.mobile = mobile.trim();
     }
 
     public List<String> getAuthorities() {

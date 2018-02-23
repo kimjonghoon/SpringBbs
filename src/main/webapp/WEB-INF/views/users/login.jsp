@@ -8,13 +8,11 @@
 <h2><spring:message code="user.login.heading" /></h2>
 
 <c:if test="${not empty param.error }">
-	<h3>${SPRING_SECURITY_LAST_EXCEPTION.message }</h3>
+    <h3>${SPRING_SECURITY_LAST_EXCEPTION.message }</h3>
 </c:if>
 <c:url var="loginUrl" value="/login" />
 <form action="${loginUrl }" method="post">
-<p style="margin:0; padding: 0;">
 <input type="hidden"	name="${_csrf.parameterName}" value="${_csrf.token}" />
-</p>
 <table>
 <tr>
     <td style="width: 200px;"><spring:message code="user.email" /></td>

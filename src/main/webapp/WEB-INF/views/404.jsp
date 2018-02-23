@@ -24,7 +24,6 @@
             <div id="content">
                 <div id="url-navi">Error</div>
                 <h2>404</h2>
-                그런 페이지가 없습니다.
             </div>
         </div>
     

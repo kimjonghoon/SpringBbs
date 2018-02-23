@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class HomeController {
 
-	@RequestMapping(method=RequestMethod.GET)
-	public String index() {
-		return "index";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
 
-	@RequestMapping(value="/403", method={RequestMethod.GET,RequestMethod.POST})
-	public String error403() {
-		return "403";
-	}
+    @RequestMapping(value = "/403", method = {RequestMethod.GET, RequestMethod.POST})
+    public String error403() {
+        return "403";
+    }
 
 }
