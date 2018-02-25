@@ -3,18 +3,62 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>    
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <script type="text/javascript">
-    function check() {
-        //var form = document.getElementById("signUpForm");
-        //TODO Validation 
-        return true;
-    }
+    $(document).ready(function() {
+        $('#signUpForm').submit(function() {
+            var name = $('#signUpForm input[name*=name]').val();
+            name = $.trim(name);
+            if (name.length === 0) {
+                alert('<spring:message code="fullname.validation.error" />');
+                $('#signUpForm input[name*=name]').val('');
+                return false;
+            }
+            var passwd = $('#signUpForm input[name*=passwd]').val();
+            passwd = $.trim(passwd);
+            if (passwd.length === 0) {
+                alert('<spring:message code="passwd.validation.error" />');
+                $('#signUpForm input[name*=passwd]').val('');
+                return false;
+            }
+            var confirm = $('#signUpForm input[name*=confirm]').val();
+            confirm = $.trim(confirm);
+            if (confirm.length === 0) {
+                alert('<spring:message code="passwd.validation.error" />');
+                $('#signUpForm input[name*=confirm]').val('');
+                return false;
+            }
+            if (passwd !== confirm) {
+                alert('<spring:message code="passwd.confirm.not.same" />');
+                return false;
+            }
+            var email = $('#signUpForm input[name*=email]').val();
+            email = $.trim(email);
+            if (email.length === 0) {
+                alert('<spring:message code="email.validation.error" />');
+                $('#signUpForm input[name*=email]').val('');
+                return false;
+            }
+            var mobile = $('#signUpForm input[name*=mobile]').val();
+            mobile = $.trim(mobile);
+            if (mobile.length === 0) {
+                alert('<spring:message code="mobile.validation.error" />');
+                $('#signUpForm input[name*=mobile]').val('');
+                return false;
+            }
+            $('#signUpForm input[name*=name]').val(name);
+            $('#signUpForm input[name*=passwd]').val(passwd);
+            $('#signUpForm input[name*=confirm]').val(confirm);
+            $('#signUpForm input[name*=email]').val(email);
+            $('#signUpForm input[name*=mobile]').val(mobile);
+        });
+        
+    });
 </script>
 
 <div id="url-navi"><spring:message code="user.membership" /></div>
 
 <h2><spring:message code="user.signup.heading" /></h2>
 
-<sf:form id="signUpForm" action="signUp" method="post" modelAttribute="user" onsubmit="return check();">
+<sf:form id="signUpForm" action="signUp" method="post" modelAttribute="user">
     <sf:errors path="*" cssClass="error" />
     <table>
         <tr>
