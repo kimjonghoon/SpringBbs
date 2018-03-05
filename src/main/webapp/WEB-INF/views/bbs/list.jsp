@@ -117,15 +117,13 @@
     <input type="button" value="<spring:message code="bbs.new.article" />" id="write-btn" />
 </div>
 
-<div id="search">
-    <form id="searchForm" method="get">
-        <input type="hidden" name="page" value="1" />
-        <div>
-            <input type="text" name="searchWord" size="15" maxlength="30" />
-            <input type="submit" value="<spring:message code="global.search" />" />
-        </div>	
-    </form>
-</div>
+<form id="searchForm" method="get">
+    <input type="hidden" name="page" value="1" />
+    <div id="search">
+        <input type="text" name="searchWord" size="15" maxlength="30" />
+        <input type="submit" value="<spring:message code="global.search" />" />
+    </div>
+</form>
 
 <div id="form-group">
     <form id="listForm" method="get">

@@ -401,15 +401,13 @@
     <input type="button" value="<spring:message code="bbs.new.article" />" />
 </div>
 
-<div id="search">
-    <form id="searchForm" action="/bbs/${boardCd }/" method="get">
-        <div>
-            <input type="hidden" name="page" value="1" />
-            <input type="text" name="searchWord" size="15" maxlength="30" />
-            <input type="submit" value="<spring:message code="global.search" />" />
-        </div>
-    </form>
-</div>
+<form id="searchForm" action="/bbs/${boardCd }/" method="get">
+    <input type="hidden" name="page" value="1" />
+    <div id="search">
+        <input type="text" name="searchWord" size="15" maxlength="30" />
+    <input type="submit" value="<spring:message code="global.search" />" />
+    </div>
+</form>
 
 <div id="form-group" style="display: none">
     <form id="listForm" action="/bbs/${boardCd }" method="get">
