@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
 <script>
     $(document).ready(function() {
         $('#paging a').click(function(e) {
@@ -30,6 +29,12 @@
                 $('#listForm input[name*=page]').val('1');
                 $('#listForm').submit();
             }
+        });
+        $('#searchForm').submit(function() {
+            var $searchWord = $('#searchForm input[name*=searchWord]').val();
+            $searchWord = $.trim($searchWord);
+            $('#searchForm input[name*=searchWord]').val($searchWord);
+            $('#searchForm').submit();
         });
     });
     

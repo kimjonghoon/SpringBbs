@@ -103,8 +103,14 @@
         $('#list-menu > input').click(function () {
             $('#writeForm').submit();
         });
-
+        $('#searchForm').submit(function() {
+            var $searchWord = $('#searchForm input[name*=searchWord]').val();
+            $searchWord = $.trim($searchWord);
+            $('#searchForm input[name*=searchWord]').val($searchWord);
+            $('#searchForm').submit();
+        });        
     });
+    
     function displayComments() {
         var url = '/comments/' + ${articleNo};
         $.getJSON(url, function (data) {
@@ -396,7 +402,7 @@
 </div>
 
 <div id="search">
-    <form action="/bbs/${boardCd }/" method="get">
+    <form id="searchForm" action="/bbs/${boardCd }/" method="get">
         <div>
             <input type="hidden" name="page" value="1" />
             <input type="text" name="searchWord" size="15" maxlength="30" />
