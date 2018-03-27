@@ -101,7 +101,7 @@ SpringBbs
 	start with 1;
 	
 
-## Database Design (MySQL or MariaDB)
+## Database Design (MySQL)
 
 	mysql --user=root --password mysql
 	
@@ -185,6 +185,8 @@ Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the fol
  
 > mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 
+(You can download ojdbc6.jar from http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html)
+
 ## How to run
 
 $ mvn jetty:run
@@ -218,7 +220,7 @@ Comment out MariaDB datasource.
 	
 	List<User> list = userService.getAllUser(map);
 
-### 4. BbsController.java (in list() and view() methods)
+### 4. list() and view() methods in BbsController.java
 
 	HashMap<String, String> map = new HashMap<String, String>();
 	map.put("boardCd", boardCd);
@@ -233,24 +235,24 @@ Comment out MariaDB datasource.
 	//Oracle end
 	*/
 	
-	//MySQL and MariaDB start
+	//MySQL start
 	Integer offset = (page - 1) * numPerPage;
 	Integer rowCount = numPerPage;
 	map.put("offset", offset.toString());
 	map.put("rowCount", rowCount.toString());
-	//MySQL and MariaDB end
+	//MySQL end
 	
 	List<Article> list = boardService.getArticleList(map);
 
 ### 5. BoardMapper.xml
 	
 	Comment out the code of <!-- Oracle -->
-	Uncomment the code of <!-- MySQL and MariaDB -->
+	Uncomment the code of <!-- MySQL -->
 	
 ### 6. UserMapper.xml
 
 	Comment out the code of <!-- Oracle -->
-	Uncomment the code of <!-- MySQL and MariaDB -->
+	Uncomment the code of <!-- MySQL -->
 	
 ## for Admin Test
 After sign up, add admin role as following.
