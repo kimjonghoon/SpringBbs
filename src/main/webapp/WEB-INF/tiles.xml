@@ -1200,7 +1200,7 @@
         <put-attribute name="title" value="Blog Index" />
         <put-attribute name="keywords" value="Blog Index" />
         <put-attribute name="description" value="Blog Index" />
-        <put-attribute name="article" value="blog-index" cascade="true" />
+        <put-attribute name="article" value="blog-index_en" cascade="true" />
     </definition>
     <definition name="blog/2015/spring-security-password-encoder" extends="app.blog">
         <put-attribute name="title" value="Spring Security Password Encoder" />
@@ -1320,6 +1320,18 @@
         <put-attribute name="title" value="Ajax Like" />
         <put-attribute name="keywords" value="ajax,like" />
         <put-attribute name="description" value="Like using Ajax" />
-        <put-attribute name="article" value="2018/ajax-like" cascade="true" />
+        <put-attribute name="article" value="2018/ajax-like_en" cascade="true" />
+    </definition>
+    <definition name="blog/2018/gaefile" extends="app.blog">
+        <put-attribute name="title" value="File Uploading using Blobstore" />
+        <put-attribute name="keywords" value="Blobstore,fileupload,REST" />
+        <put-attribute name="description" value="File Uploding using Blobstore Service" />
+        <put-attribute name="article" value="2018/gaefile_en" cascade="true" />
+    </definition>
+    <definition name="blog/2018/gae-comment" extends="app.blog">
+        <put-attribute name="title" value="Storing Comment entity to Datastore using Objetify" />
+        <put-attribute name="keywords" value="Objectify,Comment,Ajax,REST" />
+        <put-attribute name="description" value="Storing Comment entity to Datastore using Objectify" />
+        <put-attribute name="article" value="2018/gae-comment_en" cascade="true" />
     </definition>
 </tiles-definitions>

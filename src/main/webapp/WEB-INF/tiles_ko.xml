@@ -1282,4 +1282,16 @@
         <put-attribute name="description" value="Like using Ajax" />
         <put-attribute name="article" value="2018/ajax-like" cascade="true" />
     </definition>
+    <definition name="blog/2018/gaefile" extends="app.blog">
+        <put-attribute name="title" value="구글 앱 엔진에서 Blobstore를 이용하는 파일 업로드" />
+        <put-attribute name="keywords" value="Blobstore,파일 업로드,fileupload,REST" />
+        <put-attribute name="description" value="Blobstore 서비스를 이용하여 파일 업로드 구현" />
+        <put-attribute name="article" value="2018/gaefile" cascade="true" />
+    </definition>
+    <definition name="blog/2018/gae-comment" extends="app.blog">
+        <put-attribute name="title" value="오브젝티파이를 이용해서 댓글을 데이터스토어에 저장하기" />
+        <put-attribute name="keywords" value="Objectify,Comment,Ajax,REST" />
+        <put-attribute name="description" value="오브젝트파이를 이용하여 댓글을 데이터스토어에 저장하기" />
+        <put-attribute name="article" value="2018/gae-comment" cascade="true" />
+    </definition>
 </tiles-definitions>
