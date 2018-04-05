@@ -130,7 +130,6 @@ function initPage() {
       &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
       &lt;input type="hidden" name="page" value="${param.page }" /&gt;
       &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
-      &lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;
       &lt;div style="text-align: right;"&gt;
         <strong>&lt;a href="#"&gt;전송&lt;/a&gt;</strong> | <strong>&lt;a href="#"&gt;취소&lt;/a&gt;</strong>
       &lt;/div&gt;
@@ -242,12 +241,12 @@ for (i = 0; i &lt; divs.length; i++) {
 관련 코드를 수정한다.<br />
 </p>
 
-<pre class="prettyprint">&lt;div class="next-prev""&gt;
+<pre class="prettyprint">&lt;div id="next-prev"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;
-    &lt;p&gt;다음 글 : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title }&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;다음 글 : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title } &lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
   &lt;c:if test="${prevArticle != null }"&gt;
-    &lt;p&gt;이전 글 : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.title }&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;이전 글 : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.article.title }&lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
 &lt;/div&gt;
 </pre>
@@ -257,7 +256,7 @@ initPage() 함수에 다음 코드를 추가한다.
 </p>
 
 <pre class="prettyprint">//다음 글, 이전 글 링크
-var nextPrev = document.getElementsByClassName("next-prev")[0];
+var nextPrev = document.getElementById("next-prev");
 links = nextPrev.getElementsByTagName("a");
 for (i = 0; i &lt; links.length; i++) {
   links[i].onclick = function() {
@@ -352,7 +351,7 @@ while (i--) {
   };
 }  
 //새 글쓰기 버튼
-var writeBtns = document.getElementsByClassName("goWrite");
+var writeBtns = document.getElementById("goWrite");
 i = writeBtns.length;
 while(i--) {
   writeBtns[i].onclick = function() {
@@ -549,7 +548,6 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
       &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
       &lt;input type="hidden" name="page" value="${param.page }" /&gt;
       &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
-      &lt;input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /&gt;
       &lt;div style="text-align: right;"&gt;
         &lt;a href="#" <strong>class="comment-modify-submit-link"</strong>&gt;전송&lt;/a&gt; | &lt;a href="#" <strong>class="comment-modify-cancel-link"</strong>&gt;취소&lt;/a&gt;
       &lt;/div&gt;
@@ -612,7 +610,7 @@ $('.comments').click(function(e) {
 관련 코드는 전과 같다.
 </p>
 
-<pre class="prettyprint">&lt;div class="next-prev"&gt;
+<pre class="prettyprint">&lt;div id="next-prev"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;
     &lt;p&gt;다음 글 : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title }&lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
@@ -626,7 +624,7 @@ $('.comments').click(function(e) {
 $(document).ready(function() {} 함수에 다음 코드를 추가한다.
 </p>
 
-<pre class="prettyprint">$('.next-prev a').click(function(e) {
+<pre class="prettyprint">$('#next-prev a').click(function(e) {
   e.preventDefault();
   var articleNo = this.title;
   $('#viewForm input[name*=articleNo]').val(articleNo);
@@ -679,13 +677,13 @@ $('.goDelete').click(function() {
 //다음 글 버튼
 $('.next-article').click(function() {
   var articleNo = this.title;
-  $('#viewForm input[name*=articleNo]').val(articleNo);
+  $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
 //이전 글 버튼
 $('.prev-article').click(function() {
   var articleNo = this.title;
-  $('#viewForm input[name*=articleNo]').val(articleNo);
+  $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
 //목록버튼
@@ -778,7 +776,7 @@ $(document).ready(function() {} 함수에 다음 코드를 추가한다.<br />
 $('#list-table a').click(function(e) {
   e.preventDefault();
   var articleNo = this.title;
-  $('#viewForm input[name*=articleNo]').val(articleNo);
+  $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
 //페이징 처리

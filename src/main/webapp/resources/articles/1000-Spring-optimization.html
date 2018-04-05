@@ -94,25 +94,6 @@ public class GuestbookController {
 <a href="examples/java-school-guestbook.zip">예제 다운로드</a>
 </p>
 
-<p>
-최종 소스에는 다음 기능을 추가했다.
-</p>
-
-<ol>
-	<li>
-		앱의 모든 뷰가 메인 메뉴와 로그인 페이지를 이용해 화면을 구성하도록, 메인 메뉴<sup>main-menu.jsp</sup>와 로그인<sup>login.jsp</sup> 페이지를 만들었다.
-		/index.jsp, /admin/index.jsp, /guestbook/guestbook.jsp는 메인 메뉴와 로그인 페이지를 인클루드하도록 수정했다.
-		간편한 구현을 위해, 로그인 페이지를 통해 로그인이나 로그아웃하면 홈페이지로 이동하도록 했다.
-	</li>
-	<li>
-		예제를 진행하면서 Guestbook 예제에 서비스 계층을 만들었다.
-		GuestbookController의 "/guestbook" 요청 핸들러가 서비스 계층을 사용하도록 수정했다.
-	</li>
-	<li>
-		전달받은 데이터를 보여주는 역할만을 수행하도록, JSTL를 사용해서 guestbook.jsp를 수정했다.
-	</li>
-</ol>
-
 <span id="refer">참고</span>
 <ul id="references">
 	<li><a href="https://cloud.google.com/appengine/articles/spring_optimization">https://cloud.google.com/appengine/articles/spring_optimization</a></li>

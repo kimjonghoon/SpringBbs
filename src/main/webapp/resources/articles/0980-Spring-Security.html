@@ -5,7 +5,7 @@
 <p>
 <a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a>에서는 
 구글 어카운트와 스트링 시큐리티를 함께 사용하는 방법을 제공한다.
-주소에서 구현한 내용을 다음과 같다.
+주소에서 소개하는 내용을 다음과 같다.
 </p>
 
 <ul>
@@ -33,7 +33,7 @@ pom.xml의 properties 엘리먼트에 다음을 추가한다.
 &lt;properties&gt;
 	&lt;!-- 중간 생략 --&gt;
 	
-	<strong>&lt;spring.security.version&gt;5.0.0.RELEASE&lt;/spring.security.version&gt;</strong>
+	<strong>&lt;spring.security.version&gt;5.0.4.RELEASE&lt;/spring.security.version&gt;</strong>
 &lt;/properties&gt;
 </pre>
 
@@ -181,9 +181,11 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class GoogleAccountsAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         UserService userService = UserServiceFactory.getUserService();
-        response.sendRedirect(userService.createLoginURL("/"));
+        response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
     }
 }
 </pre>
@@ -279,12 +281,13 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class GaeAuthenticationFilter extends GenericFilterBean {
-    private AuthenticationDetailsSource&lt;HttpServletRequest, WebAuthenticationDetails&gt; ads = new WebAuthenticationDetailsSource();
+    private final AuthenticationDetailsSource&lt;HttpServletRequest, WebAuthenticationDetails&gt; ads = new WebAuthenticationDetailsSource();
     
     private AuthenticationManager authenticationManager;
     
     private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
-
+    
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -341,7 +344,8 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class GoogleAccountsAuthenticationProvider implements AuthenticationProvider {
-
+    
+    @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         User googleUser = (User) authentication.getPrincipal();
         
@@ -353,7 +357,8 @@ public class GoogleAccountsAuthenticationProvider implements AuthenticationProvi
 
         return new GaeUserAuthentication(gaeUser, authentication.getDetails());
     }
-
+    
+    @Override
     public final boolean supports(Class&lt;?&gt; authentication) {
         return PreAuthenticatedAuthenticationToken.class.isAssignableFrom(authentication);
     }
