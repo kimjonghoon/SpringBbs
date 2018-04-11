@@ -1,0 +1,154 @@
+<article>
+
+<h1>New Article and SignUp Design</h1>
+
+<h3>New Article</h3>
+
+<p>
+view.html 파일을 에디터에서 '다른 이름으로 저장하기' 메뉴를 사용하여 write_form.html 파일을 생성한다.<br />
+#content 엘리먼트의 기존 내용을 모두 삭제하고 대신 다음 코드를 붙여넣는다.
+</p>
+
+<pre class="prettyprint">&lt;div id="url-navi"&gt;Small Talk&lt;/div&gt;
+&lt;h3&gt;New&lt;/h3&gt;
+&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
+&lt;input type="hidden" name="boardCd" value="free" /&gt;
+&lt;table id="write-form" class="bbs-table"&gt;
+&lt;tr&gt;
+	&lt;td&gt;Title&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;textarea name="content" rows="17" cols="50"&gt;&lt;/textarea&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Attach File&lt;/td&gt;
+	&lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+	&lt;input type="submit" value="Submit" /&gt;
+	&lt;input type="button" value="Cancel" /&gt;
+	&lt;input type="button" value="List" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+
+<h6 class="src">[CSS]</h6>
+<pre class="prettyprint"><strong>#write-form td {
+	border: none;
+}
+#write-form textarea {
+	width: 99%;
+}</strong>
+</pre>
+
+<p>
+<img alt="게시판 글쓰기 디자인 결과" src="https://lh3.googleusercontent.com/rTLtbrHsf0gFPzfZkkAnjSHYZh4w1QMJHOyEf0cQABfy7S_5ZAkHJOzoBXcVuEuhbwAL1tsJrllpehgQYeqWX6Qzd-vSyYInYRBLE6rpHa0KtP3SCbjIH9ZReJ6QIi5lSBTQnIiO8BU3Zw1m7e0g5evzWAd4-kzn0qXTd6mwtBvJf1eKscN4vtOmfh3ngZ9_e0Hez_V5s9Tlf3ZaNlZsOK1_ykNuh0bOCvPG0_WFHHNHkMCevbGP4lcgWaLJ-9QwGbLmbMB6ySeAkLJHcrzrkBTuK6puafHKSSc1qEsFVJIlaN0T9ba5N8hOX8X95NFdsK8X27nEqdiGWlegokpWiOWh29kiQKfDZ8SUQsKNEphXtxsHkgE4F4_dlsCCIs3dw7qTJJGTA_BDqxrOt4FeKQTjazNZl1IbBM3XOrENOLkbjYwvqnEFAs7sROpWVWsuf4aCQbP-y-mQw78C2_9b2HYDdaC5zCbYJHNCltxSgIPfzPO0PzMYEnYrnON87OoRU2wChTtnPiY6cLY_1-ASKSabcLfTj0JEkZ6tAyAbnRelBuk4oy8IEB3prhaaWC8yr_TSxX6B1bNVLsoJdZSok3UPqpEsxkOs7Gm4qIsbXg=w1006-h654-no" />
+</p>
+
+<h4>#extra Styling</h4>
+
+<p>
+#extra 부분은 웹사이트 기획자가 상상력을 발휘하는 곳이다.<br />
+Save the following images in images folder.<br />
+<img src="https://lh3.googleusercontent.com/9bOAZbL26nFcsqh3awThpBaK9XH_G1dniKYvs0CcPGGJfZe4Wgv7AN6Q4e4a49Vea7xxUHASxdSpMLfvIjzotqIjSpa_uPM13SadQ1RrwospQmZNusdtqDMyfMjaIVcqAelOEpRjZbMZ8HgFEYpESGI9xVf6nRr7TbtlWiTAR0CPopDWKkbm_TDPQwAUgN15atqAj6Nk1XRtF65C8y1lkipMzenqx0RFptt6F7_dAVns5GMqk56wdFXNef3jEAEBCK7RcxdQje7tDpYntiDU1KLfs5cxKGA9mgLWSTZQ5V2ZivsOGw38MknfsF1p69Qjg2MO3jRK7kV2kHjS0QnIknqoUggyVj1t8A1QsxZF5-xeroV1kJWtCxadkpzLLSf7U1kvyLhaiAd9s9iUekBA8MCi-Abb5rrxpCjJm93aHBE7LehW9C2mVPO7A9h-PhLQ8jEqrWRUXqllrbtC7sCJjJqmYSO14kXqMpQlnyYFc-YQW7RPYesICXuhsZeY0t79QdiYuFGEIGDhMaheLNWmOOynZMKZILmUytvge2soUVm_ll4R1NaZJNrIq4-0v7XpYR5R9spXl0TiGwHPyMG5vcwarJzpbf8pTZffsESsjg=w377-h49-no" alt="gcp" style="border: 2px solid grey;width: 203px;" />
+<img src="https://lh3.googleusercontent.com/tCf0XFhPUg3bOiSEPEOkn_isc2zkmEUT2YKvtphHSMnn4Rp0o_t5BcHQBI1tI9dNnBBUrxOY43kBsEEohN-WTLwvo-g2qQPRb_H28L5zRc1dmG0fLh6OTlYAyuqX1Z7DQKIyDgIpZdN1MtPAbdbbRn72b2M3P7pwaN9lnTco3q5vPevE-dr9ITTc5rNDPdveMfrIzjkgsoJ0QhlhclrbWkNcIVWsRx98bL-ViwiPTFBI-E2SW1CMAN9Du1zudrZ-EZcm-jfa4NzCofG8l0V6Co1eINB6oESxAGhNkailSJ8dXAOTjFPb2zk0Jlzcm_0Sk7XMtP9JZ7k6w7tf6ixooUE2Fx9YcjvcMvkW0XNEYe5EyWrxwE-wgXt4ypwcITqcK7SDT9r_v1-9z5vfbyskRPjuHi_UEU3eP8QKh-o6nZwobEpsZ9Tgqqm40ReCVcwcxSY5TG7GeI6BGwarysLm_2v-tCkhQg1LiHxQn8xw01kP7TzlJ-pM1ft6fGXgNXcERcYY_ykwxZ27hlDIDTRne9smC0LQAh7INEqsWtDleLmlHje1kdVkK_5YDQ41pbczJtcVzVVFy9_Oemm3GtwCGjf6k8RMY5dJNTqn4M8Uaw=w773-h481-no" alt="youtube" style="border: 2px solid grey;width: 203px;" />
+<img src="https://lh3.googleusercontent.com/PCakyWDCScKyfLZiNyjp7Jx3uEZw1Ad0doucnbvByaw6Y6OTg8pEzLggA2iQIty3MTsIsGeR1KsgxhDzRpx9jnv6gzPbkECAvo8jNiT3ZGPWQP3rL2emuvVG1UF2-LfqOC74LQjZ6d7Q-Ol08hgB9qBJaselBAbhXE-X64x_g8sambVx0aGBZQXlcj8x6U2NQ8_sto1SWGzG8tcN6qai7Z74yPyU2OYziOzsUSwgfzgnWcsl4dVw1rWPY2SdLl6H20N_Jq-yPOqK8SyjKM7z0G623ryvmqXmZV3HbF1nsviXroQCfNfWpTffMCuMvngap_0n35tBrrwM7_SRrzt6CspkCU5LUppKfs3nyf2ZIQHY3RTtluMWDGK8FlRIWIS7mWqoNlDWtWAxHPbS2xx3Ey6q5XQkRezJwiWLNVlf5Njqc3_WBRIl9qPAiI6NjRL_nldIgH5exG4uyu1EOjWMK1ZXMCdwKd0uDHj1ygjKZ4LMHvI5ZmPy1VC7ueFWTm1tpfcl5bYEDGc5lOdh-xYF6YedH2VxLx9oY-6qXpWIHJsg8LsyzCwaHg9xrskqUKSpl3ckOa0L6fvOuZaRZOQAk7O9tTY8uQw-UaVzpAdPfw=w180-h74-no" alt="gmail" style="border: 2px solid grey;width: 203px;" />
+<img src="https://lh3.googleusercontent.com/FkzOL1Y2t-yf1qxqitKUm5-EMCtvJxyrSIsku7h84yju2ceCUxtPk90slo1FrsSUumTRlWfUOr4-t2hwHERozOz-8e2tvvwjaRhU_sGaVA-ZFmLxeNhJSheai6Cm1604RYf1C-N2ngt5L9teo5zYXEStu9Ei9X_QdNm2w8fU-YuA01D7cfod9vJ06FwYEOcdQolodbdMpfi59IGu2zwKpecBfGcEn8bz0pecXzrlE2PeYbVv1tnnWe69pck5JUXYDmTzD0dsnAKOojCBq-hy1j00oeRX1YLn_iw21vPX9hQWnSdPmD2enH6yb_erWHkJO_Mh5Lqtf3BZW18Vlz41n6tM_dDE0myw0OftX5VhUcH8RLWwdtIAsNU_y63QZa3_6X-PH44gi_JzSdWJH6I3FXZ_ag3RfSd18GEiX56Hm3fR-8WVVQSeBnmAk5Jco2ouww2PqDUQcfwDplxB-qBDanfpEsX-Sz60nIND0yDzowvClT3DEN8lflp31jxklwfwU9vmmmJaNO3rLtSTdnYZtaaZK6FENCwGpPWlPSo7hcnZ69SEIaFEmGyQkFHETYlpgT--f7fNH4tHexmJDAgYekzD2Wg1FYDULQ-fzhlqeQ=w695-h279-no" alt="google drive" style="border: 2px solid grey;width: 203px;" />
+</p>
+
+<p>
+Add the following to #extra in write_from.html.
+</p>
+
+<pre class="prettyprint">&lt;div id="extra"&gt;
+	<strong>&lt;a href="http://www.youtube.com"&gt;&lt;img src="images/youtube.png" alt="youtube" /&gt;&lt;/a&gt;
+	&lt;a href="http://gmail.com"&gt;&lt;img src="images/gmail.gif" alt="gmail" /&gt;&lt;/a&gt;
+	&lt;a href="http://drive.google.com"&gt;&lt;img src="images/google-drive.png" alt="google drive" /&gt;&lt;/a&gt;
+	&lt;a href="https://cloud.google.com/"&gt;&lt;img src="images/gcp-logo.png" alt="google cloud" /&gt;&lt;/a&gt;</strong>
+&lt;/div&gt;
+</pre>
+
+<p>
+Delete entire /*** Just for Looks ***/.
+</p>
+
+<h6 class="src">[CSS]</h6>
+<pre class="prettyprint">
+<strong>#extra img {
+	width: 203px;
+}
+#extra a {
+	display: block;
+	border: 1px solid #DAEAAA;
+	margin-bottom: 7px;
+}
+#extra a:hover {
+	opacity: 0.7;
+}</strong>
+</pre>
+
+<p>
+<img alt="New Article Form Screen" src="https://lh3.googleusercontent.com/1BsdNFsM6RFLozCRWSOrou7FI_Wa3sswqC_y0QYDMwFsGegBnNroYFXIcwT4hHyFbtXYoyYStll6CPZH_dMcrkPVmBucwDsdlkfMXsZGkWRVqXGN6UAyUVZ9X_utdyemIzWWh3viSyJq4y-w-LNZo0uUErmeFbY3gCbIvJmbnIOXjnWsODojbCDOZABmTALc5K43ovGbZhQWaJJGEqrR1N6kOWRSEyNDt73NtkA8SRhP8oBiLGcKKZPKCd12gdVT2b2mdCIQziEYdl59q4lf83Fj6vZ4Mw8BlSAjeAoMmZM8KGZeQlSEK8j2JO-nfcCrZSFLUyFuahmc2vWVjQnX3Cyr18WjJuJulKO5s9M-bRV1bl_ZxICpYlrdXr6anD1wHZ44fvJ4tKyxpj5DgHd7Otn5AHoTrxoGFjDnbVbeIfgKSvNsfMMFOpoeGTo0-4-ubuu05I82r03bh63lJYSsWVKrmn8QTzFCFUbmexsg7wEpI84TXOXwWQ3dRLri-XvvSW4QBqEQHKKMMJ0aJtKDmGjQ7bNbJHOTkgRhB1dgXwKOsDNoojTrNWcP0F3aIbtZfE8F6dgV2PvzUFBY2xXTw8R45ZOKOveKgmCsHIMVcw=w1006-h657-no" />
+</p>
+
+<h3>SignUp Design</h3>
+
+<p>
+write_form.html 파일을 에디터에서 '다른 이름으로 저장하기' 메뉴를 이용하여 signUp.html 파일을 만든다.<br />
+#content의 내용을 다음 코드로 바꾼다.
+</p>
+
+<pre class="prettyprint"><strong>&lt;div id="url-navi"&gt;Membership&lt;/div&gt;
+&lt;h2&gt;SignUp&lt;/h2&gt;
+&lt;form id="signUpForm" action="signUp_proc.jsp" method="post"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+	&lt;td style="width: 200px;"&gt;Full Name&lt;/td&gt;
+	&lt;td style="width: 390px;"&gt;&lt;input type="text" name="name" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Password&lt;/td&gt;
+	&lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" style="text-align: center;font-weight: bold;"&gt;
+	Do not make the password the same as your email account password because Email is used as an ID.
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Confirm&lt;/td&gt;
+	&lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Email&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="email" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Mobile&lt;/td&gt;
+	&lt;td&gt;&lt;input type="text" name="mobile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+	&lt;input type="submit" value="Submit" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;</strong>
+</pre>
+
+<p>
+<img alt="New Article form Screen" src="https://lh3.googleusercontent.com/5oaZJxKOJw9Qc2Id30USTk3bV2vsGn7l3hN6pFYj4m-5yOjfCUI4mOz_mz34DyuG2Ry6m8NLmxSSt5mQHFvzSU5zWwpK5pcncU_hWm8-UMUI486-YB32FO3LW3qYIRZWyYLuAojakCF1gQraU_XFbnbU4JP1vTp3QN7Uth-uD2YVJOlAPy1TwrvS7ugZ2MlCspaAkafcFF4mcjXQhr-gi_Gk_SgKU13MKN6f93RutPiTYubCCaoA7HnIz6p8hZ7Du8po2QxdCZh_x46e1HpUj7S0njOlD_6PVkK6Sn3mHogyhjoITPF9tYbo8JpYaQ_X8FXx7TNUt9pmC2H2OT5zwx0StwKCU8f-xxN-jZ2GGBM7qwwRtx1gNI9RdANQk_nZJPXSjWUevVELJlPUQYU8VakwbCGZkqJTA-KzMI2bEdNB_hAtwxskXFJIJL2LkwtlIMey_YNOdxQbGiFU5oXN690VK8IKIiQvz4_MuQgElBAFcXEsV8WcgGDj-_RlAU34_UNGQMn5ritCfzT2uhcignUCUv6ggJn-v29CcU47Ure3Mcx3kzUiYOJY0pGHZy0-E4wb5J6isxDuzrs7dZETl4JIGv1vYXWVAGaqaoix5Q=w1006-h595-no" />
+</p>
+
+<p>
+지금까지 게시판 디자인을 작업했다.<br />
+다음 장 'JSP 프로젝트'는 여기서 만든 최종 디자인을 가지고 진행한다.
+</p>
+
+<p>
+<a href="/css-layout/examples/css-layout-final.zip">Download Final Example</a>
+</p>
+
+</article>

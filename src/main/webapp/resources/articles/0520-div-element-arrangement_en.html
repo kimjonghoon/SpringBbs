@@ -1,24 +1,25 @@
 <article>
 
-<h1>How to arrange layout elements</h1>
+<h1>How to arrange the elements</h1>
 
 <p style="margin: 17px; font-weight: bold; font-size: 15px;">
-This article covers CSS positioning.
-CSS positioning refers to the technique of arranging the screen of a website using CSS.
+This article covers CSS positioning.<br />
+CSS positioning refers to the technique of arranging the screen of a website using CSS.<br />
 So you need a basic understanding of HTML and CSS.
 </p>
 
 <p>
-CSS properties that are important when arranging a screen are float and margin.
-It is possible to assign negative numbers for the margin values.
+CSS properties that are important when arranging a screen are float and margin.<br />
+It is possible to assign negative numbers for the margin values.<br />
 Negative margins can minimize the number of elements required for screen composition.
 </p>
  
-<h3>Understanding the property of float</h3>
+<h3>Float property</h3>
 
 <p>
-The normal element following a float applied element does not recognize the existence of the element to which the float is applied and acquires its own box area.
-However, the area of the element to which the float is applied is not invaded.
+Float is a CSS positioning property.<br />
+The normal element following a float element does not recognize the existence of the float element and try to acquire its own box area.<br />
+However, the normal element cannot invade the content area of the float element.
 </p>
 
 <pre class="prettyprint">
@@ -35,29 +36,31 @@ However, the area of the element to which the float is applied is not invaded.
 </pre>
 
 <p>
-<img src="https://lh3.googleusercontent.com/-GBiNZVxG4K0/VYIyh1EqcJI/AAAAAAAACXc/uGg9ENEr320/s789/A-float%25253Aleft-B.png" alt="A float:left" />
+<img src="https://lh3.googleusercontent.com/6zfq7QrRIJKGa821vtn9ycho9dUjMWBCLy7d637ndIp8WaoNxwvhBij3TU7AofJaAZ0NgcEzGBmscERrpfZcZAehaD1Y0c2ZAYuTLbVgf7DHJyx1Rb6CHfu6NsLe6kHRtdGPOM-7nnoGFNB7w-6_NTJr0fConNn7PUk2yHwAqRTB9P9Yrv3W6cct57bgaamTWGU47F7hfu2cIHzd2HRsHdqCcwwRPRj_NTJ00IYEhExLgzP3iJyuYQCyA5GS_2HrHYwnKfv7IF88AFmq2H3zN_xhd7tgE11YA_naIfd1eOGWLyvB2B_Ik17KdjNkteuuKVTb7CP9vWHxq6sjhYxm2SBpnnMZ95oVVkK-vS8h1fgEI_RYWOIiAIXcXtHIvRF2oto6RHSMeA3zYwzqvrofSp6ypjbp6rMikJJM1T2g_N2BRhXptNw3Ay2Rz4-PjkwRd_bZDY-vNnkkWKqeut2GSmTNmTsmP8nkMegS9G80rnvPV3iqSjv_huSb_I-Wtx2tLX4GfhxVfEbaDG0hXg1XFKgNYh6FIAif7SLBokhxQjbDeAygcmeZ4oWFE0gA3tnDOrC5GBI4_JarnjTNbNoFcsZc2LCZGjmd8JUqMvk=w789-h79-no" alt="A float:left" />
 </p>
 
-<h3>clear property</h3>
+<h3>Clear property</h3>
 
 <p>
-The clear property values are left, right, and both.
-The exact meaning is shown in the following example.
+The clear property values are left, right, and both.<br />
+Each value's exact meaning is shown in the following examples.
 </p>
 
 <p>
-Apply A to float: left and B to float: right property.
+A has <strong>float: left</strong>.<br />
+B has <strong>float: right</strong>.<br />
+C has no clear property.
 </p>
 
 <pre class="prettyprint">
 &lt;style type="text/css"&gt;
 	#A {
-		float: left;
+		<strong>float: left;</strong>
 		width: 100px;
 		background-color: #66f;
 	}
 	#B {
-		float: right;
+		<strong>float: right;</strong>
 		width: 100px;
 		background-color: #ddd;
 	}
@@ -72,7 +75,7 @@ Apply A to float: left and B to float: right property.
 </p>
 
 <p>
-Apply C to clear: left;
+Added <strong>clear: left</strong> to C.
 </p>
 
 <pre class="prettyprint">
@@ -99,7 +102,7 @@ Apply C to clear: left;
 </p>
 
 <p>
-Modify C to clear: right.
+Change clear: left to <strong>clear: right</strong> in C.
 </p>
 
 <pre class="prettyprint">
@@ -126,7 +129,7 @@ Modify C to clear: right.
 </p>
 
 <p>
-C의 clear 프로퍼티를 clear: both; 로 수정한다.
+Change clear: right to <strong>clear: both</strong> in C.
 </p>
 
 <pre class="prettyprint">
@@ -152,7 +155,11 @@ C의 clear 프로퍼티를 clear: both; 로 수정한다.
 <img src="https://lh3.googleusercontent.com/-TVJbd4acXvE/VYIyjCCYaPI/AAAAAAAACXw/n_JPIsP5oJI/s790/a-float-left-b-float-right-c-clear-both.png" alt="A float:left,B float:right,C clear:both" />
 </p>
 
-<h3>음수 마진</h3>
+<h3>Negative Margins</h3>
+
+<p>
+First, let's look at an example of elements that does not have negative margins.
+</p>
 
 <pre class="prettyprint">
 &lt;style type="text/css"&gt;
@@ -174,8 +181,8 @@ C의 clear 프로퍼티를 clear: both; 로 수정한다.
 </div>
 
 <p>
-A의 margin-left에 음수값을 적용하면 그 값만큼 A가 왼쪽으로 움직인다.
-이때 B도 따라 움직인다.
+If you assign a negative value to the margin-left of A, A moves to the left by that value.<br />
+B moves along A too.
 </p>
 
 <pre class="prettyprint">
@@ -194,14 +201,13 @@ A의 margin-left에 음수값을 적용하면 그 값만큼 A가 왼쪽으로 �
 &lt;/style&gt;
 </pre>
 
-<!-- 왼쪽으로 50px -->
 <div style="margin: 0 auto;width: 265px;height: 100px;border-left: 4px red dotted;border-right: 4px red dotted;">
 <img src="https://lh3.googleusercontent.com/-xn-gY2INVBI/VYIyieX75lI/AAAAAAAACXY/mBZY8t0e6UM/s265/A-margin-left%25253A-50px-B.png" alt="A float:left;margin-left: -50px;,B float:left" style="display: block;float: left;margin-left: -50px;opacity: 0.6;"/>
 </div>
 
 <p>
-A의 margin-right에 음수값을 적용하면 그 값만큼 B를 끌어당긴다.
-이때 B의 콘텐츠가 A 콘텐츠를 덮는다.
+If you assign a negative value to margin-right of A, A draws B towards himself by that value.<br />
+As a result, the contents of B will cover the contents of A by that value.
 </p>
 
 <pre class="prettyprint">
@@ -224,10 +230,11 @@ A의 margin-right에 음수값을 적용하면 그 값만큼 B를 끌어당긴�
 <img src="https://lh3.googleusercontent.com/-LsOwnQ044vM/VYIyjOiq3hI/AAAAAAAACX0/NQ6jLC2BR6E/s202/A-margin-right%25253A-50px-B.png" alt="A float:left;margin-right: -50px;,B float:left" />
 </div>
 
-<h3>3열 포지셔닝</h3>
+<h3>3 column layout</h3>
 
 <p>
-A, B, C 모두는 float: left; 이다. 음수 마진이 적용하지 않는 한 서로 간의 영역을 침범하지 않는다.
+A, B, C have float: left.<br />
+Because they do not have negative margins, each element do not invade other areas.
 </p>
 
 <pre class="prettyprint">
@@ -255,7 +262,7 @@ A, B, C 모두는 float: left; 이다. 음수 마진이 적용하지 않는 한 
 </p>
 
 <p>
-A의 width를 width: 100%; 로 수정한다.
+Modify A width value from 100px to 100%.
 </p>
 
 <pre class="prettyprint">
@@ -283,11 +290,13 @@ A의 width를 width: 100%; 로 수정한다.
 </p>
 
 <p>
-A 아래 B와 C가 있는 듯하지만, A, B, C는 나란히 있다고 봐야 한다.
+There are B and C under A.<br />
+To easily understand the following, you should consider A, B, and C to be side by side.
 </p>
 
 <p>
-A의 width가 100%이고, 여기에 margin-right: -100%; 를 추가하면 B, C는 A의 왼쪽에 겹치게 된다.
+Add <strong>margin-right: -100%</strong> to A.<br />
+Then B and C overlap on the left side of A.
 </p>
 
 <pre class="prettyprint">
@@ -316,8 +325,9 @@ A의 width가 100%이고, 여기에 margin-right: -100%; 를 추가하면 B, C�
 </p>
 
 <p>
-A의 margin-right: -100%; 를 지우고 B에 margin-left: -100%; 를 추가한다.
-그러면 B는 A의 왼쪽에 겹치고 C는 원래 B자리로 이동한다.
+Remove <strong>margin-right: -100%</strong> from A.<br />
+Add <strong>margin-left: -100%</strong> to B.<br />
+Then B overlaps on the left side of A, and C moves to the original B position.
 </p>
 
 <pre class="prettyprint">
@@ -346,7 +356,9 @@ A의 margin-right: -100%; 를 지우고 B에 margin-left: -100%; 를 추가한�
 </p>
 
 <p>
-원래 C의 넓이만큼 C에 margin-left: -100px; 를 주면 C는 A의 오른쪽에 겹쳐 위치하게 된다.
+Add <strong>margin-left: -100px</strong> to C.
+(100px is the width of C element)<br />
+Then C moves on the right side of A.<br />
 </p>
 
 <pre class="prettyprint">
@@ -375,77 +387,76 @@ A의 margin-right: -100%; 를 지우고 B에 margin-left: -100%; 를 추가한�
 <img src="https://lh3.googleusercontent.com/-FkqZtWbtXxA/VYIykWeB9uI/AAAAAAAACYI/oH68R5L31og/s789/a-float-left.png" alt="A float:left;width:100%;margin-right:-100%;,B float:left,C float:left" />
 </p>
 
-<h3>고정크기를 가지는 3열(Column) 레이아웃</h3>
+<h3>Website Design using 3 column layout with fixed width</h3>
 
 <p>
-고정넓이를 가진 3열 레이아웃을 실습 레이아웃으로 선택했다.
-화면은 header, man-menu, sidebar, content, extra, footer로 구성된다.
+The screen consists of header, man-menu, sidebar, content, extra, footer.
 </p>
 
 <ul>
-	<li><strong>header</strong>: 가장 위에 위치하며, 회사 로고 이미지를 담는다.</li>
-	<li><strong>main-menu</strong>: header 바로 밑에서 메인 메뉴를 보여준다.</li>
-	<li><strong>sidebar</strong>: 화면 왼쪽에서 서브 메뉴를 보여준다.</li>
-	<li><strong>content</strong>: 화면 중앙에서 페이지의 주요 내용을 보여준다.</li>
-	<li><strong>extra</strong>: 화면 오른쪽에서 광고나 새로운 아이디어를 보여준다.</li>
-	<li><strong>footer</strong>: 가장 아래에 위치하며, Copyright, 연락처, 찾아오시는 길 등등의 글로벌 메뉴를 보여준다.</li>
+	<li><strong>header</strong>: It is located at the top and contains the company logo image.</li>
+	<li><strong>main-menu</strong>: It is under the header and displays the main menu.</li>
+	<li><strong>sidebar</strong>: It shows the submenu on the left of the screen.</li>
+	<li><strong>content</strong>: It shows the main contents in the center of the screen.</li>
+	<li><strong>extra</strong>: It shows ads on the right side of the screen.</li>
+	<li><strong>footer</strong>: It is located at the bottom and shows the global menu such as Copyright, Contact, Directions and so on.</li>
 </ul>
 
 <p>
-위에서 언급한 주요 엘리먼트의 크기를 아래와 같이 지정한다.
+The size of the main element mentioned above is specified as follows.
 </p>
 
 <h4>header</h4>
 
 <p style="padding-left: 20px;">
-넓이: 1000px
-높이: 48px
+width: 1000px<br />
+height: 48px
 </p>
 
 <h4>main-menu</h4>
 
 <p style="padding-left: 20px;">
-넓이: 1000px
-높이: 35px
+width: 1000px<br />
+height: 35px
 </p>
 
 <h4>sidebar</h4>
 
 <p style="padding-left: 20px;">
-넓이: 175px
-높이: 내용에 따라 변함
+width: 175px<br />
+height: depends on content.
 </p>
 
 <h4>content</h4>
 
 <p style="padding-left: 20px;">
-넓이: 720px
-높이: 내용에 따라 변함
+width: 720px<br />
+height: depends on content.
 </p>
 
 <h4>extra</h4>
 
 <p style="padding-left: 20px;">
-넓이: 205px
-높이: 내용에 따라 변함
+width: 205px<br />
+height: depends on content.
 </p>
 
 <h4>footer</h4>
 
 <p style="padding-left: 20px;">
-넓이: 1000px
-높이: 70px
+width: 1000px<br />
+height: 70px
 </p>
 
-<h3>디폴트 HTML 문서 템플릿 작성</h3>
+<h3>Default HTML document</h3>
 
 <p>
-아래를 복사하여 사용하고 있는 에디터에 붙여넣는다.
+Copy the following and paste it to your editor.
 </p>
 
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="<em>keywords</em>" /&gt;
@@ -460,14 +471,11 @@ A의 margin-right: -100%; 를 지우고 B에 margin-left: -100%; 를 추가한�
 </pre>
 
 <p>
-생성한 파일을 index.html 이름으로 도큐먼트 베이스에 저장한다.
-이클립스를 사용한다면 DocType(Document Type)별로 제공되는 HTML 문서 템플릿을 선택하여 작성할 수 있다.
-이클립스가 제공하는 디폴트 문서 템플릿이 마음에 들지 않는다면 템플릿을 수정할 수도 있다.
+Save it as index.html on the document base.
 </p>
 
 <p>
-이제 페이지의 주요 구성요소를 입력할 차례이다.
-index.html 파일의 body 엘리먼트 사이에 다음 내용을 붙여넣는다.
+Paste the following to the body elements of index.html.
 </p>
 
 <pre class="prettyprint">
@@ -491,20 +499,18 @@ index.html 파일의 body 엘리먼트 사이에 다음 내용을 붙여넣는�
 </pre>
 
 <p>
-위에서 wrap과 container는 설명하지 않은 엘리먼트이다.
-이 엘리먼트는 견고한 포지셔닝을 위해서 필요한 여분의 엘리먼트이다.
-wrap은 문서의 모든 div를 포함한다.
-container는 여기에서 설명하는 3열을 배치하는 데 필요하다.
-되도록 이런 여분의 엘리먼트는 그 수를 최소화해야 한다.
+The wrap and container is extra elements needed for robust positioning.<br />
+The wrap contains all the divs in the document.<br />
+The container is required to lay out the three columns.
 </p>
 
 <p>
-실습하고 있는 포지셔닝에서는 본문을 담는 content가 서브 메뉴를 담는 sidebar보다 먼저 나온다.
-웹페이지에서 본문이 가장 중요하고 내용도 자주 바뀌므로 먼저 나오면 유지보수에 유리하다.
+The content element comes before the sidebar element.<br />
+The content element is the most important and frequently changed on the web page, so it is advantageous for maintenance if it comes first.
 </p>
 
 <p>
-도큐먼트 베이스에 css 서브 디렉토리를 만들고 아래 내용으로 screen.css 파일을 만든다.
+Create css folder on the document base and create screen.css file in css folder with the following content:
 </p>
 
 <pre class="prettyprint">
@@ -515,7 +521,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	background-color: #FFF;
-	font-family: "Noto Sans KR", "Liberation Sans", Helvetica, "돋움", dotum, sans-serif;
+	font-family: "Liberation Sans", Helvetica, sans-serif;
 	font-size: 1em;
 }
 #wrap {
@@ -579,20 +585,20 @@ html, body {
 </pre>
 
 <p>
-CSS 문서의 내용은 다음과 같은 형식의 반복이다.
+The content of the CSS document is a repetition of the following form:
 </p>
 
 <pre class="prettyprint">
 Selector {
-	Property(속성): value(속성값);
+	Property: value;
 	..
 	.
 }
 </pre>
 
 <p>
-Selector 종류는 Type, Descendant, Class, id, Child, attribute가 있다.
-다음은 각 셀렉터의 모습이다.
+There are various types of selectors such as Type, Descendant, Class, Id, Child, and Attribute.<br />
+The following shows each selector.
 </p>
 
 <pre class="prettyprint">
@@ -623,35 +629,32 @@ input[type="text"] {
 </pre>
 
 <p>
-CSS 파일에서 id 셀렉터(Selector)를 정의할 때는 id 앞에 #을 붙인다.<br />
-id는 HTML 문서에서 엘리먼트에 유일성을 부여한다.<br />
-그러므로 id 값은 HTML 문서에서 단 한 번만 나타나야 하는 엘리먼트에 사용한다.<br />
-index.html에서 wrap, header, main-menu, container, content, sidebar, extra, footer가 
-그런 엘리먼트이다. 반면, Class 셀렉터를 정의할 때는 클래스 이름앞에 .(도트)를 붙인다.<br />
-Class는 id와 달리 HTML 문서에서 반복되어 나타날 수 있다.
+The selector that begins with # is the ID selector.<br />
+The ID selector gives styles to the unique element in the HTML document.<br />
+In index.html, wrap, header, main-menu, container, content, sidebar, extra, footer are unique elements.<br />
+The selector that begins with .(dot) is the Class selector.
 </p>
 
 <dl class="note">
-<dt><em>div.redwine</em>와 <em>div .redwine</em></dt>
-<dd><em>div.redwine</em>은 HTML 문서에서 <em>&lt;div class="redwine"&gt;</em>에 적용된다.</dd>
-<dd><em>div .redwine</em>은 div 엘리먼트에 포함되어 있는 엘리먼트 중에서 class 속성값이 redwine인 엘리먼트에 적용된다.</dd>
+<dt><em>div.redwine</em> vs <em>div .redwine</em></dt>
+<dd><em>div.redwine</em> gives styles to <em>&lt;div class="redwine"&gt;</em> in HTML document.</dd>
+<dd><em>div .redwine</em> gives styles to elements that are contained in the div element and whose class is redwine.</dd>
 </dl>
 
 <p>
-지금까지 작성한 페이지를 웹브라우저로 확인한다.<br />
-웹서버가 동작하지 않아도 된다. 탐색기에서 작성한 index.html를 더블클릭하여 화면이 아래와 같이 보이는지 테스트한다.
+Check the web page you have created so far.<br />
+No web server is required.<br />
+Double-click the index.html.
 </p>
 
 <p>
-<img src="https://lh3.googleusercontent.com/95wLutuUcUGJItBsXMolga7mpCIO29gzKMxyYYaEa8ozGm64joo0AmqSbwrUDXknBOxggE4In5x1KQsRcxYGJtnCAOQhQCh_kVM8ZEfzv4SUFEzFgblqr_FuMeFEFHdXsrZuXcDFvKAWSsFDjzliFGpDW-sdARW5aom1YZpo1E_ygS2whOizL8UaDcyZbuTzqzC2SRDDuy20fQ5YMjT7Y4ZgO6stX5ZpO3n5tnmTTAp1YWyw-sVOgLlSAwlbGv2pI6EKkBzaWT8rd4NgQo-adHC7cFLoRDp67OyWgYCLO7Od5-MSTazR5fGarH4msc9dODbB1hMkTcj4c4alxkv9xUflvyfx91c94-y9D58O1k0owEZ1Ikvf7i4uBMdhjz0BGXE0EidqCNUCSCtLdJt6T8_ENPHNs00pdYDTYd3EBdVDvC44lKWu4o_zxJc4KL2K4ZXWW8byTv-T0k4_vX_brsixS9S5bukoh4whD_AFfHkBoXCXgzgcp1kFSAjUIht_hYxiLtfjwNl8K98GkworEptCMDrGRcb8PfYQsdKwIi7qe3lfdd1z8az19GprvlqzRDuOuHXci5TfQfNs58S9_ld9T_eDFez8ZIHmuuazxg=w1007-h456-no" alt="예제보기 1" />
+<img src="https://lh3.googleusercontent.com/95wLutuUcUGJItBsXMolga7mpCIO29gzKMxyYYaEa8ozGm64joo0AmqSbwrUDXknBOxggE4In5x1KQsRcxYGJtnCAOQhQCh_kVM8ZEfzv4SUFEzFgblqr_FuMeFEFHdXsrZuXcDFvKAWSsFDjzliFGpDW-sdARW5aom1YZpo1E_ygS2whOizL8UaDcyZbuTzqzC2SRDDuy20fQ5YMjT7Y4ZgO6stX5ZpO3n5tnmTTAp1YWyw-sVOgLlSAwlbGv2pI6EKkBzaWT8rd4NgQo-adHC7cFLoRDp67OyWgYCLO7Od5-MSTazR5fGarH4msc9dODbB1hMkTcj4c4alxkv9xUflvyfx91c94-y9D58O1k0owEZ1Ikvf7i4uBMdhjz0BGXE0EidqCNUCSCtLdJt6T8_ENPHNs00pdYDTYd3EBdVDvC44lKWu4o_zxJc4KL2K4ZXWW8byTv-T0k4_vX_brsixS9S5bukoh4whD_AFfHkBoXCXgzgcp1kFSAjUIht_hYxiLtfjwNl8K98GkworEptCMDrGRcb8PfYQsdKwIi7qe3lfdd1z8az19GprvlqzRDuOuHXci5TfQfNs58S9_ld9T_eDFez8ZIHmuuazxg=w1007-h456-no" alt="Example Screeen 1" />
 </p>
 
-<h3>screen.css 설명</h3>
+<h3>screen.css</h3>
 
 <p>
-완성 전 코드이지만 지금까지의 CSS 파일의 내용을 살펴보자.<br />
-screen.css 파일이 완성되면 화면 구성도 완성된다.<br />
-HTML 문서의 내용은 바뀌지 않는다.
+Let's take a look at the contents of the CSS file so far.
 </p>
 
 <h4>html, body</h4>
@@ -661,16 +664,15 @@ html, body {
 	margin: 0;
 	padding: 0;
 	background-color: #FFF;
-	font-family: "Noto Sans KR", "Liberation Sans", Helvetica, "돋움", dotum, sans-serif;
+	font-family: "Liberation Sans", Helvetica, sans-serif;
 	font-size: 1em;
 }
 </pre>
 
 <p>
-위 설정은 html과 body 엘리먼트 모두에 적용된다.<br />
-div와는 달리 html과 body 엘리먼트는 거의 모든 웹브라우저에서 디폴트 마진과 패딩을 가지고 있다.<br />
-정밀하게 설정된 화면은 이 값 때문에 화면이 깨질 수 있다.<br />
-그래서 대부분 웹디자이너는 html과 body의 마진과 패딩을 0으로 설정한 후 디자인을 시작한다.
+The above give styles to both the html and body elements.<br />
+Unlike the div, the html and body elements have default margins and padding in most web browsers.<br />
+Most web designers set the margins and padding of the html and body to zero, then start designing.
 </p>
 
 <h4>#wrap</h4>
@@ -684,25 +686,29 @@ div와는 달리 html과 body 엘리먼트는 거의 모든 웹브라우저에�
 </pre>
 
 <p>
-margin에는 4개의 값이 있어야 한다.<br />
-만약 값이 하나만 있다면 top right bottom left에 모두 그 값이 지정된다.<br />
-값이 2개이면 첫 번째 값이 top과 bottom에 대한 값이고 두 번째 값이 right와 left에 대한 값이다.<br />
-값이 3개라면 순서대로 top right bottom에 대한 값이며 left는 right와 같게 설정된다.<br />
-값이 4개라면 순서대로 top right bottom left에 대한 값이다.
+The margin has four values.<br />
+If you assign only one value to the margin (e.g, <strong>margin: 100px</strong>),<br />
+100px is assigned to top, right, bottom, left.<br />
+If you assign two values to margin (e.g, <strong>margin: 100px 50px</strong>),<br />
+100px is assigned to top and bottom, and 50px is assigned to right and left.<br />
+If you assign three values to margin (e.g, <strong>margin: 100px 50px 25px</strong>),<br />
+100px is assigned to top and 50px is assigned to right and 25px is assigned to bottom in order.
+Left margin is assigned to equal to right.<br />
+If you assign four values to margin, each value is assigned to top, right, bottom, left in order.
 </p>
 
 <p>
-margin 프로퍼티의 두 번째 값 auto는 해당 엘리먼트를 중앙에 위치시킨다.<br />
-margin: 0 auto; 에서 두 번째 값이 auto이므로 wrap은 좌우를 기준으로 중앙으로 이동한다.<br />
-속성값 0에는 단위를 생략한다.<br />
-div 엘리먼트의 디폴트 margin과 padding 값은 0이다.<br />
-wrap은 HTML 문서 내의 모든 엘리먼트를 담아야 하니 1000px 안에 모든 화면을 넣어야 한다.
+If you assign auto to margin, it will locate element to center or middle.<br />
+If the second value is auto, the element moves to the center.<br />
 </p>
 
 <p>
-CSS 파일에서 /*** Essential Code ***/ 부분이 중요하다.<br />
-/*** Just for Looks ***/ 부분은 예제를 웹브라우저로 확인할 때 보기 좋게 하기 위한 설정으로, 
-프로젝트가 진행되면서 없어질 부분이다.
+The default margin and padding of the div element are zero.
+</p>
+
+<p>
+The contents of the CSS file are divided into /*** Essential Code ***/ and /*** Just for Looks ***/.<br />
+/*** Just for Looks ***/ is a setting for screen testing, which disappears when the CSS file is completed.
 </p>
 
 <h4>#container</h4>
@@ -714,16 +720,14 @@ CSS 파일에서 /*** Essential Code ***/ 부분이 중요하다.<br />
 </pre>
 
 <p>
-container의 width가 100%로 설정되어 있다.<br />
-100%라 함은 container의 콘텐츠가 들어갈 수 있는 최대 넓이이다.<br />
-container의 마진과 패딩이 0이고 border 역시 설정되어 있지 않기 때문에
-100%는 여기서 wrap과 같은 1000px이다.
+100% means the maximum extent to which the content of the container can fit.<br />
+Since the margin and padding of the container is zero and no border is set, 100% is 1000px like wrap element.
 </p>
 
-<h3>#content을 중앙에 배치</h3>
+<h3>Place #content in the center</h3>
 
 <p>
-/*** The Essential Code ***/의 #content에 다음을 추가한다.
+Add the following to the #content of /*** Essential Code ***/.
 </p>
 
 <pre class="prettyprint">
@@ -734,14 +738,14 @@ container의 마진과 패딩이 0이고 border 역시 설정되어 있지 않�
 </pre>
 
 <p>
-<img src="https://lh3.googleusercontent.com/Uq0RL2J9hPslzA74L6bpsY-M1atZ-PpvTlwK_0pnqSXMOFrU3xDsde2yrahtbpbGcKB2jzavEfkWgwjQGu9RWZyq8ZlLg5uKmeVFyhvcLwxvIq2ZDtTtqu_iyDmzjaaiPPuN7Y4BhQMLlgaZ84uVLW_fmwu0caK-kQq7yMD1zlY4EOzYGZw8tKXp0Gv_Y20eOyaZw_WLDyRJ_zNme7DtV1q1jdcp9O3EuVyWagGjPNpi0w4WgmvzQAQ4VKAF9ej7ZrDfctF7dRcV8pM0_DiW3wqQzmjwf_zcak4YtUJRrVoKdbGapfjLydKflZ-35yBCF3ja5UtAcJTPeqEfhOjMv7kLuLWdemrmVkWDon5iGMv48IXDS6vokTE30NRm54N728KRu9_4Ps_gR_czDkK4cTMJyofyiY70-9oEcKF9m396JLy3BWb1lSvYFY0fmEQOXZa3Z2D6rKL1HoCHDJMtHhAoKX2wO1HL5Att65bXQQcvEDC2GVm1DpJQ6b1LuIVUSBVGcnhItwBbRrQSCdprDdGjH5TIWssaJyoCNRlM8cK9qQvmjUsZyNFKC8b4kvcPFWTuKx93gLd7qjq3vTejGnaNjtYCQLC1D3R8Yfld9A=w1003-h454-no" alt="예제보기 2" />
+<img src="https://lh3.googleusercontent.com/Uq0RL2J9hPslzA74L6bpsY-M1atZ-PpvTlwK_0pnqSXMOFrU3xDsde2yrahtbpbGcKB2jzavEfkWgwjQGu9RWZyq8ZlLg5uKmeVFyhvcLwxvIq2ZDtTtqu_iyDmzjaaiPPuN7Y4BhQMLlgaZ84uVLW_fmwu0caK-kQq7yMD1zlY4EOzYGZw8tKXp0Gv_Y20eOyaZw_WLDyRJ_zNme7DtV1q1jdcp9O3EuVyWagGjPNpi0w4WgmvzQAQ4VKAF9ej7ZrDfctF7dRcV8pM0_DiW3wqQzmjwf_zcak4YtUJRrVoKdbGapfjLydKflZ-35yBCF3ja5UtAcJTPeqEfhOjMv7kLuLWdemrmVkWDon5iGMv48IXDS6vokTE30NRm54N728KRu9_4Ps_gR_czDkK4cTMJyofyiY70-9oEcKF9m396JLy3BWb1lSvYFY0fmEQOXZa3Z2D6rKL1HoCHDJMtHhAoKX2wO1HL5Att65bXQQcvEDC2GVm1DpJQ6b1LuIVUSBVGcnhItwBbRrQSCdprDdGjH5TIWssaJyoCNRlM8cK9qQvmjUsZyNFKC8b4kvcPFWTuKx93gLd7qjq3vTejGnaNjtYCQLC1D3R8Yfld9A=w1003-h454-no" alt="example 2" />
 </p>
 
-<h3>#container, #sidebar, #extra에 float: left;</h3>
+<h3>Add <strong>float: left</strong> to #container, #sidebar, #extra</h3>
 
 <p>
-#content 왼쪽에 #sidebar를, #content 오른쪽에 #extra를 배치해 보자.
-/*** The Essential Code ***/부분에서 아래 부분을 수정한다.
+To place #sidebar on the left of #content and #extra on the right of #content,<br />
+Modify the following at /*** The Essential Code ***/
 </p>
 
 <pre class="prettyprint">
@@ -768,20 +772,20 @@ container의 마진과 패딩이 0이고 border 역시 설정되어 있지 않�
 </pre>
 
 <p>
-#content를 감싸고 있는 #container에 float 속성을 적용한다.
-#container 다음부터 나오는 엘리먼트인 #sidebar, #extra도 역시 float 속성을 적용한다.
-#container, #sidebar, #extra 모두 float:left; 로 설정했으므로 정상적인 흐름 안의 상자처럼 위아래가 아니라 옆으로 인접해 있다고 생각해야 한다.
-#footer는 clear 프로퍼티를 both로 설정해서 #footer의 위치를 가장 아래에 있도록 한다.
+Add <strong>float: left</strong> to #container which encloses #content.<br />
+Add <strong>float: left</strong> to #sidebar and #extra.<br />
+Because #container, #sidebar, and #extra are float elements, you should think that they are next to each other, not up and down like a box in normal flow.<br />
+Add <strong>clear: both</strong> to #footer to prevent #content, #sidebar, and #extra content from invading #footer.
 </p>
 
 <p>
-<img src="https://lh3.googleusercontent.com/lkF4JNsGRUHDnMFnXPQsAKsFJzeY3F21IJl9wRC0sto8EqynAe7eWCJVDIeWniyUsscLGYjLqD5wXSzeu19fmQEbiib7YqloaS2avOB0uTyb7zA6C_6po0yZDUuXq96f_ARpd2D-bgC6q19UWZ0zPx30CQIvkFnePu20BbO1MSvveSFJ4VMeW2NE3dAbeQe9YVHhO6oKLtoAl-Mahno62VCT6CI_WKPVZqXEFlcninxgFRkHB_OVhXQwg59BdvtX64YhWN3jQ88Wmr1Quap04eUIIJyCmW5BOfYDxoWejpizLss37t8j4kOBtMhqYrEqp2HOSm9TSdthRTFIHzWEOOOHatEfhZkqGAzas4hpXDV-uYtuyqTgTQVY10F5FfDKmauyKfqWsbWoSx_iG1MIKTOHerDQC7-1hNQFp2NTElse9HN-1VybT8VwW81MyTV4PZW3DILpt33cqrYko4KpIYLuQVHtfA3PnC1N5HHJaQZqOPoZLRd-jrIloik31C-sXBORqca_I108Y9YVSVlvEyf8VK7LghzV60ZanHRlIaSJl8usqwfeOmBZaOPlCMp1_w2XfnSNtpvyBQuXWLlnF3FdI_UUfiVkPXDJpNwItQ=w1007-h355-no" alt="예제보기 3" />
+<img src="https://lh3.googleusercontent.com/lkF4JNsGRUHDnMFnXPQsAKsFJzeY3F21IJl9wRC0sto8EqynAe7eWCJVDIeWniyUsscLGYjLqD5wXSzeu19fmQEbiib7YqloaS2avOB0uTyb7zA6C_6po0yZDUuXq96f_ARpd2D-bgC6q19UWZ0zPx30CQIvkFnePu20BbO1MSvveSFJ4VMeW2NE3dAbeQe9YVHhO6oKLtoAl-Mahno62VCT6CI_WKPVZqXEFlcninxgFRkHB_OVhXQwg59BdvtX64YhWN3jQ88Wmr1Quap04eUIIJyCmW5BOfYDxoWejpizLss37t8j4kOBtMhqYrEqp2HOSm9TSdthRTFIHzWEOOOHatEfhZkqGAzas4hpXDV-uYtuyqTgTQVY10F5FfDKmauyKfqWsbWoSx_iG1MIKTOHerDQC7-1hNQFp2NTElse9HN-1VybT8VwW81MyTV4PZW3DILpt33cqrYko4KpIYLuQVHtfA3PnC1N5HHJaQZqOPoZLRd-jrIloik31C-sXBORqca_I108Y9YVSVlvEyf8VK7LghzV60ZanHRlIaSJl8usqwfeOmBZaOPlCMp1_w2XfnSNtpvyBQuXWLlnF3FdI_UUfiVkPXDJpNwItQ=w1007-h355-no" alt="Example Screeen 3" />
 </p>
 
-<h3>#sidebar를 #content 왼쪽에 배치</h3>
+<h3>Place #sidebar on the left of #content</h3>
 
 <p>
-/*** The Essential Code ***/의 #sidebar에 다음을 추가한다.
+Add the following to #sidebar in the /*** The Essential Code ***/
 </p>
 
 <pre class="prettyprint">
@@ -793,17 +797,17 @@ container의 마진과 패딩이 0이고 border 역시 설정되어 있지 않�
 </pre>
 
 <p>
-margin-left: -100%;으로 해도 된다.
+The <strong>margin-left: -100%</strong> has same effect.
 </p>
 
 <p>
-<img src="https://lh3.googleusercontent.com/Opm1K3E0xe6vuQvPxKRkCOpgdO95yRey0C-E-yomTjxXy9wbxhPISvw1RsLMaPrLPStNlpDT6wekpWAZGooOuQS1a-1IGri5ZgNDuVcwfQ7ztZfsrmEbDLEJl17gZBBr6m8Nyh8VZOT8K4vEwKkKrG_n9bMC5dIS5mWJhRpyCyhp_EaRg3OOgwdKjVlWvxso8ACLd7_DjeCpwMdZ9oBS6T-BTHRP7NksDMMIwQINYQNsUxd4gLYE2bnyahEqyvV7jTcTTj4kUdYJ8Nut36wgZrXhlcnZugDGhJe1oauPuJtBYVG_LVN_ktni_wID8r-Cz1S1Y-dtOTjHocvZTmm89ZuJDvChm4jgIvjhXdI4WwCQUOqf8qJC65mo6XfqIS1qCdaXgL6BrddD3g2OqP11V9cQM8JU94XKdQHyt9qagqk3BGUhHirkbjhGQwOjMA5VgH13uoY-C7ZgAgPfzigSGQTzWL_agO4rqLL6cXVb4lhsAGKnrIbPFlTV7ijfgTu0woWkvSOl1SXBp6HDgJI6HoZXvvmCyLw3q-STf05Nzjpopu14YMV_25azjgwMXyrcBJ2cxlGdBzBGR4YxLFdmpE_bIcQGADjiCjNfhNyOGg=w1002-h353-no" alt="예제보기 4" />
+<img src="https://lh3.googleusercontent.com/Opm1K3E0xe6vuQvPxKRkCOpgdO95yRey0C-E-yomTjxXy9wbxhPISvw1RsLMaPrLPStNlpDT6wekpWAZGooOuQS1a-1IGri5ZgNDuVcwfQ7ztZfsrmEbDLEJl17gZBBr6m8Nyh8VZOT8K4vEwKkKrG_n9bMC5dIS5mWJhRpyCyhp_EaRg3OOgwdKjVlWvxso8ACLd7_DjeCpwMdZ9oBS6T-BTHRP7NksDMMIwQINYQNsUxd4gLYE2bnyahEqyvV7jTcTTj4kUdYJ8Nut36wgZrXhlcnZugDGhJe1oauPuJtBYVG_LVN_ktni_wID8r-Cz1S1Y-dtOTjHocvZTmm89ZuJDvChm4jgIvjhXdI4WwCQUOqf8qJC65mo6XfqIS1qCdaXgL6BrddD3g2OqP11V9cQM8JU94XKdQHyt9qagqk3BGUhHirkbjhGQwOjMA5VgH13uoY-C7ZgAgPfzigSGQTzWL_agO4rqLL6cXVb4lhsAGKnrIbPFlTV7ijfgTu0woWkvSOl1SXBp6HDgJI6HoZXvvmCyLw3q-STf05Nzjpopu14YMV_25azjgwMXyrcBJ2cxlGdBzBGR4YxLFdmpE_bIcQGADjiCjNfhNyOGg=w1002-h353-no" alt="Example Screeen 4" />
 </p>
 
-<h3>#extra를 #content 오른쪽에 배치</h3>
+<h3>Place #extra on the right of #content</h3>
 
 <p>
-#extra에 다음을 추가한다.
+Add the following to #extra.
 </p>
 
 <pre class="prettyprint">
@@ -814,9 +818,9 @@ margin-left: -100%;으로 해도 된다.
 }
 </pre>
 
-<img src="https://lh3.googleusercontent.com/usu6D53Xw_OU25tUIH8oKubV0wbC41xh8sj7b0MHSjMI0ouGTln29XG0Ucsa_8v44FJJ7UKQmJ8x1U5MuuIEZDo3C1kcBBojvoLOF-E3G1U5QRJpc7Y_TAQcnT0MQX5Dp7P93Kyh8k82hx12hY8DzamwcZwq3TlmT3xRcGfhWJt7hhdcPITVQufhdw1Oiu_TGGEiJcibkf_6P-dLkY0qUN4SkOVD5NTzkkCCR1J7GSIIG88WY904aGYvyr9wT0W8CqKwVvn60XUskysEQzviBXxZy2XLMJSyRjc1j5gGADlaIBktDkOPrjzCMvQwl8YzaZtZngc7IaVlO7i5JM7irSzXfDUcZDPXeW5uYq-GXUAZIel37bnKPF_n3EQkj3-Ne5nu5bGPFumYUSrTjOGAqBhEHzV41HTVKTdTiIjszECFiXynvRRL3vIJSVKMAVZwQVgrx1FUBIbDZ-kl_xUEYsMPsL5QQ8FC3rmQP3WQPjI6XOFlSmHMEnusximIT38_v2_ccYRfL4GUko-cTf3zJNSUX_Dqh9m_6cu4F5_mEJt6QGXjSGfnhEsBstmw_SLoGDw6V9XzQKWbll3gBzZo4OBR8gUlY1ATYZAPed7CZA=w1004-h252-no" alt="예제보기 5" />
+<img src="https://lh3.googleusercontent.com/usu6D53Xw_OU25tUIH8oKubV0wbC41xh8sj7b0MHSjMI0ouGTln29XG0Ucsa_8v44FJJ7UKQmJ8x1U5MuuIEZDo3C1kcBBojvoLOF-E3G1U5QRJpc7Y_TAQcnT0MQX5Dp7P93Kyh8k82hx12hY8DzamwcZwq3TlmT3xRcGfhWJt7hhdcPITVQufhdw1Oiu_TGGEiJcibkf_6P-dLkY0qUN4SkOVD5NTzkkCCR1J7GSIIG88WY904aGYvyr9wT0W8CqKwVvn60XUskysEQzviBXxZy2XLMJSyRjc1j5gGADlaIBktDkOPrjzCMvQwl8YzaZtZngc7IaVlO7i5JM7irSzXfDUcZDPXeW5uYq-GXUAZIel37bnKPF_n3EQkj3-Ne5nu5bGPFumYUSrTjOGAqBhEHzV41HTVKTdTiIjszECFiXynvRRL3vIJSVKMAVZwQVgrx1FUBIbDZ-kl_xUEYsMPsL5QQ8FC3rmQP3WQPjI6XOFlSmHMEnusximIT38_v2_ccYRfL4GUko-cTf3zJNSUX_Dqh9m_6cu4F5_mEJt6QGXjSGfnhEsBstmw_SLoGDw6V9XzQKWbll3gBzZo4OBR8gUlY1ATYZAPed7CZA=w1004-h252-no" alt="Example Screeen 5" />
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://www.html.net/tutorials/css/">http://www.html.net/tutorials/css/</a></li>
 	<li><a href="http://www.subcide.com/articles/creating-a-css-layout-from-scratch/P1/">http://www.subcide.com/articles/creating-a-css-layout-from-scratch/P1/</a></li>

@@ -1,0 +1,220 @@
+<article>
+
+<h1>Main Menu Styling</h1>
+
+<p>
+Create images folder and save the following images in the images folder.
+</p>
+
+<div style="background: #ebebeb;height: 90px;width: 497px;">
+<img src="https://lh3.googleusercontent.com/-sQJqA2Xy4lA/VYJgApAGzmI/AAAAAAAACak/QoRi8LP0HEA/s4/bull_circle.gif" alt="bull_circle.gif" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-m7AxsWEEYkI/VYJgAlTWMsI/AAAAAAAACag/ZwSK80SF3yI/s11/attach.png" alt="attach.png" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-CLWzjmg1nE0/VYJgBW3wZ2I/AAAAAAAACao/3fAtEYhiSps/s117/ci.gif" alt="ci.gif" />
+<img src="https://lh3.googleusercontent.com/-HRhH9HImJr0/VYJgB_tbr-I/AAAAAAAACa4/r0w7FPaHy6w/s3/circle.gif" alt="circle.gif" style="width: 90px;height: 90px;" />
+<img src="https://lh3.googleusercontent.com/-oNgNdic_nwk/VYJgApt8m8I/AAAAAAAACa0/BbLVtFw5Ayk/s9/arrow.gif" alt="arrow.gif" style="width: 90px;height: 90px;" />
+</div>
+
+<p>
+Open index.html.<br />
+Add the following to #main-menu in index.html.
+</p>
+
+<pre class="prettyprint">
+&lt;div id="main-menu"&gt;
+<strong>
+	&lt;ul id="nav"&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Java&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+</strong>	
+&lt;/div&gt;	
+</pre>
+
+<h3>#main-menu Styling</h3>
+
+<p>
+Add the following to #main-menu in stylesheets.<br />
+(Remove #main-menu in /*** Just for Looks ***/)
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	width: 1000px;
+	height: 35px;
+	<strong>font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;</strong>	
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/7KuwVb8C6br52eRzZ47KTIP9u-OMLpZB970ltbzveIypbUdrvlYXSdKFb1ScHyEEzyR6ZoOcgEdS4COqYCOlhyx0JkKTvv7KayQm-ZzvtxQsIiVwvXSfMkg0vml5_TdenYNrVjJBBYkIMN0fOBqbzWN8izQ9LQBeVKGUWnNTe2lNZDQYnDEsCykpLgdnc-RanSrCudRTt0tFAnUpOYNpoHj7H6eSV0UVCGs6rYQUV6ZwYQTIZKgqopQYNZt3oXvbf1d9SBtAgmvALii-ufCeMLS-Xi1fywyLpbjhB-EX3Q-jhG9FRhBjVieQ7mJqwppobNrbphoCNHf_iAKdjUH-HG7eCWERg5bAYGWjlu_4MbKiGZ3FE83TzBwQV5fPhu8XcpjZ93847_nwd9V65-37LdxhdJJWo6M6akTTjdwsz7ONerMP5Uaq4LU7sfPeDvjsk6-k53fC-ylfS2ePxZbeyIW1-7RyJheN2g2IGO5oURWxDeQyaPxX5Cj7dv9r8pc7Gvs53NE_7KHmq3EnW_uvvWkmt-I5yXJ9FCvDYobhgLmnKAyuGwaUOeKq1PBhlMJ7ynu1LP8mnNGZVZrB9hnLyNGDmikKXtHabzl7h-dSnQ=w1004-h267-no" alt="Example Screeen 1" />
+</p>
+
+<h3>ul#nav</h3>
+
+<p>
+To remove default margin and padding of ul and li,<br />
+Add the following in /*** The Essential Code ***/.
+</p>
+
+<pre class="prettyprint">
+<strong>ul#nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}</strong>	
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/Z_mGhXSx68DHbZTTR0k93Ae6sUTMqDDHkAV2OGSfnzYaa3lAJ12ZlkSwoKOzrvr_g4B4EqgE4A4ionNGH5sAl8yIiYVNbTM7D3hKE6CYHRlkh41z0LWraborpX_6gJkN-_0Y75YyR61C9x4gUOg-D-qLPrYCxxtIqf7tleieVzgjbzPvQZ0oxSWaIJrzXo3Y-YL4LXrhA5FfVDKZAYMuuwX4om61YMXQhYOtW3Ta0i-wrTq3QutDUwWxyTCWFaizrRcA1Vj4Glrdhusc9HEQ_H-pEdlyjP5-F1qclmXk0DvkyzWFWlYyS3GpsjzHikCiL5P3D2tghJz-CeUZPOP5x_dP4dnWHtmKcF-H1lmsejJkUWo9ZFAYKga0msVj4U5yWxcaqmoCBSbJyN9JDPiHlqUFl4Q4m-9nsoCiF5Ngyrd7KpAPJH__8uJv9iXZDyC-6SPJJoq2C3fuBB2-ms0mfAZdCmFyDSvH40ehMH8YSO9kQXI4Rdt4k0584X_YuBX11m9easpVeSICt1UFtboH8p2jiJHFdVIRu6C0q8C4jd2rXDPqvsHMjEFOA6JMzoIeevQj5Z_AFLZqskIvJxhKA47ck1v_Btgv0PpJA6joPw=w1003-h253-no" alt="Example Screeen 2" />
+</p>
+
+<h3>ul#nav li</h3>
+
+<p>
+To list the menus horizontally,
+Add the following to /*** The Essential Code ***/.
+</p>
+
+<pre class="prettyprint">
+<strong>ul#nav li {
+	float: left;
+}</strong>
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/pksuNst3SA9o4go-EhX5SxzYUKybiFB8K9oPzQqqUGKp2ycTa-ISqL5Fsj_k9gdILsYVai439AXyxs8LpLzbBNxXdAROXD8eQSP9WzPC7RYtwyFv7eYE4cxTMMysx3wIMA6k39LrH09XHAM0aNblLxuVAZIHxdP9POnbzK3SsgIXzFqCWgVwunpwZmiFK65EHTEVvxu__F4kaAc9emRDmA8Mdsa77ac8DzwouK2a9V_aCcpp6eLwEp7AqjpvhB0-OayOqiC5HE_42f2L8pBRzgo5hez_EJs1gXOJuGRg-6d2P5TdHeDog5nAUiyVw67rEO4pZcFkNZ9MBf0cIKeeWYCZgHIKsxZ65cmmH7qvNCXFm45cIzqZ6eGtFmYzuIInAwypzgWzfVLGq8nPmadjFJkOJehv4FCfq1ZdWk9fZAPZuEQYU_-7QDUp4L8KhgZwuO70P3aoz22QSb6hLEQC-e2b6kWPxDN0qqFHMZnCridL8PNC13mMX8Ku4smgFx65uiqkDp6mUIUi3v06EhUL0dYrefuxXLq7GAGkYXtZF3vMznD1Y6TByntg3ia_qdzToD_XoGELGoQbJpKbEyQzMsEXIHfrkAEPs0sZxngArA=w1004-h254-no" alt="Example Screeen 3" />
+</p>
+
+<p>
+To add padding between menus,
+Add the following:
+</p>
+
+<pre class="prettyprint">
+ul#nav li {
+	float: left;
+	<strong>padding: 0 17px 0 8px;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/-eiR9k0tDYLslZm2fJygd0zrByIB8j49j3lmlLbb4OOnlJ5diTkkMFQkAzRyNmVqoJABOAYGyAIsK15dUf4dXT5pLJiRHudqNKYcBpBlfYE1kX5sjyhzxfailk3NftQ6mr8pFRjgYNB6eEV1bpIjAtJ6TFj2VqlezgfTKT_WcVxG6V0TNJ22Vryea0mQj090F3-JXTNlSLjzsbMYPtJIrm-fbJVlRlgnXvwNu7oCeIzX9gjaTPT_U416VWCgpYcLa_zuTFLdz_KJfdxAXYs1jLwL15hFlwc9LJULeU5vxK_lmzSQGiJq299qiZYR3ZZwjX38K0bQ9BCX_598iUreOQ3mdKSipGcWva51cFaSl3hEVRJNlPGwIvEg7CFVjcWOAsGExtqzGPLt8Eo7v-ZXyBMVPs4V1_3f0mk8MjuMAHy5JiKHRL8vqUxwNS8_nzE3k8vmMkkHMgWfR7d5m6_2rXBD3vQK7ySdKo-RDMWnrabQzf5ELDAjd_VFHj8CJIxta99xQLFzjGRES3qhWXxMqwYDEhKocC7Fa3BfvH8bqQa0jw14gLPDEJo8NVFm-KposLRrmvrCMwNxpx1JiVe-LDvQDCMjW-_Y5qtDCfQcMQ=w1005-h254-no" alt="Example Screeen 4" />
+</p>
+
+<h3>Positioning ul#nav</h3>
+
+<p>
+The menus position is too upwards.<br />
+To move menus to middle while not changing the height of #main-menu,<br />
+Add the following.
+</p>
+
+<pre class="prettyprint">
+ul#nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	<strong>position: relative;
+	top: 9px;
+	left: 17px;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/jRac0J5LdMDbGLUchmN3NDLo9y0NfpDfTOn9mh6-6IZFyZC3zni-akAuSex_-zSlbZnHk_Pw1BdpUNSHqeClnbqywMB0-2XIAex74hKw6tmnZ_sWXvhXViwDUhESyoiGTJX5PMw3cXUHoGrN_Iw3Nu1qqMgFdxNEcAyyLyA6GrgPG94KvEfhcCjeo2oDX7lZPe3fIku67ijUN1w3EoFCT-bYp2u_ijNu-rH7iyEVKu7sCmE2yt5ZOD-JrCccN4kIo_GTFmVSmR_IYVp88-h4xdoupDSeb1igdDAftWPhV6dz0DDigCFHQM8jiTL4IJsEU5G4oXx05JjZ8vD3T4VaNeZ4HsHyP31_nbJ3njAmy2OWX9BfB61Vo_LTzrFOaO4L4neB2CbAmeKMJ0PNBenyf-IxgqhxO9zQgwJmaVcHIGT-kFpT3Jc-IVbZe9SbNW_Y3wsp6h1EKaITIKzt8ZxDCCCBLdrxoYG--6mojTVyS4b117W79jrofuRE-zxj2vqyJxLul4HDVUJ0ju9kbrD4SqHbeNZIQJfM7upWhuNwbVLs2oxj8-dF8cp80MHTtnCnifyZocngxBM4Pd6SKJirUuBYNEUxGYYL0NgV1kSAmA=w1004-h253-no" alt="Example Screeen 5" />
+</p>
+
+<h3>Main Menu Link Style</h3>
+
+<p>
+Add a background color to the #main-menu.
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	width: 1000px;
+	height: 35px;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	<strong>background: #92B91C;</strong>
+}
+</pre>
+
+<p>
+To remove the link's default underscore and set the underline to appear when the mouse hovers,<br />
+Add the following to /*** The Essential Code ***/.
+</p>
+
+<pre class="prettyprint">
+<strong>ul#nav &gt; li &gt; a {
+	text-decoration: none;
+	color: #FFF;
+}
+ul#nav &gt; li &gt; a:hover {
+	text-decoration: underline;
+	background: none;
+	color: #FFF;
+}</strong>
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/wS6vm14LPN_JQAIXbIIswjMJ5oz-P0P3X3NphvgKJ4TSdexR1ZMLA798A7rkvNpYeAy8SPRbzC4uTQmwGEhrdCEXqhGkuqArlbsIhR37yoRD5z3dnE3iRVIGHSfYvCix6uQ9qdIgKcA6YPkL5dZqDhlHBs3MtPqHSlKv9OBwH_enMZ3XQSB6QHz9rZAUdeWHiIhKhxoT9cc04VO_8YsdoGcFU9ug4K_x107YeqJR4rf9ZFoVT3w8m9XPSPCITuC9_GjFj4TWrhykrHbJQ2Z25fPkqffU6wLP5x1azwKK1xEQoGigRKnH0ey_wdT04_qrqsQWC_FQoEl83ytMTBPMjZL93aqNk4hFF_og2XQF5VsTJLIYF9_TumFOvGdZlFU3JdCiCDJCe9q3jeI8y1eq9CJM4DvALNmTn0okw2uAjhXg7sr6Tyf_pJGGr7RBdoLND4dzD7LSZFTxoiTRGbd9Y7tPt77QYKoBDiiG8AekwC7Yifbl2H2xEvjCLdCLfwzapMSZu8tjVnzyvYsyc1Uf5Ps50zMqlkS7O42hMbtQ9Pi6V_Lx2L2zZMRUKYFogDpbf1o1__HhMqgnKmS8xZ8AhGB3_YR9bYvpx8B-9DqsAQ=w1004-h253-no" alt="Example Screeen 6" />
+</p>
+
+<h3>Using an image instead of default list style</h3>
+
+<p>
+If you add list-style-type: none to ul, the default list style disappears.<br />
+If you put a background image in front of li instead of the default list style, you can express the list more elegantly.<br />
+Add the following to <strong>ul#nav li</strong>.
+</p>
+
+<pre class="prettyprint">
+ul#nav li {
+	float: left;
+	padding: 0 17px 0 8px;
+	<strong>background: url('../images/bull_circle.gif') no-repeat 0 50%;</strong>
+}
+</pre>
+
+<p>
+The image path should be relative to the CSS file location.
+</p>
+
+<p>
+Add a border style to the main menu box as shown below.
+</p>
+
+<pre class="prettyprint">
+#main-menu {
+	<strong>margin: 15px 0;</strong>
+	width: <strong>996px;</strong>
+	height: 35px;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 12px;	
+	background: #92B91C;
+	<strong>border: 2px solid #DAEAAA;</strong>
+}
+</pre>
+
+<p>
+<img src="https://lh3.googleusercontent.com/6YF3yuTJb87bww9eHReuwIpWs8WKSsaFb943mizPcBEGOHLyUB80ZcnlxTcWRluHwt7uf2867hWSAwsYVo3QCFxSbm5IlLXcaRMbYS4-h_rrA-smoV6ChTvRoNiEAOeH1kqpFjjOOiIr1ATVazxeEGAki2nLR9xoDesfv94hHIUc9YPFYCuardZc4e1a7Ajwa6bYA6zeisGHCyXjX5G_nr74xHSACvF0JxNuLShTinw8w2lDt5nn2F3r2-_2zJ6-YCLJ-vBtk-XfT7LuJP6OzepaMQTU8S4Q9Ov--vHtvhEsl6y1_UrFZEy2mcrTSOadYzSIEv2kEH4tZjjXPHZ-oVpYls1lR-szFlFJnuZSPWiE0mNoORB9Fyp3ISjNvJ73VkQbLUDErZzp-E61myn26BpmTPj6k-uT5nfWLiErEieHP87Iz_jDOsoKjWQEuXqdv_i51NbOmKFxDndRGzjkWTB7MvWUFW1NSRVU8g4jIxR3dBA_-3XmlIrJnMrvSicpYRNiW4PxQj8Tt6kBt5-1182lnW-m8RuHc-lOknOD70U-buU4X0bkMokjBvQSCX4TrqJBCH16NHkrMXTcgDGC1p7hriBbfOgWbeFnMUUzLg=w1003-h287-no" alt="Example Screeen 8" />
+</p>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://www.css3.info/preview/rounded-border/">http://www.css3.info/preview/rounded-border/</a></li>
+	<li><a href="http://border-radius.com/">http://border-radius.com/</a></li>
+	<li><a href="http://www.the-art-of-web.com/css/border-radius/">http://www.the-art-of-web.com/css/border-radius/</a></li>
+	<li><a href="http://www.alistapart.com/articles/holygrail/">http://www.alistapart.com/articles/holygrail/</a></li>
+</ul>
+</article>
