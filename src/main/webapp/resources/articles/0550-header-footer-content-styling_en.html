@@ -3,7 +3,7 @@
 <h1>#header, #footer, #content styling</h1>
 
 <p>
-index.html의 #header 사이에 다음 코드를 추가한다.
+Add the following to #header in index.html.
 </p>
 
 <pre class="prettyprint">
@@ -11,7 +11,7 @@ index.html의 #header 사이에 다음 코드를 추가한다.
 </pre>
 
 <p>
-/*** Just for Looks ***/에서 #header, #footer의 배경색을 제외한 나머지 스타일을 제거한다.
+Remove the rest of the styles in #header and #footer except for the background color in the /*** Just for Looks ***/.
 </p>
 
 <pre class="prettyprint">
@@ -27,9 +27,10 @@ index.html의 #header 사이에 다음 코드를 추가한다.
 <h3>#header h1 positioning</h3>
 
 <p>
-h1 엘리먼트는 디폴트 마진을 가지고 있기에 #header 엘리먼트는 마진만큼 아래로 떨어진다.<br />
-h1의 디폴트 마진과 패딩을 제거한다. 그리고 9px 아래로 이동한다.<br />
-/*** The Essential Code ***/에 다음 코드를 추가한다.
+Since the h1 element has a default margin, #header drops by the margin value.<br />
+To prevent this, remove the default margins and padding for #header h1.<br />
+In addition, to move h1 down 9px in #header,<br />
+Add the following to /*** The Essential Code ***/.
 </p>
 
 <pre class="prettyprint">
@@ -48,19 +49,19 @@ h1의 디폴트 마진과 패딩을 제거한다. 그리고 9px 아래로 이동
 <h2>#footer styling</h2>
 
 <p>
-index.html의 #footer 사이에 다음 코드를 추가한다.
+Add the following to #footer in the index.html.
 </p>
 
 <pre class="prettyprint">
 &lt;div id="footer"&gt;
 	<strong>&lt;ul&gt;
-		&lt;li&gt;&lt;a href="#"&gt;이용약관&lt;/a&gt;&lt;/li&gt;
-		&lt;li&gt;&lt;a href="#"&gt;개인정보보호정책&lt;/a&gt;&lt;/li&gt;
-		&lt;li&gt;&lt;a href="#"&gt;이메일무단수집거부&lt;/a&gt;&lt;/li&gt;
-		&lt;li id="company-info"&gt;전화 : 02-123-5678, FAX : 02-123-5678&lt;br /&gt;
-		people@ggmail.org&lt;br /&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Guide&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Email Collection Ban&lt;/a&gt;&lt;/li&gt;
+		&lt;li id="company-info"&gt;Phone : 02-123-5678, FAX : 02-123-5678&lt;br /&gt;
+		johndoe@gmail.org&lt;br /&gt;
 		Copyright java-school.net All Rights Reserved.&lt;/li&gt;
-		&lt;li&gt;&lt;a href="#"&gt;찾아오시는 길&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Map&lt;/a&gt;&lt;/li&gt;
 	&lt;/ul&gt;</strong>
 &lt;/div&gt;
 </pre>
@@ -91,7 +92,7 @@ Remove #header and #footer in /*** Just for Looks ***/.
 <img src="https://lh3.googleusercontent.com/WggfJXvG75akm4gm7PgN26OFvUPOOtscg9uWt-i554-DeZXJLEq44szo2YCOMko8XiHw17UPuZT5V6f4phrM-lORExXBvGi3aW7Za6dZFtLjxr5xeR5U6sX9RpBOp0l0WeHm1jx1qPPgjYVM75wE8IUT7WahJf0-XK5HMr81NrnPfzTl2x44U7j5MMxpV58lj3ZlxE-VUYabV4-XKitHHTpow4qtn6Nj38rzzFgTrfgvebmMH8UPzXZvfi38ZvdkLPHOmkE0D5RwacxRD03TjpMvs1CvhfSCLAINI8w_7yf3pAudKNiJ-mt4DWCBVugKD0mqW1eeDOX2yMxVcMVczgXIU0Z1V3SWRS7motTWOwb-15tBTxSxLTQmX2-TJF6jC-Kqkak6nLGevGRFn_QX8OmfMU0eD2FGJPayGD90dMZUJoT2VSb07s1UUCXOk8CF-HtbqlgNzhJ5XiMPD6n9IBWBjq-zG9I2mRzCG_iCHtga3S9VErCPdbDfk11hsW9zqUvMWhNnfxnuvLCU7IYSZ4cb4k3q20bzyorrdMEeC76a7RnUKRvuMTcE-mRkx4N6qJluhKW0XcFkV9_JxdQ0-VBqkx_Z1pmitHMP9oVgPQ=w1007-h420-no" alt="예제보기 3" />
 </p>
 
-<h3>#footer 메뉴를 가로로 보이게 수정</h3>
+<h3>Make the #footer menus horizontally</h3>
 
 <p>
 Add the following to /*** The Essential Code ***/. 
@@ -148,8 +149,7 @@ Add the following to /*** The Essential Code ***/.
 <h2>#content styling</h2>
 
 <p>
-#content 좌우 마진을 5px씩 늘려서 #content가 #sidebar와 #extra 사이에 간격을 두도록 설정한다.
-보더를 추가하여 경계를 구분한다.
+I Increasd #content the left and right margins of #content by 5px for the interval between #sidebar and #extra as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -160,13 +160,13 @@ Add the following to /*** The Essential Code ***/.
 </pre>
 
 <p>
-#content 상자의 영역은 1000px이다.
-좌우 마진합이 390px(180 + 210)이라면 #content의 width는 610px이다.
-border를 좌우로 1px 주었다면, #content의 width는 608px이 된다.
+The area of the #content box is 1000px.<br />
+If the sum of left and right margins is 390px (180 + 210), the width of #content is 610px.<br />
+If you give the border 1px to the left and right, the width of #content is 608px.
 </p>
 
 <p>
-레이아웃을 좀 더 우아하게 보이도록 강조된 부분을 추가한다.
+Modify #container and #extra as shown below. 
 </p>
 
 <pre class="prettyprint">
@@ -189,7 +189,7 @@ border를 좌우로 1px 주었다면, #content의 width는 608px이 된다.
 </pre>
 
 <p>
- 테스트를 위해서 /*** Just for Looks ***/의 #content의 높이를 100px에서 300px으로 수정한다. 
+Change the height of #content from 100px to 300px in the /*** Just for Looks ***/ for testing.
 </p>
 
 <pre class="prettyprint">
