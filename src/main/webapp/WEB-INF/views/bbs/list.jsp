@@ -49,7 +49,7 @@
     }
 </script>
 
-<div id="url-navi">${boardName }</div>
+<div id="content-categories">${boardName }</div>
 <div style="text-align: right;">
     <select id="numPerPage">
         <option value=""><spring:message code="num.per.page" /></option>

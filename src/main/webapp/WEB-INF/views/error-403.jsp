@@ -3,7 +3,7 @@
 <%
 Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
 %>
-<div id="url-navi">Error</div>
+<div id="content-categories">Error</div>
 <h2>Error 403</h2>
 <p>
 Access is Denied.

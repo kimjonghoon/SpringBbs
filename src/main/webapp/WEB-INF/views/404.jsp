@@ -22,7 +22,7 @@
     
 	<div id="container">
             <div id="content">
-                <div id="url-navi">Error</div>
+                <div id="content-categories">Error</div>
                 <h2>404</h2>
             </div>
         </div>

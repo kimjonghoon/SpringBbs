@@ -3,8 +3,8 @@
 <h1>Board Styling</h1>
 
 <p>
-The following code is a common style for our website.<br />
-Add that after the html, body selector in the /*** The Essential Code ***/.
+The following code is a common style for our website.
+Add that code after the html, body selector in the /*** The Essential Code ***/.
 </p>
 
 <pre class="prettyprint">
@@ -15,13 +15,10 @@ Add that after the html, body selector in the /*** The Essential Code ***/.
 input, select, textarea, td, th {
     color: #646464; 
     font-size: 12px;
-    font-family: "돋움", dotum, sans-serif; 
+    font-family: Roboto, sans-serif; 
 }
 table {
     border-collapse: collapse;
-}
-img {
-    border: 0; 
 }
 form { 
     margin: 0;
@@ -46,28 +43,27 @@ a:hover {
 </pre>
 
 <p>
-html, body에 설정한 폰트가 모든 엘리먼트에 적용된다고 생각해선 안 된다.<br />
-다음 줄에 html과 body에 설정한 폰트가 적용되지 않은 엘리먼트(input, select, textarea, td)의 폰트를 지정하고 있다.<br />
-div역시 html, body에서 설정한 폰트를 상속하지 않지만 div 폰트를 일괄적으로 설정하는 것은 필요치 않아 뺐다.<br />
+Do not assume that all elements inherit the font set in html and body.<br />
+The following line sets the fonts of the elements (input, select, textarea, td) that do not inherit the html and body fonts.<br />
+The div does not inherit the html and body fonts, but it does not need to be set to the common style.
 </p>
 
 <p>
-table의 border-collapse: collapse; 설정은 셀(td를 의미)과 셀의 테두리를 서로 겹치게 하여 셀이 서로 붙어 보이게 한다.<br />
-img의 border: 0; 설정은 img에 디폴트 border 값을 주는 옛 브라우저가 있어 추가했다.<br />
+<strong>border-collapse: collapse;</strong> of the table selector causes the border of the cell to overlap with the border of the adjacent cell.
 </p>
 
 <p>
-form 엘리먼트의 margin과 padding은 디폴트 값이 있다.<br />
-form 엘리먼트의 margin과 padding이 필요하지 않아 모두 0으로 설정했다.
+The form's margin and padding have default values.<br />
+Since these values are not needed, they are all set to zero.
 </p>
 
 
 <h2>Board list Styling</h2>
 
 <p>
-/*** Just for Looks ***/에서 #content를 삭제한다.<br />
-index.html을 열고 '다른 이름으로 저장하기' 메뉴를 사용해 list.html 파일을 만든다.<br />
-list.html의 #content 엘리먼트에 다음을 추가한다.
+Remove #content in the /*** Just for Looks ***/.<br />
+Open index.html and create a list.html file using the 'Save As'.<br />
+Add the following to #content in the list.html.
 </p>
 
 <pre class="prettyprint">
@@ -126,7 +122,11 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 <img alt="Board Design 1" src="https://lh3.googleusercontent.com/4Jb4Fx9gvKiIcp1kHQVZ2-TP-NNsR53GXOm3M_lk_7yX2N8nEit3H9E_yyr0Fy0P2jQRZnFcaCT7yFS0z37DovAlB35XCb4zQF4jhVywGnm3qRqAIepiz0wzkC8Q4MKXXXwRD8mROnKUbOQiZ-sc3WrzAnGPsX7M47C7VAR3CabGfQKErmUyEZb4V3ECE-_NIW5wmb-CSJXKX_yTX1_0Dtd8c9qtEitsxx_14fNwR0HLQ7CCtHxeA_OecSz8FBrY9j0-DL8vykaXJN0a4fRAnXihM7nFc8_eV86UzWs5KHs6_U5y_Bem82v44IbAu9G1f5qIhP8FkSIj6MB_UH5hx4ptQ9jjlxq3RKHDhqJhdGfaF8j8s8D4hlk8m5J-f3ntRwTiVcufk6v6_QvbaBLrWgIRkJWVtgjKkSZNcubtz2ejlGpJSUP0wqk5hFUXzca2IVXzjpM8QvakMBYpTquTZGWVMvcgzIdnHJPXidX2yfh3oDN2Qal2NJgKATc3usM_ov0kcZih5tm-xFB6N5O3BSORfVeAInp9QEGWaJ1J8n8W3HEGbsoZWmfnpC5qnhg1NSnyb5VdPb2B7sVzyfGQ1Gro_uBr070psjWaMCJFGg=w1005-h358-no" />
 </p>
 
-<h3>#content 패딩, 폰트 크기, 줄 간격 설정</h3>
+<h3>#content's padding, font size and line-height</h3>
+
+<p>
+Modify #content as shown below.
+</p>
 
 <pre class="prettyprint">
 #content {
@@ -140,8 +140,8 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </pre>
 
 <p>
-패딩을 추가했으므로 #content의 width는 592px이다.<br />
-1000 - 마진 390(180 + 210) - 패딩 18(9+9) = 592
+Since we added padding, the value of the width property of #content is 592px.<br />
+1000 - Sum of left and right margins 390 (180 + 210) - Sum of left and right padding 18 (9 + 9) = 592
 </p>
 
 <p>
@@ -149,12 +149,12 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <p>
-#url-navi는 #content의 가장 위에서 사용자에게 문서 위치를 알려준다.<br />
-다음을 스타일 시트에 추가한다.
+#content-categories shows the content category at the top of #content.
+Add the following to the stylesheets.
 </p>
 
 <pre class="prettyprint">
-<strong>#url-navi {
+<strong>#content-categories {
 	margin: 0;
 	padding-top: 10px;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -168,6 +168,10 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <h3>Board table heading styling</h3>
+
+<p>
+Set the style of the table to be used on the bulletin board.
+</p>
 
 <pre class="prettyprint">
 <strong>.bbs-table {
@@ -209,7 +213,7 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <p>
-목록 머릿말의 넓이를 조절한다.
+Adjust the width of the list header as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -227,7 +231,7 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <p>
-목록 아이템 중 제목을 제외하고 text-align: center;로 설정한다.
+Add <strong>text-align: center</strong> to the style property of all list items except the title as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -253,6 +257,10 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 
 <h3>#paging link styling</h3>
 
+<p>
+Add the following to the stylesheets for styling the page move link.
+</p>
+
 <pre class="prettyprint">
 <strong>#paging {
     text-align: center;
@@ -273,7 +281,8 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 </p>
 
 <p>
-댓글 개수, 현재 페이지 번호와 같이 게시판에서 글자를 강조하기 위한 스타일을 추가한다.
+To emphasize the comments total number and the current page number on the board,  
+Add the following to stylesheets.
 </p>
 
 <pre class="prettyprint">
@@ -283,12 +292,6 @@ list.html의 #content 엘리먼트에 다음을 추가한다.
 }</strong>
 </pre>
 
-<p>
-bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다.<br />
-목록 아이템에서 댓글 개수에 스타일을 적용한다.<br />
-현재 페이지 번호는 이미 되어 있다.
-</p>
- 
 <pre class="prettyprint">
 &lt;tr&gt;
 	&lt;td style="text-align: center;"&gt;11&lt;/td&gt; &lt;!--No--&gt;
@@ -309,7 +312,7 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 <img alt="Board design 10" src="https://lh3.googleusercontent.com/eiRE_MTj5_mygHSNo9tA7DHXWPwKymv6CvCIIWYuUzz428U9iH5uAMY8xQeJjE5KsAW-XjunnUQ5SEj4Hkoe7TpSDeOAsc-V5OBfmxEruJu1kSlN_ZZrImCY2YENcRXShCvm4XU8o-zRMi0yXjOvvVD7qN89GKaqs-K8AowJtwLg5eC9zUoMQ5kaQv1WxF9d0DtP7q0PabFSNltJQl0RXNCcIlBDix0roySxOnuZb-CrBrkMFhmi4VRM41rrOnTeczbfh4XgeNvV94ZeyDsYiKxlRBFnuILxQUKv-GM2EwpsJvgoRp1sgNPoyzbcuyMIc6vQfgNmQYnvNkU6CW6-heSb9c1eiEl2llcTde6KarnnRv8yCAdBJa4vBQ32YUXp8sXkfkhmykBpNhs-cWR_GlhXK2j6b9Iw0Qx7RwInxQ1G9xxOz8uYpSudmakw3jB5_29ap4-cg1rXW3yg7DBbw_Dl6N-qP5kgSu46RCtaLUn-H2tVUxjwR2A7lDNhY3sTaXC81fDQb5CG1RWaKU1VUbJKk0VKt9TOlSOYBkhFxUKF8mOpmXEMYPZXlmRCK7axYfn9uxwQ20dzWdtjbz_f3g-pD-X104aetc_fEFv9yg=w1005-h356-no" />
 </p>
 
-<h3>새 글쓰기 버튼을 오른쪽에 배치</h3>
+<h3>Place a new post button on the right</h3>
 
 <pre class="prettyprint">
 <strong>#list-menu {
@@ -321,7 +324,7 @@ bbs-string 스타일을 댓글 개수와 현재 페이지 번호에 적용한다
 <img alt="Board design 11" src="https://lh3.googleusercontent.com/sVoZyNHNQwLWeR6hkJ-ZW_pe38ZmtygX8JZZ1Es9o5QnnGDMsvxhzLfBA8CBSkjBM2CDgFXPXhrmjrqfIIynkesIpv4UMtDrp4P88w-DnF2OWI93mANKuBweaelTipmdUhHWL_T82bKqHAlFVrH6M5XviBdzRDE7wTu_LGCRsPiw2vePmMyUf5fGYUt0hN1fVei9vHKENrTC472oHHrXQGOI7Zn6uBYtsGi9-rsb5Scu1a5_lvDemSAj_4VgBfhbuo77sEHXTqa-2tiJB_ZKr_QinK5LhvMd3KvsldqqkSGQfHERXsFm7bHoXtifFbywjy8fOm5ptDDeq5mfGTBnEzRtQnkIqCSSVMyOrF5qRL1_FVA5d3cjbzkjz8OAA6xDMJOTM8e2KCVK4rMd_reCVhaNOIhVBfPW5yhDsEKli6ibyREOpo8Ze2C_6uem90WFbtGp4MKCutjK86WHbciml4hmB8tuUC-facjImU1XYfZm_cDzTiWrO3-WZFqrCA3EeecR52lcQug6NwSHdurYmhgIZlWW80GsOKOmAInYM51mg453f54XbUhgV-PI2jZvKnx3-XSIl_Ie4Q4zNmUsyFrEeGwXoyMVVPdQdm2keg=w1006-h352-no" />
 </p>
 
-<h3>검색을 중앙에 배치</h3>
+<h3>Move the text field and button for search to the center</h3>
 
 <pre class="prettyprint">
 <strong>#search {

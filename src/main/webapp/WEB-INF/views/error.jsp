@@ -16,7 +16,7 @@ if (requestUri == null) {
   requestUri = "Unknown";
 }
 %>
-<div id="url-navi">Error</div>
+<div id="content-categories">Error</div>
 <h2>Error Page</h2>
 <%
 if(statusCode != null && statusCode != 500){

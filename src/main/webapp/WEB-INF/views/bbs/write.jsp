@@ -37,7 +37,7 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="url-navi">${boardName }</div>
+<div id="content-categories">${boardName }</div>
 
 <h3><spring:message code="bbs.new.article" /></h3>
 

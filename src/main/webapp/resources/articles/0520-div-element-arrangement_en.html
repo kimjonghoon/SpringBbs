@@ -515,7 +515,6 @@ Create css folder on the document base and create screen.css file in css folder 
 
 <pre class="prettyprint">
 @CHARSET "UTF-8";
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 /*** The Essential Code ***/
 html, body {
 	margin: 0;
@@ -550,7 +549,6 @@ html, body {
 	width: 205px; 
 }
 #footer {
-	width: 1000px;
 	height: 70px;
 }
 /*** Just for Looks ***/
@@ -724,16 +722,16 @@ The contents of the CSS file are divided into /*** Essential Code ***/ and /*** 
 Since the margin and padding of the container is zero and no border is set, 100% is 1000px like wrap element.
 </p>
 
-<h3>Place #content in the center</h3>
+<h3>Set left and right margins of #content</h3>
 
 <p>
-Add the following to the #content of /*** Essential Code ***/.
+Modify #content of /*** Essential Code ***/ as shown below.
 </p>
 
 <pre class="prettyprint">
 #content {
-	margin-left: 175px;
-	margin-right: 205px;
+	<strong>margin-left: 175px;
+	margin-right: 205px;</strong>
 }
 </pre>
 

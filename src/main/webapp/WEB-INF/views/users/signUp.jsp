@@ -53,7 +53,7 @@
     });
 </script>
 
-<div id="url-navi"><spring:message code="user.membership" /></div>
+<div id="content-categories"><spring:message code="user.membership" /></div>
 
 <h2><spring:message code="user.signup.heading" /></h2>
 

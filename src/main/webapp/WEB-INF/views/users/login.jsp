@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div id="url-navi"><spring:message code="user.membership" /></div>
+<div id="content-categories"><spring:message code="user.membership" /></div>
 
 <h2><spring:message code="user.login.heading" /></h2>
 
