@@ -87,14 +87,22 @@ position: relative;와 top: 7px;은 #sidebar 박스를 #container 위 경계에�
 <img src="https://lh3.googleusercontent.com/2pAqTcMb_k87-vmBd1zXhgcZnRMbGlVZIDZW_jBOUbd-6d6vqtS69vrMVcZM0dpt6_MqwKm76D0mlAT3BUZ-aqGWqlKhUneHnyol_gBtuYq5fYKZkkYLAwwGn648-KwSv2TA0uR-1adDe6zz1xOuKCjilDFAnWr3uLa_QUzXuMo9fxJMpePNX2A1fVDQBKd9cz2ThF6hZveAU_PnFSzrZRsP70qJ05jo0Lv4BToh4Y1XncJZY8KPrHZ-hX0c5445peDgOVrjRNgUA3trs4QiszlCkAOAZnzl65BLESBkcTVibPMra3N0VE1NimcmPa5yS702DEHrKQdhqXazM62ZV8RxBORFrMPXqKmgPKHdW4glL9bpm5ernKG_zsY-iXLJme6NR31ATpVx24jb2beMzwTQ08-d5zgcpdZEL0SKrfx1OzIfTox645hMic0pQkaOrbpfDRrtkHkaQsVlYMEUgnk64XCopUojAsCwDRt0gA7xb9hAhZEbaIGCvzBHGxHvBiREZXrYWZeUvTnP5jRBV8lQqoQ_0KAmJPWUHWmZZMvHb0FHZjHz1v_BSfVzAvyURFpXdKjuuyFSiVKVg95ipy_QP9HeshH0VDpJHlD1Tg=w1007-h316-no" alt="예제보기 3" />
 </p>
 
-<h3>#sidebar &gt; ul &gt; li.sub-heading</h3>
+<h3>서브 메뉴 아이템 스타일</h3>
 
 <p>
 /*** The Essential Code ***/에 다음을 추가한다.
 </p>
 
 <pre class="prettyprint">
-<strong>sidebar &gt; ul &gt; li &gt; a:hover {
+<strong>#sidebar &gt; ul &gt; li.sub-heading {
+    display: block;
+    padding: 6px 10px 6px 10px;
+    color: #64615D;
+    background: #DAEAAA;
+    text-decoration: none;
+    font-weight: bold;
+}
+sidebar &gt; ul &gt; li &gt; a:hover {
 	background-color: #EDFEBA;
 	color: #64615D;
 }

@@ -481,7 +481,7 @@ function goView() {
         &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;        
-&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
 &lt;h3&gt;새 글쓰기&lt;/h3&gt;
 &lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
@@ -761,7 +761,7 @@ function deleteComment(commentNo) {
         &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
 &lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     &lt;div class="fl"&gt;
 <strong>&lt;%
@@ -1366,7 +1366,7 @@ function goView() {
         &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
 &lt;h3&gt;수정&lt;/h3&gt;
 &lt;form id="modifyForm" action="modify_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;

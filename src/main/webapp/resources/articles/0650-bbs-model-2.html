@@ -252,7 +252,7 @@ function goWrite() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;자유 게시판&lt;/div&gt;
+&lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
 &lt;!--  게시판 목록 머리말 --&gt;
 &lt;table class="bbs-table"&gt;
 &lt;tr&gt;
@@ -465,7 +465,7 @@ function deleteComment(commentNo) {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
     &lt;div class="fl"&gt;
@@ -797,7 +797,7 @@ function goView() {
         &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;h3&gt;새 글쓰기&lt;/h3&gt;
 &lt;form id="writeForm" action="write<strong>.do</strong>" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
@@ -908,7 +908,7 @@ function goView() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;h3&gt;수정&lt;/h3&gt;
 &lt;form id="modifyForm" action="modify<strong>.do</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
 &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
@@ -1040,7 +1040,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h2&gt;로그인&lt;/h2&gt;
 <strong>&lt;c:if test="${not empty param.msg }"&gt;
 &lt;p style="color: red;"&gt;로그인에 실패했습니다.&lt;/p&gt;
@@ -1122,7 +1122,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 
 &lt;h1&gt;회원 가입&lt;/h1&gt;
 &lt;form id="signUpForm" action="signUp<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
@@ -1207,7 +1207,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h1&gt;환영합니다.&lt;/h1&gt;
 회원 가입시 입력한 Email이 아이디로 사용됩니다.&lt;br /&gt;
 &lt;input type="button" value="로그인" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
@@ -1268,7 +1268,7 @@ function check() {
         &lt;div id="content"&gt;
         
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h1&gt;내 정보 수정&lt;/h1&gt;
 &lt;p&gt;
 비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.&lt;br /&gt;
@@ -1355,7 +1355,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h1&gt;비밀번호 변경&lt;/h1&gt;
 <strong>${user.name }</strong>&lt;br /&gt;
 <strong>${user.mobile }</strong>&lt;br /&gt;
@@ -1428,7 +1428,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h1&gt;비밀번호가 변경되었습니다.&lt;/h1&gt;
 변경된 비밀번호로 다시 로그인하실 수 있습니다.&lt;br /&gt;
 &lt;input type="button" value="로그인" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
@@ -1489,7 +1489,7 @@ function check() {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h2&gt;탈퇴&lt;/h2&gt;
 &lt;form id="byeForm" action="bye<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
@@ -1608,7 +1608,7 @@ if (loginUser == null) {
         &lt;div id="content"&gt;
 
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="url-navi"&gt;Error&lt;/div&gt;
+&lt;div id="content-categories"&gt;Error&lt;/div&gt;
 &lt;h2&gt;Error Page&lt;/h2&gt;
 &lt;%
 if(statusCode != 500){
