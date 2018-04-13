@@ -3,6 +3,19 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
+    <definition name="app.default" template="/WEB-INF/views/layouts/main-layout.jsp">
+    	 <put-attribute name="lang" value="ko" type="string" />
+        <put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" />
+        <put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" />
+        <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
+        <put-list-attribute name="styles">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/resources/js/jquery-3.2.1.min.js" />
+            <add-attribute value="/resources/js/commons.js" />
+        </put-list-attribute>
+    </definition>
     <!-- 에러 페이지 -->
     <definition name="403" extends="app.default">
         <put-attribute name="title" value="403 에러 - 스프링 시큐리티 필터" />
