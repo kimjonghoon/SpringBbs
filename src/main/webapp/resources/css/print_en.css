@@ -5,17 +5,17 @@ html, body {
 	margin: 0;
 	padding: 0;
 	background-color: #FFF;
-	font-family: "Noto Sans KR", "Liberation Sans", Helvetica, "돋움", dotum, sans-serif;
+	font-family: "Liberation Sans", Helvetica, sans-serif;
 	font-size: 1em;
 }
 pre {
 	margin: 0 0 0.7em 0;
-	font-family: Consolas, "Noto Sans KR", dotum, "Liberation Mono", Courier, monospace;	
+	font-family: Consolas, "Liberation Mono", Courier, monospace;
 }
 input, select, textarea, td, th {
 	color: #646464; 
 	font-size: 12px;
-	font-family: "돋움", dotum, sans-serif; 
+	font-family: Roboto, sans-serif;
 }
 table {
 	border-collapse: collapse;

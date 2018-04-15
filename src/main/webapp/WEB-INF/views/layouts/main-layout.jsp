@@ -15,8 +15,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="Keywords" content="<tiles:insertAttribute name="keywords" />" />
 <meta name="Description" content="<tiles:insertAttribute name="description" />" />
-<link rel="stylesheet" href="/resources/css/screen.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="/resources/css/print.css" type="text/css" media="print" />
 <c:forEach var="style" items="${styles}">
 	<link rel="stylesheet" href="<c:url value="${style}"/>" type="text/css" />
 </c:forEach>

@@ -1,6 +1,6 @@
 <article>
 
-<h1>Board Styling</h1>
+<h1>Board list page styling</h1>
 
 <p>
 The following code is a common style for our website.<br />
@@ -58,8 +58,6 @@ Since these values are not needed, they are all set to zero.
 </p>
 
 
-<h2>Board list Styling</h2>
-
 <p>
 Remove #content in the /*** Just for Looks ***/.<br />
 Open index.html and create a list.html file using the 'Save As'.<br />
@@ -68,7 +66,6 @@ Add the following to #content in the list.html.
 
 <pre class="prettyprint">
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
-
 &lt;table class="bbs-table"&gt;
 &lt;!--  List Heading --&gt;
 &lt;tr&gt;
@@ -104,18 +101,14 @@ Add the following to #content in the list.html.
 &lt;div id="list-menu"&gt;
 	&lt;input type="button" value="New" /&gt;
 &lt;/div&gt;
-&lt;div id="search"&gt;
-	&lt;form method="get"&gt;
-	&lt;p style="margin: 0;padding: 0;" &gt;
-		&lt;input type="hidden" name="curPage" value="1" /&gt;
-		&lt;input type="hidden" name="boardCd" value="free" /&gt;
-		&lt;div&gt;
-			&lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-			&lt;input type="submit" value="Search" /&gt;
-		&lt;/div&gt;
-	&lt;/p&gt;
-	&lt;/form&gt;
-&lt;/div&gt;
+&lt;form method="get"&gt;
+	&lt;input type="hidden" name="curPage" value="1" /&gt;
+	&lt;input type="hidden" name="boardCd" value="free" /&gt;
+	&lt;div id="search"&gt;
+		&lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+		&lt;input type="submit" value="Search" /&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
 </pre>
 
 <p>
