@@ -10,6 +10,7 @@
         <put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
         <put-list-attribute name="styles">
+        	<add-attribute value="/resources/css/korean.css" />
         	<add-attribute value="/resources/css/screen.css" />
 			<add-attribute value="/resources/css/print.css" />
         </put-list-attribute>
