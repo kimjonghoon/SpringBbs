@@ -1,0 +1,105 @@
+<article>
+
+<h1>How to use Log4j</h1>
+
+<p>
+Let's use Jakarta's commons-logging and log4j for logging.<br />
+Download the binary file from <a href="http://commons.apache.org/proper/commons-logging/download_logging.cgi">http://commons.apache.org/proper/commons-logging/download_logging.cgi</a>.<br />
+Unzip the downloaded file.<br />
+Copy the commons-logging-1.2.jar to /WEB-INF/lib.
+</p>
+
+<p>
+Download the binary file from <a href="http://logging.apache.org/log4j/1.2/download.html">http://logging.apache.org/log4j/1.2/download.html</a>.<br />
+Unzip the downloaded file.<br />
+Copy the log4j-1.2.17.jar file to /WEB-INF/lib.<br />
+</p>
+
+<p>
+Create a log4j.xml and copy it to /WEB-INF/classes.<br />
+If you are working in Eclipse, if you create a log4j.xml file in the src folder, the log4j.xml file is automatically created in /WEB-INF/classes. 
+</p>
+
+<h6 class="src">log4j.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" &gt;
+&lt;log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"&gt;
+    &lt;appender name="console" class="org.apache.log4j.ConsoleAppender"&gt;
+        &lt;layout class="org.apache.log4j.SimpleLayout"/&gt;
+    &lt;/appender&gt;
+	
+    &lt;appender name="file" 
+    	class="org.apache.log4j.DailyRollingFileAppender"&gt;
+        &lt;param name="File" 
+        	value="<strong>C:/www/JSPProject/WebContent/WEB-INF/debug.log"</strong> /&gt;
+        &lt;param name="datePattern" value="'.'yyyy-MM-dd" /&gt;
+        &lt;layout class="org.apache.log4j.PatternLayout"&gt;
+            &lt;param name="ConversionPattern"
+                value="[%d]%5p [%t] (%F:%L) - %m%n"/&gt;
+        &lt;/layout&gt;
+    &lt;/appender&gt;
+    
+    &lt;logger name="net.java_school"&gt;
+        &lt;level value="DEBUG"/&gt;
+        &lt;appender-ref ref="file"/&gt;
+    &lt;/logger&gt;
+    
+    &lt;root&gt;
+        &lt;level value="INFO"/&gt;
+        &lt;appender-ref ref="console"/&gt;
+    &lt;/root&gt;
+
+&lt;/log4j:configuration&gt;
+</pre>
+
+<p>
+Create a commons-logging.properties and copy it to WEB-INF/classes.<br />
+If you are working in Eclipse, create this file in the src folder.
+</p>
+
+<h6 class="src">commons-logging.properties</h6>
+<pre class="prettyprint">
+org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
+</pre>
+
+<h3>Test</h3>
+
+<p>
+The example below is a generic Java file, not a web application.<br />
+Therefore, you should not try to find log messages in Tomcat's log files.<br />
+If you test in Eclipse, you will see a log in the Console view.<br />
+The same log is also recorded in the /WEB-INF/debug.log.
+</p>
+
+<h6 class="src">LogTest.java</h6>
+<pre class="prettyprint">
+package net.java_school.logtest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class LogTest {
+	private Log log = LogFactory.getLog(LogTest.class);
+	//private Log log = LogFactory.getLog(this.getClass());
+	
+	public void x() {
+		if (log.isDebugEnabled()) {
+			log.debug("debug message");
+		}
+	}
+  
+	public static void main(String[] args) {
+		LogTest test = new LogTest();
+		test.x();
+	}
+}
+</pre>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="/java/Logging">http://www.java-school.net/java/Logging.php</a></li>
+	<li><a href="http://seosh81.info/?tag=common-logging">http://seosh81.info/?tag=common-logging</a></li>
+	<li><a href="http://www.hanb.co.kr/network/view.html?bi_id=668">http://www.hanb.co.kr/network/view.html?bi_id=668</a></li>
+</ul>
+</article>
