@@ -99,8 +99,8 @@ I will use email instead of ID.
 <h3>Login policy</h3>
 
 <ul>
-	<li>When an unauthorized user visits a page that requires authentication, the user is sent to the login page. At this time, the URL that is intended to be visited first is transmitted to the login page.</li>
-	<li>If the login is successful, go to the URL that the user want to visit.</li>
+	<li>When an unauthenticated user visits a page that requires authentication, the user is sent to the login page. At this time, the URL that is intended to be visited first is transmitted to the login page.</li>
+	<li>If the login is successful, the login page should be redirected to the URL that the user want to visit.</li>
 	<li>When the user logs in from the login page, the page is redirected to the first page of the small talk board list.</li>
 	<li>When the user log out, the page is redirected to the homepage.</li>
 </ul>
@@ -115,7 +115,7 @@ Modify the contents of the index.jsp file as follows.
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ page import="net.java_school.user.User" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="<strong>Main page</strong>" /&gt;
@@ -134,13 +134,13 @@ Modify the contents of the index.jsp file as follows.
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="login" onclick="location.href='./users/login.jsp'" /&gt;
-            &lt;input type="button" value="signUp" onclick="location.href='./users/signUp.jsp'" /&gt;
+            &lt;input type="button" value="Login" onclick="location.href='./users/login.jsp'" /&gt;
+            &lt;input type="button" value="SignUp" onclick="location.href='./users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="logout" onclick="location.href='./users/logout_proc.jsp'" /&gt;
-            &lt;input type="button" value="edit account" onclick="location.href='./users/editAccount.jsp'" /&gt;
+            &lt;input type="button" value="Logout" onclick="location.href='./users/logout_proc.jsp'" /&gt;
+            &lt;input type="button" value="Modify Account" onclick="location.href='./users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -166,7 +166,7 @@ if (loginUser == null) {
 &lt;div id="content-categories"&gt;Main&lt;/div&gt;
 &lt;h1&gt;Main&lt;/h1&gt;
 
-        &lt;/div&gt;&lt;!-- content end --&gt;
+        &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
     &lt;div id="sidebar"&gt;
@@ -201,8 +201,8 @@ if (loginUser == null) {
 <h3>Sub page</h3>
 
 <p>
-홈페이지 /index.jsp를 Save As... 메뉴를 이용하여 java 서브 디렉터리에 index.jsp 파일을 만든 후 아래와 같이 수정한다.
-홈페이지와 달리 이 페이지는 서브 디렉터리에 있으므로 상대 경로를 수정해야 한다.
+Copy the homepage /index.jsp to the java subdirectory and modify it as follows.<br />
+Unlike the homepage, this page is in a subdirectory, so you need to modify the relative path in the document.
 </p>
     
 <h6 class="src">/java/index.jsp</h6>
@@ -210,12 +210,12 @@ if (loginUser == null) {
     pageEncoding="UTF-8" %&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;    
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="자바 홈" /&gt;
-&lt;meta name="Description" content="자바 홈" /&gt;
-&lt;title&gt;자바 홈&lt;/title&gt;
+&lt;meta name="Keywords" content="Java Home" /&gt;
+&lt;meta name="Description" content="Java Home" /&gt;
+&lt;title&gt;Java Home&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -229,13 +229,13 @@ if (loginUser == null) {
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="로그인" onclick="location.href='<strong>../users/login.jsp</strong>'" /&gt;
-            &lt;input type="button" value="회원 가입" onclick="location.href='<strong>../users/signUp.jsp</strong>'" /&gt;
+            &lt;input type="button" value="Login" onclick="location.href='<strong>../users/login.jsp</strong>'" /&gt;
+            &lt;input type="button" value="SignUp" onclick="location.href='<strong>../users/signUp.jsp</strong>'" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="로그아웃" onclick="location.href='<strong>../users/logout_proc.jsp'</strong>" /&gt;
-            &lt;input type="button" value="내 정보 수정" onclick="location.href='<strong>../users/editAccount.jsp</strong>'" /&gt;
+            &lt;input type="button" value="Logout" onclick="location.href='<strong>../users/logout_proc.jsp'</strong>" /&gt;
+            &lt;input type="button" value="Modify Account" onclick="location.href='<strong>../users/editAccount.jsp</strong>'" /&gt;
 &lt;%
 }
 %&gt;
@@ -259,55 +259,11 @@ if (loginUser == null) {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;Java&lt;/div&gt;
-            
-&lt;h1&gt;JDK 설치&lt;/h1&gt;
-&lt;p&gt;
-www.oracle.com을 방문하여 JDK를 내려받는다.&lt;br /&gt;
-설치는 다음 버튼을 클릭하는 것으로 완료할 수 있다.&lt;br /&gt;  
-설치 후 PATH 환경 변수에 JDK의 bin 디렉터리를 추가한다.&lt;br /&gt;
-PATH의 기존 설정값 제일 뒤에 윈도 환경 변수의 구분자 ;를 추가하고 JDK의 bin까지의 경로를 붙여넣는다.&lt;br /&gt;
-이때 기존값은 지우지 않도록 주의한다.&lt;br /&gt; 
-&lt;/p&gt;
+&lt;h1&gt;JDK Install&lt;/h1&gt;
 
-&lt;h2&gt;PATH&lt;/h2&gt;
-&lt;p&gt;
-PATH는 운영체제가 실행 프로그램을 찾을 때 참조하는 환경 변수이다.&lt;br /&gt;
-명령 프롬프트에서 &lt;strong&gt;echo %PATH%&lt;/strong&gt;를 실행하면 PATH의 설정값을 확인할 수 있다.&lt;br /&gt;
-PATH에 JDK의 bin디렉터리를 추가하는 이유는 어느 디렉터리에서나 JDK의 bin에 있는 
-실행 프로그램(javac.exe,java.exe,jar.exe 등)을 실행할 수 있도록 하기 위해서이다.&lt;br /&gt;
-&lt;/p&gt;
-
-&lt;h2&gt;테스트&lt;/h2&gt;
-&lt;p&gt;
-아래 내용을 메모장에 작성하고 파일명을 Test.java로 저장한다.&lt;br /&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;
-public class Test {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}
-&lt;/pre&gt;
-
-&lt;ol&gt;
-    &lt;li&gt;명령 프롬프트에서 Test.java 파일이 있는 디렉터리로 이동한다.&lt;/li&gt;
-    &lt;li&gt;javac Test.java로 컴파일한다. Test.class가 현재 디렉터리에 만들어진다.&lt;/li&gt;
-    &lt;li&gt;java Test로 실행한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;
-C:\&gt;javac Test.java
-
-C:\&gt;java Test
-Hello World!
-&lt;/pre&gt;
-
-&lt;!-- 본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;h1&gt;Java&lt;/h1&gt;
@@ -323,13 +279,13 @@ Hello World!
 
     &lt;div id="footer"&gt;
         &lt;ul&gt;
-            &lt;li&gt;&lt;a href="#"&gt;이용약관&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;개인정보보호정책&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;이메일무단수집거부&lt;/a&gt;&lt;/li&gt;
-            &lt;li id="company-info"&gt;전화 : 02-123-5678, FAX : 02-123-5678&lt;br /&gt;
-            people@ggmail.org&lt;br /&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Guide&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Private&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Email Collection Ban&lt;/a&gt;&lt;/li&gt;
+            &lt;li id="company-info"&gt;Phone : 123-4567-8901, FAX : 123-4567-8901&lt;br /&gt;
+            john@gmail.org&lt;br /&gt;
             Copyright java-school.net All Rights Reserved.&lt;/li&gt;
-            &lt;li&gt;&lt;a href="#"&gt;찾아오시는 길&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
@@ -339,14 +295,13 @@ Hello World!
 &lt;/html&gt;
 </pre>
 
-<h3>공통 JSP 페이지</h3>
+<h3>Common JSPs</h3>
 
 <p>
-화면 배치가 같으면 JSP 인클루드 지시어를 사용하여 코드를 분리할 수 있다.
-페이지를 분리하면 유지 보수가 편해진다.
-#header에 있는 로고와 로그인/로그아웃 버튼, #main-menu의 메인 메뉴, #extra의 외부 링크, #footer의 글로벌 메뉴는 모든 페이지에서 공통이다.
-inc 서브 디렉터리에 다음 JSP 파일을 생성한다.
-/java/index.jsp 파일을 참고하여 다음 파일을 생성한다.
+If the screen layout is the same, you can separate the code using the JSP include directive.<br />
+Separating pages makes maintenance easier.<br />
+The logo and login/logout buttons in #header, the main menu in # main-menu, the external links in #extra, and the global menu in #footer are common to all pages.<br />
+Create the following JSP file in the inc subdirectory.
 </p>
 
 <h6 class="src">/inc/header.jsp</h6>
@@ -359,13 +314,13 @@ inc 서브 디렉터리에 다음 JSP 파일을 생성한다.
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="로그인" onclick="location.href='../users/login.jsp'" /&gt;
-    &lt;input type="button" value="회원 가입" onclick="location.href='../users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="Login" onclick="location.href='../users/login.jsp'" /&gt;
+    &lt;input type="button" value="SignUp" onclick="location.href='../users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="로그아웃" onclick="location.href='../users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="내 정보 수정" onclick="location.href='../users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="Logout" onclick="location.href='../users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="Modify Account" onclick="location.href='../users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -401,20 +356,20 @@ if (loginUser == null) {
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;ul&gt;
-    &lt;li&gt;&lt;a href="#"&gt;이용약관&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;개인정보보호정책&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;이메일무단수집거부&lt;/a&gt;&lt;/li&gt;
-    &lt;li id="company-info"&gt;전화 : 02-123-5678, FAX : 02-123-5678&lt;br /&gt;
-    people@ggmail.org&lt;br /&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Guide&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Email Collection Ban&lt;/a&gt;&lt;/li&gt;
+    &lt;li id="company-info"&gt;Phone : 123-4567-8901, FAX : 123-4567-8901&lt;br /&gt;
+    john@gmail.org&lt;br /&gt;
     Copyright java-school.net All Rights Reserved.&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;찾아오시는 길&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Map&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </pre>
 
 <p>
-공통 JSP 파일을 만들 때 페이지 지시어의 contentType 속성은 포함하는 페이지와 같아야 한다.
-같지 않다면 서블릿으로 변환되지 않는다.
-따라서 공통 JSP 파일의 contentType은 다음과 같아야 한다.
+When creating a common JSP file, the contentType attribute of the page directive must be the same as the containing page.<br />
+If it is not the same, it is not converted to a servlet.<br />
+Therefore, the contentType of a common JSP file should be:
 </p>
 
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -422,18 +377,18 @@ if (loginUser == null) {
 </pre>
 
 
-<h3>공통 JSP 파일을 이용하여 서브 페이지 수정</h3>
+<h3>Modify subpages using common JSP files</h3>
 
 <h6 class="src">/java/index.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="자바 홈" /&gt;
-&lt;meta name="Description" content="자바 홈" /&gt;
-&lt;title&gt;자바 홈&lt;/title&gt;
+&lt;meta name="Keywords" content="Java Home" /&gt;
+&lt;meta name="Description" content="Java Home" /&gt;
+&lt;title&gt;Java Home&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -451,17 +406,10 @@ if (loginUser == null) {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;Java&lt;/div&gt;
-            
 
-&lt;!--..중간 생략..--&gt;
-
-
-&lt;!-- 본문 끝 --&gt;
-
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;h1&gt;Java&lt;/h1&gt;
@@ -482,41 +430,36 @@ if (loginUser == null) {
 </pre>
 
 <p>
-홈페이지까지 인클루드 지시어를 이용하여 분리하려는 생각은 좋은 생각이 아니다.
-대부분 홈페이지는 서브 페이지와 디자인이 다르며 또한 하나만 존재하기 때문이다.
-게다가 지금 만든 파일은 상대 경로 문제로 홈페이지에서 인클루드 할 수 없다.
-
-웹 브라우저로 홈페이지와 서브 페이지 /java/index.jsp를 방문하여 테스트한다.
+Visit the homepage and subpage (/java/index.jsp) with a web browser and test it.
 </p>
 
-<h2>로그인 폼, 로그인 처리, 로그아웃 처리 페이지 생성</h2>
+<h2>Create Login Form, Login, Logout pages</h2>
 
 <p>
-로그인 테스트를 위해 로그인 폼, 로그인 처리, 로그아웃 처리 페이지를 생성한다.
-모든 회원 관련 페이지가 인클루드해야 하는 회원 메뉴 페이지, user-sub.jsp를 /users 디렉터리에 생성한다.
+Create user-sub.jsp in the users directory.
 </p>
 
 <h6 class="src">/users/user-sub.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
-&lt;h1&gt;회원&lt;/h1&gt;
+&lt;h1&gt;Membership&lt;/h1&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
 &lt;ul&gt;
-    &lt;li&gt;&lt;a href="login.jsp"&gt;로그인&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="signUp.jsp"&gt;회원 가입&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;ID 찾기&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;비밀번호 찾기&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="login.jsp"&gt;Login&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="signUp.jsp"&gt;SignUp&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Forgot ID&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Forgot Password&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;%
 } else {
 %&gt;
 &lt;ul&gt;
-    &lt;li&gt;&lt;a href="editAccount.jsp"&gt;내 정보 수정&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="changePasswd.jsp"&gt;비밀번호 변경&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="bye.jsp"&gt;탈퇴&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="editAccount.jsp"&gt;Modify Account&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="changePasswd.jsp"&gt;Change Password&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="bye.jsp"&gt;Bye&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;%
 }
@@ -524,8 +467,8 @@ if (loginUser == null) {
 </pre>
 
 <p>
-로그인 폼 페이지를 만든다.
-/java/index.jsp를 연 상태에서 Save As... 메뉴를 이용하여 login.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+Open /java/index.jsp.<br />
+Create login.jsp using the Save As ... menu in the users directory and modify it as shown below.
 </p>
 
 <h6 class="src">/users/login.jsp</h6>
@@ -537,12 +480,12 @@ String url = request.getParameter("url");
 if (url == null) url = "";
 %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="로그인" /&gt;
-&lt;meta name="Description" content="로그인" /&gt;
-&lt;title&gt;로그인&lt;/title&gt;
+&lt;meta name="Keywords" content="Login" /&gt;
+&lt;meta name="Description" content="Login" /&gt;
+&lt;title&gt;Login&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -560,9 +503,8 @@ if (url == null) url = "";
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
-&lt;h2&gt;로그인&lt;/h2&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h2&gt;Login&lt;/h2&gt;
 &lt;form id="loginForm" action="login_proc.jsp" method="post"&gt;
 <strong>&lt;input type="hidden" name="url" value="&lt;%=url %&gt;" /&gt;</strong>
 &lt;table&gt;
@@ -571,18 +513,18 @@ if (url == null) url = "";
     &lt;td style="width: 390px"&gt;&lt;input type="text" name="email" style="width: 99%;" value="captain@heist.com" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호(Password)&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="passwd" style="width: 99%;" value="1111" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-top: 15px;"&gt;
-    &lt;input type="submit" value="전송" /&gt;
-    &lt;input type="button" value="회원 가입" onclick="location.href='signUp.jsp'" /&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="SignUp" onclick="location.href='signUp.jsp'" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;<strong>
         &lt;%@ include file="user-sub.jsp" %&gt;</strong>
@@ -603,7 +545,7 @@ if (url == null) url = "";
 </pre>
 
 <p>
-로그인을 처리하는 페이지를 만든다.
+Create a page that authenticates the user.
 </p>
 
 <h6 class="src">/users/login_proc.jsp</h6>
@@ -615,18 +557,17 @@ String url = request.getParameter("url");
 String email = request.getParameter("email");
 String passwd = request.getParameter("passwd");
 
-session.setAttribute("user", new User(email, passwd, "홍길동", "010-1234-5678"));
+session.setAttribute("user", new User(email, passwd, "John doe", "123-4567-8901"));
 if (url != null &amp;&amp; !url.equals("")) {
     response.sendRedirect(url);
 } else {
-    response.sendRedirect("../bbs/list.jsp?boarCd=free&amp;curPage=1");
+    response.sendRedirect("../bbs/list.jsp?boarCd=smalltalk&amp;curPage=1");
 }
 %&gt;
 </pre>
 
 <p>
-로그아웃을 처리하는 페이지를 만든다.
-로그아웃 후 홈페이지로 이동하도록 구현한다.
+Create logout execution page.
 </p>
 
 <h6 class="src">/users/logout_proc.jsp</h6>
@@ -635,25 +576,20 @@ if (url != null &amp;&amp; !url.equals("")) {
 &lt;%
 session.removeAttribute("user");
 
-response.sendRedirect("../");
+response.sendRedirect("../");//logout_proc.jsp should by redirected to the homepage
 %&gt;
 </pre>
 
-<p>
-웹 브라우저로 로그인과 로그아웃을 테스트한다.
-로그인하면 아직 만들지 않은 게시판으로 이동하여 404 에러를 보게 된다.
-다시 상단의 로고를 클릭하여 홈페이지로 이동, 
-홈페이지에서 Java 메인 메뉴를 클릭하여 서브 페이지로 이동한 후 로그아웃하면 홈페이지로 이동한다.
-</p>
-
-<h2>JSP 에러 핸들링</h2>
+<h2>JSP error handling</h2>
 
 <p>
-web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.
+Open web.xml.<br />
+Add the following before &lt;/web-app&gt; in web.xml.
 </p>
 
 <h6 class="src">web.xml</h6>
-    <pre class="prettyprint">&lt;error-page&gt;
+<pre class="prettyprint">
+&lt;error-page&gt;
     &lt;error-code&gt;403&lt;/error-code&gt;
     &lt;location&gt;/error.jsp&lt;/location&gt;
 &lt;/error-page&gt;
@@ -672,13 +608,13 @@ web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.
 </pre>
 
 <p>
-주요 에러를 모두 /error.jsp가 담당하도록 하는 설정이다.
+This is a setting that /error.jsp will take care of all major errors.
 </p>
 
-<h3>에러 페이지</h3>
+<h3>Create error.jsp</h3>
 
 <p>
-홈페이지를 연 상태에서 Save As... 메뉴를 이용하여 error.jsp라는 새 파일을 도큐먼트 베이스에 만든 후 아래와 같이 수정한다.
+With the home page open, use the Save As ... menu to create a new file called error.jsp in the document base and modify it as shown below.
 </p>
     
 <h6 class="src">/error.jsp</h6>
@@ -689,7 +625,7 @@ web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.
 <strong>String contextPath = request.getContextPath();</strong>
 %&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Error" /&gt;
@@ -723,13 +659,13 @@ if (requestUri == null) {
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="로그인" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/login.jsp'" /&gt;
-    &lt;input type="button" value="회원 가입" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="Login" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/login.jsp'" /&gt;
+    &lt;input type="button" value="SignUp" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="로그아웃" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="내 정보 수정" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="Logout" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="Modify Account" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -752,7 +688,7 @@ if (loginUser == null) {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
+
 &lt;div id="content-categories"&gt;Error&lt;/div&gt;
 &lt;h2&gt;Error Page&lt;/h2&gt;
 &lt;%
@@ -770,9 +706,9 @@ if (throwable != null) {
     out.write("&lt;/ul&gt;");
 }
 %&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;h1&gt;Error&lt;/h1&gt;
@@ -797,24 +733,19 @@ if (throwable != null) {
 </pre>
 
 <p>
-error.jsp 소스에서 컨텍스트 패스를 구해 모든 경로를 재지정해 주어야 하는데, 
-이렇게 하지 않으면 상대 경로 문제를 겪게 된다.
-다시 로그인을 시도한다. 아직 만들지 않는 페이지를 요청하게 된다. 에러 페이지가 작동하는지 확인한다.
+In the error.jsp source, you need to specify the path using the context path,
+If you do not do this, you will have a relative path problem.<br />
+Try to login again.<br />
+You have requested a page that has not yet been created, so an error page should be displayed.
 </p>
 
-<h2>게시판</h2>
+<h2>Board program</h2>
 
 <p>
-게시판 관련 페이지를 작성한다.
+Create pages related to the bulletin board.
 </p>
 
-<h3>게시판 메뉴(bbs-sub.jsp) 페이지</h3>
-
-<p>
-게시판 모듈에서 화면을 담당하는 모든 페이지가 인클루드해야 하는 페이지부터 작성한다.
-도큐먼트 베이스에 bbs라는 서브 디렉터리를 만들고, /bbs에 bbs-sub.jsp 파일을 만든다.
-bbs-sub.jsp 파일은 게시판에 대한 링크를 제공한다.
-</p>
+<h3>Board menu page</h3>
 
 <h6 class="src">/bbs/bbs-sub.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -831,15 +762,8 @@ bbs-sub.jsp 파일은 게시판에 대한 링크를 제공한다.
 &lt;/ul&gt;
 </pre>
 
-<h3>로그인 체크(loginCheck.jsp) 페이지</h3>
+<h3>loginCheck.jsp</h3>
 
-<p>
-이 페이지는 사용자가 로그인했는지를 검사하고, 로그인하지 않은 사용자는 로그인 페이지로 리다이렉트시킨다.
-이때 로그인 후 다시 사용자가 요청한 원래 페이지로 이동하기 위해 url 정보를 로그인 페이지에 전달한다.
-공통 인클루드 파일 디렉터리인 /inc에 loginCheck.jsp 파일을 만든다.
-이 파일을 공통 인클루드 파일 디렉터리에 생성하는 이유는 게시판 모듈 외에도 사용될 수 있기 때문이다.
-</p>
-    
 <h6 class="src">/inc/loginCheck.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
@@ -848,12 +772,11 @@ bbs-sub.jsp 파일은 게시판에 대한 링크를 제공한다.
 &lt;%   
 User user = (User) session.getAttribute("user");
 if (user == null) {
-    //로그인 후 되돌아갈 URL를 구한다.
+    //URL the user intended to visit
     String uri = request.getRequestURI();
     String query = request.getQueryString();
     String url = uri;
     if (query != null) url += "?" + query;
-    //로그인 페이지로 리다이렉트
     String contextPath= request.getContextPath();
     url = URLEncoder.encode(url, "UTF-8");
     response.sendRedirect(contextPath + "/users/login.jsp?url=" + url);
@@ -862,11 +785,10 @@ if (user == null) {
 %&gt;
 </pre>
 
-<h3>목록 페이지</h3>
+<h3>Board list page</h3>
 
 <p>
-게시판 목록을 보여주는 페이지를 만든다.
-CSS 포지셔닝에서의 만든 list.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 list.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the list.html file and use the Save As ... menu to create a file named list.jsp in the bbs directory and modify it as shown below.
 </p>
 
 <h6 class="src">/bbs/list.jsp</h6>
@@ -874,12 +796,12 @@ CSS 포지셔닝에서의 만든 list.html 파일을 연 상태에서 Save As...
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="게시판 목록" /&gt;
-&lt;meta name="Description" content="게시판 목록" /&gt;
-&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;meta name="Keywords" content="Board list" /&gt;
+&lt;meta name="Description" content="Board list" /&gt;
+&lt;title&gt;Small talk&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;<strong>
 &lt;script type="text/javascript"&gt;
 function goList(curPage) {
@@ -915,42 +837,41 @@ function goWrite() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
-            
+
+&lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;table class="bbs-table"&gt;
-&lt;!--  게시판 목록 머리말 --&gt;
+&lt;!--  List heading --&gt;
 &lt;tr&gt;
     &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
     &lt;th&gt;TITLE&lt;/th&gt;
     &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
     &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
-&lt;!--  반복 구간 시작 --&gt;
+&lt;!--  List items start --&gt;
 &lt;tr&gt;
     &lt;td style="text-align: center;"&gt;11&lt;/td&gt;
     &lt;td&gt;
-        &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
-        &lt;img src="<strong>../</strong>images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+        &lt;a href="<strong>javascript:goView('1')"</strong>&gt;Title&lt;/a&gt;
+        &lt;img src="<strong>../</strong>images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
         &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
     &lt;/td&gt;
     &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
     &lt;td style="text-align: center;"&gt;4555&lt;/td&gt;
 &lt;/tr&gt;
-&lt;!--  반복 구간 끝 --&gt;
+&lt;!--  List items end --&gt;
 &lt;/table&gt;
 &lt;div id="paging"&gt;
-    &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[이전]&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[Prev]&lt;/a&gt;
     &lt;span class="bbs-strong"&gt;6&lt;/span&gt;
     &lt;a href="<strong>javascript:goList('7')</strong>"&gt;7&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('8')</strong>"&gt;8&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('9')</strong>"&gt;9&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('10')</strong>"&gt;10&lt;/a&gt;
-    &lt;a href="<strong>javascript:goList('11')</strong>"&gt;[다음]&lt;/a&gt;  
+    &lt;a href="<strong>javascript:goList('11')</strong>"&gt;[Next]&lt;/a&gt;  
 &lt;/div&gt;
 
 &lt;div id="list-menu"&gt;
-    &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+    &lt;input type="button" value="New" <strong>onclick="goWrite()"</strong> /&gt;
 &lt;/div&gt;
 
 &lt;div id="search"&gt;
@@ -959,14 +880,13 @@ function goWrite() {
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;div&gt;
             &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-            &lt;input type="submit" value="검색" /&gt;
+            &lt;input type="submit" value="Search" /&gt;
         &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
-&lt;!--  본문 끝 --&gt;
 
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         <strong>&lt;%@ include file="bbs-sub.jsp" %&gt;</strong>
@@ -1011,11 +931,10 @@ function goWrite() {
 &lt;/html&gt;
 </pre>
 
-<h3>글쓰기 폼 페이지</h3>
+<h3>New article form page</h3>
 
 <p>
-다음은 게시판 글쓰기 폼 페이지를 작성한다.
-CSS 포지셔닝에서 만든 write_form.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 write_form.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the write_form.html file and use the Save As ... menu to create a file named write_form.jsp in the bbs directory and modify it as follows:
 </p>
     
 <h6 class="src">/bbs/write_form.jsp</h6>
@@ -1023,12 +942,12 @@ CSS 포지셔닝에서 만든 write_form.html 파일을 연 상태에서 Save As
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="글쓰기 화면" /&gt;
-&lt;meta name="Description" content="글쓰기 화면" /&gt;
-&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;meta name="Keywords" content="New" /&gt;
+&lt;meta name="Description" content="New" /&gt;
+&lt;title&gt;Small talk&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 <strong>&lt;script type="text/javascript"&gt;
 function goList() {
@@ -1056,14 +975,13 @@ function goView() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
         
-&lt;!--  본문 시작 --&gt;
-&lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
-&lt;h3&gt;새 글쓰기&lt;/h3&gt;
+&lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
+&lt;h3&gt;New&lt;/h3&gt;
 &lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
 &lt;input type="hidden" name="boardCd" value="free" /&gt;
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
-    &lt;td&gt;제목&lt;/td&gt;
+    &lt;td&gt;Title&lt;/td&gt;
     &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1072,17 +990,16 @@ function goView() {
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;첨부 파일&lt;/td&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
     &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="전송" /&gt;
-    <strong>&lt;input type="button" value="목록" onclick="goList()" /&gt;
-    &lt;input type="button" value="상세보기" onclick="goView()" /&gt;</strong>
+    &lt;input type="submit" value="Submit" /&gt;
+    <strong>&lt;input type="button" value="List" onclick="goList()" /&gt;
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;</strong>
 &lt;/div&gt;
 &lt;/form&gt;
-&lt;!-- 본문 끝 --&gt;
 
         &lt;/div&gt;
     &lt;/div&gt;
@@ -1106,12 +1023,12 @@ function goView() {
         &lt;input type="hidden" name="articleNo" value="5" /&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;   
 &lt;/div&gt;
 </strong>
@@ -1119,11 +1036,10 @@ function goView() {
 &lt;/html&gt;
 </pre>
 
-<h3>글쓰기 처리 페이지</h3>
+<h3>Create write_proc.jsp</h3>
 
 <p>
-글쓰기 처리 페이지를 작성한다.
-이 페이지는 글쓰기 폼에서 전달받는 파라미터로 실제로 데이터베이스에 인서트를 담당한다.
+This page inserts into the database the information obtained from the parameters passed by the writing form.
 </p>
 
 <h6 class="src">/bbs/write_proc.jsp</h6>
@@ -1131,27 +1047,24 @@ function goView() {
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-새 게시글을 등록하는 페이지로 모델 2에서는 삭제해야 할 페이지다.
--구현-
-로그인 사용자가 아니면
+If the user is not authenticated
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
-로그인 체크를 통과하면
-boardCd, title, content, attachFile 파라미터를 가지고 새 글을 인서트한다.
+authenticated
+insert new text with the boardCd, title, content, and attachFile parameters.
 
-form의 enctype 속성이 "multipart/form-data"인 경우 request.getParameter();로 파라미터의 값을 얻을 수 없다.
-이 경우 프로그래밍을 손쉽게 하려면 아파치 commons-fileupload 또는 cos와 같은 외부 라이브러리를 이용한다.
+If the enctype attribute of the form is "multipart / form-data", parameter values can not be obtained with request.getParameter();
+To make programming easier in this case, use an external library such as Apache commons-fileupload or cos.
 
-새 글을 등록한 후 목록의 첫 번째 페이지로 되돌아가야 한다.
+After registering a new article, The program must request the first page of the list.
 */
-response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1");
+response.sendRedirect("list.jsp?boardCd=smalltalk&amp;curPage=1");
 %&gt;
 </pre>
 
-<h3>상세보기 페이지</h3>
+<h3>Detailed view page</h3>
 
 <p>
-목록에서 제목을 클릭하면 보이게 되는 게시글 상세보기 페이지를 만든다.
-CSS 포지셔닝에서 만든 view.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 view.jsp 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the view.html file and use the Save As ... menu to create the view.jsp file in the bbs directory and modify it as shown below.
 </p>
 
 <h6 class="src">/bbs/view.jsp</h6>
@@ -1159,12 +1072,12 @@ CSS 포지셔닝에서 만든 view.html 파일을 연 상태에서 Save As... �
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="게시판 상세보기" /&gt;
-&lt;meta name="Description" content="게시판 상세보기" /&gt;
-&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;meta name="Keywords" content="Board detailed view" /&gt;
+&lt;meta name="Description" content="Board detailed view" /&gt;
+&lt;title&gt;Small talk&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
@@ -1210,7 +1123,7 @@ function goModify() {
 }
 
 function goDelete() {
-    var check = confirm("정말로 삭제하시겠습니까?");
+    var check = confirm("Are you sure you want to delete it?");
     if (check) {
         var form = document.getElementById("delForm");
         form.submit();
@@ -1218,7 +1131,7 @@ function goDelete() {
 }
 
 function deleteAttachFile(attachFileNo) {
-    var check = confirm("첨부 파일을 정말로 삭제하시겠습니까?");
+    var check = confirm("Are you sure you want to delete it?");
     if (check) {
         var form = document.getElementById("deleteAttachFileForm");
         form.attachFileNo.value = attachFileNo;
@@ -1227,7 +1140,7 @@ function deleteAttachFile(attachFileNo) {
 }
 
 function deleteComment(commentNo) {
-    var check = confirm("댓글을 정말로 삭제하시겠습니까?");
+    var check = confirm("Are you sure you want to delete it?");
     if (check) {
         var form = document.getElementById("deleteCommentForm");
         form.commentNo.value = commentNo;
@@ -1252,18 +1165,17 @@ function deleteComment(commentNo) {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
+&lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     &lt;div class="fl"&gt;
-        &lt;input type="button" value="수정" <strong>onclick="goModify()</strong>" /&gt;
-        &lt;input type="button" value="삭제" <strong>onclick="goDelete()</strong>"/&gt;
+        &lt;input type="button" value="Modify" <strong>onclick="goModify()</strong>" /&gt;
+        &lt;input type="button" value="Del" <strong>onclick="goDelete()</strong>"/&gt;
     &lt;/div&gt;
     &lt;div class="fr"&gt;
-        &lt;input type="button" value="다음 글" <strong>onclick="goView('6')"</strong> /&gt;
-        &lt;input type="button" value="이전 글" <strong>onclick="goView('4')"</strong> /&gt;
-        &lt;input type="button" value="목록" <strong>onclick="goList('1')"</strong> /&gt;
-        &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+        &lt;input type="button" value="Next Article" <strong>onclick="goView('6')"</strong> /&gt;
+        &lt;input type="button" value="Prev Article" <strong>onclick="goView('4')"</strong> /&gt;
+        &lt;input type="button" value="List" <strong>onclick="goList('1')"</strong> /&gt;
+        &lt;input type="button" value="New" <strong>onclick="goWrite()"</strong> /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;table class="bbs-table"&gt;
@@ -1273,7 +1185,7 @@ function deleteComment(commentNo) {
 &lt;/tr&gt; 
 &lt;/table&gt;
 &lt;div id="detail"&gt;
-    &lt;div id="date-writer-hit"&gt;<strong>edited 2014-10-09 17:55:30 by 홍길동 hit 1330</strong>&lt;/div&gt;
+    &lt;div id="date-writer-hit"&gt;<strong>edited 2014-10-09 17:55:30 by John doe hit 1330</strong>&lt;/div&gt;
     &lt;div id="article-content"&gt;
     What makes us happy?What makes us happy?What makes us happy?&lt;br /&gt;
     What makes us happy?What makes us happy?What makes us happy?&lt;br /&gt;
@@ -1285,26 +1197,26 @@ function deleteComment(commentNo) {
 		&lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;!--  댓글 쓰기 --&gt;
+&lt;!-- Add comment --&gt;
 &lt;form id="addCommentForm" style="margin: 10px 0;" action="addComment.jsp" method="post"&gt;
     &lt;input type="hidden" name="articleNo" value="5"/&gt;
     &lt;input type="hidden" name="boardCd" value="free" /&gt;
     &lt;input type="hidden" name="curPage" value="1" /&gt;
-    &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;div id="addComment"&gt;
         &lt;textarea id="addComment-ta" name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
     &lt;/div&gt;
     &lt;div style="text-align: right;"&gt;
-        &lt;input type="submit" value="댓글 남기기" /&gt;
+        &lt;input type="submit" value="Add comments" /&gt;
     &lt;/div&gt;
 &lt;/form&gt;
-&lt;!--  댓글 반복 시작 --&gt;
+&lt;!--  comment list start --&gt;
 &lt;div class="comments"&gt;
     &lt;span class="writer"&gt;xman&lt;/span&gt;
     &lt;span class="date"&gt;2011.12.11 12:14:32&lt;/span&gt;
     &lt;span class="modify-del"&gt;
-        &lt;a href="javascript:modifyCommentToggle('5')"&gt;수정&lt;/a&gt;
-         | &lt;a href="javascript:deleteComment('5')"&gt;삭제&lt;/a&gt;
+        &lt;a href="javascript:modifyCommentToggle('5')"&gt;Modify&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment('5')"&gt;Del&lt;/a&gt;
     &lt;/span&gt;
     &lt;p id="comment5"&gt;What makes us happy?&lt;/p&gt;
     &lt;form id="modifyCommentForm5" class="comment-form" action="updateComment.jsp" method="post" style="display: none;"&gt;
@@ -1312,34 +1224,34 @@ function deleteComment(commentNo) {
     &lt;input type="hidden" name="boardCd" value="free" /&gt;
     &lt;input type="hidden" name="articleNo" value="12" /&gt;
     &lt;input type="hidden" name="curPage" value="1" /&gt;
-    &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+    &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;div class="fr"&gt;
-            &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;수정하기&lt;/a&gt;
-            | &lt;a href="javascript:modifyCommentToggle('5')"&gt;취소&lt;/a&gt;
+            &lt;a href="javascript:document.forms.modifyCommentForm5.submit()"&gt;Modify&lt;/a&gt;
+            | &lt;a href="javascript:modifyCommentToggle('5')"&gt;Cancel&lt;/a&gt;
     &lt;/div&gt;
     &lt;div&gt;
-        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;무궁화꽃이 피었습니다.&lt;/textarea&gt;
+        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;What makes us happy?&lt;/textarea&gt;
     &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
-&lt;!--  댓글 반복 끝 --&gt;
+&lt;!-- comment list end --&gt;
 &lt;div id="next-prev"&gt;
-    &lt;p&gt;다음 글 : &lt;a href="<strong>javascript:goView('6')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
-    &lt;p&gt;이전 글 : &lt;a href="<strong>javascript:goView('4')"</strong>&gt;무궁화꽃이 피었습니다.&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Next Article : &lt;a href="<strong>javascript:goView('6')"</strong>&gt;What makes us happy?&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Prev Article : &lt;a href="<strong>javascript:goView('4')"</strong>&gt;What makes us happy?&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
     &lt;div class="fl"&gt;
-        &lt;input type="button" value="수정" <strong>onclick="goModify()</strong>" /&gt;
-        &lt;input type="button" value="삭제" <strong>onclick="goDelete()</strong>"/&gt;
+        &lt;input type="button" value="Modify" <strong>onclick="goModify()</strong>" /&gt;
+        &lt;input type="button" value="Del" <strong>onclick="goDelete()</strong>"/&gt;
     &lt;/div&gt;
     &lt;div class="fr"&gt;
-        &lt;input type="button" value="다음 글" <strong>onclick="goView('6')"</strong> /&gt;
-        &lt;input type="button" value="이전 글" <strong>onclick="goView('4')"</strong> /&gt;
-        &lt;input type="button" value="목록" <strong>onclick="goList('1')"</strong> /&gt;
-        &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+        &lt;input type="button" value="Next Article" <strong>onclick="goView('6')"</strong> /&gt;
+        &lt;input type="button" value="Prev Article" <strong>onclick="goView('4')"</strong> /&gt;
+        &lt;input type="button" value="List" <strong>onclick="goList('1')"</strong> /&gt;
+        &lt;input type="button" value="New" <strong>onclick="goWrite()"</strong> /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;!-- 목록 --&gt;
+&lt;!-- List --&gt;
 &lt;table class="bbs-table"&gt;
 &lt;tr&gt;
     &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
@@ -1348,10 +1260,10 @@ function deleteComment(commentNo) {
     &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td style="text-align: center;"&gt;&lt;img src="/images/arrow.gif" alt="현재 글" /&gt;&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;&lt;img src="/images/arrow.gif" alt="You are reading now" /&gt;&lt;/td&gt;
     &lt;td&gt;
-        &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
-        &lt;img src="/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+        &lt;a href="<strong>javascript:goView('1')"</strong>&gt;Title&lt;/a&gt;
+        &lt;img src="/images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
         &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
     &lt;/td&gt;
     &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
@@ -1359,30 +1271,28 @@ function deleteComment(commentNo) {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div id="paging"&gt;
-    &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[이전]&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('5')"</strong>&gt;[Prev]&lt;/a&gt;
     &lt;span class="bbs-strong"&gt;6&lt;/span&gt;
     &lt;a href="<strong>javascript:goList('7')"</strong>&gt;7&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('8')"</strong>&gt;8&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('9')"</strong>&gt;9&lt;/a&gt;
     &lt;a href="<strong>javascript:goList('10')"</strong>&gt;10&lt;/a&gt;
-    &lt;a href="<strong>javascript:goList('11')"</strong>&gt;[다음]&lt;/a&gt;
+    &lt;a href="<strong>javascript:goList('11')"</strong>&gt;[Next]&lt;/a&gt;
 &lt;/div&gt;
 &lt;div id="list-menu"&gt;
-    &lt;input type="button" value="새 글쓰기" <strong>onclick="goWrite()"</strong> /&gt;
+    &lt;input type="button" value="New" <strong>onclick="goWrite()"</strong> /&gt;
 &lt;/div&gt;
-&lt;div id="search"&gt;
-    &lt;form action="list.jsp" method="get"&gt;
-        &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="boardCd" value="free" /&gt;
-        &lt;div&gt;
-            &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
-            &lt;input type="submit" value="검색" /&gt;
-        &lt;/div&gt;
-    &lt;/form&gt;
-&lt;/div&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+&lt;form action="list.jsp" method="get"&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="free" /&gt;
+    &lt;div id="search"&gt;
+        &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+        &lt;input type="submit" value="Search" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         <strong>&lt;%@ include file="bbs-sub.jsp" %&gt;</strong>
@@ -1402,45 +1312,45 @@ function deleteComment(commentNo) {
     &lt;form id="listForm" action="list.jsp" method="get"&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="12" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="delForm" action="del_proc.jsp" method="post"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
     &lt;form id="deleteCommentForm" action="deleteComment_proc.jsp" method="post"&gt;
       &lt;input type="hidden" name="commentNo" /&gt;
       &lt;input type="hidden" name="articleNo" value="12" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;   
     &lt;form id="deleteAttachFileForm" action="deleteAttachFile_proc.jsp" method="post"&gt;
       &lt;input type="hidden" name="attachFileNo" /&gt;
       &lt;input type="hidden" name="articleNo" value="23" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
-      &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+      &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;       
 &lt;/div&gt;
 </strong>
@@ -1448,142 +1358,90 @@ function deleteComment(commentNo) {
 &lt;/html&gt;
 </pre>
 
-<h3>댓글 쓰기 처리 페이지</h3>
+<h3>Create addComment_proc.jsp</h3>
 
-<p>
-댓글 쓰기 처리 페이지는 상세보기 페이지에서 새 댓글을 쓰고 확인을 클릭하면 실제 댓글을 데이터베이스에 인서트 하는 페이지이다.
-</p>
 
 <h6 class="src">/bbs/addComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-새로운 댓글을 인서트하는 페이지로 모델 2에서는 삭제해야 할 페이지이다.
--구현-
-로그인 사용자가 아니면 
+Unauthenticated User 
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
-로그인 체크를 통과하면 
-먼저 요청의 캐릭터 셋을 UTF-8로 설정한다.
-boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서 댓글을 인서트한다.
-댓글을 인서트한 후 상세보기를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+
+Authorized User 
+Insert comments with the boardCd, articleNo, curPage, searchWord, and memo parameters.
 */
-response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
+response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<h3>댓글 수정 처리 페이지</h3>
-
-<p>
-이 페이지는 상세 보기에서 댓글의 작성자가 자신의 댓글 내용을 수정한 후 확인을 클릭하면 데이터베이스에 있는 댓글의 내용을 수정하는 페이지이다.
-</p>
+<h3>Create updateComment_porc.jsp</h3>
 
 <h6 class="src">/bbs/updateComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-댓글 업데이트를 실행하는 페이지로 모델 2에서는 삭제해야 할 페이지이다.
--구현-
-작성자인지를 검사하여 작성자가 아니면
+authenticated but not owner
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
-작성자 체크를 통과하면
-요청의 캐릭터 셋을 UTF-8로 설정한다.
-commentNo, boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서
-댓글을 업데이트한다.
-댓글을 업데이트 처리한 후 상세보기를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+Authorized and Owner
+Modify comments with commentNo, boardCd, articleNo, curPage, searchWord, memo parametes.
 */
-response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
+response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=smalltalk&amp;curPage=1&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<h3>댓글 삭제 처리 페이지</h3>
-
-<p>
-이 페이지는 상세 보기에서 댓글 삭제를 클릭하면 데이터베이스에 있는 해당 댓글을 삭제하는 페이지이다.
-</p>
+<h3>Create deleteComment_proc.jsp</h3>
 
 <h6 class="src">/bbs/deleteComment_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-댓글 삭제를 실행하는 페이지로 모델 2에서는 삭제해야 할 페이지이다.
+Not Owner
+response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Owner"); return;
 
--구현-
-작성자인지를 검사하여 작성자가 아니면
-response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다"); return;
-요청의 캐릭터 셋을 UTF-8로 설정해야 한다.
-요청에서 참조해야 하는 파라미터는
-commentNo, boardCd, articleNo, curPage, searchWord 이다.
-댓글을 삭제 후 상세보기를 돌아가기 위해선
-searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩한다.
+Owner
+Delete comments with commentNo parameter.
 */
-response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
+response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=smalltalk&amp;curPage=1&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<h3>첨부 파일 삭제 처리 페이지</h3>
-
-<p>
-이 페이지는 상세 보기에서 첨부 파일 옆의 x 링크를 클릭하면 데이터베이스에 있는 첨부 파일을 삭제하는 페이지이다.
-파일시스템의 파일은 삭제하지 않는다.
-</p>
+<h3>Create deleteAttachFile_proc.jsp</h3>
 
 <h6 class="src">/bbs/deleteAttachFile_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-첨부 파일 삭제를 실행하는 페이지로 모델 2에서는 삭제해야 할 페이지이다.
-
--구현-
-작성자인지를 검사하여 작성자가 아니면
-response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다"); return;
-요청의 캐릭터 셋을 UTF-8로 설정해야 한다.
-요청에서 참조해야 하는 파라미터는
-attachFileNo,articleNo,boardCd,curPage,searchWord 이다.
-첨부 파일를 삭제 후 상세보기를 돌아가기 위해선
-searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩한다.
+Not Owner
+response.sendError(HttpServletResponse.SC_FORBIDDEN, "Now Owner"); return;
+Owner
+Delete attachFile with attachfileno parameter.
 */
-response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
+response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=smalltalk&amp;curPage=1&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<h3>게시글 삭제 처리 페이지</h3>
-
-<p>
-이 페이지는 상세보기 페이지에서 게시글을 삭제하는 삭제 버튼을 클릭하면 실제 게시글을 데이터베이스에서 삭제 처리한다.
-</p>
+<h3>Create del_proc.jsp</h3>
 
 <h6 class="src">/bbs/del_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-게시글을 삭제하는 페이지로 모델 2에서는 삭제해야 할 페이지이다.
--구현-
-작성자가 아니면 
+Not Owner 
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
-작성자 체크를 통과하면
-요청의 캐릭터 셋을 UTF-8로 설정한다.
-articleNo, boardCd, curPage, searchWord 파라미터를 받고
-articleNo로 게시글을 삭제한다.
-게시글 삭제 후 목록를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+Owner
+Delete board article with articleNo parameter.
 */
-response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
+response.sendRedirect("list.jsp?boardCd=smalltalk&amp;curPage=1&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<h3>게시글 수정 폼 페이지</h3>
-
-<p>
-글 소유자가 자신의 글을 수정하기 위한 페이지를 만든다.
-CSS 포지셔닝에서 만든 write_form.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 modify_form.jsp라는 이름의 새 파일을 /bbs 폴더에 만든 후 아래와 같이 수정한다. 
-</p>
+<h3>Create write_form.jsp</h3>
 
 <h6 class="src">/bbs/modify_form.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -1599,15 +1457,15 @@ int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 String boardCd = request.getParameter("boardCd");
 String curPage = request.getParameter("curPage");
 String searchWord = request.getParameter("searchWord");
-//TODO articleNo로 게시글 객체를 얻어서 현재 로그인된 사용자가 글 소유자인지를 검사한다.</strong>
+//TODO logic to confirm that an authenticated user is the owner of the article.</strong>
 %&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="게시판 수정하기 폼" /&gt;
-&lt;meta name="Description" content="게시판 수정하기 폼" /&gt;
-&lt;title&gt;자유 게시판&lt;/title&gt;
+&lt;meta name="Keywords" content="Modify article form" /&gt;
+&lt;meta name="Description" content="Modify article form" /&gt;
+&lt;title&gt;Small talk&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function goView() {
@@ -1631,18 +1489,17 @@ function goView() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
-&lt;h3&gt;수정&lt;/h3&gt;
+&lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
+&lt;h3&gt;Modify article&lt;/h3&gt;
 &lt;form id="writeForm" action="<strong>modify_proc.jsp</strong>" method="post" enctype="multipart/form-data"&gt;
 <strong>&lt;input type="hidden" name="articleNo" value="5" /&gt;
 &lt;input type="hidden" name="boardCd" value="free" /&gt;
 &lt;input type="hidden" name="curPage" value="1" /&gt;
-&lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;</strong>
+&lt;input type="hidden" name="searchWord" value="happy" /&gt;</strong>
 &lt;table id="write-form" class="bbs-table"&gt;
 &lt;tr&gt;
-    &lt;td&gt;제목&lt;/td&gt;
-    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" value="무궁화꽃" /&gt;&lt;/td&gt;
+    &lt;td&gt;Title&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" value="What makes us happy?" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td colspan="2"&gt;
@@ -1650,18 +1507,18 @@ function goView() {
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;첨부 파일&lt;/td&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
     &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="전송" /&gt;
-    &lt;input type="button" value="상세보기" onclick="goView()" /&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;%@ include file="bbs-sub.jsp" %&gt;
@@ -1679,12 +1536,10 @@ function goView() {
 
 &lt;div id="form-group" style="display: none"&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="articleNo" value="5" /&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
-    &lt;/p&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 
@@ -1692,61 +1547,45 @@ function goView() {
 &lt;/html&gt;
 </pre>
 
-<h3>게시글 수정 처리 페이지</h3>
-
-<p>
-게시글 수정 폼에서 전달받은 파라미터를 가지고 실제로 게시글 수정을 처리하는 페이지이다.
-</p>
+<h3>Create modify_proc.jsp</h3>
 
 <h6 class="src">/bbs/modify_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-게시글을 수정하는 페이지로 모델 2에서는 삭제해야 할 페이지다.
--구현-
-작성자가 아니면
+Not Owner
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); return;
-articleNo, boardCd, curPage, searchWord, title, content, attachFile 파라미터를 받고
-게시글을 수정한다.
-form의 enctype 속성이 "multipart/form-data"인 경우 request.getParameter()로 파라미터의 값을 얻을 수 없다.
-쉽게 프로그래밍하기 위해 아파치 commons-fileupload 또는 cos와 같은 외부 라이브러리를 이용한다.
-게시글을 수정한 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode 메서드를 이용해 UTF-8로 인코딩한다.
+Owner
+Modify board article with articleNo, boardCd, curPage, searchWord, title, content, attachFile parameters.
 */
-response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=free&amp;searchWord=무궁화꽃");
+response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=smalltalk&amp;searchWord=happy");
 %&gt;
 </pre>
 
-<p>
-게시판 관련 프로토타입 작업을 완료했다.
-충분히 테스트해야 한다.
-테스트 후 회원 관련 프로토타입을 작업한다.
-</p>
+<h2>User</h2>
 
-<h2>회원</h2>
-
-<h3>회원 가입 폼 페이지</h3>
+<h3>Create SignUp.jsp</h3>
 
 <p>
-회원 가입 폼 페이지를 만든다.
-CSS 포지셔닝에서 만든 singUp.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 signUp.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the singUp.html file and use the Save As ... menu to create the signUp.jsp file in the users directory and modify it as shown below.
 </p>
 
 <h6 class="src">/users/signUp.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="회원 가입" /&gt;
-&lt;meta name="Description" content="회원 가입" /&gt;
-&lt;title&gt;회원 가입&lt;/title&gt;
+&lt;meta name="Keywords" content="SignUp" /&gt;
+&lt;meta name="Description" content="SignUp" /&gt;
+&lt;title&gt;SignUp&lt;/title&gt;
 &lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
 <strong>&lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("signUpForm");
-    //TODO 유효성 검사
+    //TODO validation logic
     return true;
 }
 &lt;/script&gt;</strong>           
@@ -1766,26 +1605,26 @@ function check() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
-&lt;h1&gt;회원 가입&lt;/h1&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;SignUp&lt;/h1&gt;
 &lt;form id="signUpForm" action="signUp_proc.jsp" method="post" <strong>onsubmit="return check()"</strong>&gt;
 &lt;table&gt;
 &lt;tr&gt;
-    &lt;td style="width: 200px;"&gt;이름(Full Name)&lt;/td&gt;
-    &lt;td style="width: 390px"&gt;&lt;input type="text" name="name" style="width: 99%;" <strong>value="홍길동"</strong> /&gt;&lt;/td&gt;
+    &lt;td style="width: 200px;"&gt;Full Name&lt;/td&gt;
+    &lt;td style="width: 390px"&gt;&lt;input type="text" name="name" style="width: 99%;" <strong>value="John Doe"</strong> /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호(Password)&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="passwd" style="width: 99%;" <strong>value="1111"</strong> /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td colspan="2" style="text-align: center;font-weight: bold;"&gt;
-    Email이 아이디로 쓰이므로 비밀번호는 Email 계정 비밀번호와 같게 하지 마세요.
+     Do not input email account password!
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호 확인(Confirm)&lt;/td&gt;
+    &lt;td&gt;Confirm&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="confirm" style="width: 99%;" <strong>value="1111"</strong> /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1793,17 +1632,17 @@ function check() {
     &lt;td&gt;&lt;input type="text" name="email" style="width: 99%;" <strong>value="captain@heist.com"</strong> /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;이동전화(Mobile)&lt;/td&gt;
-    &lt;td&gt;&lt;input type="text" name="mobile" style="width: 99%;" <strong>value="010-1234-5678"</strong> /&gt;&lt;/td&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="mobile" style="width: 99%;" <strong>value="123-4567-8901"</strong> /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="전송" /&gt;
+    &lt;input type="submit" value="Submit" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         <strong>&lt;%@ include file="user-sub.jsp" %&gt;</strong>
@@ -1823,45 +1662,38 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<h3>회원 가입 처리 페이지</h3>
-
-<p>
-실제로 회원 가입을 처리하는 페이지이다.
-회원을 데이터베이스에 등록 후 환영 페이지(welcome.jsp)로 이동하게 구현했다.
-</p>
+<h3>Create SignUp_proc.jsp</h3>
 
 <h6 class="src">/users/signUp_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-회원 가입을 처리하는 페이지로 모델 2에서는 삭제해야 할 페이지다.
--구현-
-자동으로 로그인하지 않는다.
-회원 가입이 완료되면 환영페이지로 이동한다.
+Not automatically authenticate.
+When signup is completed, the sign up form page should be redirected to the welcome page.
 */
 response.sendRedirect("welcome.jsp");
 %&gt;
 </pre>
 
-<h3>회원 가입 환영 페이지</h3>
+<h3>Create welcome.jsp</h3>
 
 <p>
-이 페이지는 사용자에게 회원 가입이 성공했음을 알려준다.
-실제 회원 가입이 되지 않았는데 이 페이지를 보게 해서는 안 된다.
-signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.jsp라는 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+This page informs the user that the subscription was successful.<br />
+Users who are unsuccessful in subscription should not see this page.<br />
+Open the signUp.jsp file and use the Sava As .. menu to create the welcome.jsp file in the users directory and modify it as shown below.
 </p>
  
 <h6 class="src">/users/welcome.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="회원 가입 환영" /&gt;
-&lt;meta name="Description" content="회원 가입 환영" /&gt;
-&lt;title&gt;회원 가입이 완료되었습니다.&lt;/title&gt;
+&lt;meta name="Keywords" content="Welcome" /&gt;
+&lt;meta name="Description" content="Welcome" /&gt;
+&lt;title&gt;Welcome&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1879,15 +1711,13 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
         
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
-<strong>
-&lt;h1&gt;환영합니다.&lt;/h1&gt;
-회원 가입시 입력한 Email이 아이디로 사용됩니다.&lt;br /&gt;
-&lt;input type="button" value="로그인" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+&lt;div id="content-categories"&gt;Memeber&lt;/div&gt;
+<strong>&lt;h1&gt;Welcome&lt;/h1&gt;
+Email is used as an ID.&lt;br /&gt;
+&lt;input type="button" value="Login" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;h1&gt;Welcome&lt;/h1&gt;
@@ -1907,29 +1737,24 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
 &lt;/html&gt;
 </pre>
 
-<h3>내 정보 수정 폼 페이지</h3>
-
-<p>
-로그인한 사용자가 자신의 정보를 수정할 수 있도록 양식을 보여주는 페이지이다.
-signUp.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 editAccount.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
-</p>
+<h3>Create editAccount.jsp</h3>
 
 <h6 class="src">/users/editAccount.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="내 정보 수정" /&gt;
-&lt;meta name="Description" content="내 정보 수정" /&gt;
-&lt;title&gt;내 정보 수정&lt;/title&gt;
+&lt;meta name="Keywords" content="Modify Account" /&gt;
+&lt;meta name="Description" content="Modify Account" /&gt;
+&lt;title&gt;Modify Account&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("editAccountForm");
-    //TODO 유효성 검사
+    //TODO validation logic
     return true;
 }
 &lt;/script&gt;
@@ -1949,36 +1774,35 @@ function check() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 
-&lt;h1&gt;내 정보 수정&lt;/h1&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+
+&lt;h1&gt;Modify Account&lt;/h1&gt;
 &lt;p&gt;
-비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.&lt;br /&gt;
-비밀번호는 &lt;a href="changePasswd.jsp"&gt;비밀번호 변경&lt;/a&gt;메뉴를 이용하세요.&lt;br /&gt;
+You can modify all information of your account except password. &lt;a href="changePasswd.jsp"&gt;Change Password&lt;/a&gt;
 &lt;/p&gt;
 &lt;form id="editAccountForm" action="editAccount_proc.jsp" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
-    &lt;td&gt;이름(Full Name)&lt;/td&gt;
+    &lt;td&gt;Full Name&lt;/td&gt;
     &lt;td&gt;&lt;input type="text" name="name" value="&lt;%=user.getName() %&gt;" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;이동전화(Mobile)&lt;/td&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
     &lt;td&gt;&lt;input type="text" name="mobile" value="&lt;%=user.getMobile() %&gt;" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;현재 비밀번호(Password)&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;%@ include file="user-sub.jsp" %&gt;
@@ -1998,46 +1822,36 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<h3>내 정보 수정 처리 페이지</h3>
-
-<p>
-내 정보 수정 폼 페이지에서 전달된 정보로 회원정보를 실제로 수정하는 페이지이다.
-</p>
+<h3>Create editAccount_proc.jsp</h3>
 
 <h6 class="src">/users/editAccount_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-회원정보를 수정하는 페이지로 모델 2에서는 삭제해야 할 페이지다.
--구현-
-로그인되어 있지 않으면
+Anauthenticated
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
-회원정보를 수정한 후 다시 로그인하고 비밀번호 변경화면으로 이동한다.
-비밀번호 변경 화면에서는 비밀번호 외에 회원정보를 모두 볼 수 있기 때문이다.
+Authorized
+After editing the member information, if login again in the login page, the login page be redirected to the Change Password form page.
+On the Change Password page, you can see the member information without the password.
 */
 response.sendRedirect("changePasswd.jsp");
 %&gt;
 </pre>
 
-<h3>비밀번호 변경 폼 페이지</h3>
-
-<p>
-비밀번호를 변경하는 페이지를 만든다.
-editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changePasswd.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
-</p>
+<h3>Create changePasswd.jsp</h3>
 
 <h6 class="src">/users/changePasswd.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="비밀번호 변경" /&gt;
-&lt;meta name="Description" content="비빌번호 변경" /&gt;
-&lt;title&gt;비밀번호 변경&lt;/title&gt;
+&lt;meta name="Keywords" content="Change Password" /&gt;
+&lt;meta name="Description" content="Change Password" /&gt;
+&lt;title&gt;Change Password&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 <strong>           
@@ -2046,7 +1860,7 @@ function check() {
     if (form.newPasswd.value == form.confirm.value) {
         return true;    
     } else {
-        alert("[변경 비밀번호]와 [변경 비밀번호 확인] 값이 같지 않습니다.");
+        alert("[Change Password] and [Change Password Confirm] values are not the same.");
         return false;
     }
 }
@@ -2068,24 +1882,24 @@ function check() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 
-&lt;h1&gt;비밀번호 변경&lt;/h1&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+
+&lt;h1&gt;Change Password&lt;/h1&gt;
 &lt;%=user.getName() %&gt;&lt;br /&gt;
-이동전화 &lt;%=user.getMobile() %&gt;&lt;br /&gt;
+Mobile &lt;%=user.getMobile() %&gt;&lt;br /&gt;
 &lt;form id="changePasswordForm" action="<strong>changePasswd_proc.jsp</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
-    &lt;td&gt;현재 비밀번호&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="currentPasswd" /&gt;&lt;/td&gt;   
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;변경 비밀번호&lt;/td&gt;
+    &lt;td&gt;Change Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="newPasswd" /&gt;&lt;/td&gt;   
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;변경 비밀번호 확인&lt;/td&gt;
+    &lt;td&gt;Change Password Confirm&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt; 
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2093,9 +1907,9 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         &lt;%@ include file="user-sub.jsp" %&gt;
@@ -2115,45 +1929,39 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<h3>비밀번호 변경 처리 페이지</h3>
-
-<p>
-비밀번호 변경 폼 페이지에서 전달된 비밀번호로 회원 테이블의 비밀번호를 수정하는 페이지이다.
-</p>
+<h3>Create changePasswd_proc.jsp</h3>
 
 <h6 class="src">/users/changePasswd_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-비밀번호를 변경하는 페이지로 모델 2에서는 삭제해야 할 페이지다.
--구현-
-로그인 사용자가 아니면
+Anauthenticated
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
-비밀번호 변경 후 비밀번호 변경 확인 페이지로 이동한다.
+
+Authorized
+If the password is changed, the changePasswd_proc.jsp be redirected to the password change confirmation page.
 */
 response.sendRedirect("changePasswd_confirm.jsp");
 %&gt;
 </pre>
 
-<h3>비밀번호 변경 확인 페이지</h3>
+<h3>Create changePasswd_confirm.jsp</h3>
 
 <p>
-비밀번호 변경이 완료되었음을 알려주는 역할만을 담당하는 페이지를 만든다.
-비밀번호 변경이 실패했는데 이 페이지가 보여서는 안 된다.
-welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changePasswd_confirm.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the welcome.jsp file and use the Save As ... menu to create the changePasswd_confirm.jsp file in the users directory and modify it as shown below.
 </p>
     
 <h6 class="src">/users/changePasswd_confirm.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="비밀번호 변경 확인" /&gt;
-&lt;meta name="Description" content="비밀번호 변경 확인" /&gt;
-&lt;title&gt;비밀번호 변경 확인&lt;/title&gt;
+&lt;meta name="Keywords" content="Change Password Confirmation" /&gt;
+&lt;meta name="Description" content="Change Password Confirmation" /&gt;
+&lt;title&gt;Change Password Confirmation&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -2171,15 +1979,14 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 
-&lt;h1&gt;비밀번호가 변경되었습니다.&lt;/h1&gt;
-변경된 비밀번호로 다시 로그인하실 수 있습니다.&lt;br /&gt;<strong>
-&lt;input type="button" value="로그인" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Your password has been changed.&lt;/h1&gt;
+You can login again with the changed password.&lt;br /&gt;<strong>
+&lt;input type="button" value="Login" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         <strong>&lt;%@ include file="user-sub.jsp" %&gt;</strong>
@@ -2199,11 +2006,10 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
 &lt;/html&gt;
 </pre>
 
-<h3>회원 탈퇴 폼 페이지</h3>
+<h3>Create bye.jsp</h3>
 
 <p>
-회원 탈퇴를 위한 이메일과 비밀번호 폼을 보여주는 페이지를 만든다.
-editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the editAccount.jsp file and use the Save As ... menu to create the bye.jsp file in the users directory and modify it as shown below.
 </p>
 
 <h6 class="src">/users/bye.jsp</h6>
@@ -2211,17 +2017,17 @@ editAccount.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye
     pageEncoding="UTF-8"%&gt;
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="탈퇴" /&gt;
-&lt;meta name="Description" content="탈퇴" /&gt;
-&lt;title&gt;탈퇴&lt;/title&gt;
+&lt;meta name="Keywords" content="Bye" /&gt;
+&lt;meta name="Description" content="Bye" /&gt;
+&lt;title&gt;Bye&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("byeForm");
-    //유효성 검사
+    //TODO validation logic
     return true;
 }
 &lt;/script&gt;           
@@ -2241,28 +2047,27 @@ function check() {
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
 
-&lt;h2&gt;탈퇴&lt;/h2&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h2&gt;Bye&lt;/h2&gt;
 &lt;form id="byeForm" action="bye_proc.jsp" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
-    &lt;td&gt;이메일&lt;/td&gt;
+    &lt;td&gt;Email&lt;/td&gt;
     &lt;td&gt;&lt;input type="text" name="email" /&gt;&lt;/td&gt;   
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;  
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
 
     &lt;div id="sidebar"&gt;
         &lt;%@ include file="user-sub.jsp" %&gt;
@@ -2282,46 +2087,40 @@ function check() {
 &lt;/html&gt;
 </pre>
 
-<h3>회원 탈퇴 처리 페이지</h3>
-
-<p>
-회원 탈퇴를 처리하는 페이지를 만든다.
-</p>
+<h3>Create bye_proc.jsp</h3>
 
 <h6 class="src">/users/bye_proc.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%
 /*
-회원탈퇴를 처리하는 페이지로 모델 2에서는 삭제해야 한다.
--구현-
-로그인 사용자가 아니면
+Anauthenticated
 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
-회원테이블에서 회원정보를 지운다.
-세션을 지운다.
-탈퇴 확인 페이지로 이동한다.
+Authorized
+If the received email and password are the same as those of the logged-in user, delete the member information from the member table.
+Invalidates the current session.
+Go to the Account termination confirmation page.
 */
 response.sendRedirect("bye_confirm.jsp");
 %&gt;
 </pre>
 
-<h3>회원 탈퇴 확인 페이지</h3>
+<h3>Create bye_confirm.jsp</h3>
 
 <p>
-회원 탈퇴가 완료되었음을 확인시켜주는 페이지를 만든다.
-welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_confirm.jsp라는 이름의 새 파일을 /users 디렉터리에 만든 후 아래와 같이 수정한다.
+Open the welcome.jsp file and use the Save As ... menu to create the bye_confirm.jsp file in the users directory and modify it as shown below.
 </p>
 
 <h6 class="src">/users/bye_confirm.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;meta name="Keywords" content="탈퇴 확인" /&gt;
-&lt;meta name="Description" content="탈퇴 확인" /&gt;
-&lt;title&gt;탈퇴 확인&lt;/title&gt;
+&lt;meta name="Keywords" content="Goodbye" /&gt;
+&lt;meta name="Description" content="Goodbye" /&gt;
+&lt;title&gt;Goodbye&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -2339,14 +2138,12 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;회원&lt;/div&gt;
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Goodbye&lt;/h1&gt;
+Your Information is all deleted.
 
-&lt;h1&gt;회원 탈퇴 확인&lt;/h1&gt;
-회원님의 모든 정보가 삭제되었습니다.&lt;br /&gt;
-&lt;!--  본문 끝 --&gt;
-        &lt;/div&gt;&lt;!-- content 끝 --&gt;
-    &lt;/div&gt;&lt;!--  container 끝 --&gt;
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
     
     &lt;div id="sidebar"&gt;
         <strong>&lt;h1&gt;Goodbye&lt;/h1&gt;</strong>
@@ -2367,33 +2164,20 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
 </pre>
 
 <p>
-게시판 화면에 해당하는 페이지는 list.jsp, view.jsp, write_form.jsp, modify_form.jsp이다.
-이 중에 modify_form.jsp를 제외하고 모두 loginCheck.jsp 파일을 인클루드하는데, 
-modify_form.jsp만 빠진 이유는 로그인뿐 아니라 글 소유자인지 검사하는 로직이 필요하기 때문이다.
-(이 로직은 구현 단계로 넘긴다)
-
-회원 페이지 중 editAccount.jsp, changePasswd.jsp, bye.jsp는 loginCheck.jsp 파일을 인클루드한다.
-
-화면을 보여주지 않고 처리만을 담당하는 페이지는 파일명에 _proc를 붙여서 구별했다.
+In the bulletin board program, the pages corresponding to the screen are list.jsp, view.jsp, write_form.jsp, and modify_form.jsp.<br />
+Of these, except for modify_form.jsp and all include a loginCheck.jsp file.<br />
+modify_form.jsp requires the logic to check the owner of the post.<br />
+EditAccount.jsp, changePasswd.jsp, and bye.jsp among the member programs include the loginCheck.jsp file.<br />
+JSP pages that do not show a screen have _proc appended to the filename.
 </p>
 
-<h2>로그인 정책 정리</h2>
-
-<p>
-구현에 앞서 로그인 정책을 다시 확인한다.
-</p>
+<h2>Login Policy</h2>
 
 <ol>
-	<li>게시판과 관련된 모든 페이지는 로그인이 필요하다.</li>
-	<li>회원 모듈에서 내 정보 수정, 비밀번호 변경, 탈퇴는 로그인이 필요하다.</li>
-	<li>로그인이 성공하면 /bbs/list.jsp?boardCd=free&amp;curPage=1로 이동한다.</li>
-	<li>로그인하지 않고 로그인이 필요한 페이지를 방문하면 로그인 페이지로 이동하고, 로그인이 성공하면 원래 방문하려 했던 페이지로 이동한다.</li>
-	<li>로그아웃하면 홈페이지로 이동한다.</li>
+	<li>Only authenticated users can use the bulletin board.</li>
+	<li>If login is successful in login page, the login page be redirected to /bbs/list.jsp?boardCd=smalltalk&amp;curPage=1.</li>
+	<li>If an unauthenticated user visits a page that requires authentication, it will be redirected to the login page. If the login is successful, the login page will be redirected to the page you originally intended to visit.</li>
+	<li>When logout is complete, the logout.jsp be redirected to the homepage.</li>
 </ol>
 
-<p>
-이로써 프로토타입을 완성했다.
-이 프로토타입은 과정 마지막까지 쓰인다.
-</p>
-    
 </article>

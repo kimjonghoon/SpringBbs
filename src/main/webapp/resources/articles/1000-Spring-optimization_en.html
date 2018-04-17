@@ -1,0 +1,101 @@
+<article>
+
+<h1>구글 앱 엔진에서 스프링 최적화</h1>
+
+<p>
+구글 클라우드에서 애플리케이션 초기화 시간이 길어지면 500 에러가 발생한다.
+</p>
+
+<p>
+스프링의 컴포넌트 스캔과 오토와이어드는 초기화 시간을 늘리는 주요 원인이다.
+</p>
+
+<p>
+구글 문서에서 권고하는 대로 컴포넌트 스캔과 오토 와이어드 대신 빈을 일일이 정의하는 것으로 수정해 보자.
+</p>
+
+<h6 class="src">guestbook-servlet.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"&gt;
+        
+	&lt;security:global-method-security pre-post-annotations="enabled" /&gt;
+	    
+	&lt;mvc:resources mapping="/resources/**" location="/resources/" /&gt;
+	
+	&lt;mvc:annotation-driven /&gt;
+	
+	&lt;!-- &lt;context:component-scan base-package="net.java_school.guestbook" /&gt; --&gt;
+	<strong>&lt;context:annotation-config /&gt;</strong>
+	
+	&lt;bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+		&lt;property name="viewClass"&gt;
+			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name="prefix"&gt;
+			&lt;value&gt;/WEB-INF/views/&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name="suffix"&gt;
+			&lt;value&gt;.jsp&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	<strong>
+	&lt;bean id="guestbookController" class="net.java_school.guestbook.GuestbookController"&gt;
+		&lt;property name="guestbookService" ref="guestbookService" /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id="guestbookService" class="net.java_school.guestbook.GuestbookServiceImpl" /&gt;
+	</strong>
+&lt;/beans&gt;
+</pre>
+
+<p>
+component-scan 대신 추가한 context:annotation-config는 스프링의 빈 컨테이너가 빈을 등록할 때 빈에 적용된 애너테이션이 그 기능을 하도록 한다.
+예를 들어, 빈에 @Controller 애너테이션이 적용되었다면, 해당 빈을 컨트롤러로 등록한다.
+context:annotation-config도 mvc:annotation-driven 설정이 필요하다.
+</p>
+
+<p>
+다음으로 오토 와이어드 기능을 제거한다.
+GuestbookController에 @Autowired 애너테이션을 제거하고 세터를 추가한다.
+</p>
+
+<pre class="prettyprint">
+@Controller
+public class GuestbookController {
+  
+	private GuestbookService guestbookService;
+	<strong>
+	public void setGuestbookService(GuestbookService guestbookService) {
+		this.guestbookService = guestbookService;
+	}
+	</strong>
+	//.. omit ..
+	
+}
+</pre>
+
+<h3>Guestbook 최종 소스</h3>
+
+<p>
+<a href="examples/java-school-guestbook.zip">예제 다운로드</a>
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="https://cloud.google.com/appengine/articles/spring_optimization">https://cloud.google.com/appengine/articles/spring_optimization</a></li>
+</ul>
+</article>

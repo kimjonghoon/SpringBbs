@@ -1,0 +1,91 @@
+<article>
+
+<h1>뷰 레벨 보안</h1>
+
+<p>
+게시글 보기 화면에서 글 소유자가 아닌 사용자가 아래 그림에서 박스로 강조된 메뉴를 봐서는 안 된다.<br />
+<img alt="Before applying spring security at viewlayer" src="https://lh3.googleusercontent.com/Wdf7wwF1RPB-tPcmTFuvxe5fYdhLwQih-Q9t5EaNF0E15wBaM7BKUNruYCczilLV5D3QavWUib_m-5z8_BXLzlyqaJiajQr2MZqVuxmUqx3dLUSZi8zK7DVNgvuU_AzgBuWsfkNhPNBICZXTds6BbSnWDikQuKmIelTsDirLauhuaOturKv-Rm4DetWAfPArPWfTJYU_NUg09p1cLU7MLZ5aVr6zsbueS0EE_vuYSaJKlK6fPJOmmdBQl1qoEao40dhNqI9i_Q9OTdBY7yLPxjY_uY3X9j9eRuSt-sMyhbbrddaDjLtHrkKIqBRTtI_DBrpIGapyA2GAbEPSIpFSlX801M0SQiTFQVVUzit8RfJzPjPxETLTrmpw1eYeYxjb_30eiJwtg0h_Fw7HKNR0DqnKL0bZ0XDASEzb1rpwKV1U0tIQtId-y722cxPoyO6c-woxf4fBJ6GZ8digUNsHq653W9q8rnQpkdd-i1zPoHGRfJmqmHqZUO07Uj5pqmqXUHvEAjNeG8HpJol6_ANrDa-dOFogUQrYM0KDFzOm33m01Cc8URNO98jJGsfizhb9q4G4TRfnuwbajvGW8eyxmd_Cdwb_xZoC5k_afY4=w612-h507-no">
+</p>
+
+<h6 class="src">/WEB-INF/views/bbs/view.jsp</h6>
+<pre class="prettyprint">
+&lt;!-- 중간 생략 --&gt;
+
+<strong>&lt;%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %&gt;</strong>
+
+&lt;!-- 중간 생략 --&gt;
+
+&lt;div class="view-menu" .. &gt;
+    <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="수정" onclick="goModify();" /&gt;
+        &lt;input type="button" value="삭제" onclick="goDelete()" /&gt;
+    &lt;/div&gt;
+    <strong>&lt;/security:authorize&gt;</strong>
+
+
+&lt;!-- 중간 생략 --&gt;
+
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited ${regdate } by ${name } hit ${hit }&lt;/div&gt;
+    &lt;div id="article-content"&gt;${content }&lt;/div&gt;
+    &lt;div id="file-list" style="text-align: right;"&gt;
+        &lt;div id="file-list" style="text-align: right;"&gt;
+        &lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;
+            &lt;div class="attach-file"&gt;			
+                &lt;a href="javascript:download('${file.filename }')"&gt;${file.filename }&lt;/a&gt;
+                <strong>&lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
+                &lt;a href="javascript:deleteAttachFile('${file.attachFileNo }')"&gt;삭제&lt;/a&gt;
+                <strong>&lt;/security:authorize&gt;</strong>
+            &lt;/div&gt;
+        &lt;/c:forEach&gt;	
+        &lt;/div&gt;
+    &lt;/p&gt;		
+&lt;/div&gt;
+
+&lt;!--  댓글 반복 시작 --&gt;
+&lt;c:forEach var="comment" items="${commentList }" varStatus="status"&gt;	
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;${comment.name }&lt;/span&gt;
+    &lt;span class="date"&gt;${comment.regdate }&lt;/span&gt;
+    <strong>&lt;security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')"&gt;</strong>
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:updateComment('${comment.commentNo }')"&gt;수정&lt;/a&gt; |
+        &lt;a href="javascript:deleteComment('${comment.commentNo }')"&gt;삭제&lt;/a&gt;
+    &lt;/span&gt;
+    <strong>&lt;/security:authorize&gt;</strong>
+
+&lt;!-- 중간 생략 --&gt;
+</pre>
+
+<p>
+이미 수정한 header.jsp 파일 역시 스프링 시큐리티 태그를 사용하여 뷰가 선별적으로 랜더링된다.<br />
+</p>
+
+<h6 class="src">/WEB-INF/views/inc/header.jsp</h6>
+<pre class="prettyprint">
+&lt;!-- 중간 생략 --&gt;
+
+<strong>&lt;%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %&gt;</strong>
+
+&lt;!-- 중간 생략 --&gt;
+
+<strong>&lt;security:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"&gt;
+    &lt;security:authentication property="principal.username" var="<strong>check</strong>" /&gt;
+&lt;/security:authorize&gt;</strong>
+
+&lt;!-- 중간 생략 --&gt;
+</pre>
+
+
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://dhappy.net/?p=260">Error creating bean with name 'sqlSessionFactory' 구글 검색(spring-mybatis 1.1.1로 교체)</a></li>
+	<li><a href="http://stackoverflow.com/questions/10421588/spring-security-not-working-what-am-i-doing-wrong">시큐리티가 작동하지 않을 때는 web.xml 파일에 스프링 시큐리티에 대한 설정을 검사해야 한다.</a></li>
+	<li><a href="http://static.springsource.org/spring-security/site/faq/faq.html#faq-method-security-in-web-context">컨트롤러보다는 서비스에 시큐리티 적용 권고</a></li>
+	<li><a href="http://stackoverflow.com/questions/3087548/can-spring-security-use-preauthorize-on-spring-controllers-methods">컨트롤러에 시큐리티 적용-테스트 실패</a></li>
+	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
+	<li><a href="http://www.jpub.kr/">Spring in Action(Jpub) - 크레이그 월즈</a></li>
+</ul>
+</article>

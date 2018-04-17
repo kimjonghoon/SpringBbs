@@ -1,0 +1,3175 @@
+<article>
+
+<h1>Model 2</h1>
+
+<p>
+To modify our project with Model 2, you first need to learn about EL and JSTL.
+</p>
+
+<h3>EL</h3>
+
+<p>
+EL is an expression made for easy access to the data available in JSP.<br />
+EL is included in the JSP specification. EL provides easier access to JavaBean's property values.<br />
+${user.email} is equivalent to calling the getEmail() method of the User object.<br />
+You do not need to know exactly which scope the User object is in.<br />
+User objects in ${user.email} are retrieved in the following order: pageScope, requestScope, sessionScope, applicationScope.
+</p>
+
+<p>The following is a list of the implicit objects available in the EL.</p>
+
+<ul>
+	<li>pageScope</li>
+	<li>requestScope</li>
+	<li>sessionScope</li>
+	<li>applicationScope</li>
+	<li>param</li>
+	<li>paramValues</li>
+	<li>header</li>
+	<li>headerValues</li>
+	<li>initParam</li>
+	<li>cookie</li>
+	<li>pageContext</li>
+</ul>
+
+<p>
+When accessing the value of the searchWord parameter, use an implicit object like ${param.searchWord}.<br />
+${param.searchWord} prints "" instead of null, even if the searchWord parameter is not passed.
+</p>
+
+<p>
+In Model 2, the view only serves to show the data received.<br />
+The role of producing data should be the responsibility of the model.<br />
+Therefore, you should not use a scriptlet as much as possible in the view of Model 2.
+</p>
+
+<h3>JSTL</h3>
+
+<p>
+A tag library is a technique for creating tags that change into Java code.<br />
+The JST Standard Tag Library (JSTL) provides a standard for tag libraries. JSTL is not included in the JSP specification.<br />
+Therefore, you need to download the library to use JSTL.<br />
+Download and extract the most recent version of JSTL from <a href="http://archive.apache.org/dist/jakarta/taglibs/standard/binaries/">http://archive.apache.org/dist/jakarta/taglibs/standard/binaries/</a>.<br />
+Copy jstl.jar and standard.jar from the lib folder to WEB-INF/lib.<br />
+The core of JSTL is the most used. To use the core, add the taglib directive to the JSP as shown below.
+</p>
+
+<pre class="prettyprint no-border">
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+</pre>
+
+<p>
+The following is a JSP for testing JSTL. Create it on the document base.
+</p>
+
+<h6 class="src">/jstl.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+&lt;%
+int firstPage = 21;
+int lastPage = 30;
+ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
+a.add(1);a.add(2);a.add(3);
+a.add(4);a.add(5);a.add(6);
+a.add(7);a.add(8);a.add(9);a.add(10);
+%&gt;
+&lt;c:set var="a" value="&lt;%=a %&gt;" /&gt;
+&lt;c:set var="c" value="" /&gt;
+&lt;c:set var="firstPage" value="&lt;%=firstPage %&gt;" /&gt;
+&lt;c:set var="lastPage" value="&lt;%=lastPage %&gt;" /&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;JSTL core examples&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;if statement&lt;/h1&gt;
+
+&lt;c:if test="${empty b }"&gt;
+    &lt;h4&gt;b list is empty.&lt;/h4&gt;
+&lt;/c:if&gt;
+
+&lt;c:if test="${not empty c }"&gt;
+    &lt;h4&gt;c is not null and is not "".&lt;/h4&gt;
+&lt;/c:if&gt;
+
+&lt;c:choose&gt;
+    &lt;c:when test="${empty a }"&gt;
+        &lt;h4&gt;List is empty.&lt;/h4&gt;
+    &lt;/c:when&gt;
+&lt;/c:choose&gt;
+
+&lt;h1&gt;if ~ else statement&lt;/h1&gt;
+&lt;c:choose&gt;
+    &lt;c:when test="${empty a }"&gt;
+        &lt;h4&gt;List is empty.&lt;/h4&gt;
+    &lt;/c:when&gt;
+    &lt;c:otherwise&gt;
+        &lt;h4&gt;List is not empty.&lt;/h4&gt;
+    &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+
+&lt;h1&gt;for statement&lt;/h1&gt;
+&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;
+    [${i }]
+&lt;/c:forEach&gt;
+
+&lt;h1&gt;for statement&lt;/h1&gt;
+&lt;table&gt;
+&lt;c:forEach var="i" items="${a }" varStatus="status"&gt;
+    &lt;tr&gt;
+        &lt;td&gt;${status.index }&lt;/td&gt;&lt;td&gt;${i }&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/c:forEach&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The above example briefly introduces the most important core usage in JSTL.<br />
+Now you are ready to change the Model 1 board to the Model 2 board.<br />
+Major changes are as follows.
+</p>
+
+<ul>
+	<li>All JSPs use EL and JSTL.</li>
+	<li>JSP only shows the data it receives.</li>
+	<li>Create an action class that is responsible for the business logic.</li>
+	<li>Requests with the extension * .do are sent to the controller.</li>
+	<li>Change the parameter name curPage, which contains the page number, to page.</li>
+</ul>
+
+<h3>Update JSPs</h3>
+
+<p>
+Use EL and JSTL to modify the code, and change all .jsp to .do, except for the jsp used in the include directive.
+</p>
+
+<h6 class="src">header.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+&lt;h1 style="float: left;width: 150px;"&gt;&lt;a href="../"&gt;&lt;img src="../images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;div id="memberMenu" style="float: right;position: relative;top: 7px;"&gt;
+<strong>&lt;c:choose&gt;
+    &lt;c:when test="${empty user}"&gt;</strong>
+        &lt;input type="button" value="Login" onclick="location.href='../users/login<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="SignUp" onclick="location.href='../users/signUp<strong>.do</strong>'" /&gt;
+    <strong>&lt;/c:when&gt;
+    &lt;c:otherwise&gt;</strong>
+        &lt;input type="button" value="Logout" onclick="location.href='../users/logout<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="Modify Account" onclick="location.href='../users/editAccount<strong>.do</strong>'" /&gt;
+    <strong>&lt;/c:otherwise&gt;
+&lt;/c:choose&gt;</strong>
+&lt;/div&gt;
+</pre>
+
+<h6 class="src">bbs-sub.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;h1&gt;BBS&lt;/h1&gt;
+&lt;ul&gt;
+    &lt;li&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=free&amp;page=1"&gt;Small talk&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="list<strong>.do</strong>?boardCd=qna&amp;page=1"&gt;Q &amp; A&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+
+<p>
+In the same way, modify main-menu.jsp.<br />
+The above JSP file is simple and does not require program logic.<br />
+JSPs that show lists require program logic.<br />
+Therefore, we add a tag library directive to use JSTL core.<br />
+Delete the code that includes loginCheck.jsp.<br />
+The logic in logincheck.jsp will be implemented in the action class.
+</p>
+
+<h6 class="src">list.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Board list" /&gt;
+&lt;meta name="Description" content="Board list" /&gt;
+&lt;title&gt;Small talk&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;script type="text/javascript"&gt;
+function goList(page) {
+    var form = document.getElementById("listForm");
+    form.page.value = page;
+    form.submit();
+}
+function goView(articleNo) {
+    var form = document.getElementById("viewForm");
+    form.articleNo.value = articleNo;
+    form.submit();
+}
+function goWrite() {
+    var form = document.getElementById("writeForm");
+    form.submit();
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
+&lt;!-- List heading --&gt;
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
+    &lt;th&gt;TITLE&lt;/th&gt;
+    &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
+    &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
+&lt;/tr&gt;
+&lt;!-- List itmes --&gt;
+<strong>&lt;c:forEach var="article" items="${list }" varStatus="status"&gt;</strong>
+&lt;tr&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${listItemNo - status.index }</strong>&lt;/td&gt;
+    &lt;td&gt;
+        &lt;a href="javascript:goView('<strong>${article.articeNo }</strong>')"&gt;<strong>${article.title }</strong>&lt;/a&gt;
+        <strong>&lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;</strong>
+        &lt;img src="../images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        <strong>&lt;c:if test="${article.commentNum &gt; 0 }"&gt;</strong>
+        &lt;span class="bbs-strong"&gt;[<strong>${article.commentNum }</strong>]&lt;/span&gt;
+        <strong>&lt;/c:if&gt;</strong>
+    &lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.regdate }</strong>&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.hit }</strong>&lt;/td&gt;
+&lt;/tr&gt;
+<strong>&lt;/c:forEach&gt;</strong>
+&lt;!-- List items end --&gt;
+&lt;/table&gt;
+    
+&lt;div id="paging"&gt;
+    <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[Prev]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    
+    <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
+        <strong>&lt;c:choose&gt;
+            &lt;c:when test="${param.page == i }"&gt;</strong>
+            &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
+            <strong>&lt;/c:when&gt;
+            &lt;c:otherwise&gt;</strong>
+            &lt;a href="javascript:goList('<strong>${i }</strong>')"&gt;<strong>${i }</strong>&lt;/a&gt;
+            <strong>&lt;/c:otherwise&gt;
+        &lt;/c:choose&gt;
+    &lt;/c:forEach&gt;</strong>
+
+    <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[Next]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+&lt;/div&gt;
+
+&lt;div id="list-menu"&gt;
+    &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+&lt;/div&gt;
+
+&lt;form action="list<strong>.do</strong>" method="get"&gt;
+    &lt;input type="hidden" name="page" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+    &lt;div id="search"&gt;
+    &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+    &lt;input type="submit" value="Search" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!-- container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="writeForm" action="write_form<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The action class should create the following data and pass it to list.jsp.
+</p>
+
+<ul>
+	<li>boardNm: Board name</li>
+	<li>list: List of articles</li>
+	<li>listItemNo: List items No</li>
+	<li>prevPage: page number for [Prev]</li>
+	<li>firstPage: first page number of current block</li>
+	<li>lastPage: last page number of current block</li>
+	<li>nextPage: page number fo [Next]</li>
+</ul>
+
+<h6 class="src">view.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Board detailed view" /&gt;
+&lt;meta name="Description" content="Board detailed view" /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function modifyCommentToggle(articleNo) {
+    var p_id = "comment" + articleNo;
+    var form_id = "modifyCommentForm" + articleNo;
+    var p = document.getElementById(p_id);
+    var form = document.getElementById(form_id);
+    
+    var p_display;
+    var form_display;
+    
+    if (p.style.display) {
+        p_display = '';
+        form_display = 'none';
+    } else {
+        p_display = 'none';
+        form_display = '';
+    }
+    
+    p.style.display = p_display;
+    form.style.display = form_display;
+}
+function goList(page) {
+    var form = document.getElementById("listForm");
+    form.page.value = page;
+    form.submit();
+}
+function goView(articleNo) {
+    var form = document.getElementById("viewForm");
+    form.articleNo.value = articleNo;
+    form.submit();
+}
+function goWrite() {
+    var form = document.getElementById("writeForm");
+    form.submit();
+}
+function goModify() {
+    var form = document.getElementById("modifyForm");
+    form.submit();
+}
+function goDelete() {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("delForm");
+        form.submit();
+    }
+}
+function deleteAttachFile(attachFileNo) {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("deleteAttachFileForm");
+        form.attachFileNo.value = attachFileNo;
+        form.submit();
+    }
+}
+function deleteComment(commentNo) {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("deleteCommentForm");
+        form.commentNo.value = commentNo;
+        form.submit();
+    }
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
+    <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="Modify" onclick="goModify()" /&gt;
+        &lt;input type="button" value="Del" onclick="goDelete()"/&gt;
+    &lt;/div&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    &lt;div class="fr"&gt;
+        <strong>&lt;c:if test="${nextArticle != null }"&gt;</strong>
+        &lt;input type="button" value="Next Article" onclick="goView('<strong>${nextArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        <strong>&lt;c:if test="${prevArticle != null }"&gt;</strong>
+        &lt;input type="button" value="Prev Article" onclick="goView('<strong>${prevArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        &lt;input type="button" value="List" onclick="goList('<strong>${param.page }</strong>')" /&gt;
+        &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;<strong>${title }</strong>&lt;/th&gt;
+&lt;/tr&gt; 
+&lt;/table&gt;
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited <strong>${regdate }</strong> by <strong>${name }</strong> hit <strong>${hit }</strong>&lt;/div&gt;
+    &lt;div id="article-content"&gt;<strong>${content }</strong>&lt;/div&gt;
+    &lt;div id="file-list" style="text-align: right"&gt;
+    <strong>&lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;</strong>
+        &lt;div id="attach-file"&gt;
+            &lt;a href="<strong>${uploadPath }${file.filename }</strong>"&gt;<strong>${file.filename }</strong>&lt;/a&gt;
+            <strong>&lt;c:if test="${user.email == file.email }"&gt;</strong>
+            &lt;a href="javascript:deleteAttachFile('<strong>${file.attachFileNo }</strong>')"&gt;x&lt;/a&gt;
+            <strong>&lt;/c:if&gt;</strong>
+         &lt;/div&gt;
+    <strong>&lt;/c:forEach&gt;</strong>
+    &lt;/p&gt;
+&lt;/div&gt;
+
+<strong>&lt;c:forEach var="comment" items="${commentList }" varStatus="status"&gt;</strong>
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;<strong>${comment.name }</strong>&lt;/span&gt;
+    &lt;span class="date"&gt;<strong>${comment.regdate }</strong>&lt;/span&gt;
+    <strong>&lt;c:if test="${user.email == comment.email }"&gt;</strong>
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:modifyCommentToggle('<strong>${comment.commentNo }</strong>')"&gt;Modify&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment('<strong>${comment.commentNo }</strong>')"&gt;Del&lt;/a&gt;
+    &lt;/span&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    &lt;p id="comment<strong>${comment.commentNo }</strong>"&gt;<strong>${comment.memo }</strong>&lt;/p&gt;
+    &lt;form id="modifyCommentForm<strong>${comment.commentNo }</strong>" class="comment-form" action="updateComment<strong>.do</strong>" method="post" style="display: none;"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="commentNo" value="<strong>${comment.commentNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/p&gt;
+    &lt;div class="fr"&gt;
+            &lt;a href="javascript:document.forms.modifyCommentForm<strong>${comment.commentNo }</strong>.submit()"&gt;Submit&lt;/a&gt;
+            | &lt;a href="javascript:modifyCommentToggle('<strong>${comment.commentNo }</strong>')"&gt;Cancel&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>${comment.memo }</strong>&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+<strong>&lt;/c:forEach&gt;</strong>
+
+&lt;form id="addCommentForm" action="addComment<strong>.do</strong>" method="post"&gt;
+    &lt;p style="margin: 0; padding: 0;"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>"/&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;       
+    &lt;/p&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="Add comment" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;div id="next-prev"&gt;
+    <strong>&lt;c:if test="${nextArticle != null }"&gt;</strong>
+    &lt;p&gt;Next Article : &lt;a href="javascript:goView('<strong>${nextArticle.articleNo }</strong>')"&gt;<strong>${nextArticle.title }</strong>&lt;/a&gt;&lt;/p&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    <strong>&lt;c:if test="${prevArticle != null }"&gt;</strong>
+    &lt;p&gt;Prev Article : &lt;a href="javascript:goView('<strong>${prevArticle.articleNo }</strong>')"&gt;<strong>${prevArticle.title }</strong>&lt;/a&gt;&lt;/p&gt;
+    <strong>&lt;/c:if&gt;</strong>
+&lt;/div&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
+    <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
+    &lt;div class="fl"&gt;
+        &lt;input type="button" value="Modify" onclick="goModify()" /&gt;
+        &lt;input type="button" value="Del" onclick="goDelete()"/&gt;
+    &lt;/div&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    &lt;div class="fr"&gt;
+        <strong>&lt;c:if test="${nextArticle != null }"&gt;</strong>
+        &lt;input type="button" value="Next Article" onclick="goView('<strong>${nextArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        <strong>&lt;c:if test="${prevArticle != null }"&gt;</strong>
+        &lt;input type="button" value="Prev Article" onclick="goView('<strong>${prevArticle.articleNo }</strong>')" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        &lt;input type="button" value="List" onclick="goList('<strong>${param.page }</strong>')" /&gt;
+        &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- List --&gt;
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
+    &lt;th&gt;TITLE&lt;/th&gt;
+    &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
+    &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
+&lt;/tr&gt;
+<strong>&lt;c:forEach var="article" items="${list }" varStatus="status"&gt;</strong>
+&lt;tr&gt;
+    &lt;td style="text-align: center;"&gt;
+    <strong>&lt;c:choose&gt;</strong>
+        <strong>&lt;c:when test="${param.articleNo == article.articleNo }"&gt;</strong>
+        &lt;img src="../images/arrow.gif" alt="You are reading this" /&gt;
+        <strong>&lt;/c:when&gt;</strong>
+        <strong>&lt;c:otherwise&gt;</strong>
+        <strong>${listItemNo - status.index }</strong>
+        <strong>&lt;/c:otherwise&gt;</strong>
+    <strong>&lt;/c:choose&gt;</strong>
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;a href="javascript:goView('<strong>${article.articleNo }</strong>')"&gt;<strong>${article.title }</strong>&lt;/a&gt;
+        <strong>&lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;</strong>
+        &lt;img src="/images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
+        <strong>&lt;/c:if&gt;</strong>
+        <strong>&lt;c:if test="${article.commentNum &gt; 0 }"&gt;</strong>
+        &lt;span class="bbs-strong"&gt;[<strong>${article.commentNum }</strong>]&lt;/span&gt;
+        <strong>&lt;/c:if&gt;</strong>
+    &lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.regdate }</strong>&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>${article.hit }</strong>&lt;/td&gt;
+&lt;/tr&gt;
+<strong>&lt;/c:forEach&gt;</strong>
+&lt;/table&gt;
+    
+&lt;div id="paging"&gt;
+    <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[Prev]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+    
+    <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
+        <strong>&lt;c:choose&gt;</strong>
+            <strong>&lt;c:when test="${param.page == i }"&gt;</strong>
+                &lt;span class="bbs-strong"&gt;<strong>${i }</strong>&lt;/span&gt;
+            <strong>&lt;/c:when&gt;</strong>
+            <strong>&lt;c:otherwise&gt;</strong>
+                &lt;a href="javascript:goList('<strong>${i }</strong>')"&gt;<strong>${i }</strong>&lt;/a&gt;
+            <strong>&lt;/c:otherwise&gt;
+        &lt;/c:choose&gt;</strong>  
+    <strong>&lt;/c:forEach&gt;</strong>
+    
+    <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
+        &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[Next]&lt;/a&gt;
+    <strong>&lt;/c:if&gt;</strong>
+&lt;/div&gt;
+
+&lt;div id="list-menu"&gt;
+    &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+&lt;/div&gt;
+
+&lt;form action="list<strong>.do</strong>" method="get"&gt;
+    &lt;input type="hidden" name="page" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+    &lt;div id="search"&gt;
+        &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+        &lt;input type="submit" value="Search" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="writeForm" action="write_form<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="modifyForm" action="modify_form<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="delForm" action="del<strong>.do</strong>" method="post"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="deleteCommentForm" action="deleteComment<strong>.do</strong>" method="post"&gt;
+        &lt;input type="hidden" name="commentNo" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;   
+    &lt;form id="deleteAttachFileForm" action="deleteAttachFile<strong>.do</strong>" method="post"&gt;
+        &lt;input type="hidden" name="attachFileNo" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;       
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The data that the action class creates and passes to view.jsp is as follows.
+</p>
+
+<ul>
+	<li>boardNm</li>
+	<li>title</li>
+	<li>regdate</li>
+	<li>name: Owner'name</li>
+	<li>hit: read count</li>
+	<li>content: content of the article</li>
+	<li>attachFileList: List of attachfiles</li>
+	<li>commentList: List of comments</li>
+	<li>nextArticle: Next article object</li>
+	<li>prevArticle: Prev article object</li>
+	<li>-- Below are the same as the list --</li>
+	<li>list</li>
+	<li>listItemNo</li>
+	<li>prevPage</li>
+	<li>firstPage</li>
+	<li>lastPage</li>
+	<li>nextPage</li>
+</ul>
+
+<p>
+Modify the contents and file name of the write_form.jsp of model 1 as follows.
+</p>
+
+<h6 class="src">write.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong> 
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="New article form" /&gt;
+&lt;meta name="Description" content="New article form" /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function goList() {
+    var form = document.getElementById("listForm");
+    form.submit();
+}
+function goView() {
+    var form = document.getElementById("viewForm");
+    form.submit();
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+        
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;h3&gt;New article&lt;/h3&gt;
+&lt;form id="writeForm" action="write<strong>.do</strong>" method="post" enctype="multipart/form-data"&gt;
+&lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+&lt;table id="write-form" class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;td&gt;Title&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;
+        &lt;textarea name="content" rows="17" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
+    &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="List" onclick="goList()" /&gt;
+    <strong>&lt;c:if test="${not empty param.articleNo }"&gt;</strong>
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
+    <strong>&lt;/c:if&gt;</strong>
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;   
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="listForm" action="list<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;   
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The data that the action class creates and passes to write.jsp is the name of the board.
+</p>
+
+<p>
+Modify the contents and filename of modify_form.jsp in Model 1 as shown below.
+</p>
+
+<h6 class="src">modify.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Modify form page" /&gt;
+&lt;meta name="Description" content="Modify form page" /&gt;
+&lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    //var form = document.getElementById("modifyForm");
+    //TODO validaion logic
+    return true;
+}
+function goView() {
+    var form = document.getElementById("viewForm");
+    form.submit();
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
+&lt;h3&gt;Modify&lt;/h3&gt;
+&lt;form id="modifyForm" action="modify<strong>.do</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
+&lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+&lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+&lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+&lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+&lt;table id="write-form" class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;td&gt;Title&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" value="<strong>${title }</strong>" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;
+        &lt;textarea name="content" rows="17" cols="50"&gt;<strong>${content }</strong>&lt;/textarea&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
+    &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="viewForm" action="view<strong>.do</strong>" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The data that the action class creates and passes to modify.jsp is as follows.
+</p>
+
+<ul>
+	<li>boardNm</li>
+	<li>title</li>
+	<li>content</li>
+</ul>
+
+<p>
+Next, we modify the screen design of the member.<br />
+Replace all .jsp files except for the jsp used in the include directive with .do.
+</p>
+
+<h6 class="src">user-sub.jsp</h6>
+<pre class="prettyprint">
+&lt;h1&gt;&lt;Membership&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;c:choose&gt;
+      &lt;c:when test="${empty check}"&gt;
+        &lt;li&gt;&lt;a href="/users/login"&gt;Login&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/signUp"&gt;SignUp&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Forgot ID&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Forgot Password&lt;/a&gt;&lt;/li&gt;
+      &lt;/c:when&gt;
+      &lt;c:otherwise&gt;
+        &lt;li&gt;&lt;a href="/users/editAccount"&gt;Modify Account&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/changePasswd"&gt;Change Password&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/users/bye"&gt;Bye&lt;/a&gt;&lt;/li&gt;
+      &lt;/c:otherwise&gt;
+  &lt;/c:choose&gt;
+&lt;/ul&gt;
+</pre>
+
+<h6 class="src">login.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Login" /&gt;
+&lt;meta name="Description" content="Login" /&gt;
+&lt;title&gt;Login&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    //var form = document.getElementById("loginForm");
+    //TODO validation logic
+    return true;
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h2&gt;Login&lt;/h2&gt;
+<strong>&lt;c:if test="${not empty param.msg }"&gt;
+&lt;p style="color: red;"&gt;Login Failed!&lt;/p&gt;
+&lt;/c:if&gt;</strong>      
+
+&lt;form id="loginForm" action="<strong>login.do</strong>" method="post" onsubmit="return check()"&gt;
+&lt;p style="margin: 0; padding: 0;"&gt;
+&lt;input type="hidden" name="url" value="<strong>${param.url }</strong>" /&gt;
+&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td style="width: 200px;"&gt;Email&lt;/td&gt;
+    &lt;td style="width: 390px"&gt;&lt;input type="text" name="email" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="passwd" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding: 15px 0;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="Sign Up" onclick="location.href='signUp<strong>.do</strong>'" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">signUp.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Sign Up" /&gt;
+&lt;meta name="Description" content="Sign Up" /&gt;
+&lt;title&gt;Sign Up&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    //var form = document.getElementById("signUpForm");
+    //TODO validation logic
+    return true;
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+
+&lt;h1&gt;Sign Up&lt;/h1&gt;
+&lt;form id="signUpForm" action="signUp<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td style="width: 200px;"&gt;Full Name&lt;/td&gt;
+    &lt;td style="width: 390px"&gt;&lt;input type="text" name="name" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="passwd" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2" style="text-align: center;font-weight: bold;"&gt;
+    Do not make the password the same as your email account password because Email is used as an ID.
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Confirm&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="confirm" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Email&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="email" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="mobile" style="width: 99%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">welcome.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Welcome" /&gt;
+&lt;meta name="Description" content="Welcome" /&gt;
+&lt;title&gt;Welcome&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Welcome&lt;/h1&gt;
+The email you entered at registration will be used as an ID.&lt;br /&gt;
+&lt;input type="button" value="Login" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">editAccount.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Modify account" /&gt;
+&lt;meta name="Description" content="Modify account" /&gt;
+&lt;title&gt;Modify account&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    //var form = document.getElementById("editAccountForm");
+    //TODO validation logic
+    return true;
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+        
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Modify account&lt;/h1&gt;
+&lt;p&gt;
+You can edit your account information except your password. &lt;a href="changePasswd<strong>.do</strong>"&gt;Change password&lt;/a&gt;
+&lt;/p&gt;
+&lt;form id="editAccountForm" action="editAccount<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td&gt;Full Name&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="name" value="<strong>${user.name }</strong>" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="mobile" value="<strong>${user.mobile }</strong>" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">changePasswd.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Change password" /&gt;
+&lt;meta name="Description" content="Change password" /&gt;
+&lt;title&gt;Change password&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    var form = document.getElementById("changePasswordForm");
+    if (form.newPasswd.value == form.confirm.value) {
+        return true;    
+    } else {
+        alert("[Change Password] and [Change Password Confirm] values are not the same.");
+        return false;
+    }
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Change password&lt;/h1&gt;
+<strong>${user.name }</strong>&lt;br /&gt;
+<strong>${user.mobile }</strong>&lt;br /&gt;
+&lt;form id="changePasswordForm" action="changePasswd<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td&gt;Current Password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="currentPasswd" /&gt;&lt;/td&gt;   
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Change password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="newPasswd" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Change password confirm&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">changePasswd_confirm.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Password change confirm" /&gt;
+&lt;meta name="Description" content="Password change confirm" /&gt;
+&lt;title&gt;Password change confirm&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h1&gt;Password Changed.&lt;/h1&gt;
+You can login with the changed password.&lt;br /&gt;
+&lt;input type="button" value="Login" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="src">bye.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Bye" /&gt;
+&lt;meta name="Description" content="Bye" /&gt;
+&lt;title&gt;Bye&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function check() {
+    //var form = document.getElementById("byeForm");
+    //TODO validation logic
+    return true;
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
+&lt;h2&gt;Bye&lt;/h2&gt;
+&lt;form id="byeForm" action="bye<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td&gt;Email&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="email" /&gt;&lt;/td&gt;   
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Password&lt;/td&gt;
+    &lt;td&gt;&lt;input type="password" name="passwd" /&gt;&lt;/td&gt;  
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="Submit" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="user-sub.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>error.jsp</h3>
+
+<p>
+You do not need to modify it with JSTL because it handles all errors with one error page.<br />
+Modify all .jsp files except for the jsp used in the include directive to .do.
+</p>
+
+<h6 class="src">/error.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%
+String contextPath = request.getContextPath();
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Error" /&gt;
+&lt;meta name="Description" content="Error" /&gt;
+&lt;title&gt;Error&lt;/title&gt;
+&lt;link rel="stylesheet" href="&lt;%=contextPath %&gt;/css/screen.css" type="text/css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+//Analyze the servlet exception
+Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
+
+if (servletName == null) {
+    servletName = "Unknown";
+}
+
+String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+
+if (requestUri == null) {
+    requestUri = "Unknown";
+}
+%&gt;
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="&lt;%=contextPath %&gt;"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
+&lt;%
+User loginUser = (User) session.getAttribute("user");
+if (loginUser == null) {
+%&gt;
+    &lt;input type="button" value="Login" onclick="location.href='&lt;%=contextPath %&gt;/users/login<strong>.do</strong>'" /&gt;
+    &lt;input type="button" value="Sign Up" onclick="location.href='&lt;%=contextPath %&gt;/users/signUp<strong>.do</strong>'" /&gt;
+&lt;%
+} else {
+%&gt;   
+    &lt;input type="button" value="Logout" onclick="location.href='&lt;%=contextPath %&gt;/users/logout<strong>.do</strong>'" /&gt;
+    &lt;input type="button" value="Modify Account" onclick="location.href='&lt;%=contextPath %&gt;/users/editAccount<strong>.do</strong>'" /&gt;
+&lt;%
+}
+%&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;ul id="nav"&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/bbs/list<strong>.do</strong>?boardCd=free&amp;page=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+
+&lt;div id="content-categories"&gt;Error&lt;/div&gt;
+&lt;h2&gt;Error Page&lt;/h2&gt;
+&lt;%
+if(statusCode != 500){
+    out.write("&lt;h3&gt;Error Details&lt;/h3&gt;");
+    out.write("&lt;strong&gt;Status Code&lt;/strong&gt;:" + statusCode + "&lt;br&gt;");
+    out.write("&lt;strong&gt;Requested URI&lt;/strong&gt;:"+requestUri);
+}
+if (throwable != null) {
+    out.write("&lt;h3&gt;Exception Details&lt;/h3&gt;");
+    out.write("&lt;ul&gt;&lt;li&gt;Servlet Name:" + servletName + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Exception Name:" + throwable.getClass().getName() + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Requested URI:" + requestUri + "&lt;/li&gt;");
+    out.write("&lt;li&gt;Exception Message:" + throwable.getMessage() + "&lt;/li&gt;");
+    out.write("&lt;/ul&gt;");
+}
+%&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;h1&gt;Error&lt;/h1&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="./inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+The home page also changes all .jsp to .do, except for the jsp used in the include directive.
+</p>
+
+<h3>Implementation</h3>
+
+<p>
+The ActionForward class is the type returned by the execute () method of the action class.<br />
+The ActionForward object stores only the address information to be moved and whether to redirect.<br />
+If the redirect is false, it is forwarded to the configured address.<br />
+The action class creates an address that is forwarded or redirected, stores it in ActionForward, and returns ActionForward.
+</p>
+
+<h6 class="src">ActionForward.java</h6>
+<pre class="prettyprint">package net.java_school.action;
+
+public class ActionForward {
+    private boolean isRedirect;
+    private String view;
+    
+    public boolean isRedirect() {
+        return isRedirect;
+    }
+    public void setRedirect(boolean isRedirect) {
+        this.isRedirect = isRedirect;
+    }
+    public String getView() {
+        return view;
+    }
+    public void setView(String view) {
+        this.view = view;
+    }
+}
+</pre>
+
+<p>All action classes must implement the Action interface.</p>
+
+<h6 class="src">Action.java</h6>
+<pre class="prettyprint">package net.java_school.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public interface Action {
+    public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws IOException;
+}
+</pre>
+
+<p>
+This is a custom exception class to use when authentication fails.<br />
+It inherits runtime exceptions.
+</p>
+
+<h6 class="src">AuthenticationException.java</h6>
+<pre class="prettyprint">package net.java_school.exception;
+
+public class AuthenticationException extends RuntimeException {
+
+    private static final long serialVersionUID = -2916142666133028059L;
+
+    public AuthenticationException() {
+        super();
+    }
+
+    public AuthenticationException(String message, Throwable cause,
+            boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+    public AuthenticationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public AuthenticationException(String message) {
+        super(message);
+    }
+
+    public AuthenticationException(Throwable cause) {
+        super(cause);
+    }
+    
+}
+</pre>
+
+<p>Create a controller that handles * .do requests.</p>
+
+<h6 class="src">Controller.java</h6>
+<pre class="prettyprint">package net.java_school.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.exception.AuthenticationException;
+
+public class Controller extends HttpServlet {
+
+    private static final long serialVersionUID = 4024375917229853991L;
+    
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        doPost(req,resp);
+    }
+    
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+            
+        req.setCharacterEncoding("UTF-8");
+        
+        String uri = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        String command = uri.substring(contextPath.length());
+        
+        String view = null;
+        Action action = null;
+        ActionForward forward = null;
+        
+        try {
+            if (command.equals("/bbs/list.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new ListAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/view.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new ViewAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/write.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new WriteFormAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/write.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new WriteAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/addComment.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new AddCommentAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/updateComment.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new UpdateCommentAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/deleteComment.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new DeleteCommentAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/deleteAttachFile.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new DeleteAttachFileAction();
+                forward = action.execute(req, resp);                
+            } else if (command.equals("/bbs/modify.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new ModifyFormAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/modify.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new ModifyAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/bbs/del.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new DeleteAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/changePasswd.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new ChangePasswdFormAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/changePasswd.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new ChangePasswdAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/changePasswd_confirm.do") &amp;&amp; req.getMethod().equals("GET")) {
+                forward = new ActionForward();
+                forward.setView("/users/changePasswd_confirm.jsp");             
+            } else if (command.equals("/users/signUp.do") &amp;&amp; req.getMethod().equals("GET")) {
+                forward = new ActionForward();
+                forward.setView("/users/signUp.jsp");
+            } else if (command.equals("/users/signUp.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new SignUpAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/welcome.do") &amp;&amp; req.getMethod().equals("GET")) {
+                forward = new ActionForward();
+                forward.setView("/users/welcome.jsp");              
+            } else if (command.equals("/users/editAccount.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new EditAccountFormAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/editAccount.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new EditAccountAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/bye.do") &amp;&amp; req.getMethod().equals("GET")) {
+                //action = new ByeFormAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/bye.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new ByeAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/login.do") &amp;&amp; req.getMethod().equals("GET")) {
+                forward = new ActionForward();
+                forward.setView("/users/login.jsp");
+            } else if (command.equals("/users/login.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new LoginAction();
+                forward = action.execute(req, resp);
+            } else if (command.equals("/users/logout.do") &amp;&amp; req.getMethod().equals("POST")) {
+                //action = new LogoutAction();
+                forward = action.execute(req, resp);
+            }
+            
+            view = forward.getView();
+            
+            if (forward.isRedirect() == false) {
+                RequestDispatcher rd = this.getServletContext().getRequestDispatcher(view);
+                rd.forward(req, resp);
+            } else {
+                resp.sendRedirect(view);
+            }
+        } catch (AuthenticationException e) {
+            //If an authentication failure exception is passed to the controller, the controller passes an error message to the container.
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+        }
+        
+    }
+    
+}
+</pre>
+
+<p>Declare the controller servlet in web.xml and map it to the specific URL.</p>
+
+<h6 class="src">web.xml</h6>
+<pre class="prettyprint">
+&lt;servlet&gt;
+   &lt;servlet-name&gt;controller&lt;/servlet-name&gt;
+   &lt;servlet-class&gt;net.java_school.controller.Controller&lt;/servlet-class&gt;
+   &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+   &lt;servlet-name&gt;controller&lt;/servlet-name&gt;
+   &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+<p>Add Line Separator to the WebContants.java.</p>
+
+<h6 class="src">WebContants.java</h6>
+<pre class="prettyprint">package net.java_school.commons;
+
+public class WebContants {
+    //Session key
+    public final static String USER_KEY = "user";
+    //Error Message
+    public final static String NOT_LOGIN = "Not Login";
+    public final static String AUTHENTICATION_FAILED = "Authentication Failed";
+    //Line Separator
+    <strong>public final static String LINE_SEPARATOR = System.getProperty("line.separator");</strong>
+}
+</pre>
+
+<p>
+Bulletin boards are available only to logged-in users.<br />
+So implement login first.<br />
+Refer to the implementation of login_proc.jsp in Model 1 to create an action class to handle login.<br />
+This class works when a login.do POST request comes in.<br />
+If login fails, go back to login page.
+</p>
+
+<h6 class="src">LoginAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.user.User;
+import net.java_school.user.UserService;
+
+public class LoginAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+        
+        String url = req.getParameter("url");
+        
+        String email = req.getParameter("email");
+        String passwd = req.getParameter("passwd");
+
+        UserService service = new UserService();
+        User user = service.login(email, passwd);
+
+        ActionForward forward = new ActionForward();
+         
+        String contextPath = req.getContextPath();
+        
+        if (user == null) {
+            forward.setView(contextPath + "/users/login.do?url=" + url +"&amp;msg=Login-Failed");
+            forward.setRedirect(true);
+        } else {
+            HttpSession session = req.getSession();
+            session.setAttribute(WebContants.USER_KEY, user);
+            if (url != null &amp;&amp; !url.equals("")) {
+                forward.setView(url);
+                forward.setRedirect(true);
+            } else {
+                forward.setView(contextPath + "/bbs/list.do?boardCd=free&amp;page=1");
+                forward.setRedirect(true);
+            }
+        }
+        
+        return forward;
+    }
+
+}
+</pre>
+
+<p>
+The code that redirects to the login screen was used to get the context path so that login would work on any other URL.<br />
+The address for redirect and the address for forwarding should be obtained differently.<br />
+Addresses for forwarding use addresses that begin with / after the context path, not the context path.<br />
+In the case of a redirect, a relative path is obtained based on the position of a page to which a redirect URL is sent, or an address including a context path is used.
+</p>
+
+<h6 class="src">LogoutAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+
+public class LogoutAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+            
+        ActionForward forward = new ActionForward();
+                
+        HttpSession session = req.getSession();
+        session.removeAttribute(WebContants.USER_KEY);
+
+        String contextPath = req.getContextPath();
+        forward.setView(contextPath);//go to homepage
+        forward.setRedirect(true);
+
+        return forward;
+    }
+
+}
+</pre>
+
+<p>The SignUpAction action class handles subscription.</p>
+
+<h6 class="src">SignUpAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.user.User;
+import net.java_school.user.UserService;
+
+public class SignUpAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+
+        String email = req.getParameter("email");
+        String passwd = req.getParameter("passwd");
+        String name = req.getParameter("name");
+        String mobile = req.getParameter("mobile");
+
+        User user = new User(email, passwd, name, mobile);
+
+        UserService service = new UserService();
+        service.addUser(user);
+
+        forward.setView("welcome.do");
+        forward.setRedirect(true);
+
+        return forward;
+    }
+
+}
+</pre>
+
+<p>
+The EditAccountFormAction action class works when the /users/editAccount.do request is passed to the controller by clicking the Edit My Info button.
+</p>
+
+<h6 class="src">EditAccountFormAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.user.User;
+
+public class EditAccountFormAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        //Same as loginCheck.jsp logic.
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setRedirect(true);
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+
+            return forward;
+        }
+
+        forward.setView("/users/editAccount.jsp");
+
+        return forward;
+    }
+
+}
+</pre>
+
+<p>The EditAccountAction action class acts on the /users/editAccount.do POST request to modify the user's information.</p>
+
+<h6 class="src">EditAccountAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+import net.java_school.user.UserService;
+
+public class EditAccountAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+            
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        String name = req.getParameter("name");
+        String mobile = req.getParameter("mobile");
+        String passwd = req.getParameter("passwd");
+        
+        if (user == null) {
+            throw new AuthenticationException(WebContants.NOT_LOGIN);
+        }
+        
+        String email = user.getEmail();
+        
+        UserService service = new UserService();
+        
+        //user.setEmail(email);
+        user.setPasswd(passwd);
+        user.setName(name);
+        user.setMobile(mobile);
+        
+        int check = service.editAccount(user);
+        
+        if (check &gt; 0) {
+            session.setAttribute(WebContants.USER_KEY, user);
+            forward.setView("changePasswd.do");
+            forward.setRedirect(true);
+        } else {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+        
+        return forward;
+    }
+
+}
+</pre>
+
+<p>The ChangePasswdFormAction action class works on the /users/changePasswd.do request.</p>
+
+<h6 class="src">ChangePasswdFormAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.user.User;
+
+public class ChangePasswdFormAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+        
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setRedirect(true);
+            
+            return forward;
+        }
+
+        forward.setView("/users/changePasswd.jsp");
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The ChangePasswdAction action class works on the /users/changePasswd.do POST request.</p>
+
+<h6 class="src">ChangePasswdAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+import net.java_school.user.UserService;
+
+public class ChangePasswdAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+    		HttpServletResponse resp) throws IOException {
+       
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            throw new AuthenticationException(WebContants.NOT_LOGIN);
+        }
+
+        String currentPasswd = req.getParameter("currentPasswd");
+        String newPasswd = req.getParameter("newPasswd");
+        String email = user.getEmail();
+
+        UserService service = new UserService();
+        int check = service.changePasswd(currentPasswd, newPasswd, email);
+                
+        if (check &lt; 1) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+        
+        forward.setView("changePasswd_confirm.do");
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The ByeFormAction action class works on the /users/bye.do GET request.</p>
+
+<h6 class="src">ByeFormAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.user.User;
+
+public class ByeFormAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setRedirect(true);
+ 
+            return forward;
+        }
+
+        forward.setView("/users/bye.jsp");
+        
+        return forward;
+    }
+
+}
+</pre>
+
+<p>The ByeAction action class works on the /users/bye.do POST request.</p>
+
+<h6 class="src">ByeAction.java</h6>
+<pre class="prettyprint">package net.java_school.user.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+import net.java_school.user.UserService;
+
+public class ByeAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        if (user == null) {
+            throw new AuthenticationException(WebContants.NOT_LOGIN); 
+        }
+
+        String email = req.getParameter("email");
+        String passwd = req.getParameter("passwd");
+
+        UserService service = new UserService();
+
+        service.bye(email, passwd);
+        session.removeAttribute(WebContants.USER_KEY);
+
+        forward.setView("/users/bye_confirm.jsp");
+        
+        return forward;
+    }
+
+}
+
+</pre>
+
+<p>The ListAction action class works on the /bbs/list.do GET request.</p>
+
+<h6 class="src">ListAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.user.User;
+
+public class ListAction implements Action {
+    public NumbersForPaging getNumbersForPaging(int totalRecord, int page, int numPerPage, int pagePerBlock) {
+        int totalPage = totalRecord / numPerPage;
+        if (totalRecord % numPerPage != 0) totalPage++;
+        int totalBlock = totalPage / pagePerBlock;
+        if (totalPage % pagePerBlock != 0) totalBlock++;
+        int block = page / pagePerBlock;
+        if (page % pagePerBlock != 0) block++;
+        int firstPage = (block - 1) * pagePerBlock + 1;
+        int lastPage = block * pagePerBlock;
+        int prevPage = 0;
+        if (block > 1) {
+            prevPage = firstPage - 1;
+        }
+        int nextPage = 0;
+        if (block &lt; totalBlock) {
+            nextPage = lastPage + 1;
+        }
+        if (block >= totalBlock) {
+            lastPage = totalPage;
+        }
+        int listItemNo = totalRecord - (page - 1) * numPerPage;
+        
+        NumbersForPaging numbers = new NumbersForPaging();
+        
+        numbers.setTotalPage(totalPage);
+        numbers.setFirstPage(firstPage);
+        numbers.setLastPage(lastPage);
+        numbers.setPrevBlock(prevPage);
+        numbers.setNextBlock(nextPage);
+        numbers.setListItemNo(listItemNo);
+        
+        return numbers;
+    }    
+    @Override
+    public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setRedirect(true);
+            
+            return forward;
+        }
+        
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+        
+        BoardService service = new BoardService();
+           
+        int numPerPage = 10;
+        int pagePerBlock = 10;
+                 
+        int totalRecord = service.getTotalRecord(boardCd, searchWord);
+        
+        int startRecord = (page - 1) * numPerPage + 1;
+        int endRecord = page * numPerPage;
+        
+        List&lt;Article&gt; list = service.getArticleList(boardCd, searchWord, startRecord, endRecord);
+        
+        NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+        
+        String boardNm = service.getBoardNm(boardCd);
+        
+        req.setAttribute("list", list);
+        req.setAttribute("listItemNo", numbers.getListItemNo());
+        req.setAttribute("prevPage", numbers.getPrevPage());
+        req.setAttribute("firstPage", numbers.getFirstPage());
+        req.setAttribute("lastPage", numbers.getLastPage());
+        req.setAttribute("nextPage", numbers.getNextPage());
+        req.setAttribute("boardNm", boardNm);
+        
+        forward.setView("/bbs/list.jsp");
+        
+        return forward;
+        
+    }
+}
+</pre>
+
+<p>The ViewAction action class works on the /bbs/view.do GET request.</p>
+
+<h6 class="src">ViewAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.AttachFile;
+import net.java_school.board.BoardService;
+import net.java_school.board.Comment;
+import net.java_school.commons.NumbersForPaging;
+import net.java_school.commons.WebContants;
+import net.java_school.user.User;
+
+public class ViewAction implements Action {
+    public NumbersForPaging getNumbersForPaging(int totalRecord, int page, int numPerPage, int pagePerBlock) {
+        int totalPage = totalRecord / numPerPage;
+        if (totalRecord % numPerPage != 0) totalPage++;
+        int totalBlock = totalPage / pagePerBlock;
+        if (totalPage % pagePerBlock != 0) totalBlock++;
+        int block = page / pagePerBlock;
+        if (page % pagePerBlock != 0) block++;
+        int firstPage = (block - 1) * pagePerBlock + 1;
+        int lastPage = block * pagePerBlock;
+        int prevPage = 0;
+        if (block > 1) {
+            prevPage = firstPage - 1;
+        }
+        int nextPage = 0;
+        if (block &lt; totalBlock) {
+            nextPage = lastPage + 1;
+        }
+        if (block >= totalBlock) {
+            lastPage = totalPage;
+        }
+        int listItemNo = totalRecord - (page - 1) * numPerPage;
+        
+        NumbersForPaging numbers = new NumbersForPaging();
+        
+        numbers.setTotalPage(totalPage);
+        numbers.setFirstPage(firstPage);
+        numbers.setLastPage(lastPage);
+        numbers.setPrevBlock(prevPage);
+        numbers.setNextBlock(nextPage);
+        numbers.setListItemNo(listItemNo);
+        
+        return numbers;
+    }    
+
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setRedirect(true);
+                        
+            return forward;
+        }
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+
+        BoardService service = new BoardService();
+        
+        service.increaseHit(articleNo);
+
+        int numPerPage = 10;
+        int pagePerBlock = 10;
+        
+        int startRecord = (page - 1) * numPerPage + 1;
+        int endRecord = page * numPerPage;        
+        
+        Article article = service.getArticle(articleNo);
+        List&lt;AttachFile&gt; attachFileList = service.getAttachFileList(articleNo);
+        Article nextArticle = service.getNextArticle(articleNo, boardCd, searchWord);
+        Article prevArticle = service.getPrevArticle(articleNo, boardCd, searchWord);
+        List&lt;Article&gt; list = service.getArticleList(boardCd, searchWord, startRecord, endRecord);
+        List&lt;Comment&gt; commentList = service.getCommentList(articleNo);
+        String boardNm = service.getBoardNm(boardCd);
+
+        String title = article.getTitle();
+        String content = article.getContent();
+        content = content.replaceAll(WebContants.LINE_SEPARATOR, "&lt;br /&gt;");
+        int hit = article.getHit();
+        String name = article.getName();
+        String email = article.getEmail();
+        Date regdate = article.getRegdate();
+        String contextPath = req.getContextPath();
+        String uploadPath = contextPath + "/upload/";
+
+        int totalRecord = service.getTotalRecord(boardCd, searchWord);
+        NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+        
+        req.setAttribute("title", title);
+        req.setAttribute("content", content);
+        req.setAttribute("hit", hit);
+        req.setAttribute("name", name);
+        req.setAttribute("email", email);
+        req.setAttribute("regdate", regdate);
+        req.setAttribute("uploadPath", uploadPath);
+        req.setAttribute("attachFileList", attachFileList);
+        req.setAttribute("nextArticle", nextArticle);
+        req.setAttribute("prevArticle", prevArticle);
+        req.setAttribute("commentList", commentList);
+        
+        req.setAttribute("list", list);
+        req.setAttribute("listItemNo", numbers.getListItemNo());
+        req.setAttribute("prevPage", numbers.getPrevPage());
+        req.setAttribute("firstPage", numbers.getFirstPage());
+        req.setAttribute("lastPage", numbers.getLastPage());
+        req.setAttribute("nextPage", numbers.getNextPage());
+        req.setAttribute("boardNm", boardNm);
+        
+        forward.setView("/bbs/view.jsp");
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The WriteFormAction action class works on the /bbs/write.do GET request.</p>
+
+<h6 class="src">WriteFormAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.BoardService;
+import net.java_school.user.User;
+
+public class WriteFormAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            String url = req.getRequestURI();
+            String query = req.getQueryString();
+            if (query != null) url += "?" + query;
+            url = URLEncoder.encode(url, "UTF-8");
+            String contextPath = req.getContextPath();
+            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setRedirect(true);
+            
+            return forward;
+        }
+
+        String boardCd = req.getParameter("boardCd");
+
+        BoardService service = new BoardService();
+        String boardNm = service.getBoardNm(boardCd);
+        
+        req.setAttribute("boardNm", boardNm);
+        
+        forward.setView("/bbs/write.jsp");
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The WriteAction action class works on the /bbs/write.do POST request.</p>
+
+<h6 class="src">WriteAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.AttachFile;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class WriteAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            throw new AuthenticationException(WebContants.NOT_LOGIN);
+        }
+        
+        ServletContext servletContext = req.getServletContext();
+        String dir = servletContext.getRealPath("/upload");
+
+        MultipartRequest multi = new MultipartRequest(
+                req,
+                dir,
+                5*1024*1024,
+                "UTF-8",
+                new DefaultFileRenamePolicy());
+
+        String title = multi.getParameter("title");
+        String content = multi.getParameter("content");
+        String filename = multi.getFilesystemName("attachFile");
+        String filetype = multi.getContentType("attachFile");
+
+        File f = multi.getFile("attachFile");
+        long filesize = 0L;
+        AttachFile attachFile = null;
+
+        if (f != null) {
+            filesize = f.length();
+            attachFile = new AttachFile();
+            attachFile.setFilename(filename);
+            attachFile.setFiletype(filetype);
+            attachFile.setFilesize(filesize);
+            attachFile.setEmail(user.getEmail());
+        }
+
+        String boardCd = multi.getParameter("boardCd");
+
+        Article article = new Article();
+        article.setEmail(user.getEmail());
+        article.setTitle(title);
+        article.setContent(content);
+        article.setBoardCd(boardCd);
+
+        BoardService service = new BoardService();
+        service.addArticle(article, attachFile);
+        
+        forward.setView("list.do?boardCd=" + boardCd + "&amp;page=1");
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The ModifyFormAction action class works on the /bbs/modify.do GET request.</p>
+
+<h6 class="src">ModifyFormAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class ModifyFormAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        BoardService service = new BoardService();
+        Article article = service.getArticle(articleNo);
+
+        if (user == null || !user.getEmail().equals(article.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        String title = article.getTitle();
+        String content = article.getContent();
+        String boardNm = service.getBoardNm(boardCd);
+
+        req.setAttribute("title", title);
+        req.setAttribute("content", content);
+        req.setAttribute("boardNm", boardNm);
+        
+        forward.setView("/bbs/modify.jsp");
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The ModifyAction action class works on the /bbs/modify.do POST request.</p>
+
+<h6 class="src">ModifyAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.AttachFile;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class ModifyAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        ServletContext servletContext = req.getServletContext();
+        String dir = servletContext.getRealPath("/upload");
+
+        MultipartRequest multi = new MultipartRequest(
+                req,
+                dir,
+                5*1024*1024,
+                "UTF-8",
+                new DefaultFileRenamePolicy());
+
+        BoardService service = new BoardService();
+        int articleNo = Integer.parseInt(multi.getParameter("articleNo"));
+
+        if (!service.getArticle(articleNo).getEmail().equals(user.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        String boardCd = multi.getParameter("boardCd");
+        int page = Integer.parseInt(multi.getParameter("page"));
+        String searchWord = multi.getParameter("searchWord");
+        searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+
+        String title = multi.getParameter("title");
+        String content = multi.getParameter("content");
+        String filename = multi.getFilesystemName("attachFile");
+        String filetype = multi.getContentType("attachFile");
+
+        File f = multi.getFile("attachFile");
+        long filesize = 0L;
+        AttachFile attachFile = null;
+
+        if (f != null) {
+            filesize = f.length();
+            attachFile = new AttachFile();
+            attachFile.setFilename(filename);
+            attachFile.setFiletype(filetype);
+            attachFile.setFilesize(filesize);
+            attachFile.setEmail(user.getEmail());
+            attachFile.setArticleNo(articleNo);
+        }
+
+        Article article = new Article();
+        article.setArticleNo(articleNo);
+        article.setBoardCd(boardCd);
+        article.setTitle(title);
+        article.setContent(content);
+        article.setEmail(user.getEmail());
+
+        service.modifyArticle(article, attachFile);
+
+        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The DeleteAction action class works on the /bbs/del.do POST	request.</p>
+
+<h6 class="src">DeleteAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.Article;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class DeleteAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+
+        BoardService service = new BoardService();
+        Article article = service.getArticle(articleNo);
+        
+        if (user == null || !user.getEmail().equals(article.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        service.removeArticle(articleNo);
+
+        String boardCd = req.getParameter("boardCd");
+        String page = req.getParameter("page");
+        String searchWord = req.getParameter("searchWord");
+
+        searchWord = URLEncoder.encode(searchWord, "UTF-8");
+        
+        forward.setView("list.do?boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The AddCommentAction action class works on the /bbs/addComment.do POST request.</p>
+
+<h6 class="src">AddCommentAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.BoardService;
+import net.java_school.board.Comment;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class AddCommentAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+        
+        if (user == null) {
+            throw new AuthenticationException(WebContants.NOT_LOGIN);
+        }
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+        String memo = req.getParameter("memo");
+
+        Comment comment = new Comment();
+        comment.setArticleNo(articleNo);
+        comment.setEmail(user.getEmail());
+        comment.setMemo(memo);
+
+        BoardService service = new BoardService();
+        service.addComment(comment);
+
+        searchWord = URLEncoder.encode(searchWord, "UTF-8");
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The UpdateCommentAction action class works on the	/bbs/updateComment.do POST request.</p>
+
+<h6 class="src">UpdateCommentAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.BoardService;
+import net.java_school.board.Comment;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class UpdateCommentAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        int commentNo = Integer.parseInt(req.getParameter("commentNo"));
+
+        BoardService service = new BoardService();
+        Comment comment = service.getComment(commentNo);
+        
+        if (user == null || !user.getEmail().equals(comment.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+
+        String memo = req.getParameter("memo");
+
+        comment.setCommentNo(commentNo);
+        comment.setArticleNo(articleNo);
+        comment.setEmail(user.getEmail());
+        comment.setMemo(memo);
+
+        service.modifyComment(comment);
+
+        searchWord = URLEncoder.encode(searchWord, "UTF-8");
+        
+        forward.setView("view.do?articleNo="+ articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+
+}
+</pre>
+
+<p>The DeleteCommentAction action class works on the /bbs/deleteComment.do POST request.</p>
+
+<h6 class="src">DeleteCommentAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.BoardService;
+import net.java_school.board.Comment;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class DeleteCommentAction implements Action {
+    
+    @Override
+    public ActionForward execute(HttpServletRequest req, 
+        HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+                
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        int commentNo = Integer.parseInt(req.getParameter("commentNo"));
+
+        BoardService service = new BoardService();
+        Comment comment = service.getComment(commentNo);
+        if (user == null || !user.getEmail().equals(comment.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+
+        service.removeComment(commentNo);
+
+        searchWord = URLEncoder.encode(searchWord, "UTF-8");
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+}
+</pre>
+
+<p>The DeleteAttachFileAction action class works on the	/bbs/deleteAttachFile.do POST request.</p>
+
+<h6 class="src">DeleteAttachFileAction.java</h6>
+<pre class="prettyprint">package net.java_school.board.action;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.java_school.action.Action;
+import net.java_school.action.ActionForward;
+import net.java_school.board.AttachFile;
+import net.java_school.board.BoardService;
+import net.java_school.commons.WebContants;
+import net.java_school.exception.AuthenticationException;
+import net.java_school.user.User;
+
+public class DeleteAttachFileAction implements Action {
+
+    @Override
+    public ActionForward execute(HttpServletRequest req,
+            HttpServletResponse resp) throws IOException {
+
+        ActionForward forward = new ActionForward();
+        
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+        int attachFileNo = Integer.parseInt(req.getParameter("attachFileNo"));
+
+        BoardService service = new BoardService();
+        AttachFile attachFile = service.getAttachFile(attachFileNo);
+        
+        if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
+            throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
+        }
+
+        int articleNo = Integer.parseInt(req.getParameter("articleNo"));
+        String boardCd = req.getParameter("boardCd");
+        int page = Integer.parseInt(req.getParameter("page"));
+        String searchWord = req.getParameter("searchWord");
+
+        service.removeAttachFile(attachFileNo);
+
+        searchWord = URLEncoder.encode(searchWord, "UTF-8");
+        
+        forward.setView("view.do?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;page=" + page + "&amp;searchWord=" + searchWord);
+        forward.setRedirect(true);
+        
+        return forward;
+    }
+
+}
+</pre>
+
+<h3>Model 2 Features</h3>
+
+<ul>
+	<li>Model 2 consists of model, view and controller.</li>
+	<li>All requests are forwarded to the controller.</li>
+	<li>The controller delegates tasks to the model.</li>
+	<li>The model performs the business logic and passes the results
+		to the view.</li>
+</ul>
+
+<p>
+	The view is responsible for the JSP in the project.<br /> A model is
+	an action class in a project and is responsible for business logic.<br />
+	Business logic is the logic that processes the data needed for the
+	business.<br /> You can think of the business logic as the logic that
+	produces the data to be seen in the view.<br /> The business logic
+	must be detached from the view and implemented in the model.<br /> If
+	your view has business logic, it's not good code.
+</p>
+
+</article>

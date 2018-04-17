@@ -1,0 +1,1397 @@
+<article>
+
+<h1>Implementations</h1>
+
+<h3>Sign Up</h3>
+
+<h6 class="src">/bbs/signUp_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.user.*" %&gt;</strong>    
+<strong>
+request.setCharacterEncoding("UTF-8");
+
+String email = request.getParameter("email");
+String passwd = request.getParameter("passwd");
+String name = request.getParameter("name");
+String mobile = request.getParameter("mobile");
+
+User user = new User(email, passwd, name, mobile);
+
+UserService service = new UserService();
+service.addUser(user);
+</strong>
+response.sendRedirect("welcome.jsp");
+%&gt;
+</pre>
+
+<p>
+Visit http://localhost:port/JSPProject/users/signUp.jsp.<br />
+If you see the welcome page, connect to SQL*PLUS and check that there is data in the member table.<br />
+If you do not see the welcome page, check the log messages in the WEB-INF/debug.log file.<br />
+For Linux systems, you need to set permissions like chmod o+w debug.log.<br />
+Log messages are also written to files in the CATALINA_HOME/logs directory.<br />
+If the test succeeds, remove all the text field values in SignUp.jsp.
+</p>
+
+<h3>login_proc.jsp</h3>
+
+<h6 class="src">/users/login_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+<strong>&lt;%@ page import="net.java_school.user.UserService" %&gt;</strong>
+&lt;%
+<strong>request.setCharacterEncoding("UTF-8");</strong>
+
+String url = request.getParameter("url");
+String email = request.getParameter("email");
+String passwd = request.getParameter("passwd");
+<strong>
+UserService service = new UserService();
+User user = service.login(email, passwd);
+
+if (user == null) {
+    //if login failed, this page should be redirected to login.jsp
+    response.sendRedirect("login.jsp?url=" + url + "&amp;msg=Login-Failed");
+} else {
+    session.setAttribute("user", user);</strong>
+    if (url != null &amp;&amp; !url.equals("")) {
+        response.sendRedirect(url);
+    } else {
+        response.sendRedirect("../bbs/list.jsp?boardCd=smalltalk&amp;curPage=1");
+    }
+}
+%&gt;
+</pre>
+
+<p>
+Add the following code snippet to the login page.
+</p>
+
+<h6 class="src">login.jsp</h6>
+<pre class="prettyprint">&lt;h2&gt;Login&lt;/h2&gt;
+<strong>&lt;%
+String msg = request.getParameter("msg");
+
+if (msg != null) {
+%&gt;
+    &lt;p style="color: red;"&gt;Login Failed!&lt;/p&gt;
+&lt;%
+}
+%&gt;</strong>
+</pre>
+
+<p>
+Create a class to store the strings used in the project.
+</p>
+
+<h6 class="src">WebContants.java</h6>
+<pre class="prettyprint">package net.java_school.commons;
+
+public class WebContants {
+    //Session key
+    public final static String USER_KEY = "user";
+}
+</pre>
+
+<p>
+"user" is the key value of the User object to put in the session.<b />
+Open login_proc.jsp and change "user" to WebContants.USER_KEY.
+</p>
+
+<h3>Modify Account</h3>
+
+<p>
+Add the following string to WebContants.java.
+</p>
+
+<pre>public final static String NOT_LOGIN = "Not Login";</pre>
+
+<h6 class="src">/users/editAccount_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.user.UserService" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.NOT_LOGIN);
+    return;
+}
+
+request.setCharacterEncoding("UTF-8");
+
+String name = request.getParameter("name");
+String mobile = request.getParameter("mobile");
+String passwd = request.getParameter("passwd");
+
+String email = user.getEmail();
+
+UserService service = new UserService();
+
+user = service.login(email, passwd);
+
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    session.removeAttribute(WebContants.USER_KEY);
+    return;
+}
+
+user = new User(email, passwd, name, mobile);
+
+service.editAccount(user);
+session.setAttribute(WebContants.USER_KEY, user);
+</strong>
+response.sendRedirect("changePasswd.jsp");
+%&gt;
+</pre>
+
+<h3>Change Password</h3>
+
+<h6 class="src">/users/changePasswd_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.user.UserService" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.NOT_LOGIN);
+    return; 
+}
+
+String currentPasswd = request.getParameter("currentPasswd");
+String newPasswd = request.getParameter("newPasswd");
+String email = user.getEmail();
+
+UserService service = new UserService();
+int check = service.changePasswd(currentPasswd, newPasswd, email);
+if (check &lt; 1) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return; 
+}
+</strong>
+response.sendRedirect("changePasswd_confirm.jsp");
+%&gt;
+</pre>
+
+<h3>Reomve Account</h3>
+
+<p>
+Add the following string to the WebContants.java.
+</p>
+
+<pre>public final static String AUTHENTICATION_FAILED = "Authentication Failed";</pre>
+
+<h6 class="src">/users/bye_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.user.UserService" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.NOT_LOGIN); 
+    return;
+}
+
+String email = request.getParameter("email");
+String passwd = request.getParameter("passwd");
+
+UserService service = new UserService();
+User check = service.login(email, passwd);
+if (check == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED); 
+    return;
+}
+
+service.bye(user.getEmail(), passwd);
+session.removeAttribute(WebContants.USER_KEY);
+</strong>
+response.sendRedirect("bye_confirm.jsp");
+%&gt;
+</pre>
+
+<h3>Board List</h3>
+
+<p>
+Create the data to be displayed in the list page.
+</p>
+
+<h6 class="src">/bbs/list.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.NumbersForPaging" %&gt;
+&lt;%@ page import="java.util.ArrayList" %&gt;</strong>
+&lt;%@ include file="../inc/loginCheck.jsp" %&gt;
+<strong>&lt;%
+request.setCharacterEncoding("UTF-8");
+
+String boardCd = request.getParameter("boardCd");
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+if (searchWord == null) searchWord = "";
+BoardService service = new BoardService();
+
+int totalRecord = service.getTotalRecord(boardCd, searchWord);
+int numPerPage = 10;
+int pagePerBlock = 10;
+int startRecord = (curPage - 1) * numPerPage;
+int endRecord = curPage * numPerPage;
+List&lt;Article&gt; articleList = service.getArticleList(boardCd, searchWord, startRecord, endRecord);
+String boardName = service.getBoardName(boardCd);
+NumbersForPaing numbers = service.getNumbersForPaging(totalRecord, curPage, numPerPage, pagePerBlock);
+%&gt;</strong>
+</pre>
+
+<p>
+Modify the part of list.jsp that shows the board name as follows. 
+</p>
+
+<pre class="prettyprint">&lt;h1&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/h1&gt;</pre>
+
+<p>
+Modify the search form part as shown below.
+</p>
+
+<pre class="prettyprint">&lt;form action="list.jsp" method="get"&gt;
+    &lt;input type="hidden" name="curPage" value="1" /&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+    &lt;div id="search"&gt;
+        &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+        &lt;input type="submit" value="Search" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+</pre>
+
+<p>
+Modify the value of the input element attribute in the #form-group as shown below.
+</p>
+
+<pre class="prettyprint">&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="listForm" action="list.jsp" method="get"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/p&gt;
+    &lt;/form&gt;
+    &lt;form id="viewForm" action="view.jsp" method="get"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="articleNo" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/p&gt;
+    &lt;/form&gt;
+    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+    &lt;p&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/p&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+</pre>
+
+<p>
+Implement paging processing logic as follows.
+</p>
+
+<pre class="prettyprint">
+<strong>&lt;%
+int listItemNo = numbers.getListItemNo();
+int size = articleList.size();
+for (int i = 0; i &lt; size; i++) {
+    Article article = articleList.get(i);
+    int articleNo = article.getArticleNo();
+    String title = article.getTitle();
+    java.util.Date regdate = article.getRegdate();
+    int attachFileNum = article.getAttachFileNum();
+    int commentNum = article.getCommentNum();
+    int hit = article.getHit();
+%&gt;</strong>           
+    &lt;tr&gt;
+        &lt;td style="text-align: center;"&gt;<strong>&lt;%=listItemNo %&gt;</strong>&lt;/td&gt;
+        &lt;td&gt;
+            &lt;a href="javascript:goView('<strong>&lt;%=articleNo %&gt;</strong>')"&gt;<strong>&lt;%=title %&gt;</strong>&lt;/a&gt;
+            <strong>&lt;% if (attachFileNum &gt; 0) { %&gt;</strong>&lt;img src="images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;<strong>&lt;% } %&gt;</strong>
+            <strong>&lt;% if (commentNum &gt; 0) { %&gt;</strong>&lt;span class="bbs-strong"&gt;[&lt;%=commentNum %&gt;]&lt;/span&gt;<strong>&lt;% } %&gt;</strong>
+        &lt;/td&gt;
+        &lt;td style="text-align: center;"&gt;<strong>&lt;%=regdate %&gt;</strong>&lt;/td&gt;
+        &lt;td style="text-align: center;"&gt;<strong>&lt;%=hit %&gt;</strong>&lt;/td&gt;
+    &lt;/tr&gt;
+<strong>&lt;%
+    listItemNo--;
+} // for statement end
+%&gt;</strong>           
+    &lt;/table&gt;
+
+    &lt;div id="paging"&gt;
+<strong>&lt;%
+if (numbers.getPrevPage() != 0) {
+%&gt;</strong>
+        &lt;a href="javascript:goList('&lt;%=numbers.getPrevPage() %&gt;')"&gt;[Prev]&lt;/a&gt;
+<strong>&lt;%
+} // if statement end
+
+int firstPage = numbers.getFirstPage();
+int lastPage = numbers.getLastPage();
+for (int i = firstPage; i &lt;= lastPage; i++) {
+    if (curPage == i) {
+%&gt;</strong>
+        &lt;span class="bbs-strong"&gt;&lt;%=i %&gt;&lt;/span&gt;       
+<strong>&lt;%
+    } else {
+%&gt;</strong>   
+        &lt;a href="javascript:goList('&lt;%=i %&gt;')"&gt;&lt;%=i %&gt;&lt;/a&gt;      
+<strong>&lt;%
+    }
+}// for statement end
+
+// [Next]
+if (numbers.getNextPage() != 0) {
+%&gt;</strong>
+    &lt;a href="javascript:goList('&lt;%=numbers.getNextPage() %&gt;')"&gt;[Next]&lt;/a&gt;
+<strong>&lt;%
+}// if statement end
+%&gt;</strong>
+    &lt;/div&gt;
+</pre>
+
+<h3>New Article form page</h3>
+
+<h6 class="src">/bbs/write_form.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %&gt;<strong>
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;</strong>
+&lt;%@ include file="../inc/loginCheck.jsp" %&gt;<strong>
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+String articleNo = request.getParameter("articleNo");
+String boardCd = request.getParameter("boardCd");
+String curPage = request.getParameter("curPage");
+String searchWord = request.getParameter("searchWord");
+
+BoardService service = new BoardService();
+String boardName = service.getBoardName(boardCd);
+%&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="New Article form page" /&gt;
+&lt;meta name="Description" content="New Article form page" /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function goList() {
+    var form = document.getElementById("listForm");
+    form.submit();
+}
+function goView() {
+    var form = document.getElementById("viewForm");
+    form.submit();
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+        
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;h3&gt;New Article&lt;/h3&gt;
+&lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
+&lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+&lt;table id="write-form" class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;td&gt;Title&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;
+        &lt;textarea name="content" rows="17" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
+    &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="List" onclick="goList()" /&gt;
+<strong>&lt;% 
+if (articleNo != null) {
+%&gt;   
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
+&lt;%
+} //if statement end
+%&gt;</strong>  
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="viewForm" action="view.jsp" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="listForm" action="list.jsp" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>write_proc.jsp</h3>
+
+<p>
+Download <a href="http://www.servlets.com/cos/cos-26Dec2008.zip">http://www.servlets.com/cos/cos-26Dec2008.zip</a> and unzip it.<br />
+Copy cos.jar to WEB-INF/lib of your web application.<br />
+Create an upload folder on the document base.<br />
+If you have a Unix system, you need to set permissions on the upload folder.
+</p>
+
+<h6 class="src">/bbs/write_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %&gt;
+<strong>&lt;%@ page import="java.io.*" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.user.UserService" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="com.oreilly.servlet.MultipartRequest" %&gt;
+&lt;%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.NOT_LOGIN);
+    return;
+}
+
+String dir = application.getRealPath("/upload");
+
+MultipartRequest multi = new MultipartRequest(
+        request,
+        dir,
+        5*1024*1024,
+        "UTF-8",
+        new DefaultFileRenamePolicy());
+
+String title = multi.getParameter("title");
+String content = multi.getParameter("content");
+String filename = multi.getFilesystemName("attachFile");
+String filetype = multi.getContentType("attachFile");
+
+File f = multi.getFile("attachFile");
+long filesize = 0L;
+AttachFile attachFile = null;
+
+if (f != null) {
+    filesize = f.length();
+    attachFile = new AttachFile();
+    attachFile.setFilename(filename);
+    attachFile.setFiletype(filetype);
+    attachFile.setFilesize(filesize);
+    attachFile.setEmail(user.getEmail());
+}
+
+String boardCd = multi.getParameter("boardCd");
+
+Article article = new Article();
+article.setEmail(user.getEmail());
+article.setTitle(title);
+article.setContent(content);
+article.setBoardCd(boardCd);
+
+BoardService service = new BoardService();
+service.addArticle(article, attachFile);
+
+response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;curPage=1");</strong>
+%&gt;
+</pre>
+
+<h3>view.jsp</h3>
+
+<h6 class="src">/bbs/view.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;<strong>
+&lt;%@ page import="java.util.*" %&gt;
+&lt;%@ page import="net.java_school.user.*" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.*" %&gt;</strong>
+&lt;%@ include file="../inc/loginCheck.jsp" %&gt;<strong>
+&lt;%
+request.setCharacterEncoding("UTF-8");
+
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+String boardCd = request.getParameter("boardCd");
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+if (searchWord == null) searchWord = "";
+
+BoardService service = new BoardService();
+
+int totalRecord = service.getTotalRecord(boardCd, searchWord);
+int numPerPage = 10;
+int pagePerBlock = 10;
+int startRecord = (curPage - 1) * numPerPage + 1;
+int endRecord = curPage * numPerPage;
+
+service.increaseHit(articleNo);
+
+Article detailedArticle = service.getArticle(articleNo);
+List&lt;AttachFile&gt; attachFileList = service.getAttachFileList(articleNo);
+Article nextArticle = service.getNextArticle(articleNo, boardCd, searchWord);
+Article prevArticle = service.getPrevArticle(articleNo, boardCd, searchWord);
+List&lt;Article&gt; articleList = service.getArticleList(boardCd, searchWord, startRecord, endRecord); 
+List&lt;Comment&gt; commentList = service.getCommentList(articleNo);
+
+String boardName = service.getBoardName(boardCd);
+
+String articleOwnerName = detailedArticle.getName();
+%&gt;</strong>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Detailed view page" /&gt;
+&lt;meta name="Description" content="Detailed view page" /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript"&gt;
+function modifyCommentToggle(articleNo) {
+    var p_id = "comment" + articleNo;
+    var form_id = "modifyCommentForm" + no;
+    var p = document.getElementById(p_id);
+    var form = document.getElementById(form_id);
+    
+    var p_display;
+    var form_display;
+    
+    if (p.style.display) {
+            p_display = '';
+            form_display = 'none';
+    } else {
+            p_display = 'none';
+            form_display = '';
+    }
+    
+    p.style.display = p_display;
+    form.style.display = form_display;
+}
+function goList(curPage) {
+    var form = document.getElementById("listForm");
+    form.curPage.value = curPage;
+    form.submit();
+}
+function goView(articleNo) {
+    var form = document.getElementById("viewForm");
+    form.articleNo.value = articleNo;
+    form.submit();
+}
+function goWrite() {
+    var form = document.getElementById("writeForm");
+    form.submit();
+}
+function goModify() {
+    var form = document.getElementById("modifyForm");
+    form.submit();
+}
+function goDelete() {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("delForm");
+        form.submit();
+    }
+}
+function deleteAttachFile(attachFileNo) {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("deleteAttachFileForm");
+        form.attachFileNo.value = attachFileNo;
+        form.submit();
+    }
+}
+function deleteComment(commentNo) {
+    var check = confirm("Are you sure you want to delete it?");
+    if (check) {
+        var form = document.getElementById("deleteCommentForm");
+        form.commentNo.value = commentNo;
+        form.submit();
+    }
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+        
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
+    &lt;div class="fl"&gt;
+<strong>&lt;%
+if (user.getEmail().equals(detailedArticle.getEmail())) {
+%&gt;</strong>      
+        &lt;input type="button" value="Modify" onclick="goModify();" /&gt;
+        &lt;input type="button" value="Del" onclick="goDelete()" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>
+    &lt;/div&gt;
+    &lt;div class="fr"&gt;
+<strong>&lt;%
+if (nextArticle != null) {
+%&gt;</strong>       
+        &lt;input type="button" value="Next Article" onclick="goView(<strong>'&lt;%=nextArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+if (prevArticle != null) {
+%&gt;</strong>           
+        &lt;input type="button" value="Prev Article" onclick="goView(<strong>'&lt;%=prevArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>           
+        &lt;input type="button" value="List" onclick="goList(<strong>'&lt;%=curPage %&gt;'</strong>)" /&gt;
+        &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;table class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;th style="width: 47px;text-align: left;vertical-align: top;font-size: 1em;"&gt;TITLE&lt;/th&gt;
+    &lt;th style="text-align: left;color: #555;font-size: 1em;"&gt;<strong>&lt;%=detailedArticle.getTitle() %&gt;</strong>&lt;/th&gt;
+&lt;/tr&gt; 
+&lt;/table&gt;
+
+&lt;div id="detail"&gt;
+    &lt;div id="date-writer-hit"&gt;edited <strong>&lt;%=detailedArticle.getRegdate() %&gt;</strong> by <strong>&lt;%=articleOwnerName %&gt;</strong> hit <strong>&lt;%=detailedArticle.getHit() %&gt;</strong>&lt;/div&gt;<strong>
+&lt;%
+String content = detailedArticle.getContent();
+content = content.replaceAll(System.getProperty("line.separator"), "&lt;br /&gt;");
+%&gt;</strong>
+    &lt;div id="article-content"&gt;<strong>&lt;%=content %&gt;</strong>&lt;/div&gt;<strong>
+&lt;%       
+int size = attachFileList.size();
+if (size &gt; 0) {
+%&gt;</strong>
+    &lt;div id="file-list" style="text-align: right"&gt;
+<strong>&lt;%
+    String path = request.getContextPath();
+    String uploadPath = path + "/upload/";
+    
+    for (int i = 0; i &lt; size; i++) {
+        AttachFile attachFile = attachFileList.get(i);
+        String filename = attachFile.getFilename();
+        int attachFileNo = attachFile.getAttachFileNo();
+        String fileFullPath = uploadPath + filename;
+%&gt;</strong>
+        &lt;div id="attach-file"&gt;		
+            &lt;a href="<strong>&lt;%=fileFullPath %&gt;"&gt;&lt;%=filename %&gt;</strong>&lt;/a&gt;
+<strong>&lt;% 
+        if (user.getEmail().equals(detailedArticle.getEmail())) { 
+%&gt;</strong>
+            &lt;a href="javascript:deleteAttachFile('<strong>&lt;%=attachFileNo %&gt;</strong>')"&gt;x&lt;/a&gt;
+<strong>&lt;%
+        }//if statement end
+%&gt;</strong>
+        &lt;/div&gt;
+<strong>&lt;%       
+    }//for statement end
+%&gt;</strong>       
+    &lt;/div&gt;
+<strong>&lt;%
+}//if statement end
+%&gt;</strong>      
+&lt;/div&gt;
+&lt;!-- Add comment --&gt;
+&lt;form id="addCommentForm" action="addComment.jsp" method="post"&gt;
+     &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+     &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;div id="addComment"&gt;
+        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="Add comment" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+<strong>&lt;%
+size = commentList.size();
+for (int i = 0; i &lt; size; i++ ) {
+    Comment comment = commentList.get(i);
+    int commentNo = comment.getCommentNo();
+    String email = comment.getEmail();
+    String memo = comment.getMemo();
+    String commentOwnerName = comment.getName();
+    Date regdate = comment.getRegdate();
+%&gt;</strong>
+&lt;div class="comments"&gt;
+    &lt;span class="writer"&gt;<strong>&lt;%=commentOwnerName %&gt;</strong>&lt;/span&gt;
+    &lt;span class="date"&gt;<strong>&lt;%=regdate %&gt;</strong>&lt;/span&gt;
+<strong>&lt;%
+    if (user.getEmail().equals(email)) {
+%&gt;</strong>   
+    &lt;span class="modify-del"&gt;
+        &lt;a href="javascript:modifyCommentToggle(<strong>'&lt;%=commentNo %&gt;'</strong>)"&gt;Modify&lt;/a&gt;
+         | &lt;a href="javascript:deleteComment(<strong>'&lt;%=commentNo %&gt;'</strong>)"&gt;Del&lt;/a&gt;
+    &lt;/span&gt;
+<strong>&lt;%
+    }//if문 끝
+%&gt;</strong>   
+    &lt;p id="comment<strong>&lt;%=commentNo %&gt;</strong>"&gt;<strong>&lt;%=memo %&gt;</strong>&lt;/p&gt;
+    &lt;form id="modifyCommentForm<strong>&lt;%=commentNo %&gt;</strong>" class="comment-form" action="updateComment_proc.jsp" method="post" style="display: none;"&gt;
+        &lt;input type="hidden" name="commentNo" value="<strong>&lt;%=commentNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+        &lt;div class="fr"&gt;
+            &lt;a href="javascript:document.forms.modifyCommentForm<strong>&lt;%=commentNo %&gt;</strong>.submit()"&gt;Submit&lt;/a&gt;
+            | &lt;a href="javascript:goCommentModify(<strong>'&lt;%=commentNo %&gt;'</strong>)"&gt;Cancel&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>&lt;%=memo %&gt;</strong>&lt;/textarea&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+<strong>&lt;%
+}//for statement end
+%&gt;</strong>
+
+&lt;div id="next-prev"&gt;
+<strong>&lt;%
+if (nextArticle != null) {
+%&gt;</strong>
+    &lt;p&gt;Next Article : &lt;a href="javascript:goView(<strong>'&lt;%=nextArticle.getArticleNo() %&gt;'</strong>)"&gt;<strong>&lt;%=nextArticle.getTitle() %&gt;</strong>&lt;/a&gt;&lt;/p&gt;
+<strong>&lt;%
+} 
+if (prevArticle != null) {
+%&gt;</strong>       
+    &lt;p&gt;Prev Article : &lt;a href="javascript:goView(<strong>'&lt;%=prevArticle.getArticleNo() %&gt;'</strong>)"&gt;<strong>&lt;%=prevArticle.getTitle() %&gt;</strong>&lt;/a&gt;&lt;/p&gt;
+<strong>&lt;%
+}
+%&gt;</strong>       
+&lt;/div&gt;
+&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
+    &lt;div class="fl"&gt;
+<strong>&lt;%
+if (user.getEmail().equals(detailedArticle.getEmail())) {
+%&gt;</strong>      
+        &lt;input type="button" value="Modify" onclick="goModify();" /&gt;
+        &lt;input type="button" value="Del" onclick="goDelete()" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>
+    &lt;/div&gt;
+        
+    &lt;div class="fr"&gt;
+<strong>&lt;%
+if (nextArticle != null) {
+%&gt;</strong>       
+        &lt;input type="button" value="Next Article" onclick="goView(<strong>'&lt;%=nextArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+if (prevArticle != null) {
+%&gt;</strong>           
+        &lt;input type="button" value="Prev Article" onclick="goView(<strong>'&lt;%=prevArticle.getArticleNo() %&gt;'</strong>)" /&gt;
+<strong>&lt;%
+}
+%&gt;</strong>           
+        &lt;input type="button" value="List" onclick="goList(<strong>'&lt;%=curPage %&gt;'</strong>)" /&gt;
+        &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+    
+&lt;!-- List --&gt;
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;th style="width: 60px"&gt;NO&lt;/th&gt;
+    &lt;th&gt;TITLE&lt;/th&gt;
+    &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
+    &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
+&lt;/tr&gt;
+<strong>&lt;%
+int listItemNo = service.getListItemNo();
+size = articleList.size();
+for (int i = 0; i &lt; size; i++) {
+    Article article = articleList.get(i);
+    int aNo = article.getArticleNo();
+    String title = article.getTitle();
+    Date regdate = article.getRegdate();
+    int hit = article.getHit();
+    int attachFileNum = article.getAttachFileNum();
+    int commentNum = article.getCommentNum();
+%&gt;</strong>  
+&lt;tr&gt;
+    &lt;td style="text-align: center;"&gt;
+<strong>&lt;%
+if (articleNo == aNo) {
+%&gt;</strong>
+    &lt;img src="../images/arrow.gif" alt="You are reading this" /&gt;
+<strong>&lt;%
+} else {
+%&gt;
+    &lt;%=listItemNo %&gt;
+&lt;%
+}
+%&gt;</strong>
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;a href="javascript:goView(<strong>'&lt;%=aNo %&gt;'</strong>)"&gt;&lt;%=title %&gt;&lt;/a&gt;
+<strong>&lt;%
+if (attachFileNum &gt; 0) { 
+%&gt;</strong>
+        &lt;img src="../images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
+<strong>&lt;%
+}
+if (commentNum &gt; 0 ) {
+%&gt;</strong>           
+        &lt;span class="bbs-strong"&gt;[<strong>&lt;%=commentNum %&gt;</strong>]&lt;/span&gt;
+<strong>&lt;%
+}
+%&gt;</strong>          
+    &lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>&lt;%=regdate %&gt;</strong>&lt;/td&gt;
+    &lt;td style="text-align: center;"&gt;<strong>&lt;%=hit %&gt;</strong>&lt;/td&gt;
+&lt;/tr&gt;
+&lt;%
+    <strong>listItemNo--;
+}//for statement end
+%&gt;</strong>
+
+&lt;/table&gt;
+
+&lt;div id="paging"&gt;<strong>
+&lt;%
+if (service.getPrevPage() != 0 ) {
+%&gt;</strong>
+    &lt;a href="javascript:goList(<strong>'&lt;%=service.getPrevPage() %&gt;'</strong>)"&gt;[Prev]&lt;/a&gt;
+<strong>&lt;%
+}
+int firstPage = service.getFirstPage();
+int lastPage = service.getLastPage();
+
+for (int i = firstPage; i &lt;= lastPage; i++) {
+    if (curPage == i) {
+%&gt;</strong>
+    &lt;span class="bbs-strong"&gt;<strong>&lt;%=i %&gt;</strong>&lt;/span&gt;
+<strong>&lt;%
+    } else {
+%&gt;</strong>   
+    &lt;a href="javascript:goList(<strong>'&lt;%=i %&gt;'</strong>)"&gt;<strong>&lt;%=i %&gt;</strong>&lt;/a&gt;        
+<strong>&lt;%
+    }
+}//for statement end
+
+if (service.getNextPage() != 0) {
+%&gt;</strong>
+    &lt;a href="javascript:goList(<strong>'&lt;%=service.getNextPage() %&gt;'</strong>)"&gt;[Next]&lt;/a&gt;
+<strong>&lt;%
+}
+%&gt;</strong>
+&lt;/div&gt;
+
+&lt;div id="list-menu"&gt;
+    &lt;input type="button" value="New" onclick="goWrite()" /&gt;
+&lt;/div&gt;
+
+&lt;form action="list.jsp" method="get"&gt;
+&lt;input type="hidden" name="curPage" value="1" /&gt;
+&lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+&lt;div id="search"&gt;
+    &lt;input type="text" name="searchWord" size="15" maxlength="30" /&gt;
+    &lt;input type="submit" value="Search" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none"&gt;
+    &lt;form id="listForm" action="list.jsp" method="get"&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="viewForm" action="view.jsp" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="delForm" action="del_proc.jsp" method="post"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+    &lt;form id="deleteCommentForm" action="deleteComment_proc.jsp" method="post"&gt;
+        &lt;input type="hidden" name="commentNo" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;   
+    &lt;form id="deleteAttachFileForm" action="deleteAttachFile.jsp" method="post"&gt;
+        &lt;input type="hidden" name="attachFileNo" /&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;   
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>addComment_proc.jsp</h3>
+
+<h6 class="src">/bbs/addComment_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+if (user == null) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.NOT_LOGIN);
+    return;
+}
+request.setCharacterEncoding("UTF-8");
+
+String boardCd = request.getParameter("boardCd");
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+String memo = request.getParameter("memo");
+
+Comment comment = new Comment();
+comment.setArticleNo(articleNo);
+comment.setEmail(user.getEmail());
+comment.setMemo(memo);
+
+BoardService service = new BoardService();
+service.addComment(comment);
+
+searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+
+<h3>updateComment_proc.jsp</h3>
+<h6 class="src">/bbs/updateComment_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+request.setCharacterEncoding("UTF-8");
+int commentNo = Integer.parseInt(request.getParameter("commentNo"));
+
+BoardService service = new BoardService();
+Comment comment = service.getComment(commentNo);
+if (user == null || !user.getEmail().equals(comment.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return; 
+}
+
+String boardCd = request.getParameter("boardCd");
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+
+String memo = request.getParameter("memo");
+
+comment.setCommentNo(commentNo);
+comment.setArticleNo(articleNo);
+comment.setEmail(user.getEmail());
+comment.setMemo(memo);
+
+service.modifyComment(comment);
+
+searchWord = java.net.URLEncoder.encode(searchWord,"UTF-8");
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+
+<h3>deleteComment_proc.jsp</h3>
+
+<h6 class="src">/bbs/deleteComment_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+request.setCharacterEncoding("UTF-8");
+int commentNo = Integer.parseInt(request.getParameter("commentNo"));
+
+BoardService service = new BoardService();
+Comment comment = service.getComment(commentNo);
+if (user == null || !user.getEmail().equals(comment.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return; 
+}
+
+String boardCd = request.getParameter("boardCd");
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+
+service.removeComment(commentNo);
+
+searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+
+<h3>deleteAttachFile_proc.jsp</h3>
+
+<h6 class="src">/bbs/deleteAttachFile_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+request.setCharacterEncoding("UTF-8");
+int attachFileNo = Integer.parseInt(request.getParameter("attachFileNo"));
+
+BoardService service = new BoardService();
+AttachFile attachFile = service.getAttachFile(attachFileNo);
+if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return; 
+}
+
+String boardCd = request.getParameter("boardCd");
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+
+service.removeAttachFile(attachFileNo);
+
+searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+
+<h3>modify_form.jsp</h3>
+
+<h6 class="src">/bbs/modify_form.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %&gt;
+<strong>&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="java.util.*" %&gt;</strong>
+&lt;%<strong>
+request.setCharacterEncoding("UTF-8");
+
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+String boardCd = request.getParameter("boardCd");
+int curPage = Integer.parseInt(request.getParameter("curPage"));
+String searchWord = request.getParameter("searchWord");
+
+User user = (User) session.getAttribute("user");
+BoardService service = new BoardService();
+Article article = service.getArticle(articleNo);
+
+if (user == null || !user.getEmail().equals(article.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return;
+}
+
+String title = article.getTitle();
+String content = article.getContent();
+if (content == null) content = "";
+
+String boardName = service.getBoardName(boardCd);</strong>
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="Board article modify form page" /&gt;
+&lt;meta name="Description" content="Board article modify form page" /&gt;
+&lt;title&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
+&lt;script type="text/javascript"&gt;
+function goView() {
+    var form = document.getElementById("viewForm");
+    form.submit();
+}
+&lt;/script&gt;           
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="wrap"&gt;
+
+    &lt;div id="header"&gt;
+        &lt;%@ include file="../inc/header.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="main-menu"&gt;
+        &lt;%@ include file="../inc/main-menu.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="content"&gt;
+        
+&lt;div id="content-categories"&gt;<strong>&lt;%=boardName %&gt;</strong>&lt;/div&gt;
+&lt;h3&gt;Modify&lt;/h3&gt;
+&lt;form id="modifyForm" action="modify_proc.jsp" method="post" enctype="multipart/form-data"&gt;
+&lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+&lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+&lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+&lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+&lt;table id="write-form" class="bbs-table"&gt;
+&lt;tr&gt;
+    &lt;td&gt;Title&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="title" style="width: 90%;" value="<strong>&lt;%=title %&gt;</strong>" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;
+        &lt;textarea name="content" rows="17" cols="50"&gt;<strong>&lt;%=content %&gt;</strong>&lt;/textarea&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Attach File&lt;/td&gt;
+    &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center;padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+    &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+
+        &lt;/div&gt;&lt;!-- content end --&gt;
+    &lt;/div&gt;&lt;!--  container end --&gt;
+    
+    &lt;div id="sidebar"&gt;
+        &lt;%@ include file="bbs-sub.jsp" %&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="extra"&gt;
+        &lt;%@ include file="../inc/extra.jsp" %&gt;
+    &lt;/div&gt;
+
+    &lt;div id="footer"&gt;
+        &lt;%@ include file="../inc/footer.jsp" %&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div id="form-group" style="display: none;"&gt;
+    &lt;form id="viewForm" action="view.jsp" method="get"&gt;
+        &lt;input type="hidden" name="articleNo" value="<strong>&lt;%=articleNo %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="boardCd" value="<strong>&lt;%=boardCd %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="curPage" value="<strong>&lt;%=curPage %&gt;</strong>" /&gt;
+        &lt;input type="hidden" name="searchWord" value="<strong>&lt;%=searchWord %&gt;</strong>" /&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>modify_proc.jsp</h3>
+
+<h6 class="src">/bbs/modify_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="java.io.*" %&gt;
+&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.user.UserService" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;
+&lt;%@ page import="com.oreilly.servlet.MultipartRequest" %&gt;
+&lt;%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+String dir = application.getRealPath("/upload");
+
+MultipartRequest multi = new MultipartRequest(
+        request,
+        dir,
+        5*1024*1024,
+        "UTF-8",
+        new DefaultFileRenamePolicy());
+
+BoardService service = new BoardService();
+int articleNo = Integer.parseInt(multi.getParameter("articleNo"));
+
+if (!service.getArticle(articleNo).getEmail().equals(user.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return;
+}
+
+String boardCd = multi.getParameter("boardCd");
+int curPage = Integer.parseInt(multi.getParameter("curPage"));
+String searchWord = multi.getParameter("searchWord");
+searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+
+String title = multi.getParameter("title");
+String content = multi.getParameter("content");
+String filename = multi.getFilesystemName("attachFile");
+String filetype = multi.getContentType("attachFile");
+
+File f = multi.getFile("attachFile");
+long filesize = 0L;
+AttachFile attachFile = null;
+
+if (f != null) {
+    filesize = f.length();
+    attachFile = new AttachFile();
+    attachFile.setFilename(filename);
+    attachFile.setFiletype(filetype);
+    attachFile.setFilesize(filesize);
+    attachFile.setEmail(user.getEmail());
+    attachFile.setArticleNo(articleNo);
+}
+
+Article article = new Article();
+article.setArticleNo(articleNo);
+article.setBoardCd(boardCd);
+article.setTitle(title);
+article.setContent(content);
+article.setEmail(user.getEmail());
+
+service.modifyArticle(article, attachFile);
+
+response.sendRedirect("view.jsp?articleNo=" + articleNo + "&amp;boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+
+<h3>del_proc.jsp</h3>
+
+<h6 class="src">/bbs/del_proc.jsp</h6>
+<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+<strong>&lt;%@ page import="net.java_school.commons.WebContants" %&gt;
+&lt;%@ page import="net.java_school.user.User" %&gt;
+&lt;%@ page import="net.java_school.board.*" %&gt;</strong>
+&lt;%
+<strong>
+User user = (User) session.getAttribute(WebContants.USER_KEY);
+
+request.setCharacterEncoding("UTF-8");
+
+int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+
+BoardService service = new BoardService();
+Article article = service.getArticle(articleNo);
+if (user == null || !user.getEmail().equals(article.getEmail())) {
+    response.sendError(HttpServletResponse.SC_FORBIDDEN, WebContants.AUTHENTICATION_FAILED);
+    return;
+}
+
+service.removeArticle(articleNo);
+
+String boardCd = request.getParameter("boardCd");
+String curPage = request.getParameter("curPage");
+String searchWord = request.getParameter("searchWord");
+
+searchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+response.sendRedirect("list.jsp?boardCd=" + boardCd + "&amp;curPage=" + curPage + "&amp;searchWord=" + searchWord);</strong>
+%&gt;
+</pre>
+</article>

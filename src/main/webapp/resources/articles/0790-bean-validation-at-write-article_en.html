@@ -1,0 +1,140 @@
+<article>
+
+<h1>글쓰기에서 빈 검증</h1>
+
+<p>
+게시글을 표현하는 Article 클래스를 다음을 참조하여 수정한다.
+</p>
+
+<h6 class="src">Article.java</h6>
+<pre class="prettyprint">
+private Integer articleNo;//int에서 변경
+
+@Size(min=2,max=10,message="게시판코드는 2자에서 10자 사이이어야 합니다.")
+private String boardCd;
+
+@Size(min=1,max=60,message="제목은 1자에서 60자 사이이어야 합니다.")
+private String title;
+
+@Size(min=1,message="내용은 1자 이상이어야 합니다.")
+private String content;
+
+//중간 생략..
+
+public Integer getArticleNo() {
+    return articleNo;
+}
+
+public void setArticleNo(Integer articleNo) {
+    this.articleNo = articleNo;
+}
+</pre>
+
+<p>
+아래에서 writeForm() 메서드는 내용이 없는 빈 객체(Article 객체)를 생성해 뷰에 전달해야 한다.
+이건 스펙이니 따라야 한다.
+글쓰기를 처리하는 요청 핸들러 메서드(write() 메서드)에 빈 검증 로직을 추가한다.
+이 메서드의 매개 변수 리스트에서 @Valid 어노테이션이 적용된 매개 변수 다음에는 반드시 BindingResult 타입의 매개 변수를 선언해야 한다.
+그렇지 않으면 HTTP 400 에러가 발생한다.
+</p>
+
+<h6 class="src">BbsController.java</h6>
+<pre class="prettyprint">
+//글쓰기 화면
+@RequestMapping(value="/write", method=RequestMethod.GET)
+public String writeForm(String boardCd, Model model) {
+    String boardNm = boardService.getBoardNm(boardCd);
+    model.addAttribute("boardNm", boardNm);//아래 테스트 화면처럼 '자유게시판'을 표시하기 위해
+    <strong>model.addAttribute("article", new Article());</strong>
+    return "bbs/write";
+}
+
+//글쓰기 처리
+@RequestMapping(value="/write", method=RequestMethod.POST)
+public String write(<strong>@Valid Article article, BindingResult bindingResult,</strong>
+        Model model,
+        MultipartHttpServletRequest mpRequest,
+        Principal principal) throws Exception {
+        
+    //검증 로직
+    if (bindingResult.hasErrors()) {
+        String boardNm = boardService.getBoardNm(article.getBoardCd());
+        model.addAttribute("boardNm", boardNm);//아래 테스트 화면처럼 '자유게시판'을 표시하기 위해
+        return "bbs/write";
+    }
+    
+    article.setEmail(principal.getName());
+    boardService.addArticle(article);
+
+    //파일 업로드 - 기존과 같음
+
+    //파일 데이터 삽입 - 기존과 같음
+
+    return "redirect:/bbs/list?page=1&amp;boardCd=" + article.getBoardCd();
+}
+</pre>
+
+<p>
+아래를 참조해 JSP를 수정한다.
+&lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
+</p>
+
+<h6 class="src">write.jsp</h6>
+<pre class="prettyprint">
+<strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
+
+&lt;sf:form id="writeForm" action="write" method="post" enctype="multipart/form-data" 
+        modelAttribute="article" onsubmit="return check();"&gt;</strong>
+    &lt;input type="hidden" name="articleNo" value="${param.articleNo }" /&gt;
+    &lt;input type="hidden" name="boardCd" value="${param.boardCd }" /&gt;
+    &lt;input type="hidden" name="page" value="${param.page }" /&gt;
+    &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
+<strong>&lt;sf:errors path="*" cssClass="error" /&gt;</strong>
+&lt;table id="write-form"&gt;
+&lt;tr&gt;
+    &lt;td&gt;제목&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:input path="title" style="width: 90%" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="title" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;
+        &lt;textarea name="content" rows="17" cols="50"&gt;&lt;/textarea&gt;&lt;br /&gt;
+        <strong>&lt;sf:errors path="content" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;파일첨부&lt;/td&gt;
+    &lt;td&gt;&lt;input type="file" name="attachFile" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div style="text-align: center; padding-bottom: 15px;"&gt;
+    &lt;input type="submit" value="전송" /&gt;
+    &lt;input type="button" value="목록" onclick="goList()" /&gt;
+    &lt;c:if test="${not empty param.articleNo }"&gt;
+        &lt;input type="button" value="상세보기" onclick="goView()" /&gt;
+    &lt;/c:if&gt;
+&lt;/div&gt;
+<strong>&lt;/sf:form&gt;</strong>
+</pre>
+
+<p>
+아래는 글쓰기 화면에서 아무것도 입력하지 않고 전송 버튼을 눌렀을 때의 화면이다. (스타일시트에 .error { color: red; }가 추가되어 있어야 한다.) 
+<img alt="글쓰기 화면" src="https://lh3.googleusercontent.com/BsCH-rX2BTim1NeW85lw9LYnbD55iqZF-6Ql_4_1rczKpOly0na8tuiRKgZH6u4LzhzGQGaUibB3IptgtKG3YGnNxi7U7lj9VEdhMp_isPlVgF7tRKjP7nltvM_qggWL8SpD2O-k0vjsNcs8cjYuzxoMP9MdRmQ1uVJT-go8_Lvf3u4T0eNJjCw_DbLf1IPq62HTyhFxlFXnyH0TGSNvCp3aJKGDgC9bxYTF_vj4qRYnoe3HAbOSdANePmoLfpKwpGsDXQ48pMugOiC-KgmImyWsguUW_3ZhftlWrcC7cyMT7-R6yEdTE3IcHmvlvLM88CrqpnPjVbi3twi6CWrw1iQR7IQdxTvz5AIbw4eM5VrbsC8vDzp1fWq0EjKnn5cpA5Uunf3JIyV-tTaio4UBgfYcb6iNZ179M8KgcMr2e3YYahxYZrIAM15ZQCaZ_WVcLxhDQCYNX8IqORX1L7VjHVxagQJLZYnNVDVus5kG-sLDTTVy5ER0QojCj_htriOFZg1ockUKJNsfJ0tta7Qqy0iXo9I0rbD3CVa7T5rXnaZ3D8aNKDzxwcEY79wa7apoj505Iw8BxgMzt2svyAaUghRLpS1ELnwi10e7DE_7l3CRvq_Kw5Hjm7vF=w598-h447-no" /><br />
+<img alt="빈 검증 실패" src="https://lh3.googleusercontent.com/BOlgADl_AeP6-ZfcCSpgebCa-OjXOpxesSSDmg1cfmNL1ta6-4EYYpvyzYERtXWp3z-gJkDMj6i9sIfyQeygW76TcUEbuuotXA70bwngkLoBQhg46mAbH7hK03s_v4CAMaS6eE0nMT0fbb1ZG0HMBljck5ngT4Ys1cXLdYzhQGxBIzHuSXRWrI8sxq_TrvMmLNLeUFNzUTMwPc9RrfQhVpEihonZ_fD0e4KG0teLkpZlqdmY-KUK9NfQ2mJpRGk_GWBZLX1eGcIiWnYqaFOjdM2T8L0DSr21ftYKunQdGI3ZbMnuvyaF22wyO8I6640eIPhekvOUjVfHUB4nMaJuaShXMEYnGaNTkT4KJEw3PNfU7sJKKeNTitZTtrv5zWogBLVGOKP5uHbbrGX3JWYNoUsA6I9gLXNQfl_GqQyyNyUKdyjLhf5ULAXiwKU8ia0yQTuRhYXB84NzHwY3VzaNat4eR9elDwKWb23RECzyjfbnOhCQqBxKRx6eQrDWhzLTYJPMinG0e7MMb1IMPnuONMV6uKgmcmIhprchS4quEsrRU2W0ubvlgMZbcA2ofl-0SXHyl32IVjssS9vB2aVq7okjqgvdgIRfkTXRzWld28VlCPXb-dPnn4Y-=w598-h524-no" /><br />
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://hibernate.org/validator/documentation/getting-started/">Getting started with Hibernate Validator</a></li>
+	<li><a href="http://forum.spring.io/forum/spring-projects/web/80192-validation-empty-int-field">Validation - Empty int field</a></li>
+	<li><a href="http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work">http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work</a></li>
+	<li><a href="http://stackoverflow.com/questions/6227547/spring-3-validation-not-working">http://stackoverflow.com/questions/6227547/spring-3-validation-not-working</a></li>
+	<li><a href="http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found">http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found</a></li>
+	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
+	<li><a href="http://jpub.tistory.com/196">Spring in Action(Jpub) - 크레이그 월즈</a></li>
+	<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/">spring-framework-reference.pdf</a></li>
+	<li><a href="http://mybatis.github.io/mybatis-3/getting-started.html">MyBatis Getting started</a></li>
+</ul>
+</article>

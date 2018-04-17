@@ -1,0 +1,138 @@
+<article>
+
+<h1>비밀번호 변경에서 빈 검증</h1>
+
+<p>
+비밀번호 검증에 '빈 검증'을 사용하려면 비밀번호를 위한 클래스를 만들어야 한다.
+</p>
+
+<h6 class="src">Password.java</h6>
+<pre class="prettyprint">
+package net.java_school.user;
+
+import javax.validation.constraints.Size;
+
+public class Password {
+
+    @Size(min=4, message="패스워드는 4자 이상이어야 합니다.")
+    private String currentPasswd;
+    
+    @Size(min=4, message="패스워드는 4자 이상이어야 합니다.")
+    private String newPasswd;
+
+    public String getCurrentPasswd() {
+        return currentPasswd;
+    }
+    public void setCurrentPasswd(String currentPasswd) {
+        this.currentPasswd = currentPasswd;
+    }
+    public String getNewPasswd() {
+        return newPasswd;
+    }
+    public void setNewPasswd(String newPasswd) {
+        this.newPasswd = newPasswd;
+    }
+}
+</pre>
+
+<p>
+비밀번호 페이지로 포워딩하는 요청 핸들러 메서드(아래 첫 번째 changePasswd() 메서드)에 내용이 없는 빈 객체(Password 객체)를 생성해 뷰에 전달해야 한다.
+이건 스펙이니 따라야 한다.
+비밀번호 변경을 처리하는 요청 핸들러 메서드(아래 두 번재 changePasswd() 메서드)에 빈 검증 로직을 추가한다.
+두 번째 changePasswd() 메서드의 매개 변수 리스트에서 @Valid 어노테이션이 적용된 매개 변수 다음에는 반드시 BindingResult 타입의 매개 변수를 선언해야 한다.
+그렇지 않으면 HTTP 400 에러가 발생한다. 
+</p>
+
+<h6 class="src">UsersController.java</h6>
+<pre class="prettyprint">
+@RequestMapping(value="/changePasswd", method=RequestMethod.GET)
+public String changePasswd(Principal principal, Model model) {
+    User user = userService.getUser(principal.getName());
+    model.addAttribute(WebContants.USER_KEY, user);//아래 테스트 화면처럼 홍길동 11111111을 출력하기 위해 필요
+    <strong>model.addAttribute("password", new Password());</strong>
+    
+    return "users/changePasswd";
+}
+
+@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
+public String changePasswd(@Valid Password password,
+        BindingResult bindingResult,
+        Model model,
+        Principal principal) {
+
+    if (bindingResult.hasErrors()) {
+        User user = userService.getUser(principal.getName());
+        model.addAttribute(WebContants.USER_KEY, user);//아래 테스트 화면처럼 홍길동 11111111을 출력하기 위해 필요
+        return "users/changePasswd";
+    }
+    
+    int check = userService.changePasswd(password.getCurrentPasswd(),
+    		password.getNewPasswd(), principal.getName());
+    
+    if (check &lt; 1) {
+        throw new RuntimeException(WebContants.CHANGE_PASSWORD_FAIL);
+    }
+
+    return "redirect:/users/changePasswd_confirm";
+}
+</pre>
+
+<p>
+아래를 참고하여 JSP를 수정한다.
+&lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
+</p>
+
+<h6 class="src">changePasswd.jsp</h6>
+<pre class="prettyprint">
+<strong>
+&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
+
+&lt;sf:form id="changePasswordForm" action="changePasswd" method="post"
+        modelAttribute="password" onsubmit="return check();"&gt;</strong>
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;td&gt;현재 비밀번호&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:password path="currentPasswd" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="currentPasswd" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;변경 비밀번호&lt;/td&gt;
+    &lt;td&gt;
+        <strong>&lt;sf:password path="newPasswd" /&gt;&lt;br /&gt;
+        &lt;sf:errors path="newPasswd" cssClass="error" /&gt;</strong>
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;변경 비밀번호 확인&lt;/td&gt;
+    &lt;td&gt;
+        &lt;input type="password" name="confirm" /&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td colspan="2"&gt;&lt;input type="submit" value="전송" /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+<strong>&lt;/sf:form&gt;</strong>
+</pre>
+
+<p>
+아래는 비밀번호 변경 화면에서 아무것도 입력하지 않고 전송 버튼을 눌렀을 때의 화면이다. (스타일시트에 .error { color: red; }가 추가되어 있어야 한다.) 
+<img alt="비밀번호 변경 화면" src="https://lh3.googleusercontent.com/0oEz_m-JjuW204LfmT-sq0VvgU3KVoWIK4gQXKnEHRIss-7mBBEHaswSd7h0MulEaiNSXY972dKIR2AMK9WKuNvcJdFLVV33XNO30041dkqBMcSvJAb4ZFv5bi4lgCEP8zwMgjljoTbd_vmzunBvmkKiG0pXQkdNrHKVl-yKPSxPbhJMHhsH07cid-juddM8bs9zqF1QXbvH4qKZ4eFuAThUGmD_lTqEhj0_Ehp8H8WyLUrrNhOzS_acfYBJsw7AId0i5jS8YE4mCHtdRvOkYdsbLF1upfRVhKSCLSWzsrxHVME1oaMleVgM5YqfZHnlwFIEX4O3a5llUPX5Z1bNSSYYgO1BIfLc7YctxMy96DWV_PmGDp49IKkYxd0RL-X-W6pP5fbkVAbaEjpMwojRzVsCvSBwm4OOmZ1F8IVg-CtdR3yKeVkRvFhqDbj7doUnUvKBlG4E4anFrN1ZbwBfpWnZ9aySyzTqn61TBtk79nTOzYN_cUrjSf-b53jXJ8BiPyaC7EEzKqKnwAWY5QpkCeMn4nKNzXwB-PhljJmeb8sMf2S9ZVBBqwRLiekFKOMI5c4ram9EsufHbhYAAINSCwXgwfeD5G5UvC_jENUTB68O-Ff0x_FvsDDC=w555-h200-no" /><br />
+<img alt="빈 검증 실패" src="https://lh3.googleusercontent.com/0ObGJE7tPgY-2Ev3JxTkoiUNH-I8-e1erVK1oJYAkzUrK8YwJ3J4-NnQEdr3inHSqX_mORb5RbUDU-mQGlW86kJZc5Gk5czjyz_KI8YM_7pP2DN_-cP3bHkSytGpi7N-O4PmfEKoOtC7PBxaot_wTE3yINfxpWVMHSmv63Uv1OFiageTH0NoR4xzyvBKPamGJGmtolIKCg0ViL2bmm8DZ2i13_GtfPPCeAyWqhJEHTzyJdXCelEe9I1KzeXjgOxQiPkx0_6BtDgdRTeCGeXMvJjD-otCo_A59k9lpUh72Uk-OBAc48QW1fBEGJQPw6WSZMgqQpFt1WTjMTFnLS8IEB-rP6itwHcg4N1GdNdWvBfkQmj5fFtTB7xxx9dWX-R-jZDx0Kk5bEOiEabgAFfWLT6PVjufOeStUhZLmRhH6PjGg6WWebVrRM855DcxXsrND4_Ca4xHkGwMmsstgsO8AMWUN1VXZwsGTph-mMaLc7c7sRPccqmZDvvoB34MhwmQUAcp_kPJoBgPGoAfs5egyT8WZdrMNTv-d2eY_EJ4pOm8MSiUNFyou-muuDaOMfzqmBkWD0bJaTmJKs6zRM6i8RmB-YWjhiSkfa2sQMVvTXvsoHISoKEbInQ2=w555-h243-no" /><br />
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="http://hibernate.org/validator/documentation/getting-started/">Getting started with Hibernate Validator</a></li>
+	<li><a href="http://forum.spring.io/forum/spring-projects/web/80192-validation-empty-int-field">Validation - Empty int field</a></li>
+	<li><a href="http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work">http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work</a></li>
+	<li><a href="http://stackoverflow.com/questions/6227547/spring-3-validation-not-working">http://stackoverflow.com/questions/6227547/spring-3-validation-not-working</a></li>
+	<li><a href="http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found">http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found</a></li>
+	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
+	<li><a href="http://jpub.tistory.com/196">Spring in Action(Jpub) - 크레이그 월즈</a></li>
+	<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/">spring-framework-reference.pdf</a></li>
+	<li><a href="http://mybatis.github.io/mybatis-3/getting-started.html">MyBatis Getting started</a></li>
+</ul>
+</article>
