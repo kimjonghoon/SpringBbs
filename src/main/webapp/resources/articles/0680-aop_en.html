@@ -3,8 +3,7 @@
 <h1>Spring AOP</h1>
 
 <p>
-자바 은행에서 로깅을 스프링 AOP로 구현해 보자.
-아래 의존성을 pom.xml에 추가한다. 
+Add the following to pom.xml.
 </p>
 
 <pre class="prettyprint">
@@ -17,12 +16,12 @@
 &lt;dependency&gt;
 	&lt;groupId&gt;org.aspectj&lt;/groupId&gt;
 	&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
-	&lt;version&gt;1.8.10&lt;/version&gt;
+	&lt;version&gt;1.8.13&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
 <p>
-TestLogger.java를 아래와 같이 작성한다.
+Create TestLogger.java as shown below.
 </p>
 
 <h6 class="src">TestLogger.java</h6>
@@ -57,7 +56,7 @@ public class TestLogger {
 </pre>
 
 <p>
-자바 소스에서 로그 관련 코드를 제거한다.
+Remove log code from all Java sources.
 </p>
 
 <h6 class="src">ShinhanBankDao.java</h6>
@@ -77,7 +76,7 @@ public class ShinhanBankDao implements BankDao {
 	static final String USER = "scott";
 	static final String PASSWORD = "tiger";
 	
-	//중간 생략..
+	//..omit..
 	
 	@Override
 	public void deposit(String accountNo, long amount) {
@@ -125,12 +124,12 @@ public class ShinhanBankDao implements BankDao {
 		
 	}
 	
-	//중간 생략..
+	//..omit..
 	
 }	
 </pre>
 
-<h3>XML 설정</h3>
+<h3>XML configuration</h3>
 
 <h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">
@@ -164,7 +163,7 @@ public class ShinhanBankDao implements BankDao {
 </pre>
 
 <p>
-테스트하기 전에 BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+Modify the main method of BankUi.java as follows.
 </p>
 
 <pre class="prettyprint">
@@ -173,7 +172,7 @@ ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applica
 </pre>
 
 
-<h3>JavaConfig 설정</h3>
+<h3>JavaConfig configuration</h3>
 
 <h6 class="src">BankConfig.java</h6>
 <pre class="prettyprint">
@@ -218,9 +217,8 @@ public class BankConfig {
 </pre>
 
 <p>
-테스트하기 전에,
-applicationContext.xml 설정을 모두 주석 처리한다.
-BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+First of all, comment out all the settings in applicationContext.xml.<br />
+Modify the main method of BankUi.java as follows.
 </p>
 
 <pre class="prettyprint">
@@ -229,28 +227,12 @@ AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
 </pre>
 
 
-<h3>최종 소스</h3>
-
 <p>
-<a href="examples/aop.zip">예제 다운로드</a>
+<a href="examples/aop.zip">Download example</a>
 </p>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html">http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html</a></li>
-<!--
- 	<li><a href="http://www.eclipse.org/aspectj/downloads.php">http://www.eclipse.org/aspectj/downloads.php</a></li>
-	<li><a href="http://stackoverflow.com/questions/21058778/why-is-my-webapplication-noclassdeffounderror-org-aspectj-lang-reflect-ajtypesy">의존성 설정 힌트</a></li>
-	<li><a href="http://mvnrepository.com/artifact/org.springframework/spring-aspects/4.1.4.RELEASE">http://mvnrepository.com/artifact/org.springframework/spring-aspects/4.1.4.RELEASE</a></li>
- 	<li><a href="http://mvnrepository.com/artifact/log4j/log4j">http://mvnrepository.com/artifact/log4j/log4j</a></li>
-	<li><a href="http://stackoverflow.com/questions/15746676/logging-with-aop-in-spring">http://stackoverflow.com/questions/15746676/logging-with-aop-in-spring</a></li>
-	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
-	<li><a href="http://www.jpub.kr/">Spring in Action(Jpub) - 크레이그 월즈</a></li>
-	<li><a href="http://static.springsource.org/spring/docs/current/spring-framework-reference/pdf/">http://static.springsource.org/spring/docs/current/spring-framework-reference/pdf/</a></li>
-	<li><a href="http://commons.apache.org/logging/">http://commons.apache.org/logging/</a></li>
-	<li><a href="http://www.eclipse.org/aspectj/downloads.php">http://www.eclipse.org/aspectj/downloads.php</a></li>
-	<li><a href="http://sourceforge.net/projects/aopalliance/files/aopalliance/1.0/">http://sourceforge.net/projects/aopalliance/files/aopalliance/1.0/</a></li>
-	<li><a href="http://logging.apache.org/log4j/1.2/download.html">http://logging.apache.org/log4j/1.2/download.html</a></li>
--->
 </ul>
 </article>

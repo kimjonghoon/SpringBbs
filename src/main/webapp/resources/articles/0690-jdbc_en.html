@@ -3,8 +3,8 @@
 <h1>Spring JDBC</h1>
 
 <p>
-자바 은행에서 사용한 JDBC 코드를 스프링 JDBC로 바꾸어 보자.
-다음 의존성을 추가한다.
+The following article explains how to replace the JDBC code used by Java Bank with Spring JDBC.<br />
+Add the following to the pom.xml.
 </p>
 
 <pre class="prettyprint">
@@ -16,8 +16,8 @@
 </pre>
 
 <p>
-ShinhanBankDao 클래스가 NamedParameterJdbcDaoSupport 클래스를 상속하도록 선언한다.
-생성자와 getConnection(), close(rs,pstmt,con) 메서드는 제거한다.
+Declares that ShinhanBankDao inherits NamedParameterJdbcDaoSupport.<br />
+Remove constructors, getConnection(), and close(rs, pstmt, con) methods.
 </p>
 
 <h6 class="src">ShinhanBankDao.java</h6>
@@ -35,15 +35,15 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 public class ShinhanBankDao <strong>extends NamedParameterJdbcDaoSupport</strong> implements BankDao {
 
-	//필드 URL, USER, PASSWORD 삭제
-	//생성자와 getConnection(), close(rs,pstmt,con) 메서드 삭제
+	//Remove URL, USER, PASSWORD fields.
+	//Remove constructors, getConnection(), close(rs,pstmt,con) methods.
 	
-	//..중간 생략..
+	//..omit..
 
 }
 </pre>
 
-<h6 class="src">기존 insertAccount() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public void insertAccount(String accountNo, String name, String kind) {
@@ -69,7 +69,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<h6 class="src">수정 후 insertAccount() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String INSERT_ACCOUNT = 
 		"INSERT INTO " +
@@ -87,7 +87,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<h6 class="src">기존 selectOneAccount() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public Account selectOneAccount(String accountNo) {
@@ -126,7 +126,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectOneAccount() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String SELECT_ONE_ACCOUNT = 
 		"SELECT accountno,owner,balance,kind " +
@@ -156,7 +156,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<h6 class="src">기존 selectAccountsByName() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAccountsByName(String name) {
@@ -196,7 +196,7 @@ public List&lt;Account&gt; selectAccountsByName(String name) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAccountsByName() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String SELECT_ACCOUNTS_BY_NAME = 
 		"SELECT accountno,owner,balance,kind " +
@@ -232,7 +232,7 @@ protected class AccountRowMapper implements RowMapper&lt;Account&gt; {
 }
 </pre>
 
-<h6 class="src">기존 selectAllAccounts() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAllAccounts() {
@@ -271,7 +271,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAllAccounts() 메서드</h6>
+<h6 class="src">Atter</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_ACCOUNTS = 
 		"SELECT accountNo,owner,balance,kind " +
@@ -285,7 +285,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<h6 class="src">기존 deposit() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public void deposit(String accountNo, long amount) {
@@ -311,7 +311,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">수정 후 deposit() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String DEPOSIT = 
 		"UPDATE bankaccount " +
@@ -328,7 +328,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">기존 withdraw() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public void withdraw(String accountNo, long amount) {
@@ -353,7 +353,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">수정 후 withdraw() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String WITHDRAW = 
 		"UPDATE bankaccount " +
@@ -370,7 +370,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">기존 selectAllTransactions() 메서드</h6>
+<h6 class="src">Before</h6>
 <pre class="code">
 @Override
 public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
@@ -414,7 +414,7 @@ public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAllTransactions() 메서드</h6>
+<h6 class="src">After</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_TRANSACTIONS = 
 		"SELECT transactionDate,kind,amount,balance " +
@@ -453,10 +453,10 @@ protected class TransactionRowMapper implements RowMapper&lt;Transaction&gt; {
 }
 </pre>
 
-<h3>XML 설정</h3>
+<h3>XML configuration</h3>
 
 <p>
-applicationContext.xml에 강조된 부분을 추가한다.
+Modify applicationContext.xml as shown below.
 </p>
 
 <h6 class="src">applicationContext.xml</h6>
@@ -497,10 +497,8 @@ applicationContext.xml에 강조된 부분을 추가한다.
 &lt;/beans&gt;
 </pre>
 
-<h3>테스트</h3>
-
 <p>
-테스트하기 전에 BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+Modify the main method of BankUi.java as follows.
 </p>
 
 <pre class="prettyprint">
@@ -509,13 +507,13 @@ ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applica
 </pre>
 
 <p>
-101계좌는 존재하나 505계좌는 존재하는 않는다고 가정한다.
-101계좌에서 505계좌로 이체 테스트를 한다.
-이체 후 101계좌는 이체 금액만큼 잔액이 줄어든다.
-(이 문제는 <a href="/spring/transaction">트랜잭션</a>에서 다룬다)
+It is assumed that 101 accounts exist but 505 accounts do not exist.<br />
+Try to transfer from account 101 to account 505.<br />
+After transfer, 101 accounts will be reduced by the transfer amount.<br />
+(This is covered in <a href="/spring/transaction">Spring Transaction</a>)
 </p>
 
-<h3>JavaConfig 설정</h3>
+<h3>JavaConfig configuration</h3>
 
 <h6 class="src">BankConfig.java</h6>
 <pre class="prettyprint">
@@ -575,9 +573,8 @@ public class BankConfig {
 </pre>
 
 <p>
-테스트하기 전에,
-applicationContext.xml 설정을 모두 주석 처리한다.
-BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+First of all, comment out all settings in applicationContext.xml.<br />
+Modify the main method of BankUi.java as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -585,10 +582,8 @@ BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
 AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BankConfig.class); //JavaConfig
 </pre>
 
-<h3>최종 소스</h3>
-
 <p>
-<a href="examples/jdbc.zip">예제 다운로드</a>
+<a href="examples/jdbc.zip">Download example</a>
 </p>
 
 </article>

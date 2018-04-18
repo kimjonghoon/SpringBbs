@@ -3,14 +3,14 @@
 <h1>Spring DI(종속객체 주입)</h1>
 
 <p style="color: #777;">
-아래 글은 워크스페이스를 C:\java로 정하고 진행했다.
+아래 글은 워크스페이스를 C:\java라고 가정했다.
 </p>
 
 <h2>명령 프롬프트에서 메이븐 프로젝트 생성</h2>
 
 <p>
-명령 프롬프트로 C:\java로 이동한 후 다음 명령을 실행한다.
-(화면에서 ↵는 엔터키를 누르라는 표시다. 입력하지 않고 엔터키를 누르면 디폴트 값이 선택된다)
+명령 프롬프트로 C:\java로 이동한 후 다음 명령을 실행한다.<br />
+(화면에서 ↵는 엔터키를 누르라는 표시다. 엔터키만 누르면 디폴트 값이 선택된다)
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -41,15 +41,15 @@ package: net.java_school
 </pre>
 
 <p>
-시간이 지남에 따라 화면에서 번호나 버전이 다를 수 있으나
-Choose a number or apply filter 에서 엔터키를 눌러 maven-archetype-quickstart 아키타입을,
-Choose org.apache.maven.archetypes:maven-archetype-quickstart version: 에서 엔터키를 눌러 가장 최신 버전이 선택되도록 한다.
+위 화면에서 번호나 버전이 다를 수 있지만 상관없다.<br />
+Choose a number or apply filter는 엔터키만 눌러 maven-archetype-quickstart 아키타입을 선택한다.<br />
+Choose org.apache.maven.archetypes:maven-archetype-quickstart version: 역시 엔터키만 눌러 가장 최신 버전을 선택한다.
 </p>
 
 <h2>테이블 생성 및 소스 코드 복사</h2>
 
 <p>
-<a href="../jdbc/JavaBank">자바은행</a>에서의 테이블을 그대로 사용한다.
+<a href="../jdbc/JavaBank">자바은행</a>에서의 테이블을 그대로 사용한다.<br />
 만약 테이블이 없다면 scott 계정으로 SQL*PLUS에 접속한 다음 테이블을 생성한다.
 </p>
 
@@ -64,7 +64,6 @@ create table bankaccount (
         CHECK (balance >= CASE WHEN kind='NORMAL' THEN 0 END),
     constraint CK_BANKACCOUNT_KIND CHECK (kind in ('NORMAL', 'MINUS'))
 );  
-
 create table transaction (
     transactiondate timestamp,
     kind varchar2(10),
@@ -77,7 +76,7 @@ create table transaction (
 </pre>
 
 <p>
-scott 계정으로 SQL*PLUS에 접속한 상태에서, 입금이나 출금할 때 거래 테이블에 데이터를 인서트 하는 트리거를 만든다. 
+scott 계정으로 SQL*PLUS에 접속한 상태에서, 입금이나 출금시 거래 테이블에 데이터를 인서트하는 트리거를 다음을 이용해서 생성한다. 
 </p>
 
 <pre class="prettyprint">
@@ -113,7 +112,7 @@ end;
 
 
 <p>
-<a href="../jdbc/JavaBank">자바은행</a>에서 작성한 소스를 복사하여 다음 위치에 붙여넣는다.
+<a href="../jdbc/JavaBank">자바은행</a>에서 작성한 자바 소스를 복사하여 다음 위치에 붙여넣는다.
 </p>
 
 <pre class="code">C:\java\bank
@@ -132,23 +131,23 @@ end;
                                         - <a href="/jdbc/examples/Transaction.java">Transaction.java</a>
 </pre>
 
-<h3 id="Oralce-JDBC-Driver-Dependency">오라클 JDBC 드라이버를 로컬 저장소에 설치하기</h3>
+<h3 id="Oralce-JDBC-Driver-Dependency">로컬 저장소에 오라클 JDBC 드라이버 설치하기</h3>
 
 <p>
-오라클 JDBC 드라이버는 메이븐 저장소에서 제공하지 않는다.
-따라서 로컬에 설치된 오라클의 JDBC 드라이버 파일을 다음과 같이 로컬 저장소에 설치한 뒤 pom.xml에 의존성 설정해야 한다.
+오라클 JDBC 드라이버는 메이븐 저장소에서 제공하지 않는다.<br />
+따라서 오라클의 JDBC 드라이버 파일을 다음과 같이 로컬 저장소에 설치한 뒤 pom.xml에 의존성 설정해야 한다.
 </p>
 
 <p>
-로컬 저장소에 오라클 JDBC 드라이버를 설치하는 방법하려면, 자신의 시스템에서 ojdbc6.jar 파일이 있는 디렉토리로 이동한 후, 명령 프롬프트에서 아래를 실행한다.
+ojdbc6.jar 파일이 있는 디렉토리로 이동한 후, 명령 프롬프트에서 다음 명령을 실행한다.
 </p>
 
-<pre class="screen">
+<pre>
 mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 </pre>
 
 <p>
-로컬 저장소에 저장된 정보대로 pom.xml에 다음과 같이 의존성을 추가한다.
+로컬 저장소에 저장된 정보대로 pom.xml에 의존성을 추가한다.
 </p>
 
 <pre class="prettyprint">
@@ -160,7 +159,7 @@ mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojd
 </pre>
 
 <p>
-pom.xml 파일을 아래와 같이 편집한다.
+pom.xml을 아래와 같이 편집한다.
 </p>
 
 <h6 class="src">pom.xml</h6>
@@ -238,7 +237,7 @@ pom.xml 파일을 아래와 같이 편집한다.
 </pre>
 
 <p>
-메이븐 프로젝트로 성공적으로 변경했는지 빌드하고 실행해 본다.
+빌드하고 실행한다.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -247,10 +246,9 @@ pom.xml 파일을 아래와 같이 편집한다.
 C:\java\bank&gt;<span class="prompt-selection">mvn exec:java -Dexec.mainClass=net.java_school.bank.BankUi</span>
 </pre>
 
-<h3>자바 소스 수정</h3>
+<h3>자바은행 예제를 스프링 예제로 수정</h3>
 
 <p>
-자바 은행 예제를 스프링 예제로 변경해 보자.
 자바 소스에서 다음 부분을 수정한다.
 </p>
 
@@ -279,6 +277,7 @@ import java.io.PrintStream;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 //..중간 생략..
+
 //private Bank bank = new ShinhanBank();
 private Bank bank;
 
@@ -299,7 +298,6 @@ System.out.print()을 stream.print()으로 수정한다.
 
 //..중간 생략..
 
-
 public static void main(String[] args) {
 	ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 	BankUi ui = ctx.getBean(BankUi.class);
@@ -310,8 +308,8 @@ public static void main(String[] args) {
 </pre>
 
 <p>
-src/main/resources 폴더를 만들고,  <a href="../java/Logging#logback-xml-javabank">로깅</a>에서의 내용대로 logback.xml 파일을 아래 위치에 생성한다. 
-applicationContext.xml 파일도 같은 위치에 생성한다.
+src/main/resources 폴더(이 역시 메이븐 디렉터리다)를 만들고,  <a href="../java/Logging">로깅</a>의 logback.xml 파일을 복사해 resource 폴더에 붙여넣는다. 
+applicationContext.xml 파일도 resource 폴더에 생성한다.
 </p>
 
 <pre class="code">C:\java\bank
@@ -351,7 +349,9 @@ appliactionContext.xml 파일을 다음과 같이 편집한다.
 </pre>
 
 
-<h2>컴파일과 실행</h2>
+<p>
+컴파일하고 실행한다.
+</p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
 <pre class="screen">C:\java\bank&gt;<span class="prompt-selection">mvn clean compile</span>
@@ -362,31 +362,28 @@ C:\java\bank&gt;<span class="prompt-selection">mvn exec:java -Dexec.mainClass=ne
 <h2>이클립스 작업환경 구축</h2>
 
 <p>
-이클립스를 시작한다.
-워크스페이스는 어디든 상관없다.
-Project Explorer 뷰에서 마우스 오른쪽 버튼을 사용하여 컨텍스트 메뉴를 보이게 한다.
-Import를 사용하여 spring-bbs 프로젝트를 이클립스로 불러온다.<br />
-
+이클립스를 시작한다.(워크스페이스는 어디든 상관없다)<br />
+Project Explorer 뷰에서 마우스 오른쪽 버튼을 사용하여 컨텍스트 메뉴를 보이게 한다.<br />
+Import 메뉴를 사용해 자바은행 예제를 이클립스로 임포트한다.<br />
 <img alt="컨텍스트 메뉴에서 Import" src="https://lh3.googleusercontent.com/-VjWpQCEiqes/VYYV3b2GPFI/AAAAAAAACh0/-KoRbgI8nn0/s590/maven-project-import.png"><br />
-
 <img alt="이클립스에서 메이븐 프로젝트 Import" src="https://lh3.googleusercontent.com/-uDuAOI41Aj4/VYYV3Pmo4qI/AAAAAAAAChw/m4HA61kOVbE/s610/eclipse-with-maven.png"><br />
-
-이클립스와 pom.xml을 동기화한다.
-Package Explorer에서 프로젝트를 선택한 상태에서 마우스 오른쪽 버튼으로 컨텍스트 메뉴를 연다.
-Maven - Update Project Configuration을 차례로 선택한다.
-이후 진행하면서 pom.xml이 바뀌면 같은 방법으로 이클립스와 동기화를 해주어야 한다.
+이클립스와 pom.xml을 동기화한다.<br />
+Package Explorer에서 프로젝트를 선택한 상태에서 마우스 오른쪽 버튼으로 컨텍스트 메뉴를 연다.<br />
+Maven, Update Project Configuration을 차례로 선택한다.<br />
+<br />
+이후 진행하면서 pom.xml이 바뀌면 같은 방법으로 이클립스와 동기화한다.
 </p>
 
-<h2>JavaConfig 설정</h2>
+<h2>JavaConfig</h2>
 
 <p>
-스프링이 발전하면서 빈 설정을 XML 파일이 아닌 자바 클래스로도 할 수 있도록 했다.
-빈 설정 클래스는 @Configuration과 @Bean 어노테이션을 사용한다.
+스프링이 발전하면서 빈 설정을 XML 파일이 아닌 자바 클래스로도 할 수 있게 되었다.<br />
+빈 설정 클래스는 @Configuration과 @Bean 어노테이션을 사용해 작성한다.<br />
 빈 설정 클래스에서 @Bean 어노테이션이 붙은 메서드 이름이 빈 객체가 된다.
 </p>
 
 <p>
-빈 설정 클래스 테스트를 위해 applicationContext.xml에서 모든 설정을 주석 처리한다.
+빈 설정 클래스 테스트를 위해 applicationContext.xml의 모든 설정을 주석 처리한다.
 </p>
 
 <h6 class="src">applicationContext.xml</h6>
@@ -469,8 +466,14 @@ public static void main(String[] args) {
 }
 </pre>
 
-<h3>최종 소스</h3>
 <p>
 <a href="examples/di.zip">예제 다운로드</a>
 </p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="../jdbc/JavaBank">자바은행</a></li>
+	<li><a href="../java/Logging">로깅</a></li>
+</ul>
+
 </article>

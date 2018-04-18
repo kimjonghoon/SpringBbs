@@ -1,22 +1,22 @@
 <article>
 
-<h1>메이븐을 이용한 Spring 실습</h1>
+<h1>Building Java Projects with Maven</h1>
 
 <p style="clear: both;font-style: italic;font-weight: bold;padding: 10px 30px;font-size: 14px;">
-아래 글은 <a href="http://spring.io/guides/gs/maven/">http://spring.io/guides/gs/maven/</a>를 번역한 것입니다.
+Original <a href="http://spring.io/guides/gs/maven/">http://spring.io/guides/gs/maven/</a>
 </p>
 
-<h2 id="Install-Maven">메이븐 설치</h2>
+<h2 id="Install-Maven">Maven Install</h2>
 
 <ol>
-	<li><a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a>에서 최신 바이너리 파일을 다운로드한다.</li>
-	<li>압축을 풀고 생성된 디렉터리를 적당한 곳에 옮긴다.</li>
-	<li>메이븐 bin 디렉터리까지의 전체 경로를 Path에 추가한다.</li>
-	<li>JDK가 설치된 전체 경로를 값으로 하는 JAVA_HOME 환경 변수가 있는지 확인한다. 메이븐은 JAVA_HOME 환경 변수를 참조하기 때문에 없으면 만들어야 한다. (<a href="/">JDK 설치</a> 문서 참조)</li>
+	<li>Download the latest binary file from <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a>.</li>
+	<li>Unzip and move the generated directory to the desired location.</li>
+	<li>Add the Maven bin directory to the Path.</li>
+	<li>Make sure you have the JAVA_HOME environment variable. Because Maven refers to the JAVA_HOME environment variable, it should be created if it does not exist. (See <a href="/">JDK Install</a>)</li>
 </ol>
 
 <p>
-명령 프롬프트를 열고 다음 명령으로 메이븐 버전을 확인한다.
+Open a command prompt and check the Maven version with the following command:
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -28,25 +28,22 @@ Java home: C:\Program Files\Java\jdk1.8.0_131\jre
 ..
 </pre>
 
-<h2>메이븐 프로젝트 생성</h2>
+<h2>Set up the project</h2>
 
 <p>
-메이븐 프로젝트를 생성하는 방법은 두 가지가 있다.
-첫 번째는 메이븐 프로젝트 디렉터리 구조(메이븐 프로젝트의 디렉터리 구조는 정해져 있다)와 pom.xml 파일을 직접 만드는 방법이다.
-두 번째는 mvn archetype:generate 명령을 사용하는 방법이다.
+There are two ways to create a Maven project.<br />
+The first is to manually create the maven project directory structure and the pom.xml file.<br />
+The second is to use the mvn archetype: generate command.
 </p>
 
-<h3>1. 메이븐 프로젝트 디렉터리 구조와 pom.xml 파일을 직접 만들어 메이븐 프로젝트를 만드는 방법</h3>
-
-<h4>메이븐 디렉터리 구조 생성</h4>
+<h3>1. Create the directory structure</h3>
 
 <p>
-C:\maven\HelloWord를 프로젝트 루트 디렉터리라면, HelloWorld 아래에 다음과 같이 서브 디렉터리를 만든다.
-(아래에서 맨 끝단의 hello는 생성할 자바 클래스의 패키지 이름이다.)
+In a project directory of your choosing, create the following subdirectory structure
 </p>
 
 <pre class="code">
-HelloWorld (프로젝트 루트)
+HelloWorld (project directory of your choosing)
    └── src
         └── main
              └── java
@@ -54,10 +51,8 @@ HelloWorld (프로젝트 루트)
 </pre>
 
 
-<h4>pom.xml 파일 작성</h4>
-
 <p>
-프로젝트 루트에 pom.xml 파일을 아래와 같이 작성한다.
+Create a file named pom.xml at the root of the project
 </p>
 
 <h6 class="src">pom.xml</h6>
@@ -78,16 +73,16 @@ HelloWorld (프로젝트 루트)
 </pre>
 
 <ul>
-	<li>&lt;modelVersion&gt; - POM model version으로 언제나 4.0.0</li>
-	<li>&lt;groupId&gt; - 프로젝트의 소유자인 조직이나 기관으로 패키지 형식의 이름을 가진다.</li>
-	<li>&lt;artifactId&gt; - 프로젝트 이름. 생성되는 jar나 war 파일에 이 이름이 붙여진다.</li>
-	<li>&lt;version&gt; - 프로젝트 버전</li>
-	<li>&lt;packaging&gt; - 프로젝트를 어떻게 패키지 할 것인가를 설정한다. 디폴트는 jar이고 웹 애플리케이션이면 war로 설정한다.</li>
+	<li>&lt;modelVersion&gt; POM model version (always 4.0.0).</li>
+	<li>&lt;groupId&gt; Group or organization that the project belongs to. Often expressed as an inverted domain name.</li>
+	<li>&lt;artifactId&gt; Name to be given to the project’s library artifact (for example, the name of its JAR or WAR file).</li>
+	<li>&lt;version&gt; Version of the project that is being built.</li>
+	<li>&lt;packaging&gt; How the project should be packaged. Defaults to "jar" for JAR file packaging. Use "war" for WAR file packaging.</li>
 </ul>
 
 
 <p>
-아래 두 자바 소스 파일은 hello 디렉터리에 작성한다.
+Within the src/main/java/hello directory, create these two classes: HelloWorld.java and Greeter.java.
 </p>
 
 <h6 class="src">HelloWorld/src/main/java/hello/HelloWorld.java</h6>
@@ -114,59 +109,68 @@ public class Greeter {
 </pre>
 
 
-<h4>메이븐 기본 명령어</h4>
+<h3>Build Java code</h3>
 
 <p>
-다음 명령어를 pom.xml 파일이 있는 위치(프로젝트 루트 디렉터리)에서 명령 프롬프트를 열고 실행한다.
+To try out the build, issue the following at the command line:
 </p>
 
 <pre class="screen">mvn compile</pre>
 
 <p>
-컴파일을 실행하고 컴파일 결과물을 target/classes 폴더에 저장한다.
-target/classes 폴더는 컴파일이 수행되면서 만들어진다.
+This will run Maven, telling it to execute the compile goal. When it’s finished, you should find the compiled .class files in the target/classes directory.<br />
 <img alt="mvn compile" src="https://lh3.googleusercontent.com/1x82DkXPiOrW_fJSNV19zo47lTOeCNSv5Bmj_pCefvAg_k3HA5HVLii6CGLfB87LH3eFBMQOhkxX1DWDCCjRslJwGEEGWINPH5EeMIixo5TjgJbV9LmErzjcoo6wsSinwcwqy3W4dv7QiUra_3yYQQAUvykoLR0OTDAYsxKI4zwXBSUNDzdvi73koycw_tPTk7Dd_pRgCCiVskFLX_iuJCG2NntS4tPai_0teNqGN-4xEPIKIghN2ipRygTS8R5J8Z3zJZd_KU51jVhpDz0Tk8XIp1AHRl0urayqVEZY1TsIUB0T1VNyJL3XzKBN020qlfo2dtFjHMLzFukYOm9l3cWwniosgHkau84LKcCt9-EKLQ0vfDzAFuZnf_3zpqAJOlWKKHM5AHLnfsR0lYf1UR7n4VljjN25YcIBnG3nmtFN92aoCw4CQ8eMLyS29ZVD0a7V55GcaKm2FEbztngzay4T3YZEu7RqrW6W7HtDhgd3PBToUr2M3Fo6DzHqO-LHfEmtN_im4uBwrKf09c5Qb6Yc1t-H6bMIWHbNEOTJ0sKsGnT_da3YKjMqkkEgY2jAPjaydtN1t5E_jNgAgPygUoGe2JZJptsaqUdWPEp63kgaRdcNwh3l=w523-h121-no" style="display: block;" />
+</p>
+
+<p>
+Since it’s unlikely that you’ll want to distribute or work with .class files directly, you’ll probably want to run the package goal instead:
 </p>
 
 <pre class="screen">mvn package</pre>
 
 <p>
-자바 코드를 컴파일하고 테스트를 수행하고 패키지(jar 또는 war)로 묶어서 target 디렉터리에 저장한다.
-위 pom.xml 설정대로라면 gs-maven-initial-0.1.0.jar란 파일이 target 디렉터리에 생성된다.
+Compile the Java code, test it, bundle it in a package (jar or war), and save it in the target directory.<br />
+According to the pom.xml configuration above, a file named gs-maven-initial-0.1.0.jar is created in the target directory.<br />
 <img alt="mvn package" src="https://lh3.googleusercontent.com/838OsscY8Fm6fv8YiK-KfDH7RewhJYJwSPj7EyqYnKHErDnEy2pSKfCCgBWQV_LSNXRrmZG4WnQb95ExDU9r6S5BIkh9DeCo4Ib_qKLyNoniWopdh6CvtMABtiSgNMH8zEZreHPAZ0lgx8-WfnEi_cd3gF-USpEroTJjcpn2sLAIIVA2SlBcAFRub7km5hkFa0njZy2iDopOGfqtspX9J7b-YkTYbrk0EQnFmMjxaytZEP1-dZlvchLV2K92_oYmwyRb_iUe1at7eATuiTXD6y_yBOnNHlz615-L9EIls-dQ1A192UpcmVZwgOGugjkQ1arzqVh5prwnykxrKBcKHhnVA-aTdnznvbVgv_VaNuByF_Xs1C9_KFODl0mL8iThxe-IoupCK8QWva_JRW3GHmBam-MQsS74P6TTZkHhGpRy45lwl_MluVXbwW1ukw72CgxsD6tn5Zy0gphWWpWBnWTi-CU0hQKM4DPZgV4Dl8BAVukEbXXLT8IVfLnasT-eslPH6BJMH1KrleqpuuX36BunEBe50Sz9J2zk-UZ10LfzbU6D3oZiwN_bxplg6IQF4tLNNne7n1yynS-nx4k-shDwtlbbm88UYEwhtD72ZzGMN1jYMpW8=w540-h175-no" style="display: block;" />
+</p>
+
+<p>
+Maven also maintains a repository of dependencies on your local machine (usually in a .m2/repository directory in your home directory) for quick access to project dependencies.
+If you’d like to install your project’s JAR file to that local repository, then you should invoke the install goal:
 </p>
 
 <pre class="screen">mvn install</pre>
 
 <p>
-패키징된 jar 파일을 로컬 저장소에 저장한다.
+The above command saves the packaged jar file in the local repository.<br />
 <img alt="mvn install" src="https://lh3.googleusercontent.com/0XDB0SuXO3F2L3VZDPgjI3oENZawp8pXcd1Ahngbqsm-NCKs7hdhPL5wWEa7hsrQ-CtqsI8PQMd615nwc8Ap6hdjoQCzD1RK4ajRW_T4i9aLR6SYsmFb91feV4zH7cZYyTJykoMmtQAORycTcDrCw-xJtEVYcg_v1sfnA6C-Bgs9eJ8pgEgmqKp3_TtMP_GZuGFGLArmoKaBBPI-qB5ZJke3KCLY6A_6MgiGaT4Ccl2-p4UXRpeXwhEj5WEvYobSRuoLEj9eDo0QnZ1k4uV1M3z2XsZYPDqPyjxurY-5KrgPzs1eidE-ajetkNl_ZQ0J6PEYx2MHm2m-5gq6kJrwSxzZ_VNm31pgGfFxwYRs9IC3Pme5Jw36bmcAJrJXMhlwM2vU0aeMBf3i_eH1CToxWolHDE91tQ7XmaX89BDv_mkvE0PWLmQkwOrh75iKG_0_xWr-XWlJIz_lu0hinZP4n0Vz452U2y8hNTzHu909wff2FQ2VZianRJ-YB4N1qkDZYvcvqbsg1QKewhQViv7SfO4kryeLjk1XSI5siC5xafrBlKEOXXgl1RFzM4JcF18oCvKpAvVan_9RNS75Fvw-7lTZNnkU8Qm40abfa_oIXH6pVmGzEsVK=w677-h149-no" style="display: block;" /> 
 </p>
 
 <pre class="screen">mvn clean</pre>
 
 <p>
-빌드를 통해 생성된 모든 산출물을 삭제한다.
+Delete all artifacts generated by the build.<br />
 <img alt="mvn clean" src="https://lh3.googleusercontent.com/Uo3NNCIhcjg2RDAPY85kBCMnQ9LIbyziEOeYRD7XJK1wky0JKySTNXlh5KjJV8s6lYGJb5KrujLbk9gS-lywzpFtJ5NDrS2mM9K0InClY52UwFzoVuPrPB941X0GrBuar5tMX8iUoU-zjSVFwAt1XIDSeVvZ5GDcLNyimqKYrQFy-wEP2g7zPv3k_G-ttM1rslg_GrIuVaeVtX_vmFfe_TLEcGKxlbdKSs38gZxW4LFlFm1XuYkj1cjt0dkwcKOx02tRoFcHm2Jq1U7Qm3l7EnKITzrjVM6veBwB6iMpO9wcs1oe6SHDdur8318xxYP-USEh5XNADR1dhiCHtYFKz-zfkObm1zlmMctZpWeXKOClUcANHEKjiqEURg1JJZXVVm7qVkMCtRs5_jhFGtCku5gbKw5eAt9PWqzoRLWkHFfxdlaFNiuj1fCq3JxhvReOfx6Y40zzvKhNIE--_1iXIl87J43PGScI-bp4WpC8kcKOxiyNM2F0sINUz1Et1JgoEcfLvgeAF1dZNkkLuylIAjyz2oPitBU-LapA0gI8kL_yMe5dK9U1EfUQmpl-hqX5tMdq7E3a7bYJ_dpR32QFIhpIijXvoeBZIrWutzShYSrDkfGXw5tS=w542-h144-no" style="display: block;" />
+</p>
+
+<p>
+You can invoke multiple goals as follows:
 </p>
 
 <pre class="screen">mvn clean compile</pre>
 
 <p>
-위와 같이 중복해서 수행할 수 있다.
+Run the HelloWorld program with the following command: 
 </p>
 
 <pre class="screen">mvn exec:java -Dexec.mainClass=hello.HelloWorld</pre>
 
-<p>
-위 명령은 HelloWorld 메이븐 프로그램을 실행한다. 
-</p>
 
-<h4>pom.xml에 의존 라이브러리 추가하기</h4>
+<h3>Declare Dependencies</h3>
 
 <p>
-대부분의 애플리케이션이 외부 라이브러리에 의존한다.
-우리의 예제도 외부 라이브러리를 사용하도록, HelloWorld.java를 아래처럼 수정한다.
+Most applications, however, depend on external libraries to handle common and complex functionality.<br />
+Modify HelloWorld.java as follows.
 </p>
 
 <h6 class="src">HelloWorld/src/main/java/hello/HelloWorld.java</h6>
@@ -187,9 +191,9 @@ public class HelloWorld {
 </pre>
 
 <p>
-mvn compile 을 실행하면 빌드가 실패한다.
-pom.xml에 의존 라이브러리 설정을 추가하지 않았기 때문이다.
-pom.xml 파일을 열고 아래와 같이 의존 라이브러리 설정을 추가한다.
+Here HelloWorld uses Joda Time’s LocalTime class to get and print the current time.<br />
+If you were to run mvn compile to build the project now, the build would fail because you’ve not declared Joda Time as a compile dependency in the build.<br />
+Modify pom.xml as shown below.
 </p>
 
 <h6 class="src">pom.xml</h6>
@@ -218,26 +222,27 @@ pom.xml 파일을 열고 아래와 같이 의존 라이브러리 설정을 추�
 </pre>
 
 <p>
-dependency의 하위 엘리먼트로 scope 엘리먼트가 추가 될 수 있다.
-scope 엘리먼트는 compile(디폴트), provided 또는 test라는 값을 가질 수 있다.
+The scope element can be added as a sub-element of dependency.<br />
+The value of scope is either compile, provided, or test.<br />
+(The default value is compile)
 </p>
 
 <ul>
-	<li>provided: 컴파일할 때 필요하지만 런타임에는 컨테이너에 의해 제공되는 것.(예, Servlet API)</li>
-	<li>test: 컴파일하고 테스트에는 필요하지만 빌드(컴파일과 배포)하거나 실행할 때는 필요 없는 것.</li>
+	<li>provided: Required at compile time but provided by the container at runtime (eg Servlet API)</li>
+	<li>test: Required for compilation and testing, but not needed for build or run.</li>
 </ul>
 
 <p>
-의존성을 추가한 후 mvn compile을 다시 수행하면 성공한다.
+If you add the dependency and run mvn compile again, it succeeds.
 </p>
 
-<h3>2. mvn archetype:generate 명령을 사용하여 메이븐 프로젝트를 만드는 방법</h3>
+<h3>2. Creating a Maven project using mvn archetype:generate</h3>
 
 <p>
-mvn archetype:generate를 사용하면 대화형으로 메이븐 프로젝트를 생성할 수 있다.
-archetype이란 원형이라는 사전적 의미를 가지는 데, 자바에서는 프로젝트 프로토타입을 뜻한다.
-이 방법을 쓰면 메이븐 디렉터리와 pom.xml 파일이 자동으로 생성되며, 또한 다양한 자바 프로젝트의 프로트타입을 얻을 수 있다.
-C:\maven 디렉터리에서 다음을 실행한다.
+mvn archetype: generate allows you to interactively create a maven project.<br />
+(Archetype has a lexical meaning of prototype, which in Java stands for project prototype)<br />
+This method automatically creates the maven directory and the pom.xml file, as well as the prototypes of various Java projects.<br />
+From the C:\maven directory, run:
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -246,7 +251,7 @@ C:\maven&gt; mvn archetype:generate
 </pre>
 
 <p>
-아래 화면에서 엔터키를 누르면 maven-archetype-quickstart가 선택된다.
+In the screen below, press enter to select maven-archetype-quickstart.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -255,7 +260,7 @@ Choose a number or apply filter (format: [groupId:]artifactId, case sensitive co
 </pre>
 
 <p>
-아래 화면에서 엔터키를 누른다.
+In the screen below, press enter to select the latest version.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -271,8 +276,7 @@ Choose a number: 6:
 </pre>
 
 <p>
-groupId와 artifactId에 값을 준다.
-version과 package는 디폴트 값이 있으니 엔터키를 눌러 디폴트 값을 선택한다.
+Give groupId and artifactId the values shown below. (for version and package, press enter to accept the default)
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -284,7 +288,7 @@ Define value for property 'package':  org.springframework.gs: :
 </pre>
 
 <p>
-아래 화면에서 엔터키를 누른다.
+On the screen below, press the Enter key.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -298,9 +302,8 @@ package: org.springframework.gs
 </pre>
 
 <p>
-artifactId로 정해준 gs-maven-initial라는 디렉터리가 생기고
-이 디렉터리에 pom.xml 파일과 메이븐 디렉터리가 생성된다.
-(C:\maven\gs-maven-initial이 루트 디렉터리가 된다.) 
+The gs-maven-initial directory, such as the artifactId value, is created and the pom.xml file and maven directory are created in this directory.<br />
+(C:\maven\gs-maven-initial is the root directory) 
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -309,10 +312,14 @@ C:\maven&gt;cd gs-maven-initial
 C:\maven\gs-maven-initial&gt;
 </pre>
 
-<h2>스프링 시작하기 강좌 중 <a href="http://projects.spring.io/spring-framework/#quick-start">Quick Start</a> 정리</h2>
+<h2>Spring framework Quick Start</h2>
+
+<p style="clear: both;font-style: italic;font-weight: bold;padding: 10px 30px;font-size: 14px;">
+Original <a href="http://projects.spring.io/spring-framework/#quick-start">http://projects.spring.io/spring-framework/#quick-start</a>
+</p>
 
 <p>
-메이븐 프로젝트의 디렉토리를 만든다.
+Create a directory for the Maven project as shown below.
 </p>
 
 <pre class="code">
@@ -324,8 +331,8 @@ quick-start
 </pre>
 
 <p>
-프로젝트 루트(quick-start)에 pom.xml 파일을 만든다.
-스프링 프레임워크를 의존 라이브러리 설정에 추가할 때는 http://projects.spring.io/spring-framework/에서 가장 최신 릴리스 버전을 선택한다.
+Create a pom.xml file in the root directory.<br />
+(Check the latest release version at <a href="http://projects.spring.io/spring-framework/">http://projects.spring.io/spring-framework/</a>)
 </p>
  
 <h6 class="src">pom.xml</h6>
@@ -360,7 +367,7 @@ quick-start
 		&lt;dependency&gt;
 			&lt;groupId&gt;org.springframework&lt;/groupId&gt;
 			&lt;artifactId&gt;spring-context&lt;/artifactId&gt;
-			&lt;version&gt;5.0.2.RELEASE&lt;/version&gt;
+			&lt;version&gt;5.0.5.RELEASE&lt;/version&gt;
 		&lt;/dependency&gt;
 		</strong>
 	&lt;/dependencies&gt;
@@ -369,16 +376,15 @@ quick-start
 </pre>
 
 <p>
-스프링은 빈을 관리하는 빈 컨테이너 기능이 핵심이다.
-실습할 예제는 스프링의 빈 컨테이너 기능을 확인하는 예제이다.
-위에서 spring-context 의존성을 pom.xml에 추가했다.
-메이븐의 의존성 관리 기능은 프로젝트가 A라는 라이브러리에 의존하는데 A는 B라는 라이브러리에 의존한다면,
-A만의 의존성 설정으로 A뿐 아니라 B 역시 저장소에 저장한다.
-따라서 spring-context만 추가했더라도 spring-context가 의존하는 다른 라이브러리 역시 저장소에 저장된다.
+Spring is the key to the bean container's ability to manage beans.<br />
+Spring-context dependencies have been added to pom.xml.<br />
+Here is a brief description of Maven's dependency management features:<br />
+If the project relies on the A library and A depends on B, then Maven will store both A and B in the repository with only the A dependency configuration.<br />
+Thus, even if only the spring-context is added, other libraries dependent on spring-context are also stored in the repository.<br />
 </p>
 
 <p>
-명령 프롬프트에서 메모장을 실행해서 아래 소스와 같이 MessageService.java, MessagePrinter.java, Application.java 파일을 /hello 폴더에 생성한다.
+At the command prompt, run Notepad to create the MessageService.java, MessagePrinter.java, and Application.java files in the hello folder as shown below.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -455,7 +461,7 @@ public class Application {
 </pre>
 
 <p>
-다음 명령을 차례대로 실행하여 프로젝트를 빌드하고 실행한다.
+Run the following commands in order.
 </p>
 
 <pre class="screen">
@@ -464,33 +470,12 @@ mvn exec:java -Dexec.mainClass=hello.Application
 </pre>
 
 <p>
-코드상으로는 MessagePrinter는 MessageService는 서로 결합되어 있지 않다.
-하지만 스프링 프레임워크가 이들을 묶어준다.
+In the code, MessagePrinter and MessageService are not combined.<br />
+But Spring Framework combines them.
 </p>
-
-<!-- <p>
-만일 mvn compile이 실패했고, 실패 메시지 중에 "annotations are not supported in -source 1.3" 문장이 있다면
-pom.xml 파일을 열고 &lt;/project&gt; 바로 위에 다음을 추가한다.
-</p>
-
-<pre class="prettyprint">
-&lt;build&gt;
-    &lt;finalName&gt;quick-start&lt;/finalName&gt;
-    &lt;pluginManagement&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-                &lt;version&gt;3.0&lt;/version&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/pluginManagement&gt;
-&lt;/build&gt;
-</pre>  -->
-
 
 <p>
-테스트 실행까지 확인했다면 메이븐의 로컬 저장소에 저장된 어떤 라이브러리가 저장되었는지 확인해 보자.
-참고로 메이븐의 로컬 저장소는 사용자 폴더 안의 .m2 폴더이다.
+Check which libraries are stored in Maven's local repository.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -504,18 +489,12 @@ C:\Users\kim\.m2\repository\org\springframework&gt;dir /w
 </pre>
 
 <p>
-spring-context가 의존하는 spring-aop spring-beans spring-core spring-expression도 함께 설치된다.
+The spring-aop, spring-beans, spring-core, and spring-expression dependent on spring-context are also installed.
 </p>
 
-
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://spring.io/guides/gs/maven/">Building Java Projects with Maven</a></li>
 	<li><a href="http://projects.spring.io/spring-framework/#quick-start">http://projects.spring.io/spring-framework/#quick-start</a></li>
-<!-- 	
-	<li><a href="http://static.springsource.org/spring/docs/current/spring-framework-reference/pdf/">http://static.springsource.org/spring/docs/current/spring-framework-reference/pdf/</a></li>
-	<li><a href="http://www.springsource.org/download/community">http://www.springsource.org/download/community</a></li>
-	<li><a href="http://www.springframework.org/schema/beans/">http://www.springframework.org/schema/beans/</a></li> 
--->
 </ul>
 </article>
