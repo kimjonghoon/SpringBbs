@@ -3,60 +3,41 @@
 <h1>Web Development Setup</h1>
 
 <p>
-First you need to have Tomcat and Eclipse installed on your system.<br />
-Eclipse requires a WTP plug-in installed.<br />
-Depending on your version of Eclipse, WTP may not be easy to install. In this case, remove Eclipse and reinstall Eclipse IDE for Java EE Developers.
+This article assumes that 'Eclipse IDE for Java EE Developers' and Tomcat are installed on your system.
 </p>
 
 <h3>Creating a Dynamic Web Project in Eclipse</h3>
 
 <p>
-The following is different from the <a href="https://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.stardust.docs.wst%2Fhtml%2Fwst-integration%2Fdynamic-web-proj.html">Creating a Dynamic Web Project in Eclipse</a>.<br />
-In my experience, I like the way below and introduce it.
+The method described below is different from the original: <a href="https://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.stardust.docs.wst%2Fhtml%2Fwst-integration%2Fdynamic-web-proj.html">Creating a Dynamic Web Project in Eclipse</a>.
 </p>
 
 <p>
-Start Eclipse.<br />
-(Assuming your workspace is C:/www)<br />
-In the Java EE perspective, select File, New, then Dynamic Web Project to create a new project.
-</p>
-
-<p>
+Start Eclipse.(suppose the workspace is C:/www)<br />
+In the Java EE perspective, select File, New, Dynamic Web Project as shown below.<br />
 <img src="https://lh5.googleusercontent.com/-42TkBNkWZyw/Tuv7qhWj1eI/AAAAAAAAA4Y/4N0ZYhVmrx4/s590/new_dynamic_webProject.png" alt="1. New - Dynamic Web Project 를 선택한다." /><br />
+Click Next button.<br />
 <img src="https://lh3.googleusercontent.com/-hbGGtu9EfEI/TutjP9fITlI/AAAAAAAAA4E/fbwQJmVZPv0/s523/dynamic_webproject.png" alt="2. Dynamic Web Proejct 를 이용해서 새로운 프로젝트를 생성한다. " /><br />
-
-Name the project JSPProject.<br />
-I will not run Tomcat in Eclipse.<br />
-Leave the settings other than the project name as default and click 'Next' to finish.<br />
-
+In the 'Project name:' text box, type <em>JSPProject</em>.<br />
+I will not run Tomcat in Eclipse, so leave all the values except the project name as default and click 'Finish'.<br />
 <img src="https://lh3.googleusercontent.com/-HVViyq64maY/Tuti18TkZ-I/AAAAAAAAA3U/KQ337OflcXs/s640/JSPProject.PNG" alt="3. 이클립스에서 Dynamic WebProject 를 선택해서 새로운 프로젝트를 생성하는데 프로젝트명은 JSPProject로 한다." /><br />
-
-<img src="https://lh3.googleusercontent.com/-17rYJE8t9no/Tuti3epuNmI/AAAAAAAAA3s/6AMamqkjZP8/s520/WebContent.PNG" alt="4. Dynamic WebProject 로 프로젝트를 생성할 때 웹컨텐츠를 두는 기본 폴더는 WebContent 이다." /><br />
-
-In the Package Explorer view, select the project with the mouse and click the right mouse button to display the menu as shown below.<br />
-Select Build Path, Configure Build Path ... from the menu.<br />
-
+<!-- <img src="https://lh3.googleusercontent.com/-17rYJE8t9no/Tuti3epuNmI/AAAAAAAAA3s/6AMamqkjZP8/s520/WebContent.PNG" alt="4. Dynamic WebProject 로 프로젝트를 생성할 때 웹컨텐츠를 두는 기본 폴더는 WebContent 이다." /><br />
+ -->
+In the Package Explorer view, select the JSPProject project with the mouse and click the right mouse button and select Build Path, Configure Build Path ... as shown below.<br />
 <img src="https://lh6.googleusercontent.com/-Fs1hxINvL_8/Tuti0tC0wKI/AAAAAAAAA3A/aL_2Z1ixVhI/s590/build_path.png" alt="5. 개발을 편하게 하기 위해서 Dynamic WebProject의 기본 output 폴더인 build 를 WEB-INF/classes 로 바꾸기 위해 Build Path  를 선택한다." /><br />
-
-Select the Source tab.<br />
-
+Click the Source tab.<br />
 <img src="https://lh5.googleusercontent.com/-XbccQsDk2Gs/TuwAO6p5hrI/AAAAAAAAA48/g0SMlArOHMI/s741/source_tab_select.PNG" alt="source tab를 선택한다." width="590px" /><br />
-
 Click the Browse... button of the Default output folder.<br />
 Click the Create New Folder... button to create the WEB-INF/classes folder.<br />
 Set the WEB-INF/classes folder to be the Default output folder.
-
 <img src="https://lh3.googleusercontent.com/-Axdwie02Mps/Tuti1e4eG-I/AAAAAAAAA3Q/VkIWy9KCG9s/s552/classes.png" alt="Build Path를 선택해서 나오는 설정화면에서 source 탭을 클릭한다. 아래 Default output Folder 옆의 Browser 를 클릭한 다음 Create New Folder 를 클릭하여 WEB-INF아래 classes 폴더를 만들고 이 폴더를 선택한다." /><br />
-
 Make sure the Default output folder is JSPProject/WebContent/WEB-INF/classes.
-
 <img src="https://lh3.googleusercontent.com/-F2nBQYXkPL4/Tuti0jkBddI/AAAAAAAAA28/iestW7xEr2Q/s733/build_path_result.PNG" width="590px;" alt="변경하려는 Build Path, JSPProject/WebContent/WEB-INF/classes 를 확인하는 설정 화면이다." /><br />
 </p>
 
 <h2>Loading JSPProject into Tomcat</h2>
 
 <p>
-Let Tomcat service JSPProject.<br />
 Create the JSPProject.xml file as shown below and save it to CATALINA_HOME/conf/Catalina/localhost and then rerun Tomcat.<br />
 (Where CATALINA_HOME is the directory where Tomcat is installed)
 </p>
@@ -71,20 +52,18 @@ Create the JSPProject.xml file as shown below and save it to CATALINA_HOME/conf/
 </pre>
 
 <p>
-If the Web application and the JSPProjext.xml file are correct, Tomcat loads and services the JSPProject application.<br />
-If you are a Windows system and have installed Tomcat 8.5, CATALINA_HOME is C:\Program Files\Apache Software Foundation\Tomcat 8.5 
-and the JSPProject.xml file should be stored in C:\Program Files\Apache Software Foundation\Tomcat 8.5\conf\Catalina\localhost.<br />
+If the JSPProjext.xml file are correct, Tomcat loads the JSPProject application.<br />
 Note that the docBase value in JSPProject.xml is not C:/www/JSPProject.<br />
-The parent directory of WEB-INF is the document base.
+The parent directory of WEB-INF is the Document Base.
 </p>
 
 <h3>WEB-INF/web.xml</h3>
 
 <p>
 web.xml is the configuration file for the web application.<br />
-If you created a project in Dynamic Web Project in Eclipse, web.xml can be created automatically.<br />
+If you created a Dynamic Web Project in Eclipse, web.xml can be created automatically.<br />
 If not, copy the web.xml file of the ROOT application in CATALINA_HOME/webapps and paste it into the WEB-INF directory of JSPProject.<br />
-Then, open the web.xml file that you pasted and delete all contents of the web-app element as shown below. 
+Then, open the web.xml and delete all within the web-app element as follows. 
 </p>
 
 <h6 class="src">web.xml</h6>
@@ -119,15 +98,11 @@ Then, open the web.xml file that you pasted and delete all contents of the web-a
 <h3>Test</h3>
 
 <p>
-Let's make sure Tomcat is serving JSPProject.<br />
-Create a test.html file on the document base.<br />
+Create a test.html file on the Document Base.<br />
 With the WebContent selected as shown below, right-click and select New, then HTML File.<br />
- 
 <img src="https://lh5.googleusercontent.com/-5QI9P39l5IQ/Tuti2gJ7hcI/AAAAAAAAA3o/Ic0IBV-nWUw/s590/test_html.png" alt="웹 애플리케이션이 톰캣에 등록한 후에 테스트하기 위해서 웹 애플리케이션의 루트 디렉토리에 test.html 이라는 파일을 만드는 화면이다." /><br />
-
-Visit http://localhost:port/JSPProject/test.html to see if Tomcat is serving your web application.<br />
-(Where port is the port number used by Tomcat.<br />
-You can find the port number in the CATALINA_HOME/conf/server.xml file)
+Visit http://localhost:port/JSPProject/test.html.<br />
+Where port is the port number used by Tomcat, you can find the port number in the CATALINA_HOME/conf/server.xml file.
 </p>
 
 <pre class="prettyprint">
@@ -140,8 +115,9 @@ You can find the port number in the CATALINA_HOME/conf/server.xml file)
 <h2>JSP pages</h2>
 
 <p>
-You will create a Model 1 bulletin board in JSPProject.<br />
-In Model 1, the client requests the JSP directly.
+I have prepared a Model 1 bulletin board as an example to be implemented in JSPProject.<br />
+In Model 1, the client requests the JSP directly.<br />
+The following is a list of JSP files required for the example.
 </p>
 
 <ul>
@@ -153,7 +129,7 @@ In Model 1, the client requests the JSP directly.
   <li>
     <strong>/inc</strong>
     <ol>
-      <li>header.jsp : Logo, Membership menu(Login, Sign Up, Sign out, Edit account)</li>
+      <li>header.jsp : Logo, Membership menu(Login, Sign Up, Logout, Modify account)</li>
       <li>main-menu.jsp : Main menu</li>
       <li>extra.jsp : Image Links</li>
       <li>footer.jsp : Copyright, Contact</li>
@@ -167,21 +143,21 @@ In Model 1, the client requests the JSP directly.
     <strong>/users</strong>
 
     <ol>
-      <li>user-sub.jsp : Account menu</li>
+      <li>user-sub.jsp : Membership menu</li>
       <li>login.jsp : Login form page</li>
       <li>login_proc.jsp : Login execution</li>
       <li>logout_proc.jsp : Logout execution</li>
       <li>signUp.jsp : Sign Up form page</li>
       <li>signUp_proc.jsp : Sign Up execution</li>
       <li>welcome.jsp : Welcome page</li>
-      <li>editAccount.jsp : Edit account forom page</li>
-      <li>editAccount_proc.jsp : Edit account execution</li>
-      <li>changePasswd.jsp : Change password form page</li>
-      <li>changePasswd_proc.jsp : Change password execution</li>
-      <li>changePasswd_confirm.jsp : Change passsword confirmation page</li>
-      <li>bye.jsp : Remove the account form page</li>
-      <li>bye_proc.jsp : Remove the account execution</li>
-      <li>bye_confirm.jsp : Remove the account confirmation page</li>
+      <li>editAccount.jsp : Account modify forom page</li>
+      <li>editAccount_proc.jsp : Account modify execution</li>
+      <li>changePasswd.jsp : Password change form page</li>
+      <li>changePasswd_proc.jsp : Password change execution</li>
+      <li>changePasswd_confirm.jsp : passsword change confirmation page</li>
+      <li>bye.jsp : Account Removal form page</li>
+      <li>bye_proc.jsp : Account Removal execution</li>
+      <li>bye_confirm.jsp : Account Removal confirmation page</li>
     </ol>
   </li>
 </ul>
@@ -192,16 +168,16 @@ In Model 1, the client requests the JSP directly.
     <ol>
       <li>bbs-sub.jsp : Board menu</li>
       <li>list.jsp : Board List page</li>
-      <li>write_form.jsp : New board article form page</li>
-      <li>write_proc.jsp : New board article execution</li>
-      <li>view.jsp : Board Detailed view page</li>
-      <li>addComment_proc.jsp : New comment execution</li>
-      <li>updateComment_proc.jsp : Edit comment execution</li>
-      <li>deleteComment_proc.jsp : Delete comment execution</li>
-      <li>deleteAttachFile_proc.jsp : Delete attach file execution</li>
-      <li>del_proc.jsp : Delete board article execution</li>
-      <li>modify_form.jsp : Edit board article form page</li>
-      <li>modify_proc.jsp : Edit board article execution</li>
+      <li>write_form.jsp : Board article write form page</li>
+      <li>write_proc.jsp : Board article write execution</li>
+      <li>view.jsp : Board detailed view page</li>
+      <li>addComment_proc.jsp : Comment write execution</li>
+      <li>updateComment_proc.jsp : Comment modify execution</li>
+      <li>deleteComment_proc.jsp : Comment delete execution</li>
+      <li>deleteAttachFile_proc.jsp : Attach file delete execution</li>
+      <li>del_proc.jsp : Board article delete execution</li>
+      <li>modify_form.jsp : Board article modify form page</li>
+      <li>modify_proc.jsp : Board article modify execution</li>
     </ol>
   </li>
 </ul>
@@ -210,7 +186,7 @@ In Model 1, the client requests the JSP directly.
   <li>
     <strong>/java</strong>
     <ol>
-      <li>index.jsp</li>
+      <li>index.jsp : Java Home</li>
     </ol>
   </li>
 </ul>
