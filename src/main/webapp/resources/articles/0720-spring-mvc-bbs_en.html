@@ -1,59 +1,51 @@
 <article>
 
-<h1>Spring MVC Bulletin Board</h1>
+<h1>Bulletin Board on Spring MVC</h1>
 
 <p>
-The following article covers modifying the Model 2 bulletin board to use Spring MVC.<br />
-You need the output of <a href="spring/building-java-projects-with-maven">Building Spring MVC with maven</a> and the final source of the Model 2 bulletin board in <a href="/jsp-pjt">JSP Porject</a> chapter.<br />
-Download the Model 2 board source with the following command. (Git must be installed on your system)
+This article covers modifying the Model 2 project to Spring MVC project.<br />
+You need the final source of <a href="/spring/building-java-projects-with-maven">'Building Spring MVC with maven'</a> and the final source of the Model 2 bulletin board of the <a href="/jsp-pjt">JSP Porject</a> chapter.<br />
+If Git be installed on your system, you can download the Model 2 final source with the following command:
 </p>
 
-<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
-<pre class="screen">
-C:\www&gt; <span class="prompt-selection">git clone https://github.com/kimjonghoon/model2</span>
+<pre>
+git clone https://github.com/kimjonghoon/model2
 </pre>
 
 <h2>Database design</h2>
 
 <p>
-See <a href="http://www.java-school.net/jsp-pjt/database-design">http://www.java-school.net/jsp-pjt/database-design</a>.
+See <a href="/jsp-pjt/database-design">Database design</a>.
 </p>
 
 <h2>Stylesheets and Images</h2>
 
 <p>
-모델 2게시판의 C:/www/model2/WebContent에서 css/와 images/ 폴더를 복사하여, 도큐먼트베이스인 C:/www/spring-bbs/src/main/webapp 디렉터리에 붙여넣는다.
+Copy the css/ and images/ folders from C:/www/model2/WebContent on the Model 2 bulletin board and paste them into the Document Base, C:/www/spring-bbs/src/main/webapp directory.
 </p>
 
 <h2>JSPs</h2>
 
 <p>
-C:/www/spring-bbs/src/main/webapp/WEB-INF/views/ 폴더를 만들고, 모델 2 게시판의 C:/www/model2/WebContent에서 index.jsp(홈페이지)와 error.jsp(에러 페이지) 그리고 JSP 파일 폴더인 bbs/, inc/, java/, users/를 복사하여 붙여넣는다.
+Create the views folder under C:/www/spring-bbs/src/main/webapp/WEB-INF.<br />
+Copy the index.jsp, error.jsp, /bbs, /inc, /java, /users folders from the Document Base of Model 2 board and paste them into the /views folder.
 </p>
 
 <p>
-JSP를 WEB-INF/ 아래에 두는 이유는 웹 브라우저로 JSP에 바로 접근하지 못 하게 하기 위해서다. 스프링 MVC는
-모든 요청을 디스패처 서블릿을 거쳐 컨트롤러에 전달되도록 하는 것을 권장한다. JSP를 바로 요청할 수 있으면서 어떤 요청은
-디스패처 서블릿을 거치도록 프로그래밍하는 것은 프로그램을 복잡하게 하고 유지 보수에도 좋지 않다.
+The reason for putting the JSP in the / WEB-INF subdirectory is to prevent the web browser from directly accessing the JSP.<br />
+Spring MVC recommends that all requests be passed to the controller through the dispatcher servlet.
 </p>
 
-<h2>자바 소스 복사</h2>
+<h2>Java sources</h2>
 
 <p>
-C:/www/spring-bbs/src/main/java에 모델 2 게시판의 C:/www/model2/src/net/java_school에서 모든 자바 소스 폴더를 복사하여 붙여넣는다.
-만약 C:/www/spring-bbs/src/main/java 폴더가 없다면 메이븐 프로젝트의 기본 디렉터리이니 만든다.
+Copy all the Java source folders from C:/www/model2/src/net/java_school on the Model 2 bulletin board and paste them into C:/www/spring-bbs/src/main/java.
 </p>
 
-<p>
-복사한 자바 소스 중 action 클래스와 컨트롤러 역할을 수행하는 서블릿은 더이상 사용하지 않으므로 삭제해도 된다.
-</p>
-
-
-<h2>JSP 수정</h2>
+<h2>Modify JSP</h2>
 
 <p>
-스프링은 디스패처 서블릿이 모든 요청을 담당하도록 설정할 것을 권장한다.
-web.xml의 다음 부분이 디스패처 서블릿이 모든 요청을 담당토록 하는 설정이다.
+As recommended by Spring MVC, set the following in web.xml so that the dispatcher servlet will handle all requests:
 </p>
 
 <pre class="prettyprint">
@@ -63,20 +55,20 @@ web.xml의 다음 부분이 디스패처 서블릿이 모든 요청을 담당토
 &lt;/servlet-mapping&gt;
 </pre>
 
-<h3>JSP에서 요청 문자열 변경</h3>
+<h3>Change the request string within JSPs</h3>
 
 <p>
-모델 2 게시판에서는 컨트롤러는 .do로 끝나는 요청만을 담당했다.
-따라서 모델 2 게시판의 뷰에서 .do로 끝나는 모든 요청 문자열을 수정해야 한다.
-예를 들어, header.jsp안의 ../users/login.do를 ../users/login으로 수정하는 식이다.
-이렇게 모든 JSP에서 .do로 끝나는 요청 문자열에서 .do를 제거한다.
+The Model 2 board controller was only responsible for requests ending in .do.<br />
+Therefore, you must modify all request strings ending in .do in the JSP of the Model 2 bulletin board.<br />
+Remove .do from request strings ending in .do in any JSP.<br />
+For example, modify ../users/login.do in header.jsp to ../users/login.
 </p>
 
-<h3>목록과 상세보기에서 날짜 포맷 변경</h3>
+<h3>Change date format in list.jsp and view.jsp</h3>
 
 <p>
-list.jsp와 view.jsp에서의 날짜 포맷을 다르게 할 것이다.
-두 파일에 다음 태그 라이브러리를 추가한다.
+The date formats in list.jsp and view.jsp will be different.<br />
+Add the following tag libraries to both files:
 </p>
 
 <pre class="prettyprint">
@@ -84,7 +76,7 @@ list.jsp와 view.jsp에서의 날짜 포맷을 다르게 할 것이다.
 </pre>
 
 <p>
-list.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정한다.
+In list.jsp, find the part that displays the date and modify it as follows.
 </p>
 
 <pre class="prettyprint">
@@ -92,7 +84,7 @@ list.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정�
 </pre>
 
 <p>
-view.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정한다.
+In view.jsp, find the part that displays the date and modify it as follows.
 </p>
 
 <pre class="prettyprint">
@@ -100,19 +92,18 @@ view.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정�
 &lt;fmt:formatDate pattern="yyyy.MM.dd" value="${article.regdate }" /&gt;
 </pre>
 
-<h2>첨부 파일을 내려받는 JSP 추가</h2>
+<h3>Create download.jsp</h3>
 
 <p>
-모델 2 게시판은 상세보기(view.jsp)에서 첨부 파일을 단순히 링크 거는 것으로 구현했다.
-스프링 MVC 게시판에서는 /WEB-INF/views/inc/download.jsp를 이용하여 첨부 파일을 내려받는 것으로 변경할 것이다.
-이 경우 웹 브라우저가 접근하지 못하는 경로에 첨부 파일이 있어도 상관없다.
+The view.jsp on the Model 2 bulletin board simply links the attachment.<br />
+On the Spring MVC bulletin board, the download.jsp be used to download the attachment.<br />
+With download.jsp, you can download attachments even if they are in a location that your web browser can not access.
 </p>
 
 <h6 class="src">/WEB-INF/views/inc/download.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;	  
-    
 &lt;%@ page import="java.io.File" %&gt;
 &lt;%@ page import="java.net.URLEncoder" %&gt;
 &lt;%@ page import="java.io.OutputStream" %&gt;
@@ -121,7 +112,7 @@ view.jsp에서 날짜를 출력하는 부분을 찾아 다음과 같이 수정�
 &lt;%@ page import="org.springframework.util.FileCopyUtils" %&gt;
 &lt;%@ page import="net.java_school.commons.WebContants" %&gt;
 &lt;%
-//request.setCharacterEncoding("UTF-8");//이 작업은 필터가 한다.
+//request.setCharacterEncoding("UTF-8");//This is done by a filter.
 String filename = request.getParameter("filename");
 
 File file = new File(<strong>WebContants.UPLOAD_PATH</strong> + filename);
@@ -164,13 +155,7 @@ out.flush();
 </pre>
 
 <p>
-위에서 <strong>WebContants.UPLOAD_PATH</strong>는 첨부 파일이 있는 디렉터리를 상수화 한 것이다.
-WebContants.java에 첨부 파일이 저장되는 디렉터리의 전체 경로 UPLOAD_PATH를 추가한다.
-</p>
-
-<p>
-모델 2에서는 웹 브라우저로 접근할 수 있는 디렉터리였으나 여기서는 접근할 수 없는 디렉터리를 선택했다. 
-따라서 단순히 링크로 파일을 내려받을 수 없다. view.jsp의 첨부 파일 다운로드 코드가 변경되어야 한다는 점을 기억하자.
+In the above, WebContants.UPLOAD_PATH is the directory where the attachment is located. Add UPLOAD_PATH to WebContants.java.
 </p>
 
 <h6 class="src">WebContants.java</h6>
@@ -189,8 +174,18 @@ public class WebContants {
 }
 </pre>
 
+<p>
+C:/www/spring-bbs/upload/ is a directory that the web browser can not access.<br />
+Therefore, you can not download attachments as links.<br />
+Note that the attachment download code in view.jsp must be changed.
+</p>
 
-<h2>로그</h2>
+<h2>Logging</h2>
+
+<p>
+Create the following file in C:/www/spring-bbs/src/main/resources.<br />
+If the /resources folder does not exist, create it and run <strong>'Maven' - 'Update Project...'</strong> to synchronize.
+</p>
 
 <h6 class="src">commons-logging.properties</h6>
 <pre class="prettyprint">
@@ -220,21 +215,15 @@ org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 &lt;/Configuration&gt;
 </pre>
 
-<p>
-위 두 개의 파일을 C:/www/spring-bbs/src/main/resources에 생성한다.<br />
-C:/www/spring-bbs/src/main/resources 폴더가 없다면 만들고, 컨텍스트 메뉴에서 Maven - Update Project... 를 실행하여 동기화한 후 작업한다.<br />
-</p>
 
-<h2>회원</h2>
+<h2>Membership</h2>
 
 <p>
-데이터베이스 관련 코드는 MyBatis-Spring 라이브러리를 사용하도록 수정할 것이다.
-MyBatis-Spring 공식 문서에는 스프링과 마이바티스의 연동에 관한 여러 가지 방법을 소개하고 있다.
-여기서는 DAO 패턴을 이용하지 않는 방법을 선택했다.
+Database-related code will be modified to use the MyBatis-Spring.
 </p>
 
 <p>
-UserService.java를 인터페이스로 변경한다.
+Change UserService.java to interface.
 </p>
 
 <h6 class="src">UserService.java</h6>
@@ -243,30 +232,23 @@ UserService.java를 인터페이스로 변경한다.
 
 public interface UserService {
     
-  //회원 가입
   public void addUser(User user);
 
-  //로그인
   public User login(String email, String passwd);
 
-  //내 정보 수정
   public int editAccount(User user);
 
-  //비밀번호 변경
   public int changePasswd(String currentPasswd, String newPasswd, String email);
 
-  //탈퇴
   public void bye(User user);
 
-  //회원 찾기
   public User getUser(String email);
     
 }
 </pre>
 
 <p>
-net.java_school.mybatis 패키지에 UserMapper.java를 작성한다.
-(모델 2 게시판의 UserDao와 일관성을 위해 메서드 이름은 될 수 있으면 그대로 유지했다)
+Create UserMapper.java in the net.java_school.mybatis package.
 </p>
 
 <h6 class="src">UserMapper.java</h6>
@@ -299,13 +281,7 @@ public interface UserMapper {
 </pre>
 
 <p>
-비밀번호 변경을 위한 메서드 명은 UserDao에서의 update가 아닌 updatePasswd로 변경했다.
-UserMapper.xml에 UserMapper.java의 메서드 이름으로 id를 설정해야 하는데, update라고 그대로 쓰면 내 정보 수정의 update와 이름이 같아져서 id가 중복되기 때문이다.
-(UserMapper.xml은 곧 다루는데, 마이바티스 설정 파일로 매퍼라 부른다)
-</p>
-
-<p>
-net.java_school.user 패키지에 UserServiceImpl.java를 만든다.
+Create UserServiceImpl.java in the net.java_school.user package.
 </p>
 
 <h6 class="src">UserServiceImpl.java</h6>
@@ -351,10 +327,10 @@ public class UserServiceImpl implements UserService {
 </pre>
 
 <p>
-src/main/resources에 net.java_school.mybatis 패키지를 만들고, 이 패키지에 마이바티스 관련 설정 파일인 Congifuration.xml을 만든다.
-이 파일은 타입의 별칭과 매퍼 파일의 위치를 설정한다.
-메이븐 프로젝트에서 클래스 패스에 생성되어야 할 설정 파일은 반드시 src/main/resources에 생성해야 한다.
-설정 파일을 소스 디렉터리에 만들어도 클래스 패스에 복사되지 않기 때문이다. 
+In the project explorer view, create the net.java_school.mybatis package in src/main/resources, and create the MyBatis related configuration file Congifuration.xml in this package.<br />
+This file sets the alias of the type and the location of the mapper files.<br />
+The configuration file to be created in the classpath in the Maven project must be created in src/main/resources.<br />
+If you create a configuration file in the source directory in the Maven project, it will not be copied to the classpath.
 </p>
 
 <h6 class="src">Configuration.xml</h6>
@@ -387,8 +363,8 @@ src/main/resources에 net.java_school.mybatis 패키지를 만들고, 이 패키
 </pre>
 
 <p>
-Configuration.xml와 같은 위치에 UserMapper.xml 파일을 만든다.
-UserMapper.java의 메서드 이름과 id 값이 일치해야 한다.
+Create a UserMapper.xml file in the same location as Configuration.xml.<br />
+In the mapper file, the id must match the method name in UserMapper.java.
 </p>
 
 <h6 class="src">UserMapper.xml</h6>
@@ -434,10 +410,9 @@ UserMapper.java의 메서드 이름과 id 값이 일치해야 한다.
 </pre>
 
 <p>
-net.java_school.controller 패키지에 UsersController.java를 작성한다.
-이 컨트롤러가 "/users"를 포함하는 모든 요청을 처리하도록 하려면,
-클래스를 선언하는 곳 위에 @Controller 어노테이션을 사용하여 이 클래스가 컨트롤러 컴포넌트임을 표시해주고 
-@Controller 어노테이션 바로 아래 @RequestMapping("users") 어노테이션을 적용하여 "/users로 시작하는 모든 요청을 담당한다고 표시한다.
+Create UsersController.java in the net.java_school.controller package.<br />
+If you want this controller to handle all requests involving "/users", 
+add the @Controller annotation to the class declaration and add the @RequestMapping ("users") annotation right below the @Controller annotation.
 </p>
 
 <h6 class="src">UsersController.java</h6>
@@ -508,11 +483,9 @@ public class UsersController {
     User user = (User) session.getAttribute(WebContants.USER_KEY);
 
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
       
       return "redirect:/users/login?url=" + url;
@@ -546,11 +519,9 @@ public class UsersController {
     User user = (User) session.getAttribute(WebContants.USER_KEY);
         
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
       return "redirect:/users/login?url=" + url;     
     }
@@ -581,11 +552,9 @@ public class UsersController {
     User user = (User)session.getAttribute(WebContants.USER_KEY);
         
     if (user == null) {
-      //로그인 후 다시 돌아오기 위해
       String url = req.getServletPath();
       String query = req.getQueryString();
       if (query != null) url += "?" + query;
-      //로그인 페이지로 리다이렉트
       url = URLEncoder.encode(url, "UTF-8");
       
       return "redirect:/users/login?url=" + url;     
@@ -628,20 +597,22 @@ public class UsersController {
 </pre>
 
 <p>
-메서드 선언 위의 @RequestMapping(value="signUp", method=RequestMethod.GET)는 메서드가 GET 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
-("/users/signUp"에서 "/users" 부분은 UsersController 클래스 이름 위의 @RequestMapping("users") 어노테이션 때문이다.)
-메서드 선언 위의 @RequestMapping(value="/signUp", method=RequestMethod.POST)는 메서드가 POST 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
-이처럼 요청 문자열이 같더라도 HTTP 메서드로 구분하여 요청을 각각 처리할 수 있다.
-POST 방식의 /users/signUp 요청 시 호출되는 메서드는 회원 가입을 처리한 후에는 return "redirect:/users/welcome";로 리다이렉트한다.
-여기서 포워드를 쓴다면 사용자가 F5버튼 등으로 재로딩할때 회원 가입이 똑같은 정보로 다시 시도될 수 있다.
-리다이렉트는 그런 일이 발생하지 않는다.
-이점이 포워딩과 리다이렉트를 선택할 때 중요한 선택 기준이다.
-리다이렉트를 선택할 때는 컨트롤러에 리다이렉트 요청에 대한 매핑을 추가해야 한다.
-@RequestMapping(value="welcome", method="RequestMethod.GET")
+The @RequestMapping(value="signUp", method=RequestMethod.GET) annotation above the method declaration allows the method to handle the "/users/signUp" request of the GET method.<br />
+(The "/users" part of "/users/signUp" is due to the @RequestMapping("users") annotation added above the UsersController class declaration)
 </p>
 
 <p>
-아래는 HomeController은 홈페이지 요청을 담당하는 컨트롤러이다.
+@RequestMapping(value="/signUp", method=RequestMethod.POST) above the method declaration allows the method to handle the "/users/signUp" request of the POST method.<br />
+Even if the request string is the same, it is possible to handle each request separately by HTTP method.<br />
+The method invoked on the /users/signUp request of the POST method redirects the request to welcome.jsp after completing membership.<br />
+If this method changes the screen using forwarding after membership, the user can try to subscribe with the same information using the F5 button.<br />
+Redirects do not have this problem.<br />
+If you have chosen a welcome request using a redirect, the controller should have the following:
+</p>
+<pre class="prettyprint">@RequestMapping(value="welcome", method="RequestMethod.GET")</pre>
+
+<p>
+HomeController is the controller responsible for homepage request.
 </p>
 
 <h6 class="src">HomeController.java</h6>
@@ -662,7 +633,7 @@ public class HomeController {
 </pre>
 
 <p>
-JavaController은 "/java"가 포함된 모든 요청을 처리하는 컨트롤러이다.
+The JavaController is the controller that handles all requests that contain "/java".
 </p>
 
 <h6 class="src">JavaController.java</h6>
@@ -690,7 +661,7 @@ public class JavaController {
 </pre>
 
 <p>
-JavascriptController은 "/javascrit"가 포함된 모든 요청을 처리하는 컨트롤러이다.
+The JavascriptController is the controller that handles all requests that contain "/javascript".
 </p>
 
 <h6 class="src">JavascriptController.java</h6>
@@ -713,7 +684,7 @@ public class JavascriptController {
 </pre>
 
 <p>
-web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng-bbs-servlet.xml라는 이름으로 web.xml과 같은 위치인 WEB-INF에 스프링 설정 파일을 생성한다.
+Since spring-bbs is the name of DispatcherServlet in web.xml, create sprng-bbs-servlet.xml file in /WEB-INF folder.
 </p>
 
 <h6 class="src">spring-bbs-servlet.xml</h6>
@@ -733,7 +704,7 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
     http://mybatis.org/schema/mybatis-spring 
     http://mybatis.org/schema/mybatis-spring.xsd"&gt;
             
-  &lt;!-- 스프링의 DispatcherServet에게 정적인 자원을 알려준다.  --&gt;
+  &lt;!-- The following tells Dispatcher servlet the location of the static resource.  --&gt;
   &lt;mvc:resources location="/images/" mapping="/images/**" /&gt;
   &lt;mvc:resources location="/css/" mapping="/css/**" /&gt;
         
@@ -794,14 +765,23 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
 &lt;/beans&gt;
 </pre>
 
-<h3>spring-bbs-servlet.xml 설명</h3>
+<h3>spring-bbs-servlet.xml</h3>
+
+<p>
+The following tells Dispatcher servlet the location of the static resource.
+</p>
 
 <pre class="prettyprint">
 <strong>&lt;mvc:resources location=".." /&gt;</strong>
 </pre>
 
 <p>
-이 설정은 디스패쳐 서블릿에 정적 자원의 위치를 알려준다.
+The next setting will automatically scan the bean and register it in the container.<br />
+The scanned bean does not need to be registered in the Spring configuration file.<br />
+In order for a bean to auto-scan, it must belong to the base-package package and have an annotation indicating that it is a component above the class declaration.<br />
+Classes with @Controller and @Repository annotations above the class declaration are treated as annotation names.<br />
+@Repository is used for DAO class.<br />
+The @Component and @Service annotations above the class declaration only indicate that the class is only auto-scanned, and nothing else is special.
 </p>
 
 <pre class="prettyprint">
@@ -809,12 +789,7 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
 </pre>
 
 <p>
-이 설정은 자동으로 빈을 스캔하여 빈 컨테이너에 등록한다.
-스캔 되는 빈은 스프링 설정 파일에서 bean 엘리먼트를 사용하여 따로 등록하지 않아도 된다.
-빈이 자동 스캔되려면 base-package 패키지에 속하면서, 동시에 클래스 선언부 위에 컴포넌트임을 표시하는 어노테이션이 있어야 한다.
-이때, 클래스 선언부 위에 @Controller, @Repository 어노테이션이 있는 클래스는 어노테이션의 이름대로 취급된다.
-@Repository는 DAO 클래스에 사용한다.
-클래스 선언부 위에 @Component와 @Service 어노테이션은 클래스가 단지 자동 스캔 대상이라는 사실만을 표시하며, 그 외 특별하게 취급되는 사항은 없다.
+Spring applications that run on an annotation base require the following settings:
 </p>
 
 <pre class="prettyprint">
@@ -822,7 +797,7 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
 </pre>
 
 <p>
-어노테이션 기반으로 동작하는 스프링 애플리케이션은 이 설정이 필요하다.
+The following settings scan mybatis-spring beans and register them in the container.
 </p>
 
 <pre class="prettyprint">
@@ -830,8 +805,7 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
 </pre>
 
 <p>
-base-package 속성에 매퍼 인터페이스의 패키지를 지정하면, 마이바티스 스프링 연동 빈즈가 스캔된다.
-이 설정을 이용하면 아래 설정을 생략할 수 있다.
+Using the above configuration, you can omit the following settings from the Spring configuration file.
 </p>
 
 <pre class="prettyprint">
@@ -841,12 +815,17 @@ base-package 속성에 매퍼 인터페이스의 패키지를 지정하면, 마�
 &lt;/bean&gt;
 </pre>
 
+<p>
+The dataSource definition is always needed whether you use Spring JDBC or MyBatis.
+</p>
+
 <pre class="prettyprint">
 <strong>&lt;bean id="dataSource" ..&gt;</strong>
 </pre>
 
 <p>
-dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용하든지 상관없이 언제나 필요하다.
+All MyBatis applications must use instances of the SqlSessionFactory interface type.<br />
+MyBatis Spring uses the SqlSessionFactoryBean.
 </p>
 
 <pre class="prettyprint">
@@ -854,22 +833,18 @@ dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용
 </pre>
 
 <p>
-모든 MyBatis 애플리케이션은 SqlSessionFactory 인터테이스 타입의 인스턴스를 사용해야 한다.
-마이바티스 스프링 연동모듈에서는 SqlSessionFactoryBean를 사용한다.
+The following are settings for uploading files.<br />
+When uploading a file, a wrapper for the HttpServletRequest is passed to the controller.<br />
+The method that handles the uploaded file must cast the wrapper to the MultiPartHttpServletRequest interface to handle the multipart file passed to the server.
 </p>
 
 <pre class="prettyprint">
 <strong>&lt;bean id="multipartResolver" ..&gt;</strong>
 </pre>
 
-<p>
-파일 업로드를 위한 설정이다.
-파일을 업로드할 때 HttpServletRequest의 래퍼가 컨트롤러에 전달된다.
-컨트롤러에서 업로드된 파일을 처리하는 메서드는 래퍼를 MultiPartHttpServletRequest 인터페이스로 캐스팅해야 서버로 전달된 멀티파트 파일을 다룰 수 있게 된다.
-</p>
 
 <p>
-&lt;!-- ViewResolver --&gt; 부분은 컨트롤러가 반환하는 문자열로부터 뷰를 해석하는 방법이다.
+The following is a setting for how to interpret the view from the string returned by the controller.
 </p>
 
 <pre class="prettyprint">
@@ -877,29 +852,35 @@ dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용
 </pre>
 
 <p>
-스프링 MVC 예외 처리에 대한 설정이다.
-스프링 MVC에는 여러 가지 예외 처리 방법이 있다.
-이 중에서 SimpleMappingExceptionResolver를 이용하는 것이 가장 사용하기 쉽다.
-설정대로라면 AuthenticationException 예외가 발생하면 선택되는 뷰는 403-error이다.
-403-error 역시 뷰리졸브의 의해 /WEB-INF/views/403-error.jsp로 해석된다.
-이 파일은 정확한 위치에 생성한다. 간단히 "접근거부"라고 보여주면 된다.
-참고로, /403-error에 대한 요청은 컨트롤러에서 매핑하지 않아도 된다.
-이 밖의 다른 예외가 발생하면 다음 설정이 에러를 처리한다. 
+The following are the settings for Spring MVC exception handling.<br />
+Spring MVC has several exception handling methods.<br />
+Among them, it is easiest to use SimpleMappingExceptionResolver.<br />
+<br />
+If an AuthenticationException exception is thrown, the 403-error view is set to be selected.<br />
+The 403-error is interpreted as /WEB-INF/views/403-error.jsp by the view resolver.<br />
+<br />
+Create a 403-error.jsp file that says "Access Denied".<br />
+For reference, you do not need to define a handler for the / 403-error to the controller.
+</p>
+
+<pre class="prettyprint">
+&lt;prop key="net.java_school.exception.AuthenticationException"&gt;
+  403-error
+&lt;/prop&gt;
+</pre>
+
+<p>
+If any other exception occurs, the following setting handles the error.
 </p>
 
 <pre class="prettyprint">
 &lt;property name="defaultErrorView" value="error" /&gt;
 </pre>
 
-<p>
-/WEB-INF/views/error.jsp는 이전 예제의 error.jsp 파일이다.
-이밖에 404와 500 HTTP 상태 코드에 대해서는 web.xml에서 error-page 엘리먼트로 설정했다.
-</p>
-
-<h2>게시판</h2>
+<h2>Board</h2>
 
 <p>
-Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 같은 위치에 만든다.
+Create the BoardMapper.xml file in the same location as the UserMapper.xml, as configured in Configuration.xml.
 </p>
 
 <h6 class="src">BoardMapper.xml</h6>
@@ -1097,30 +1078,18 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
 &lt;/mapper&gt;
 </pre>
 
-<h3>MyBatis에서 인서트 후 고유번호가 반환되게 하는 방법</h3>
+<h3>How to make MyBatis return a unique number after an insert</h3>
 
 <p>
-<em>&lt;insert id="insert" ..&gt;</em>부분이 새 글을 추가할 때 쓰인다.<br />
-모델 2 게시판의 BoardDao.insert() 메서드는<br />
-<em>INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)<br />
-VALUES (<strong>SEQ_ARTICLE.nextval</strong>, ?, ?, ?, ?, 0, sysdate);</em><br />
-문이 성공한 후 첨부 파일이 있으면<br />
-<em>INSERT INTO attachfile (attachfileno, filename, filetype, filesize, articleno, email)<br />
-VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, <strong>SEQ_ARTICLE.currval</strong>, ?)</em>문을 이어서 실행하는 것으로 글쓰기를 구현했다.<br />
-이렇듯 JDBC를 쓰는 상황에서는 모든 것이 분명하다.
-하지만 JDBC 위에서 동작하는 프레임워크를 사용하는 상황에서는 JDBC를 사용할 때 분명해 보이던 것에 대한 해법을 찾기가 쉽지 않다.
-</p>
-
-<p>
-마이바티스에서 DML은 일반적으로 바뀐 행수가 반환한다.
-인서트 문장이 실행된 후 고유번호가 반환되기를 원한다면 useGeneratedKeys="true" 속성이 있어야 하고, 오라클과 같이 자동 증가 칼럼이 없는 경우엔 selectKey 서브 엘리먼트를 사용해야 한다.
+Add useGeneratedKeys="true".<br />
+For databases that do not have auto-increment columns lide Oracle, add the selectKey subelement as follows:
 </p>
 
 <pre class="prettyprint">
-&lt;insert id="insert" parameterType="Article" useGeneratedKeys="true"&gt;
-    &lt;selectKey keyProperty="articleNo" resultType="int" order="BEFORE"&gt;
+&lt;insert id="insert" parameterType="Article" <strong>useGeneratedKeys="true"</strong>&gt;
+    <strong>&lt;selectKey keyProperty="articleNo" resultType="int" order="BEFORE"&gt;
         SELECT seq_article.nextval FROM dual
-    &lt;/selectKey&gt;
+    &lt;/selectKey&gt;</strong>
     INSERT INTO article (articleNo, boardCd, title, content, email, hit, regdate)
     VALUES
     (#{articleNo}, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
@@ -1128,26 +1097,7 @@ VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, <strong>SEQ_ARTICLE.currval</strong>, ?
 </pre>
 
 <p>
-이외에도 MyBatis와 연동하면서 바뀐 내용은 다음과 같다.<br />
-모델 2의 게시글 수정 메서드는<br />
-<em>UPDATE article SET title = ?, content = ? WHERE articleno = ?</em><br />
-을 실행한 후에 첨부 파일이 있다면<br />
-<em>INSERT INTO attachfile<br />
-(attachfileno, filename, filetype, filesize, articleno, email)<br />
-VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, ?, ?)</em>을 연이어 실행하는 구조였으나 Spring MVC 프로젝트에서는 update()와 insertAttachFile() 메서드의 조합으로 이를 대신했다.
-</p>
-
-<p>
-모델 2의 게시글 삭제 메서드는<br />
-DELETE FROM comments WHERE articleno = ?<br />
-DELETE FROM attachfile WHERE articleno = ?<br />
-DELETE FROM article WHERE articleno = ?을 하나의 트랜잭션으로 실행하는 것이었다.<br />
-Spring MVC 프로젝트에서는 간단한 구현을 위해<br />
-DELETE FROM article WHERE articleno = ?만 실행하는 것으로 구현한다.<br />
-</p>
-
-<p>
-BoardMapper.xml에 맞게 BoardMapper.java를 아래와 같이 만든다.
+Create BoardMapper.java as shown below.
 </p>
 
 <h6 class="src">BoardMapper.java</h6>
@@ -1162,68 +1112,49 @@ import net.java_school.board.Comment;
 
 public interface BoardMapper {
 
-  //목록
   public List&lt;Article&gt; selectListOfArticles(HashMap&lt;String, String&gt; hashmap);  
 
-  //총 레코드
   public int selectCountOfArticles(HashMap&lt;String, String&gt; hashmap);
 
-  //글쓰기
   public int insert(<strong>Article article</strong>);   
 
-  <strong>//첨부 파일 추가
-  public void insertAttachFile(AttachFile attachFile);</strong>
+  <strong>public void insertAttachFile(AttachFile attachFile);</strong>
 
-  //글수정
   public void update(<strong>Article article</strong>);  
 
-  //글삭제
   public void delete(int articleNo);
 
-  //조회 수 증가
   public void updateHitPlusOne(int articleNo);  
 
-  //상세보기
   public Article selectOne(int articleNo);
 
-  //다음 글
   public Article selectNextOne(<strong>HashMap&lt;String, String&gt; hashmap</strong>); 
 
-  //이전 글 
   public Article selectPrevOne(<strong>HashMap&lt;String, String&gt; hashmap</strong>);
 
-  //첨부 파일 리스트  
   public List&lt;AttachFile&gt; selectListOfAttachFiles(int articleNo);    
 
-  //첨부 파일 삭제  
   public void deleteFile(int attachFileNo); 
 
-  //게시판
   public String selectOneBoard(String boardCd);
 
-  //댓글 쓰기 
   public void insertComment(Comment comment);   
 
-  //댓글 수정 
   public void updateComment(Comment comment);
 
-  //댓글 삭제
   public void deleteComment(int commentNo);
 
-  //댓글 리스트
   public List&lt;Comment&gt; selectListOfComments(int articleNo);
 
-  //첨부 파일 찾기
   public AttachFile selectOneAttachFile(int attachFileNo);
 
-  //댓글 찾기
   public Comment selectOneComment(int commentNo);
 
 } 
 </pre>
 
 <p>
-모델 2의 BoardService.java를 인터페이스로 바꾼다.
+Modify BoardService.java to be an interface.
 </p>
 
 <h6 class="src">BoardService.java</h6>
@@ -1233,69 +1164,49 @@ import java.util.List;
 
 public interface BoardService {
 
-  //목록
   public <strong>List&lt;Article&gt;</strong> getArticleList(String boardCd, String searchWord, <strong>Integer startRecord, Integer endRecord</strong>);
 
-  //총 레코드
   public int getTotalRecord(String boardCd, String searchWord);
 
-  //글쓰기
   public int addArticle(<strong>Article article</strong>);
 
-  <strong>//첨부 파일 추가 
-  public void addAttachFile(AttachFile attachFile);</strong>
+  <strong>public void addAttachFile(AttachFile attachFile);</strong>
 
-  //글 수정 
   public void modifyArticle(<strong>Article article</strong>);
 
-  //글 삭제 
   public void removeArticle(int articleNo);
 
-  //조회 수 증가 
   public void increaseHit(int articleNo);
 
-  //상세보기 
   public Article getArticle(int articleNo);
 
-  //다음 글 
-  public Article getNextArticle(int articleNo, 
-      String boardCd, String searchWord);
+  public Article getNextArticle(int articleNo, String boardCd, String searchWord);
 
-  //이전 글 
-  public Article getPrevArticle(int articleNo, 
-      String boardCd, String searchWord);
+  public Article getPrevArticle(int articleNo, String boardCd, String searchWord);
 
-  //첨부 파일 리스트 
   public <strong>List&lt;AttachFile&gt;</strong> getAttachFileList(int articleNo);
 
-  //첨부 파일 삭제 
   public void removeAttachFile(int attachFileNo);
 
-  //게시판 
   public Board getBoard(String boardCd);
 
-  //댓글 쓰기 
   public void addComment(Comment comment);
 
-  //댓글 수정 
   public void modifyComment(Comment comment);
 
-  //댓글 삭제 
   public void removeComment(int commentNo);
 
-  //댓글 리스트 
   public <strong>List&lt;Comment&gt;</strong> getCommentList(int articleNo);
 
-  //첨부 파일 찾기 
   public AttachFile getAttachFile(int attachFileNo);
 
-  //댓글 찾기 
   public Comment getComment(int commentNo);
+
 }
 </pre>
 
 <p>
-BoardService 인터페이스의 구현체 BoardServiceImpl.java를 net.java_school.board 패키지에 만든다.
+In the net.java_school.board package, create BoardServiceImpl.java, which is an implementation of the BoardService interface.
 </p>
 
 <h6 class="src">BoardServiceImpl.java</h6>
@@ -1314,7 +1225,6 @@ public class BoardServiceImpl implements BoardService {
   @Autowired
   private BoardMapper boardMapper;
 
-  //목록 
   @Override
   public <strong>List&lt;Article&gt;</strong> getArticleList(String boardCd, String searchWord, <strong>Integer startRecord, Integer endRecord</strong>) {
     HashMap&lt;String, String&gt; hashmap = new HashMap&lt;String, String&gt;();
@@ -1326,7 +1236,6 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.selectListOfArticles(hashmap);
   }
     
-  //총 레코드 
   @Override 
   public int getTotalRecord(String boardCd, String searchWord) {
     HashMap&lt;String,String&gt; hashmap = new HashMap&lt;String,String&gt;();
@@ -1336,43 +1245,36 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.selectCountOfArticles(hashmap);
   }
     
-  //글쓰기 
   @Override
   public int addArticle(Article article) {
     return boardMapper.insert(article);
   }
 
-  //첨부 파일 추가 
   @Override
   public void addAttachFile(AttachFile attachFile) {
     boardMapper.insertAttachFile(attachFile);
   }
 
-  //글 수정 
   @Override
   public void modifyArticle(Article article) {
     boardMapper.update(article);
   }
 
-  //글 삭제
   @Override
   public void removeArticle(int articleNo) {
     boardMapper.delete(articleNo);
   }
 
-  //조회 수 증가 
   @Override
   public void increaseHit(int articleNo) {
     boardMapper.updateHitPlusOne(articleNo);
   }
 
-  //상세보기 
   @Override
   public Article getArticle(int articleNo) {
     return boardMapper.selectOne(articleNo);
   }
 
-  //다음 글 
   @Override
   public Article getNextArticle(int articleNo, String boardCd, String searchWord) {
     HashMap&lt;String, String&gt; hashmap = new HashMap&lt;String, String&gt;();
@@ -1384,7 +1286,6 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.selectNextOne(hashmap);
   }
 
-  //이전 글 
   @Override
   public Article getPrevArticle(int articleNo, String boardCd, String searchWord) {
     HashMap&lt;String, String&gt; hashmap = new HashMap&lt;String, String&gt;();
@@ -1396,65 +1297,56 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.selectPrevOne(hashmap);
   }
 
-  //첨부 파일 리스트 
   @Override
   public <strong>List&lt;AttachFile&gt;</strong> getAttachFileList(int articleNo) {
     return boardMapper.selectListOfAttachFiles(articleNo);
   }
 
-  //첨부 파일 삭제 
   @Override
   public void removeAttachFile(int attachFileNo) {
     boardMapper.deleteFile(attachFileNo);
   }
 
-  //게시판 
   @Override
   public Board getBoard(String boardCd) {
     return boardMapper.selectOneBoard(boardCd);
   }
 
-  //댓글 쓰기 
   @Override
   public void addComment(Comment comment) {
     boardMapper.insertComment(comment);
   }
 
-  //댓글 수정 
   @Override
   public void modifyComment(Comment comment) {
     boardMapper.updateComment(comment);
   }
 
-  //댓글 삭제 
   @Override
   public void removeComment(int commentNo) {
     boardMapper.deleteComment(commentNo);
   }
 
-  //댓글 리스트 
   @Override
   public <strong>List&lt;Comment&gt;</strong> getCommentList(int articleNo) {
     return boardMapper.selectListOfComments(articleNo);
   }
 
-  //첨부 파일 찾기 
   @Override
   public AttachFile getAttachFile(int attachFileNo) {
     return boardMapper.selectOneAttachFile(attachFileNo);
   }
 
-  //댓글 찾기 
   @Override
   public Comment getComment(int commentNo) {
     return boardMapper.selectOneComment(commentNo);
   }
+
 }
 </pre>
 
 <p>
-게시판과 관련된 모든 요청을 담당하는 컨트롤러를 만들어야 한다.
-그 전에 페이징 처리를 위한 클래스를 작성한다.
+Create NumbersForPaging.java that save numbers needed for paging as shown below.
 </p>
 
 <h6 class="src">NumbersForPaging.java</h6>
@@ -1509,6 +1401,10 @@ public class NumbersForPaging {
 }
 </pre>
 
+<p>
+Create Paginator.java that returns a NumberForPaging object as shown below.
+</p>
+
 <h6 class="src">Paginator.java</h6>
 <pre class="prettyprint">
 package net.java_school.commons;
@@ -1553,7 +1449,7 @@ public class Paginator {
 </pre>
 
 <p>
-BbsController.java 클래스를 net.java_school.controller 패키지에 만든다.
+Create the BbsController.java class in the net.java_school.controller package.
 </p>
 
 <h6 class="src">BbsController.java</h6>
@@ -1602,14 +1498,11 @@ public class BbsController <strong>extends Paginator</strong> {
 			HttpSession session,
 			Model model) throws Exception {
 
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
-			//로그인 후 되돌아갈 URL을 구한다.
 			String url = req.getServletPath();
 			String query = req.getQueryString();
 			if (query != null) url += "?" + query;
-			//로그인 페이지로 리다이렉트
 			url = URLEncoder.encode(url, "UTF-8");
 			return "redirect:/users/login?url=" + url;
 		}
@@ -1656,19 +1549,15 @@ public class BbsController <strong>extends Paginator</strong> {
 			HttpSession session,
 			Model model) throws Exception {
 
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
-			//로그인 후 되돌아갈 URL을 구한다.
 			String url = req.getServletPath();
 			String query = req.getQueryString();
 			if (query != null) url += "?" + query;
-			//로그인 페이지로 리다이렉트
 			url = URLEncoder.encode(url, "UTF-8");
 			return "redirect:/users/login?url=" + url;
 		}
 
-		//게시판 이름
 		String boardName = boardService.getBoard(boardCd).getBoardNm_ko();
 		model.addAttribute("boardName", boardName);
 
@@ -1679,7 +1568,6 @@ public class BbsController <strong>extends Paginator</strong> {
 	public String write(MultipartHttpServletRequest mpRequest,
 			HttpSession session) throws Exception {
 
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
 			throw new AuthenticationException(WebContants.NOT_LOGIN);
@@ -1697,7 +1585,6 @@ public class BbsController <strong>extends Paginator</strong> {
 
 		boardService.addArticle(article);
 
-		//파일 업로드
 		Iterator&lt;String&gt; it = mpRequest.getFileNames();
 		List&lt;MultipartFile&gt; fileList = new ArrayList&lt;MultipartFile&gt;();
 		while (it.hasNext()) {
@@ -1709,7 +1596,6 @@ public class BbsController <strong>extends Paginator</strong> {
 			}
 		}
 
-		//파일데이터 삽입
 		int size = fileList.size();
 		for (int i = 0; i &lt; size; i++) {
 			MultipartFile mpFile = fileList.get(i);
@@ -1735,40 +1621,30 @@ public class BbsController <strong>extends Paginator</strong> {
 			HttpSession session,
 			Model model) throws Exception {
 
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
-			//로그인 후 되돌아갈 URL을 구한다.
 			String url = req.getServletPath();
 			String query = req.getQueryString();
 			if (query != null) url += "?" + query;
-			//로그인 페이지로 리다이렉트
 			url = URLEncoder.encode(url, "UTF-8");
 			return "redirect:/users/login?url=" + url;
 		}
 
-		/*
-        상세보기를 할 때마다 조회 수를 1 증가
-        하단에 목록에서 조회 수를 제대로 보기 위해서는
-        목록 레코드를 페치하기 전에 조회 수를 먼저 증가시켜야 한다.
-        TODO : 사용자 IP와 시간을 고려해서 조회 수를 증가하도록
-		 */
 		boardService.increaseHit(articleNo);
 
-		Article article = boardService.getArticle(articleNo);//상세보기에서 볼 게시글
+		Article article = boardService.getArticle(articleNo);
 		List&lt;AttachFile&gt; attachFileList = boardService.getAttachFileList(articleNo);
 		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
 		List&lt;Comment&gt; commentList = boardService.getCommentList(articleNo);
 
-		//상세보기에서 볼 게시글 관련 정보
-		String title = article.getTitle();//제목
-		String content = article.getContent();//내용
+		String title = article.getTitle();
+		String content = article.getContent();
 		content = content.replaceAll(WebContants.LINE_SEPARATOR, "&lt;br /&gt;");
-		int hit = article.getHit();//조회 수
-		String name = article.getName();//작성자 이름
-		String email = article.getEmail();//작성자 ID
-		String regdate = article.<strong>getRegdateForView()</strong>;//작성일
+		int hit = article.getHit();
+		String name = article.getName();
+		String email = article.getEmail();
+		String regdate = article.<strong>getRegdateForView()</strong>;
 
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
@@ -1781,15 +1657,13 @@ public class BbsController <strong>extends Paginator</strong> {
 		model.addAttribute("prevArticle", prevArticle);
 		model.addAttribute("commentList", commentList);
 
-		//목록 관련
-		int numPerPage = 10;//페이지당 레코드 수
-		int pagePerBlock = 10;//블록당 페이지 링크 수
+		int numPerPage = 10;
+		int pagePerBlock = 10;
 
 		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 
 		NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
 
-		//oracle
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 
@@ -1826,7 +1700,6 @@ public class BbsController <strong>extends Paginator</strong> {
 			String memo,
 			HttpSession session) throws Exception {
 
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
 			throw new AuthenticationException(WebContants.NOT_LOGIN);
@@ -1861,12 +1734,10 @@ public class BbsController <strong>extends Paginator</strong> {
 
 		Comment comment = boardService.getComment(commentNo);
 
-		//로그인 사용자가 댓글 소유자인지  검사
 		if (user == null || !user.getEmail().equals(comment.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
 
-		//생성된 Comment 객체를 재사용한다.
 		comment.setMemo(memo);
 		boardService.modifyComment(comment);
 
@@ -1891,7 +1762,6 @@ public class BbsController <strong>extends Paginator</strong> {
 
 		Comment comment = boardService.getComment(commentNo);
 
-		//로그인 사용자가 댓글의 소유자인지 검사
 		if (user == null || !user.getEmail().equals(comment.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
@@ -1917,12 +1787,10 @@ public class BbsController <strong>extends Paginator</strong> {
 
 		Article article = boardService.getArticle(articleNo);
 
-		//로그인 사용자가 글 작성자인지 검사
 		if (user == null || !user.getEmail().equals(article.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
 
-		//수정페이지에서의 보일 게시글 정보
 		String title = article.getTitle();
 		String content = article.getContent();
 		String boardName = boardService.getBoard(boardCd).getBoardNm_ko();
@@ -1943,7 +1811,6 @@ public class BbsController <strong>extends Paginator</strong> {
 		int articleNo = Integer.parseInt(mpRequest.getParameter("articleNo"));
 		Article article = boardService.getArticle(articleNo);
 
-		//로그인 사용자가 글 작성자인지 검사
 		if (!article.getEmail().equals(user.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
@@ -1955,13 +1822,11 @@ public class BbsController <strong>extends Paginator</strong> {
 		String title = mpRequest.getParameter("title");
 		String content = mpRequest.getParameter("content");
 
-		//게시글 수정
 		article.setTitle(title);
 		article.setContent(content);
 		article.setBoardCd(boardCd);
 		boardService.modifyArticle(article);
 
-		//파일 업로드
 		Iterator&lt;String&gt; it = mpRequest.getFileNames();
 		List&lt;MultipartFile&gt; fileList = new ArrayList&lt;MultipartFile&gt;();
 		while (it.hasNext()) {
@@ -1973,7 +1838,6 @@ public class BbsController <strong>extends Paginator</strong> {
 			}
 		}
 
-		//파일데이터 삽입
 		int size = fileList.size();
 		for (int i = 0; i &lt; size; i++) {
 			MultipartFile mpFile = fileList.get(i);
@@ -1997,7 +1861,6 @@ public class BbsController <strong>extends Paginator</strong> {
 
 	@RequestMapping(value="/download", method=RequestMethod.POST)
 	public String download(String filename, HttpSession session, Model model) {
-		//로그인 체크
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		if (user == null) {
 			throw new AuthenticationException(WebContants.NOT_LOGIN);
@@ -2019,7 +1882,6 @@ public class BbsController <strong>extends Paginator</strong> {
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		AttachFile attachFile = boardService.getAttachFile(attachFileNo);
 
-		//로그인 사용자가 첨부 파일 소유자인지 검사
 		if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
@@ -2045,7 +1907,6 @@ public class BbsController <strong>extends Paginator</strong> {
 		User user = (User) session.getAttribute(WebContants.USER_KEY);
 		Article article = boardService.getArticle(articleNo);
 
-		//로그인 사용자가 글 작성자인지 검사
 		if (user == null || !user.getEmail().equals(article.getEmail())) {
 			throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 		}
@@ -2063,111 +1924,15 @@ public class BbsController <strong>extends Paginator</strong> {
 }
 </pre>
 
-<h3>BbsController.java에 적용된 어노테이션 설명</h3>
-
 <p>
-다음은 컨트롤러에 적용된 어노테이션을 정리한 것이다.
+The handler method parameters boardCd, page, and searchWord are assigned the values of the request parameters.<br />
+If the request parameter name is curPage and the parameter name is page, resolve as follows.
 </p>
 
-<ul>
-  <li>@Controller는 클래스가 컨트롤러 컴포넌트임을 표시한다.</li>
-  <li>클래스 레벨의 @RequestMapping("/bbs")는 컨트롤러가 "/bbs"를 포함하는 모든 요청을 담당한다는 것을 표시한다.</li>
-  <li>메서드 레벨의 @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})는<br />
-  메서드가 GET이나 POST 방식의 "/bbs/list" 요청에 매핑됨을 표시한다.</li>
-  <li>멤버 변수에 @Autowired를 적용하면 변수의 접근자가 private이고 공개된 setter가 없어도 종속객체가 주입된다.</li>
-</ul>
-
-<h3>목록 요청</h3>
+<pre class="prettyprint">@RequestParam("curPage") String page</pre>
 
 <p>
-목록 요청 URL은 /bbs/list이다.
-컨트롤러에서 이 요청을 메서드에 매핑하려면 메서드 레벨로 @RequestMapping을 사용한다.
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="list", method={RequestMethod.GET, RequestMethod.POST})
-</pre>
-
-<p>
-클래스 레벨로 @RequestMapping("bbs")를 적용했기에, 위 메서드는 HTTP 프로토콜의 METHOD가 GET이나 POST 방식의 /bbs/list 요청에 매핑된다.
-목록이라면 GET 방식이 맞을 것이다. GET 방식의 요청만을 매핑하려면 다음과 같이 고친다.
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="/list", method=RequestMethod.GET)
-public String list(String boardCd, Integer page, String searchWord,...) {..}
-</pre>
-
-<p>
-메서드 아규먼트 리스트 boardCd, page, searchWord에는 요청에 실려 오는 파라미터의 값이 할당된다.<br />
-만약 파라미터 이름이 curPage이고 이 파라미터의 값을 할당받아야 하는 아규먼트 이름이 page라면 다음과 같이 해결한다.<br />
-</p>
-
-<pre>@RequestParam("curPage") String page</pre>
-
-<p>
-컨트롤러 메서드의 아규먼트를 파라미터의 이름과 같게 하면 쉽게 파라미터값을 받을 수 있다.<br />
-파라미터 중에서 boardCd와 page는 필수적으로 전달되도록 구현해야 한다.<br />
-searchWord는 사용자가 검색할 때만 전달된다.<br />
-전달되는 파라미터값을 전부 받았음에도 아규먼트 리스트에서 HttpServletRequest가 있는 이유는 요청 URL을 구하기 위해서다.<br />
-메서드 구현부에서 로그인 체크를 통과하지 못하면 로그인 페이지로 리다이렉트하면서 현재 요청 URL을 전달해야 하기 때문이다.<br />
-HttpSession 타입의 아규먼트는 세션에 접근하기 위해서다.<br />
-</p>
-
-<pre class="prettyprint">
-//로그인 체크
-User user = (User) <strong>session</strong>.getAttribute(WebContants.USER_KEY);
-if (user == null) {
-    //로그인 후 되돌아갈 URL을 구한다.
-    String url = <strong>req</strong>.getServletPath();
-    String query = <strong>req</strong>.getQueryString();
-    if (query != null) url += "?" + query;
-    //로그인 페이지로 리다이렉트
-    url = URLEncoder.encode(url, "UTF-8");
-    return "redirect:/users/login?url=" + url;
-}
-</pre>
-
-<p>
-로그인 체크를 통과했다면 뷰로 전달할 데이터를 생산하는 비즈니스 로직이 이어진다.
-</p>
-
-<pre class="prettyprint">
-int numPerPage = 10;
-int pagePerBlock = 10;
-
-int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
-
-NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
-
-Integer startRecord = (page - 1) * numPerPage + 1;
-Integer endRecord = page * numPerPage;
-</pre>
-
-<p>
-목록을 구성하는 리스트, 게시판 이름, 목록 아이템의 번호, 이전 링크, 다음 링크, 첫 번째 페이지, 마지막 페이지 데이터를 생산한다.
-</p>
-
-<pre class="prettyprint">
-HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
-map.put("boardCd", boardCd);
-map.put("searchWord", searchWord);
-map.put("start", startRecord.toString());
-map.put("end", endRecord.toString());
-List&lt;Article&gt; list = boardService.getArticleList(map);
-String boardName = boardService.getBoard(boardCd).getBoardNm_ko();
-
-Integer listItemNo = numbers.getListItemNo();
-Integer prevPage = numbers.getPrevBlock();
-Integer nextPage = numbers.getNextBlock();
-Integer firstPage = numbers.getFirstPage();
-Integer lastPage = numbers.getLastPage();
-</pre>
-
-<h3>글쓰기 폼 요청</h3>
-
-<p>
-writeForm() 메서드는 GET 방식의 /bbs/write 요청에 매핑된다.
+The writeForm() method is a handler for the /bbs/write request of the GET method.
 </p>
 
 <pre class="prettyprint">
@@ -2176,16 +1941,7 @@ public String writeForm(String boardCd,HttpServletRequest req,HttpSession sessio
 </pre>
 
 <p>
-메서드 아규먼트로는 파라미터값을 받는 boardCd와 목록 메서드와 같은 이유로 req와 session이 있다.<br />
-boardCd는 게시판 이름을 만드는 데 필요하다.<br />
-page와 searchWord는 포워딩 되므로 아규먼트로 받을 특별한 이유가 없다.<br />
-게시판은 로그인 사용자만 이용할 수 있으므로 메서드는 먼저 로그인 체크로 시작하고, 로그인 체크가 통과하면 게시판 이름을 생성하고 write.jsp로 포워딩한다.
-</p>
-
-<h3>글쓰기 처리 요청</h3>
-
-<p>
-write() 메서드는 POST 방식의 /bbs/write 요청에 매핑된다.<br />
+The write() method handles the /bbs/write request of the POST method.
 </p>
 
 <pre class="prettyprint">
@@ -2194,17 +1950,15 @@ public String write(MultipartHttpServletRequest mpRequest, HttpSession session) 
 </pre>
 
 <p>
-MultipartHttpServletRequest 타입의 mpRequest 아규먼트는 시스템에 전달된 파일에 접근할 수 있다.
+The mpRequest parameter of the MultipartHttpServletRequest type has access to the files passed to the system.
 </p>
 
 <p>
-메서드는. 먼저 로그인 여부를 판단한다.<br />
-로그인되어 있지 않다면 AuthenticationException 예외를 발생시킨다.<br />
-spring-bbs-servlet.xml에 설정된 예외 리졸브에 의해서 뷰는 /WEB-INF/views/error.jsp가 선택된다.<br />
+The write () method first checks the login.<br />
+If the user is not logged in, AuthenticationException exception occurs and the view resolver selects /WEB-INF/views/error.jsp as the view.
 </p>
 
 <pre class="prettyprint">
-//로그인 체크
 User user = (User) session.getAttribute(WebContants.USER_KEY);
 if (user == null) {
     throw new AuthenticationException(WebContants.NOT_LOGIN);
@@ -2212,8 +1966,8 @@ if (user == null) {
 </pre>
 
 <p>
-로그인 체크를 통과하면 새 글을 테이블에 삽입한다.<br />
-BoardMapper.xml 파일에서 설명했듯이, boardService.addArticle(article);가 실행되면 인자 article이 가리키는 Article 객체의 setArticleNo()가 호출되어 게시글 고유번호가 세팅된다.
+If a login check is passed, a new entry is inserted into the table.<br />
+When boardService.addArticle (<strong>article</strong>) is executed, the <strong>article</strong>'s setArticleNo () is called to set the article's unique number.
 </p>
 
 <pre class="prettyprint">
@@ -2231,12 +1985,11 @@ article.setEmail(user.getEmail());
 </pre>
 
 <p>
-테이블에 새 글 정보를 삽입한 후, 서버에 전달된 파일을 우리가 원하는 업로드 디렉터리로 옮긴다.<br />
-글쓰기 폼 페이지에서는 첨부 파일을 하나만 올릴 수 있지만 메서드는 여러 파일을 올릴 수 있도록 구현했다.<br />
+After inserting the new post information into the table, move the uploaded file to the specified directory.<br />
+The writing form page can only upload an attachment, but the handler method is implemented to handle multiple upload files.
 </p>
 
 <pre class="prettyprint">
-//파일 업로드
 Iterator&lt;String&gt; it = mpRequest.getFileNames();
 List&lt;MultipartFile&gt; fileList = new ArrayList&lt;MultipartFile&gt;();
 while (it.hasNext()) {
@@ -2250,18 +2003,13 @@ while (it.hasNext()) {
 </pre>
 
 <p>
-컨트롤러 메서더의 매개변수 중 MultipartHttpServletRequest 타입은 시스템에 전달된 파일에 접근할 수 있다.
-위 코드는 전달된 파일을 다루는 방법을 보여준다.
+The above code shows how to handle uploaded files.<br />
+The MultipartHttpServletRequest type has access to the files passed to the system.
 </p>
 
 <p>
-스프링 MVC는 파일 업로드를 위해 아파치의 commons-fileupload를 지원한다.
-개발자가 해야 할 일은 필요한 의존성을 추가하고, multipartResolver 빈을 설정하는 것이다.
-</p>
-
-<p>
-파일 업로드를 위한 부분을 다시 살펴본다.
-pom.xml에 다음 의존 라이브러리 설정이 필요하다.
+Spring MVC supports Apache's commons-fileupload for file uploads.<br />
+The developer has to add the necessary dependencies and set the multipartResolver bean in the Spring configuration file.
 </p>
 
 <pre class="prettyprint">
@@ -2279,10 +2027,6 @@ pom.xml에 다음 의존 라이브러리 설정이 필요하다.
 &lt;/dependency&gt;
 </pre>
 
-<p>
-spring-bbs-servlet.xml에 multipartResolver를 설정이 필요하다.
-</p>
-
 <pre class="prettyprint">
 &lt;bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"&gt;
   &lt;property name="maxUploadSize" value="2097152" /&gt;
@@ -2290,12 +2034,11 @@ spring-bbs-servlet.xml에 multipartResolver를 설정이 필요하다.
 </pre>
 
 <p>
-파일을 업로드 디렉터리에 옮겼다면 첨부 파일 테이블에 파일 정보를 인서트 한다.<br />
-article.getArticleNo()로 테이블에 입력된 게시글의 고유번호를 얻을 수 있다.<br />
+The method moves the attachment to the upload directory and inserts the file information into the table.<br />
+article.getArticleNo () gets the unique number of the article that is inserted into the table.
 </p>
 
 <pre class="prettyprint">
-//파일데이터 삽입
 int size = fileList.size();
 for (int i = 0; i &lt; size; i++) {
     MultipartFile mpFile = fileList.get(i);
@@ -2311,14 +2054,12 @@ for (int i = 0; i &lt; size; i++) {
 </pre>
 
 <p>
-글쓰기를 서버스의 addArticle(article)과 addAttachFile(attachFile) 2개의 메서드를 사용하여 구현하고 있다.
-(모델 2에서는 서비스의 addArticle(article, attachFile); 메서드 하나로 구현했었다.)
+Two new methods are used: addArticle(article) and addAttachFile(attachFile).<br />
+(Note that in the Model 2 board, the addArticle(article, attachFile) method is used)
 </p>
 
 <p>
-마지막으로 포워딩이 아닌 리다이렉트로 이동해야 한다.
-포워딩하면 문제가 발생할 수 있는데, 사용자가 F5키로 웹 브라우저를 리로딩하면 똑같은 정보로 글쓰기 처리가 다시 수행될 수 있기 때문이다.
-리다이렉트로 이동할 때는 게시판 코드와 함께 page=1도 함께 전달해야 한다.
+When using a redirect, pass the boardCd and page=1 to the list page as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -2326,16 +2067,10 @@ return redirect:/bbs/list?page=1&amp;boardCd=" + article.getBoardCd();
 </pre>
 
 
-<h3>상세보기 요청</h3>
+<h3>Detailed view</h3>
 
 <p>
-상세보기 요청(/bbs/view)에 매핑되는 메서드는 view()이다.<br />
-메서드에 전달되는 파라미터는 articleNo, boardCd, page, searchWord이다.<br />
-메서드의 아규먼트로 이들 파라미터의 값을 전달받을 변수를 선언했다.<br />
-포워드로 이동하지만 view.jsp에 필요한 데이터를 생산하기 위해 전달되는 파라미터 모두 필요하기 때문이다.<br /> 
-그럼에도 HttpServletRequest 타입의 아규먼트 변수가 있는 것은 로그인 체크를 통과 못 했을 때 
-요청 URL 정보를 로그인 페이지에 전달하기 위해서다.<br />
-HttpSession 타입의 아규먼트는 로그인 체크를 하려면 세션의 저장된 값에 접근해야 하기 때문에 필요하다.<br />
+The following method is a handler for /bbs/view request.
 </p>
 
 <pre class="prettyprint">
@@ -2350,37 +2085,27 @@ public String view(Integer articleNo,
 </pre>
 
 <p>
-메서드는 먼저 로그인 체크를 한다.<br />
-로그인 체크를 통과하면 조회 수를 증가시킨 후에 상세보기 화면에 필요한 데이터를 생산한다.<br />
-조회 수 증가는 사용자가 F5로 재로딩하면 계속 증가하는데, 
-나중에 IP와 시간을 고려해서 증가하도록 후에 수정해야 할 것이다.<br />
-IP와 시간을 고려한 조회 수 증가는 이 책에서는 다루지 않는다.<br />
+The method first checks the login.<br />
+If the login check is passed, the number of views is increased and the necessary data is produced on the detailed view screen.
 </p>
 
 <pre class="prettyprint">
-/*
-상세보기를 할 때마다 조회 수를 1 증가
-하단에 목록에서 조회 수를 제대로 보기 위해서는
-목록 레코드를 생산하기 전에 조회 수를 먼저 증가시켜야 한다.
-TODO : 사용자 IP와 시간을 고려해서 조회 수를 증가하도록
-*/
 boardService.increaseHit(articleNo);
 
-Article article = boardService.getArticle(articleNo);//상세보기에서 볼 게시글
+Article article = boardService.getArticle(articleNo);
 List&lt;AttachFile&gt; attachFileList = boardService.getAttachFileList(articleNo);
 Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
 List&lt;Comment&gt; commentList = boardService.getCommentList(articleNo);
 String boardName = boardService.getBoard(boardCd).getBoardNm_ko();
 
-//상세보기에서 볼 게시글 관련 정보
-String title = article.getTitle();//제목
-String content = article.getContent();//내용
+String title = article.getTitle();
+String content = article.getContent();
 content = content.replaceAll(WebContants.LINE_SEPARATOR, "&lt;br /&gt;");
-int hit = article.getHit();//조회 수
-String name = article.getName();//작성자 이름
-String email = article.getEmail();//작성자 ID
-String regdate = article.getRegdateForView();//작성일
+int hit = article.getHit();
+String name = article.getName();
+String email = article.getEmail();
+String regdate = article.getRegdateForView();
 
 model.addAttribute("title", title);
 model.addAttribute("content", content);
@@ -2394,15 +2119,10 @@ model.addAttribute("prevArticle", prevArticle);
 model.addAttribute("commentList", commentList);
 </pre>
 
-<p>
-상세보기 화면에도 목록이 있다.
-이 부분을 위한 코드는 목록 메서드와 같다.<br />
-</p>
-
-<h3>댓글 쓰기 처리 요청</h3>
+<h3>Add comment</h3>
 
 <p>
-addComment() 메서드는 POST방식의 /bbs/addComment 요청에 매핑되는 메서드다.
+The addComment() is a handler for /bbs/addComment request of POST method.
 </p>
 
 <pre class="prettyprint">
@@ -2416,12 +2136,10 @@ public String addComment(Integer articleNo,
 </pre>
 
 <p>
-댓글 쓰기 처리 후 상세보기 뷰로 리다이렉트될 것이므로 파라미터값을 저장할 아규먼트가 필요하다.<br /> 
-로그인되어 있지 않다면 사용자 정의 인증 예외를 던진다.<br />
+That method first check login.
 </p>
 
 <pre class="prettyprint">
-//로그인 체크
 User user = (User) session.getAttribute(WebContants.USER_KEY);
 if (user == null) {
     throw new AuthenticationException(WebContants.NOT_LOGIN);
@@ -2429,7 +2147,7 @@ if (user == null) {
 </pre>
 
 <p>
-로그인 체크를 통과하면 파라미터값으로 댓글을 인서트 한다.<br />
+If login check passes, Comment information be inserted to the table with request parameters.
 </p>
 
 <pre class="prettyprint">
@@ -2442,8 +2160,7 @@ boardService.addComment(comment);
 </pre>
 
 <p>
-마지막으로 다시 상세보기 화면으로 리다이렉트해야 하는데,<br />
-이때 검색어 searchWord는 한글일 수 있으므로 인코딩 작업을 한다.<br />
+The search term be encoded.
 </p>
 
 <pre class="prettyprint">
@@ -2451,7 +2168,7 @@ searchWord = URLEncoder.encode(searchWord,"UTF-8");
 </pre>
 
 <p>
-상세보기 뷰로 리다이렉트한다.<br />
+The method uses a redirect to move the page.
 </p>
 
 <pre class="prettyprint">
@@ -2461,10 +2178,10 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
     "&amp;searchWord=" + searchWord;
 </pre>
 
-<h3>댓글 수정 요청</h3>
+<h3>Modify comment</h3>
 
 <p>
-updateComment() 메서드는 POST 방식의 댓글 수정 요청 /bbs/updateComment에 매핑된다.
+The updateComment() method is a handler for "/bbs/updateComment" request of POST method.
 </p>
 
 <pre class="prettyprint">
@@ -2480,8 +2197,7 @@ public String updateComment(
 </pre>
 
 <p>
-구현은 먼저 로그인 여부와 글 소유자 여부를 동시에 검사한다.<br />
-검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
+This method first checks whether the user is logged in and the owner of the text, and throws a custom authentication exception if it does not pass the check.
 </p>
 
 <pre class="prettyprint">
@@ -2489,26 +2205,23 @@ User user = (User) session.getAttribute(WebContants.USER_KEY);
 
 Comment comment = boardService.getComment(commentNo);
 
-//로그인 사용자가 댓글 소유자인지  검사
 if (user == null || !user.getEmail().equals(comment.getEmail())) {
     throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 }
 </pre>
 
 <p>
-검사를 통과하면 파라미터로 댓글을 수정한다.<br />
-댓글 수정은 댓글 내용만을 수정할 수 있다.<br />
-즉, 관리자가 댓글을 수정하더라도 댓글의 소유자는 변경되지 않는 거로 구현했다.<br />
+If passed, this method modifies the comment with the request parameters.<br />
+Only the content of the comment can be edited, and the original owner of the comment will not change, even if the administrator modifies the comment.
 </p>
 
 <pre class="prettyprint">
-//생성된 Comment 객체를 재사용한다.
 comment.setMemo(memo);
 boardService.modifyComment(comment);
 </pre>
 
 <p>
-마지막으로 상세보기 화면으로 리다이렉트한다.<br />
+The method uses a redirect to move the page.
 </p>
 
 <pre class="prettyprint">
@@ -2520,10 +2233,8 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
     "&amp;searchWord=" + searchWord;
 </pre>
 
-<h3>댓글 삭제 요청</h3>
-
 <p>
-deleteComment() 메서드는 POST방식의 /bbs/deleteComment 요청에 매핑되는 메서드다.<br />
+The deleteComment() is a handler for '/bbs/deleteComment' request of POST method.
 </p>
 
 <pre class="prettyprint">
@@ -2538,8 +2249,7 @@ public String deleteComment(
 </pre>
 
 <p>
-구현은 먼저 로그인 여부와 글 소유자 여부를 동시에 검사한다.<br />
-검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
+This method first checks whether the user is logged in and the owner of the text, and throws a custom authentication exception if it does not pass the check.
 </p>
 
 <pre class="prettyprint">
@@ -2547,14 +2257,13 @@ User user = (User) session.getAttribute(WebContants.USER_KEY);
 
 Comment comment = boardService.getComment(commentNo);
 
-//로그인 사용자가 댓글의 소유자인지 검사
 if (user == null || !user.getEmail().equals(comment.getEmail())) {
     throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 }
 </pre>
 
 <p>
-검사를 통과하면 해당 댓글을 삭제한다.<br />
+If passed, this method deletes the comment with the request parameter.
 </p>
 
 <pre class="prettyprint">
@@ -2562,7 +2271,7 @@ boardService.removeComment(commentNo);
 </pre>
 
 <p>
-마지막으로 상세보기 화면으로 리다이렉트한다.<br />
+This mehtod uses a redirect to move the page.
 </p>
 
 <pre class="prettyprint">
@@ -2574,185 +2283,17 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
     "&amp;searchWord=" + searchWord;
 </pre>
 
-<h3>글 수정 폼 요청</h3>
-
 <p>
-modifyForm() 메서드는 GET 방식의 게시글 수정 폼 요청 /bbs/modify에 매핑되는 메서드다.<br />
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="/modify", method=RequestMethod.GET)
-public String modifyForm(
-        Integer <strong>articleNo</strong>, 
-        String <strong>boardCd</strong>,
-        HttpSession session,
-        Model model) {
-</pre>
-
-<p>
-로그인 검사와 글 소유자 검사를 한다.<br />
-검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
-</p>
-
-<pre class="prettyprint">
-User user = (User) session.getAttribute(WebContants.USER_KEY);
-
-Article article = boardService.getArticle(<strong>articleNo</strong>);
-
-//로그인 사용자가 글 작성자인지 검사
-if (user == null || !user.getEmail().equals(article.getEmail())) {
-    throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
-<p>
-검사를 통과하면 게시글 수정 폼 화면에 필요한 데이터를 생산한다.<br />
-마지막으로 게시글 수정 폼으로 포워드 한다.<br />
-</p>
-
-<pre class="prettyprint">
-//수정 페이지에서의 보일 게시글 정보
-String title = article.getTitle();
-String content = article.getContent();
-String boardName = boardService.getBoard(<strong>boardCd</strong>).getBoardNm_ko();
-        
-model.addAttribute("title", title);
-model.addAttribute("content", content);
-model.addAttribute("boardName", boardName);
-
-return "bbs/modify";
-</pre>
-
-<h3>글 수정 처리 요청</h3>
-
-<p>
-modify() 메서드는 POST 방식의 글 수정 처리 요청 /bbs/modify에 매핑되는 메서드다.<br />
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="/modify", method=RequestMethod.POST)
-public String modify(
-        MultipartHttpServletRequest mpRequest,
-        HttpSession session) throws Exception {
-</pre>
-
-<p>
-글 소유자인지 검사한다.<br />
-검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
-</p>
-
-<pre class="prettyprint">
-User user = (User) session.getAttribute(WebContants.USER_KEY);
-
-int articleNo = Integer.parseInt(mpRequest.getParameter("articleNo"));
-Article article = boardService.getArticle(articleNo);
-
-//로그인 사용자가 글 작성자인지 검사
-if (!article.getEmail().equals(user.getEmail())) {
-    throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
-<p>
-전달된 파라미터 정보로 글을 수정한다.<br />
-</p>
-
-<pre class="prettyprint">
-String boardCd = mpRequest.getParameter("boardCd");
-int page = Integer.parseInt(mpRequest.getParameter("page"));
-String searchWord = mpRequest.getParameter("searchWord");
-
-String title = mpRequest.getParameter("title");
-String content = mpRequest.getParameter("content");
-
-//게시글 수정
-article.setTitle(title);
-article.setContent(content);
-article.setBoardCd(boardCd);//TODO 게시판 종류 변경
-boardService.modifyArticle(article);
-</pre>
-
-<p>
-서버에 전달된 파일을 원하는 위치로 옮긴다.<br />
-</p>
-
-<pre class="prettyprint">
-//파일 업로드
-Iterator&lt;String&gt; it = mpRequest.getFileNames();
-List&lt;MultipartFile&gt; fileList = new ArrayList&lt;MultipartFile&gt;();
-while (it.hasNext()) {
-    MultipartFile multiFile = mpRequest.getFile((String) it.next());
-    if (multiFile.getSize() &gt; 0) {
-        String filename = multiFile.getOriginalFilename();
-        multiFile.transferTo(new File(WebContants.UPLOAD_PATH + filename));
-        fileList.add(multiFile);
-    }
-}
-</pre>
-
-<p>
-첨부 파일 데이터를 인서트 한다.<br />
-글쓰기와 달리 게시글의 고유번호는 파라미터 articleNo이다.<br />
-</p>
-
-<pre class="prettyprint">
-//파일데이터 삽입
-int size = fileList.size();
-for (int i = 0; i &lt; size; i++) {
-    MultipartFile mpFile = fileList.get(i);
-    AttachFile attachFile = new AttachFile();
-    String filename = mpFile.getOriginalFilename();
-    attachFile.setFilename(filename);
-    attachFile.setFiletype(mpFile.getContentType());
-    attachFile.setFilesize(mpFile.getSize());
-    attachFile.setArticleNo(<strong>articleNo</strong>);
-    attachFile.setEmail(user.getEmail());
-    boardService.addAttachFile(attachFile);
-}
-</pre>
-
-<p>
-마지막으로 상세보기 화면으로 리다이렉트한다.<br />
-</p>
-
-<pre class="prettyprint">
-searchWord = URLEncoder.encode(searchWord,"UTF-8");
-
-return "redirect:/bbs/view?articleNo=" + articleNo 
-    + "&amp;boardCd=" + boardCd 
-    + "&amp;page=" + page 
-    + "&amp;searchWord=" + searchWord;
-</pre>
-
-<h3>첨부 파일 다운로드 요청</h3>
-
-<p>
-download() 메서드는 POST 방식의 파일 다운로드 요청 /bbs/download에 매핑되는 메서드다.<br />
-사실 다운로드는 게시판이 아닌 다른 모듈에서도 이용될 수 있으므로 파일 다운로드만을 위한 컨트롤러를 
-만들어 처리할 수 있다.<br />
+The download() is a handle for '/bbs/download' request of POST method.
 </p>
 
 <pre class="prettyprint">
 @RequestMapping(value="/download", method=RequestMethod.POST)
-    public String download(String filename, HttpSession session, Model model) {
+public String download(String filename, HttpSession session, Model model) {
 </pre>
 
 <p>
-구현은 먼저 로그인을 했는지 검사한다.<br />
-검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
-</p>
-
-<pre class="prettyprint">
-//로그인 체크
-User user = (User) session.getAttribute(WebContants.USER_KEY);
-if (user == null) {
-    throw new AuthenticationException(WebContants.NOT_LOGIN);
-}
-</pre>
-
-<p>
-파일명을 download.jsp에 전달한다.<br />
-우리의 프로그램에서는 JSP 페이지가 파일 다운로드를 실행한다.<br />
+The method passes the filename to download.jsp.
 </p>
 
 <pre class="prettyprint">
@@ -2760,101 +2301,10 @@ model.addAttribute("filename", filename);
 return "inc/download";
 </pre>
 
-<h3>첨부 파일 삭제 처리 요청</h3>
+<h3>Modify view.jsp</h3>
 
 <p>
-deleteAttachFile() 메서드는 POST 방식의 첨부 파일 삭제 요청 /bbs/deleteAttachFile에 매핑되는 메서드다.<br />
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="/deleteAttachFile", method=RequestMethod.POST)
-public String deleteAttachFile(
-        Integer attachFileNo, 
-        Integer articleNo, 
-        String boardCd, 
-        Integer page, 
-        String searchWord,
-        HttpSession session) throws Exception {
-</pre>
-
-<p>
-첨부 파일의 소유자인지 검사하고 검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
-</p>
-
-<pre class="prettyprint">
-User user = (User) session.getAttribute(WebContants.USER_KEY);
-AttachFile attachFile = boardService.getAttachFile(attachFileNo);
-
-//로그인 사용자가 첨부 파일 소유자인지 검사
-if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
-    throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
-<p>
-검사를 통과하면 첨부 파일을 삭제하고 상세보기 화면으로 리다이렉트한다.<br />
-</p>
-
-<pre class="prettyprint">
-boardService.removeAttachFile(attachFileNo);
-
-searchWord = URLEncoder.encode(searchWord,"UTF-8");
-
-return "redirect:/bbs/view?articleNo=" + articleNo + 
-    "&amp;boardCd=" + boardCd + 
-    "&amp;page=" + page + 
-    "&amp;searchWord=" + searchWord;
-</pre>
-
-<h3>게시글 삭제 처리 요청</h3>
-
-<p>
-del() 메서드는 POST 방식의 게시글 삭제 처리 요청 /bbs/del에 매핑되는 메서드다.<br />
-</p>
-
-<pre class="prettyprint">
-@RequestMapping(value="/del", method=RequestMethod.POST)
-public String del(
-        Integer articleNo, 
-        String boardCd, 
-        Integer page, 
-        String searchWord,
-        HttpSession session) throws Exception {
-</pre>
-
-<p>
-글 소유자 검사하고 검사를 통과하지 못하면 사용자 정의 인증 예외를 던진다.<br />
-</p>
-
-<pre class="prettyprint">
-User user = (User) session.getAttribute(WebContants.USER_KEY);
-Article article = boardService.getArticle(articleNo);
-
-//로그인 사용자가 글 작성자인지 검사
-if (user == null || !user.getEmail().equals(article.getEmail())) {
-    throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
-<p>
-검사를 통과하면 게시글을 삭제하고 목록으로 리다이렉트한다.<br />
-</p>
-
-<pre class="prettyprint">
-boardService.removeArticle(articleNo);
-
-searchWord = URLEncoder.encode(searchWord, "UTF-8");
-
-return "redirect:/bbs/list?boardCd=" + boardCd + 
-    "&amp;page=" + page + 
-    "&amp;searchWord=" + searchWord;
-</pre>
-
-<h3>view.jsp에서 파일 다운로드 부분 수정</h3>
-
-<p>
-모델 2와 달리 첨부 파일을 단순히 링크를 거는 것이 아니라 자바의 입출력 클래스를 이용해서 파일을 다운로드하는 것으로 변경했다.<br />
-view.jsp에 다음 자바스크립트 함수를 추가한다.<br />
+Add the following javascript code to the view.jsp.
 </p>
 
 <pre class="prettyprint">
@@ -2866,19 +2316,17 @@ function download(filename) {
 </pre>
 
 <p>
-하단 #form-group에 폼 엘리먼트를 추가한다.<br />
+Add the following form to the #form-group.
 </p>
 
 <pre class="prettyprint">
 &lt;form id="downForm" action="download" method="post"&gt;
-&lt;p&gt;
     &lt;input type="hidden" name="filename" /&gt;
-&lt;/p&gt;
 &lt;/form&gt;
 </pre>
 
 <p>
-파일 다운로드 부분을 아래와 같이 변경한다.<br />
+Modify file download links as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -2886,27 +2334,12 @@ function download(filename) {
 </pre>
 
 
-<h2>테스트</h2>
-
-<p>
-Proejct Explorer 뷰에서 프로젝트를 선택한다.<br />
-메이븐 프로젝트의 루트 디렉터리에서 명령 프롬프트로 다음과 같이 실행한다.<br />
-</p>
+<h2>Test</h2>
 
 <pre class="commandLine">mvn clean compile war:inplace</pre>
 
 <p>
-compile war:inplace은
-<em class="path">C:\www\spring-bbs\src\main\webapp\WEB-INF\lib</em>
-에 의존 라이브러리를 복사하고 
-<em class="path">C:\www\spring-bbs\src\main\webapp\WEB-INF\classes</em>
-에 자바 클래스를 컴파일한다.<br />
-</p>
-
-<p>
-기존 ROOT.xml 톰캣 컨텍스트 파일을 수정한다.<br />
-WEB-INF의 바로 위인 src/main/webapp가 DocumentBase이다.<br />
-메이븐 프로젝트 루트 디렉터리가 C:/www/spring-bbs라면 컨텍스트 파일을 아래와 같이 작성한다.<br />
+Modify ROOT.xml as shown below.
 </p>
 
 <h6 class="src">ROOT.xml</h6>
@@ -2918,94 +2351,46 @@ WEB-INF의 바로 위인 src/main/webapp가 DocumentBase이다.<br />
 </pre>
 
 <p>
-톰캣을 재실행한 다음<br />
-http://localhost:port/bbs/list?boarCd=free&amp;page=1을 방문하여 테스트한다.<br />
-JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일 것이다.<br />
-데이터가 있다면 한글 검색을 테스트한다.<br />
-한글 검색이 되지 않는다면 TOMCAT_HOME/conf/server.xml 파일을 열고 다음 강조된 부분이 있는지 확인한다.<br />
+Restart Tomcat.<br />
+Visit http://localhost:port/bbs/list?boarCd=smalltalk&amp;page=1.
 </p>
 
-<h6 class="src">server.xml</h6>
-<pre class="prettyprint">&lt;Connector port="8989" protocol="HTTP/1.1"
-  connectionTimeout="20000"
-  <strong>URIEncoding="UTF-8"</strong>
-  redirectPort="8443" /&gt;
-</pre>
+<h2>Authentication Summary</h2>
 
 <p>
-강조된 부분이 있어야 한글 검색이 된다.<br />
-다음은 테스트 실패 시 검사 항목을 정리한 것이다.<br />
+The following is the authentication code used in the method of the bulletin board controller.
 </p>
 
-<ol>
-	<li>/WEB-INF/classes에 바이트 코드가 있는가?</li>
-	<li>/WEB-INF/lib에 라이브러리 파일이 있는가?</li>
-	<li>TOMCAT_HOME/lib에 ojdbc6.jar 파일이 있는가?</li>
-	<li>JSP 파일의 EL이 해석되지 않는다면 web.xml이 DTD 버전이 2.4버전 이상인가?</li>
-</ol>
-
-<h2>Spring MVC 프로젝트에서의 사용자 인증 정리</h2>
-
-<p>
-스프링 시큐리티를 적용하기 전에 현재 인증 처리를 어떻게 구현했는지 다시 정리해 볼 필요가 있다.<br />
-다음은 게시판 컨트롤러의 메서드에 적용된 인증 코드이다.<br />
-</p>
-
-<h3>목록보기, 상세보기, 글쓰기 폼</h3>
-<pre class="prettyprint">//로그인 체크
+<pre class="prettyprint">
 User user = (User) session.getAttribute(WebContants.USER_KEY);
 if (user == null) {
-  //로그인 후 되돌아갈 URL을 구한다.
   String url = req.getServletPath();
   String query = req.getQueryString();
   if (query != null) url += "?" + query;
-  //로그인 페이지로 리다이렉트
   url = URLEncoder.encode(url, "UTF-8");
   return "redirect:/users/login?url=" + url;
 }
 </pre>
 
-<h3>글쓰기, 댓글 쓰기</h3>
-
-<pre class="prettyprint">//로그인 체크
+<pre class="prettyprint">
 User user = (User) session.getAttribute(WebContants.USER_KEY);
 if (user == null) {
   throw new AuthenticationException(WebContants.NOT_LOGIN);
 }
 </pre>
 
-<h3>댓글 수정, 댓글 삭제</h3>
-
-<pre class="prettyprint">//로그인 사용자가 댓글 소유자인지  검사
+<pre class="prettyprint">
 if (user == null || !user.getEmail().equals(comment.getEmail())) {
   throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
 }
 </pre>
 
-<h3>수정 폼, 수정하기, 글 삭제</h3>
-
-<pre class="prettyprint">//로그인 사용자가 글 작성자인지 검사
-if (user == null || !user.getEmail().equals(article.getEmail())) {
-  throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
-<h3>첨부 파일 삭제</h3>
-
-<pre class="prettyprint">//로그인 사용자가 첨부 파일 소유자인지 검사
-if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
-  throw new AuthenticationException(WebContants.AUTHENTICATION_FAILED);
-}
-</pre>
-
 <p>
-다음은 회원 컨트롤러에 적용된 사용자 인증 로직이다.<br />
-회원 컨트롤러의 대부분의 메서드는 인증 로직을 포함한다.<br />
+The following is the authentication code used in the method of the UsersController.
 </p>
 
-<h3>로그인</h3>
-
-<pre class="prettyprint">User user = userService.login(email, passwd);
+<pre class="prettyprint">
+User user = userService.login(email, passwd);
 if (user == null) {
   return "redirect:/users/login?url=" + url + "&amp;msg=Login-Failed";
 } else {
@@ -3017,21 +2402,16 @@ if (user == null) {
 return "redirect:/";
 </pre>
 
-<h3>내 정보 수정 폼, 비밀번호 변경 폼, 탈퇴</h3>
-
-<pre class="prettyprint">User user = (User) session.getAttribute(WebContants.USER_KEY);
+<pre class="prettyprint">
+User user = (User) session.getAttribute(WebContants.USER_KEY);
 if (user == null) {
-  //로그인 후 다시 돌아오기 위해
   String url = req.getServletPath();
   String query = req.getQueryString();
   if (query != null) url += "?" + query;
-  //로그인 페이지로 리다이렉트
   url = URLEncoder.encode(url, "UTF-8");
   return "redirect/users/login?url=" + url;
 }
 </pre>
-
-<h3>내 정보 수정</h3>
 
 <pre class="prettyprint">
 User loginUser = (User) session.getAttribute(WebContants.USER_KEY);
@@ -3045,21 +2425,16 @@ if (userService.login(loginUser.getEmail(), user.getPasswd()) == null) {
 }
 </pre>
 
-<h3>비밀번호 변경</h3>
-
 <pre class="prettyprint">
 String email = ((User)session.getAttribute(WebContants.USER_KEY)).getEmail();
 </pre>
 
 <p>
-JSP에 사용자 인증 코드를 적용한 부분을 살펴보자.<br />
-이 또한 스프링 시큐리티를 적용하면 바뀐다.<br />
-상세보기 view.jsp에 있는 사용자 인증 코드가 핵심이다.<br />
-JSP는 인증이 적용된 부분을 선별적으로 랜더링할 것이다.<br />
+The following is the authentication code used in JSPs.
 </p>
 
 <pre class="prettyprint">
-&lt;!-- 중략 --&gt;
+&lt;!-- omit --&gt;
 
 &lt;p id="file-list" style="text-align: right"&gt;
   &lt;c:forEach var="file" items="${attachFileList }" varStatus="status"&gt;    
@@ -3071,42 +2446,37 @@ JSP는 인증이 적용된 부분을 선별적으로 랜더링할 것이다.<br 
   &lt;/c:forEach&gt;
 &lt;/p&gt;
 
-&lt;!-- 중략 --&gt;
+&lt;!-- omit --&gt;
 
 <strong>&lt;c:if test="${user.email == comment.email }"&gt;</strong>    
 &lt;span class="modify-del"&gt;
-  &lt;a href="javascript:modifyCommentToggle('${comment.commentNo }')"&gt;수정&lt;/a&gt;
-  | &lt;a href="javascript:deleteComment('${comment.commentNo }')"&gt;삭제&lt;/a&gt;
+  &lt;a href="javascript:modifyCommentToggle('${comment.commentNo }')"&gt;Modify&lt;/a&gt;
+  | &lt;a href="javascript:deleteComment('${comment.commentNo }')"&gt;Del&lt;/a&gt;
 &lt;/span&gt;
 <strong>&lt;/c:if&gt;</strong>  
 
-&lt;!-- 중략 --&gt;
+&lt;!-- omit --&gt;
 
 <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
 &lt;div class="fl"&gt;
-  &lt;input type="button" value="수정" onclick="goModify()" /&gt;
-  &lt;input type="button" value="삭제" onclick="goDelete()"/&gt;
+  &lt;input type="button" value="Modify" onclick="goModify()" /&gt;
+  &lt;input type="button" value="Del" onclick="goDelete()"/&gt;
 &lt;/div&gt;
 <strong>&lt;/c:if&gt;</strong>
 </pre>
 
 <p>
-다음 장에서 사용자 인증을 스프링 시큐리티를 사용하여 구현할 것이다.<br />
-스프링 MVC에서 사용한 인증 코드와 스프링 시큐리티를 적용한 코드를 비교하는 것을 잊지 않도록 한다.<br />
-<br />
-테스트하면서 발생하는 에러는 log4j.xml에서 설정한 로그 파일이나 
-TOMCAT_HOME/logs에 있는 로그 파일을 뒤져서 해결해야 한다.<br />
-로그 메시지 전부를 이해하는 사람은 없을 것이다. 로그 메시지 중에 자신이 작성한 클래스의 어느 라인에서 예외가 발생하고 있는지 파악하고 이를 기초로 추론하는 능력을
-키워야 한다.<br />
+The next section covers Spring Security.<br />
+Spring Security is an authentication framework.<br />
 </p>
 
-<h2>남겨진 과제</h2>
-<ol>
-	<li>게시글로 유튜브 동영상 소스 코드를 올렸을 때, 동영상를 보면서 댓글은 작성하거나 수정하거나 삭제하면 다시 상세보기 /bbs/view를 요청하므로 동영상이 중지된다. 애이잭스를 이용하여 동영상을 중지시키지 않으면서 댓글을 등록, 수정, 삭제할 수 있게 한다.</li>
-	<li>조회 수 증가를 유명 포탈 사이트에서와 같이 구현한다.</li>
-</ol>
+<p>
+If an error occurs during testing, you need to check the log file set in log4j.xml or the log file in CATALINA_HOME/logs.<br />
+No one will understand all of the log messages.<br />
+You should develop your ability to see the log and infer the cause of the error.
+</p>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://www.mybatis.org/mybatis-3/logging.html">http://www.mybatis.org/mybatis-3/logging.html</a></li>
 </ul>
