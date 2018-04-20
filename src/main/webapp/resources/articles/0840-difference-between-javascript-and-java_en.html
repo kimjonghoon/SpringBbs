@@ -1,22 +1,23 @@
 <article>
 
-<h1>자바와 다른 점</h1>
-
-자바를 바탕으로 자바와 다른 자바스크립트의 특징을 살펴본다.<br />
+<h1>Difference from JavaScript and Java</h1>
 
 <ol>
-	<li>변수 선언 시 변수 앞에 var를 붙인다.</li>
-	<li>기본 데이터형 중 숫자는 부동 소수이며 나눗셈의 결과는 부동 소수가 된다.</li>
-	<li>switch 문에서 switch ()의 괄호 안에 문자가 들어가도 된다. (JDK1.7부터 자바도 된다.)</li>
-	<li>일반적인 배열(인덱스를 사용하여 요소를 접근)을 만드는 법</li>
-	<li>연관 배열은 key:value 의 배열로 인덱스로 요소에 접근할 수 없다. 자바에는 연관 배열이 없다.</li>
-	<li>for in 반복문</li>
-	<li>자바스크립트는 함수를 함수의 인자로 전달할 수 있다.</li>
+	<li>Use var when declaring variables.</li>
+	<li>The number of primitive data types is floating point and the result of division is floating point.</li>
+	<li>You can use a string in () of switch(). (Since JDK 1.7, that is available in Java)</li>
+	<li>Creating an ordinary array that can access elements using indexes</li>
+	<li>An associative array is an array of key: value. Associative arrays can not access an element with an index. Java has no associative array.</li>
+	<li>for in statement</li>
+	<li>JavaScript can pass a function as an argument to a function. (Since JDK 1.8, Java can also pass a lambda expression as an argument)</li>
 </ol>
 
-1,2는 이미 보았다.<br />
+<p>
+1,2 have already confirmed.
+</p>
 
-<h3>3. switch("문자열")</h3>
+<h3>3. switch("string")</h3>
+
 <pre class="prettyprint script-result-display">
 var str = "A";
 
@@ -38,10 +39,13 @@ default:
 }
 </pre>
 
-<h3>4. 배열 만들기</h3>
+<h3>4. Create ordinary array</h3>
 
-<h4>[] 사용</h4>
-[]을 사용하여 만든 배열은 인덱스를 사용하여 요소에 접근할 수 있다.
+<h4>Using []</h4>
+
+<p>
+An array created using [] can access an element using an index.
+</p>
 
 <pre class="prettyprint script-result-display">
 var arr = [1, 2, 3, 4, 5];
@@ -49,11 +53,14 @@ var sum = 0;
 for (var i = 0; i &lt; arr.length; i++) {
 	sum = sum + arr[i];
 }
-alert('배열요소 합:' + sum);
+alert('SUM:' + sum);
 </pre>
 
-<h4>Array 객체 이용</h4>
-Array 객체를 이용하여 만든 배열 역시 인덱스를 사용하여 요소에 접근할 수 있다.
+<h4>Using Array object</h4>
+
+<p>
+An array created using an Array object can also be accessed using an index.
+</p>
 
 <pre class="prettyprint script-result-display">
 var arr = new Array(1, 2, 3, 4, 5);
@@ -61,24 +68,27 @@ var sum = 0;
 for (var i = 0; i &lt; arr.length; i++) {
 	sum = sum + arr[i];
 }
-alert('배열요소 합:' + sum);
+alert('SUM:' + sum);
 </pre>
 
-<h3>5. 연관 배열</h3>
-연관 배열은 key:value의 배열로 {}를 사용하여 만든다.<br />
-연관 배열은 인덱스를 사용할 수 없다.<br />
+<h3>5. Associative array</h3>
+
+<p>
+Associative arrays are created using {}.
+</p>
 
 <pre class="prettyprint script-result-display">
-var person = {"name":"홍길동", "job":"의적"};
+var person = {"name":"El Draque", "job":"pirate"};
 alert(person.name);
 alert(person["name"]);
 alert(person.job);
 alert(person["job"]);
 </pre>
 
-<h3>6. for in 반복문으로 연관 배열의 모든 요소에 접근할 수 있다.</h3>
+<h3>6. You can access all the elements of the associative array with the for in loop.</h3>
+
 <pre class="prettyprint script-result-display">
-var person = {"name":"임꺽정", "job":"의적"};
+var person = {"name":"Barbadosed", "job":"pirate"};
 var result = "";
 for(var property in person) {
 	result += person[property];
@@ -86,7 +96,8 @@ for(var property in person) {
 alert(result);
 </pre>
 
-<h3>7. 자바스크립트는 함수를 함수의 인자로 전달할 수 있다.</h3>
+<h3>7. JavaScript can pass a function as an argument to a function.</h3>
+
 <pre class="prettyprint script-result-display">
 function x(a, y) {
     var ret = y(a);
@@ -99,4 +110,5 @@ function z(a) {
 
 x(2, z);
 </pre>
+
 </article>

@@ -1,23 +1,11 @@
 <article>
 
-<h1>빈 검증(Bean Validation)</h1>
+<h1>Bean Validation</h1>
+
+<h2>Sign Up</h2>
 
 <p>
-Spring MVC 프로젝트에서 폼 입력에 바인딩되는 빈을 검증하는 예제를 실습한다.
-실습 과정은 다음과 같다.
-</p>
-
-<ol>	
-	<li>Hibernate Validator 의존 라이브러리를 pom.xml에 추가</li>
-	<li>폼 입력에 바인딩 되는 자바 빈에 유효성 검사 규칙 선언</li>
-	<li>컨트롤러의 요청 핸들러 메서드에 빈 검증 로직 추가</li>
-	<li>JSP에 스프링 태그 라이브러리를 적용하여 검사 에러가 출력되도록 수정</li>
-</ol>
-
-<h2>회원 가입에서의 빈 검증</h2>
-
-<p>
-Hibernate Validator 의존 라이브러리를 pom.xml에 추가한다.
+Add Hibernate Validator dependency to pom.xml.
 </p>
 
 <h6 class="src">pom.xml</h6>
@@ -26,18 +14,17 @@ Hibernate Validator 의존 라이브러리를 pom.xml에 추가한다.
 &lt;dependency&gt;
 	&lt;groupId&gt;org.hibernate&lt;/groupId&gt;
 	&lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
-	&lt;version&gt;6.0.5.Final&lt;/version&gt;
+	&lt;version&gt;6.0.9.Final&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
 <p>
-pom.xml의 내용이 변경되었으니 컨텍스트 메뉴의 Maven - Update Project Cofiguraion을 실행하여 이클립스와 동기화한다.<br /> 
-빈 검증은 스프링 설정 파일에 &lt;mvc:annotation-driven /&gt; 설정이 필요하다.<br /> 
-web.xml에 요청 파라미터의 캐릭터 셋을 "UTF-8"로 바꾸는 필터가 설정되어 있는지 확인한다.
+Since the contents of pom.xml have changed, run Maven, Update Project Cofiguraion menu to synchronize with Eclipse.<br />
+Bean validation need &lt;mvc:annotation-driven /&gt; in spring-bbs-servlet.xml.
 </p>
 
 <p>
-회원 가입 폼 입력에 바인딩되는 빈에 빈 검증 어노테이션을 사용하여 검사 규칙을 선언한다.
+Declare a check rule on the bean that is bound to the sign up form.
 </p>
 
 <h6 class="src">User.java</h6>
@@ -45,26 +32,26 @@ web.xml에 요청 파라미터의 캐릭터 셋을 "UTF-8"로 바꾸는 필터�
 <strong>import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-@Size(min=5, message="이메일 형식이 아닙니다.")
-@Email(message="이메일 형식이 아닙니다.")</strong>
+@Size(min=5, message="Invalid email.")
+@Email(message="Invalid email.")</strong>
 private String email;
 <strong>
-@Size(min=4, message="패스워드는 4자 이상이어야 합니다.")</strong>
+@Size(min=4, message="The password must be at least 4 characters long.")</strong>
 private String passwd;
 <strong>
-@Size(min=2, message="이름은 2자 이상이어야 합니다.")</strong>
+@Size(min=2, message="The full name must be at least two characters long.")</strong>
 private String name;
 <strong>
-@Size(min=6, max=20, message="모바일폰 번호형식이 아닙니다.")</strong>
+@Size(min=6, max=20, message="Invalid mobile.")</strong>
 private String mobile;
 </pre>
 
 <p>
-회원 가입 폼 페이지로 포워딩하는 요청 핸들러 메서드(아래 첫 번째 signUp() 메서드)에 내용이 없는 빈 객체(User 객체)를 생성해 뷰에 전달해야 한다.<br /> 
-(이건 스펙이니 따라야 한다)<br />
-회원 가입을 처리하는 요청 핸들러 메서드(아래 두 번재 signUp() 메서드)에 빈 검증 로직을 추가한다.<br />
-두 번재 signUp() 메서드의 매개 변수 리스트에서 @Valid 어노테이션이 적용된 매개 변수 다음에는 반드시 BindingResult 타입의 매개 변수를 선언해야 한다.<br />
-그렇지 않으면 HTTP 400 에러가 발생한다.
+The membership form handler must create an empty object with no content and pass it to the view.<br />
+This is a spec and should be followed.<br />
+Add bean validation logic to the request handler method that handles subscription.<br />
+In the parameter list of this method, you must declare a parameter of type BindingResult after the @Valid annotated parameter.<br />
+Otherwise, an HTTP 400 error will occur.
 </p>
 
 <h6 class="src">UsersController.java</h6>
@@ -81,18 +68,17 @@ public String signUp(<strong>Model model</strong>) {
 
 @RequestMapping(value="/signUp", method=RequestMethod.POST)
 public String signUp(<strong>@Valid</strong> User user, <strong>BindingResult bindingResult</strong>) {
-    <strong>//유효성 검사
-    if (bindingResult.hasErrors()) { //검증에 실패한 빈은 BindingResult에 담겨 뷰에 전달된다.
+    <strong>//A bean that fails validation is stored in the BindingResult and the BindingResult is passed to the view.
+    if (bindingResult.hasErrors()) {
         return "users/signUp";
     }</strong>
 	
-    //...중간 생략...
+    //...omit...
 }
 </pre>
 
 <p>
-JSP를 아래를 참고하여 수정한다.<br />
-&lt;sf:errors&gt; 태그는 사용자에게 검증 에러를 표시하는 스프링 폼 태그이다.
+Modify signUp.jsp as shown below.(&lt;sf:errors &gt; is a Spring form tag that displays a verification error to the user)
 </p>
 
 
@@ -105,14 +91,14 @@ JSP를 아래를 참고하여 수정한다.<br />
 &lt;sf:errors path="*" cssClass="error" /&gt;</strong>
 &lt;table&gt;
 &lt;tr&gt;
-    &lt;td style="width: 200px;"&gt;이름(Full Name)&lt;/td&gt;
+    &lt;td style="width: 200px;"&gt;Full Name&lt;/td&gt;
     &lt;td style="width: 390px"&gt;
         <strong>&lt;sf:input path="name" /&gt;&lt;br /&gt;
         &lt;sf:errors path="name" cssClass="error" /&gt;</strong>
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호(Password)&lt;/td&gt;
+    &lt;td&gt;Password&lt;/td&gt;
     &lt;td&gt;
         <strong>&lt;sf:password path="passwd" /&gt;&lt;br /&gt;
         &lt;sf:errors path="passwd" cssClass="error" /&gt;</strong>
@@ -120,11 +106,11 @@ JSP를 아래를 참고하여 수정한다.<br />
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td colspan="2" style="text-align: center;font-weight: bold;"&gt;
-        Email이 아이디로 쓰이므로 비밀번호는 Email계정 비밀번호와 같게 하지 마세요.
+        Do not make the password the same as your email account password because Email is used as an ID.
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;비밀번호 확인(Confirm)&lt;/td&gt;
+    &lt;td&gt;Confirm&lt;/td&gt;
     &lt;td&gt;&lt;input type="password" name="confirm" /&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -135,7 +121,7 @@ JSP를 아래를 참고하여 수정한다.<br />
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td&gt;손전화(Mobile)&lt;/td&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
     &lt;td&gt;
         <strong>&lt;sf:input path="mobile" /&gt;&lt;br /&gt;
         &lt;sf:errors path="mobile" cssClass="error" /&gt;</strong>
@@ -143,13 +129,13 @@ JSP를 아래를 참고하여 수정한다.<br />
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="text-align: center;padding-bottom: 15px;"&gt;
-    &lt;input type="submit" value="전송" /&gt;
+    &lt;input type="submit" value="Submit" /&gt;
 &lt;/div&gt;
 &lt;/sf:form&gt;
 </pre>
 
 <p>
-스타일 시트에 에러 메시지를 위한 스타일을 추가한다.<br />
+Add the following to stylesheet.
 </p>
 
 <pre class="prettyprint">
@@ -158,22 +144,20 @@ JSP를 아래를 참고하여 수정한다.<br />
 }
 </pre>
 
-<h3>테스트 화면</h3>
+<h3>Test Screen</h3>
 
 <p>
-<img alt="가입 페이지 방문" src="https://lh3.googleusercontent.com/8BysmtNqq9fZIWu1XFQ78roItWGE5S4qD4wXrJ0u3xH7CU6QiiImvstqiX6FzITb-M8oz-d3t24DGpL3D2S9taqvPLqo_pzM7kyNblXji9tlu9Z-oXqJUr4Qtg-sziIS5wtw-cN0P8ISxwazjLoSY9e2epPfNbirCFzUz3cGHjaHBv6Mew72WDzdoEYdN1Pf7O-vvQ3sbWkWlsyiLKgKK6t-Nr6Ntz-n-n7PvZswEGuV8rng2mR43JA2Sn8diHylcGSz-ySs5blyGVcjxgjxxJzKgeb92nWHDVmJnE7ezFmVDMgk8Fgw-viWfODjLThgY_5QYY1IefneTrSI-1DSxqeHCvhM2LIMZbEFGzmWKUe7zCQ9_zBmS5wyjkk6oVewmvZcVcbZtuFUFL8oVumzoA-MwfV3yWCFzybX6fGpcX4y4NaxYob93MDjk3h99izSTveZoP_Ty1ez8SMirxWPdvUUlnuNXI7Rj50r-yH652YMLx77mT3cb_88NKszz5bFyOrtZbjV4lQili7q3ceO4l81rtqEjHMFrKX8xdtl8GJobZp4X77hRru-qVTE_2RCSEcb3lSnVh2C7AhVrYVeIfw5s4Z2HPLeiqKEo0VzeL8fogBF3Lg_7sSw=w520-h246-no" /><br />
-<img alt="빈 검증 실패" src="https://lh3.googleusercontent.com/hQCU_L2otKQO8o6GYM8dJOwFZfbqizQELKO4Jo8JRodmWO1_7-lj37c0gkU5VPla7LihNnxJHgNwWymmVFWuqNzHLXXvlgI4fyxrcX9b5xGZczIBY5T07D4tMPainhOvL7a0zRPx5efc97253q8pInVuRuyK9A66gNCOAnf-U657HYjt_yspP8Xd2EI1AezdRZtbU23K7QMs44XNHkWSRfydtQ4BEqzW6C6XmaL2jFhYwxFfWdTJpdb0ISgGRb8OjwPQPVsGO__wayFc9GlmS0_X_1kFqlIBQKMr6TKwTjyyNNcx4_h0GccAq17sM4kPFl12iZUUp_ulFYsPj3qFGW4CggsUXNiL4vHnLi0U-GEwPZ-QScvy5hBb7iuPAZd5KxMX2K4Fv_5QDd3lFuW7qvzoBn6ppVIyS8CyIXO_T3zVj7F5OwjwUqyCgIuWj-70kc6GEpeBje5UOGQHs9gYyaIXKwvjq1RNa-9iWJVhqC6CyQRNb1hBYStSMVyO_TkMNQO7Z0M62DSI8hYmHqiD6rARoC0pqKrITwsNTQ0WeRj35QydFBjBj0Nv6SCYDmpaEwj7VYSiS6aD_vfQjqUo4Ugb1Cla3JLs7P59qkZ2wVmRn9mSTYJVBM6z=w555-h382-no" /><br />
+<img alt="Sign Up" src="https://lh3.googleusercontent.com/8BysmtNqq9fZIWu1XFQ78roItWGE5S4qD4wXrJ0u3xH7CU6QiiImvstqiX6FzITb-M8oz-d3t24DGpL3D2S9taqvPLqo_pzM7kyNblXji9tlu9Z-oXqJUr4Qtg-sziIS5wtw-cN0P8ISxwazjLoSY9e2epPfNbirCFzUz3cGHjaHBv6Mew72WDzdoEYdN1Pf7O-vvQ3sbWkWlsyiLKgKK6t-Nr6Ntz-n-n7PvZswEGuV8rng2mR43JA2Sn8diHylcGSz-ySs5blyGVcjxgjxxJzKgeb92nWHDVmJnE7ezFmVDMgk8Fgw-viWfODjLThgY_5QYY1IefneTrSI-1DSxqeHCvhM2LIMZbEFGzmWKUe7zCQ9_zBmS5wyjkk6oVewmvZcVcbZtuFUFL8oVumzoA-MwfV3yWCFzybX6fGpcX4y4NaxYob93MDjk3h99izSTveZoP_Ty1ez8SMirxWPdvUUlnuNXI7Rj50r-yH652YMLx77mT3cb_88NKszz5bFyOrtZbjV4lQili7q3ceO4l81rtqEjHMFrKX8xdtl8GJobZp4X77hRru-qVTE_2RCSEcb3lSnVh2C7AhVrYVeIfw5s4Z2HPLeiqKEo0VzeL8fogBF3Lg_7sSw=w520-h246-no" /><br />
+<img alt="Bean validaion failed" src="https://lh3.googleusercontent.com/hQCU_L2otKQO8o6GYM8dJOwFZfbqizQELKO4Jo8JRodmWO1_7-lj37c0gkU5VPla7LihNnxJHgNwWymmVFWuqNzHLXXvlgI4fyxrcX9b5xGZczIBY5T07D4tMPainhOvL7a0zRPx5efc97253q8pInVuRuyK9A66gNCOAnf-U657HYjt_yspP8Xd2EI1AezdRZtbU23K7QMs44XNHkWSRfydtQ4BEqzW6C6XmaL2jFhYwxFfWdTJpdb0ISgGRb8OjwPQPVsGO__wayFc9GlmS0_X_1kFqlIBQKMr6TKwTjyyNNcx4_h0GccAq17sM4kPFl12iZUUp_ulFYsPj3qFGW4CggsUXNiL4vHnLi0U-GEwPZ-QScvy5hBb7iuPAZd5KxMX2K4Fv_5QDd3lFuW7qvzoBn6ppVIyS8CyIXO_T3zVj7F5OwjwUqyCgIuWj-70kc6GEpeBje5UOGQHs9gYyaIXKwvjq1RNa-9iWJVhqC6CyQRNb1hBYStSMVyO_TkMNQO7Z0M62DSI8hYmHqiD6rARoC0pqKrITwsNTQ0WeRj35QydFBjBj0Nv6SCYDmpaEwj7VYSiS6aD_vfQjqUo4Ugb1Cla3JLs7P59qkZ2wVmRn9mSTYJVBM6z=w555-h382-no" /><br />
 </p>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://hibernate.org/validator/documentation/getting-started/">Getting started with Hibernate Validator</a></li>
 	<li><a href="http://forum.spring.io/forum/spring-projects/web/80192-validation-empty-int-field">Validation - Empty int field</a></li>
 	<li><a href="http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work">http://stackoverflow.com/questions/14715248/simple-springmvc-3-login-doesnt-work</a></li>
 	<li><a href="http://stackoverflow.com/questions/6227547/spring-3-validation-not-working">http://stackoverflow.com/questions/6227547/spring-3-validation-not-working</a></li>
 	<li><a href="http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found">http://stackoverflow.com/questions/8909482/spring-mvc-3-ambiguous-mapping-found</a></li>
-	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-887-9#binfo5">예제로 쉽게 배우는 스프링 프레임워크 3.0(한빛미디어) - 사카타 코이치</a></li>
-	<li><a href="http://jpub.tistory.com/196">Spring in Action(Jpub) - 크레이그 월즈</a></li>
 	<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/">spring-framework-reference.pdf</a></li>
 	<li><a href="http://mybatis.github.io/mybatis-3/getting-started.html">MyBatis Getting started</a></li>
 </ul>

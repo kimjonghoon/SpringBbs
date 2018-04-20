@@ -21,18 +21,18 @@ See <a href="/jsp-pjt/database-design">Database design</a>.
 <h2>Stylesheets and Images</h2>
 
 <p>
-Copy the css/ and images/ folders from C:/www/model2/WebContent on the Model 2 bulletin board and paste them into the Document Base, C:/www/spring-bbs/src/main/webapp directory.
+Copy the /css and /images folders from C:/www/model2/WebContent on the Model 2 bulletin board and paste them into the Document Base, C:/www/spring-bbs/src/main/webapp directory.
 </p>
 
 <h2>JSPs</h2>
 
 <p>
-Create the views folder under C:/www/spring-bbs/src/main/webapp/WEB-INF.<br />
+Create the /views folder under C:/www/spring-bbs/src/main/webapp/WEB-INF.<br />
 Copy the index.jsp, error.jsp, /bbs, /inc, /java, /users folders from the Document Base of Model 2 board and paste them into the /views folder.
 </p>
 
 <p>
-The reason for putting the JSP in the / WEB-INF subdirectory is to prevent the web browser from directly accessing the JSP.<br />
+The reason for putting the JSP in the /WEB-INF subdirectory is to prevent the web browser from directly accessing JSPs.<br />
 Spring MVC recommends that all requests be passed to the controller through the dispatcher servlet.
 </p>
 
@@ -604,10 +604,10 @@ The @RequestMapping(value="signUp", method=RequestMethod.GET) annotation above t
 <p>
 @RequestMapping(value="/signUp", method=RequestMethod.POST) above the method declaration allows the method to handle the "/users/signUp" request of the POST method.<br />
 Even if the request string is the same, it is possible to handle each request separately by HTTP method.<br />
-The method invoked on the /users/signUp request of the POST method redirects the request to welcome.jsp after completing membership.<br />
+The method invoked on the /users/signUp request of the POST method get your web browser redirects the request to welcome.jsp after completing membership.<br />
 If this method changes the screen using forwarding after membership, the user can try to subscribe with the same information using the F5 button.<br />
-Redirects do not have this problem.<br />
-If you have chosen a welcome request using a redirect, the controller should have the following:
+Redirect does not have this problem.<br />
+If you have chosen a redirect, You need to write a method with the following annotation on the controller.
 </p>
 <pre class="prettyprint">@RequestMapping(value="welcome", method="RequestMethod.GET")</pre>
 
@@ -2059,7 +2059,7 @@ Two new methods are used: addArticle(article) and addAttachFile(attachFile).<br 
 </p>
 
 <p>
-When using a redirect, pass the boardCd and page=1 to the list page as shown below.
+When using a redirect, you need to add the boardCd and page=1 to the request as shown below.
 </p>
 
 <pre class="prettyprint">
@@ -2168,7 +2168,7 @@ searchWord = URLEncoder.encode(searchWord,"UTF-8");
 </pre>
 
 <p>
-The method uses a redirect to move the page.
+The method gets your web browser to redirect the request to view.jsp.
 </p>
 
 <pre class="prettyprint">
@@ -2221,7 +2221,7 @@ boardService.modifyComment(comment);
 </pre>
 
 <p>
-The method uses a redirect to move the page.
+The method gets your web browser to redirect the request to view.jsp.
 </p>
 
 <pre class="prettyprint">
@@ -2271,7 +2271,7 @@ boardService.removeComment(commentNo);
 </pre>
 
 <p>
-This mehtod uses a redirect to move the page.
+The mehtod gets your web browser to redirect the request to view.jsp.
 </p>
 
 <pre class="prettyprint">
