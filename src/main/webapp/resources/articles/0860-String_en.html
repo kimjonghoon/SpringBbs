@@ -1,25 +1,47 @@
 <article>
 
-<h1>String</h1>
+<h2>String</h2>
 
 <pre class="prettyprint script-result-display">
-<strong>var name = new String("John Doe");//or var name = "John Doe";</strong>
+<strong>var name = new String("Jack Black");
+//or var name = "Jack Black";</strong>
 alert("A. Name: " + name);
-alert("B. Name's Length: " + name<strong>.length</strong>);//자바는 length()
-alert("C. " + name<strong>.charAt(1)</strong>);//문자의 인덱스 1에 위치한 문자 반환,자바와 같음
-alert("D. " + name<strong>.charCodeAt(1)</strong>);//인덱스의 문자코드 반환, 자바의 codePointAt()
-alert("E. " + name<strong>.concat(",Jane Doe,Anne Bonny")</strong>);//자바와 같음
-alert("F. " + name<strong>.indexOf("Doe")</strong>);//길이라는 문자가 있는 인덱스 번지 반환,자바와 같음 
-alert("G. " + name<strong>.lastIndexOf("Doe",0)</strong>);//인덱스 0부터 왼쪽으로 검색,자바와 같음
-alert("H. " + name<strong>.match(/Doe/)</strong>);//정규표현식에 해당하는 문자열을 반환,자바엔 없음
-alert("I. " + name<strong>.replace("Doe","Cusack")</strong>);//자바의 replaceAll()과 가장 비슷
-alert("J. " + name<strong>.search(/Doe/g)</strong>);//정규표현식에 해당하는 문자열의 찾아 인덱스 반환
-alert("K. " + name<strong>.slice(1,2)</strong>);//자바의 substring(int,int)
-alert("L. " + name<strong>.slice(1)</strong>);//자바의 substring(int)
-alert("M. " + name<strong>.split(" ")</strong>);//자바스크립트의 배열은,로 구분,자바의 split() 같음
-alert("N. " + name<strong>.substring(1,2)</strong>);//자바와 같음
-alert("O. " + name<strong>.toUpperCase()</strong>);//자바와 같음
-alert("P. " + name<strong>.toLowerCase()</strong>);//자바와 같음
+
+//Same as length() in Java
+alert("B. Name's Length: " + name<strong>.length</strong>);
+
+//Returns the character at index 1,Same as Java
+alert("C. " + name<strong>.charAt(1)</strong>);
+
+//Return the character code of the index, Same as codePointAt() in Java
+alert("D. " + name<strong>.charCodeAt(1)</strong>);
+
+alert("E. " + name<strong>.concat(",Anne Bonny")</strong>);//Same as Java
+
+//Returns the index of "Black",Same as Java
+alert("F. " + name<strong>.indexOf("Black")</strong>);
+
+//Search from index 0 to the left,Same as Java
+alert("G. " + name<strong>.lastIndexOf("Black",0)</strong>);
+
+//Returns a string that matches the regular expression
+alert("H. " + name<strong>.match(/Black/)</strong>);
+
+//Similar to Java's replaceAll()
+alert("I. " + name<strong>.replace("Black","White")</strong>);
+
+//Returns the index of the string that matches the regular expression
+alert("J. " + name<strong>.search(/Black/g)</strong>);
+alert("K. " + name<strong>.slice(1,2)</strong>);//Java's substring(int, int)
+alert("L. " + name<strong>.slice(1)</strong>);//Java's substring(int)
+
+//The array of JavaScript is separated by commas.
+//Similar to Java's split()
+alert("M. " + name<strong>.split(" ")</strong>);
+
+alert("N. " + name<strong>.substring(1,2)</strong>);//Same as Java
+alert("O. " + name<strong>.toUpperCase()</strong>);//Same as Java
+alert("P. " + name<strong>.toLowerCase()</strong>);//Same as Java
 </pre>
 
 </article>
