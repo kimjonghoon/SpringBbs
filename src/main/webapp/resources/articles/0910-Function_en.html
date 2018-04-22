@@ -53,8 +53,8 @@ alert(minus(3,4));
 <h3>Self-Executing Anonymous Functions</h3>
 
 <p>
-함수를 ()를 이용해서 감싸고 마지막에 (); 있으면 () 안의 함수가 즉시 실행된다.
-자기 호출 익명 함수는 jQuery 와 같은 자바스크립트 라이브러리 코드에서 많이 볼 수 있다.
+If you enclose the function with '(' and ')();', the function in parentheses is executed immediately.<br />
+Self-Executing Anonymous Functions are often found in JavaScript library code, such as jQuery.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -66,30 +66,30 @@ alert(minus(3,4));
 <pre class="prettyprint script-result-display">
 (function(whom) {
 	alert("Hello " + whom);
-})('장길산');
+})('John Doe');
 </pre>
 
 <pre class="prettyprint script-result-display">
 (function(a, b) {
 	alert(a + b);
 })(2,5);
-
 </pre>
 
 <h3>Scoping and Hoisting</h3>
 
 <p>
-스코핑(Scoping)은 변수가 유효성을 갖는 영역이 결정되는 규칙을 말한다. 
-스코핑을 충분히 이해하기 위해서는 호이스팅에 대한 이해가 중요하다.
-호이스팅이란 자바스크립트 인터프리터가 <strong>'선언된 변수나 함수를 현재 실행 영역의 맨 위로 끌어올리는 동작'</strong>을 말한다.
-할당 구문은 런타임 과정에서 이루어지기 때문에 호이스팅되지 않는다.
-참고로, 호이스팅은 자바스크립트의 공식 용어는 아니다.
-<a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf">ECMA-262.pdf</a> 문서에서 호이스팅이란 용어는 나오지 않는다.
-자바는 블록({ }) 안에서 변수를 선언하면 그 변수는 블록에서만 유효한 변수이다.
-하지만 자바스크립트에서 그와 같은 변수는 함수 안에서만 만들 수 있다.
-자바스크립트에서는 {}, if 문 블록에서만 유효한 변수는 만들 수 없다.
-
-다음 코드의 결과를 예측해 보자.
+Scoping is a rule that determines the effective area of a variable.<br />
+Understanding scoping requires an understanding of hoisting.<br />
+Hoisting refers to the action of a JavaScript interpreter to 'raise a declared variable or function to the top of the current execution area'.<br />
+<br />
+The assignment statement is not subject to hoisting because it is done during runtime.<br />
+For reference, hoisting is not an official term in JavaScript.<br />
+<br />
+In Java, variables declared in a block are valid only within a block.<br />
+In JavaScript, however, such variables can only be created within a function.<br />
+In JavaScript, you can not create variables that are valid only in the {} and if statement blocks.<br />
+<br />
+Predict the results of the following code.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -125,9 +125,8 @@ alert(x);
 </pre>
 
 <p>
-위 예제는 설명이 필요하다.
-정확하게 위 소스는 다음과 같이 해석되어 실행된다.
-결론적으로 fn() 함수의 식별자 x는 fn() 함수 내에서만 유효하게 된다.
+The identifier x of the fn() function is valid only within the fn() function.<br />
+Exactly the above source is interpreted as follows.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -155,7 +154,7 @@ alert(x);
 </pre>
 
 <p>
-자바스크립트에서는 {}, if 문 블록에서만 유효한 변수는 만들 수 없다.
+In JavaScript, you can not create variables that are valid only in the {} and if statement blocks.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -184,9 +183,8 @@ foo();
 </pre>
 
 <p>
-위 예제는 함수에 var x = 2;를 선언했다.
-이 x 변수는 함수 내에서만 유효한 영역을 가지는 새로운 변수이다.
-함수 밖의 var x = 1;와는 전혀 상관없는 변수이다. 
+The above example declares var x = 2; in the function.<br />
+This x variable is a new variable with a valid region only within the function, and has no relation to the variable x (var x = 1;) outside the function. 
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -201,7 +199,7 @@ alert(x);
 </pre>
 
 <p>
-위 코드가 호이스팅되면 아래 코드와 같다.
+The above code is hoisted and interpreted as follows.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -217,18 +215,18 @@ alert(x);
 </pre>
 
 <p>
-만약 위 코드에서 함수 fn() 안에 선언된 var x;를 주석 처리하면 결과는 어떻게 바뀔까?
+In the above code, comment out the var x declared in the function fn () to see how the result will change.
 </p>
 
 <pre class="prettyprint script-result-display">
-sayHo(); //sayHo();호출이 코드에서 먼저 있다
+sayHo(); //SayHo() comes first in the code.
 function sayHo() { 
 	alert("Ho");
 }
 </pre>
 
 <p>
-호이스팅되면 결과적으로 아래 코드와 같다.
+The above code is hoisted and interpreted as follows.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -239,7 +237,7 @@ sayHo();
 </pre>
 
 <p>
-하지만 비슷해 보이는 다음 코드는 에러를 발생시킨다. 
+The following code, which looks similar, throws an error.
 </p>
 
 <pre class="typeError">
@@ -250,7 +248,7 @@ var sayHo = function() {
 </pre>
 
 <p>
-다음은 좀 더 어려운 예제이다.
+The following is a more difficult example.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -267,7 +265,7 @@ bumpInto();
 </pre>
 
 <p>
-호이스팅되면 결과적으로 아래 코드와 같다.
+The above code is hoisted and interpreted as follows.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -284,7 +282,7 @@ bumpInto();
 </pre>
 
 <p>
-매개변수 리스트가 다르면 자바처럼 오버 로딩될까?
+If the parameter list is different, will it overload as Java?
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -292,7 +290,7 @@ function bumpInto() {
 	function greet() {
 		alert("How You Doin?");
 	}
-	function greet(whom) { //매개변수가 있는 greet 함수
+	function greet(whom) { //Greet function with parameters
 		alert("What's Up?");
 	}
 	return greet();
@@ -301,11 +299,11 @@ bumpInto();
 </pre>
 
 <p>
-greet()와 greet(whom) 함수는 자바처럼 오버 로딩되지 않는다.
-나중에 선언된 greet(whom) 함수가 실행된다. 
-
-할당 구문은 런타임 과정에서 이루어지기 때문에 호이스팅 되지 않는다고 했다.
-다음 예제를 보자.
+JavaScript functions are not overloaded like Java.<br />
+The greet (whom) function declared later is executed.<br />
+<br />
+The assignment statement is said to be non-hoisting because it is done during runtime.<br />
+Consider the following example.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -322,7 +320,7 @@ bumpInto();
 </pre>
 
 <p>
-호이스팅 되면 결과적으로 아래 코드와 같다.
+The above code is hoisted and interpreted as follows.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -341,22 +339,22 @@ bumpInto();
 </pre>
 
 <p>
-return 문 다음에 있는 "What's Up?"을 출력하는 greet() 함수는 실행될 기회가 없다.
+The greet() function that prints "What's Up?" after the return statement has no chance to execute.
 </p>
 
-<h3>클로저(Closures)</h3>
+<h3>Closures</h3>
 
-<h4>내부 함수</h4>
+<h4>Inner function</h4>
 
 <p>
-자바스크립트는 내부 함수(inner function)를 지원하는 언어다.
-내부 함수는 외부 함수(내부 함수는 감싸는)에서 선언된 변수를  사용할 수 있다.
+JavaScript supports inner functions.<br />
+An inner function can use a variable declared in an outer function (wrapping inner function).
 </p>
 
 <pre class="prettyprint script-result-display">
 function fn() {
-	var balance = 0; //외부에서 선언된 변수
-	function deposit(money) { //내부함수
+	var balance = 0; //outside variable
+	function deposit(money) { //inner function
 		balance += money;
 		alert(balance);
 	}
@@ -366,38 +364,35 @@ fn();
 </pre>
 
 <p>
-부모 함수 밖에서 내부 함수를 직접 부를 수는 없지만 부모 함수 밖에서 내부 함수를 실행시킬 방법은 있다.
-<strong>"자바스크립트 함수는 기본적으로 함수 객체이다. 
-그래서 함수를 변수에 할당하거나 다른 함수의 인자로 넘길 수 있다."</strong>
-위 예제를 다음과 같이 바꾸어 보자.
-코드는 내부 함수에 대한 참조를 반환하여, 부모 함수 밖에서도 이 함수를 참조할 수 있게 된다.
+There is no way to call an internal function directly outside the parent function, but there is a way to execute the internal function outside the parent function.<br />
+"A JavaScript function is basically a function object, so you can assign a function to a variable or pass it as an argument to another function."<br />
+The code returns a reference to the inner function so that it can be referenced outside the parent function.<br />
+By returning a reference to the inner function in the above example, you can change it to be able to reference it outside of the parent function.
 </p>
 
 <pre class="prettyprint script-result-display">
 function fn() {
-	var balance = 0; //외부에서 선언된 변수
-	function deposit(money) { //내부함수
+	var balance = 0; //outside variable
+	function deposit(money) { //inner function
 		balance += money;
 		alert(balance);
 	}
-	<strong>alert("fn() 함수가 실행된다.");</strong>
+	<strong>alert("The fn () function is executed.");</strong>
 	<strong>return deposit;</strong>
 }
-var retFn = fn();//만약 fn함수가 반환하지 않는 함수라면 retFn은 undefined 이다.
+var retFn = fn();//If the function fn does not return, retFn is undefined.
 retFn(200);
 </pre>
 
 <p>
-이 코드가 문제없이 실행된다는 사실은 자바 프로그래머를 불편하게 한다.
-자바에서는 메서드 안에 정의된 지역변수는 메서드가 종료되면 사라진다.
-마찬가지로 fn() 함수가 종료될 때 이 함수 내부에 정의된 지역 변수(balance)는 없어져야 하지만,
-fn() 함수가 리턴 값을 반환했는데도 balance 변수는 여전히 유효하다.
-
-balance가 여전히 유효한 이유는 retFn가 클로저를 갖는다는 데 있다.
-클로저는 2개로 이루어진 특별한 객체이다.
-첫 번째는 함수이고 두 번째는 그 함수가 만들어진 환경이다.
-여기서 환경이란 함수가 만들어질 때 사용할 수 있는 변수들이다.
-<strong>"retFn는 deposit 함수와 balance 변수를 포함하는 클로저를 갖는다."</strong>
+The fact that this code runs without problems makes the Java programmer uncomfortable.<br />
+In Java, local variables defined in a method disappear when the method terminates.<br />
+Likewise, when the fn () function is terminated, the local variables defined within the function should be removed, but the variable balance is still valid even though the fn () function returns a return value.<br />
+balance is still valid because retFn has a closure.<br />
+A closure is a special object made up of two.<br />
+The first is the function and the second is the environment in which the function was created.<br />
+Here, the environment is a variable that can be used when a function is created.<br />
+"retFn has a closure containing the deposit function and the balance variable."
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -422,18 +417,16 @@ ac2(500);
 </pre>
 
 <p>
-함수가 정의된 범위 밖에서 그 내부 함수를 참조할 때 클로저가 만들어진다.
-내부 함수가 자신의 영역 범위를 넘어서 참조를 통해서 호출될 수 있다는 사실은 그 함수가 앞으로도 
-계속 호출될 수 있고, 그래서 자바스크립트는 그 함수를 계속 유지해야 함을 뜻한다.
-변수가 부모 함수의 지역 변수라면 당연히 내부 함수는 그 부모의 범위를 상속하고 
-있기 때문에 그 변수를 참조할 수 있다.
-같은 참조 변수를 이용해서 deposit()를 두 번 호출하면 balance 변수의 값이 누적되고 있음을 확인할 수 있다.
-ac1(50); ac1(450);
-ac2(200); ac2(500);
-또한 서로 다른 참조 변수(ac1과 ac2)를 사용하고 있는 deposit() 함수의 호출에서는 balance 변수가 서로 독립적으로 증가한다.
+A closure is created when a function's internal functions are referenced outside the function.<br />
+The fact that an inner function can be called through a reference beyond its scope means that the function can still be called in the future, so JavaScript must keep the function.<br />
+If a variable is a local variable of a parent function, the inner function inherits the scope of the parent and can reference the variable.<br />
+If you call deposit () twice with the same reference variable, you can see that the value of the balance variable is accumulated.<br />
+ac1 (50); ac1 450;<br />
+ac2 (200); ac2 (500);<br />
+Also, in calls to the deposit () function that use different reference variables (ac1 and ac2), the balance variables increase independently of each other.
 </p>
 
-<h4>클로저 간 변수 공유</h4>
+<h4>Shared variable between closures</h4>
 
 <pre class="prettyprint script-result-display">
 function account(accountNo) {
@@ -471,20 +464,15 @@ alert(ac2.getAccountNo() + ': ' + ac2.getBalance());
 </pre>
 
 <p>
-4 개의 내부 함수는 동일한 지역변수를 참조하고 있으며, 동일한 변수 범위를 공유하고 있다.
-deposit() 함수가 balance를 1000 증가시키면 withdraw()가 다시 호출될 때에 증가된 balance의 값이 
-새로운 시작 값이 된다.
-account()을 또 호출하면(var ac2 = account('222');)
-동일한 닫힌 환경을 가지는 클로저의 새 인스턴스가 생성된다.
+The four internal functions refer to the same local variables and share the same scope of variables.<br />
+If the deposit () function increments the balance by 1000, the value of the increased balance will be the new starting value when withdraw () is called again.<br />
+When account() is called again like <b>var ac2 = account('222');</b>, a new instance of the closure with the same closed environment is created.
 </p>
 
-<h3>객체 지향 자바스크립트</h3>
+<h3>Object-oriented coding in JavaScript</h3>
 
 <p>
-자바에서의 클래스를 자바스크립트에서는 다음처럼 작성하면 된다.
-간단히 설명하면,
-자바스크립트에서는 class 란 키워드가 없으니 클래스를 만들려면 function를 이용해서 만든다.
-this는 자바에서의 this 와 같다고 보면 된다.
+In JavaScript, the following is similar to a class in Java.
 </p>
 
 <pre class="prettyprint script-result-display">

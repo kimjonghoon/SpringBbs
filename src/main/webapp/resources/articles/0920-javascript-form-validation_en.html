@@ -1,11 +1,11 @@
 <article>
 
-<h1>유효성 검사</h1>
+<h1>Validation</h1>
 
-<h3>폼에 접근</h3>
+<h3>Accessing forms with JavaScript</h3>
 
 <p>
-&lt;form id="someform"&gt; 폼 태그가 있다면 폼의 참조를 얻는 방법이다.<br />
+The following is a way to get a reference to a form(&lt;form id="someform"&gt;).
 </p>
 
 <pre class="prettyprint">
@@ -13,26 +13,24 @@ var form = document.getElementsTagName("form")[0];
 var form = document.getElementById("someform");
 </pre>
 
-<h3>폼에 이벤트를 추가하는 방법</h3>
+<h3>Submit event handler</h3>
 
 <p>
-폼 엘리먼트 내에 submit 버튼이 클릭 이벤트에 핸들러 함수를 매핑하는 방법은 다음과 같다.<br />
+Here's how to specify the handler function to perform when the submit button is clicked:
 </p>
 
 <pre class="prettyprint">
-&lt;form id="someform" onsubmit="return 핸들러함수() "&gt;
+&lt;form id="someform" onsubmit="return someHandler() "&gt;
 </pre>
 
 <p>
-이때 핸들러 함수는 불린을 리턴해야 한다.<br />
-유효성 검사를 통과하여 폼을 전송하려면 return true;로<br />
-유효성 검사를 통과 못 해서 폼 전송을 취소하려면 return false;로 구현한다.<br />
+The someHandler() function should return true to pass the form through validation, false to cancel the form submission because it fails validation.
 </p>
 
-<h3>라디오 버튼과 체크 박스</h3>
+<h3>How to disable the radio button</h3>
 
 <p>
-라디오 버튼을 비활성화 시키는 방법은 아래와 같다.<br />
+Here is how to disable the radio button.
 </p>
 
 <pre class="prettyprint">
@@ -40,7 +38,7 @@ document.someform.radiogroup[i].disabled = true;
 </pre>
 
 <p>
-비활성화하면 이 파라미터는 서버에 전송되지 않는다.<br />
+Disabled parameters are not sent to the server.
 </p>
 
 <h6 class="src">send1.html</h6>
@@ -49,7 +47,7 @@ document.someform.radiogroup[i].disabled = true;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 테스트&lt;/title&gt;
+&lt;title&gt;JavaScript Test&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
 function check() {
 	var form = document.getElementById("testForm");
@@ -66,19 +64,19 @@ function check() {
 	N&lt;input type="radio" name="condition" value="normal" /&gt;
 	B&lt;input type="radio" name="condition" value="bad" /&gt;
 	W&lt;input type="radio" name="condition" value="worst" /&gt;
-	&lt;input type="submit" value="전송" /&gt;
+	&lt;input type="submit" value="Submit" /&gt;
 &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
 
 <p>
-<a href="examples/send1.html">예제 실행</a><br />
-이름을 입력하고 W를 선택한 후 서밋 버튼을 클릭하여 전송되는 파라미터와 값을 확인한다.<br />
-W 외에 다른 값을 선택한 후 서밋 버튼을 클릭하여 전송되는 파라미터와 값을 확인한다.<br />
+<a href="examples/send1.html">Run example</a><br />
+Enter the name, select W, and click the Summit button to confirm the parameters and values to be transmitted.<br />
+Select a value other than W and click the Summit button to confirm the parameters and values to be transmitted.
 </p>
 
-<h3>라디오 버튼이나 체크 박스를 선택하면 실행되는 이벤트 핸들러 등록 예제</h3>
+<h3>Event handler that executes when radio button or checkbox is selected</h3>
 
 <h6 class="src">send2.html</h6>
 <pre class="prettyprint">
@@ -86,7 +84,7 @@ W 외에 다른 값을 선택한 후 서밋 버튼을 클릭하여 전송되는 
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 테스트&lt;/title&gt;
+&lt;title&gt;JavaScript Test&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
 function agree() {
 	var form = document.getElementById("testForm");
@@ -115,7 +113,7 @@ function check() {
 	N&lt;input type="radio" name="condition" value="normal" /&gt;
 	B&lt;input type="radio" name="condition" value="bad" /&gt;
 	W&lt;input type="radio" name="condition" value="worst" /&gt;&lt;br /&gt;
-	정보 제공에 동의합니다.
+	I agree to the information provided.
 	&lt;input type="radio" name="agreement" value="y" onchange="agree()" /&gt;
 	&lt;input type="submit" id="submit" value="확인" disabled="disabled" /&gt;
 &lt;/form&gt;
@@ -124,33 +122,34 @@ function check() {
 </pre>
 
 <p>
-<a href="examples/send2.html">예제 실행</a><br />
-입력 후 서밋 버튼을 클릭하여 전송되는 파라미터와 값을 확인한다.<br />
+<a href="examples/send2.html">Run example</a><br />
+After entering the name, click the Summit button to confirm the transmitted parameters and values.
 </p>
 
-<h3>그 밖의 참고사항</h3>
+<h3>Etc</h3>
+
 <ul>
-	<li>라디오 버튼이나 체크박스의 경우 옵션을 동적으로 추가 또는 삭제할 수 없다.</li>
-	<li>input 엘리먼트의 type 속성은 text, password, hidden 이 있다.</li>
-	<li>textarea는 여러 줄을 입력할 수 있게 한다.</li>
-	<li>input 과 textarea에서 사용자가 입력한 값은 value 속성으로 접근할 수 있다.</li>
-	<li>click 이외에도 change, focus, blur 이벤트를 이용하여 폼 유효성 검사를 수행할 수 있다.</li>
-	<li>이벤트 핸들러를 등록하는 방법은 아래와 같다.
+	<li>You can not dynamically add or delete radio button or checkbox options.</li>
+	<li>The type attribute of the input element is text, password, hidden.</li>
+	<li>The textarea is used to enter multiple lines.</li>
+	<li>Values entered by the user in input and textarea can be accessed with the value attribute.</li>
+	<li>In addition to click, you can perform form validation using change, focus, and blur events.</li>
+	<li>How to register each event handler is as follows.
 		<ul>
-			<li>onclick="핸들러 함수()"</li>
-			<li>onchange="핸들러 함수()"</li>
-			<li>onfocus="핸들러 함수()"</li>
-			<li>onblur="핸들러 함수()"</li>
+			<li>onclick="someHandler()"</li>
+			<li>onchange="someHandler()"</li>
+			<li>onfocus="someHandler()"</li>
+			<li>onblur="someHandler()"</li>
 		</ul>
 	</li>
 </ul>
 
-<h3>자바스크립트 코드와 디자인의 분리</h3>
+<h3>Separation of JavaScript code and HTML design</h3>
 
 <p>
-엘리먼트의 onclick 속성을 이용하여 이벤트를 등록하는 방법은 디자인과의 결합도가 높은 코드다.<br />
-<em class="path">&lt;form id="testForm" method="get" onsubmit="return check()"&gt;</em>
-부분이 결합도가 높다. send1.html 파일을 아래처럼 바꾸어서 테스트한다.
+If you register the event handler using the onclick attribute of the element as in the following, the degree of coupling with the HTML design becomes high.<br />
+&lt;form id="testForm" method="get" onsubmit="return check()"&gt;<br />
+You can lower the degree of coupling by modifying send1.html as shown below.
 </p>
 
 <h6 class="src">send1-1.html</h6>
@@ -159,11 +158,9 @@ function check() {
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 테스트&lt;/title&gt;
+&lt;title&gt;JavaScript Test&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-//&lt;![CDATA[
-<strong>
-window.onload = initPage;
+<strong>window.onload = initPage;
 
 function initPage() {
 	var form = document.getElementById("testForm");
@@ -174,56 +171,29 @@ function check() {
 	var form = document.getElementById("testForm");
 	form.condition[4].disabled = true;
 	return true;
-}
-</strong>
-//]]&gt;
+}</strong>
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;form id="testForm" method="get"&gt;
-	이름 &lt;input type="text" name="name" /&gt;&lt;br /&gt;
+	Name &lt;input type="text" name="name" /&gt;&lt;br /&gt;
 	B&lt;input type="radio" name="condition" value="best" /&gt;
 	G&lt;input type="radio" name="condition" value="good" /&gt;
 	N&lt;input type="radio" name="condition" value="normal" /&gt;
 	B&lt;input type="radio" name="condition" value="bad" /&gt;
 	W&lt;input type="radio" name="condition" value="worst" /&gt;
-	&lt;input type="submit" value="전송" /&gt;
+	&lt;input type="submit" value="Submit" /&gt;
 &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
 
-<a href="examples/send1-1.html">예제 실행</a><br />
-
 <p>
-자바스크립트 코드를 외부 파일로 만들면 좋은 코드가 된다.<br />
+<a href="examples/send1-1.html">Run example</a>
 </p>
 
-<h6 class="src">send1-2.html</h6>
-<pre class="prettyprint">
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 테스트&lt;/title&gt;
-<strong>&lt;script type="text/javascript" src="send1.js"&gt;&lt;/script&gt;</strong>
-&lt;/head&gt;
-&lt;body&gt;
-&lt;form id="testForm" method="get"&gt;
-	이름 &lt;input type="text" name="name" /&gt;&lt;br /&gt;
-	B&lt;input type="radio" name="condition" value="best" /&gt;
-	G&lt;input type="radio" name="condition" value="good" /&gt;
-	N&lt;input type="radio" name="condition" value="normal" /&gt;
-	B&lt;input type="radio" name="condition" value="bad" /&gt;
-	W&lt;input type="radio" name="condition" value="worst" /&gt;
-	&lt;input type="submit" value="전송" /&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
 <p>
-<a href="examples/send1-2.html">예제 실행</a><br />
+You can make the JavaScript code into an external file as follows.
 </p>
 
 <h6 class="src">send1.js</h6>
@@ -242,15 +212,41 @@ function check() {
 }
 </pre>
 
+<h6 class="src">send1-2.html</h6>
+<pre class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;title&gt;JavaScript Test&lt;/title&gt;
+<strong>&lt;script type="text/javascript" src="send1.js"&gt;&lt;/script&gt;</strong>
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form id="testForm" method="get"&gt;
+	Name &lt;input type="text" name="name" /&gt;&lt;br /&gt;
+	B&lt;input type="radio" name="condition" value="best" /&gt;
+	G&lt;input type="radio" name="condition" value="good" /&gt;
+	N&lt;input type="radio" name="condition" value="normal" /&gt;
+	B&lt;input type="radio" name="condition" value="bad" /&gt;
+	W&lt;input type="radio" name="condition" value="worst" /&gt;
+	&lt;input type="submit" value="Submit" /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+<a href="examples/send1-2.html">Run example</a>
+</p>
+
 <h6 class="src">send2-1.html</h6>
 <pre class="prettyprint">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 테스트&lt;/title&gt;
+&lt;title&gt;JavaScript Test&lt;/title&gt;
 &lt;script type="text/javascript"&gt;
-//&lt;![CDATA[
 window.onload = initPage;
 
 function initPage() {
@@ -275,18 +271,17 @@ function check() {
 	form.condition[4].disabled = true;
 	return true;
 }
-//]]&gt;
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;form id="testForm" method="get"&gt;
-	이름 &lt;input type="text" name="name" /&gt;&lt;br /&gt;
+	Name &lt;input type="text" name="name" /&gt;&lt;br /&gt;
 	B&lt;input type="radio" name="condition" value="best" /&gt;
 	G&lt;input type="radio" name="condition" value="good" /&gt;
 	N&lt;input type="radio" name="condition" value="normal" /&gt;
 	B&lt;input type="radio" name="condition" value="bad" /&gt;
 	W&lt;input type="radio" name="condition" value="worst" /&gt;&lt;br /&gt;
-	정보 제공에 동의합니다.
+	I agree to the information provided.
 	&lt;input type="radio" name="agreement" value="y"/&gt;
 	&lt;input type="submit" id="submit" value="확인" /&gt;
 &lt;/form&gt;
@@ -295,11 +290,9 @@ function check() {
 </pre>
 
 <p>
-<a href="examples/send2-1.html">예제 실행</a><br />
-
-위 예제 역시 자바스크립트 코드를 분리하면 더 좋은 코드가 된다.<br />
-
-<a href="examples/send2-2.html">예제 실행</a><br />
+<a href="examples/send2-1.html">Run example</a><br />
+Separating the JavaScript code from the above example makes better code.<br />
+<a href="examples/send2-2.html">Run example</a>
 </p>
 
 </article>
