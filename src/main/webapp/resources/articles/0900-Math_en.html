@@ -1,23 +1,26 @@
 <article>
 
-<h1>Math</h1>
+<h2>Math</h2>
 
 <pre class="prettyprint script-result-display">
 var random = Math.random() * 10;
 random = random.toPrecision(3);
-alert("랜덤값 : " + random);
+alert("Random: " + random);
 
 var ceil = Math.ceil(random);
-alert("올림값 : " + ceil);
+alert("Ceil: " + ceil);
 
 var floor = Math.floor(random);
-alert("내림값 : " + floor);
+alert("Floor: " + floor);
 
 var round = Math.round(random);
-alert("반올림 : " + round);
+alert("Round: " + round);
 </pre>
 
-<h4>로또번호 생성기 자바스크립트 버전</h4>
+<p>
+The following JavaScript function generates a lotto number.
+</p>
+
 <pre class="prettyprint script-result-display">
 var lotto = new Array();
 var index = 0;
@@ -39,10 +42,10 @@ while(true) {
 	}
 }
 
-alert("예상로또번호: " + lotto.toString());
+alert("Lotto number: " + lotto.toString());
 </pre>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://www.w3schools.com/jsref/jsref_obj_math.asp">http://www.w3schools.com/jsref/jsref_obj_math.asp</a></li>
 </ul>
