@@ -1,25 +1,16 @@
 <article>
 
-<h1>DOM 실습 - HTML에서 자바스크립트 분리</h1>
+<h1>Decoupling HTML and JavaScript</h1>
 
 <p>
-이벤트 핸들러를 지정하는 데는 두 가지 방식이 있다.
-</p>
-
-<h4 class="filename">1. HTML 엘리먼트 속성에 바로 지정하는 방식</h4>
-<pre class="prettyprint no-border">&lt;input type="button" value="버튼" onclick="이벤트 핸들러" /&gt;</pre>
-
-<p>
-HTML 속성에 이벤트 핸들러를 지정하면 HTML과 자바스크립트의 결합도가 높아진다.<br />
-DOM 모델을 활용해서 이벤트 핸들러를 지정할 수 있는데, 이렇게 하면 HTML과 자바스크립트의 결합도를 조금 낮출 수 있다.<br />
-지정을 보다 편하게 하기 위해 HTML 엘리먼트에 id 속성을 추가한다. 
+DOM 모델을 활용해서 이벤트 핸들러를 지정할 수 있는데, 이렇게 하면 HTML과 자바스크립트의 결합도를 낮출 수 있다.
+다음과 같이 엘리먼트에 id 속성을 추가하면 이벤트 핸들러를 지정이 쉬워진다.
 </p>
 
 <pre class="prettyprint no-border">&lt;input type="button" <strong>id="some-button"</strong> value="버튼" /&gt;</pre>
 
-<h4 class="filename">2. DOM 모델을 활용해 지정하는 방식</h4>
-
-<pre class="prettyprint no-border">window.onload = function() {
+<pre class="prettyprint no-border">
+window.onload = function() {
 	var btn = document.getElementById("<strong>some-button</strong>");
 	btn.onclick = function() {
 		//TODO
@@ -28,24 +19,22 @@ DOM 모델을 활용해서 이벤트 핸들러를 지정할 수 있는데, 이�
 </pre>
 
 <p>
-웹 브라우저는 HTML 문서를 해석하여 보여준다.<br />
-정확하게 말하면, HTML 문서로부터 DOM 트리를 생성한 후 DOM 트리를 해석해서 보여준다.<br />
-모든 문서가 준비되었을 때 발생하는 이벤트가 window의 onload 이벤트다.<br />
-window의 onload 이벤트에 이벤트 핸들러가 지정하는 방식에도 단점이 있다.<br />
-필요하지 않았던 글로벌 속성(id,class,title)을 추가해야 하고, 문서에 이미지가 많을수록 핸들러 등록이 늦어진다.
-(window의 onload 이벤트는 이미지가 모두 로드된 후 발생하기 때문이며, 절 후반에 제이쿼리를 사용하면 개선할 수 있다)<br />
-이 절에서 우리는 HTML 속성에 지정한 핸들러를 제거하고, DOM을 활용해서 핸들러를 지정하는 실습을 할 것이다. 
-실습 대상은 게시판의 view.jsp 파일이다.
+Occurs when all the elements of the window's onload event document are ready.<br />
+There is also a disadvantage to specifying an event handler for the window's onload event.<br />
+You need to add global attributes (id, class, title) that you do not need, and if there are many images in the document, the handler registration will be slowed down.<br />
+(You can use JQuery to improve this)<br />
+In this section, we will remove the handler specified in the HTML attribute, and use the DOM to specify the handler.<br />
+The subject of the exercise is the view.jsp file of the bulletin board.
 </p>
 
-<h3>첨부 파일 링크와 첨부 파일 삭제 링크</h3>
+<h3>Attachment link and Attachment delete link</h3>
 
 <p>
-<img alt="첨부 파일링크와 첨부 파일 삭제 링크" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
+<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
 </p>
 
 <p>
-다운로드 링크와 삭제 링크를 다음과 같이 수정한다.
+Modify the download link and the delete link as follows.
 </p>
 
 <pre class="prettyprint">&lt;div id="detail"&gt;
@@ -58,22 +47,22 @@ window의 onload 이벤트에 이벤트 핸들러가 지정하는 방식에도 �
       &lt;div class="attach-file"&gt;
           &lt;a href="#" <strong>title="${file.filename }" class="download"</strong>&gt;${file.filename }&lt;/a&gt;
           &lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;
-            <strong>&lt;a href="#" title="${file.attachFileNo }"&gt;삭제&lt;/a&gt;</strong>
+            <strong>&lt;a href="#" title="${file.attachFileNo }"&gt;Del&lt;/a&gt;</strong>
           &lt;/security:authorize&gt;
       &lt;/div&gt;
     &lt;/c:forEach&gt;
-  &lt;/p&gt;        
+  &lt;/p&gt;
 &lt;/div&gt;
 </pre>
 
 <p>
-&lt;script&gt;와 &lt;/script&gt; 사이에 다음을 추가한다.
+Add the following between &lt;script&gt; and &lt;/script&gt;.
 </p>
 
 <pre class="prettyprint">window.onload = initPage;
 
 function initPage() {
-  //첨부 파일 다운로드, 첨부 파일 삭제
+  //Download link and the delete link
   var file_list = document.getElementById("file-list");
   var fileLinks = file_list.getElementsByTagName("a");
   
@@ -90,7 +79,7 @@ function initPage() {
     } else {
       fileLink.onclick = function() {
         var attachFileNo = this.title;
-        var chk = confirm("정말로 삭제하겠습니까?");
+        var chk = confirm("Are you sure you want to delete it?");
         if (chk === true) {
           var form = document.getElementById("deleteAttachFileForm");
           form.attachFileNo.value = attachFileNo;
@@ -100,17 +89,17 @@ function initPage() {
       };
     }
   }
-  //TODO 진행하면서 이곳에 코드를 추가한다.
+  //TODO: Add code here
   
-}//initPage 함수 끝
+}//initPage function end
 </pre>
 
 
-<h3>댓글</h3>
+<h3>Comment</h3>
 
 <p>
-<img alt="댓글 반복" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
-관련 코드를 다음처럼 수정한다.<br />
+<img alt="Comments" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
+Modify as follows.
 </p>
 
 <pre class="prettyprint"><strong>&lt;div id="all-comments"&gt;</strong>
@@ -120,7 +109,7 @@ function initPage() {
     &lt;span class="date"&gt;${comment.regdate }&lt;/span&gt;
     &lt;security:authorize access="#comment.email == principal.username or hasRole('ROLE_ADMIN')"&gt;
     &lt;span class="modify-del"&gt;
-      <strong>&lt;a href="#"&gt;수정&lt;/a&gt;</strong> | <strong>&lt;a href="#" title="${comment.commentNo }"&gt;삭제&lt;/a&gt;</strong>
+      <strong>&lt;a href="#"&gt;Modify&lt;/a&gt;</strong> | <strong>&lt;a href="#" title="${comment.commentNo }"&gt;Del&lt;/a&gt;</strong>
     &lt;/span&gt;
     &lt;/security:authorize&gt;
     <strong>&lt;div class="comment-memo"&gt;${comment.memo }&lt;/div&gt;</strong>
@@ -131,7 +120,7 @@ function initPage() {
       &lt;input type="hidden" name="page" value="${param.page }" /&gt;
       &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
       &lt;div style="text-align: right;"&gt;
-        <strong>&lt;a href="#"&gt;전송&lt;/a&gt;</strong> | <strong>&lt;a href="#"&gt;취소&lt;/a&gt;</strong>
+        <strong>&lt;a href="#"&gt;Submit&lt;/a&gt;</strong> | <strong>&lt;a href="#"&gt;Cancel&lt;/a&gt;</strong>
       &lt;/div&gt;
       &lt;div&gt;
         &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
@@ -143,7 +132,7 @@ function initPage() {
 </pre>
 
 <p>
-initPage() 함수 밖에 다음을 추가한다.
+Add the following outside the initPage() function:
 </p>
 
 <pre class="prettyprint">function commentUpdate(e) {
@@ -161,8 +150,8 @@ function modifyCommentToggle(e) {
   while (comments.className != "comments") {
     comments = comments.parentNode;
   }
-  var div = comments.getElementsByTagName("div")[0];//댓글 내용
-  var form = comments.getElementsByTagName("form")[0];//댓글 form
+  var div = comments.getElementsByTagName("div")[0];//Comment p
+  var form = comments.getElementsByTagName("form")[0];//Comment form
   if (div.style.display) {
     div.style.display = '';
     form.style.display = 'none';
@@ -173,18 +162,18 @@ function modifyCommentToggle(e) {
   return false; 
 }
 /*
- Head First Ajax 참조 
+ Head First Ajax 
 */
 function getActivatedObject(e) {
   var obj;
   if (!e) {
-    //IE 옛 버전
+    //IE Old version
     obj = window.event.srcElement;
   } else if (e.srcElement) {
-    //IE 7 이상
+    //IE 7
     obj = e.srcElement;
   } else {
-    //DOM 레벨 2 브라우저
+    //DOM Level 2
     obj = e.target;
   }
   return obj;
@@ -192,10 +181,10 @@ function getActivatedObject(e) {
 </pre>
 
 <p>
-initPage() 함수에 다음 코드를 추가한다.
+Add the following to initPage().
 </p>
 
-<pre class="prettyprint">//댓글
+<pre class="prettyprint">
 var allComments = document.getElementById("all-comments");
 var divs = allComments.getElementsByTagName("div");
 
@@ -206,12 +195,12 @@ for (i = 0; i &lt; divs.length; i++) {
     for (var j = 0; j &lt; spans.length; j++) {
       if (spans[j].className === "modify-del") {
         var md = spans[j];
-        var commentModifyLink = md.getElementsByTagName("a")[0];//수정 링크
+        var commentModifyLink = md.getElementsByTagName("a")[0];//Modify link
         commentModifyLink.onclick = modifyCommentToggle;
-        var commentDelLink = md.getElementsByTagName("a")[1];//삭제 링크
+        var commentDelLink = md.getElementsByTagName("a")[1];//Delete link
         commentDelLink.onclick = function() {
           var commentNo = this.title;
-          var chk = confirm("정말로 삭제하겠습니까?");
+          var chk = confirm("Are you sure you want to delete it?");
           if (chk === true) {
             var form = document.getElementById("deleteCommentForm");
             form.commentNo.value = commentNo;
@@ -220,12 +209,12 @@ for (i = 0; i &lt; divs.length; i++) {
            }
          };
       }
-      //form 태그 안의 수정하기 링크
+      //Modify link in form
       var form = comments.getElementsByTagName("form")[0];
       var div = form.getElementsByTagName("div")[0];
       commentModifyLink = div.getElementsByTagName("a")[0];
       commentModifyLink.onclick = commentUpdate;
-      //form 태그 안의 취소링크
+      //Cancel link in form
       var cancelLink = div.getElementsByTagName("a")[1];
       cancelLink.onclick = modifyCommentToggle;
     }
@@ -234,28 +223,28 @@ for (i = 0; i &lt; divs.length; i++) {
 </pre>
 
 
-<h3>이전 글 링크와 다음 글 링크</h3>
+<h3>Next article link and Prev article link</h3>
 
 <p>
-<img alt="다음 글 이전 글 링크" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
-관련 코드를 수정한다.<br />
+<img alt="Next article link and Prev article link" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
+Modify as follows.
 </p>
 
 <pre class="prettyprint">&lt;div id="next-prev"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;
-    &lt;p&gt;다음 글 : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title } &lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Next Article : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title } &lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
   &lt;c:if test="${prevArticle != null }"&gt;
-    &lt;p&gt;이전 글 : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.article.title }&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Prev Article : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.article.title }&lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
 &lt;/div&gt;
 </pre>
 
 <p>
-initPage() 함수에 다음 코드를 추가한다.
+Add the following to initPage().
 </p>
 
-<pre class="prettyprint">//다음 글, 이전 글 링크
+<pre class="prettyprint">//Next Article link, Prev Article link
 var nextPrev = document.getElementById("next-prev");
 links = nextPrev.getElementsByTagName("a");
 for (i = 0; i &lt; links.length; i++) {
@@ -269,38 +258,38 @@ for (i = 0; i &lt; links.length; i++) {
 </pre>
 
 
-<h3>수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼</h3>
+<h3>Modify/Del/Next Article/Prev Article/List/New Article Button</h3>
 
 <p>
-<img alt="수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
-관련 코드를 다음과 같이 수정한다. (두 군데 모두 수정한다)<br />
+<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
+Modify the following code. (Modify both of them)
 </p>
 
 <pre class="prettyprint">&lt;div class="view-menu" ..&gt;
   &lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;
   &lt;div class="fl"&gt;
-    &lt;input type="button" value="수정" <strong>class="goModify"</strong> /&gt;
-    &lt;input type="button" value="삭제" <strong>class="goDelete"</strong> /&gt;
+    &lt;input type="button" value="Modify" <strong>class="goModify"</strong> /&gt;
+    &lt;input type="button" value="Del" <strong>class="goDelete"</strong> /&gt;
   &lt;/div&gt;
   &lt;/security:authorize&gt;
   &lt;div class="fr"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;
-    &lt;input type="button" value="다음 글" title="${nextArticle.articleNo }" <strong>class="next-article"</strong> /&gt;
+    &lt;input type="button" value="Next Article" title="${nextArticle.articleNo }" <strong>class="next-article"</strong> /&gt;
   &lt;/c:if&gt;
   &lt;c:if test="${prevArticle != null }"&gt;
-    &lt;input type="button" value="이전 글" title="${prevArticle.articleNo }" <strong>class="prev-article"</strong> /&gt;
+    &lt;input type="button" value="Prev Article" title="${prevArticle.articleNo }" <strong>class="prev-article"</strong> /&gt;
   &lt;/c:if&gt;
-    &lt;input type="button" value="목록" <strong>class="goList"</strong> /&gt;
-    &lt;input type="button" value="새 글쓰기" <strong>class="goWrite"</strong> /&gt;
+    &lt;input type="button" value="List" <strong>class="goList"</strong> /&gt;
+    &lt;input type="button" value="New Article" <strong>class="goWrite"</strong> /&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
 <p>
-initPage() 함수에 다음 코드를 추가한다.<br />
+Add the following to initPage().
 </p>
 
-<pre class="prettyprint">//수정버튼
+<pre class="prettyprint">//Modify Button
 var modifyBtns = document.getElementsByClassName("goModify");
 i = modifyBtns.length;
 while (i--) {
@@ -309,19 +298,19 @@ while (i--) {
     form.submit();
   };
 }
-//삭제버튼
+//Del Button
 var deleteBtns = document.getElementsByClassName("goDelete");
 i = deleteBtns.length;
 while (i--) {
   deleteBtns[i].onclick = function() {
-    var chk = confirm('정말로 삭제하겠습니까?');
+    var chk = confirm('Are you sure you want to delete it?');
     if (chk === true) {
       var form = document.getElementById("delForm");
       form.submit();
     }
   };
 }
-//다음 글 버튼
+//Next Article Button
 var nextArticleBtns = document.getElementsByClassName("next-article");
 i = nextArticleBtns.length;
 while (i--) {
@@ -331,7 +320,7 @@ while (i--) {
   	    form.submit();
   };
 }
-//이전 글 버튼
+//Prev Article Button
 var prevArticleBtns = document.getElementsByClassName("prev-article");
 i = prevArticleBtns.length;
 while (i--) {
@@ -341,7 +330,7 @@ while (i--) {
     form.submit();
   };
 }
-//목록버튼
+//List Button
 var listBtns = document.getElementsByClassName("goList");
 i = listBtns.length
 while (i--) {
@@ -350,7 +339,7 @@ while (i--) {
     form.submit();
   };
 }  
-//새 글쓰기 버튼
+//New Article Button
 var writeBtns = document.getElementById("goWrite");
 i = writeBtns.length;
 while(i--) {
@@ -361,11 +350,11 @@ while(i--) {
 }
 </pre>
 
-<h3>제목 링크, 페이징 직접 이동 링크, 새 글쓰기 버튼</h3>
+<h3>Title link, Page move link, New Article Button</h3>
 
 <p>
-<img alt="view.jsp에서 목록과 페이징 처리 부분, 새 글쓰기 버튼" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
-관련 코드를 수정한다.<br />
+<img alt="Title link, Page move link, New Article Button" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
+Modify as follows.
 </p>
 
 <pre class="prettyprint">&lt;table <strong>id="list-table"</strong> class="bbs-table"&gt;
@@ -375,13 +364,13 @@ while(i--) {
   &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
   &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
-&lt;!--  반복 구간 시작 --&gt;
+&lt;!--  List items start --&gt;
 &lt;c:forEach var="article" items="${list }" varStatus="status"&gt;
 &lt;tr&gt;
   &lt;td style="text-align: center;"&gt;
   &lt;c:choose&gt;
     &lt;c:when test="${param.articleNo == article.articleNo }"&gt;
-      &lt;img src="/resources/images/arrow.gif" alt="현재 글" /&gt;
+      &lt;img src="/resources/images/arrow.gif" alt="You are reading this" /&gt;
     &lt;/c:when&gt;
     &lt;c:otherwise&gt; 
       ${listItemNo - status.index }
@@ -391,7 +380,7 @@ while(i--) {
   &lt;td&gt;
     <strong>&lt;a href="#" title="${article.articleNo }"&gt;${article.title }&lt;/a&gt;</strong>
     &lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;
-      &lt;img src="/resources/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+      &lt;img src="/resources/images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
     &lt;/c:if&gt;
     &lt;c:if test="${article.commentNum &gt; 0 }"&gt;
       &lt;span class="bbs-strong"&gt;[${article.commentNum }]&lt;/span&gt;
@@ -403,12 +392,12 @@ while(i--) {
   &lt;td style="text-align: center;"&gt;${article.hit }&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/c:forEach&gt;
-&lt;!--  반복 구간 끝 --&gt;
+&lt;!--  List items end --&gt;
 &lt;/table&gt;
     
 &lt;div id="paging"&gt;
   &lt;c:if test="${prevPage &gt; 0 }"&gt;
-    <strong>&lt;a href="#" title="${prevPage }"&gt;[이전]&lt;/a&gt;</strong>
+    <strong>&lt;a href="#" title="${prevPage }"&gt;[Prev]&lt;/a&gt;</strong>
   &lt;/c:if&gt;
   &lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;
     &lt;c:choose&gt;
@@ -421,19 +410,19 @@ while(i--) {
     &lt;/c:choose&gt;   
   &lt;/c:forEach&gt;
   &lt;c:if test="${nextPage &gt; 0 }"&gt;
-    <strong>&lt;a href="#" title="${nextPage }"&gt;[다음]&lt;/a&gt;</strong>
+    <strong>&lt;a href="#" title="${nextPage }"&gt;[Next]&lt;/a&gt;</strong>
   &lt;/c:if&gt;
 &lt;/div&gt;
 &lt;div id="list-menu"&gt;
-  <strong>&lt;input type="button" value="새 글쓰기" /&gt;</strong>
+  <strong>&lt;input type="button" value="New" /&gt;</strong>
 &lt;/div&gt;
 </pre>
 
 <p>
-initPage() 함수에 다음 코드를 추가한다.<br />
+Add the following to initPage().
 </p>
 
-<pre class="prettyprint">//상세보기에서 목록 제목 링크
+<pre class="prettyprint">//Title links in detail view
 var listTable = document.getElementById("list-table");
 links = listTable.getElementsByTagName("a");
 for (i = 0; i &lt; links.length; i++) {
@@ -444,7 +433,7 @@ for (i = 0; i &lt; links.length; i++) {
     return false;
   };
 }
-//페이징 처리
+//Paging
 var paging = document.getElementById("paging");
 links = paging.getElementsByTagName("a");
 for (i = 0; i &lt; links.length; i++) {
@@ -455,7 +444,7 @@ for (i = 0; i &lt; links.length; i++) {
     return false;
   };
 }
-//검색 버튼 위 새 글쓰기 버튼
+//New Article button
 var listMenu = document.getElementById("list-menu");
 writeBtn = listMenu.getElementsByTagName("input")[0];
 writeBtn.onclick = function() {
@@ -464,22 +453,21 @@ writeBtn.onclick = function() {
 };
 </pre>
 
-<h3>첨부 파일 링크와 첨부 파일 삭제 링크(jQuery)</h3>
+<h3>Attachment link and Attachment delete link (jQuery)</h3>
 
 <p>
-자바스크립트 분리 DOM 실습을 jQuery로 수정한다.<br />
-순서대로 첨부 파일 다운로드 링크와 삭제 링크부터 수정한다.<br />
-<img alt="첨부 파일링크와 첨부 파일 삭제 링크" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
-
-<a href="http://jQuery.com">jQuery.com</a>에서 jQuery 최신 버전을 내려받는다.<br />
-/js 폴더에 내려받은 jQuery 파일을 복사한다.<br />
-view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한다.
+Modify the JavaScript DOM example to use jQuery.<br />
+Modify the download attachments link and Attachments delete link as follows.<br />
+<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
+Download the latest version of jQuery from <a href="http://jQuery.com">jQuery.com</a>.<br />
+Put the jQuery file in the /js folder.<br />
+Add the following between &lt;head&gt; and &lt;/head&gt; of view.jsp.
 </p>
 
 <pre class="prettyprint no-border"><strong>&lt;script src="/resources/js/jquery-3.3.1.min.js"&gt;&lt;/script&gt;</strong></pre>
 
 <p>
-다운로드 링크와 삭제 링크는 제이쿼리를 적용하는 데 있어 고칠 부분이 없다.
+The download link and the delete link have nothing to fix.
 </p>
 
 <pre class="prettyprint">&lt;div id="detail"&gt;
@@ -501,7 +489,7 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
 </pre>
 
 <p>
-자바스크립트 기존 내용은 모두 주석 처리한 후 아래 코드를 추가한다.
+Comment out all the existing contents of the JavaScript, add the following code.
 </p>
 
 <pre class="prettyprint">$(document).ready(function() {
@@ -513,7 +501,7 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
   });
   $('#file-list a:not(.download)').click(function(e) {
     e.preventDefault();
-    var chk = confirm("정말로 삭제하겠습니까?");
+    var chk = confirm("Are you sure you want to delete it?");
     if (chk === true) {
       var attachFileNo = this.title;
       $('#deleteAttachFileForm input[name*=attachFileNo]').val(attachFileNo);
@@ -523,11 +511,11 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
 });
 </pre>
 
-<h3>댓글(jQuery)</h3>
+<h3>Comment(jQuery)</h3>
 
 <p>
-<img alt="댓글 반복" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
-다음과 같이 수정한다.
+<img alt="Comments" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
+Modify as follows.
 </p>
 
 <pre class="prettyprint">&lt;div id="all-comments"&gt;
@@ -537,8 +525,8 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
     &lt;span class="date"&gt;${comment.regdate }&lt;/span&gt;
     &lt;c:if test="${user.username == comment.username }" &gt;
     &lt;span class="modify-del"&gt;
-      &lt;a href="#" <strong>class="comment-modify-link"</strong>&gt;수정&lt;/a&gt; | 
-      &lt;a href="#" <strong>class="comment-delete-link"</strong> title="${comment.commentNo }"&gt;삭제&lt;/a&gt;
+      &lt;a href="#" <strong>class="comment-modify-link"</strong>&gt;Modify&lt;/a&gt; | 
+      &lt;a href="#" <strong>class="comment-delete-link"</strong> title="${comment.commentNo }"&gt;Del&lt;/a&gt;
     &lt;/span&gt;
     &lt;/c:if&gt;
     &lt;div class="comment-memo"&gt;${comment.memo }&lt;/div&gt;
@@ -549,7 +537,7 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
       &lt;input type="hidden" name="page" value="${param.page }" /&gt;
       &lt;input type="hidden" name="searchWord" value="${param.searchWord }" /&gt;
       &lt;div style="text-align: right;"&gt;
-        &lt;a href="#" <strong>class="comment-modify-submit-link"</strong>&gt;전송&lt;/a&gt; | &lt;a href="#" <strong>class="comment-modify-cancel-link"</strong>&gt;취소&lt;/a&gt;
+        &lt;a href="#" <strong>class="comment-modify-submit-link"</strong>&gt;Submit&lt;/a&gt; | &lt;a href="#" <strong>class="comment-modify-cancel-link"</strong>&gt;Cancel&lt;/a&gt;
       &lt;/div&gt;
       &lt;div&gt;
         &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;${comment.memo }&lt;/textarea&gt;
@@ -561,10 +549,10 @@ view.jsp의 &lt;head&gt;와 &lt;/head&gt; 사이에 다음 코드를 추가한�
 </pre>
 
 <p>
-$(document).ready(function() {} 함수에 다음 코드를 추가한다.
+Add the following to $(document).ready(function() {} function.
 </p>
 
-<pre class="prettyprint">//댓글반복
+<pre class="prettyprint">//Comments
 $('.comments').click(function(e) {
   e.preventDefault();
   if ($(e.target).is('.comment-modify-link')) {
@@ -591,7 +579,7 @@ $('.comments').click(function(e) {
     var $form = $(e.target).parent().parent().parent().find('.comment-form');
     $form.submit();
   } else if ($(e.target).is('.comment-delete-link')) {
-    var chk = confirm('정말로 삭제하겠습니까?');
+    var chk = confirm('Are you sure you want to delete it?');
     if (chk === false) {
       return;
     }
@@ -603,25 +591,25 @@ $('.comments').click(function(e) {
 </pre>
 
 
-<h3>이전 글 링크와 다음 글 링크(jQuery)</h3>
+<h3>Prev Article link and Next Article link (jQuery)</h3>
 
 <p>
-<img alt="다음 글 이전 글 링크" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
-관련 코드는 전과 같다.
+<img alt="Next Article link and Prev Article link" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
+The HTML code has nothing to fix.
 </p>
 
 <pre class="prettyprint">&lt;div id="next-prev"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;
-    &lt;p&gt;다음 글 : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title }&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Next Article : &lt;a href="#" <strong>title="${nextArticle.articleNo }"</strong>&gt;${nextArticle.title }&lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
   &lt;c:if test="${prevArticle != null }"&gt;
-    &lt;p&gt;이전 글 : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.title }&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Prev Article : &lt;a href="#" <strong>title="${prevArticle.articleNo }"</strong>&gt;${prevArticle.title }&lt;/a&gt;&lt;/p&gt;
   &lt;/c:if&gt;
 &lt;/div&gt;
 </pre>
 
 <p>
-$(document).ready(function() {} 함수에 다음 코드를 추가한다.
+Add the following to $(document).ready(function() {} function.
 </p>
 
 <pre class="prettyprint">$('#next-prev a').click(function(e) {
@@ -632,75 +620,75 @@ $(document).ready(function() {} 함수에 다음 코드를 추가한다.
 });
 </pre>
 
-<h3>수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼(jQuery)</h3>
+<h3>Modify/Del/Next Article/Prev Article/List/New Article Button (jQuery)</h3>
 
 <p>
-<img alt="수정, 삭제, 다음 글, 이전 글, 목록, 새 글쓰기 버튼" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
-관련 코드는 전과 같다.
+<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
+The HTML code has nothing to fix.
 </p>
 
 <pre class="prettyprint">&lt;div class="view-menu" .. &gt;
   &lt;security:authorize access="#email == principal.username or hasRole('ROLE_ADMIN')"&gt;
   &lt;div class="fl"&gt;
-    &lt;input type="button" value="수정" <strong>class="goModify"</strong> /&gt;
-    &lt;input type="button" value="삭제" <strong>class="goDelete"</strong> /&gt;
+    &lt;input type="button" value="Modify" <strong>class="goModify"</strong> /&gt;
+    &lt;input type="button" value="Del" <strong>class="goDelete"</strong> /&gt;
   &lt;/div&gt;
   &lt;/security:authorize&gt;    
   &lt;div class="fr"&gt;
   &lt;c:if test="${nextArticle != null }"&gt;      
-    &lt;input type="button" value="다음 글" title="${nextArticle.articleNo }" <strong>class="next-article"</strong> /&gt;
+    &lt;input type="button" value="Next Article" title="${nextArticle.articleNo }" <strong>class="next-article"</strong> /&gt;
   &lt;/c:if&gt;
   &lt;c:if test="${prevArticle != null }"&gt;          
-    &lt;input type="button" value="이전 글" title="${prevArticle.articleNo }" <strong>class="prev-article"</strong> /&gt;
+    &lt;input type="button" value="Prev Article" title="${prevArticle.articleNo }" <strong>class="prev-article"</strong> /&gt;
   &lt;/c:if&gt;
-    &lt;input type="button" value="목록" <strong>class="goList"</strong> /&gt;
-    &lt;input type="button" value="새 글쓰기" <strong>class="goWrite"</strong> /&gt;
+    &lt;input type="button" value="List" <strong>class="goList"</strong> /&gt;
+    &lt;input type="button" value="New Article" <strong>class="goWrite"</strong> /&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
 <p>
-$(document).ready(function() {} 함수에 다음 코드를 추가한다.
+Add the following to $(document).ready(function() {} function.
 </p>
 
-<pre class="prettyprint">//수정 버튼
+<pre class="prettyprint">//Modify Button
 $('.goModify').click(function() {
   $('#modifyForm').submit();
 });
-//삭제 버튼
+//Del Button
 $('.goDelete').click(function() {
-  var chk = confirm('정말로 삭제하겠습니까?');
+  var chk = confirm('Are you sure you want to delete it?');
   if (chk === true) {
     $('#delForm').submit();
   }
 });
-//다음 글 버튼
+//Next Article Button
 $('.next-article').click(function() {
   var articleNo = this.title;
   $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
-//이전 글 버튼
+//Prev Article Button
 $('.prev-article').click(function() {
   var articleNo = this.title;
   $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
-//목록버튼
+//List Button
 $('.goList').click(function() {
   $('#listForm').submit();
 });
-//새 글쓰기 버튼
+//New Article Button
 $('.goWrite').click(function() {
   $('#writeForm').submit();
 });
 </pre>
 
-<h3>제목 링크, 페이징 직접 이동 링크, 새 글쓰기 버튼(jQuery)</h3>
+<h3>Title link, Page move links, New Article Button (jQuery)</h3>
 
 <p>
-<img alt="view.jsp에서 목록과 페이징처리 부분,새 글쓰기 버튼" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
-관련 코드는 전과 같다.<br />
+<img alt="Title link, Page move links, New Article Button" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
+The relevant code is the same as before.
 </p>
 
 <pre class="prettyprint">&lt;table <strong>id="list-table"</strong> class="bbs-table"&gt;
@@ -710,13 +698,13 @@ $('.goWrite').click(function() {
   &lt;th style="width: 84px;"&gt;DATE&lt;/th&gt;
   &lt;th style="width: 60px;"&gt;HIT&lt;/th&gt;
 &lt;/tr&gt;
-&lt;!--  반복 구간 시작 --&gt;
+&lt;!--  List items start --&gt;
 &lt;c:forEach var="article" items="${list }" varStatus="status"&gt;
 &lt;tr&gt;
   &lt;td style="text-align: center;"&gt;
   &lt;c:choose&gt;
     &lt;c:when test="${param.articleNo == article.articleNo }"&gt;
-      &lt;img src="/resources/images/arrow.gif" alt="현재 글" /&gt;
+      &lt;img src="/resources/images/arrow.gif" alt="You are reading this" /&gt;
     &lt;/c:when&gt;
     &lt;c:otherwise&gt; 
       ${listItemNo - status.index }
@@ -726,7 +714,7 @@ $('.goWrite').click(function() {
   &lt;td&gt;
     <strong>&lt;a href="#" title="${article.articleNo }"&gt;${article.title }&lt;/a&gt;</strong>
     &lt;c:if test="${article.attachFileNum &gt; 0 }"&gt;
-      &lt;img src="/resources/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+      &lt;img src="/resources/images/attach.png" alt="Attach File" style="vertical-align: middle;" /&gt;
     &lt;/c:if&gt;
     &lt;c:if test="${article.commentNum &gt; 0 }"&gt;
       &lt;span class="bbs-strong"&gt;[${article.commentNum }]&lt;/span&gt;
@@ -738,12 +726,12 @@ $('.goWrite').click(function() {
   &lt;td style="text-align: center;"&gt;${article.hit }&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/c:forEach&gt;
-&lt;!--  반복 구간 끝 --&gt;
+&lt;!--  List items end --&gt;
 &lt;/table&gt;
     
 &lt;div id="paging"&gt;
   &lt;c:if test="${prevPage &gt; 0 }"&gt;
-    <strong>&lt;a href="#" title="${prevPage }"&gt;[이전]&lt;/a&gt;</strong>
+    <strong>&lt;a href="#" title="${prevPage }"&gt;[Prev]&lt;/a&gt;</strong>
   &lt;/c:if&gt;
     
   &lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;
@@ -758,48 +746,44 @@ $('.goWrite').click(function() {
   &lt;/c:forEach&gt;
     
   &lt;c:if test="${nextPage &gt; 0 }"&gt;
-    <strong>&lt;a href="#" title="${nextPage }"&gt;[다음]&lt;/a&gt;</strong>
+    <strong>&lt;a href="#" title="${nextPage }"&gt;[Next]&lt;/a&gt;</strong>
   &lt;/c:if&gt;
     
 &lt;/div&gt;
 
 &lt;div id="list-menu"&gt;
-  <strong>&lt;input type="button" value="새 글쓰기" /&gt;</strong>
+  <strong>&lt;input type="button" value="New Article" /&gt;</strong>
 &lt;/div&gt;
 </pre>
 
 <p>
-$(document).ready(function() {} 함수에 다음 코드를 추가한다.<br />
+Add the following to $(document).ready(function() {} function.
 </p>
 
-<pre class="prettyprint">//상세보기에서 목록 제목 링크
+<pre class="prettyprint">//Title links in Detailed view
 $('#list-table a').click(function(e) {
   e.preventDefault();
   var articleNo = this.title;
   $('#viewForm input[name*articleNo]').val(articleNo);
   $('#viewForm').submit();
 });
-//페이징 처리
+//Paging
 $('#paging a').click(function(e) {
   e.preventDefault();
   var page = this.title;
   $('#listForm input[name*=page]').val(page);
   $('#listForm').submit();
 });
-//검색 버튼 위 새 글쓰기 버튼
+//New Article Button
 $('#list-menu input').click(function() {
   $('#writeForm').submit();
 });
 </pre>
 
 <p>
-DOM 처리 자바스크립트 실습에서 title 속성을 자주 사용했는데 title은 글로벌 속성이라 다양한 엘리먼트에 쓸 수 있기에 선택했다. 그 외 특별한 이유는 없다.<br />
-순수 자바스크립트 또는 jQuery를 사용할 지는 여러분 몫이다.
+In the DOM handling JavaScript practice, I used the title attribute frequently because the title is a global attribute and can be used for various elements.<br /> 
+There is no other reason.<br />
+It is up to you to use pure JavaScript or jQuery.
 </p>
 
-<span id="refer">References</span>
-<ul id="references">
-	<li><a href="http://www.wikibook.co.kr/PublisherApp/homepage/detailView?isbn=9788992939331">jQuery 1.3 작고 강력한 자바스크립트 라이브러리 | 조나단 채퍼 외 | 위키북스</a></li>
-	<li><a href="http://www.hanb.co.kr/book/look.html?isbn=978-89-7914-693-6"> Head First Ajax - 레베카 리오단 지음 | 홍승표, 김은희 역 | 한빛미디어</a></li>
-</ul>
 </article>

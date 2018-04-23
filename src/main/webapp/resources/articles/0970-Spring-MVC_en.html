@@ -1,30 +1,28 @@
 <article>
 
-<h1>구글 앱 엔진 프로젝트에 Spring MVC 적용하기</h1>
+<h1>Google Cloud project On Spring MVC</h1>
 
 <p>
-guestbook 디렉터리 구조를 Spring MVC에 맞게 아래와 같이 바꾼다.<br />
+Change the guestbook directory structure as shown below.<br />
 <img alt="before_after" src="https://lh3.googleusercontent.com/_U2-CnVyiw-HAakNmEHMHBAc9_2bJqZsHmsvUCGfmB2N2ilnVes_Q1kykNI-GHzQh4sTl_xPNmFZ37E2RdZ6GnBCoe9vdWain3BCf-SdiVMraqZzjRhfvvIzk4ndVEhMGIZ-fRpvmICbMViQrl1_NvpWNPr2PB6YD2HVxdj2USNaTqrdVsTTiuRuuvO4IhOaiqm8pf9-_bwJcfF6LBIDUGpgGyxAnyBjZkJP-k8XWVOXTa8a_riYp5LdTV-FjFHu_F9UBd-t_Dl6OnHPQ0ogPa6wX_i96ztdiTIjZoavzew4VvWEysMadaUxp5DaiLDet47xSjda_LcsFDF0ZsFwq_-JbhYEyL10jJMy6xnNvTZuBLduQFMTAUXcdTgTqFSdX68wppQ_5iv8v_doNozs0j7unyashJy-JRiAicGPC6PYxMsoozNYNlmHx-QEZ2mYR33-YMmipAgeHf6WxMpNgec-SPVg7E9sOnJCW7-XEfP0343Z4ZC23nCoDn3yerEbfceeMog8JQ_Hetet0J2Nx0yQu8TxvwupeJQTvG-d6TFYcPXyCEK4zvHNAEMOPkB2KcT3djWKryNyJAMBj6CcMWStpA-NqAjUlilsdgQ0_Q=w468-h291-no" style="width: 100%;" />
 </p>
 
 <p>
-webapp/resources/는 웹 애플리케이션의 정적 요소를 위해 만들었다.<br />
-웹 애플리케이션에서 정적인 요소란 이미지, 스타일 시트, 자바스크립트, HTML 파일을 말한다.<br />
-webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.<br />
-그래서 guestbook.jsp 파일은 webapp/guestbook.jsp에서 webapp/WEB-INF/views/guestbook/guestbook.jsp로 옮겼다.<br />
-스프링 프로젝트에선 src/main/webapp에는 favicon.ico 파일 외 어떤 파일도 두지 않는 게 좋다.<br />
-favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지를 말한다. 
+I made /webapp/resources as a directory for the static resources of the web application.<br />
+Static resources in a web application are images, stylesheets, JavaScript, and HTML files.<br />
+I made /webapp/WEB-INF/views as a directory for jsp files.<br />
+So I moved the guestbook.jsp file from /webapp to /webapp/WEB-INF/views/guestbook. 
 </p>
 
 <p>
-웹 애플리케이션에 스프링 MVC를 적용하기 위해선 다음 과정이 필요하다.
+For Spring MVC, you need to do the following:
 </p>
 
 <ul>
-	<li>pom.xml에 스프링 의존성 추가</li>
-	<li>web.xml에 디스패처 서블릿 설정을 추가</li>
-	<li>[비영어권 사이트는 web.xml에 인코딩 필터 추가]</li>
-	<li>디스패처 서블릿 이름을 기반으로 스프링 설정 파일 생성 (예, 디스패처 서블릿 이름-servlet.xml)</li>
+	<li>Adding Spring Dependencies to pom.xml</li>
+	<li>Add dispatcher servlet configuration to web.xml</li>
+	<li>[Add encoding filter to web.xml to support multiple languages]</li>
+	<li>Create a Spring configuration file based on the dispatcher servlet name (eg, dispatcher servlet name-servlet.xml)</li>
 </ul>
 
 <h6 class="src">pom.xml</h6>
@@ -106,14 +104,14 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 </pre>
 
 <p>
-요청 문자열을 UTF-8으로 인코딩하는 필터를 추가했다.<br />
-디스패처 서블릿을 guestbook이란 이름으로 추가했고 '/'로 매핑했다.<br />
-이 밖에 welcome-file-list와 방명록 예제를 위한 서블릿을 제거했다.<br />
-제거된 서블릿 구현 내용은 스프링 컨트롤러 메서드에서 구현해야 한다. 
+To support multiple languages, I added a filter that encodes the request string in UTF-8.<br />
+I added the dispatcher servlet as guestbook and mapped it to '/'.<br />
+I removed the welcome-file-list setting and the guestbook servlet in web.xml.<br />
+The functionality of the removed servlet will be implemented in the Spring Controller method. 
 </p>
 
 <p>
-디스패처 서블릿 이름이 guestbook 이므로, 스프링 설정 파일을 guestbook-servlet.xml란 이름으로 web.xml 파일이 있는 위치에 생성한다.
+Since the dispatcher servlet is named guestbook, create a Spring configuration file named guestbook-servlet.xml in the location where the web.xml file is located.
 </p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
@@ -129,11 +127,16 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd"&gt;
-    &lt;mvc:resources mapping="/resources/**" location="/resources/" /&gt;<b><span>&lt;!--</span>1.정적 콘텐츠 요청 처리<span>--&gt;</span></b>
-    &lt;mvc:annotation-driven /&gt;<b><span>&lt;!--</span>2.애너테이션 기반으로 스프링 구동<span>--&gt;</span></b>
-    &lt;context:component-scan base-package="net.java_school.guestbook" /&gt;<b><span>&lt;!--</span>3.컴포넌트 스캔<span>--&gt;</span></b>
+        
+    <b><span>&lt;!--</span>1.Handling requests for static resources<span>--&gt;</span></b>    
+    &lt;mvc:resources mapping="/resources/**" location="/resources/" /&gt;
+    <b><span>&lt;!--</span>2.To drive the spring based on the annation<span>--&gt;</span></b>
+    &lt;mvc:annotation-driven /&gt;
+    <b><span>&lt;!--</span>3.Component scan<span>--&gt;</span></b>
+    &lt;context:component-scan base-package="net.java_school.guestbook" /&gt;
+    <b><span>&lt;!--</span>4.View resolver<span>--&gt;</span></b>
     &lt;bean id="internalResourceViewResolver" 
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;<b><span>&lt;!--</span>4.뷰 리졸버<span>--&gt;</span></b>
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
         &lt;property name="viewClass"&gt;
             &lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
         &lt;/property&gt;
@@ -148,18 +151,16 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 </pre>
 
 <ol>
-	<li>webapp/resources 나 그 하위 디렉터리에 있는 정적 콘텐츠 (스타일 시트, 이미지, 자바스크립트 등등)에 대한 요청을 처리하기 위한 설정이다.</li>
-	<li>애너테이션 기반으로 스프링을 구동하기 위한 설정이다.</li>
-	<li>지정한 패키지에서 컴포넌트를 스캔해서 빈 컨테이너에 등록하게 하는 설정이다.</li>
-	<li>뷰 리졸버는 컨트롤러에서 온 문자열을 해석하여 뷰를 결정한다.
-		컨트롤러가 "guestbook/guestbook"를 리턴한다면, 
-		위에서 설정한 뷰 리졸버는 prifix와 suffix를 사용해서 뷰를
-		<strong>/WEB-INF/views/</strong>guestbook/guestbook<strong>.jsp</strong>라고 해석할 것이다.
+	<li>It is a setting for handling requests for static content (stylesheets, images, JavaScript, etc.) in /webapp/resources or its subdirectories.</li>
+	<li>This is the setting for driving the spring based on the annation.</li>
+	<li>This setting is required to scan components from the specified package and automatically register them in the container.</li>
+	<li>The view resolver interprets the string from the controller to determine the view.<br />
+If the controller returns "guestbook/guestbook", the view resolver set above will use prifix and suffix to interpret the view as <b>/WEB-INF/views/</b>guestbook/guestbook<b>.jsp</b>.
 	</li>
 </ol>
 
 <p>
-com.example.guestbook 패키지에 방명록(Guestbook)을 전담하는 컨트롤러를 생성한다. 
+Create a controller dedicated to the guestbook in the com.example.guestbook package. 
 </p>
 
 
@@ -183,13 +184,15 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class GuestbookController {
 
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook</strong>", method=RequestMethod.GET)<b><span>//</span>1."/guestbook" 요청 핸들러</b>
+	<b><span>//</span>1."/guestbook" reqeust handler</b>
+	<strong>@RequestMapping</strong>(value="<strong>/guestbook</strong>", method=RequestMethod.GET)
 	public String guestbook(String guestbookName, Model model) {
 		model.addAttribute("guestbookName", guestbookName);
 		return "guestbook/guestbook";
 	}
-    
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook/sign</strong>", method=RequestMethod.POST)<b><span>//</span>2."/guestbook/sign" 요청 핸들러</b>
+	
+	<b><span>//</span>2."/guestbook/sign" request handler</b>
+	<strong>@RequestMapping</strong>(value="<strong>/guestbook/sign</strong>", method=RequestMethod.POST)
 	public String sign(HttpServletRequest req, HttpServletResponse resp) {
 		Greeting greeting;
 		UserService userService = UserServiceFactory.getUserService();
@@ -210,14 +213,16 @@ public class GuestbookController {
 </pre>
 
 <ol>
-	<li>guestbook() 메서드는 GET 방식의 "/guestbook" 요청을 담당한다.</li>
-	<li>sign() 메서드는 POST 방식의 "/guestbook/sign" 요청을 담당한다. sign() 메서드 내용은 SignGuestbookServlet.java 서블릿 코드 그대로다.</li>
+	<li>The guestbook() method is responsible for the "/guestbook" request of the GET method.</li>
+	<li>The sign() method is responsible for the "/guestbook/sign" request of the POST method.<br />
+The implementation of the sign () method is the same as that of the SignGuestbookServlet.java servlet.
+	</li>
 </ol>
 
-<h3>guestbook.jsp 수정</h3>
+<h3>Modify guestbook.jsp</h3>
 
 <p>
-스타일 시트 파일 위치를 변경했으므로 guestbook.jsp에서 스타일 시트 경로를 수정한다.
+Now that the style sheet file location has changed, modify the stylesheet path in guestbook.jsp as follows.
 </p>
 
 <pre class="prettyprint">
@@ -225,7 +230,7 @@ public class GuestbookController {
 </pre>
 
 <p>
-guestbook.jsp에서 폼 action 속성을 GuestbookController의 요청 핸들러에 맞게 수정한다. 
+Modify the form action attribute in guestbook.jsp to match the request handler in GuestbookController as follows. 
 </p>
 
 <pre class="prettyprint">
@@ -234,24 +239,19 @@ guestbook.jsp에서 폼 action 속성을 GuestbookController의 요청 핸들러
 </pre>
 
 <p>
-guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutURL() 메서드와 createLoginURL() 메서드의 인자를 그대로 두면 
-두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환하고 결국 404 에러를 발생시킨다.<br /> 
-두 메서드의 인자를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
+Since the location of guestbook.jsp has changed, the methods createLogoutURL() and createLoginURL() in guestbook.jsp will return /WEB-INF/views/guestbook/guestbook.jsp and eventually occur a 404 error.<br />
+Modify the arguments of the two methods from request.getRequestURI() to <b>"/guestbook/?GuestbookName=" + guestbookName</b>.
 </p>
 
 <p>
-자바 8 환경에서 앱을 실행하려면, appengine-web.xml에 다음 설정이 있어야 한다.
+To run an app in the Java 8 environment, you need the following configuration in appengine-web.xml:
 </p>
  
 <pre class="prettyprint">
 &lt;runtime&gt;java8&lt;/runtime&gt;
 </pre>
 
-<h3>로컬 테스트</h3>
-
-<p>
-명령 프롬프트에서 다음을 실행하여 로컬 테스트를 진행한다.
-</p>
+<h3>Local Test</h3>
 
 <pre class="screen">
 mvn clean
@@ -259,21 +259,20 @@ mvn appengine:run
 </pre>
 
 <p>
-http://localhost:8080/guestbook을 방문한다.
+Visit http://localhost:8080/guestbook.
 </p>
 
-<h3>서버 테스트</h3>
+<h3>Remote Test</h3>
 
 <pre class="screen">
 mvn appengine:deploy
 </pre>
 
 <p>
-http://<em>your-app-id</em>.appspot.com/guestbook을 방문한다.
+Visit http://<em>your-app-id</em>.appspot.com/guestbook.
 </p>
 
-
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="https://cloud.google.com/appengine/docs/standard/java/runtime-java8">https://cloud.google.com/appengine/docs/standard/java/runtime-java8</a></li>
 </ul>

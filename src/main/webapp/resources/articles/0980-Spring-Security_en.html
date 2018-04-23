@@ -1,45 +1,34 @@
 <article>
 
-<h1>구글 어카운트 + Spring Security</h1>
+<h1>Spring Security with Google Accounts</h1>
 
 <p>
-<a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a>에서는 
-구글 어카운트와 스트링 시큐리티를 함께 사용하는 방법을 제공한다.
-주소에서 소개하는 내용을 다음과 같다.
+<a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a> explains:
 </p>
 
-<ul>
-	<li>구글 어카운트 인증으로 시큐리티 컨텍스트 세팅 (다중 인증<sup>Multiple Authentication</sup> 아님)</li>
-	<li>사용자 정의 인증<sup>Authentication</sup> 클래스 구현</li>
-	<li>구글 어카운트 정보에 권한 정보 추가</li>
-	<li>권한 정보를 기반으로 접근 제어</li>
-	<li>사용자 정보(구글 어카운트 + 권한)를 데이터스토어에 저장 (네이티브 API 사용)</li>
-	<li>불량 사용자 접근 금지</li>
-</ul>
+<ol>
+	<li>Security context setup with Google account authentication (not Multiple Authentication)</li>
+	<li>How to create a custom Authentication class</li>
+	<li>Add credentials to your Google account information</li>
+	<li>Access control based on credentials information</li>
+	<li>Store user information (Google account + credentials) in datastore (using native API)</li>
+	<li>Prohibit bad user access</li>
+</ol>
 
 <p>
-소개한 주소에서 참고하여, 사용자 정보를 영속 데이터로 저장하지 않고도 운영할 수 있는 사이트를 구현해 볼 것이다.
-따라서 위 항목에서 데이터스토어에 사용자 정보를 저장하는 것과 불량 사용자 접근 금지는 구현하지 않는다.
+We will implement a site that can operate without storing user information as persistent data.<br /> 
+Therefore, storing user information in the datastore and prohibiting bad user access will not be implemented.
 </p>
 
-<h3>스프링 시큐리티 추가</h3>
-
-<p>
-pom.xml의 properties 엘리먼트에 다음을 추가한다.
-</p>
+<h3>Add Spring Security dependencies to pom.xml</h3>
 
 <h6 class="src">pom.xml</h6>
 <pre class="prettyprint">
 &lt;properties&gt;
-	&lt;!-- 중간 생략 --&gt;
-	
+	&lt;!-- omit --&gt;
 	<strong>&lt;spring.security.version&gt;5.0.4.RELEASE&lt;/spring.security.version&gt;</strong>
 &lt;/properties&gt;
 </pre>
-
-<p>
-pom.xml의 dependencies 엘리먼트에 다음을 추가한다.
-</p>
 
 <h6 class="src">pom.xml</h6>
 <pre class="prettyprint">&lt;!-- [START Spring Security] --&gt;
@@ -92,7 +81,6 @@ public enum AppRole implements GrantedAuthority {
     }
 
 }
-
 </pre>
 
 <h6 class="src">GaeUser.java</h6>
@@ -376,42 +364,42 @@ public class GoogleAccountsAuthenticationProvider implements AuthenticationProvi
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security.xsd"&gt;
-	<strong>
-    &lt;http pattern="/_ah/login" security="none" /&gt;
-    &lt;http pattern="/_ah/logout" security="none" /&gt;</strong><b><span>&lt;!--</span>1. 시큐리티 예외 설정<span>--&gt;</span></b>
-
-    &lt;http entry-point-ref="<strong>gaeEntryPoint</strong>"&gt;<b><span>&lt;!--</span>2. 인증 진입점<span>--&gt;</span></b>
-        &lt;access-denied-handler error-page="<strong>/403</strong>" /&gt;<b><span>&lt;!--</span>3. 에러 페이지<span>--&gt;</span></b>
+	<b><span>&lt;!--</span>1. Security exclusion settings<span>--&gt;</span></b>
+	<strong>&lt;http pattern="/_ah/login" security="none" /&gt;
+    &lt;http pattern="/_ah/logout" security="none" /&gt;</strong>
+    
+    &lt;http entry-point-ref="<strong>gaeEntryPoint</strong>"&gt;<b><span>&lt;!--</span>2. Authentication entry point<span>--&gt;</span></b>
+        &lt;access-denied-handler error-page="<strong>/403</strong>" /&gt;<b><span>&lt;!--</span>3. error page<span>--&gt;</span></b>
         &lt;intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" /&gt;
         &lt;intercept-url pattern="/**" access="permitAll" /&gt;
-        <strong>&lt;custom-filter position="PRE_AUTH_FILTER" ref="gaeFilter" /&gt;</strong><b><span>&lt;!--</span>4. 인증 필터<span>--&gt;</span></b>
+        <strong>&lt;custom-filter position="PRE_AUTH_FILTER" ref="gaeFilter" /&gt;</strong><b><span>&lt;!--</span>4. Authentication Filter<span>--&gt;</span></b>
     &lt;/http&gt;
 	
-    &lt;authentication-manager alias="<strong>authenticationManager</strong>"&gt;<b><span>&lt;!--</span>5. 인증 관리자<span>--&gt;</span></b>
-        &lt;authentication-provider ref="<strong>gaeAuthenticationProvider</strong>" /&gt;<b><span>&lt;!--</span>6. 인증 공급자<span>--&gt;</span></b>
+    &lt;authentication-manager alias="<strong>authenticationManager</strong>"&gt;<b><span>&lt;!--</span>5. Authentication Manager<span>--&gt;</span></b>
+        &lt;authentication-provider ref="<strong>gaeAuthenticationProvider</strong>" /&gt;<b><span>&lt;!--</span>6. Authentication Provider<span>--&gt;</span></b>
     &lt;/authentication-manager&gt;
 	
 &lt;/beans:beans&gt;
 </pre>
 
 <ol>
-	<li>스프링 시큐리티 예외 설정으로 로그인과 로그아웃을 사이트 외부에서 하기에 이 설정은 불가피하다.</li>
-	<li>인증 진입점은 단순히 사용자를 로그인 페이지로 리다이렉트한다.</li>
+	<li>This is inevitable because login and logout are performed at outside.</li>
+	<li>The authentication entry point simply redirects the user to the login page.</li>
 	<li>
-		권한이 없는 사용자에게 보여줄 페이지를 지정한다.
-		guestbook-servlet.xml의 뷰 리졸버는 /403을 /WEB-INF/views/403.jsp로 해석할 것이기에, /WEB-INF/views 디렉터리에 403.jsp를 생성해야 한다.
-		또한, 컨트롤러에 /403 요청을 처리하는 핸들러 메서드도 만들어야 한다.
+Specify the page to show to unauthorized users.<br />
+The view resolver will interpret /403 as /WEB-INF/views/403.jsp, so you need to create 403.jsp in the /WEB-INF/views directory.<br />
+You also need to create a handler method that handles /403 requests to the controller.
 	</li>
 	<li>
 		인증 필터는 로그인 서식의 POST 요청으로부터 인증에 필요한 정보(아이디와 패스워드)를 추출한다.
-		추출한 정보로 인증<sup>Authentication</sup> 객체에 저장한다.
-		부분적으로 채워진 인증 객체를 인증 관리자<sup>Authentication Manager</sup>에 전달한다.
+		추출한 정보로 Authentication 객체에 저장한다.
+		부분적으로 채워진 인증 객체를 Authentication Manager에 전달한다.
 	</li>
 	<li>인증 관리자는 필터로부터 인증 판단을 위임받는다. 인증 관리자는 인증 공급자 리스트로 설정한다.</li>
 	<li>
 		실제로 사용자가 누구인지 검증하는 것은 인증 공급자이다.
 		인증 공급자는 데이터베이스와 같은 저장소에서 가져온 비밀번호와 인증 객체에 저장된 비밀번호를 비교한다.
-		비밀번호가 같으면 신원 객체<sup>Principal</sup>를 만들어 인증 객체에 추가하고 인증 객체를 반환한다.
+		비밀번호가 같으면 Principal를 만들어 인증 객체에 추가하고 인증 객체를 반환한다.
 	</li>
 </ol>
 
@@ -478,7 +466,7 @@ public class GoogleAccountsAuthenticationProvider implements AuthenticationProvi
 
 <ol>
 	<li>
-		스프링 시큐리티 설정은 분리해서 security.xml을 만들었다.<br />
+		스프링 시큐리티 설정은 분리해서 security.xml을 만들었다.
 		하지만 이 설정만큼은 -servlet.xml로 끝나는 스프링 설정 파일에 있어야 한다.
 	</li>
 </ol>
@@ -761,24 +749,24 @@ mvn appengine:run
 </pre>
 
 <p>
-홈페이지를 방문하고 Guestbook 링크를 클릭한다.<br />
-<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
-Sign in를 클릭한다.<br />
-<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
-로그인 페이지에서 Sign in as Administrator를 체크하고 로그인한다.<br />
-<img src="https://lh3.googleusercontent.com/njUdDdcv3eSIj9LTF1ApHIJ6XgpJLSKKIttSNDJQHDCDLkdDWtzG9nGcFGKwKfl_f8d-rrXSo6KRliovQ7a4haZSjjZKTgpqqftWlXtppbDYJOwFErv4GqgWf3iWE5-eXZovYMBiL5FtRV4sre9JiBNIOk80DZ5RSchiXqICdNOjAeI09lO_IonI6CMNWXgAc21w4LJ2n6k-xlktrfdAK4p73gzesBmTCjpA8-bibwgubs95ym0S1CznUS5MuV2X2sE2rsw9Va6bZWfgdlr8jEYs4vgddmW8m2jMXMcD8qxxLRGhh3KaPl7ofZQsSNtOPkpxi3ybXAjUMX4I4nvWIBJ2orwetlr2ZpKBRZmFNC5Z6XSaEfIeXL0WJT0LNKbEDQz3bku0rmTcz1zI9b9xYhzDFP-wk-ig9qkDXXjFPmwXr5NB2fGNC0cuH-NjX11KZ2hfcltGhuBO9DW5gryVjXcda1Em-2iboPpRuwJNmlmJrvCKVW1dIswuQA8I8MLCfIp8Mb0io-vWYMj-Id90fr_K5r17Q0C-SUabGMJIydxSmsAUgXPLOwUW07bO_4xFIIcqqVzcCO2absJGYgpkSgGv6qnwH4wKBuK5L4Ytu1xG7M5aQ07eBx83=w419-h319-no" alt="Sign in by Admin" /><br />
-<img src="https://lh3.googleusercontent.com/ENkdX6uqkza7qAlio0ucvUDNo_cpFud2WEMNTD_p4FPaw8p0_QijcdRsl1ESbO14Q9AHOgHXFeAHY3IjikzXEHf0IrgHGUYbQ_wc4yhmwSDPQFsICIBisQE0ziMbMwiZqRvc7Wi2JVkD1ZJwJFLMTE8PH6UQoPl8S34JOH5Sphv1sbl0VkA9zK7zg49cCyomegROTbY08ffW78VkXMwR4JGkpUHG0M71-Z5180sv-TSy5N-9W71WAmJq9gve23fPUguDYtltxa7hUKZTVbxF9Gi8uT0Tk-kJ0Z3Aiave4oRGRgyQ_wT37QkZLcp_r84wlIrroyxVu-oEHVdqyM9P_qqWVbUKlWlkc4HKANS5Vtl6XtlygpmgF7A9MNrXVYfjcxUmo74Nk9kLKWH0OH-JsuNrW674DipTy7wNJIxn73FHjeoaHd3l-YoALFo5U1dpMYuurOlwBFUIqXJaqjFInswmN8i2L79dQdt0hG6xpuw4o51uJux_HvCPdXN_0Qufg1kgJmYf6kU08ThTYYJM4joWFvxKGVzWaoLzNRP40NqyG3omdOCn2tMsBRvnNrdmA3y7-dFIni5cS2ASciaUJERfmNk88hT_cmHCa1FcbgWAXENnVJA6FeyR=w451-h301-no" alt="Guestbook" /><br />
-관리자로 로그인된 상태에서 다시 홈페이지를 방문한다. Admin 링크를 클릭한다.<br />
-<img src="https://lh3.googleusercontent.com/QvcX_nWvNvGBIDIRVj4LIEPrb5VOx6l90F4c6YcJIxehG_nkkJnHdJKVitkOE4yYKcuSssVFACePlj3ABd343_LciVwp4PhEeuD_6AyrDcrhDg5z9KEoPJQcXdfNe776Fhi3shBvoIKNyKmNT-PnTiDAYKIdRHvtjfUEokRNf7jtfhQ8LOd3Gb2TtZe3leuLxLTIBHk88LyZq-Uk3LYb7OzH6SAAWLtqbHIdyiKg844K4sj_ehH83W7UH5SsLLhVmo8UCGAvFoXkwKXgi-tGKG9W7MvFNKJ9K7u1SPLGjmehk2jxTuqdSue_HOwWymzrY51ndClyzwCVhGhToNFAGmWAlWPCCtqJV0ozoQiRUdigInvopmwKhcvF25W3UeiOA0x-ic9zvffs4Wo_p18EugoqAbz_m8Shev_Ai1H3Rx80O0xHaoogugWuz3BwlJXvvltrHFfve9LFSlhO2NMmEEXZcG-VkerEDJyHd71tPymQRwz8GuK9VlhUgISUVQBrVvOge2DLEDzHUDO7M-qHcotGVsti1AEFI_8nef-31ov8-NlorqY41tBlv7JK6JbrFnm2ERwZzeUgSRvlPXuSvSzeQ6mqOQB9PwDvmtdRwv-Wy9ZYFF6CE7Qw=w452-h220-no" alt="Access Homepage and Admin" /><br />
-<img src="https://lh3.googleusercontent.com/l-ABwrnNjsRxU4bBSBlfih0Sb2jcERvVHr4atqWzf8AQy9VNVc7I-r5Okxrw4P7P25vCX7LlDefGgKkiTz7Vge5EOW5MNQ38LQDyG1EMTA7E8q7RQWlv_4oPCLVcS_RsQ46T5QLWNnOKKtDia86TKgJ91w1w3s7WzVQGA8nIQYLeJdg_0iZysBYTjEdXTN2HCJUCusIOqQ6VsOnLBO7_9F-YnBRddEbfL52slWliGCIYMTpyTjI3vWQsEMKPSd5oANamYpvXdbstkuj4iw20tCZtohu0E5Re-zl1MVpRcwy2pyIm5yh4wq1e-WIaM_rBycsiSS6SEr7xWjY3yzZEbozGfRWmznBXZwYHbpySL6u3sk_n3F5V7oW4UJuDsqPM0NoILxboHBlFT7vebrJ5svSgBmiC4A0xVW59rC7o7M7dFzify8uCDMhdGPaBIOmhgS2dC-5klfcYIKF_iDcdhejT6BFe6wi4SbZl8CG_Qvd9coCoafh5DeTP9AuyEbUAPJaZLc7isiiBX46haQo62uXvMaBwsFQRbVmJvKODKng7-4aP6fqpboXPuSdzLqYyh4o46PHOoQqB1g3GRsT121J-n0FGvqf3oYeHCwc8L9ydCukS51aP5UW8=w450-h233-no" alt="Admin Page" /><br />
-다시 방명록 페이지로 돌아와서 로그아웃하고 Sign in를 클릭한다.<br />
-<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
-이번에는 일반 사용자로 로그인한다.<br />
-<img src="https://lh3.googleusercontent.com/JFIPDnglJq8KtPG5Pv4KMWthG4fUPhGgv2NAYaACQQMxyDzgxKe87titAJKBoTvY-GtcHodBFEZ3C_1u3G6VPuUPqrw65pnxAdxQysd5IP3YCf9FHPBWIOBFHgM6xqb6E87Nm1qQvacYg5kmZg3DUIcydZOwad4JcgFAbNaUmYnnhPG2P95BxyYXqEpAwPXw4BFvJNc0TU36-O3kw2g1mA3ahx9FxbV3AfGdFW-RaTkEKa6NeLlzCehZg7iOWrRw5BXEbTsXkWven_HYHd0PtLrB_Wa1_1qQ7t29OoXL1ox-2HzlkPZNLhqtUmcuVM4JV1OBRQ9efsgne896L2I2i2MdBZffAzWLFLCglvzabSsYhFJ1E-8y8ZFAkylraWxq7MF_cy7jpdHUsaxCLEo6Zgp_uSYc4aO2O88eWrlJIr7pJhlCDy4st8q7XLCeD2LStxEkePbkqKOUBSYpb_wrbsN11N15FpXE67rezkz6J2Dno-5e54JQspx_o3ujA4DZU25iHpgZIwSv3G9lAo0mRz_wWW6zPx7sTZRduMF4fDlA1jEDwUpy1avu89m5xhTT8PESM1hngBxHQIN3GCPRDeQFdqKg6TMuOKMYjsN-_6IV-M5dxPqlIHVZ=w451-h275-no" alt="Sign in by normal user" /><br />
-홈페이지를 방문한다. Admin 링크가 사라진 것을 확인한다.<br />
-<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
-웹 브라우저의 주소창에 localhost:8080/admin를 입력하여 관리자 페이지로의 접근을 시도한다.<br />
-<img src="https://lh3.googleusercontent.com/zVAFmaEpBdA9W3xGV3o1avo-4wYBk2TdS9Ys1wIvYiIWK-Nxvgkrt05T9sFLlQcW6LA_0C3N9NB7GmfSZUvt2Vvix_5tWDORjEAkHawvnGBXlX0LINcBGL7QhiRi4X9xtKn8H5CH8d232k9vb6OF9hFCOjnmqmsP9GJ8w96nqhHhL6kEfA1HK0QoFCky6CzEdnfCmKno-G7voB7N38ITn-e3Cus7o0diqlQw9dlNLDgEqA2eGK7GEeiTqwDKQ9Jz52VWMGeZA0cLvHD1eyIiF50POVQ0j86Y7ixo79fHWS7HQOPYaXIMYy6aoWX-eiz5c5Wqa7ra9hdvM0BIswDNywqHC77umx1ltulzAiQMhbV2DgHNKuru1t3SNMe7Hrx0VN0W6UUmAc0inp5AmSBUu4ZAdw6kiLJyYWWay6LoR_pU8JXkRTywspRdGJV5GfPAb6HWszxTbIT0cv40kmc_23DCq_tlK7_qXRCX4RNXJkspBjoMSm0ZU74EXcn0anrXsMGVRkVnGChLnhDmoKESq-fjinjqIP2yEcKh6S_7kTLz-u2l7nALV7NzhO3U192tXZquOuCWgOvbrMjV3hKVelPMC6k6lKhcE1bqXSkuZdQzwEMCoWhkvnrn=w450-h216-no" alt="Access Denied" /><br />
+홈페이지를 방문하고 Guestbook 링크를 클릭한다.
+<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" />
+Sign in를 클릭한다.
+<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" />
+로그인 페이지에서 Sign in as Administrator를 체크하고 로그인한다.
+<img src="https://lh3.googleusercontent.com/njUdDdcv3eSIj9LTF1ApHIJ6XgpJLSKKIttSNDJQHDCDLkdDWtzG9nGcFGKwKfl_f8d-rrXSo6KRliovQ7a4haZSjjZKTgpqqftWlXtppbDYJOwFErv4GqgWf3iWE5-eXZovYMBiL5FtRV4sre9JiBNIOk80DZ5RSchiXqICdNOjAeI09lO_IonI6CMNWXgAc21w4LJ2n6k-xlktrfdAK4p73gzesBmTCjpA8-bibwgubs95ym0S1CznUS5MuV2X2sE2rsw9Va6bZWfgdlr8jEYs4vgddmW8m2jMXMcD8qxxLRGhh3KaPl7ofZQsSNtOPkpxi3ybXAjUMX4I4nvWIBJ2orwetlr2ZpKBRZmFNC5Z6XSaEfIeXL0WJT0LNKbEDQz3bku0rmTcz1zI9b9xYhzDFP-wk-ig9qkDXXjFPmwXr5NB2fGNC0cuH-NjX11KZ2hfcltGhuBO9DW5gryVjXcda1Em-2iboPpRuwJNmlmJrvCKVW1dIswuQA8I8MLCfIp8Mb0io-vWYMj-Id90fr_K5r17Q0C-SUabGMJIydxSmsAUgXPLOwUW07bO_4xFIIcqqVzcCO2absJGYgpkSgGv6qnwH4wKBuK5L4Ytu1xG7M5aQ07eBx83=w419-h319-no" alt="Sign in by Admin" />
+<img src="https://lh3.googleusercontent.com/ENkdX6uqkza7qAlio0ucvUDNo_cpFud2WEMNTD_p4FPaw8p0_QijcdRsl1ESbO14Q9AHOgHXFeAHY3IjikzXEHf0IrgHGUYbQ_wc4yhmwSDPQFsICIBisQE0ziMbMwiZqRvc7Wi2JVkD1ZJwJFLMTE8PH6UQoPl8S34JOH5Sphv1sbl0VkA9zK7zg49cCyomegROTbY08ffW78VkXMwR4JGkpUHG0M71-Z5180sv-TSy5N-9W71WAmJq9gve23fPUguDYtltxa7hUKZTVbxF9Gi8uT0Tk-kJ0Z3Aiave4oRGRgyQ_wT37QkZLcp_r84wlIrroyxVu-oEHVdqyM9P_qqWVbUKlWlkc4HKANS5Vtl6XtlygpmgF7A9MNrXVYfjcxUmo74Nk9kLKWH0OH-JsuNrW674DipTy7wNJIxn73FHjeoaHd3l-YoALFo5U1dpMYuurOlwBFUIqXJaqjFInswmN8i2L79dQdt0hG6xpuw4o51uJux_HvCPdXN_0Qufg1kgJmYf6kU08ThTYYJM4joWFvxKGVzWaoLzNRP40NqyG3omdOCn2tMsBRvnNrdmA3y7-dFIni5cS2ASciaUJERfmNk88hT_cmHCa1FcbgWAXENnVJA6FeyR=w451-h301-no" alt="Guestbook" />
+관리자로 로그인된 상태에서 다시 홈페이지를 방문한다. Admin 링크를 클릭한다.
+<img src="https://lh3.googleusercontent.com/QvcX_nWvNvGBIDIRVj4LIEPrb5VOx6l90F4c6YcJIxehG_nkkJnHdJKVitkOE4yYKcuSssVFACePlj3ABd343_LciVwp4PhEeuD_6AyrDcrhDg5z9KEoPJQcXdfNe776Fhi3shBvoIKNyKmNT-PnTiDAYKIdRHvtjfUEokRNf7jtfhQ8LOd3Gb2TtZe3leuLxLTIBHk88LyZq-Uk3LYb7OzH6SAAWLtqbHIdyiKg844K4sj_ehH83W7UH5SsLLhVmo8UCGAvFoXkwKXgi-tGKG9W7MvFNKJ9K7u1SPLGjmehk2jxTuqdSue_HOwWymzrY51ndClyzwCVhGhToNFAGmWAlWPCCtqJV0ozoQiRUdigInvopmwKhcvF25W3UeiOA0x-ic9zvffs4Wo_p18EugoqAbz_m8Shev_Ai1H3Rx80O0xHaoogugWuz3BwlJXvvltrHFfve9LFSlhO2NMmEEXZcG-VkerEDJyHd71tPymQRwz8GuK9VlhUgISUVQBrVvOge2DLEDzHUDO7M-qHcotGVsti1AEFI_8nef-31ov8-NlorqY41tBlv7JK6JbrFnm2ERwZzeUgSRvlPXuSvSzeQ6mqOQB9PwDvmtdRwv-Wy9ZYFF6CE7Qw=w452-h220-no" alt="Access Homepage and Admin" />
+<img src="https://lh3.googleusercontent.com/l-ABwrnNjsRxU4bBSBlfih0Sb2jcERvVHr4atqWzf8AQy9VNVc7I-r5Okxrw4P7P25vCX7LlDefGgKkiTz7Vge5EOW5MNQ38LQDyG1EMTA7E8q7RQWlv_4oPCLVcS_RsQ46T5QLWNnOKKtDia86TKgJ91w1w3s7WzVQGA8nIQYLeJdg_0iZysBYTjEdXTN2HCJUCusIOqQ6VsOnLBO7_9F-YnBRddEbfL52slWliGCIYMTpyTjI3vWQsEMKPSd5oANamYpvXdbstkuj4iw20tCZtohu0E5Re-zl1MVpRcwy2pyIm5yh4wq1e-WIaM_rBycsiSS6SEr7xWjY3yzZEbozGfRWmznBXZwYHbpySL6u3sk_n3F5V7oW4UJuDsqPM0NoILxboHBlFT7vebrJ5svSgBmiC4A0xVW59rC7o7M7dFzify8uCDMhdGPaBIOmhgS2dC-5klfcYIKF_iDcdhejT6BFe6wi4SbZl8CG_Qvd9coCoafh5DeTP9AuyEbUAPJaZLc7isiiBX46haQo62uXvMaBwsFQRbVmJvKODKng7-4aP6fqpboXPuSdzLqYyh4o46PHOoQqB1g3GRsT121J-n0FGvqf3oYeHCwc8L9ydCukS51aP5UW8=w450-h233-no" alt="Admin Page" />
+다시 방명록 페이지로 돌아와서 로그아웃하고 Sign in를 클릭한다.
+<img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" />
+이번에는 일반 사용자로 로그인한다.
+<img src="https://lh3.googleusercontent.com/JFIPDnglJq8KtPG5Pv4KMWthG4fUPhGgv2NAYaACQQMxyDzgxKe87titAJKBoTvY-GtcHodBFEZ3C_1u3G6VPuUPqrw65pnxAdxQysd5IP3YCf9FHPBWIOBFHgM6xqb6E87Nm1qQvacYg5kmZg3DUIcydZOwad4JcgFAbNaUmYnnhPG2P95BxyYXqEpAwPXw4BFvJNc0TU36-O3kw2g1mA3ahx9FxbV3AfGdFW-RaTkEKa6NeLlzCehZg7iOWrRw5BXEbTsXkWven_HYHd0PtLrB_Wa1_1qQ7t29OoXL1ox-2HzlkPZNLhqtUmcuVM4JV1OBRQ9efsgne896L2I2i2MdBZffAzWLFLCglvzabSsYhFJ1E-8y8ZFAkylraWxq7MF_cy7jpdHUsaxCLEo6Zgp_uSYc4aO2O88eWrlJIr7pJhlCDy4st8q7XLCeD2LStxEkePbkqKOUBSYpb_wrbsN11N15FpXE67rezkz6J2Dno-5e54JQspx_o3ujA4DZU25iHpgZIwSv3G9lAo0mRz_wWW6zPx7sTZRduMF4fDlA1jEDwUpy1avu89m5xhTT8PESM1hngBxHQIN3GCPRDeQFdqKg6TMuOKMYjsN-_6IV-M5dxPqlIHVZ=w451-h275-no" alt="Sign in by normal user" />
+홈페이지를 방문한다. Admin 링크가 사라진 것을 확인한다.
+<img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" />
+웹 브라우저의 주소창에 localhost:8080/admin를 입력하여 관리자 페이지로의 접근을 시도한다.
+<img src="https://lh3.googleusercontent.com/zVAFmaEpBdA9W3xGV3o1avo-4wYBk2TdS9Ys1wIvYiIWK-Nxvgkrt05T9sFLlQcW6LA_0C3N9NB7GmfSZUvt2Vvix_5tWDORjEAkHawvnGBXlX0LINcBGL7QhiRi4X9xtKn8H5CH8d232k9vb6OF9hFCOjnmqmsP9GJ8w96nqhHhL6kEfA1HK0QoFCky6CzEdnfCmKno-G7voB7N38ITn-e3Cus7o0diqlQw9dlNLDgEqA2eGK7GEeiTqwDKQ9Jz52VWMGeZA0cLvHD1eyIiF50POVQ0j86Y7ixo79fHWS7HQOPYaXIMYy6aoWX-eiz5c5Wqa7ra9hdvM0BIswDNywqHC77umx1ltulzAiQMhbV2DgHNKuru1t3SNMe7Hrx0VN0W6UUmAc0inp5AmSBUu4ZAdw6kiLJyYWWay6LoR_pU8JXkRTywspRdGJV5GfPAb6HWszxTbIT0cv40kmc_23DCq_tlK7_qXRCX4RNXJkspBjoMSm0ZU74EXcn0anrXsMGVRkVnGChLnhDmoKESq-fjinjqIP2yEcKh6S_7kTLz-u2l7nALV7NzhO3U192tXZquOuCWgOvbrMjV3hKVelPMC6k6lKhcE1bqXSkuZdQzwEMCoWhkvnrn=w450-h216-no" alt="Access Denied" />
 </p>
 
 <dl class="note">
@@ -806,7 +794,7 @@ HTTP Status 405 Request method 'POST' not supported
 
 </dl>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/">http://spring.io/blog/2010/08/02/spring-security-in-google-app-engine/</a></li>
 </ul>

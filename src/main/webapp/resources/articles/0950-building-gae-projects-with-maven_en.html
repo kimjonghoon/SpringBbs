@@ -1,66 +1,64 @@
 <article>
 
-<h1>구글 앱 엔진 시작하기</h1>
+<h1>Building Google Cloud Project with Maven</h1>
 
-<h2>서비스 신청</h2>
+<h2>Apply for Service</h2>
 
 <p>
-<a href="https://cloud.google.com">https://cloud.google.com</a>에서 비자 또는 마스터 신용카드나 체크카드로 서비스를 신청할 수 있다.<br />
-구글 계정에 로그인해야 서비스 신청을 할 수 있다.<br />
+You can apply service at <a href="https://cloud.google.com">https://cloud.google.com</a> with your Visa or Master Card.<br />
+To apply for a service, you need to sign in to your Google account.
 </p>
 
 <p>
-서비스 신청 후 구글은 1년간 사용할 수 있는 300달러 바우처를 제공한다.<br />
-1년간 300달러에 해당하는 서비스를 체험하는 것은 무료이다.<br />
-300달러를 소진하거나 1년이 지나면 구글은 서비스를 계속 사용할지를 묻는다.<br />
-서비스를 계속 사용하겠다는 확답을 주면, 구글은 서비스 비용을 0으로 초기화하고 이후 발생한 서비스 비용은 신청시 등록한 카드로 자동 결재한다.<br />
-사용자는 바우처를 사용하는 동안 자신에 맞는 서비스를 정하고 예산을 수립할 수 있도록 노력해야 한다.
+Google will offer a $ 300 voucher after subscribing to the service.<br />
+A $ 300 service is free for up to one year after application.<br />
+If you spend $ 300 or a year, Google asks if you want to continue using the service.<br />
+If you confirm that you will continue to use the service, Google will initialize the service cost to zero, and any subsequent service charges will be automatically credited to the card you enrolled at the time of application.
 </p>
 
-<h2>프로젝트 생성</h2>
+<h2>Create my project</h2>
 
 <p>
-신청을 완료하고 다시 <a href="https://cloud.google.com">https://cloud.google.com</a>을 방문하면 GO TO CONSOLE 버튼이 보일 것이다.<br />
-이 버튼을 클릭하면 웹 콘솔 화면으로 이동하게 된다.
-</p>
-
-<p>
-웹 콘솔 화면에서 처음으로 해야 할 일은 프로젝트를 생성하는 것이다.<br />
-왼쪽 상단의 Google Cloud Platform 옆에서 프로젝트를 생성할 수 있는 메뉴를 찾아 실행한다.<br />
-<img alt="새 프로젝트 이름, 아이디" src="https://lh3.googleusercontent.com/0sv1GHn6s-XXPN2ObCQxViZwgDG1aHRWFsG_mY63rlJeNIpKdyo7E5cwXRLxF4o7T3GCX-u3IPyodnlORu0AjUEMPE-y3GTUU9XfGwCb4cEO0G7OLfzvCy4HTK87zUyd216efpND8J13pa_l10lsx3wL41CcFTT64oahY1R-5-fOsHWw6_h5YbwA6YJ71S8wRGryMQ9rx7sooKWG3LSik-GAcf7Sy3_kOjt4_UaC4UQQlltwAdaBNu7XAUnCrD9Wc6jCJppfz8TkVOeDIBbW19XvjxYdgznhxZ1xA7-z89GhaBcIKTyHeRaYE-9W2EgE1VHfQAdNKGiYaN6dPwKTnQqLcLBetq3MmFMtIFf0ojonoxFmIAKrHp2Vflhjts_MCfz_6OM59vEI_oLGCf9aKj93mIwkMxMGYb5YWjuT_tAzYmIeIKoV5nQTXx5rrAr7l2KS8hYgsJ8u2pF_11H363aZz-b3I-NTKNAljFwoDQGxFX7BWDGSJi--h6FoFQVx5QNbTZ_1r1C_-C0pc0KXJ8mVlzksQ3Vd3nht7YAQGPVtOkg7COEdI0eAhMIoedf3gDJ2a9kI5matFKocR4Nyrp7lgKEy0xbFc8SI6kGKK2q93GzjngPPf-wd=w495-h297-no" style="display: block;" />
-프로젝트 이름을 입력하면 프로젝트 아이디는 프로젝트 이름-숫자 형태로 만들어진다.<br />
-프로젝트 이름을 독특하게 짓는다면 프로젝트 이름과 프로젝트 아이디가 같을 수 있다.<br />
-기억해야 할 것은 프로젝트 아이디이다.
-</p>
-
-<h2>개발 환경</h2>
-
-<h3>1. 자바 설치</h3>
-
-<p>
-자바 8 최신 버전을 설치한다.<br />
-<strong>자바 9로 구글 앱 엔진 프로젝트를 개발할 수 없다.</strong><br />
-(여기서는 윈도가 기준이지만 우분투의 경우, 자바 9가 이미 설치되어 있는 우분투 시스템에 오라클 웹사이트에서 다운로드한 자바 8을 설치하고 넷빈즈에서 자바 8를 자바 디렉터리로 설정하면 개발이 가능하다)<br />
-자바 8 설치는 <a href="/">JDK 설치</a>를 참조한다.<br />
-</p>
-
-<h3>2. 메이븐 설치</h3>
-
-<p>
-메이븐 최신 버전을 설치한다.<br />
-메이븐 설치는 <a href="/spring/building-java-projects-with-maven#Install-Maven">메이븐 설치</a>를 참조한다.
-<p>
-
-<h3>3. Cloud SDK 설치</h3>
-
-<p>
-<a href="https://cloud.google.com/sdk/downloads">https://cloud.google.com/sdk/downloads</a>에서 설치 파일을 내려받는다.<br />
-윈도의 경우, 같은 페이지에서 인스톨러를 제공한다.<br />
-압축 파일을 내려받았다면 압축을 풀고 생성된 디렉터리를 적당한 곳으로 옮긴다. 
+Once you've completed your application, go back to <a href="https://cloud.google.com">https://cloud.google.com</a> and you'll see a GO TO CONSOLE button.<br />
+Click this button to go to the web console screen.<br />
+<br />
+The first thing to do on the web console screen is to create a project.<br />
+Click the Create Project menu next to Google Cloud Platform in the top left corner.
 </p>
 
 <p>
-리눅스와 맥 OS X에서 환경 변수 PATH에 Cloud SDK의 bin 경로를 추가하려면 다음을 실행한다.
+<img alt="Project name, Project ID" src="https://lh3.googleusercontent.com/0sv1GHn6s-XXPN2ObCQxViZwgDG1aHRWFsG_mY63rlJeNIpKdyo7E5cwXRLxF4o7T3GCX-u3IPyodnlORu0AjUEMPE-y3GTUU9XfGwCb4cEO0G7OLfzvCy4HTK87zUyd216efpND8J13pa_l10lsx3wL41CcFTT64oahY1R-5-fOsHWw6_h5YbwA6YJ71S8wRGryMQ9rx7sooKWG3LSik-GAcf7Sy3_kOjt4_UaC4UQQlltwAdaBNu7XAUnCrD9Wc6jCJppfz8TkVOeDIBbW19XvjxYdgznhxZ1xA7-z89GhaBcIKTyHeRaYE-9W2EgE1VHfQAdNKGiYaN6dPwKTnQqLcLBetq3MmFMtIFf0ojonoxFmIAKrHp2Vflhjts_MCfz_6OM59vEI_oLGCf9aKj93mIwkMxMGYb5YWjuT_tAzYmIeIKoV5nQTXx5rrAr7l2KS8hYgsJ8u2pF_11H363aZz-b3I-NTKNAljFwoDQGxFX7BWDGSJi--h6FoFQVx5QNbTZ_1r1C_-C0pc0KXJ8mVlzksQ3Vd3nht7YAQGPVtOkg7COEdI0eAhMIoedf3gDJ2a9kI5matFKocR4Nyrp7lgKEy0xbFc8SI6kGKK2q93GzjngPPf-wd=w495-h297-no" style="display: block;" /><br />
+If you enter a project name, the project ID is made in project name-number format.<br />
+If you name the project uniquely, the project name and project ID can be the same.<br />
+Remember the project ID.
+</p>
+
+<h2>Set up the project</h2>
+
+<h3>1. Java Install</h3>
+
+<p>
+Install the latest version of Java 8.<br />
+You can not develop a Google Cloud project with Java 9.<br />
+For Java 8 installation, see <a href="/">Installing the JDK</a>.
+</p>
+
+<h3>2. Maven Install</h3>
+
+<p>
+Install the latest version of Maven.<br />
+See <a href="/spring/building-java-projects-with-maven#Install-Maven">Maven Install</a>.
+<p>
+
+<h3>3. Cloud SDK Install</h3>
+
+<p>
+See <a href="https://cloud.google.com/sdk/downloads">https://cloud.google.com/sdk/downloads</a>.<br />
+For Windows, install using the installer.
+</p>
+
+<p>
+To add the Cloud SDK bin path to the environment variable PATH on Linux and Mac OS X:
 </p>
 
 <pre class="screen">
@@ -68,7 +66,7 @@
 </pre>
 
 <p>
-윈도에서 환경 변수 PATH에 Cloud SDK의 bin 경로를 추가하려면 다음을 관리자 권한으로 실행한다.
+To add the Cloud SDK bin path to the environment variable PATH on Windows, run the following as administrator:
 </p>
 
 <pre class="screen">
@@ -76,8 +74,8 @@
 </pre>
 
 <p>
-gcloud components list 명령으로 설치된 컴포넌트를 확인한다.<br />
-app-engine-java 컴포넌트를 설치한다.
+Check the installed components with gcloud components list command.<br />
+Install the app-engine-java component.
 </p>
 
 <pre class="screen">
@@ -85,12 +83,11 @@ gcloud components install app-engine-java
 </pre>
 
 <p>
-어느 디렉터리에서나 상관없으나 윈도의 경우 명령 프롬프트를 관리자 권한으로 열고 실행해야 한다.
+It can be any directory, but in the case of Windows, you need to open and run the command prompt as an administrator.
 </p>
 
 <p>
-gcloud 초기화를 진행한다.<br />
-어느 디렉터리에서 행하는지 상관없다.
+Initialize gcloud with the following command: 
 </p>
 
 <pre class="screen">
@@ -98,35 +95,35 @@ gcloud init
 </pre>
 
 <p>
-초기화 작업을 통해 사용할 프로젝트와 Google Compute Engine의 존(zone) 지정한다.<br />
-(명령을 실행하기 전에 구글 클라우드 콘솔에서 프로젝트를 생성해야 한다. 우리는 이 작업을 이미 했다)<br />
-존 지정은 인스턴스가 생성될 지역을 설정하는 것으로, 주로 서비스되는 지역과 가까운 곳을 지정한다.<br />
-존에 대한 자세한 내용은 <a href="https://cloud.google.com/compute/docs/regions-zones/">https://cloud.google.com/compute/docs/regions-zones/</a>를 참조한다.
+It does not matter which directory is executed.<br />
+Initialize the project and zone of Google Compute Engine.<br />
+(You should create the project in the Google Cloud Console before running the command, we have already done this)<br />
+Zoning specifies the region in which the instance will be created, usually a location close to the service area.<br />
+See <a href="https://cloud.google.com/compute/docs/regions-zones/">https://cloud.google.com/compute/docs/regions-zones/</a> for more information about zone.
 </p>
 
-<h3>4. IDE 설치</h3>
+<h3>4. Eclipse Install</h3>
 
 <p>
-IDE로 이클립스나 넷빈즈를 설치한다.
-이클립스는 Java EE Developers를 설치한다.
+If you chose Eclipse, install Eclipse for Java EE Developers.
 </p>
 
 <p>
-<a href="http://www.eclipse.org">www.eclipse.org</a>에서 이클립스 인스톨러 압축 파일을 내려받는다.<br />
-압축을 풀고 생성된 디렉터리에서 eclipse-inst로 시작하는 이클립스 인스톨러를 실행한다.<br />
+Download the Eclipse installer file from <a href="http://www.eclipse.org">http://www.eclipse.org</a>.<br />
+Unzip and run the Eclipse installer named eclipse-inst in the generated directory.
 </p>
 
-<h3>5. Git 설치</h3>
+<h3>5. Git Install</h3>
 
 <p>
-<a href="https://git-scm.com">https://git-scm.com</a>에서 최신 바이너리 파일을 다운로드하고 압축을 푼다.<br />
-압축을 풀고 생성된 디렉터리를 적당한 곳으로 옮긴 후 Git의 bin 디렉터리의 경로를 PATH 환경변수에 추가한다.
+Download the latest binary file from <a href="https://git-scm.com">https://git-scm.com</a> and unzip it.<br />
+Unzip and move the generated directory to the appropriate location and add the path to the Git bin directory to your PATH environment variable.
 </p>
 
-<h2>구글 앱 엔진 방명록(guestbook) 아키타입 생성</h2>
+<h2>Create a guestbook archetype</h2>
 
 <p>
-자신이 지정한 워크스페이스에서 다음 명령을 실행한다.
+Execute the following command in the workspace.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -206,9 +203,9 @@ service: default
 </pre>
 
 <p>
-빌드가 완료되면 artifactId 값과 같은 이름의 서브 폴더가 생긴다.<br />
-artifactId 값을 guestbook으로 주었으므로 guestbook 서브 폴더가 생긴다.<br />
-guestbook 폴더로 이동하여 다음 명령을 실행한다.
+When the build is complete, a subfolder with the same name as the artifactId value is created.<br />
+Since you gave the artifactId value to guestbook, a guestbook subfolder is created.<br />
+Go to the guestbook folder and run the following command.
 <p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -216,10 +213,10 @@ guestbook 폴더로 이동하여 다음 명령을 실행한다.
 C:\Lab\guestbook&gt;<span class="prompt-selection">mvn clean package</span>
 </pre>
 
-<h3>로컬 테스트</h3>
+<h3>Local test</h3>
 
 <p>
-로컬 테스트를 위한 명령어는 mvn appengine:run 이다.<br />
+The command for local testing is mvn appengine:run.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -227,12 +224,12 @@ C:\Lab\guestbook&gt;<span class="prompt-selection">mvn clean package</span>
 </pre>
 
 <p>
-Dev App Server is now running이 보이면, 웹 브라우저로 http://localhost:8080을 방문하여 테스트한다.<br />
-테스트가 끝나면 Ctrl + C로 종료한다.
+If you see "Dev App Server is now running", visit http://localhost:8080 in your web browser and test.<br />
+When the test is finished, press Ctrl + C to exit.
 </p>
 
 <p>
-아래는 pom.xml 파일이다.<br />
+Here is a pom.xml file that has been tested successfully.
 </p>
 
 <h6 class="src">pom.xml</h6>
@@ -427,20 +424,19 @@ Dev App Server is now running이 보이면, 웹 브라우저로 http://localhost
 &lt;/project&gt;
 </pre>
 
-<h3>서버 테스트</h3>
+<h3>Remote Test</h3>
 
 <p>
-pom.xml을 열고   &lt;!-- &lt;app.deploy.project&gt;your-app-id&lt;/app.deploy.project&gt; --&gt;
-에서 your-app-id를 자신의 프로젝트 아이디로 수정한 후 주석을 제거한다.
+Open pom.xml and modify "your-app-id" to real project id in "&lt;!-- &lt;app.deploy.project&gt;your-app-id&lt;/app.deploy.project&gt; --&gt;" then Remove comment. 
 </p>
 
 <pre class="prettyprint">
 &lt;properties&gt;
-	&lt;app.deploy.project&gt;<em>프로젝트 아이디</em>&lt;/app.deploy.project&gt;
+	&lt;app.deploy.project&gt;<em>real project id</em>&lt;/app.deploy.project&gt;
 </pre>
 
 <p>
-서버로 앱을 배포하려면 명령 프롬프트에서 mvn appengine:deploy 를 실행한다.
+To deploy the app to the server, run mvn appengine:deploy.
 </p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
@@ -448,7 +444,7 @@ pom.xml을 열고   &lt;!-- &lt;app.deploy.project&gt;your-app-id&lt;/app.deploy
 </pre>
 
 <p>
-다음과 같은  에러가 발생할 수 있다.
+The following error may occur.
 </p>
 
 <pre class="screen">
@@ -457,56 +453,55 @@ This application does not exist(project_id=u'')...
 </pre>
 
 <p>
-위 에러는 다음 작업을 통해 바로 잡을 수 있다.<br />
-구글 클라우드 웹 콘솔에 방문한 후, 왼쪽 메뉴 항목에서 App Engine를 선택한다.<br />
-아래 그림을 참조하여 프로그래밍 언어와 지역을 선택하는 것까지 진행한다.
+Go to the Google Cloud Web Console and select App Engine from the menu on the left.<br />
+Refer to the figure below and proceed to selecting the programming language and region.
 </p>
 
 <p>
-<img alt="웹 엔진 시작하기" src="https://lh3.googleusercontent.com/h9C_fLIfty50gjNYjLLTbhJVTy2izwhCIPI9IeMqzuriA5lcyLgYRAXgE53WtESpxB-JZlzaY9t84emyxRcLSs3HHdhQ_ThIDWSAnaUYsYlsIqFDtLe1Jya9Q_u1KabwyTAo2fP8PsKlLej0ftGGgmW44lFZ05Mfwo54hZg6JoAJGvn-f5Vl-hP6KixO_qvHiz3WLQV_WUcTSgRDKzUvPctBS2hoXzSg-TiSfjZ3cu3wpTHGjndpDw9MBcFZQHe9-8RQZf11lPcgXzPI2zd0cilReYbroqgKX3jt9FRdYSnhsTj-qYxJaeySMJVAFbFU1_IlhR2k7nikQEPEHgYxuQ6Lo2Hb4gja9C4ux8TQyelRDCBr0P4IrmchXOi_6hNVFwo4GJRpML0pJnMMimN2mozSX35D5ZZ_dgyaHzOxVA53OdYt-_REkzsefQTJRvGeihy1GnJ-PijCaN4yKrpK_Dq_D15xUc5kD-OjW1FyJReHaY1JwJAM8NlZsnsevqbfTXaxuR7Rkpd4enLyO2T4fNbn04Mv9C5_oNntxr09S1C1YsmyFwt76rLA_ba9iwwnLFQAsXTwsuQA9U5uGvJlEhn6ubYW-E-4MmYFrQ-i7-EpVHltWxaGBzqN=w767-h438-no" style="display: block;" />
-<img alt="웹 엔진 언어 선택" src="https://lh3.googleusercontent.com/rRFRqCAsMa98NbWItvh8z-txY3UJAazKmePRAsIef_ggym3jut8Bb3T2Yd1cY6Jb7wH2cp9h6jTmDAxZXktsFi9yuVls25vrzbznsOFfXDNDICJDreDh7J0pe46ECl9HqLoBQBwyFKxau94-61L69k_kde92Qk0dzbC9H_esa2J5X6SVCZEEj6WEnFoGzaXZuG8VgEkiITpdDAxrWAl_XtG__fEw-o9aP2GtgIBpDGxzy2UTE9ZeUK-yKKbF87MO9z_QoEy4kV1W0kVUYxRZ1Z0NC38QrYuIO4pE7uqzadSvT6L9-hKq49wS8bqOx-DQMPND3OwE57ePRPzHM-5BBSAiOrQykokcYPlBCBUfR2q1tKoB5cQBIMFXqvmWqXleGSGkZjTobJIovpoASiZ-xk-YuvDD-KvbCQyMl9iqDaHvjcNssbvI8O8oGFdI9McmuBeYkSEL_JBGEHv9oXuPZ8qK9WPn2z87ePy3bOhIjSXo6EPoZrWhf5nFH-uw6XPhXJbLLPARgwkYhsR28B8EizWe-AjyIPWZWooHkAtdL89T_KAlAVP47qZbdF7EYa4TldvQVJWvX-USriJoOHEvB4E87tcNgRmaP9bQ2bPeaNMFQQ35yxt_IzAD=w798-h460-no" style="display: block;" />
-<img alt="웹 엔진 지역 선택" src="https://lh3.googleusercontent.com/cVqrFltH8rB7u_YTLtjAtZ_VHZNBNVgwexaKtZRo06CLw8UfVqLfHIie7qQ_PBQD7yowOdL3tnm2N4sqRzcMf_XpLxrmHb-8LjY9Kjqi_PvIQQsNIi5TC6bLzCauVRfnRBcrcjxaHKCDkrk1RqAIxNxDguvgXmOQ0NqOzROjDUuKgR6udfzVltJvcrK0VScXODKw6InWhOGcU1vU5H1P1BGf3w0wBmUwhWl0D-wsyZW-Gy0zPtOOL6KIm3vFNUcl0lbNxSdcsHbdsjIJa0OSUaW46WmDifXWMIZk-iaqSYFGl6tjzAlpZtn4E_-pVN5RAHcFVVzsmj9ltnLqnOs13064xe6FTQLx6O_pL8dQWR5kDggR_DhtQ99EKAQHIZV9DHSr0SD1ZGzdTFI4yT3qNEfpumbQE-WHlP6EPP0Ma52q5ec5bZDR0qQKvVhKbO8wh4hxSPjfN25ag-9FfKA--tE_lqtd8DHLG4DVqmtXEK0gmaPeOpE1fYQy54vKpoJrHLGwvl0KPkYSvyOdYPWamDWco-yxF1XjVpQup2gMOnoc4oTWCWMzZQe7Fy5U--TkS7VihB-ANX8d1waapsVoRRt29K2ZP-KGXiblS46tE5WxNC3F61AU9TAh=w625-h657-no" style="display: block;" />
-<img alt="웹 엔진 초기화" src="https://lh3.googleusercontent.com/ekvRnfmByuTJaw47t-JzrR72KpymwAoUH1R5SRc1wPOpnRb4NHuvs9NFntl0BYGWDrtag5r3WXNy0aewMTU6sI4YgPj6vmIDtlFnaU8pQ4DrsrXF8J2iKIL__KR_69zwlfvEUSS312uPvCIEDjE4r6FSLcpqIu5WlyVt4kd8aFe3nqaRM7kp4GbEtREE7qBw8209XLLUMM-UmHrBKufkjSiNzbX_WvTaHoJP-KB6lcEY-p2DDrJ8LjIMDnXWAv6lTI9KUiAZMFSCqBXXTWnr1Zkei-YqY-kXvRMaNQ3CMna_jNjYv55ATz4XhcoXzxi80HzZHLkqgnezO7p9T0Q34N9c1__s6DbKPpJH3cJYI1kvgjpt2kzhpsKB-TnOILKcWBB5KqJrTTjdF3qApT7rG7JVz7NBGqSssdNkdnF_vbh4thF0sxFu8BUwy7Q6RfQyUc2y9UcXygzCiChS1UMgtsCbQC22vd2Bq5-sUK6ray-W3RmxxW-3xxfCmjMmAqnGSNlgStIStS2cSWRgVwn2F3qXyy8_-ga6xFli7oPWDO2bUS0vQmmSIpzxLOHl4dWEXnbzxFnGjS2zXfJVZWR2p6PoWHtfPyuX6Lilxin1nm7VyQx_bs_xzyfU=w593-h294-no" style="display: block;" />
+<img alt="GCP start" src="https://lh3.googleusercontent.com/h9C_fLIfty50gjNYjLLTbhJVTy2izwhCIPI9IeMqzuriA5lcyLgYRAXgE53WtESpxB-JZlzaY9t84emyxRcLSs3HHdhQ_ThIDWSAnaUYsYlsIqFDtLe1Jya9Q_u1KabwyTAo2fP8PsKlLej0ftGGgmW44lFZ05Mfwo54hZg6JoAJGvn-f5Vl-hP6KixO_qvHiz3WLQV_WUcTSgRDKzUvPctBS2hoXzSg-TiSfjZ3cu3wpTHGjndpDw9MBcFZQHe9-8RQZf11lPcgXzPI2zd0cilReYbroqgKX3jt9FRdYSnhsTj-qYxJaeySMJVAFbFU1_IlhR2k7nikQEPEHgYxuQ6Lo2Hb4gja9C4ux8TQyelRDCBr0P4IrmchXOi_6hNVFwo4GJRpML0pJnMMimN2mozSX35D5ZZ_dgyaHzOxVA53OdYt-_REkzsefQTJRvGeihy1GnJ-PijCaN4yKrpK_Dq_D15xUc5kD-OjW1FyJReHaY1JwJAM8NlZsnsevqbfTXaxuR7Rkpd4enLyO2T4fNbn04Mv9C5_oNntxr09S1C1YsmyFwt76rLA_ba9iwwnLFQAsXTwsuQA9U5uGvJlEhn6ubYW-E-4MmYFrQ-i7-EpVHltWxaGBzqN=w767-h438-no" style="display: block;" />
+<img alt="GCP language" src="https://lh3.googleusercontent.com/rRFRqCAsMa98NbWItvh8z-txY3UJAazKmePRAsIef_ggym3jut8Bb3T2Yd1cY6Jb7wH2cp9h6jTmDAxZXktsFi9yuVls25vrzbznsOFfXDNDICJDreDh7J0pe46ECl9HqLoBQBwyFKxau94-61L69k_kde92Qk0dzbC9H_esa2J5X6SVCZEEj6WEnFoGzaXZuG8VgEkiITpdDAxrWAl_XtG__fEw-o9aP2GtgIBpDGxzy2UTE9ZeUK-yKKbF87MO9z_QoEy4kV1W0kVUYxRZ1Z0NC38QrYuIO4pE7uqzadSvT6L9-hKq49wS8bqOx-DQMPND3OwE57ePRPzHM-5BBSAiOrQykokcYPlBCBUfR2q1tKoB5cQBIMFXqvmWqXleGSGkZjTobJIovpoASiZ-xk-YuvDD-KvbCQyMl9iqDaHvjcNssbvI8O8oGFdI9McmuBeYkSEL_JBGEHv9oXuPZ8qK9WPn2z87ePy3bOhIjSXo6EPoZrWhf5nFH-uw6XPhXJbLLPARgwkYhsR28B8EizWe-AjyIPWZWooHkAtdL89T_KAlAVP47qZbdF7EYa4TldvQVJWvX-USriJoOHEvB4E87tcNgRmaP9bQ2bPeaNMFQQ35yxt_IzAD=w798-h460-no" style="display: block;" />
+<img alt="GCP region" src="https://lh3.googleusercontent.com/cVqrFltH8rB7u_YTLtjAtZ_VHZNBNVgwexaKtZRo06CLw8UfVqLfHIie7qQ_PBQD7yowOdL3tnm2N4sqRzcMf_XpLxrmHb-8LjY9Kjqi_PvIQQsNIi5TC6bLzCauVRfnRBcrcjxaHKCDkrk1RqAIxNxDguvgXmOQ0NqOzROjDUuKgR6udfzVltJvcrK0VScXODKw6InWhOGcU1vU5H1P1BGf3w0wBmUwhWl0D-wsyZW-Gy0zPtOOL6KIm3vFNUcl0lbNxSdcsHbdsjIJa0OSUaW46WmDifXWMIZk-iaqSYFGl6tjzAlpZtn4E_-pVN5RAHcFVVzsmj9ltnLqnOs13064xe6FTQLx6O_pL8dQWR5kDggR_DhtQ99EKAQHIZV9DHSr0SD1ZGzdTFI4yT3qNEfpumbQE-WHlP6EPP0Ma52q5ec5bZDR0qQKvVhKbO8wh4hxSPjfN25ag-9FfKA--tE_lqtd8DHLG4DVqmtXEK0gmaPeOpE1fYQy54vKpoJrHLGwvl0KPkYSvyOdYPWamDWco-yxF1XjVpQup2gMOnoc4oTWCWMzZQe7Fy5U--TkS7VihB-ANX8d1waapsVoRRt29K2ZP-KGXiblS46tE5WxNC3F61AU9TAh=w625-h657-no" style="display: block;" />
+<img alt="init" src="https://lh3.googleusercontent.com/ekvRnfmByuTJaw47t-JzrR72KpymwAoUH1R5SRc1wPOpnRb4NHuvs9NFntl0BYGWDrtag5r3WXNy0aewMTU6sI4YgPj6vmIDtlFnaU8pQ4DrsrXF8J2iKIL__KR_69zwlfvEUSS312uPvCIEDjE4r6FSLcpqIu5WlyVt4kd8aFe3nqaRM7kp4GbEtREE7qBw8209XLLUMM-UmHrBKufkjSiNzbX_WvTaHoJP-KB6lcEY-p2DDrJ8LjIMDnXWAv6lTI9KUiAZMFSCqBXXTWnr1Zkei-YqY-kXvRMaNQ3CMna_jNjYv55ATz4XhcoXzxi80HzZHLkqgnezO7p9T0Q34N9c1__s6DbKPpJH3cJYI1kvgjpt2kzhpsKB-TnOILKcWBB5KqJrTTjdF3qApT7rG7JVz7NBGqSssdNkdnF_vbh4thF0sxFu8BUwy7Q6RfQyUc2y9UcXygzCiChS1UMgtsCbQC22vd2Bq5-sUK6ray-W3RmxxW-3xxfCmjMmAqnGSNlgStIStS2cSWRgVwn2F3qXyy8_-ga6xFli7oPWDO2bUS0vQmmSIpzxLOHl4dWEXnbzxFnGjS2zXfJVZWR2p6PoWHtfPyuX6Lilxin1nm7VyQx_bs_xzyfU=w593-h294-no" style="display: block;" />
 </p>
 
 <p>
-지역을 선택한 다음의 과정은 대화형 가이드에 따라 앱을 배포하는 과정이다.<br />
-방명록 예제를 이미 작성한 우리는 이 과정을 생략한다.
+The next step is to distribute your apps according to an interactive guide.<br />
+We have already created the guestbook example, and we omit this process.
 </p>
 
 <p>
-mvn appengine:deploy 를 다시 실행한다.<br />
-처음으로 앱을 올리는 경우, 웹 브라우저 실행되고 웹 브라우저의 내용을 명령 프롬프트에 복사하는 절차가 있다.<br />
-<img alt="Copy this code" src="https://lh3.googleusercontent.com/O2zWW7NNUcTHzIvOMMIksKCIhpL0LevU9X1zjipnNg5sU9xtjTaM2g6rHO79fi0M6uAtL-KTOnDbOXBoirzXAGt6hrsnbtv5yiaGozqjpLYNsG5L85Ts0x8G-rZ_AvDjZbU8N09R4i6d1IRfWoapbtjmNW6yl0a51dLeCzbpTMzZZUKZOTPWtriYB8GoqvRj9gfhKBgJ0YBreEMylVeM-2__UJL-4VeKWWyRpDHyojwfT76goFiGJw6BhSwbmLHw4rTHCZyrm433O4gCPlAoxVgvaF2YJlF9KeYkRq9f1vdoaUhA5sjTPOp1xbNLZuYclEyX5x88EJLCvIETX_OSUTHR2eLSWYd9ebHWJDoJbuFUWK3mRPs5mFtOQgjYl3jkK47ia7qf18j6s5aaBomKr60q7by9zbyDWNvbl-UOeC8PkrxZ4ZIBqDN7qFK8Gm0vKlcUovS27JsmTrA59PLiaKhxp76Hhegt0oDXXSaALny2bYJ2zCcCVnNxC2qgkDmYk5eE-JUq2joHd0V5NRyAqnp7wfkIJ8KcSU8j70sVy7i7GSw5Aslh5vhh89Hlpnl510rmiqsZAGOTpoTXD_6RvGaKTI5Ux4WoU0j_gZheMPVSc6iUcv2zk6oq=w631-h290-no" style="display: block;" />
+Rerun mvn appengine: deploy.<br />
+If you are uploading an app for the first time, your default web browser will launch and copy the encoding characters from your web browser and paste it at the command prompt.<br />
+<img alt="Copy this code" src="https://lh3.googleusercontent.com/O2zWW7NNUcTHzIvOMMIksKCIhpL0LevU9X1zjipnNg5sU9xtjTaM2g6rHO79fi0M6uAtL-KTOnDbOXBoirzXAGt6hrsnbtv5yiaGozqjpLYNsG5L85Ts0x8G-rZ_AvDjZbU8N09R4i6d1IRfWoapbtjmNW6yl0a51dLeCzbpTMzZZUKZOTPWtriYB8GoqvRj9gfhKBgJ0YBreEMylVeM-2__UJL-4VeKWWyRpDHyojwfT76goFiGJw6BhSwbmLHw4rTHCZyrm433O4gCPlAoxVgvaF2YJlF9KeYkRq9f1vdoaUhA5sjTPOp1xbNLZuYclEyX5x88EJLCvIETX_OSUTHR2eLSWYd9ebHWJDoJbuFUWK3mRPs5mFtOQgjYl3jkK47ia7qf18j6s5aaBomKr60q7by9zbyDWNvbl-UOeC8PkrxZ4ZIBqDN7qFK8Gm0vKlcUovS27JsmTrA59PLiaKhxp76Hhegt0oDXXSaALny2bYJ2zCcCVnNxC2qgkDmYk5eE-JUq2joHd0V5NRyAqnp7wfkIJ8KcSU8j70sVy7i7GSw5Aslh5vhh89Hlpnl510rmiqsZAGOTpoTXD_6RvGaKTI5Ux4WoU0j_gZheMPVSc6iUcv2zk6oq=w631-h290-no" style="display: block;" /><br />
 </p>
 
 
 <p>
-빌드가 성공하면 https://프로젝트 아이디.appspot.com을 방문한다.<br />
-로컬 테스트와 달리 다음과 같은 서버 에러를 만날 것이다.<br />
-<img alt="First Server Error" src="https://lh3.googleusercontent.com/WBI0ZTUKVl8OJBgXJWUBq43QZ6dj51p9e2qLZKoUDu6XfpoiSIADFrhDfWxtLAxVfKVh93jcnewfhrZXJRF1LWU3SQbOorO-9IQ5kEv7VtyvKGzfQM6u9pPafFD-83U7Iv3F4ku8EdhZbpzlDTRdaBB33-bBoPaZIpw5gpO-x_rdrcPwgj9KJgUByd4wqr8ZvwYC3ycMfcO2yvmlKTwiinGRl-YRQKvAnos9fZSvt5zUMj94tZ87YlRbryiftHpKTIWJ2RobxmXvakdXJmiccj9u6lCntlbRB9zuSH31z_P_vv49jrBQA9qtDuH9HSe7KXTapInk5AO_45e4RxtFNZ6sgCndkIgFRqCOt5BA3d7eZY0efWw94HIIci8LB3h5jhhjQK_YaS2CIavP0qyBMldNflZh2aNPE4qAVtY5qVP9CTz7-o4m7tKAvOrIvsyk-oZGNxnwASUKjKfn9U5P12Ami6rn51cK01Q3J5DJQEKKH9zz9_Wl-P0a05QlD1nk1Sa9TlbfR454RmEzBgA5QLBRxjUWZQmpefJV7aCYJ7ya5beVnS5_je7kX98AJKwZJJ0K7KU3W_MWvCFH1XKfqTSIm7dryufY5DbNsl_7UZbGQ6QyRmSPWQp4=w846-h223-no" style="display: block;" />
-하지만 몇 분 후 다시 접속하면 서버 에러가 사라지고 방명록 화면을 볼 수 있다.<br />
+If the build is successful, visit https://<em>your-project-id</em>.appspot.com.<br />
+Unlike local tests, you will encounter the following server error:<br />
+<img alt="First Server Error" src="https://lh3.googleusercontent.com/WBI0ZTUKVl8OJBgXJWUBq43QZ6dj51p9e2qLZKoUDu6XfpoiSIADFrhDfWxtLAxVfKVh93jcnewfhrZXJRF1LWU3SQbOorO-9IQ5kEv7VtyvKGzfQM6u9pPafFD-83U7Iv3F4ku8EdhZbpzlDTRdaBB33-bBoPaZIpw5gpO-x_rdrcPwgj9KJgUByd4wqr8ZvwYC3ycMfcO2yvmlKTwiinGRl-YRQKvAnos9fZSvt5zUMj94tZ87YlRbryiftHpKTIWJ2RobxmXvakdXJmiccj9u6lCntlbRB9zuSH31z_P_vv49jrBQA9qtDuH9HSe7KXTapInk5AO_45e4RxtFNZ6sgCndkIgFRqCOt5BA3d7eZY0efWw94HIIci8LB3h5jhhjQK_YaS2CIavP0qyBMldNflZh2aNPE4qAVtY5qVP9CTz7-o4m7tKAvOrIvsyk-oZGNxnwASUKjKfn9U5P12Ami6rn51cK01Q3J5DJQEKKH9zz9_Wl-P0a05QlD1nk1Sa9TlbfR454RmEzBgA5QLBRxjUWZQmpefJV7aCYJ7ya5beVnS5_je7kX98AJKwZJJ0K7KU3W_MWvCFH1XKfqTSIm7dryufY5DbNsl_7UZbGQ6QyRmSPWQp4=w846-h223-no" /><br />
+However, if you try again after a few minutes, the error disappears and you can see the guestbook.<br />
 <img alt="First Remote Test" src="https://lh3.googleusercontent.com/mUnkUemqhzcVDPF-PdDHu4MQuv1hbWjv0Ede8RNDiKTh5lTuaayYew9l6DAodL1v2K5V44_4ozY0VeUxE0TD37uY6s4kHkKtrBwOOQ8PzUZppVVHebhr_1xvOFlFTNkE1NPtsJSJRAvcMQwMK6WnPIlgGGCaVk6pOWWjyVa3XYs60BBbyCQoEGjeHCSxy5yF_k3gufQs5aftaQEdyzWrFobwx45zlHoMUuSqST6xNzUMEuVbG2YYBg2zYGy5RsAXgsrD_OEvrG7vKGAoscpROZbxFPcpk_0VXr4ac0yfcFMyB2d0V14f_v3bS-pA9xsoNFK_FktFeAsDumfS9fdGUO8U0aCwOxxZ5kzfvlG3ZyT5SUn5sU-tL0Rp_BJQ_zz7C4aVRlhFHXgND20uuHMX2aZYWPcDZngS6zmQVa1b4J3E_9y_iIrUWK2eHicDIxki6GSkAyAxpZA91h9CCrSPRhFvVS9wNJ-3FkY1XE5CGfkcyunva1S1nqwqHwtg8BOAmTmbQpGs5jsBCob8BL2thPdTn6MnEOyY1LqI4o696oEg7Axou5A7vnbfJZyeBBotOcvmDih3okCx07T9-HuOekpXkrBiGZgDdRAaBykt1xWajuldcZSGWs7M=w560-h408-no" style="display: block;" />
 </p>
 
 <p>
-처음에 보았던 에러의 원인은 데이터스토어 인덱스가 생성되기 전에 방문했기 때문이다.<br />
-데이터스토어 인덱스는 생성되는 데 몇 분 정도 소요된다.<br />
-인덱스가 없어서 발생하는 서버 에러의 경우, 구글 클라우드는 로그 메시지를 통해 자세한 내용을 알려준다.<br />
+The reason for the error is that it was requested before the datastore index was created.<br />
+The data store index takes a few minutes to be created.<br />
+The error that occurred because there is no index can be checked in the log of Google's cloud console log as follows.<br />
 <img src="https://lh3.googleusercontent.com/0v5LYyJLB1vPfrBSVQnJP36YVmteWiilewxxoeDgbxgD3EH7Bsr79jnGeqnyPAbei3IalH53P5YjoIv9vmSLIujligLMpMtXiiJuXzLHl7VaPbTrYPNOfLlKSPOXIbfyrZstE_kUhKut3H-wqkodd-u3aYzlQJqwcJCcMYPNqQInhLUNE9aFz7kywaj3NnLl6L6IyuA3So_gBEH7C8Te1DPP5JqhAxZfKrbwe_fpexsGO7d54Gxz41wSuTGpWiZfHaJQ2DHfTChXxrOAByT9VALF4jZjvM8Kvn28AMGTyvzfGb2XQLpLBT3OTPy-2BFz9VSBQHXZ6hsMv875E1hfyQFJAb-zGdQeb5glEss5N01FeoLbfDrI7JAMjZ8T-SeTrKj164j-Gw5G8wejS2bIQLzkNPwRmE4apJQT80URAoacQiJ5edhaThjf87SVxAHaoPxK6j9lbB-lrL0ILe-PmIpqpuLtAZEBm2huBWUg-HecNXx7jrJvbBm8TNm8FReTerMbuZO0BmD4MQXklu__HLhmgPJjMbboWib6ViWPsQ44xL6u1z29yrQR-4NJhx17JMWtLcEbYuAniraSJU2y53z5PhGh13ymUdVrGpP1pw=w884-h596-no" alt="log message" /><br />  
 </p>
 
 
 <p>
-데이터스토어 인덱스는 구글 클라우드 콘솔에서 확인할 수 있다.<br />
+The datastore index can be found in the Google Cloud Console.<br />
 <img src="https://lh3.googleusercontent.com/c-QAudFDFDS9AI5lOnG1ZJdd8qqPWy756DktSraa6kiRwnJy2CHLnSWxjAplT8jVdJbkA6KhSuvSZIzHWDJNmGZut7gr8sGVCWjIR5b7eyiLLRLGqL7zub8Wq0MeO6IEGhjLUK2GIYUkkgv_4_7QBNJy4LI3Z_u9Qb8vJjdxCGNoDVCbO6dyPNWGtJiN3UR01nlxEbp0cLkV2bSLMPU9Vkan3_8QlsEkgTqIW8HD1nuZpYV48TovHlOGyjEF8PRqADnZ51V4WWSmEuIOGs1eWkc5At-4N53Y2mD0nAz9tuWXUiZ41peQtL3491PNc7He-LAN4lgNC0U_lVhj0rH1gbDwcgRqZxFaWxsqMvcWsTgQRxuofqAHWAkU7L3Dg7kH9NC6jUBLcTy84hzCrrXAeqIz7pzFP0mdbtwZ3jucwMFyRk_IlBNXH0-xBKN1NMP9kkxrdy59yIU5lYQ2Md5N1vicmyi9GpBPAnhY6VK6nWJG1lwT6_jP9UR9n0xUoBijX2gPdVpa598szjIRLEBBvvRs0Bl8O4F8YKGBnwGg2xISAhmFXVqZT3rMxoBO27p4HNH7f1wY8MvYZoZzQJxpiVeBxXqoD_3xor9QHTFVHw=w1116-h336-no" alt="datatore indexes" />
 </p>
 
 
-<h2>Git 저장소 생성</h2>
+<h2>Create a Git repository</h2>
 
 <p>
-gcloud source repos create <em>개인 저장소 이름</em> 명령으로 구글 클라우드에 개인 저장소를 생성한다.
+Create a personal repository in the Google Cloud as follows:
 </p>
 
 <pre class="screen">
@@ -514,12 +509,12 @@ gcloud source repos create firstGaePjt
 </pre>
 
 <p>
-firstGaePjt 저장소를 구글 클라우드에 생성했다.
+The firstGaePjt repository was created in the Google cloud.
 </p>
 
 
 <p>
-gcloud source repos clone <em>로컬 저장소 이름</em> 명령으로 로컬 저장소를 생성한다.
+Create a local repository as follows:
 </p>
 
 <pre class="screen">
@@ -527,14 +522,14 @@ C:\Lab&gt;gcloud source repos clone firstGaePjt
 </pre>
 
 <p>
-firstGaePjt 로컬 저장소를 개발 시스템에 생성했다.<br />
-원격 저장소에 아무런 내용이 없으므로 <em>warning: 리모트 HEAD가 없는 레퍼런스를 참고하므로, 체크아웃할 수 없습니다.</em>라는 메시지가 보인다.<br />
-명령을 실행한 디렉터리에 firstGaePjt라는 디렉터리가 생성된다. 이 곳이 소스가 위치할 디렉터리다.<br />
-C:\Lab\guestbook의 모든 파일을 firstGaePjt 디렉터리에 복사한다.
+The firstGaePjt local repository was created on the development system.<br />
+The message "warning: remote HEAD ..." appears because there is no content in the remote repository.<br />
+A directory called firstGaePjt is created in the directory where the command is executed. This is the directory where the source is located.<br />
+Copy all the files in C:\Lab\guestbook to the firstGaePjt directory.
 </p>
 
 <p>
-이후는 git 사용법과 같다.
+You can now manage guestbook sources with git.
 </p>
 
 <pre class="screen">
@@ -543,7 +538,7 @@ git commit -m "First Commit"
 git push origin master
 </pre>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
 	<li><a href="https://cloud.google.com/appengine/docs/standard/java/quickstart">https://cloud.google.com/appengine/docs/standard/java/quickstart</a></li>
 	<li><a href="https://cloud.google.com/appengine/docs/standard/java/tools/maven">https://cloud.google.com/appengine/docs/standard/java/tools/maven</a></li>

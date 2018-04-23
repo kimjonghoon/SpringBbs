@@ -6,22 +6,25 @@
 The code below gets all the cookies that the current document object can access. 
 </p>
 
-<h3>var allCookies = document.cookie</h3>
-
-
-<h3>document.cookie = newCookie;</h3>
+<pre class="prettyprint">
+var allCookies = document.cookie
+</pre>
 
 <p>
-위 코드는 새로운 쿠키를 추가한다.<br />
-(추가한다고 document.cookie += newCookie;처럼 사용하지 않는다)
+The code below adds a new cookie.<br />
+Do not use it like document.cookie + = newCookie;
 </p>
 
-<h3>쿠키를 다루기 위한 사용자 정의 함수</h3>
+<pre class="prettyprint">
+document.cookie = newCookie;
+</pre>
+
+<h3>User-defined functions for handling cookies</h3>
 
 <p>
-아래 createCookie(), readCookie(), deleteCookie() 함수는 각각 쿠키를 굽고 쿠키를 읽고 쿠키를 삭제한다.<br />
-쿠키를 굽는 createCookie() 함수는 <strong>쿠키 이름=쿠키값; 파기 날짜;</strong> 형태의 문자열을 생성한다.<br />
-(이 경우 도메인, 경로, 보안은 디폴트 값이 적용된다)
+The createCookie(), readCookie(), and deleteCookie() functions below each write a cookie, read the cookie, and delete the cookie.<br />
+The createCookie() function returns string of 'Cookie name=Cookie value;Destruction Date' form.<br />
+In this case, domain, path, and security are default values.
 </p>
 
 <pre class="prettyprint">function createCookie(name, value, days) {
@@ -56,18 +59,17 @@ function deleteCookie(name) {
 </pre>
 
 <p>
-사용자 정의 함수를 이용해서 게시판에 적용할 수 있는 예제를 만들었다.<br />
-예제에서 사용자는 게시판 목록의 페이지당 레코드 수를 쿠키에 저장할 수 있다.<br />
-(구글 크롬은 로컬에서 생산한 쿠키를 저장하지 않기에, 로컬 테스트를 하려면 다른 브라우저를 사용하자.<br />
-다음 링크를 방문하면 크롬도 테스트할 수 있다. <a href="http://www.java-school.net/javascript/examples/Test.html">http://www.java-school.net/javascript/examples/Test.html</a>)
+I have created an example that can be applied to a bulletin board using a user-defined function.<br />
+In the example, the user can store "number of records per page" in the cookie.<br />
+(Chrome does not store locally produced cookies, so use a different browser for local testing)
 </p>
 
 <div class="filename">Test.html</div>
 <pre class="prettyprint">&lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
-&lt;title&gt;자바스크립트 쿠키 테스트&lt;/title&gt;
+&lt;title&gt;JavaScript Cookie Test&lt;/title&gt;
 &lt;script&gt;
 window.onload = initPage;
 
@@ -89,7 +91,7 @@ function showCookie() {
     if(numPerPage) {
       div.innerHTML = numPerPage;
     } else {
-      div.innerHTML = '쿠키가 없습니다!';
+      div.innerHTML = 'No Cookies!';
     }
 }
 function delNumPerPageCookie() {
@@ -138,7 +140,7 @@ function deleteCookie(name) {
     &lt;option value="50"&gt;50&lt;/option&gt;
     &lt;option value="100"&gt;100&lt;/option&gt;
   &lt;/select&gt;
-  &lt;input type="button" id="del-numPerPage-btn" value="numPerPage 쿠키 삭제" /&gt;
+  &lt;input type="button" id="del-numPerPage-btn" value="Del numPerPage Cookie" /&gt;
 &lt;/div&gt;
 &lt;div id="show-npp-div"&gt;&lt;/div&gt;
 &lt;/body&gt;
@@ -146,7 +148,7 @@ function deleteCookie(name) {
 </pre>
 
 <p>
-setNumPerPage() 함수는 100일간 유지되는 numPerPage 쿠키를 굽는다.
+The setNumPerPage () function creates the numPerPage cookie, which is maintained for 100 days.
 </p>
 
 <pre class="prettyprint">function setNumPerPage() {
@@ -157,10 +159,10 @@ setNumPerPage() 함수는 100일간 유지되는 numPerPage 쿠키를 굽는다.
 </pre>
 
 <p>
-numPerPage 쿠키가 구워지면 서버 측 코드는 다음처럼 쿠키를 얻을 수 있다.
+When the numPerPage cookie is created, the server side code can get the cookie as follows:
 </p>
 
-<pre class="prettyprint">int numPerPage = 10;// 디폴트 레코드 수
+<pre class="prettyprint">int numPerPage = 10;//default record numbers per page
 Cookie[] cookies = req.getCookies();
 if (cookies != null) {
   for (int i = 0; i &lt; cookies.length; i++) {
@@ -175,9 +177,7 @@ if (cookies != null) {
 
 <span id="refer">References</span>
 <ul id="references">
-	<li><a href="http://en.wikipedia.org/wiki/HTTP_cookie">http://en.wikipedia.org/wiki/HTTP_cookie</a></li>
-	<li><a href="http://ezbuilder.tistory.com/34">http://ezbuilder.tistory.com/34</a></li>
-	<li><a href="http://stackoverflow.com/questions/2144386/javascript-delete-cookie">http://stackoverflow.com/questions/2144386/javascript-delete-cookie</a></li>
+	<li><a href="http://stackoverflow.com/questions/2144386/javascript-delete-cookie">How to delete a cookie?</a></li>
 </ul>
 
 </article>
