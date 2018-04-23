@@ -1209,115 +1209,115 @@
         <put-attribute name="title" value="Spring Security Password Encoder" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="article" value="2015/spring-security-password-encoder" cascade="true" />
+        <put-attribute name="article" value="2015/spring-security-password-encoder_en" cascade="true" />
     </definition>
     <definition name="blog/2016/spring-security-access-denied-handling" extends="app.blog">
         <put-attribute name="title" value="Spring Security Access Denied Handling" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="article" value="2016/spring-security-access-denied-handling" cascade="true" />
+        <put-attribute name="article" value="2016/spring-security-access-denied-handling_en" cascade="true" />
     </definition>
     <definition name="blog/2017/migrating-to-spring-security-4" extends="app.blog">
         <put-attribute name="title" value="Migrating to Spring Security 4" />
         <put-attribute name="keywords" value="spring security" />
         <put-attribute name="description" value="spring security" />
-        <put-attribute name="article" value="2017/migrating-to-spring-security-4" cascade="true" />
+        <put-attribute name="article" value="2017/migrating-to-spring-security-4_en" cascade="true" />
     </definition>
     <definition name="blog/2017/SpringBbs-with-MySql" extends="app.blog">
         <put-attribute name="title" value="SpringBbs with MySql" />
         <put-attribute name="keywords" value="spring mvc" />
         <put-attribute name="description" value="spring mvc, board," />
-        <put-attribute name="article" value="2017/SpringBbs-with-MySql" cascade="true" />
+        <put-attribute name="article" value="2017/SpringBbs-with-MySql_en" cascade="true" />
     </definition>
     <definition name="blog/2017/jetty-maven-plugin" extends="app.blog">
         <put-attribute name="title" value="Jetty Maven Plugin" />
         <put-attribute name="keywords" value="jetty maven plugin" />
         <put-attribute name="description" value="jetty maven plugin" />
-        <put-attribute name="article" value="2017/jetty-maven-plugin" cascade="true" />
+        <put-attribute name="article" value="2017/jetty-maven-plugin_en" cascade="true" />
     </definition>
     <definition name="blog/2017/basic-board" extends="app.blog">
         <put-attribute name="title" value="Basic Board Program" />
         <put-attribute name="keywords" value="Basic Board Program" />
         <put-attribute name="description" value="Basic Board Program" />
-        <put-attribute name="article" value="2017/basic-board" cascade="true" />
+        <put-attribute name="article" value="2017/basic-board_en" cascade="true" />
     </definition>
     <definition name="blog/2017/thread-board" extends="app.blog">
         <put-attribute name="title" value="Thread Board" />
         <put-attribute name="keywords" value="Thread Board" />
         <put-attribute name="description" value="Thread Board" />
-        <put-attribute name="article" value="2017/thread-board" cascade="true" />
+        <put-attribute name="article" value="2017/thread-board_en" cascade="true" />
     </definition>
     <definition name="blog/2017/board-using-oracle-hierarchical-query" extends="app.blog">
         <put-attribute name="title" value="board,oracle hierarchical query" />
         <put-attribute name="keywords" value="board,oracle hierarchical query" />
         <put-attribute name="description" value="board,oracle hierarchical query" />
-        <put-attribute name="article" value="2017/board-using-oracle-hierarchical-query" cascade="true" />
+        <put-attribute name="article" value="2017/board-using-oracle-hierarchical-query_en" cascade="true" />
     </definition>
     <definition name="blog/2017/model1-board" extends="app.blog">
         <put-attribute name="title" value="board,model 1" />
         <put-attribute name="keywords" value="board,model 1" />
         <put-attribute name="description" value="board,model 1" />
-        <put-attribute name="article" value="2017/model1-board" cascade="true" />
+        <put-attribute name="article" value="2017/model1-board_en" cascade="true" />
     </definition>
     <definition name="blog/2017/model2-board" extends="app.blog">
         <put-attribute name="title" value="board,model 2" />
         <put-attribute name="keywords" value="board,model 2" />
         <put-attribute name="description" value="board,model 2" />
-        <put-attribute name="article" value="2017/model2-board" cascade="true" />
+        <put-attribute name="article" value="2017/model2-board_en" cascade="true" />
     </definition>
     <definition name="blog/2017/model2-board-using-DBCP" extends="app.blog">
         <put-attribute name="title" value="board,model 2,DBCP" />
         <put-attribute name="keywords" value="board,model 2,DBCP" />
         <put-attribute name="description" value="board,model 2" />
-        <put-attribute name="article" value="2017/model2-board-using-DBCP" cascade="true" />
+        <put-attribute name="article" value="2017/model2-board-using-DBCP_en" cascade="true" />
     </definition>
     <definition name="blog/2017/REST-example" extends="app.blog">
         <put-attribute name="title" value="REST" />
         <put-attribute name="keywords" value="REST" />
         <put-attribute name="description" value="REST" />
-        <put-attribute name="article" value="2017/REST-example" cascade="true" />
+        <put-attribute name="article" value="2017/REST-example_en" cascade="true" />
     </definition>
     <definition name="blog/2017/model2mysqlboard-using-DBCP" extends="app.blog">
         <put-attribute name="title" value="Model 2 Board on MySql using DBCP" />
         <put-attribute name="keywords" value="model 2" />
         <put-attribute name="description" value="model 2" />
-        <put-attribute name="article" value="2017/model2mysqlboard-using-DBCP" cascade="true" />
+        <put-attribute name="article" value="2017/model2mysqlboard-using-DBCP_en" cascade="true" />
     </definition>
     <definition name="blog/2017/spring-mvc-ajax-example" extends="app.blog">
         <put-attribute name="title" value="Ajax Example on Spring MVC" />
         <put-attribute name="keywords" value="ajax,spring mvc" />
         <put-attribute name="description" value="simple ajax example" />
-        <put-attribute name="article" value="2017/spring-mvc-ajax-example" cascade="true" />
+        <put-attribute name="article" value="2017/spring-mvc-ajax-example_en" cascade="true" />
     </definition>
     <definition name="blog/2017/i18n" extends="app.blog">
         <put-attribute name="title" value="i18n" />
         <put-attribute name="keywords" value="i18n" />
         <put-attribute name="description" value="simple i18n example" />
-        <put-attribute name="article" value="2017/i18n" cascade="true" />
+        <put-attribute name="article" value="2017/i18n_en" cascade="true" />
     </definition>
     <definition name="blog/2017/spring-mvc-apache-tiles" extends="app.blog">
         <put-attribute name="title" value="Apache Tiles on Spring MVC" />
         <put-attribute name="keywords" value="apache tiles,spring mvc" />
         <put-attribute name="description" value="simple apache tiles example" />
-        <put-attribute name="article" value="2017/spring-mvc-apache-tiles" cascade="true" />
+        <put-attribute name="article" value="2017/spring-mvc-apache-tiles_en" cascade="true" />
     </definition>
     <definition name="blog/2017/Setting-development-environment-in-Ubuntu" extends="app.blog">
         <put-attribute name="title" value="Setting development environment in Ubuntu" />
         <put-attribute name="keywords" value="ubuntu,mysql" />
         <put-attribute name="description" value="ubuntu" />
-        <put-attribute name="article" value="2017/Setting-development-environment-in-Ubuntu" cascade="true" />
+        <put-attribute name="article" value="2017/Setting-development-environment-in-Ubuntu_en" cascade="true" />
     </definition>
     <definition name="blog/2017/downloadController" extends="app.blog">
         <put-attribute name="title" value="DownloadController" />
         <put-attribute name="keywords" value="DownloadController" />
         <put-attribute name="description" value="DownloadController Example" />
-        <put-attribute name="article" value="2017/downloadController" cascade="true" />
+        <put-attribute name="article" value="2017/downloadController_en" cascade="true" />
     </definition>
     <definition name="blog/2017/ajax-fileupload" extends="app.blog">
         <put-attribute name="title" value="Ajax FileUpload" />
         <put-attribute name="keywords" value="ajax,fileupload" />
         <put-attribute name="description" value="Fileupload using Ajax" />
-        <put-attribute name="article" value="2017/ajax-fileupload" cascade="true" />
+        <put-attribute name="article" value="2017/ajax-fileupload_en" cascade="true" />
     </definition>	
     <definition name="blog/2018/ajax-like" extends="app.blog">
         <put-attribute name="title" value="Ajax Like" />

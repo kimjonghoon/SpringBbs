@@ -1,17 +1,11 @@
 <article>
 
-<h1>구글 앱 엔진에서 스프링 최적화</h1>
+<h1>Spring Optimization in Google Cloud</h1>
 
 <p>
-구글 클라우드에서 애플리케이션 초기화 시간이 길어지면 500 에러가 발생한다.
-</p>
-
-<p>
-스프링의 컴포넌트 스캔과 오토와이어드는 초기화 시간을 늘리는 주요 원인이다.
-</p>
-
-<p>
-구글 문서에서 권고하는 대로 컴포넌트 스캔과 오토 와이어드 대신 빈을 일일이 정의하는 것으로 수정해 보자.
+500 errors occur when application initialization time is long in Google cloud.<br />
+Spring component scans and autowired are the main causes of increased initialization time.<br />
+Let's modify the configuration file by defining beans one by one instead of component scanning and Otouwide as recommended in the official document.
 </p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
@@ -63,14 +57,13 @@
 </pre>
 
 <p>
-component-scan 대신 추가한 context:annotation-config는 스프링의 빈 컨테이너가 빈을 등록할 때 빈에 적용된 애너테이션이 그 기능을 하도록 한다.
-예를 들어, 빈에 @Controller 애너테이션이 적용되었다면, 해당 빈을 컨트롤러로 등록한다.
-context:annotation-config도 mvc:annotation-driven 설정이 필요하다.
+The annotation-config added in place of component-scan allows an annotation declared in a bean to function when a Spring container registers a bean.<br />
+For example, if an @Controller annotation is declared in a bean, Spring registers the bean as a controller.<br />
+context:annotation-config also needs mvc:annotation-driven configuration.
 </p>
 
 <p>
-다음으로 오토 와이어드 기능을 제거한다.
-GuestbookController에 @Autowired 애너테이션을 제거하고 세터를 추가한다.
+Remove the @Autowired annotation from the GuestbookController and add the setter as follows.
 </p>
 
 <pre class="prettyprint">
