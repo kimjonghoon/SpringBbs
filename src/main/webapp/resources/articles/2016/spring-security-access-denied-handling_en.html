@@ -111,15 +111,17 @@ For reference, here is the error page setting in web.xml.
 </pre>
 
 <p>
-Build(mvn clean compile war:inplace), rerun Tomcat, and visit http://localhost:8080/admin.<br />
-If the logged user has only the ROLE_USER privilege, /WEB-INF/views/403.jsp will be displayed to him.
+Run <b>mvn clean compile war:inplace</b>, rerun Tomcat, and visit http://localhost:8080/admin.<br />
+If a user has only the ROLE_USER privilege, /WEB-INF/views/403.jsp will be displayed to him.
 </p>
 
 <h3>Implementing an AccessDeniedHandler</h3>
 
 <p>
-접근 권한이 없어 에러 페이지로 이동하는 상황에서 수행해야 할 비즈니스 로직이 있다면 org.springframework.security.web.access.AccessDeniedHandler를 구현해야 한다.
-security.xml 파일을 다음과 같이 수정한다.
+If you do not have the privilege required by the requested page, you will see an error page.<br />
+If you have business logic that needs to be done before you view the error page, you must implement org.springframework.security.web.access.AccessDeniedHandler.<br />
+Modify the security.xml file as follows:
+
 </p>
 
 <h6 class="src">security.xml</h6>
@@ -139,7 +141,7 @@ Add the following to security.xml.
 </pre>
 
 <p>
-security.xml에 추가한 설정대로 AccessDeniedHandler를 구현하는 MyAccessDeniedHandler를 생성한다.<br />
+Create a MyAccessDeniedHandler that implements AccessDeniedHandler as you added it to security.xml.
 </p>
 
 <h6 class="src">MyAccessDeniedHandler.java</h6>
@@ -166,7 +168,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse resp, AccessDeniedException e)
 			throws IOException, ServletException {
-		//TODO 수행할 비즈니스 로직
+		//TODO: business logic
 		req.getRequestDispatcher(errorPage).forward(req, resp);
 	}
 
@@ -174,28 +176,27 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 </pre>
 
 <p>
-web.xml 설정으로 보이는 에러 페이지는 스프링 시큐리티 태그가 작동하지 않는다.
-이유는 스프링 필터 체인에서 뷰 레벨 보안이 적용하기 위한 필터가 작동하기 전에 에러 페이지로 이동하기 때문이다.
+The error page in web.xml does not work with the Spring Security tag.<br />
+Because the request is forwarded to these error pages before the view-level security filter works.
 </p>
 
-<h2>메서드 보안</h2>
+<h2>Method Security</h2>
 
 <p>
-스프링 MVC에서 익셉션과 에러 페이지를 매핑하는 방법 중 SimpleMappingExceptionResolver를 사용하는 것이 가장 간단하다.
-아래는 org.springframework.security.access.AccessDeniedException 익셉션이 발생할 때 error-403으로 매핑한다.
-그 외 다른 익셉션이 발생하면 error로 매핑한다.
-매핑은 우리가 설정한 뷰 리졸버에 의해 각각 /WEB-INF/views/error-403.jsp와 /WEB-INF/views/error.jsp로 해석된다.
-컨트롤러가 이들을 매핑할 필요는 없다.
+The simplest way to map an exception to an error page in Spring MVC is to use the SimpleMappingExceptionResolver.<br />
+The following configuration maps to error-403 when the org.springframework.security.access.AccessDeniedException exception occurs, and to error when any other exception occurs.<br />
+The view resolver interprets error-403 and error as /WEB-INF/views/error-403.jsp and /WEB-INF/views/error.jsp respectively.<br />
+Here's what the controller does not have to do.
 </p>
 
 <h6 class="src">spring-bbs-servlet.xml</h6>
 <pre class="prettyprint">
 &lt;bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"&gt;
-	&lt;property name="defaultErrorView" value="error" /&gt;
+	&lt;property name="defaultErrorView" value="<b>error</b>" /&gt;
 	&lt;property name="exceptionMappings"&gt;
 		&lt;props&gt;
 			&lt;prop key="AccessDeniedException"&gt;
-			error-403
+			<b>error-403</b>
 			&lt;/prop&gt;
 		&lt;/props&gt;
 	&lt;/property&gt;
@@ -203,7 +204,7 @@ web.xml 설정으로 보이는 에러 페이지는 스프링 시큐리티 태그
 </pre>
 
 <p>
-im@gmail.org/1111로 로그인하고 탈퇴메뉴에서 hong@gmail.org와 1111를 입력하여 탈퇴를 시도하면
+After logging in as janedoe@gmail.org/1111, try to unsubscribe at johndoe@gmail.org/1111 from the Bye menu.
 </p>
 
 <h6 class="src">UserService.java</h6>
@@ -213,9 +214,8 @@ im@gmail.org/1111로 로그인하고 탈퇴메뉴에서 hong@gmail.org와 1111�
 </pre>
 
 <p>
-위의 강조된 부분이 작동하여 org.springframework.security.access.AccessDeniedException 익셉션이 발생하여 결국 /WEB-INF/views/error-403.jsp을 보게 된다.
-
-다시 탈퇴메뉴에서 이번에는 im@gmail.org와 비밀번호를 틀리게 입력하면 
+The highlighted section above will work and an org.springframework.security.access.AccessDeniedException exception will occur and you will see /WEB-INF/views/error-403.jsp.<br />
+On the Bye page, enter the wrong password for janedoe@gmail.org. 
 </p>
 
 <h6 class="src">UserServiceImpl.java</h6>
@@ -226,7 +226,7 @@ public void bye(User user) {
 	boolean check = this.bcryptPasswordEncoder.matches(user.getPasswd(), encodedPassword);
 	
 	if (check == false) {
-		<strong>throw new AccessDeniedException("비밀번호가 틀립니다.");</strong>
+		<strong>throw new AccessDeniedException("Wrong password!");</strong>
 	}
 	
 	userMapper.deleteAuthority(user.getEmail());
@@ -235,15 +235,14 @@ public void bye(User user) {
 </pre>
 
 <p>
-위의 강조된 부분이 작동하여 org.springframework.security.access.AccessDeniedException 익셉션이 발생하여 결국 /WEB-INF/views/error-403.jsp을 보게 된다.
+The highlighted section above will work and an org.springframework.security.access.AccessDeniedException exception will occur and you will see /WEB-INF/views/error-403.jsp.
 </p>
 
-<span id="related-articles">관련 글</span>
+<span id="related-articles">Related Articles</span>
 <ul id="related-articles-ul">
-    <li><a href="/spring/spring-security-config">스프링 시큐리티 웹 요청 보안</a></li>
-    <li><a href="/spring/method-security">스프링 시큐리티 메서드 보안</a></li>
-    <li><a href="/spring/security-at-view-layer">스프링 시큐리티 뷰 레벨 보안</a></li>
-    <li><a href="/blog">블로그 목록</a></li>
+    <li><a href="/spring/spring-security-config">Filter Security</a></li>
+    <li><a href="/spring/method-security">Method Security</a></li>
+    <li><a href="/spring/security-at-view-layer">View Layer Security</a></li>
 </ul>
 
 </article>

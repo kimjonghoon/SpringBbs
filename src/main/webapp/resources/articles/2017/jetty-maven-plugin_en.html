@@ -1,0 +1,170 @@
+<article>
+<div class="last-modified">Last Modified 2017.8.30</div>
+	
+<h1>Jetty Maven Plugin</h1>
+
+<p>
+With the Jetty Maven Plugin, you can test web apps without installing a server. 
+</p>
+
+<p>
+Create a webapp archetype.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+mvn archetype:generate -Dfilter=maven-archetype-webapp
+</pre>
+
+<p>
+Import the Maven project into Eclipse by selecting Import - Import - Existing Maven Project.
+</p>
+
+<p>
+Modify web.xml as follows.
+</p>
+
+<strong class="filename">web.xml</strong>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;
+&lt;web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  metadata-complete="true"&gt;
+  
+&lt;/web-app&gt;
+</pre>
+
+<p>
+Modify pom.xml as follows.
+</p>
+
+<strong class="filename">pom.xml</strong>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;groupId&gt;net.java_school&lt;/groupId&gt;
+	&lt;artifactId&gt;examples&lt;/artifactId&gt;
+	&lt;packaging&gt;war&lt;/packaging&gt;
+	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+	&lt;name&gt;examples&lt;/name&gt;
+	&lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+	&lt;properties&gt;
+		&lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
+	&lt;/properties&gt;
+
+	&lt;dependencies&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;junit&lt;/groupId&gt;
+			&lt;artifactId&gt;junit&lt;/artifactId&gt;
+			&lt;version&gt;3.8.1&lt;/version&gt;
+			&lt;scope&gt;test&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;!-- Servlet JSP JSTL --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+			&lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+			&lt;version&gt;3.1.0&lt;/version&gt;
+			&lt;scope&gt;provided&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+			&lt;artifactId&gt;javax.servlet.jsp-api&lt;/artifactId&gt;
+			&lt;version&gt;2.3.1&lt;/version&gt;
+			&lt;scope&gt;provided&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;jstl&lt;/groupId&gt;
+			&lt;artifactId&gt;jstl&lt;/artifactId&gt;
+			&lt;version&gt;1.2&lt;/version&gt;
+		&lt;/dependency&gt;
+	&lt;/dependencies&gt;
+
+	&lt;build&gt;
+		&lt;finalName&gt;examples&lt;/finalName&gt;
+		&lt;pluginManagement&gt;
+			&lt;plugins&gt;
+				&lt;plugin&gt;
+					&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+					&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+					&lt;version&gt;3.6.2&lt;/version&gt;
+					&lt;configuration&gt;
+						&lt;source&gt;${jdk.version}&lt;/source&gt;
+						&lt;target&gt;${jdk.version}&lt;/target&gt;
+						&lt;encoding&gt;UTF-8&lt;/encoding&gt;
+					&lt;/configuration&gt;
+				&lt;/plugin&gt;
+				<strong>&lt;plugin&gt;
+					&lt;groupId&gt;org.eclipse.jetty&lt;/groupId&gt;
+					&lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
+					&lt;version&gt;9.4.6.v20170531&lt;/version&gt;
+				&lt;/plugin&gt;</strong>
+			&lt;/plugins&gt;
+		&lt;/pluginManagement&gt;
+	&lt;/build&gt;
+
+&lt;/project&gt;
+</pre>
+
+<p>
+Select the latest jetty-maven-plugin distribution from <a href="https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin">https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin</a> and add it to the plug-in instead of the dependency. (See the highlighted section above)
+</p>
+
+
+<p>
+Run jetty server as shown below.
+</p>
+
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+mvn jetty:run
+</pre>
+
+<p>
+Visit http://localhost:8080.
+</p>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="http://www.eclipse.org/jetty/documentation/9.3.x/jetty-maven-plugin.html">http://www.eclipse.org/jetty/documentation/9.3.x/jetty-maven-plugin.html</a></li>
+	<li><a href="https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin">https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin</a></li>
+	<li><a href="https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin/9.4.6.v20170531">https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin/9.4.6.v20170531</a></li>
+	<li><a href="https://maven.apache.org/plugins/maven-compiler-plugin/usage.html">https://maven.apache.org/plugins/maven-compiler-plugin/usage.html</a></li>
+	<li><a href="https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html">https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html</a></li>
+</ul>
+ 
+<span id="related-articles">Related Articles</span>
+<ul id="related-articles-ul">
+	<li><a href="/blog/2017/jetty-maven-plugin">Jetty Maven Plugin</a></li>
+	<li><a href="/blog/2017/basic-board">Basic bulletin board</a></li>
+	<li><a href="/blog/2017/thread-board">Hierarchical bulletin board</a></li>
+	<li><a href="/blog/2017/board-using-oracle-hierarchical-query">Hierarchical bulletin board using Oracle Hierarchical query</a></li>
+	<li><a href="/blog/2017/model1-board">Model 1 bulletin board</a></li>
+	<li><a href="/blog/2017/model2-board">Model 2 bulletin board</a></li>
+	<li><a href="/blog/2017/model2-board-using-DBCP">Model 2 bulletin board for Oracle using DBCP</a></li>
+	<li><a href="/blog/2017/model2mysqlboard-using-DBCP">Model 2 bulletin board for MySQL using DBCP</a></li>
+	<li><a href="/blog/2017/REST-example">REST example</a></li>
+</ul>
+
+</article>

@@ -1,17 +1,16 @@
 <article>
 <div class="last-modified">Last Modified 2017.8.31</div>
 	
-<h1>Basic Board Program</h1>
+<h1>Basic bulletin board</h1>
 
 <p>
-<a href="/blog/examples/board.zip">기본 기능을 가진 게시판 예제 다운로드</a><br />
-예제는 게시판 기본 기능을 다룬다.<br />
-(설명은 <a href="/jsp/BBS-Study">게시판 프로그램 이해하기</a> 참조) 
+<a href="/blog/examples/board.zip">Download example</a><br />
+This example covers the basics of the bulletin board.<br />
+(For more information, See <a href="/jsp/BBS-Study">Understaing Bulletin Board Program</a>.) 
 </p>
 
 <p>
-SCOTT 계정에 다음 테이블과 시퀀스, 테스트 레코드를 생성한다.
-('게시판 프로그램 이해하기'에서의 테이블과 시퀀스 이름이 다르다.) 
+Create article table and seq_article sequence in the SCOTT account and insert the test record as shown below. 
 </p>
 
 <pre class="prettyprint">
@@ -131,34 +130,34 @@ commit;
 </pre>
 
 <p>
-<a href="/spring/di#Oralce-JDBC-Driver-Dependency">오라클 JDBC 드라이버를 로컬 저장소에 설치하기</a>를 참조하여 오라클 JDBC 드라이버를 로컬 저장소에 등록시킨다.
+Install the Oracle JDBC driver in local repository.<br />
+See <a href="/spring/di#Oralce-JDBC-Driver-Dependency">Installing the Oracle JDBC driver in local repository</a>. 
 </p>
 
-
-<h3>테스트</h3>
+<h3>Test</h3>
 
 <p>
-압축을 풀고 루트 디렉터리로 이동하여 mvn jetty:run 을 실행한 후, http://localhost:8080을 방문한다.
+Unzip example file.<br />
+Move to root directory, and run <b>mvn jetty:run</b>.<br />
+Visit http://localhost:8080.
 </p>
 
-<span id="refer">참고</span>
+<span id="refer">References</span>
 <ul id="references">
-	<li><a href="/jsp/BBS-Study">게시판 프로그램 이해하기</a></li>
-	<li><a href="/spring/di#Oralce-JDBC-Driver-Dependency">오라클 JDBC 드라이버를 로컬 저장소에 설치하기</a></li>
+	<li><a href="/jsp/BBS-Study">Understanding bulletin board program</a></li>
+	<li><a href="/spring/di#Oralce-JDBC-Driver-Dependency">Install the oracle JDBC driver in local repository</a></li>
 </ul>
 
-<span id="related-articles">관련 글</span>
+<span id="related-articles">Related Articles</span>
 <ul id="related-articles-ul">
 	<li><a href="/blog/2017/jetty-maven-plugin">Jetty Maven Plugin</a></li>
-	<li><a href="/blog/2017/basic-board">게시판 기본 기능</a></li>
-	<li><a href="/blog/2017/thread-board">계층형 게시판</a></li>
-	<li><a href="/blog/2017/board-using-oracle-hierarchical-query">오라클 계층형 쿼리를 사용하는 계층형 게시판</a></li>
-	<li><a href="/blog/2017/model1-board">모델 1 게시판</a></li>
-	<li><a href="/blog/2017/model2-board">모델 2 게시판</a></li>
-	<li><a href="/blog/2017/model2-board-using-DBCP">DBCP를 사용하는 오라클 용 모델 2 게시판</a></li>
-	<li><a href="/blog/2017/model2mysqlboard-using-DBCP">DBCP를 사용하는 MySQL 용 모델 2 게시판</a></li>
-	<li><a href="/blog/2017/REST-example">REST 예제</a></li>
-	<li><a href="/blog">블로그 목록</a></li>
+	<li><a href="/blog/2017/basic-board">Basic bulletin board</a></li>
+	<li><a href="/blog/2017/thread-board">Hierarchical bulletin board</a></li>
+	<li><a href="/blog/2017/board-using-oracle-hierarchical-query">Hierarchical bulletin board using oracle hierarchical query</a></li>
+	<li><a href="/blog/2017/model1-board">Model 1 bulletin board</a></li>
+	<li><a href="/blog/2017/model2-board">Model 2 bulletin board</a></li>
+	<li><a href="/blog/2017/model2-board-using-DBCP">Model 2 bulletin board for Oracle using DBCP</a></li>
+	<li><a href="/blog/2017/model2mysqlboard-using-DBCP">Model 2 bulletin board for MySQL using DBCP</a></li>
 </ul>
 
 </article>

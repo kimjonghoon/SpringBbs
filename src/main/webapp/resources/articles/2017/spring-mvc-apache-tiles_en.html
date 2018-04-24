@@ -1,0 +1,187 @@
+<article>
+<div class="last-modified">Last Modified 2017.10.28</div>
+
+<h1>Using Apache Tiles on Spring MVC</h1>
+
+<p>
+<a href="/blog/examples/tilesOnSpringMVC.zip">Download example</a><br />
+Unzip example and move to root directory and run mvn jetty:run and visit http://localhost:8080.
+</p>
+
+<h3>Add apache tiles dependency to pom.xml</h3>
+
+<h6 class="src">pom.xml</h6>
+<pre class="prettyprint">
+&lt;!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.tiles&lt;/groupId&gt;
+    &lt;artifactId&gt;tiles-extras&lt;/artifactId&gt;
+    &lt;version&gt;3.0.7&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+<h3>Create template JSP</h3>
+
+<h6 class="src">/WEB-INF/views/template/template.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+&lt;%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="Keywords" content="&lt;tiles:insertAttribute name="keywords" /&gt;" /&gt;
+&lt;meta name="Description" content="&lt;tiles:insertAttribute name="description" /&gt;" /&gt;
+&lt;title&gt;&lt;tiles:insertAttribute name="title" /&gt;&lt;/title&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
+&lt;script type="text/javascript" src="/js/jquery-3.0.0.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;div id="wrap"&gt;
+
+		&lt;div id="header"&gt;
+			&lt;tiles:insertAttribute name="header" /&gt;
+		&lt;/div&gt;
+
+		&lt;div id="main-menu"&gt;
+			&lt;tiles:insertAttribute name="main-menu" /&gt;
+		&lt;/div&gt;
+
+		&lt;div id="container"&gt;
+			&lt;div id="content"&gt;
+				&lt;tiles:insertAttribute name="content" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+
+		&lt;div id="sidebar"&gt;
+			&lt;tiles:insertAttribute name="sidebar" /&gt;
+		&lt;/div&gt;
+
+		&lt;div id="extra"&gt;
+			&lt;tiles:insertAttribute name="extra" /&gt;
+		&lt;/div&gt;
+
+		&lt;div id="footer"&gt;
+			&lt;tiles:insertAttribute name="footer" /&gt;
+		&lt;/div&gt;
+
+	&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>Create tiles definition file</h3>
+
+<h6 class="src">/WEB-INF/tile-defs/template.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"&gt;
+&lt;tiles-definitions&gt;
+	&lt;definition name="defaultTemplate" template="/WEB-INF/views/template/template.jsp"&gt;
+		&lt;put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" /&gt;
+		&lt;put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" /&gt;
+		&lt;put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" /&gt;
+		&lt;put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /&gt;
+	&lt;/definition&gt;
+	&lt;!-- Homepage --&gt;
+	&lt;definition name="index" extends="defaultTemplate"&gt;
+		&lt;put-attribute name="title" value="Homepage" /&gt;
+		&lt;put-attribute name="keywords" value="homepage" /&gt;
+		&lt;put-attribute name="description" value="Welcome to Java-School" /&gt;
+		&lt;put-attribute name="content" value="/WEB-INF/views/index.jsp" /&gt;
+		&lt;put-attribute name="sidebar" value="/WEB-INF/views/index-sub.jsp" /&gt;
+	&lt;/definition&gt;
+&lt;/tiles-definitions&gt;
+</pre>
+
+<h3>Create tiles definition file for korean</h3>
+
+<h6 class="src">/WEB-INF/tile-defs/template_ko.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"&gt;
+&lt;tiles-definitions&gt;
+	&lt;definition name="defaultTemplate" template="/WEB-INF/views/template/template.jsp"&gt;
+		&lt;put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" /&gt;
+		&lt;put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" /&gt;
+		&lt;put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" /&gt;
+		&lt;put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /&gt;
+	&lt;/definition&gt;
+	&lt;!-- Homepage --&gt;
+	&lt;definition name="index" extends="defaultTemplate"&gt;
+		&lt;put-attribute name="title" value="홈페이지" /&gt;
+		&lt;put-attribute name="keywords" value="홈페이지" /&gt;
+		&lt;put-attribute name="description" value="자바스쿨에 오신 걸 환영합니다." /&gt;
+		&lt;put-attribute name="content" value="/WEB-INF/views/index_ko.jsp" /&gt;
+		&lt;put-attribute name="sidebar" value="/WEB-INF/views/index-menu_ko.jsp" /&gt;
+	&lt;/definition&gt;
+&lt;/tiles-definitions&gt;
+</pre>
+
+<h3>Tiles View Resolver</h3>
+
+<p>
+Remove the existing view resolver and tiles view resolver to Spring Configuration file.
+</p>
+<pre class="prettyprint">
+&lt;!-- ViewResolver --&gt;
+&lt;bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"&gt;
+	&lt;property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"&gt;
+	&lt;property name="definitions"&gt;
+		&lt;list&gt;
+			&lt;value&gt;/WEB-INF/tile-defs/template.xml&lt;/value&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+</pre>
+
+<h3>Test</h3>
+
+<h6 class="src">/index.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+
+&lt;h1&gt;Home&lt;/h1&gt;
+</pre>
+
+<h6 class="src">/index_ko.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+
+&lt;h1&gt;홈&lt;/h1&gt;
+</pre>
+
+<h6 class="src">index-sub.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+
+&lt;h1&gt;Home&lt;/h1&gt;
+</pre>
+
+<h6 class="src">index-menu_ko.jsp</h6>
+<pre class="prettyprint">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%&gt;
+
+&lt;h1&gt;홈&lt;/h1&gt;
+</pre>
+
+<span id="related-articles">Related articles</span>
+<ul id="related-articles-ul">
+	<li><a href="/blog/2017/i18n">i18n</a></li>
+</ul>
+
+</article>

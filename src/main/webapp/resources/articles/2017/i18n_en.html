@@ -1,0 +1,69 @@
+<article>
+<div class="last-modified">Last Modified 2017.10.27</div>
+
+<h1>i18n</h1>
+
+<p>
+<a href="/blog/examples/i18nOnSpringMVC.zip">Download example</a><br />
+Unzip example and move to root directory and run mvn jetty:run and visit http://localhost:8080.
+</p>
+
+<h3>MessageSource</h3>
+
+<p>
+MessageSource is a component that looks at the locale and determines the message.<br />
+ResourceBundleMessageSource and ReloadableResourceBundleMessageSource are implementations.
+</p>
+
+<p>
+ResourceBundleMessageSource can only access resources in the classpath.<br />
+ReloadableResourceBundleMessageSource can access anywhere the resource is on the file system.
+</p>
+
+<p>
+Add the following to spring configuration file.
+</p>
+
+<pre class="prettyprint">
+&lt;bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"&gt;
+	&lt;property name="basename" value="WEB-INF/classes/messages" /&gt;
+	&lt;property name="defaultEncoding" value="UTF-8" /&gt;
+&lt;/bean&gt;
+</pre>
+
+<p>
+Without <b>&lt;property name="defaultEncoding" value="UTF-8" /&gt;</b>, Non english characters are broken.
+</p>
+
+<h3>LocalResolver</h3>
+
+<p>
+LocaleResolver is a component that determines the locale.<br />
+If you omit LocaleResolver, AcceptHeaderLocaleResolver is selected by default.<br />
+AcceptHeaderLocaleResolver uses the locale set in the "accept-language" of the request header.<br />
+The operating system's locale is set in the accept-language header.<br />
+In this case, the user can not change the locale.<br />
+If you want the user to be able to change the locale, you must select SessionLocaleResolver or CookieLocaleResolver as LocaleResolver and you need a LocaleChangeInterceptor.
+</p>
+
+<p>
+Add the SessionLocaleResolver and LocalChangeInterceptor settings to the Spring configuration file.
+</p>
+
+<pre class="prettyprint">
+&lt;bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"&gt;
+    &lt;property name="defaultLocale" value="en" /&gt;
+&lt;/bean&gt;
+&lt;mvc:interceptors&gt;
+	&lt;bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"&gt;
+		&lt;property name="paramName" value="lang" /&gt;
+	&lt;/bean&gt;
+&lt;/mvc:interceptors&gt;
+</pre>
+
+<span id="related-articles">Related articles</span>
+<ul id="related-articles-ul">
+	<li><a href="/blog/2017/spring-mvc-apache-tiles">Apache Tiles</a></li>
+</ul>
+
+</article>
