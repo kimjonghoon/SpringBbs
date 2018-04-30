@@ -56,12 +56,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.9.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
-<!--         <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <version>2.2.2</version>
-        </dependency> -->
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
        <dependency>
             <groupId>mysql</groupId>

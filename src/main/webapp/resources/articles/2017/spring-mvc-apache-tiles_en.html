@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2017.10.28</div>
+<div class="last-modified">Last Modified 2018.04.29</div>
 
 <h1>Using Apache Tiles on Spring MVC</h1>
 
@@ -16,19 +16,19 @@ Unzip example and move to root directory and run mvn jetty:run and visit http://
 &lt;dependency&gt;
     &lt;groupId&gt;org.apache.tiles&lt;/groupId&gt;
     &lt;artifactId&gt;tiles-extras&lt;/artifactId&gt;
-    &lt;version&gt;3.0.7&lt;/version&gt;
+    &lt;version&gt;3.0.8&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
-<h3>Create template JSP</h3>
+<h3>Create Layout JSP</h3>
 
-<h6 class="src">/WEB-INF/views/template/template.jsp</h6>
+<h6 class="src">/WEB-INF/views/layouts/main-layout.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
 &lt;%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang="&lt;tiles:insertAttribute name="lang" defaultValue="en" defaultValueType="string" /&gt;"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="&lt;tiles:insertAttribute name="keywords" /&gt;" /&gt;
@@ -75,21 +75,21 @@ Unzip example and move to root directory and run mvn jetty:run and visit http://
 
 <h3>Create tiles definition file</h3>
 
-<h6 class="src">/WEB-INF/tile-defs/template.xml</h6>
+<h6 class="src">/WEB-INF/tiles.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE tiles-definitions PUBLIC  
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"&gt;
 &lt;tiles-definitions&gt;
-	&lt;definition name="defaultTemplate" template="/WEB-INF/views/template/template.jsp"&gt;
+	&lt;definition name="app.default" template="/WEB-INF/views/layouts/main-layout.jsp"&gt;
 		&lt;put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" /&gt;
 		&lt;put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" /&gt;
 		&lt;put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" /&gt;
 		&lt;put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /&gt;
 	&lt;/definition&gt;
 	&lt;!-- Homepage --&gt;
-	&lt;definition name="index" extends="defaultTemplate"&gt;
+	&lt;definition name="index" extends="app.default"&gt;
 		&lt;put-attribute name="title" value="Homepage" /&gt;
 		&lt;put-attribute name="keywords" value="homepage" /&gt;
 		&lt;put-attribute name="description" value="Welcome to Java-School" /&gt;
@@ -101,26 +101,27 @@ Unzip example and move to root directory and run mvn jetty:run and visit http://
 
 <h3>Create tiles definition file for korean</h3>
 
-<h6 class="src">/WEB-INF/tile-defs/template_ko.xml</h6>
+<h6 class="src">/WEB-INF/tiles_ko.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE tiles-definitions PUBLIC  
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"&gt;
 &lt;tiles-definitions&gt;
-	&lt;definition name="defaultTemplate" template="/WEB-INF/views/template/template.jsp"&gt;
+	&lt;definition name="app.default" template="/WEB-INF/views/layouts/main-layout.jsp"&gt;
+		&lt;put-attribute name="lang" value="ko" type="string" /&gt;
 		&lt;put-attribute name="header" value="/WEB-INF/views/inc/header.jsp" /&gt;
 		&lt;put-attribute name="main-menu" value="/WEB-INF/views/inc/main-menu.jsp" /&gt;
 		&lt;put-attribute name="extra" value="/WEB-INF/views/inc/extra.jsp" /&gt;
 		&lt;put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /&gt;
 	&lt;/definition&gt;
 	&lt;!-- Homepage --&gt;
-	&lt;definition name="index" extends="defaultTemplate"&gt;
+	&lt;definition name="index" extends="app.default"&gt;
 		&lt;put-attribute name="title" value="홈페이지" /&gt;
 		&lt;put-attribute name="keywords" value="홈페이지" /&gt;
 		&lt;put-attribute name="description" value="자바스쿨에 오신 걸 환영합니다." /&gt;
 		&lt;put-attribute name="content" value="/WEB-INF/views/index_ko.jsp" /&gt;
-		&lt;put-attribute name="sidebar" value="/WEB-INF/views/index-menu_ko.jsp" /&gt;
+		&lt;put-attribute name="sidebar" value="/WEB-INF/views/index-sub_ko.jsp" /&gt;
 	&lt;/definition&gt;
 &lt;/tiles-definitions&gt;
 </pre>
@@ -139,7 +140,7 @@ Remove the existing view resolver and tiles view resolver to Spring Configuratio
 &lt;bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"&gt;
 	&lt;property name="definitions"&gt;
 		&lt;list&gt;
-			&lt;value&gt;/WEB-INF/tile-defs/template.xml&lt;/value&gt;
+			&lt;value&gt;/WEB-INF/tiles.xml&lt;/value&gt;
 		&lt;/list&gt;
 	&lt;/property&gt;
 &lt;/bean&gt;
@@ -163,7 +164,7 @@ Remove the existing view resolver and tiles view resolver to Spring Configuratio
 &lt;h1&gt;홈&lt;/h1&gt;
 </pre>
 
-<h6 class="src">index-sub.jsp</h6>
+<h6 class="src">/index-sub.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
@@ -171,7 +172,7 @@ Remove the existing view resolver and tiles view resolver to Spring Configuratio
 &lt;h1&gt;Home&lt;/h1&gt;
 </pre>
 
-<h6 class="src">index-menu_ko.jsp</h6>
+<h6 class="src">/index-sub_ko.jsp</h6>
 <pre class="prettyprint">
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%&gt;
