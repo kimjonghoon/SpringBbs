@@ -189,11 +189,14 @@ Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the fol
 
 ## How to run
 
+### 1. (Current Settings)
+Edit ROOT.xml.(Context file of Tomcat's root application)
 $ **mvn compile war:inplace**
 Start Tomcat and visit http://localhost:8080
-(If dependencies change, run **mvn clean** first)
+(If dependencies change, run $ **mvn clean** first)
 
-if you want use jetty plugin, edit pom.xml and run **mvn jetty:run**. 
+### 2.
+if you want use jetty plugin, edit pom.xml and run $ **mvn jetty:run**. 
 
 ## Oracle -> MySQL
 
