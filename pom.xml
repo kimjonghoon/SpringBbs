@@ -11,7 +11,7 @@
     <properties>
         <spring.version>5.0.5.RELEASE</spring.version>
         <spring.security.version>5.0.4.RELEASE</spring.security.version>
-        <jdk.version>1.8</jdk.version>
+        <jdk.version>1.9</jdk.version>
     </properties>
     <dependencies>
         <dependency>
@@ -154,7 +154,7 @@
             <version>1.2</version>
         </dependency>
     </dependencies>
-
+<!-- 
     <build>
         <finalName>spring-bbs</finalName>
         <pluginManagement>
@@ -177,5 +177,37 @@
             </plugins>
         </pluginManagement>
     </build>
-
+-->    
+	<build>
+		<finalName>spring-bbs</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+						<compilerArgument></compilerArgument>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>src/main/webapp/WEB-INF/classes</directory>
+							</fileset>
+							<fileset>
+								<directory>src/main/webapp/WEB-INF/lib</directory>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+    
 </project>

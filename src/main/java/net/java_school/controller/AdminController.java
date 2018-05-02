@@ -43,23 +43,23 @@ public class AdminController extends Paginator {
         HashMap<String, String> map = new HashMap<>();
         
 
-        /*
+        
         //Oracle start
         Integer startRecord = (page - 1) * numPerPage + 1;
         Integer endRecord = page * numPerPage;
         map.put("startRecord", startRecord.toString());
         map.put("endRecord", endRecord.toString());
         //Oracle end
-        */
         
         
+ /*       
         //MySQL and MariaDB start
         Integer offset = (page - 1) * numPerPage;
         Integer rowCount = numPerPage;
         map.put("offset", offset.toString());
         map.put("rowCount", rowCount.toString());
         //MySQL and MariaDB end
-        
+*/        
 
         List<User> list = userService.getAllUser(map);
 
