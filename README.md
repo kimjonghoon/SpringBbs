@@ -180,8 +180,10 @@ SpringBbs
 	);
 
 ## Have to do
- 
-Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
+1.Modify the **UPLOAD_PATH** in WebContants.java
+(e.g. **/home/kim/Lab/**SpringBbs/download/data/ => **C:\www\**SpringBbs\download\data\)
+
+2.Install the Oracle JDBC driver(ojdbc6.jar) to your local repository with the following command:
  
 > mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 

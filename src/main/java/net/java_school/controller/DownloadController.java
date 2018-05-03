@@ -19,130 +19,79 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import net.java_school.commons.WebContants;
+
 @Controller
 public class DownloadController {
+	
+	@GetMapping("/data/{filename:.+}")
+	public ResponseEntity<InputStreamResource> download(@PathVariable String filename, HttpServletRequest req) throws IOException {
 
-    private static final String FILE_DIR = "./download/";
-    private static final String BOARD_DATA_DIR = "./download/data/";
+		File file = new File(WebContants.UPLOAD_PATH + filename);
 
-    @GetMapping("/download/{filename:.+}")
-    public ResponseEntity<InputStreamResource> download(@PathVariable String filename, HttpServletRequest req) throws IOException {
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-        File file = new File(FILE_DIR + filename);
+		boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
+		if (ie) {
+			filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+		} else {
+			filename = new String(filename.getBytes("UTF-8"), "8859_1");
+		}
 
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"")
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length())
+				.body(resource);
+	}
+	
+	// I use this
+	@PostMapping("/data")
+	public void boardDataDownload(String filename, HttpServletRequest req, HttpServletResponse resp) {
+		OutputStream outputStream = null;
 
-        boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-        if (ie) {
-            filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-        } else {
-            filename = new String(filename.getBytes("UTF-8"), "8859_1");
-        }
+		try {
+			File file = new File(WebContants.UPLOAD_PATH + filename);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length())
-                .body(resource);
-    }
+			String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
 
-    //blog example zip file download
-    @PostMapping("/download")
-    public void download(String filename, HttpServletRequest req, HttpServletResponse resp) {
-        OutputStream outputStream = null;
+			if (filetype.trim().equalsIgnoreCase("txt")) {
+				resp.setContentType("text/plain");
+			} else {
+				resp.setContentType("application/octet-stream");
+			}
 
-        try {
-            File file = new File(FILE_DIR + filename);
+			resp.setContentLength((int) file.length());
 
-            String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
+			boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
+			if (ie) {
+				filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
+			} else {
+				filename = new String(filename.getBytes("UTF-8"), "8859_1");
+			}
 
-            if (filetype.trim().equalsIgnoreCase("txt")) {
-                resp.setContentType("text/plain");
-            } else {
-                resp.setContentType("application/octet-stream");
-            }
+			resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-            resp.setContentLength((int) file.length());
+			outputStream = resp.getOutputStream();
+			FileInputStream fis = null;
 
-            boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-            if (ie) {
-                filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-            } else {
-                filename = new String(filename.getBytes("UTF-8"), "8859_1");
-            }
-
-            resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-
-            outputStream = resp.getOutputStream();
-            FileInputStream fis = null;
-
-            try {
-                fis = new FileInputStream(file);
-                FileCopyUtils.copy(fis, outputStream);
-            } finally {
-                if (fis != null) {
-                    fis.close();
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                outputStream.close();
-                resp.flushBuffer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //Board Upload Data Download
-    @PostMapping("/data")
-    public void boardDataDownload(String filename, HttpServletRequest req, HttpServletResponse resp) {
-        OutputStream outputStream = null;
-
-        try {
-            File file = new File(BOARD_DATA_DIR + filename);
-
-            String filetype = filename.substring(filename.indexOf(".") + 1, filename.length());
-
-            if (filetype.trim().equalsIgnoreCase("txt")) {
-                resp.setContentType("text/plain");
-            } else {
-                resp.setContentType("application/octet-stream");
-            }
-
-            resp.setContentLength((int) file.length());
-
-            boolean ie = req.getHeader("User-Agent").indexOf("MSIE") != -1;
-            if (ie) {
-                filename = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", " ");
-            } else {
-                filename = new String(filename.getBytes("UTF-8"), "8859_1");
-            }
-
-            resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-
-            outputStream = resp.getOutputStream();
-            FileInputStream fis = null;
-
-            try {
-                fis = new FileInputStream(file);
-                FileCopyUtils.copy(fis, outputStream);
-            } finally {
-                if (fis != null) {
-                    fis.close();
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                outputStream.close();
-                resp.flushBuffer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+			try {
+				fis = new FileInputStream(file);
+				FileCopyUtils.copy(fis, outputStream);
+			} finally {
+				if (fis != null) {
+					fis.close();
+				}
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				outputStream.close();
+				resp.flushBuffer();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
