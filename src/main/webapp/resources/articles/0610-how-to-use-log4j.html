@@ -2,6 +2,7 @@
 
 <h1>로깅</h1>
 
+<p>
 프로젝트에 자카르타의 commons-logging을 사용하고, 로깅 구현체로 log4j를 사용하기로 한다.<br />
 <a href="http://commons.apache.org/proper/commons-logging/download_logging.cgi">http://commons.apache.org/proper/commons-logging/download_logging.cgi</a>
 에서 Binary 파일을 내려받는다. <br />
@@ -16,6 +17,7 @@ log4j 바이너리 파일을 내려받는다.<br />
 log4j 설정 파일을 작성한다.<br />
 아래 내용으로 log4j.xml 이름으로 /WEB-INF/classes에 복사한다.<br />
 이클립스에서 작업한다면 src 폴더에 log4j.xml 파일을 만들면 자동으로 /WEB-INF/classes에 log4j.xml 파일이 만들어진다.<br /> 
+</p>
 
 <h6 class="src">log4j.xml</h6>
 <pre class="prettyprint">
@@ -50,9 +52,11 @@ log4j 설정 파일을 작성한다.<br />
 &lt;/log4j:configuration&gt;
 </pre>
 
+<p>
 자카르타 commons-logging 설정 파일을 만든다.<br />
 commons-logging.properties라는 파일을 아래 내용으로 만들고 WEB-INF/classes에 복사한다.<br />
 이클립스에서 작업한다면 src 폴더에 파일을 복사한다.<br />
+</p>
 
 <h6 class="src">commons-logging.properties</h6>
 <pre class="prettyprint">
@@ -60,10 +64,13 @@ org.apache.commons.logging.Log = org.apache.commons.logging.impl.Log4JLogger
 </pre>
 
 <h3>로깅 테스트</h3>
+
+<p>
 아래 예제는 웹 애플리케이션이 아닌 일반 자바 파일이다.<br />
 따라서 콘솔에 출력하는 로그 메시지를 톰캣의 로그 파일에서 찾으려 해서는 안 된다.<br />
 이클립스에서 테스트하면 Console 뷰에 로그가 출력된다.<br />
 /WEB-INF/debug.log 파일에도 로그가 쌓인다.<br />
+</p>
 
 <h6 class="src">LogTest.java</h6>
 <pre class="prettyprint">

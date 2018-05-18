@@ -37,7 +37,7 @@ Run the following insert statement while logged in to SQL * PLUS with the scott 
 (A total of 100 insert statements are executed)
 </p>
 
-<h6 class="src"><a href="board-data.sql">board-data.sql</a></h6>
+<h6 class="src">board-data.sql</h6>
 <pre class="prettyprint">
 insert into board values (board_no_seq.nextval, '000001','',sysdate);
 insert into board values (board_no_seq.nextval, '000002','',sysdate);
@@ -1802,7 +1802,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 The reason for the keyword = java.net.URLEncoder.encode (keyword, "UTF-8") code is that the encoding of the Java string and the URL address character, which are arguments to the sendRedirect () method of HttpServletResponse, are different.
 The URLEncoder encode () method allows you to get the byte value for non-English characters.
 This code needs to modify the server settings to work the way we want.
-Open the {TOMCAT_HOME}/conf/server.xml file and make sure that the Connector element has the URIEncoding attribute set to UTF-8, as shown below, with the Connector element having the port attribute value of 8080 (we had to change it to 8989).
+Open the CATALINA_HOME/conf/server.xml file and make sure that the Connector element has the URIEncoding attribute set to UTF-8, as shown below, with the Connector element having the port attribute value of 8080 (we had to change it to 8989).
 If there is no URIEncoding attribute, add it as follows.
 </p>
 

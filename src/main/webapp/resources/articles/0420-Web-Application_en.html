@@ -32,8 +32,8 @@ The web.xml file should be placed in WEB-INF.
 <h2>Web application directory</h2>
 
 <p>
-The default location for web applications in Tomcat is {TOMCAT_HOME}/webapps.
-If you want to add a new web application, create a subdirectory<sup><a href="#comments">1</a></sup> with the appropriate name in {TOMCAT_HOME}/webapps and create the following folder in that subdirectory.
+The default location for web applications in Tomcat is CATALINA_HOME/webapps.
+If you want to add a new web application, create a subdirectory<sup><a href="#comments">1</a></sup> with the appropriate name in CATALINA_HOME/webapps and create the following folder in that subdirectory.
 </p>
 
 <h3>WEB-INF</h3>
@@ -67,7 +67,7 @@ Tomcat class loader looks for classes in the following order:
 	<li>Java API</li>
 	<li>WEB-INF/classes directory of a web application</li>
 	<li>WEB-INF/lib directory of a web application</li>
-	<li>{TOMCAT_HOME}/lib</li>
+	<li>CATALINA_HOME/lib</li>
 </ol>
 </dd>
 </dl>
@@ -97,7 +97,7 @@ A web.xml contains all the configuration information on a web application.
 <h3>Example and description of web.xml</h3>
 
 <p>
-When creating the web.xml file, copy {TOMCAT_HOME}/webapps/ROOT/WEB-INF/web.xml file and paste it into WEB-INF / of your web application.
+When creating the web.xml file, copy CATALINA_HOME/webapps/ROOT/WEB-INF/web.xml file and paste it into WEB-INF / of your web application.
 Then open the web.xml file and delete everything in the web-app root element.
 You can configure your web application by adding sub elements of the web-app element, as highlighted below.
 </p>

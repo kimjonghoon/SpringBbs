@@ -14,6 +14,10 @@ pre {
 	font-family: Consolas, "Noto Sans KR", dotum, "Liberation Mono", Courier, monospace;
 }
 
+pre:lang(en) {
+	font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
 input, select, textarea, td, th {
 	color: #646464;
 	font-size: 12px;

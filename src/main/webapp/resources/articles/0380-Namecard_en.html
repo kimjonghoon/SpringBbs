@@ -224,7 +224,6 @@ public class Test {
 		}
 */
 
-
 /* 
 		//3.selectByKeyword(String) test: Find a namecard by keyword
 		ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword("Alison");
@@ -235,16 +234,14 @@ public class Test {
 		}
 */
 
-
 /* 
 		//4.selectOne(int) test : Find a namecard by no
 		Namecard card = dao.selectOne(1);
 		System.out.println(card);
 */
 
-
 /* 
-		5.delete(int) test : Remove a namecard
+		//5.delete(int) test : Remove a namecard
 		dao.delete(1);
 		ArrayList&lt;Namecard&gt; all = dao.selectAll();
 		int cardNum = all.size();
@@ -254,7 +251,8 @@ public class Test {
 		}
 */	
 
-/*		//6. update(Namecard) test : Modify a namecard
+/*		
+		//6. update(Namecard) test : Modify a namecard
 		Namecard card = dao.selectOne(3);
 		System.out.println(card);
 		card.setEmail("alison@ggmail.org");
@@ -267,14 +265,14 @@ public class Test {
 </pre>
 
 <p>
-Test the insert () method of NamecardDao.
-Run SQL * PLUS to see if Alison's information is inserted.
-When you run the JDBC program, SQL * PLUS must be terminated.
-This is because different commit modes of JDBC programs and SQL * PLUS can cause bottlenecks.
-When testing the main method of Test, test it one by one.
-For example, when testing # 2, comments 1, 3, 4, 5, and 6 are commented out.
-When you have finished testing, create a class that will act as the user interface and finish the program.
-You need to change your mind when creating user interface classes.
+Test the insert () method of NamecardDao.<br />
+Run SQL * PLUS to see if Alison's information is inserted.<br />
+When you run the JDBC program, SQL * PLUS must be terminated.<br />
+This is because different commit modes of JDBC programs and SQL * PLUS can cause bottlenecks.<br />
+When testing the main method of Test, test it one by one.<br />
+For example, when testing # 2, comments 1, 3, 4, 5, and 6 are commented out.<br />
+When you have finished testing, create a class that will act as the user interface and finish the program.<br />
+You need to change your mind when creating user interface classes.<br />
 If you use a database, you do not need to store card objects in an array or ArrayList.
 </p>
 

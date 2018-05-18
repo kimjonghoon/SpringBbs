@@ -1,0 +1,78 @@
+.environment-variables {
+	width:377px;
+	margin: 15px 0;
+	border: 1px solid #7989dc;
+	font-size: 11px;
+	background-color: #ebe9d7;
+}
+.environment-variables-header {
+	padding: 3px;
+	font-size: 13px;
+	font-weight: bold;
+	color: white;
+	background-color: #2b4fe1;
+}
+.environment-variables > fieldset {
+	margin: 12px 10px;
+	border: 1px solid #d1d1c2;
+	background-color: #ebe9d7;
+}
+.environment-variables > fieldset > legend {
+	color: #2842d5;
+}
+.environment-variables > fieldset > table {
+	margin: 0;
+	padding: 0;	
+}
+.environment-variables > fieldset > table th {
+	margin: 0 !important;
+	padding: 2px 0 2px 8px !important;
+	font-weight: normal;
+}
+.environment-variables > fieldset > table td {
+	background-color: white;
+	border-right: 1px solid white;
+	border-bottom: 1px solid white;
+}
+.environment-variables-buttons {
+	text-align: right;
+	margin: 15px 0 5px 0;
+}
+.environment-variables-buttons > input {
+	font-size: 11px;
+	width: 70px;
+}
+.environment-variables-ok-cancel-buttons {
+	text-align: right;
+	margin: 0 10px 10px 0;
+}
+.environment-variables-ok-cancel-buttons > input {
+	font-size: 11px;
+	width: 70px;
+}
+.new-user-variable {
+	width:377px;
+	margin: 15px 0;
+	border: 1px solid #7989dc;
+	font-size: 11px;
+	background-color: #ebe9d7;
+}
+.new-user-variable-header {
+	padding: 3px;
+	font-size: 13px;
+	font-weight: bold;
+	color: white;
+	background-color: #2b4fe1;
+}
+.new-user-variable > table {
+	margin: 10px 7px;
+}
+.new-user-variable > table td {
+	border: none !important;
+	color: #333;
+}
+.new-user-variable input {
+	color: #333;
+	font-size: 12px;
+	padding: 2px;
+}

@@ -363,14 +363,6 @@ h6 {
 	color: #000;
 	background: #efefef url('../images/ref.png') no-repeat center left;
 }
-#last-modified {
-	padding-top: 3px;
-	text-align: right;
-	font-family: tahoma, arial, sans-serif;
-	font-size: 10px;
-	line-height: 1;
-	color: #7a7a7a;
-}
 .comment-p {
 	font-size: 1em;
 	line-height: 1.2em;
@@ -402,6 +394,34 @@ article > ul > li {
 #next-prev > ul > li {
 	padding: 0.2em 0 0.2em 0.5em;
 	background: url('../images/circle.gif') no-repeat 0% 50%;
+}
+.no-border {
+    border: none !important;
+    margin: 0.4em 0;
+}
+.api-summary {
+	border: 1px solid #C8CDD2;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+.api-summary-dt {
+	font-weight: bold;
+	padding-left: 5px;
+}
+.api-summary-dd {
+	color: #666;
+	margin-left: 10px;
+	font-style: normal;
+	font-weight: bold;
+}
+.api-summary-dd-class-desc {
+	font-style: normal;
+	font-weight: normal;
+	margin: 0;
+	padding: 3px 5px 0 5px;
+}
+.bottom-line {
+	border-bottom: 1px solid #C8CDD2;
 }
 
 }

@@ -2,11 +2,13 @@
 
 <h1>정규 표현식</h1>
 
+<p>
 RegExp는 정규 표현식 객체이다.<br />
 / ~ /로 표현한다. ("/ ~ /", '/ ~ /' 모두 아니다!)<br />
 정규 표현식 객체에는 test()와 exec() 메서드가 있다.<br />
 test()는 인자로 들어온 문자열이 정규 표현식에 부합한지를 판단하여 불린 값을 리턴한다.<br />
 exec()는 인자로 들어온 문자열에서 정규 표현식에 부합된 문자열을 찾아 리턴한다.<br />
+</p>
 
 <pre class="prettyprint script-result-display">
 var regExp = /Java/;
@@ -16,8 +18,11 @@ alert(retArr[0]);
 </pre>
 
 <h3>i flag</h3>
+
+<p>
 정규 표현식 객체의 끝의 / 다음에 오는 문자열은 플래그다.<br />
 i 플래그가 붙으면 대소문자를 가리지 않는다.<br />
+</p>
 
 <pre class="prettyprint script-result-display">
 var regExp = /Java/i;
@@ -27,8 +32,11 @@ alert(retArr[0]);
 </pre>
 
 <h3>g flag</h3>
+
+<p>
 g 플래그를 사용하면 마지막으로 매칭 된 위치를 기억하고 있다가 
 다음번의 exec()를 호출되면 그다음 위치부터 매칭 되는 곳을 찾게 된다.<br />
+</p>
 
 <pre class="prettyprint script-result-display">
 var regExp = new RegExp('Java', 'gi'); // /Java/gi
@@ -76,7 +84,6 @@ retArr = regExp.exec(testStr);
 alert(retArr[0]);
 </pre>
 
-
 <table class="table-in-article">
 <tr>
 	<th class="table-in-article-th" colspan="2">
@@ -113,7 +120,9 @@ var retStr = testStr.replace(regExp,'-');
 alert(retStr);
 </pre>
 
+<p>
 다음은 회원가입을 위한 폼이다.<br />
+</p>
 
 <pre class="prettyprint">
 &lt;form id="signUp" action="signUp" method="post" onsubmit="return check()"&gt;
@@ -124,7 +133,9 @@ alert(retStr);
 &lt;/form&gt;
 </pre>
 
+<p>
 이름에 해당하는 파라미터의 값이 공백문자로만 이루어졌는지 검사하는 자바스크립트 코드를 작성한다.<br />
+</p>
 
 <pre class="prettyprint">
 function check() {
@@ -188,10 +199,13 @@ function check() {
 </table>
 
 <h3>필요한 정규 표현식 얻기</h3>
+
+<p>
 다음 사이트에서 이메일에 대한 정규 표현식을 얻을 수 있다.<br />
 <a href="http://regexlib.com">http://regexlib.com</a><br />
 
 이를 이용해서 사용자가 입력한 이메일과 날짜가 유효한 값인지 체크하는 자바스크립트 함수를 만들어 본다.<br />
+</p>
 
 <pre class="prettyprint script-result-display" style="white-space: pre-wrap">
 var emailRegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;

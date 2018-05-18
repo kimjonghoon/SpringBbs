@@ -74,7 +74,7 @@ public class Namecard {
 		sb.append(no);
 		sb.append("] ");
 		sb.append(name);
-		sb.append(" ,손전화: ");
+		sb.append(" ,휴대폰: ");
 		sb.append(mobile);
 		sb.append(" ,이메일: ");
 		sb.append(email);
@@ -127,7 +127,6 @@ public class NamecardDao {
 				e.printStackTrace();
 			}
 		}
-		
 		if (pstmt != null) {
 			try {
 				pstmt.close();
@@ -135,7 +134,6 @@ public class NamecardDao {
 				e.printStackTrace();
 			}
 		}
-		
 		if (con != null) {
 			try {
 				con.close();
@@ -231,7 +229,6 @@ public class Test {
 		}
 */
 
-
 /* 
 		//3.selectByKeyword(String)테스트: 검색어로 명함찾기
 		ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword("임꺽정");
@@ -242,16 +239,14 @@ public class Test {
 		}
 */
 
-
 /* 
 		//4.selectOne(int) 테스트 : 명함번호로 명함 찾기
 		Namecard card = dao.selectOne(1);
 		System.out.println(card);
 */
 
-
 /* 
-		5.delete(int) 테스트 : 명함삭제하기 
+		//5.delete(int) 테스트 : 명함삭제하기 
 		dao.delete(1);
 		ArrayList&lt;Namecard&gt; all = dao.selectAll();
 		int cardNum = all.size();
@@ -261,7 +256,8 @@ public class Test {
 		}
 */	
 
-/*		//6. update(Namecard) 테스트 : 명함 수정하기
+/*		
+		//6. update(Namecard) 테스트 : 명함 수정하기
 		Namecard card = dao.selectOne(3);
 		System.out.println(card);
 		card.setEmail("kimchi@ggmail.org");
@@ -327,7 +323,7 @@ public class NamecardUi {
 				if (menu.equals("1")) {
 					System.out.print("이름을 입력하세요&gt;&gt;");
 					String name = readCommandLine();
-					System.out.print("손전화를 입력하세요&gt;&gt;");
+					System.out.print("휴대폰을 입력하세요&gt;&gt;");
 					String mobile = readCommandLine();
 					System.out.print("이메일을 입력하세요&gt;&gt;");
 					String email = readCommandLine();
@@ -368,7 +364,7 @@ public class NamecardUi {
 						if (!name.equals("")) {
 							card.setName(name);
 						}
-						System.out.print("손전화를 수정하려면 입력하세요&gt;&gt;");
+						System.out.print("휴대폰을 수정하려면 입력하세요&gt;&gt;");
 						String mobile = readCommandLine();
 						if (!mobile.equals("")) {
 							card.setMobile(mobile);

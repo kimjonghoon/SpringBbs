@@ -10,12 +10,12 @@
 
 <h2>명함관리를 웹 애플리케이션으로 바꾸기 위한 준비작업</h2>
 
-<h3>1. 오라클 JDBC 드라이버를 {톰캣홈}/lib 에 복사한다.</h3>
+<h3>1. 오라클 JDBC 드라이버를 CATALINA_HOME/lib 에 복사한다.</h3>
 
 <p>
-JDBC 드라이버는 특별한 이유<sup><a href="#comments">1</a></sup> 때문에 웹 애플리케이션의 WEB-INF/lib 가 아닌 {톰캣홈}/lib 에 있어야 한다.<br />
+JDBC 드라이버는 특별한 이유<sup><a href="#comments">1</a></sup> 때문에 웹 애플리케이션의 WEB-INF/lib 가 아닌 CATALINA_HOME/lib 에 있어야 한다.<br />
 다시 말해, WEB-INF/lib 에는 JDBC 드라이버가 없어야 한다.<br />
-오라클 JDBC 드라이버인 ojdbc6.jar 파일을 {톰캣홈}/lib 에 복사한다.<br />
+오라클 JDBC 드라이버인 ojdbc6.jar 파일을 CATALINA_HOME/lib 에 복사한다.<br />
 </p>
 
 <h3>2. 웹 애플리케이션을 위한 디렉토리 구조를 마련한다.</h3>
@@ -34,7 +34,7 @@ C:/www/namecard 아래 다음과 같은 서브 디렉토리를 만들어야 한�
 <h3>3. web.xml 파일을 WEB-INF 디렉토리에 만든다.</h3>
 
 <p>
-{톰캣홈}/webapps/ROOT/WEB-INF/web.xml 을 복사하여 C:/www/namecard/WEB-INF/에 붙여넣는다.<br />
+CATALINA_HOME/webapps/ROOT/WEB-INF/web.xml 을 복사하여 C:/www/namecard/WEB-INF/에 붙여넣는다.<br />
 복사한 후 C:/www/namecard/WEB-INF/web.xml 파일을 편집기로 열고
 web-app 엘리먼트 안에 있는 모든 내용을 지운다.<br />
 </p>
@@ -70,7 +70,7 @@ web-app 엘리먼트 안에 있는 모든 내용을 지운다.<br />
 <h3>4. namecard.xml 컨텍스트 파일 만든다.</h3>
 
 <p>
-아래 내용대로 namecard.xml 파일을 만든 다음 {톰캣홈}/conf/Catalina/localhost 로 옮긴다.<br />
+아래 내용대로 namecard.xml 파일을 만든 다음 CATALINA_HOME/conf/Catalina/localhost 로 옮긴다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -89,7 +89,7 @@ web-app 엘리먼트 안에 있는 모든 내용을 지운다.<br />
 <a href="/jdbc/Namecard">명함관리</a>에서 실습했던 명함관리 Namecard 와 NamecardDao 바이트코드를 WEB-INF/classes 에 복사한다.<br />
 </p>
 
-<pre>
+<pre lang="en">
 C:/www/namecard/WEB-INF/classes
                            └── net
                                └── java_school
@@ -276,7 +276,7 @@ http://localhost:8989/namecard/list.jsp를 방문한다.<br />
 
 <h6 class="src">/list.jsp</h6>
 <pre class="prettyprint">
-.. 중간 생략 ..
+&lt;!-- .. 중간 생략 .. --&gt;
 
     &lt;td&gt;번호&lt;/td&gt;
     &lt;td&gt;이름&lt;/td&gt;
@@ -285,7 +285,7 @@ http://localhost:8989/namecard/list.jsp를 방문한다.<br />
     &lt;td&gt;회사&lt;/td&gt;
     <span class="emphasis">&lt;td&gt;관리&lt;/td&gt;</span>
 
-.. 중간 생략 ..
+&lt;!-- .. 중간 생략 .. --&gt;
 
     &lt;td&gt;&lt;%=card.getNo() %&gt;&lt;/td&gt;
     &lt;td&gt;&lt;%=card.getName() %&gt;&lt;/td&gt;
@@ -293,8 +293,8 @@ http://localhost:8989/namecard/list.jsp를 방문한다.<br />
     &lt;td&gt;&lt;%=card.getEmail() %&gt;&lt;/td&gt;
     &lt;td&gt;&lt;%=card.getCompany() %&gt;&lt;/td&gt;
     <span class="emphasis">&lt;td&gt;&lt;a href="delete.jsp?no=&lt;%=card.getNo() %&gt;"&gt;삭제&lt;/a&gt;&lt;/td&gt;</span>
-
-.. 중간 생략 ..	
+    
+&lt;!-- .. 중간 생략 .. --&gt;
 </pre>
 
 <p>
@@ -355,7 +355,7 @@ public void update(Namecard card) {
 		pstmt.setInt(5, card.getNo());
 		pstmt.executeUpdate();
 		
-.. 중간 생략 ..
+//.. 중간 생략 ..
 </pre>
 
 <p>

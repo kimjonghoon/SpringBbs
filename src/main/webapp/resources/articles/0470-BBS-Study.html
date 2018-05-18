@@ -37,7 +37,7 @@ SQL&gt;@C:\board-schema.sql
 scott 계정으로 SQL*PLUS에 접속한 상태에서 다음 인서트 문을 실행한다. (총 100개의 인서트 문)
 </p>
 
-<h6 class="src"><a href="board-data.sql">board-data.sql</a></h6>
+<h6 class="src">board-data.sql</h6>
 <pre class="prettyprint">
 insert into board values (board_no_seq.nextval, '000001','',sysdate);
 insert into board values (board_no_seq.nextval, '000002','',sysdate);
@@ -2343,7 +2343,7 @@ URLEncoder의 encode() 메서드는 한글과 같은 문자에 대한 바이트 
 This method uses the supplied encoding scheme to obtain the bytes for unsafe characters. 
 -->
 이 코드가 우리가 원하는 방식으로 동작하려면 서버 설정을 건드려야 한다.<br />
-{톰캣홈}/conf/server.xml 파일을 열고 Connector 엘리먼트 중 port 속성값이 8080인(우리는 8989로 바꿔야 했다) <br />
+CATALINA_HOME/conf/server.xml 파일을 열고 Connector 엘리먼트 중 port 속성값이 8080인(우리는 8989로 바꿔야 했다) <br />
 Connector 엘리먼트에 URIEncoding 속성을 다음과 같이 UTF-8인지를 확인한다.<br />
 URIEncoding 속성이 없다면 아래처럼 추가한다.
 </p>

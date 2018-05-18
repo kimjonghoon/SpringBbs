@@ -59,7 +59,7 @@ Default output 폴더가 <strong>JSPProject/WebContent/WEB-INF/classes</strong> 
 <p>
 톰캣이 우리가 만든 JSPProject 웹 애플리케이션을 등록하고 서비스하도록 해야 한다.<br />
 아래와 같은 내용으로 파일명을 JSPProject.xml 으로 파일을 만들고, 
-{톰캣홈}/conf/Catalina/localhost 에 저장한 다음 톰캣을 재실행한다.<br />
+CATALINA_HOME/conf/Catalina/localhost 에 저장한 다음 톰캣을 재실행한다.<br />
 </p>
 
 <h6 class="src">JSPProject.xml</h6>
@@ -73,8 +73,8 @@ Default output 폴더가 <strong>JSPProject/WebContent/WEB-INF/classes</strong> 
 
 <p>
 웹 애플리케이션과 JSPProjext.xml 파일에 이상이 없다면 톰캣은 JSPProject 애플리케이션을 등록하고 서비스한다.<br />
-여기서 {톰캣홈} 은 톰캣이 설치된 최상위 디렉토리를 말한다.<br />
-윈도우 시스템이고 톰캣 7을 설치했을 경우 {톰캣홈} 은 <br />
+여기서 CATALINA_HOME 은 톰캣이 설치된 최상위 디렉토리를 말한다.<br />
+윈도우 시스템이고 톰캣 7을 설치했을 경우 CATALINA_HOME 은 <br />
 <em class="path">C:\Program Files\Apache Software Foundation\Tomcat 7.0</em> 이고
 JSPProject.xml 파일은
 <em class="path">C:\Program Files\Apache Software Foundation\Tomcat 7.0\conf\Catalina\localhost</em> 
@@ -88,7 +88,7 @@ WEB-INF 바로 위 디렉토리가 도큐먼트베이스이다.<br />
 <p>
 web.xml 은 웹 애플리케이션에 대한 설정파일이다.<br />
 이클립스에서 Dynamic Web Project 로 프로젝트를 생성했다면 web.xml 이 자동으로 만들어질 수 있다.<br />
-만일 만들어지지 않았다면 {톰캣홈}/webapps 에 있는 ROOT 애플리케이션의 web.xml 파일을 복사해서 JSPProject 의 WEB-INF 디렉토리에 붙여넣는다.<br />
+만일 만들어지지 않았다면 CATALINA_HOME/webapps 에 있는 ROOT 애플리케이션의 web.xml 파일을 복사해서 JSPProject 의 WEB-INF 디렉토리에 붙여넣는다.<br />
 그다음, 붙여넣기한 web.xml 파일을 열고 web-app 엘리먼트의 내용을 모두 지운다.<br /> 
 </p>
 
@@ -133,7 +133,7 @@ New -- HTML File 를 차례로 선택한다.<br />
 
 http://localhost:port/JSPProject/test.html를 방문해서 톰캣이 웹 애플리케이션을 서비스하는지 확인한다.<br />
 여기서 port는 톰캣이 사용하는 포트 번호이다.<br />
-{톰캣홈}/conf/server.xml 파일에서 포트번호를 확인할 수 있다.<br />
+CATALINA_HOME/conf/server.xml 파일에서 포트번호를 확인할 수 있다.<br />
 </p>
 
 <pre class="prettyprint">

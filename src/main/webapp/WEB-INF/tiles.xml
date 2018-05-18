@@ -101,6 +101,9 @@
         <put-attribute name="next-article" value="/java/Features" type="string" cascade="true" />
         <put-attribute name="next-article-title" value="Java Features" cascade="true" />
         <put-attribute name="sidebar" value="/WEB-INF/views/index-sub.jsp" />
+        <put-list-attribute name="styles" inherit="true">
+            <add-attribute value="/resources/css/windows.css" />
+        </put-list-attribute>        
     </definition>
     <!-- Java Web Programming Lectures -->
     <definition name="java/Features" extends="app.lecture">

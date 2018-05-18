@@ -9,12 +9,12 @@ In this Chapter, You will be able to understand the difference between pure Java
 
 <h2>Preparations for changing the JDBC Namecard example to a web application</h2>
 
-<h3>1. Copy the Oracle JDBC driver to {TOMCAT_HOME}/lib.</h3>
+<h3>1. Copy the Oracle JDBC driver to CATALINA_HOME/lib.</h3>
 
 <p>
-The JDBC driver must be in {TOMCAT_HOME}/lib instead of WEB-INF/lib for your web application for special reasons.<sup><a href="#comments">1</a></sup>
+The JDBC driver must be in CATALINA_HOME/lib instead of WEB-INF/lib for your web application for special reasons.<sup><a href="#comments">1</a></sup>
 There should be no JDBC driver in WEB-INF/lib for your web application.
-Copy the ojdbc6.jar file to {TOMCAT_HOME}/lib.
+Copy the ojdbc6.jar file to CATALINA_HOME/lib.
 </p>
 
 <h3>2. Create a directory structure for Namecard web applications.</h3>
@@ -33,7 +33,7 @@ you should create the following subdirectory under C:/www/ namecard.
 <h3>3. Create the web.xml file in the WEB-INF directory.</h3>
 
 <p>
-Copy {TOMCAT_HOME}/webapps/ROOT/WEB-INF/web.xml and paste it into C:/www/namecard/WEB-INF/.
+Copy CATALINA_HOME/webapps/ROOT/WEB-INF/web.xml and paste it into C:/www/namecard/WEB-INF/.
 After copying, open the file C:/www/namecard/WEB-INF/web.xml and delete everything inside the web-app element.
 </p>
 
@@ -69,7 +69,7 @@ After copying, open the file C:/www/namecard/WEB-INF/web.xml and delete everythi
 <h3>4. Create a context file named namecard.xml.</h3>
 
 <p>
-Create a namecard.xml file as shown below and move it to {TOMCAT_HOME}/conf/Catalina/localhost.
+Create a namecard.xml file as shown below and move it to CATALINA_HOME/conf/Catalina/localhost.
 </p>
 
 <pre class="prettyprint">

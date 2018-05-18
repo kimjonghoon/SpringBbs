@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<h1 style="float: left;width: 150px;"><a href="/"><img src="/resources/images/ci.gif" alt="java-school" /></a></h1>
+<div style="float: left;width: 150px;position: relative;top: 7px;"><a href="/"><img src="/resources/images/ci.gif" alt="java-school" /></a></div>
 
 <div id="memberMenu" style="float: right;position: relative;top: 7px;">
     <security:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">

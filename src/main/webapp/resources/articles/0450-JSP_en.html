@@ -151,7 +151,7 @@ try {
 
 <p>
 Because hello.jsp is created in the top-level directory of the ROOT application, 
-the full path to the generated servlet is {TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java.
+the full path to the generated servlet is CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java.
 Tomcat compiles this servlet, creates a servlet object from the servlet bytecode, and invokes the service method of the servlet object.
 When hello.jsp request arrives again, Tomcat checks whether the hello.jsp file has been changed.
 If hello.jsp has not changed, Tomcat checks whether the servlet object is loaded.
@@ -656,8 +656,8 @@ The full path of each servlet is:
 </p>
 
 <ul>
-	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java</li>
-	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\helloworld_jsp.java</li>
+	<li>CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java</li>
+	<li>CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\helloworld_jsp.java</li>
 </ul>
 
 <h3 id="request">5.2 request</h3>
@@ -1261,7 +1261,7 @@ name cookie deleted.&lt;br /&gt;
 <h3 id="include-directive-example">7.4 Separate pages using include directive</h3>
 
 <p>
-Download <a href="examples/example.zip">example.zip</a> and unzip it to the root directory of your ROOT application.
+Download <a href="/examples/example.zip">example.zip</a> and unzip it to the root directory of your ROOT application.
 Visit http://localhost:port/example/ex1/index.jsp.
 Open the index.jsp file and confirm the following:
 </p>

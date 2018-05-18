@@ -86,7 +86,7 @@ To call destroy(), you must use the "Tomcat manager" to unload the application o
 Tomcat manager is a web application that can be accessed at http://localhost:port/manager. 
 It is the web application that manages web applications.
 To view the Tomcat Manager screen, you must log in using the administrator and administrator password you set when installing Tomcat.
-If you do not remember your administrator and Administrator password, open {TOMCAT_HOME}/conf/tomcat-users.xml and you'll see it.  
+If you do not remember your administrator and Administrator password, open CATALINA_HOME/conf/tomcat-users.xml and you'll see it.  
 </p>
 
 <pre class="prettyprint no-border">
@@ -1251,7 +1251,7 @@ Add the following to web.xml:
 </pre>
 
 <p>
-Copy the JDBC driver file to {TOMCAT_HOME}/lib.
+Copy the JDBC driver file to CATALINA_HOME/lib.
 After restarting Tomcat, visit http://localhost:port<span class="emphasis">/empList</span>.
 </p>
 
@@ -1279,7 +1279,7 @@ If you do not see the results you want, check the list below.
 <ul>
 	<li>Is the servlet declaration and servlet mapping added correctly to the web.xml file?</li>
 	<li>Is there a GetEmpServlet bytecode in the /WEB-INF/classes/example directory.</li>
-	<li>Is there an Oracle JDBC driver file (ojdbc6.jar) in the {TOMCAT_HOME}/lib directory.</li>
+	<li>Is there an Oracle JDBC driver file (ojdbc6.jar) in the CATALINA_HOME/lib directory.</li>
 	<li>Did the ROOT web application load successfully?</li>
 </ul>
 

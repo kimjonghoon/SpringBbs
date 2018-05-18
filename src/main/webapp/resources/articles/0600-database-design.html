@@ -2,7 +2,9 @@
 
 <h1>데이터베이스 설계</h1>
 
-SYS 계정으로 접속한다.<br />
+<p>
+SYS 계정으로 접속한다.
+</p>
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
 <pre class="screen">
@@ -18,13 +20,115 @@ SQL&gt; show user
 USER은 "SYS"입니다
 </pre>
 
-접속한 상태에서 다음을 실행한다.<br />
+<p>
+접속한 상태에서 다음을 실행한다.
+</p>
 
-<script src="https://gist.github.com/kimjonghoon/4ad45823c45c1d60b15c.js"></script>
+<pre class="prettyprint">
+GRANT CONNECT,RESOURCE,UNLIMITED TABLESPACE TO java IDENTIFIED BY school;
+ALTER USER java DEFAULT TABLESPACE USERS;
+ALTER USER java TEMPORARY TABLESPACE TEMP;
+
+CONNECT java/school
+
+create table member (
+    email varchar2(60) PRIMARY KEY,
+    passwd varchar2(200) NOT NULL,
+    name varchar2(20) NOT NULL,
+    mobile varchar2(20)
+);
+
+create table board (
+    boardcd varchar2(20),
+    boardnm varchar2(40) NOT NULL,
+    boardnm_ko varchar2(40),
+    constraint PK_BOARD PRIMARY KEY(boardcd)
+);
+
+create table article (
+    articleno number,
+    boardcd varchar2(20),
+    title varchar2(200) NOT NULL,
+    content clob NOT NULL,
+    email varchar2(60),
+    hit number,    
+    regdate date,
+    constraint PK_ARTICLE PRIMARY KEY(articleno),
+    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
+);
+
+create sequence SEQ_ARTICLE
+increment by 1
+start with 1;
+
+create table comments (
+    commentno number,
+    articleno number,    
+    email varchar2(60),    
+    memo varchar2(4000) NOT NULL,
+    regdate date, 
+    constraint PK_COMMENTS PRIMARY KEY(commentno)
+);
+
+create sequence SEQ_COMMENTS
+    increment by 1
+    start with 1;
+
+create table attachfile (
+    attachfileno number,
+    filename varchar2(50) NOT NULL,
+    filetype varchar2(30),
+    filesize number,
+    articleno number,
+    email varchar2(60),
+    constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
+);
+
+create sequence SEQ_ATTACHFILE
+increment by 1
+start with 1;
+
+CREATE TABLE authorities (
+  email VARCHAR2(60) NOT NULL,
+  authority VARCHAR2(20) NOT NULL,
+  CONSTRAINT fk_authorities FOREIGN KEY(email) REFERENCES member(email)
+);
+
+CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority); 
+
+-- for test records  
+insert into board values ('free', 'Free', '자유게시판');
+insert into board values ('qna', 'Q and A', '묻고 답하기');
+insert into board values ('data', 'Data', '자료실');
+
+INSERT INTO member VALUES ('hong@gmail.org','1111','홍길동','010-1111-1111');
+INSERT INTO member VALUES ('im@gmail.org','1111','임꺽정','010-1111-2222');
+
+INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_USER');
+INSERT INTO authorities VALUES ('hong@gmail.org','ROLE_ADMIN');
+INSERT INTO authorities VALUES ('im@gmail.org','ROLE_USER');
+
+commit;
+
+create table views (
+	no number,
+	articleNo number,
+	ip varchar(60),
+	yearMonthDayHour char(10),
+	constraint PK_VIEWS PRIMARY KEY(no),
+	constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
+);
+
+create sequence SEQ_VIEWS
+	increment by 1
+start with 1;
+</pre>
 
 <h2>DataSource 설정</h2>
 
-{톰캣홈}/conf/Catalina/localhost/JSPProject.xml 을 열고 아래와 같이 추가한다.<br />
+<p>
+CATALINA_HOME/conf/Catalina/localhost/JSPProject.xml 을 열고 아래와 같이 추가한다.
+</p>
 
 <h6 class="src">JSPProject.xml</h6>
 <pre class="prettyprint">
@@ -48,11 +152,17 @@ USER은 "SYS"입니다
 &lt;/Context&gt;
 </pre>
 
-<h3>JDBC 드라이버 파일을 {톰캣홈}/lib에 복사</h3>
-오라클 JDBC 드라이버 파일인 ojdbc6.jar 파일을 {톰캣홈}/lib에 복사한다.<br />
+<h3>JDBC 드라이버 파일을 CATALINA_HOME/lib에 복사</h3>
+
+<p>
+오라클 JDBC 드라이버 파일인 ojdbc6.jar 파일을 CATALINA_HOME/lib에 복사한다.
+</p>
 
 <h3>테스트</h3>
-test.jsp 파일을 도큐멘트베이스(C:/www/JSPProject/WebContent)에 생성한다.<br />
+
+<p>
+test.jsp 파일을 도큐멘트베이스(C:/www/JSPProject/WebContent)에 생성한다.
+</p>
 
 <h6 class="src">test.jsp</h6>
 <pre class="prettyprint">
@@ -119,6 +229,9 @@ test.jsp 파일을 도큐멘트베이스(C:/www/JSPProject/WebContent)에 생성
 &lt;/html&gt;
 </pre>
 
+<p>
 톰캣을 재실행하고 http://localhost:port/JSPProject/test.jsp를 방문한다.
-3을 본다면 성공이다.<br />
+3을 본다면 성공이다.
+</p>
+
 </article>

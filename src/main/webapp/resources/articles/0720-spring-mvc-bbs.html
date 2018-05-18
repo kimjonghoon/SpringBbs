@@ -2926,7 +2926,7 @@ WEB-INF의 바로 위인 src/main/webapp가 DocumentBase이다.<br />
 http://localhost:port/bbs/list?boarCd=free&amp;page=1을 방문하여 테스트한다.<br />
 JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일 것이다.<br />
 데이터가 있다면 한글 검색을 테스트한다.<br />
-한글 검색이 되지 않는다면 TOMCAT_HOME/conf/server.xml 파일을 열고 다음 강조된 부분이 있는지 확인한다.<br />
+한글 검색이 되지 않는다면 CATALINA_HOME/conf/server.xml 파일을 열고 다음 강조된 부분이 있는지 확인한다.<br />
 </p>
 
 <h6 class="src">server.xml</h6>
@@ -2944,7 +2944,7 @@ JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일
 <ol>
 	<li>/WEB-INF/classes에 바이트 코드가 있는가?</li>
 	<li>/WEB-INF/lib에 라이브러리 파일이 있는가?</li>
-	<li>TOMCAT_HOME/lib에 ojdbc6.jar 파일이 있는가?</li>
+	<li>CATALINA_HOME/lib에 ojdbc6.jar 파일이 있는가?</li>
 	<li>JSP 파일의 EL이 해석되지 않는다면 web.xml이 DTD 버전이 2.4버전 이상인가?</li>
 </ol>
 
@@ -3099,7 +3099,7 @@ JSP는 인증이 적용된 부분을 선별적으로 랜더링할 것이다.<br 
 스프링 MVC에서 사용한 인증 코드와 스프링 시큐리티를 적용한 코드를 비교하는 것을 잊지 않도록 한다.<br />
 <br />
 테스트하면서 발생하는 에러는 log4j.xml에서 설정한 로그 파일이나 
-TOMCAT_HOME/logs에 있는 로그 파일을 뒤져서 해결해야 한다.<br />
+CATALINA_HOME/logs에 있는 로그 파일을 뒤져서 해결해야 한다.<br />
 로그 메시지 전부를 이해하는 사람은 없을 것이다. 로그 메시지 중에 자신이 작성한 클래스의 어느 라인에서 예외가 발생하고 있는지 파악하고 이를 기초로 추론하는 능력을
 키워야 한다.<br />
 </p>

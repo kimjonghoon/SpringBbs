@@ -15,20 +15,20 @@
 8080 포트를 다른 프로그램이 사용하고 있다면, 8080을 사용할 수 없다.
 만약 오라클 11g XE가 8080을 사용한다면, 톰캣의 포트를 변경한다.
 포트 번호는 설치 후에도 변경할 수 있다.
-{톰캣홈}<sup>1</sup>/conf 디렉토리에서 server.xml 파일을 편집하면 변경된다.
+CATALINA_HOME<sup>1</sup>/conf 디렉토리에서 server.xml 파일을 편집하면 변경된다.
 </p>
 
 <p>
 설치 도중 톰캣 관리자의 사용자명과 비밀번호를 부여한다.
 이 설정 역시 설치 후에 변경할 수 있다.
-{톰캣홈}/conf 디렉토리에서 tomcat-users.xml 파일을 열고 편집하면 변경된다.
+CATALINA_HOME/conf 디렉토리에서 tomcat-users.xml 파일을 열고 편집하면 변경된다.
 </p>
 
 <p>
 설치가 제대로 완료되었는지 확인하기 위해서 http://localhost:port를 방문한다. 
 (여기서 port는 톰캣이 사용하도록 정한 포트이다.)
 고양이를 보여주는 화면은 톰캣의 ROOT 애플리케이션의 홈페이지다.
-ROOT 애플리케이션의 위치는 {톰캣홈}/webapps/ROOT이다.
+ROOT 애플리케이션의 위치는 CATALINA_HOME/webapps/ROOT이다.
 </p>
 
 <p>
@@ -38,10 +38,10 @@ ROOT 애플리케이션의 위치는 {톰캣홈}/webapps/ROOT이다.
 
 <span id="comments">주석</span>
 <ol>
-	<li>윈도 시스템에서 {톰캣홈}의 경로는 대략 다음과 같다. <em>"C:\Program Files\Apache Software Foundation\Tomcat ..."</em></li>
+	<li>CATALINA_HOME은 톰캣이 설치된 루트 디렉터리다. 윈도 시스템에서 CATALINA_HOME의 경로는 <em>"C:\Program Files\Apache Software Foundation\Tomcat &lt;version&gt;"</em></li>
 	<li>포트를 8080을 사용하도록 설치한 후, http://localhost:8080을 방문했을 때 다음과 같은 에러 메지지가 보인다면 톰캣이 아니라 오라클 XDB가 반응한 메시지다.<br />
 	<em>"인증 필요 서버 http://localhost:8080에 사용자 이름과 비밀번호를 입력해야 합니다.서버메시지:XDB ..."</em><br />
-	이 경우 {톰캣홈}/conf/server.xml 파일에서 8080 포트를 다른 번호로 바꿔야 한다.
+	이 경우 CATALINA_HOME/conf/server.xml 파일에서 8080 포트를 다른 번호로 바꿔야 한다.
 	</li>
 </ol>
 </article>

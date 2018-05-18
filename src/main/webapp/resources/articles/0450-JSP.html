@@ -150,7 +150,7 @@ try {
 </pre>
 
 <p>
-hello.jsp가 ROOT애플리케이션의 최상위 디렉토리에 있기에, 만들어진 서블릿의 전체 경로는 {톰캣홈}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java이다.
+hello.jsp가 ROOT애플리케이션의 최상위 디렉토리에 있기에, 만들어진 서블릿의 전체 경로는 CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java이다.
 톰캣은 이 서블릿을 컴파일하고, 서블릿 바이트코드로부터 객체를 생성하고, 생성한 서블릿 객체의 서비스 메서드를 호출한다.
 /hello.jsp 요청이 다시 오면, 톰캣은 hello.jsp 파일이 변경되었는지를 체크한다.
 hello.jsp가 변경되지 않았다면, 톰캣은 서블릿 객체가 이미 로딩되어 있는지 확인한다.
@@ -710,8 +710,8 @@ hello.jsp로 만들어진 서블릿과 helloworld.jsp로 만들어진 서블릿�
 </p>
 
 <ul>
-	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java</li>
-	<li>{TOMCAT_HOME}\work\Catalina\localhost\_\org\apache\jsp\helloworld_jsp.java</li>
+	<li>CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java</li>
+	<li>CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\helloworld_jsp.java</li>
 </ul>
 
 <h3 id="request">5.2 request</h3>
@@ -1320,7 +1320,7 @@ name 쿠키를 삭제했습니다.&lt;br /&gt;
 <h3 id="include-directive-example">7.4 include 지시어를 이용하는 페이지 분리</h3>
 
 <p>
-<a href="examples/example.zip">example.zip</a>을 다운로드한 후 ROOT 애플리케이션의 최상위 디렉토리에 압축을 푼다.
+<a href="/examples/example.zip">example.zip</a>을 다운로드한 후 ROOT 애플리케이션의 최상위 디렉토리에 압축을 푼다.
 http://localhost:port/example/ex1/index.jsp를 방문한다.
 /example/ex1/index.jsp 파일을 열고 다음을 확인한다.
 </p>

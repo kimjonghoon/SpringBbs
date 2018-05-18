@@ -86,7 +86,7 @@ void service(ServletRequest req, ServletResponse res) throws ServletException, I
 destroy() 메서드를 실행하려면 "톰캣 매니저"를 사용하여 애플리케이션을 언로드하거나 톰캣을 셧다운 시켜야 한다.<br />
 톰캣 매니저는 http://localhost:port/manager로 접근할 수 있는 웹 애플리케이션로 웹 애플리케이션을 관리하는 웹 애플리케이션이다.<br />
 톰캣 매니저 화면을 보려면, 톰캣을 설치할 때 정해준 관리자와 관리자 비밀번호를 사용하여 로그인해야 한다.<br />
-관리자와 관리자 비밀번호가 생각나지 않으면 {톰캣홈}/conf/tomcat-users.xml 파일을 열어보면 알 수 있다.
+관리자와 관리자 비밀번호가 생각나지 않으면 CATALINA_HOME/conf/tomcat-users.xml 파일을 열어보면 알 수 있다.
 </p>
 
 <pre class="prettyprint no-border">
@@ -1246,7 +1246,7 @@ web.xml에 다음을 추가한다.
 </pre>
 
 <p>
-JDBC 드라이버 파일을 {톰캣홈}/lib 복사한다.<br />
+JDBC 드라이버 파일을 CATALINA_HOME/lib 복사한다.<br />
 톰캣을 재시작한 후, http://localhost:port<span class="emphasis">/empList</span>를 방문한다.
 </p>
 
@@ -1274,7 +1274,7 @@ JDBC 드라이버 파일을 {톰캣홈}/lib 복사한다.<br />
 <ul>
 	<li>web.xml 파일에 서블릿 선언과 서블릿 매핑이 올바르게 추가되었는가?</li>
 	<li>/WEB-INF/classes/example 디렉터리에 GetEmpServlet 바이트 코드 있는가?</li>
-	<li>{톰캣홈}/lib에 오라클 JDBC 드라이버 파일(ojdbc6.jar)이 있는가?</li>
+	<li>CATALINA_HOME/lib에 오라클 JDBC 드라이버 파일(ojdbc6.jar)이 있는가?</li>
 	<li>루트 웹 애플리케이션이 성공적으로 로드되었는가?</li>
 </ul>
 

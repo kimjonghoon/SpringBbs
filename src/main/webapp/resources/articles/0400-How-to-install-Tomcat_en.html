@@ -15,20 +15,20 @@ Tomcat's default port is 8080.
 If the 8080 port is being used by another program, you should change it.
 If Oracle 11g XE uses the 8080, you need to change the Tomcat port.
 The port number can be changed after installation.
-You can change it by opening and editing the server.xml file in {TOMCAT_HOME}<sup>1</sup>/conf directory.
+You can change it by opening and editing the server.xml file in CATALINA_HOME<sup>1</sup>/conf directory.
 </p>
 
 <p>
 Set the Tomcat administrator username and password during installation.
 This setting can also be changed after installation.
-You can change them by opening and editing the tomcat-users.xml in {TOMCAT_HOME}/conf directory.
+You can change them by opening and editing the tomcat-users.xml in CATALINA_HOME/conf directory.
 </p>
 
 <p>
 Visit http://localhost:port.(Where port is the port number used by Tomcat)
 If you see a cat, installation is a success.
 The screen showing the cat is the homepage of Tomcat's ROOT application.
-The location of the ROOT application is {TOMCAT_HOME}/webapps/ ROOT.
+The location of the ROOT application is CATALINA_HOME/webapps/ ROOT.
 </p>
 
 <p>
@@ -38,11 +38,12 @@ If you have not seen the cat, try restarting Tomcat using this Tomcat Monitor.<s
 
 <span id="comments">Comments</span>
 <ol>
-	<li>On Windows systems, the full path to {TOMCAT_HOME} is approximately <em>"C:\Program Files\Apache Software Foundation\Tomcat ..."</em>.</li>
+	<li>CATALINA_HOME represents the root of your Tomcat installation.<br />
+	On Windows systems, the full path to CATALINA_HOME is approximately <em>"C:\Program Files\Apache Software Foundation\Tomcat &lt;version&gt;"</em>.</li>
 	<li>When you set the Tomcat port to 8080 and visit http://localhost:8080,
 If you see the message <em>"Authentication Required Server http:/localhost:8080 requires a user name and a password. The server says: XDB"</em>.
 It is Oracle XDB, not Tomcat, that works with 8080.
-In this case, you need to change port 8080 to a different number in the {TOMCAT_HOME}/conf/server.xml.<br />
+In this case, you need to change port 8080 to a different number in the CATALINA_HOME/conf/server.xml.<br />
 <h6 class="src">Previous</h6>
 <pre class="prettyprint">
 &lt;Connector port="<strong>8080</strong>" protocol="HTTP/1.1"

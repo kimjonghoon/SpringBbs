@@ -3,8 +3,8 @@
 <h1>Web application directory structure</h1>
 
 <p>
-You already know how to add a new web application to {TOMCAT_HOME}/webapps.
-In this chapter, you will learn how to make Tomcat serve web applications that are not in {TOMCAT_HOME}/webapps.
+You already know how to add a new web application to CATALINA_HOME/webapps.
+In this chapter, you will learn how to make Tomcat serve web applications that are not in CATALINA_HOME/webapps.
 Create C:/www/myapp directory.
 Create subdirectories under myapp/ as shown below.
 </p>
@@ -25,8 +25,8 @@ This XML file is called a context file because the root element of this XML file
 The most important information in the context file is the top-level directory (called DocumentBase or Context Root) of the Web application 
 and the Context Path that is URL path information for accessing web application with web browser.
 These information are set in the docBase and path attributes of the Context element in the context file.
-If you create a Context file and place it in {TOMCAT_HOME}/conf/Catalina/localhost, Tomcat will automatically recognize and load your web application.
-If the context file is written incorrectly, Tomcat will not load your web application and will write the cause of the failure to a log file in {TOMCAT_HOME}/logs.
+If you create a Context file and place it in CATALINA_HOME/conf/Catalina/localhost, Tomcat will automatically recognize and load your web application.
+If the context file is written incorrectly, Tomcat will not load your web application and will write the cause of the failure to a log file in CATALINA_HOME/logs.
 </p>
 
 <h3>How to create a Tomcat Context file</h3>
@@ -45,7 +45,7 @@ Let's create a context file for myapp web application.
 </pre>
 
 <p>
-Copy myapp.xml file to {TOMCAT_HOME}/conf/Catalina/ localhost.
+Copy myapp.xml file to CATALINA_HOME/conf/Catalina/ localhost.
 If you name your Context file as myapp.xml as above, if you omit the path attribute, the context path is determined as myapp.
 </p>
 <p>
