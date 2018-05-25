@@ -16,6 +16,14 @@ Create a webapp archetype.
 mvn archetype:generate -Dfilter=maven-archetype-webapp
 </pre>
 
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
+<pre class="screen">
+Define value for property 'groupId': : net.java_school.test
+Define value for property 'artifactId': : hello
+Define value for property 'version':  1.0-SNAPSHOT: : 
+Define value for property 'package':  net.java_school.hello: : 
+</pre>
+
 <p>
 Import the Maven project into Eclipse by selecting Import - Import - Existing Maven Project.
 </p>
@@ -63,11 +71,11 @@ Modify pom.xml as follows.
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
 	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-	&lt;groupId&gt;net.java_school&lt;/groupId&gt;
+	&lt;groupId&gt;net.java_school.test&lt;/groupId&gt;
 	&lt;artifactId&gt;examples&lt;/artifactId&gt;
 	&lt;packaging&gt;war&lt;/packaging&gt;
 	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-	&lt;name&gt;examples&lt;/name&gt;
+	&lt;name&gt;hello&lt;/name&gt;
 	&lt;url&gt;http://maven.apache.org&lt;/url&gt;
 
 	&lt;properties&gt;
@@ -102,7 +110,7 @@ Modify pom.xml as follows.
 	&lt;/dependencies&gt;
 
 	&lt;build&gt;
-		&lt;finalName&gt;examples&lt;/finalName&gt;
+		&lt;finalName&gt;hello&lt;/finalName&gt;
 		&lt;pluginManagement&gt;
 			&lt;plugins&gt;
 				&lt;plugin&gt;
@@ -118,7 +126,7 @@ Modify pom.xml as follows.
 				<strong>&lt;plugin&gt;
 					&lt;groupId&gt;org.eclipse.jetty&lt;/groupId&gt;
 					&lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
-					&lt;version&gt;9.4.6.v20170531&lt;/version&gt;
+					&lt;version&gt;9.4.10.v20180503&lt;/version&gt;
 				&lt;/plugin&gt;</strong>
 			&lt;/plugins&gt;
 		&lt;/pluginManagement&gt;

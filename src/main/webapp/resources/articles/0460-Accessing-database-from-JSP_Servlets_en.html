@@ -204,7 +204,7 @@ try {
 <p>
 The second JSP uses the jsp: useBean action to obtain the OracleConnectionManager object reference.
 The second JSP can obtain a connection by calling the getConnection () method of the OracleConnectionManager whenever a connection is needed.
-One thing to keep in mind when using this custom connection pool is that you should use the freeConnection() method of the OracleConnectionManager instead of using the close() method of Connection after using the connection.
+One thing to keep in mind when using this custom connection pool is that you must use the freeConnection() method of the OracleConnectionManager instead of using the close() method of Connection after using the connection.
 If you use the close() of Connection, this custom connection pool will not work.
 </p>
 

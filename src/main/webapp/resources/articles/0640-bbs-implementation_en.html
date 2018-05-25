@@ -52,7 +52,7 @@ UserService service = new UserService();
 User user = service.login(email, passwd);
 
 if (user == null) {
-    //if login failed, this page should be redirected to login.jsp
+    //if login failed, redirect to login.jsp
     response.sendRedirect("login.jsp?url=" + url + "&amp;msg=Login-Failed");
 } else {
     session.setAttribute("user", user);</strong>
@@ -96,7 +96,7 @@ public class WebContants {
 </pre>
 
 <p>
-"user" is the key value of the User object to put in the session.<b />
+"user" is the key value of the User object to put in the session.
 Open login_proc.jsp and change "user" to WebContants.USER_KEY.
 </p>
 

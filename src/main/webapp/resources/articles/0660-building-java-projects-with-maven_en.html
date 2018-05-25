@@ -12,8 +12,7 @@ Original <a href="http://spring.io/guides/gs/maven/">http://spring.io/guides/gs/
 	<li>Download the latest binary file from <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a>.</li>
 	<li>Unzip and move the generated directory to the desired location.</li>
 	<li>Add the Maven bin directory to the Path.</li>
-	<li>Make sure you have the JAVA_HOME environment variable. Because Maven refers to the JAVA_HOME environment variable, it should be created if it does not exist.<br />
-	(See <a href="/">JDK Install</a>)</li>
+	<li>Make sure you have the JAVA_HOME environment variable. Because Maven refers to the JAVA_HOME environment variable, it should be created if it does not exist. (See <a href="/">JDK Install</a>)</li>
 </ol>
 
 <p>
@@ -25,7 +24,7 @@ Open a command prompt and check the Maven version with the following command:
 Apache Maven 3.5.0
 Maven home: C:\Program Files\apache-maven-3.5.0\bin\..
 Java version: 1.8.0_131, vendor: Oracle Corporation
-Java home: C:\Program Files\Java\jdk1.8.0_131\jre
+Java home: C:\Program Files\Java\jdk-10.0.1\jre
 ..
 </pre>
 
@@ -119,8 +118,8 @@ To try out the build, issue the following at the command line:
 <pre class="screen">mvn compile</pre>
 
 <p>
-This will run Maven, telling it to execute the compile goal. When it’s finished, you should find the compiled .class files in the target/classes directory.<br />
-<img alt="mvn compile" src="https://lh3.googleusercontent.com/1x82DkXPiOrW_fJSNV19zo47lTOeCNSv5Bmj_pCefvAg_k3HA5HVLii6CGLfB87LH3eFBMQOhkxX1DWDCCjRslJwGEEGWINPH5EeMIixo5TjgJbV9LmErzjcoo6wsSinwcwqy3W4dv7QiUra_3yYQQAUvykoLR0OTDAYsxKI4zwXBSUNDzdvi73koycw_tPTk7Dd_pRgCCiVskFLX_iuJCG2NntS4tPai_0teNqGN-4xEPIKIghN2ipRygTS8R5J8Z3zJZd_KU51jVhpDz0Tk8XIp1AHRl0urayqVEZY1TsIUB0T1VNyJL3XzKBN020qlfo2dtFjHMLzFukYOm9l3cWwniosgHkau84LKcCt9-EKLQ0vfDzAFuZnf_3zpqAJOlWKKHM5AHLnfsR0lYf1UR7n4VljjN25YcIBnG3nmtFN92aoCw4CQ8eMLyS29ZVD0a7V55GcaKm2FEbztngzay4T3YZEu7RqrW6W7HtDhgd3PBToUr2M3Fo6DzHqO-LHfEmtN_im4uBwrKf09c5Qb6Yc1t-H6bMIWHbNEOTJ0sKsGnT_da3YKjMqkkEgY2jAPjaydtN1t5E_jNgAgPygUoGe2JZJptsaqUdWPEp63kgaRdcNwh3l=w523-h121-no" style="display: block;" />
+This will run Maven, telling it to execute the compile goal. When it’s finished, you can find the compiled .class files in the target/classes directory.<br />
+<img alt="mvn compile" src="https://lh3.googleusercontent.com/I0cHa55BW_YfT3-tpyHPs2BAVoCfNol7rE9Y0MIaMuyboJRkZFLYqGcptyHpDyH_DKN-eaXX__FfFgHrcPZkrg9YODDFspA_n0vDo7LfI-N-dcYIqa6LpWF5ZGM4x35JcMzQlkoNQHVjt_dHSe9Yr5mA-OS4at2KLkZNCOP-WJVr18lgJfjfUeQ-sx02-qze5sKR7kkxiuYgnfUjoZijZpElq7DeR7CTQQtHfCwSv8maY3OPCsCbvp2FBsxr6DoMcKwiN9mQewkU2mcPaDdvKZUoei686EUxkOrw8o-REwY3DLSalDRe8FH4o_gq5QLtiVmmlVhMwxlltUOMbePLcQ3HhMNdA8pn12_XHguvgRXki08INIy5pOX1JkMpxZW2l2gquM14TpvdbYLUrLT_-Cqnt0UKYfF-UPA1h-vPMt7OgSey0iRPdEcaEJwKD5PPWeRFeYQtrrRWCpAjCTmypu5lSzYAFgGLX-Vl0Tlr23ytuOVwGIPjsJ0C_qSPkvHJ9rr_dDBVVZXMZsmpffUTRWm34TFMfuEuMfMWE5slUGo8UjR-PVnE7s8q1bhCenMb5fpzDwQe-ybdG3QFPzxWMEWgN38V4eBkeRunOeQ=w589-h122-no" style="display: block;" />
 </p>
 
 <p>
@@ -132,26 +131,26 @@ Since it’s unlikely that you’ll want to distribute or work with .class files
 <p>
 Compile the Java code, test it, bundle it in a package (jar or war), and save it in the target directory.<br />
 According to the pom.xml configuration above, a file named gs-maven-initial-0.1.0.jar is created in the target directory.<br />
-<img alt="mvn package" src="https://lh3.googleusercontent.com/838OsscY8Fm6fv8YiK-KfDH7RewhJYJwSPj7EyqYnKHErDnEy2pSKfCCgBWQV_LSNXRrmZG4WnQb95ExDU9r6S5BIkh9DeCo4Ib_qKLyNoniWopdh6CvtMABtiSgNMH8zEZreHPAZ0lgx8-WfnEi_cd3gF-USpEroTJjcpn2sLAIIVA2SlBcAFRub7km5hkFa0njZy2iDopOGfqtspX9J7b-YkTYbrk0EQnFmMjxaytZEP1-dZlvchLV2K92_oYmwyRb_iUe1at7eATuiTXD6y_yBOnNHlz615-L9EIls-dQ1A192UpcmVZwgOGugjkQ1arzqVh5prwnykxrKBcKHhnVA-aTdnznvbVgv_VaNuByF_Xs1C9_KFODl0mL8iThxe-IoupCK8QWva_JRW3GHmBam-MQsS74P6TTZkHhGpRy45lwl_MluVXbwW1ukw72CgxsD6tn5Zy0gphWWpWBnWTi-CU0hQKM4DPZgV4Dl8BAVukEbXXLT8IVfLnasT-eslPH6BJMH1KrleqpuuX36BunEBe50Sz9J2zk-UZ10LfzbU6D3oZiwN_bxplg6IQF4tLNNne7n1yynS-nx4k-shDwtlbbm88UYEwhtD72ZzGMN1jYMpW8=w540-h175-no" style="display: block;" />
+<img alt="mvn package" src="https://lh3.googleusercontent.com/zmCB7h7_J2KLUKuiOktX73I2FCHZ2h5KGD9qJQzAHMHqKij6ahG7SunHBIJeQrnsxXDddqeJK6zNHDBDwjN0PlBAyThlIsp66BPS9bprauQFNYPSxd5_nVvTElShlim8NuXpSF-Uykx73KholpcD6Ij7r-AmwntgbsoCQHPJEkh8RXq3IcDHCwofDEh_HP-DoIFmTG3T7UILu_eAAsPfsSsw4kvTjCnEMW3BJk5aO2n-qleSQHYqIPZpUzBoaemkgP-7qwlqCfen-Zv6KmNnKu5Ifo6NLYh06ExIadQ5d8XBcFgVD11tQpmAgyseKVi0yOwN9w95zPDpXBhNpRXGIw7cH206qRlywGE47rI73Qbz9Sq9hb60iG5DxJber2E7Hngw6PcoVYWSAowF1mzXl7Oc_eX7kXUypcR7k5kNhOID_9kMio2KlySWIhjR73e69L-KteqXqt4BElZSipPCmNf0uyeGMGtn2R_bLRIaybWrIZSdAQK6sTmcvfD4-yCt0AcS1AGXHVqZfEQzy2PqX-ENAHovqHvuM2HV8PuvqU6NdMzfNpnqfcIN_FNqOGDMiGpeDrACNlfPT8jtT9hpSyeudU285feBRB0dcio=w583-h159-no" style="display: block;" />
 </p>
 
 <p>
 Maven also maintains a repository of dependencies on your local machine (usually in a .m2/repository directory in your home directory) for quick access to project dependencies.
-If you’d like to install your project’s JAR file to that local repository, then you should invoke the install goal:
+If you’d like to install your project’s JAR file to that local repository, then you have to invoke the install goal:
 </p>
 
 <pre class="screen">mvn install</pre>
 
 <p>
 The above command saves the packaged jar file in the local repository.<br />
-<img alt="mvn install" src="https://lh3.googleusercontent.com/0XDB0SuXO3F2L3VZDPgjI3oENZawp8pXcd1Ahngbqsm-NCKs7hdhPL5wWEa7hsrQ-CtqsI8PQMd615nwc8Ap6hdjoQCzD1RK4ajRW_T4i9aLR6SYsmFb91feV4zH7cZYyTJykoMmtQAORycTcDrCw-xJtEVYcg_v1sfnA6C-Bgs9eJ8pgEgmqKp3_TtMP_GZuGFGLArmoKaBBPI-qB5ZJke3KCLY6A_6MgiGaT4Ccl2-p4UXRpeXwhEj5WEvYobSRuoLEj9eDo0QnZ1k4uV1M3z2XsZYPDqPyjxurY-5KrgPzs1eidE-ajetkNl_ZQ0J6PEYx2MHm2m-5gq6kJrwSxzZ_VNm31pgGfFxwYRs9IC3Pme5Jw36bmcAJrJXMhlwM2vU0aeMBf3i_eH1CToxWolHDE91tQ7XmaX89BDv_mkvE0PWLmQkwOrh75iKG_0_xWr-XWlJIz_lu0hinZP4n0Vz452U2y8hNTzHu909wff2FQ2VZianRJ-YB4N1qkDZYvcvqbsg1QKewhQViv7SfO4kryeLjk1XSI5siC5xafrBlKEOXXgl1RFzM4JcF18oCvKpAvVan_9RNS75Fvw-7lTZNnkU8Qm40abfa_oIXH6pVmGzEsVK=w677-h149-no" style="display: block;" /> 
+<img alt="mvn install" src="https://lh3.googleusercontent.com/HQtqeMKwn3IgBxm5zSPgylzp9yIo97u0Ihl5hIgLpXNSSVICWCQUq1qdzMP52hP9ovKZuwF0QiR5xejkSxUQJ6gi9XkxoykmOiJthRuLlHWkmBhoSohYjog8MdXHj_QP7bPoNoLSANcxjhi_KZ1sP-p8dhcTDng15a9Ck-PpvdyRDl8KDmsQAhw9LbzmrV5RR9if2zzfTHDZlILoYv9Wr8nYy7j3ZO_SySbYDPY88IywwgumGFRwvWWi7X5Hf1R9KMKbRcxLZ7HEnaV3CGTXIsP6dGx3kJjOoRl5wZsx8SJOOP4-86qfnSV1GIIz6NBAEQ86Y-xUxcLO5uC-6CSrmyyRdhcs1zSqpdu6WO61tX7dTtxRjK7pdqZG_itR8A4OmoYzxVKacCuo5O8N5D_dyhzzqCYJ92h47W2ABPuqeNFcX1VeWPTiz6dk3Tdde1e26G813hotESwYUKWHd4TC2XbJky3RxEwqNW5lFU1p-JThKlnEuHjIOUCI0w9NoumHE7wPdDN1HbkJpjhEsH_ZRHvpPwyZC6LUtFjV0GX7uA_JaxC--q_sC9Fh5KdPVUp89bk2B5nHhflNkXh7_EmvHSNnddxjWLcRW_nHObU=w747-h141-no" style="display: block;" /> 
 </p>
 
 <pre class="screen">mvn clean</pre>
 
 <p>
 The above command deletes all artifacts generated by the build.<br />
-<img alt="mvn clean" src="https://lh3.googleusercontent.com/Uo3NNCIhcjg2RDAPY85kBCMnQ9LIbyziEOeYRD7XJK1wky0JKySTNXlh5KjJV8s6lYGJb5KrujLbk9gS-lywzpFtJ5NDrS2mM9K0InClY52UwFzoVuPrPB941X0GrBuar5tMX8iUoU-zjSVFwAt1XIDSeVvZ5GDcLNyimqKYrQFy-wEP2g7zPv3k_G-ttM1rslg_GrIuVaeVtX_vmFfe_TLEcGKxlbdKSs38gZxW4LFlFm1XuYkj1cjt0dkwcKOx02tRoFcHm2Jq1U7Qm3l7EnKITzrjVM6veBwB6iMpO9wcs1oe6SHDdur8318xxYP-USEh5XNADR1dhiCHtYFKz-zfkObm1zlmMctZpWeXKOClUcANHEKjiqEURg1JJZXVVm7qVkMCtRs5_jhFGtCku5gbKw5eAt9PWqzoRLWkHFfxdlaFNiuj1fCq3JxhvReOfx6Y40zzvKhNIE--_1iXIl87J43PGScI-bp4WpC8kcKOxiyNM2F0sINUz1Et1JgoEcfLvgeAF1dZNkkLuylIAjyz2oPitBU-LapA0gI8kL_yMe5dK9U1EfUQmpl-hqX5tMdq7E3a7bYJ_dpR32QFIhpIijXvoeBZIrWutzShYSrDkfGXw5tS=w542-h144-no" style="display: block;" />
+<img alt="mvn clean" src="https://lh3.googleusercontent.com/km18kJG5aisUESbv_PAB6doN5yesdPPEG15KFbEhs4FleeS_kPI7srtmB6jGOqyG-HzHjVaBBtnzRMURMr8eRBpF0c96fJxy8mKyDyzX6o5Sv9pMpRnilMWTSS_8nQS5U4ChDaMgcRl6BykuA0rNXAsOa0-4xnAqWBduNE2yhyNDDs7ekhcl43bR2JSIVURxEflOp9N6E8opHOAbI6ixkfaqJd2br2x51qcKErPslInd5Ca2PA2ptkjzfDhtXX1D732WjW2ufjfICFRw9Cn99XiSow8QiGFlbUmOJlfA8gQBo__JCzg9WaCFscFp3VLGsMn8eUY7Qy5OP3KfLzTdaw3XwVWqBXdTDqp7NYH4M0DTgL-6bQDXlOL7IY0U_Yuk3p_lzbBEpz11vQNGNrXeF6j2jNUr_1-4ifQ68F88jaGBg-UM-iAzF--tko2N4bgvhKDv0dFZ0TrG429tH_6QsApzmsU1qKtVxOFq66Dj_OCeD51NeZI8rxB9_ow8PS98kA71CYnOamsAGrmjjZyh_hKUIjBLhAIFlboUxjg--JudVlvsMEna7pNbuuuUgRF-Kj_lHLF5ofYOvKwuyTeWytYPhy4TSaxVQnFGYCM=w584-h138-no" style="display: block;" />
 </p>
 
 <p>

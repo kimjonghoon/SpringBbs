@@ -16,8 +16,8 @@ public class Account implements Serializable {
 
 	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 	static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
-	static final String DEPOSIT = "입금";
-	static final String WITHDRAW = "출금";
+	static final String DEPOSIT = "DEPOSIT";
+	static final String WITHDRAW = "WITHDRAW";
 	static final String NORMAL = "NORMAL";
 	static final String MINUS = "MINUS";
 	static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance();

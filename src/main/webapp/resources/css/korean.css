@@ -11,7 +11,7 @@ html, body {
 
 pre {
 	margin: 0 0 0.7em 0;
-	font-family: Consolas, "Noto Sans KR", dotum, "Liberation Mono", Courier, monospace;
+	font-family: Consolas, "Liberation Mono", Courier, "Noto Sans KR", dotum, monospace;
 }
 
 pre:lang(en) {

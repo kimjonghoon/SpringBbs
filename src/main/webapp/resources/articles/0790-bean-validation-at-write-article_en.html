@@ -13,10 +13,10 @@ private Integer articleNo;//Change int to Integer
 @Size(min=2,max=10,message="The board code must be between 2 and 10 characters.")
 private String boardCd;
 
-@Size(min=1,max=60,message="The title must be between 1 and 60 characters.")
+@Size(min=1,max=60,message="The title must consist of 1 to 100 characters.")
 private String title;
 
-@Size(min=1,message="Content must be at least 1 character.")
+@Size(min=1,message="The content must consist of 2 characters.")
 private String content;
 
 //omit..
@@ -103,8 +103,8 @@ public String write(<strong>@Valid Article article, BindingResult bindingResult,
 
 <p>
 On the post screen, click the Submit button without entering anything.<br /> 
-<img alt="New article test 1" src="https://lh3.googleusercontent.com/BsCH-rX2BTim1NeW85lw9LYnbD55iqZF-6Ql_4_1rczKpOly0na8tuiRKgZH6u4LzhzGQGaUibB3IptgtKG3YGnNxi7U7lj9VEdhMp_isPlVgF7tRKjP7nltvM_qggWL8SpD2O-k0vjsNcs8cjYuzxoMP9MdRmQ1uVJT-go8_Lvf3u4T0eNJjCw_DbLf1IPq62HTyhFxlFXnyH0TGSNvCp3aJKGDgC9bxYTF_vj4qRYnoe3HAbOSdANePmoLfpKwpGsDXQ48pMugOiC-KgmImyWsguUW_3ZhftlWrcC7cyMT7-R6yEdTE3IcHmvlvLM88CrqpnPjVbi3twi6CWrw1iQR7IQdxTvz5AIbw4eM5VrbsC8vDzp1fWq0EjKnn5cpA5Uunf3JIyV-tTaio4UBgfYcb6iNZ179M8KgcMr2e3YYahxYZrIAM15ZQCaZ_WVcLxhDQCYNX8IqORX1L7VjHVxagQJLZYnNVDVus5kG-sLDTTVy5ER0QojCj_htriOFZg1ockUKJNsfJ0tta7Qqy0iXo9I0rbD3CVa7T5rXnaZ3D8aNKDzxwcEY79wa7apoj505Iw8BxgMzt2svyAaUghRLpS1ELnwi10e7DE_7l3CRvq_Kw5Hjm7vF=w598-h447-no" /><br />
-<img alt="New article test 2" src="https://lh3.googleusercontent.com/BOlgADl_AeP6-ZfcCSpgebCa-OjXOpxesSSDmg1cfmNL1ta6-4EYYpvyzYERtXWp3z-gJkDMj6i9sIfyQeygW76TcUEbuuotXA70bwngkLoBQhg46mAbH7hK03s_v4CAMaS6eE0nMT0fbb1ZG0HMBljck5ngT4Ys1cXLdYzhQGxBIzHuSXRWrI8sxq_TrvMmLNLeUFNzUTMwPc9RrfQhVpEihonZ_fD0e4KG0teLkpZlqdmY-KUK9NfQ2mJpRGk_GWBZLX1eGcIiWnYqaFOjdM2T8L0DSr21ftYKunQdGI3ZbMnuvyaF22wyO8I6640eIPhekvOUjVfHUB4nMaJuaShXMEYnGaNTkT4KJEw3PNfU7sJKKeNTitZTtrv5zWogBLVGOKP5uHbbrGX3JWYNoUsA6I9gLXNQfl_GqQyyNyUKdyjLhf5ULAXiwKU8ia0yQTuRhYXB84NzHwY3VzaNat4eR9elDwKWb23RECzyjfbnOhCQqBxKRx6eQrDWhzLTYJPMinG0e7MMb1IMPnuONMV6uKgmcmIhprchS4quEsrRU2W0ubvlgMZbcA2ofl-0SXHyl32IVjssS9vB2aVq7okjqgvdgIRfkTXRzWld28VlCPXb-dPnn4Y-=w598-h524-no" /><br />
+<img alt="New article test 1" src="https://lh3.googleusercontent.com/QCXQioh1cvBSctfkuS4VWcozTRCo00sELf1waptSk2NqI2Q8VI6E_I4aLrdB3GoadzEyd5sKYIkMGO0J3IguzKaVrY_SCJ7-DJ4Vl-z74JVY4yJoCxtTWOwUDRj1E4eqjG-JaK1B9IXCjrgCPPiU_JonMWXDpAGnTkZkSIB3Nz3Y-TTFADEcrol9UFjlHRIGsO5ImwWdVyOcd_IF9i4OudOjWWHhVnxLX4mRhEY6-efcmAB44aPs7N8k7TGqDzBSthX-N7_R_Dy1K2NvXtBu3Vc8US5IrXgOpi2OUqMxOgonBXQKUDZ2bU12nazOtIBrU79VcQdBdc3cmb5zR9Xv4qn1aBqKKTazx3wEweqIZMUgtpfc2tVRZi2_rah4z2KI3GXW71okjnx3_1p_hZ8ZUXmbmRQqlEljtD_Z9QsnQIqUgrxFThvY76vggoW4G--UGnEgFsYGnIndDKEyiRw3Z2xiQ87_YVyuAjGxnOZxZvbEodaSCnqswBIeNhoe8OWBzMLMo0go01H1pHg_FFmZWY4oWsljp9MbDKksE4ewvt-ojPrmVJBi_QGeyA2lswOVJYPMIbj8HcHjKC3kwk0pya53hHuHc_KBM659QjI=w610-h403-no" /><br />
+<img alt="New article test 2" src="https://lh3.googleusercontent.com/oOgplTjxCIqPqgEsjSomAysBBTttzoiSAWCd97HH4G_uwQppqbk20gW-va8r2W58y5jY1sqQFhUbV7ilKmO29dx5rVWjcbKMeeZgnkb7RKq3AsT8Flso-bwloXOf0EA0opbo24kAh8TXDBEKAtnCg48O1mLRjbOKsj62-W97Vne_CK_uLfIOSXPvXiHptWrTTY0oEYOHMPKv_aOgz_b8Ydjs7mAIyBK7oTv6FaVBuYclreq-R0eXJUv-xrk80OYr8hRcRqSYWBJKOPeZ4m8qhfoeSCctLb8nhdEbmlvcSWlXiTpnFHJLkLdTzJabF_TVQbiFD1vttRIAZkcDms2NXkyziif59mmZistQmAKvaQEOFrv2VLVQh7xFqZrWsxeNzln3RdO1dxJJGoAQ9i6LipI6cWIA3p5x0r-AALYStJ1wKeh-BwbaGTkx-6mWGm6BnUOEw073fAiEZKtkNQUwH2okjiuw0DmyDQcDH0IokwD7sFus7zDzx3zDQONuPQfZzKj5sUIcZ7xSC62rHxmY31K62XR-YAeqgul4wOZ0jN9Jp999LwutDp36vuLDEjCpmCH7a-Zf3Hq-6XeKMsAws3hKaRqkgoixAXo8UcA=w614-h494-no" /><br />
 </p>
 
 <span id="refer">References</span>

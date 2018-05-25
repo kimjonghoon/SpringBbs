@@ -5,7 +5,10 @@
 <h2>Creating tables and triggers</h2>
 
 <p>
-In the Java bank example, modify the account and transaction history to store in the database.
+In this section we will modify the Java bank example to store the account and transaction history in the database.
+</p>
+
+<p>
 Connect to soctt account with SQL*PLUS and create the following table.
 </p>
 
@@ -58,22 +61,6 @@ insert into a values ('Carol');
 select * from b;
 </pre>
 
-<!-- 
-트리거 검색 쿼리
- 
-SELECT TRIG.TRIGGER_NAME "Trigger",
-       TRIG.STATUS "Status",
-       ALLO.STATUS "Validation",
-       TRIG.TABLE_NAME "Table",
-       TRIG.TABLE_OWNER "Table Owner"
-  FROM SYS.ALL_OBJECTS ALLO,
-       SYS.ALL_TRIGGERS TRIG
- WHERE ALLO.OBJECT_TYPE   = 'TRIGGER'
-       AND ALLO.OBJECT_NAME   = TRIG.TRIGGER_NAME
-       AND ALLO.OWNER         = TRIG.OWNER
-order by TRIG.TRIGGER_NAME asc;
--->
-
 <p>
 Create a trigger that accumulates data in the transaction history table whenever your account balance changes.
 </p>
@@ -122,10 +109,6 @@ package net.java_school.bank;
 import java.io.Serializable;
 
 public class Transaction implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4845616677229242217L;
 	private String transactionDate;
 	private String transactionTime;
 	private String kind;
@@ -213,10 +196,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8412950380936847545L;
 	private String accountNo;
 	private String name;
 	protected long balance;
@@ -225,8 +204,8 @@ public class Account implements Serializable {
 	
 	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 	static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
-	static final String DEPOSIT = "Deposit";
-	static final String WITHDRAW = "Withdraw";
+	static final String DEPOSIT = "DEPOSIT";
+	static final String WITHDRAW = "WITHDRAW";
 	static final String NORMAL = "NORMAL";
 	static final String MINUS = "MINUS";
 	static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance();
@@ -421,7 +400,6 @@ public class ShinhanBankDao implements BankDao {
 				e.printStackTrace();
 			}
 		}
-		    
 		if (pstmt != null) {
 			try {
 				pstmt.close();
@@ -429,7 +407,6 @@ public class ShinhanBankDao implements BankDao {
 				e.printStackTrace();
 			}
 		}
-
 		if (con != null) {
 			try {
 				con.close();
@@ -679,10 +656,6 @@ package net.java_school.bank;
 import java.util.List;
 
 public class ShinhanBank implements Bank {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2284812319594381302L;
 	
 	private BankDao dao = new ShinhanBankDao();
 
@@ -765,7 +738,7 @@ public class BankUi {
 				System.out.println(" 6 ** Transaction history    ");
 				System.out.println(" q ** Quit    ");
 				System.out.println(" ********************** ");
-				System.out.print("&gt;&gt;");
+				System.out.println("&gt;&gt;");
 				
 				try {
 					menu = readCommandLine();
@@ -777,11 +750,11 @@ public class BankUi {
 					
 					if (menu.equals("1")) {
 						//TODO New Account registration
-						System.out.print("Enter the account number of the account you want to create: ");
+						System.out.println("Enter the account number of the account you want to create: ");
 						accountNo = this.readCommandLine();
-						System.out.print("Enter the owner name of the account you want to create: ");
+						System.out.println("Enter the owner name of the account you want to create: ");
 						name = this.readCommandLine();
-						System.out.print("Please select an account kind. noraml (n), minus (m): normal (n) : : ");
+						System.out.println("Please select an account kind. noraml (n), minus (m): normal (n) : : ");
 						kind = this.readCommandLine();
 						if (kind.equals("") || kind.equals("n") || kind.equals("m")) {
 							if (kind.equals("")) {
@@ -802,30 +775,30 @@ public class BankUi {
 						}
 					} else if (menu.equals("3")) {
 						//TODO Deposit
-						System.out.print("Please enter your account number: ");
+						System.out.println("Please enter your account number: ");
 						accountNo = this.readCommandLine();
-						System.out.print("Please enter deposit amount: ");
+						System.out.println("Please enter deposit amount: ");
 						amount = Integer.parseInt(this.readCommandLine());
 						bank.deposit(accountNo, amount);
 					} else if (menu.equals("4")) {
 						//TODO Withdraw
-						System.out.print("Please enter your account number: ");
+						System.out.println("Please enter your account number: ");
 						accountNo = this.readCommandLine();
-						System.out.print("Please enter withdraw amount: ");
+						System.out.println("Please enter withdraw amount: ");
 						amount = Integer.parseInt(this.readCommandLine());
 						bank.withdraw(accountNo, amount);
 					} else if (menu.equals("5")) {
 						//TODO Transfer
-						System.out.print("Please enter your withdrawal account number: ");
+						System.out.println("Please enter your withdrawal account number: ");
 						String from = this.readCommandLine();
-						System.out.print("Please enter your deposit account number: ");
+						System.out.println("Please enter your deposit account number: ");
 						String to = this.readCommandLine();
-						System.out.print("Enter transfer amount: ");
+						System.out.println("Enter transfer amount: ");
 						amount = Integer.parseInt(this.readCommandLine());
 						bank.transfer(from, to, amount);
 					} else if (menu.equals("6")) {
 						//TODO Transaction history
-						System.out.print("Please enter your account number: ");
+						System.out.println("Please enter your account number: ");
 						accountNo = this.readCommandLine();
 						List&lt;Transaction&gt; transactions = bank.getTransactions(accountNo);
 						for (Transaction transaction : transactions) {

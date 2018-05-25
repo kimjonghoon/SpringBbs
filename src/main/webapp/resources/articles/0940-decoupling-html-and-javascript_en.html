@@ -3,11 +3,11 @@
 <h1>Decoupling HTML and JavaScript</h1>
 
 <p>
-DOM 모델을 활용해서 이벤트 핸들러를 지정할 수 있는데, 이렇게 하면 HTML과 자바스크립트의 결합도를 낮출 수 있다.
-다음과 같이 엘리먼트에 id 속성을 추가하면 이벤트 핸들러를 지정이 쉬워진다.
+You can use the DOM model to specify an event handler, which can reduce the degree of coupling between HTML and JavaScript.<br />
+Adding an id attribute to an element makes it easier to specify an event handler:
 </p>
 
-<pre class="prettyprint no-border">&lt;input type="button" <strong>id="some-button"</strong> value="버튼" /&gt;</pre>
+<pre class="prettyprint no-border">&lt;input type="button" <strong>id="some-button"</strong> value="Button" /&gt;</pre>
 
 <pre class="prettyprint no-border">
 window.onload = function() {
@@ -30,7 +30,7 @@ The subject of the exercise is the view.jsp file of the bulletin board.
 <h3>Attachment link and Attachment delete link</h3>
 
 <p>
-<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
+<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/CuG0cxi56sIl6YtQue2lJCng-kNM1x69l-7VYhVOQvRKBLyucWOCn-KnyRsAl-9vL_YVf9_qtN7ALWPT69islNQztadJaU15-2YCTpQI-pk-Qsxkn8seMiOjPZpNIgiNiONvFVA3Xnz5L3tvtGvwxJEOO9NvRMdSAzmkmHdvs_JX7syEWqsKd62gTuKQkHgLZXHkF7rwWFiPOmCSwnXTKxQeupmsiiLiIjomrXAQEY8gFfU8TqCRW9SP8aNkyse7iGXD7wpDRsIAM6X3fWSAJodw6iqoR20H5pnW5c6SZ6dYeZSXVXJkO_ErDH1K7mGa4i-Rybq79aC-qa4Esc5or4iOa7UrHzzDc0NWFN08Du1CTFEKrqSYvod0ErCnJJCCtcsltJ8LkFMw9rfv99goy5L_Vu-R-6qip1yTmVPoMcEG42IA8c3qGAH3Mb6hxQ4GAekRWIfMN-aO6I-wJUpE_x0NwLNlVZiak-ydYDXcNTn9cPnEZV59YhoiaGnyP8ZuAKkFZWaN_Q5Z0g0KLXFzn1Z6MsKYs0o4SYJKsVKt9hUrhb_kdU7kPaTo-jtNXSy3YTVv-zyC71w0D6UY5AWO7Mur9d6eUBGgsXsEwOA=w612-h127-no" /><br />
 </p>
 
 <p>
@@ -98,7 +98,7 @@ function initPage() {
 <h3>Comment</h3>
 
 <p>
-<img alt="Comments" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
+<img alt="Comments" src="https://lh3.googleusercontent.com/dyW3vdic9cfmYT1Xna4Z5w57apuy1N_RZwh3RhljuHlOOcFE_5iCZOG_kjhOUNO-inQAWssymyDNN7PGfjx7L4XDLLwnlT1dcCXyzJ3KA7nLsnDGpHuH0I9NuBRMW4dzMH5zzN3CJgkBZZkAdurrzadmszYUuclLnFgeU0zwNUd5C9D0IpNEvO5XnlXSZul3I-WV0G3VstEdAf3I69-OibHCXzg18HqZp6vgmQUdtZqhElbRlHuQU-tl1muQAwhpzO_FBDtuj_eTtEX9uzRN3zTYGJvOOL1Gz1uLB1sUH9bXmB0W6ehLzFDjQvfHpLj_BNE3NsEBkCTF9f2nde-l9UH_2AQ8LJRAPNHZaoLqi3OXMLLn5CBrcztiypZCd3apI0sQ_rNqowiHARfxNY1249ttHa1oQJoyqbyn6ehof4oGgTBFG5WU9e3rQnpQDBDc6BmZrvks-hoGBC9h3_uZgucnnTIdMgcXmXSzLqjnE5adYvpVUJUU4m52OfaIJt8kT0d25Xt_nMLNjIeBPCP4uP6IT9WQGagsJkDeL3wi8WrrySkv7uVNpiumtNtnAV-L6_7C4ljujv-9ogzxCNBKLVM7wQR39Ndo2HU2sgY=w598-h195-no" /><br />
 Modify as follows.
 </p>
 
@@ -226,7 +226,7 @@ for (i = 0; i &lt; divs.length; i++) {
 <h3>Next article link and Prev article link</h3>
 
 <p>
-<img alt="Next article link and Prev article link" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
+<img alt="Next article link and Prev article link" src="https://lh3.googleusercontent.com/tTA0pw8-Q1aMsr3ZdYi_3nVb0Nb9m1GGZ77lMxHGc8kzmcV-hJp3DZps53lY1cxrTMrHS_MzaCRD1fCcYfMQyxqgrv7OMCVDXB_vT6Mgt4Szg6PH_kUpipUx6pqgE-TPFbiTqhtVSnRtdihYSEQop41Us2Q9-bSMAxuFcuRLmt2RnRPmkJBleKcMRdSRxW870UZvs-KuYzO4Tb3ZCyQxyA6PAHd2lFM4EXZUS4fh4D2TQ5Fc0AE1M3YPj5_dIaoBfVtsYJjPUPqpY7TwtUMA9RBMjzU3_Jrn3ZiUpjFn6c2WGLxmZtAOZiOZENDwkAlfT7LcmZwVkDdEddz5xJnM7x47b9vABo0M-3n68L8fCLWlr2m4xkff4jSdfDlTqZTS67y4xQQtQ8-D2_QJu6Lq7Io1wHDeRscnSfThzq-rY4V2AaN_WeL9PKghbRbYDEjfdXVa-MTzzNXjnYAgFHu6DQqnFwSdtb9M7JO4xbC6nJgBZEeZr58glZgYp_nxtJuBFCzmp9A48CtjafwcfPexDkUZgzC-PJIBsrXSdEGbDhrXvFbPn3rqj2tqcnk9_1wKXkHq3xJPJKcWcLD_C6O9P3Wx-qs9-eIlAmAjYkI=w601-h70-no" /><br />
 Modify as follows.
 </p>
 
@@ -261,7 +261,7 @@ for (i = 0; i &lt; links.length; i++) {
 <h3>Modify/Del/Next Article/Prev Article/List/New Article Button</h3>
 
 <p>
-<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
+<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/ZoV46kPu_ZZRmVAVR8s4tcvMTlr3h2Yb61-GaLENwpI0KnPXDh_fRz9zcxoFWH5BIXK4aCMKGD3uE8zRpxVoh-B47RGajxDr4VafpkRHCMuAJD4gu7dNhs9_be5z55APVgoMMYLv0vIkOQe-70vHiVjYWOlyFHT2axa9E44Ga7w_xK1ds8Z68bcD8uuiIy_vqvYcB9_EjsusKPQCgLcRmt7jSnzDK1w4qbJJA-wzLy3XdU3RWO_6NyGbXA4GdVH-2S3P87-lA1K5eY1MLbPOCQ4l7Z1wXFA6HmuxkRWLzeMBDyLfD10i7Ihcws5H6utaZwnkokwOXKz7Ds7E1GsmKjLSKSIISqxx1vUArf38ZtY1UNVgrp1q-EbwsHfy_KCKFhWmGM4BFQsHOVgLmvD5S_-Ef8m71AnHCcYoQeV18vlvpNEPD8aNvnzRcaQFUApqpIgNFgakMpkcApMFC0yWzfNt9HgtDFHQBfW2_pdKO1zmIuIIztV8A6Oa6Ccd7JNcbW69eiaP8SWoJONdppjzefhTOM2BiW1qpaeIHfo1rCViZTabEOedwIsrfUp0MHWKQXnuMJyhJuuE8TxhRlCJdSRMcpno5SRMJzvMjrI=w606-h37-no" /><br />
 Modify the following code. (Modify both of them)
 </p>
 
@@ -353,7 +353,7 @@ while(i--) {
 <h3>Title link, Page move link, New Article Button</h3>
 
 <p>
-<img alt="Title link, Page move link, New Article Button" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
+<img alt="Title link, Page move link, New Article Button" src="https://lh3.googleusercontent.com/EnMZionM1HhRuOv0TkkrBTcot3gejJFv51PHCryM0TfR7DX15PmFjKdKJfb6sLHoQ8cy2CdowJrarh5BDDUeP_qJyVQSGj6gvZ6btaSG5Alw7kqyN3Hi70wDTVfkP5IyFuZJRY2dSo4_ZtlSsR9qX18YFnmipb11K73slyA-yme52OWsX9ZdJphePKQDAy0wjp5JgisHY16haj001i4zaZd8A2Cp3qxscODmYmZUKRtJ6MEcdCaMESavs3z32sxLqkzy2jyl0IIGhUCIAJLehxQyCrb2DlKPY0bKteMbhaSEemO0AjW_0lf1EDdl43X5ULtB6XzfDZ2CGcy3uUXbvz89c0Rv37oGz3q1KsX3N0kNDxTG4d-d-hAz9UcdOasiJvxxCO9yRI4pRwbeh9iLnQPIVL77YPrEr4_jqwlcvD40u9s8fohQhuD3cS0wN0hwZYnKJGi44XTXvF0hHF23Okh6yT1-7HNvBjpFUrwPWh3uALanUVwRN2FIL0rB5J19UEydoxR8x4qm0jIW980zSkjOVTjs36DIYs0p-OMc_p9JmEspen8E6Xqx4b05zqGZ57UD_hC4eMOqFHqQy1ZZTikK7PjPfAw6YJX1_lE=w619-h322-no" /><br />
 Modify as follows.
 </p>
 
@@ -458,7 +458,7 @@ writeBtn.onclick = function() {
 <p>
 Modify the JavaScript DOM example to use jQuery.<br />
 Modify the download attachments link and Attachments delete link as follows.<br />
-<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/1riG_TPFsNXTIeUU5H5BKvQq6b6nrCOespVxbrfR71phsSDkRxxvCmg7W3cNwZUt0gB30dnAbOijqKdzdL2IHYvcvHjozP-PdO5Wrm1dADBsEzBWFAUr31KPWQ3JqrmB52PtBQtz6p-IdapTtGsnHjiOBB6LyGLS7FzRkC0fQjy-W4Bblld_UGarb9bnSoe4K724Fxmyp8CmaIK2X_nzHDCetsiZ5Tg1l5KDs2BSQqccwPGHdJXnII2m6ZdTMuSK32jk86FZcdxWSbiL19MX-1eVCz72kfkTj1OwiiJnR8X4jHze--MMAiSpBxRfJvg8odvHQuvLqovY4e7v1b9YPyv2SIWcu1Vr8gNfhW2OdKvl7hwWsQUgVFZURMbbrrHCQEUht82a_G_ulhU-Z3ug-aLNZOTxydp-Q87VS5u3zeyDF4I_vZvh9QznM6y7g30oVek5tu-mJfDmwAgNy2hjV6spy_3iosJ1nCGUq2Y-zhF5mmjcrG-BoRvlMd05lXODp6OJz4Be2ym17PM88Y2INB2Fo2x2JkCEiLNFfBIlC_Gne8QSSbZmtGiCCCkWBM17q5iIq9Gq0l9rE4JAqT8IOap4rc12TxYJbKDOfHk=w614-h196-no" /><br />
+<img alt="Attachment link and Attachment delete link" src="https://lh3.googleusercontent.com/CuG0cxi56sIl6YtQue2lJCng-kNM1x69l-7VYhVOQvRKBLyucWOCn-KnyRsAl-9vL_YVf9_qtN7ALWPT69islNQztadJaU15-2YCTpQI-pk-Qsxkn8seMiOjPZpNIgiNiONvFVA3Xnz5L3tvtGvwxJEOO9NvRMdSAzmkmHdvs_JX7syEWqsKd62gTuKQkHgLZXHkF7rwWFiPOmCSwnXTKxQeupmsiiLiIjomrXAQEY8gFfU8TqCRW9SP8aNkyse7iGXD7wpDRsIAM6X3fWSAJodw6iqoR20H5pnW5c6SZ6dYeZSXVXJkO_ErDH1K7mGa4i-Rybq79aC-qa4Esc5or4iOa7UrHzzDc0NWFN08Du1CTFEKrqSYvod0ErCnJJCCtcsltJ8LkFMw9rfv99goy5L_Vu-R-6qip1yTmVPoMcEG42IA8c3qGAH3Mb6hxQ4GAekRWIfMN-aO6I-wJUpE_x0NwLNlVZiak-ydYDXcNTn9cPnEZV59YhoiaGnyP8ZuAKkFZWaN_Q5Z0g0KLXFzn1Z6MsKYs0o4SYJKsVKt9hUrhb_kdU7kPaTo-jtNXSy3YTVv-zyC71w0D6UY5AWO7Mur9d6eUBGgsXsEwOA=w612-h127-no" /><br />
 Download the latest version of jQuery from <a href="http://jQuery.com">jQuery.com</a>.<br />
 Put the jQuery file in the /js folder.<br />
 Add the following between &lt;head&gt; and &lt;/head&gt; of view.jsp.
@@ -514,7 +514,7 @@ Comment out all the existing contents of the JavaScript, add the following code.
 <h3>Comment(jQuery)</h3>
 
 <p>
-<img alt="Comments" src="https://lh3.googleusercontent.com/D3HfqeCzqlwpQ-4-nhe_WBcpgllpb7_oICGk1Jz0ZY3hL2fcAWbSaHm4wASjeYivkWEJHx_C7xqC0CcOBfpm1lYfLnEXOW3G8J6i6DDOdUrvgLxzECgx0Tn_L0BAQUnoqDIMODxB2F2fz9Cr0p9pgRgUIHHD5FTbP3jHhydHLI6bycLl2d5oSr5wXRIMG_vJJMHBLp9dFaUzj2ZV0P-qP-38Ucz7jruPhemOEGPCBrAF88glE0Zjo4aicvDUSHANtIyG2GMj9BJ-EJSmjpLkBo2VWFEbQE2oO-k3RZDSm3RNasDPZnZgU4VSuMQi-r1GaaA_IaAuw8Nrd3x_86Uh8By8fqs-adG0Wy6fyXju3w3gdkrhxwr015MA2d3nq-p305664-nWI1j2sGSWNMQlN9h1rRq_oyBKPjZc9evXoQMjqoG6-syHCgnKotF6EIXozRTk38SPQ1YCctpLkJRbFFead5lisMH46d8xU-lq9b-M84Ai4IQY3boccXhszaVjjSb73ZGdVfaDn2Ubm8g-Dmmp-B5cl2TiyUmlYdziPNWkzkCEXU27Se3HChBPkQml8uRkGTwHjgpfXf9AyiL8a2uheL0Csm2L3eOp7rs=w603-h288-no" /><br />
+<img alt="Comments" src="https://lh3.googleusercontent.com/dyW3vdic9cfmYT1Xna4Z5w57apuy1N_RZwh3RhljuHlOOcFE_5iCZOG_kjhOUNO-inQAWssymyDNN7PGfjx7L4XDLLwnlT1dcCXyzJ3KA7nLsnDGpHuH0I9NuBRMW4dzMH5zzN3CJgkBZZkAdurrzadmszYUuclLnFgeU0zwNUd5C9D0IpNEvO5XnlXSZul3I-WV0G3VstEdAf3I69-OibHCXzg18HqZp6vgmQUdtZqhElbRlHuQU-tl1muQAwhpzO_FBDtuj_eTtEX9uzRN3zTYGJvOOL1Gz1uLB1sUH9bXmB0W6ehLzFDjQvfHpLj_BNE3NsEBkCTF9f2nde-l9UH_2AQ8LJRAPNHZaoLqi3OXMLLn5CBrcztiypZCd3apI0sQ_rNqowiHARfxNY1249ttHa1oQJoyqbyn6ehof4oGgTBFG5WU9e3rQnpQDBDc6BmZrvks-hoGBC9h3_uZgucnnTIdMgcXmXSzLqjnE5adYvpVUJUU4m52OfaIJt8kT0d25Xt_nMLNjIeBPCP4uP6IT9WQGagsJkDeL3wi8WrrySkv7uVNpiumtNtnAV-L6_7C4ljujv-9ogzxCNBKLVM7wQR39Ndo2HU2sgY=w598-h195-no" /><br />
 Modify as follows.
 </p>
 
@@ -594,7 +594,7 @@ $('.comments').click(function(e) {
 <h3>Prev Article link and Next Article link (jQuery)</h3>
 
 <p>
-<img alt="Next Article link and Prev Article link" src="https://lh3.googleusercontent.com/3cEDfRYqLZ43LZfTE7X9dfZCH0fp6OYHou88jA2j6GjeB-m1WBwNvXSuhue-3rijzvV6m-W1CsGHzc-nllIeeQ8SMuWX8fp07JYXyJSgP1Di6iwAZT1VMhYqEfrrKI_YkaAvIB82ngMPJoEp31EXoVX3M-CwpYh2BCQEeh8fW2GWGGxhPwp7pzrJVyrkJCIlnl0UjZewnrDUo0tw2nvdEigJUg2bVA8g0i7vLLqm2vb129HKcvl2d9R47GdZkXirTiICVScaVvyNPZa9uQtA6l-uSdgabdJODPKkd-XiJ78181b7djmAzb1egKCcV-ZR4dUA6W8GYaXBzCVWhv1CfyV0EImhRbYTZTkE1YHJcA3gdvYJDjkv1DCrHVj2PVb5UF97h3TDoPT3kejMbsXQMEbpDpj8NjpHUwGIkvjSI3edRk1jaLOooOO05m997SCGCPKQsjBCWJmpuhi2fxzjLQOvfdU9XX61doMReGT517Xf0D1SlDm8ro7Uf47OlXumHGXuTPNeWm20OyS7XBC9NKMDv5sfxR05tTrPyTR1WpHAIOybfcRBDdKowL_sXX7qcEcS0MxXZjdLozIkZzm4Q9dHf3F8zDN7EPfk3LA=w599-h70-no" /><br />
+<img alt="Next Article link and Prev Article link" src="https://lh3.googleusercontent.com/tTA0pw8-Q1aMsr3ZdYi_3nVb0Nb9m1GGZ77lMxHGc8kzmcV-hJp3DZps53lY1cxrTMrHS_MzaCRD1fCcYfMQyxqgrv7OMCVDXB_vT6Mgt4Szg6PH_kUpipUx6pqgE-TPFbiTqhtVSnRtdihYSEQop41Us2Q9-bSMAxuFcuRLmt2RnRPmkJBleKcMRdSRxW870UZvs-KuYzO4Tb3ZCyQxyA6PAHd2lFM4EXZUS4fh4D2TQ5Fc0AE1M3YPj5_dIaoBfVtsYJjPUPqpY7TwtUMA9RBMjzU3_Jrn3ZiUpjFn6c2WGLxmZtAOZiOZENDwkAlfT7LcmZwVkDdEddz5xJnM7x47b9vABo0M-3n68L8fCLWlr2m4xkff4jSdfDlTqZTS67y4xQQtQ8-D2_QJu6Lq7Io1wHDeRscnSfThzq-rY4V2AaN_WeL9PKghbRbYDEjfdXVa-MTzzNXjnYAgFHu6DQqnFwSdtb9M7JO4xbC6nJgBZEeZr58glZgYp_nxtJuBFCzmp9A48CtjafwcfPexDkUZgzC-PJIBsrXSdEGbDhrXvFbPn3rqj2tqcnk9_1wKXkHq3xJPJKcWcLD_C6O9P3Wx-qs9-eIlAmAjYkI=w601-h70-no" /><br />
 The HTML code has nothing to fix.
 </p>
 
@@ -623,7 +623,7 @@ Add the following to $(document).ready(function() {} function.
 <h3>Modify/Del/Next Article/Prev Article/List/New Article Button (jQuery)</h3>
 
 <p>
-<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/8qKr5KQn-CDj-g3xoTrUeJRzg9Vx7ptg9IO3nCVfEzpn3h4IdrBFHKaHbZLd5oQpzoSax6xTKgt4JHwqqfrMPy4mywlYFkqSHmZmy-uCqDwiIqsHhh1l5HlkcT99o3JvC6cj-CbWgNfFobrCcumhcnMypfocGdRYIrVDH6csGcyhUmfDr_jQUolkLWcvbsuwEvKHTW5Z52fN0z6nXKu0YXXXQdFImMIaooU2Qyo7_t5im4oLbM5RiKJI95x7AUrKJjDgTCpSzLKo9hKEEDmnANgZi67h6kePfheYWrNj2s2vjiHH_AczG0M8B3z26flF6FtXoMnApHWosnTZTwfr_90ofYFR_8l2-HC1r0HQxissKvLxpBna1xB7qGuX21RSw6RJWWz4m0K4C0-tCPxws63A6mlivjlZTp9qbugpN1DjYD-IRSCbAxw9kdcL6-ZfgZjOQv2KBmto29p3RRyHaMaAgX35NVYQ9mO48Jq60B-wHfobisoGeQcJLOTto4LqhJ1Gu6hI2xm9OxL8sM8fPYhsKeEPdgWvz4HUimYdSaVPTOu8OkNVs2XFg8PuXrMdHyQf_nxNLbBQkzIZz3jUBEc742mugOfOlrGmFN4=w599-h33-no" /><br />
+<img alt="Modify/Del/Next Article/Prev Article/List/New Article Button" src="https://lh3.googleusercontent.com/ZoV46kPu_ZZRmVAVR8s4tcvMTlr3h2Yb61-GaLENwpI0KnPXDh_fRz9zcxoFWH5BIXK4aCMKGD3uE8zRpxVoh-B47RGajxDr4VafpkRHCMuAJD4gu7dNhs9_be5z55APVgoMMYLv0vIkOQe-70vHiVjYWOlyFHT2axa9E44Ga7w_xK1ds8Z68bcD8uuiIy_vqvYcB9_EjsusKPQCgLcRmt7jSnzDK1w4qbJJA-wzLy3XdU3RWO_6NyGbXA4GdVH-2S3P87-lA1K5eY1MLbPOCQ4l7Z1wXFA6HmuxkRWLzeMBDyLfD10i7Ihcws5H6utaZwnkokwOXKz7Ds7E1GsmKjLSKSIISqxx1vUArf38ZtY1UNVgrp1q-EbwsHfy_KCKFhWmGM4BFQsHOVgLmvD5S_-Ef8m71AnHCcYoQeV18vlvpNEPD8aNvnzRcaQFUApqpIgNFgakMpkcApMFC0yWzfNt9HgtDFHQBfW2_pdKO1zmIuIIztV8A6Oa6Ccd7JNcbW69eiaP8SWoJONdppjzefhTOM2BiW1qpaeIHfo1rCViZTabEOedwIsrfUp0MHWKQXnuMJyhJuuE8TxhRlCJdSRMcpno5SRMJzvMjrI=w606-h37-no" /><br />
 The HTML code has nothing to fix.
 </p>
 
@@ -687,7 +687,7 @@ $('.goWrite').click(function() {
 <h3>Title link, Page move links, New Article Button (jQuery)</h3>
 
 <p>
-<img alt="Title link, Page move links, New Article Button" src="https://lh3.googleusercontent.com/uKPsywVrTe_w7L1lyUkEZ1jwmx7cQDtiLLhHWPk2H4lrpLabClkwJXO7vBTzFgl-zR_oQ5vfR2pigBMFlPwICubK9HmedcBAXd9BZ4K08n8oDNxtmeeILUEI6mWrzYtCdeFsDys_0Yieviy0D1judNBzgxGQeYAllNLb4hnvMhkbTEQE1bQuR4swnau6TIUP8j8Wt-6iC12GezuFOUnxqxoUm6M8Zp3hQ0rp73JK9uA0z3s7-qlSB2Hhfz2aEgXx9qgAGGY7bNPrcvqksNJOrjSeGo326JFNN8LUd9idcEXtq_YSwNA4w49QYL6i08ZRnHRPKZ-n_gKijwUcqQn_kkcXvgpOeyvaia6BQNBVsV2dLRwoAiCZPni4bGDHQScrhbc2XAYYjCR38JRnIVHQWgQJ_2Oz50_xjIIDAPaOFcKjIs3sLMj8KMRrIbwo-1oeXdD_scKO_PWRonYc5hTd7rRknZ7-2us5zxfO82jATALaUvFOYj7FEBwQg2QEf1aGG_ESI2zZV4GPFSI-4c2Z9VzTpYDT-Ti759t--oc9KTKMfgxypij5TLEcibaPRiICYJWDBctL6ss8ddNqVyVoR3IPJHV4LOScFsAiMT0=w610-h154-no" /><br />
+<img alt="Title link, Page move links, New Article Button" src="https://lh3.googleusercontent.com/EnMZionM1HhRuOv0TkkrBTcot3gejJFv51PHCryM0TfR7DX15PmFjKdKJfb6sLHoQ8cy2CdowJrarh5BDDUeP_qJyVQSGj6gvZ6btaSG5Alw7kqyN3Hi70wDTVfkP5IyFuZJRY2dSo4_ZtlSsR9qX18YFnmipb11K73slyA-yme52OWsX9ZdJphePKQDAy0wjp5JgisHY16haj001i4zaZd8A2Cp3qxscODmYmZUKRtJ6MEcdCaMESavs3z32sxLqkzy2jyl0IIGhUCIAJLehxQyCrb2DlKPY0bKteMbhaSEemO0AjW_0lf1EDdl43X5ULtB6XzfDZ2CGcy3uUXbvz89c0Rv37oGz3q1KsX3N0kNDxTG4d-d-hAz9UcdOasiJvxxCO9yRI4pRwbeh9iLnQPIVL77YPrEr4_jqwlcvD40u9s8fohQhuD3cS0wN0hwZYnKJGi44XTXvF0hHF23Okh6yT1-7HNvBjpFUrwPWh3uALanUVwRN2FIL0rB5J19UEydoxR8x4qm0jIW980zSkjOVTjs36DIYs0p-OMc_p9JmEspen8E6Xqx4b05zqGZ57UD_hC4eMOqFHqQy1ZZTikK7PjPfAw6YJX1_lE=w619-h322-no" /><br />
 The relevant code is the same as before.
 </p>
 

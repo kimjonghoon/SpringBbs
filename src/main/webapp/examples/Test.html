@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>JavaScript Cookie Test</title>
+<script>
+window.onload = initPage;
+
+function initPage() {
+	var selectBox = document.getElementById("numPerPage");
+	selectBox.onchange = setNumPerPage;
+	var delNumPerPageBtn = document.getElementById("del-numPerPage-btn");
+	delNumPerPageBtn.onclick = delNumPerPageCookie;
+}
+function setNumPerPage() {
+	var selectBox = document.getElementById("numPerPage");
+	var numPerPage = selectBox.value;
+	createCookie('numPerPage', numPerPage, '100');
+	showCookie();
+}
+function showCookie() {
+	var numPerPage = readCookie("numPerPage");
+	var div = document.getElementById('show-npp-div');
+	if (numPerPage) {
+		div.innerHTML = numPerPage;
+	} else {
+		div.innerHTML = 'No Cookies!';
+	}
+}
+function delNumPerPageCookie() {
+	deleteCookie("numPerPage");
+	showCookie();
+}
+function createCookie(name, value, days) {
+	var newCookie = name + "=" + escape(value);
+	if (days) {
+		var expires = new Date();
+		expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+		newCookie += "; expires=" + expires.toGMTString();
+	}
+	document.cookie = newCookie;
+}
+function readCookie(name) {
+	var allCookies = document.cookie;
+	if (!allCookies) {
+		return null;
+	}
+	var beginIndex = allCookies.indexOf(" " + name + "=");
+	if (beginIndex === -1) {
+		beginIndex = allCookies.indexOf(name + "=");
+	}
+	if (beginIndex === -1) {
+		return null;
+	} else {
+		beginIndex = allCookies.indexOf("=", beginIndex) + 1;
+		var endIndex = allCookies.indexOf(";", beginIndex);
+		if (endIndex === -1) {
+			endIndex = allCookies.length;
+		}
+		return unescape(allCookies.substring(beginIndex, endIndex));
+	}
+}
+function deleteCookie(name) {
+	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+</script>
+</head>
+<body>
+<div>
+	<select id="numPerPage">
+		<option value="10">10</option>
+		<option value="25">25</option>
+		<option value="50">50</option>
+		<option value="100">100</option>
+	</select> <input type="button" id="del-numPerPage-btn"
+		value="Del numPerPage Cookie" />
+</div>
+<div id="show-npp-div"></div>
+</body>
+</html>

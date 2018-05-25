@@ -2,13 +2,17 @@
 
 <h1>자바스크립트에서 쿠키 다루기</h1>
 
-<h3>var allCookies = document.cookie</h3>
+<pre class="prettyprint no-border">
+var allCookies = document.cookie
+</pre>
 
 <p>
 위 코드는 현재 문서 객체가 접근할 수 있는 모든 쿠키를 얻는다.<br /> 
 </p>
 
-<h3>document.cookie = newCookie;</h3>
+<pre class="prettyprint no-border">
+document.cookie = newCookie;
+</pre>
 
 <p>
 위 코드는 새로운 쿠키를 추가한다.<br />
@@ -57,8 +61,7 @@ function deleteCookie(name) {
 <p>
 사용자 정의 함수를 이용해서 게시판에 적용할 수 있는 예제를 만들었다.<br />
 예제에서 사용자는 게시판 목록의 페이지당 레코드 수를 쿠키에 저장할 수 있다.<br />
-(구글 크롬은 로컬에서 생산한 쿠키를 저장하지 않기에, 로컬 테스트를 하려면 다른 브라우저를 사용하자.<br />
-다음 링크를 방문하면 크롬도 테스트할 수 있다. <a href="http://www.java-school.net/javascript/examples/Test.html">http://www.java-school.net/javascript/examples/Test.html</a>)
+(구글 크롬은 로컬에서 생산한 쿠키를 저장하지 않기에, 로컬 테스트를 하려면 다른 브라우저를 사용하라)
 </p>
 
 <div class="filename">Test.html</div>

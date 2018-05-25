@@ -6,7 +6,7 @@
 Attempting to connect to a database in a Java program (getting a Connection object) is a time-consuming task.
 If you create a certain amount of connection in advance and store it in the repository, you can save time if the program provides a connection from the repository if there is a request.
 This programming technique is called connection pooling.
-When using JDBC, you should return the connection to the repository instead of returning the resource using the Connection's close () method.
+When using JDBC, you have to return the connection to the repository instead of returning the resource using the Connection's close () method.
 </p>
 
 <h3>Summary of Connection Pooling Classes</h3>
@@ -537,7 +537,7 @@ To practice the example, add the commons-dbcp, commons-pool, and commons-logging
 
 <p>
 Note that DBCP 2 runs only in the JDK 7 environment.
-You should use DBCP 1.4 in JDK 6 and DBCP 1.3 in JDKs 6 and below.
+You have to use DBCP 1.4 in JDK 6 and DBCP 1.3 in JDKs 6 and below.
 </p>
 
 <ul>
@@ -782,7 +782,7 @@ public class GetEmp {
 <p>
 Note that the connection is returned by the <em>conn.close();</em>.
 Would not it be a problem to return resources like this when using a connection pool?
-To solve this question, you should look at the DataSource interface.
+To solve this question, you have to look at the DataSource interface.
 The DataSource is the connection factory.
 There are three kinds of implementations of DataSource.
 </p>

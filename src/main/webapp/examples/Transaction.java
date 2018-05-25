@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Transaction implements Serializable {
-	
+
 	private String transactionDate;
 	private String transactionTime;
 	private String kind;

@@ -32,17 +32,17 @@ Declare a check rule on the bean that is bound to the sign up form.
 <strong>import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-@Size(min=5, message="Invalid email.")
-@Email(message="Invalid email.")</strong>
+@Size(min=5, message="It is not an email.")
+@Email(message="It is not an email.")</strong>
 private String email;
 <strong>
-@Size(min=4, message="The password must be at least 4 characters long.")</strong>
+@Size(min=4, message="Your password must be at least 4 characters long.")</strong>
 private String passwd;
 <strong>
-@Size(min=2, message="The full name must be at least two characters long.")</strong>
+@Size(min=2, message="The full name must exceed two characters.")</strong>
 private String name;
 <strong>
-@Size(min=6, max=20, message="Invalid mobile.")</strong>
+@Size(min=6, max=20, message="It is not a mobile number.")</strong>
 private String mobile;
 </pre>
 
@@ -106,7 +106,7 @@ Modify signUp.jsp as shown below.(&lt;sf:errors &gt; is a Spring form tag that d
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td colspan="2" style="text-align: center;font-weight: bold;"&gt;
-        Do not make the password the same as your email account password because Email is used as an ID.
+        Do not input email account password!
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -147,8 +147,8 @@ Add the following to stylesheet.
 <h3>Test Screen</h3>
 
 <p>
-<img alt="Sign Up" src="https://lh3.googleusercontent.com/8BysmtNqq9fZIWu1XFQ78roItWGE5S4qD4wXrJ0u3xH7CU6QiiImvstqiX6FzITb-M8oz-d3t24DGpL3D2S9taqvPLqo_pzM7kyNblXji9tlu9Z-oXqJUr4Qtg-sziIS5wtw-cN0P8ISxwazjLoSY9e2epPfNbirCFzUz3cGHjaHBv6Mew72WDzdoEYdN1Pf7O-vvQ3sbWkWlsyiLKgKK6t-Nr6Ntz-n-n7PvZswEGuV8rng2mR43JA2Sn8diHylcGSz-ySs5blyGVcjxgjxxJzKgeb92nWHDVmJnE7ezFmVDMgk8Fgw-viWfODjLThgY_5QYY1IefneTrSI-1DSxqeHCvhM2LIMZbEFGzmWKUe7zCQ9_zBmS5wyjkk6oVewmvZcVcbZtuFUFL8oVumzoA-MwfV3yWCFzybX6fGpcX4y4NaxYob93MDjk3h99izSTveZoP_Ty1ez8SMirxWPdvUUlnuNXI7Rj50r-yH652YMLx77mT3cb_88NKszz5bFyOrtZbjV4lQili7q3ceO4l81rtqEjHMFrKX8xdtl8GJobZp4X77hRru-qVTE_2RCSEcb3lSnVh2C7AhVrYVeIfw5s4Z2HPLeiqKEo0VzeL8fogBF3Lg_7sSw=w520-h246-no" /><br />
-<img alt="Bean validaion failed" src="https://lh3.googleusercontent.com/hQCU_L2otKQO8o6GYM8dJOwFZfbqizQELKO4Jo8JRodmWO1_7-lj37c0gkU5VPla7LihNnxJHgNwWymmVFWuqNzHLXXvlgI4fyxrcX9b5xGZczIBY5T07D4tMPainhOvL7a0zRPx5efc97253q8pInVuRuyK9A66gNCOAnf-U657HYjt_yspP8Xd2EI1AezdRZtbU23K7QMs44XNHkWSRfydtQ4BEqzW6C6XmaL2jFhYwxFfWdTJpdb0ISgGRb8OjwPQPVsGO__wayFc9GlmS0_X_1kFqlIBQKMr6TKwTjyyNNcx4_h0GccAq17sM4kPFl12iZUUp_ulFYsPj3qFGW4CggsUXNiL4vHnLi0U-GEwPZ-QScvy5hBb7iuPAZd5KxMX2K4Fv_5QDd3lFuW7qvzoBn6ppVIyS8CyIXO_T3zVj7F5OwjwUqyCgIuWj-70kc6GEpeBje5UOGQHs9gYyaIXKwvjq1RNa-9iWJVhqC6CyQRNb1hBYStSMVyO_TkMNQO7Z0M62DSI8hYmHqiD6rARoC0pqKrITwsNTQ0WeRj35QydFBjBj0Nv6SCYDmpaEwj7VYSiS6aD_vfQjqUo4Ugb1Cla3JLs7P59qkZ2wVmRn9mSTYJVBM6z=w555-h382-no" /><br />
+<img alt="Sign Up" src="https://lh3.googleusercontent.com/x9fu3nCqMzHBBm2cgastO0tuXZgi4jRNHVMAA8qa5r2soXtjxhMpVfgvk7C_LhCyOwXuoDxC6wcLkZCkUGtxUW3VCEPJrgHda-kK8lmMi2t9-q_DXRDmSohIHRUrPtIFb-cLEPUL2a6wzEiWUl87aXvUrbNAp6RpNeoBJjyjMcDXCBAk0WFEx63RCD93VYBZDpt5QyytIX7Mz-mXQq8XCKpaWcQs_APtYIdjEb3psN9OY7fS_haRV737cKCqC96pQcG74AuvbqmomZ2wIH8G5l5ud-DmO7i4-fmhA1Fl96ZaW4kgavILn_hpFW8gLICEI9p7BwDG5zQJbemzXwmpi15sU50bnrYsC1pIJjUv7vkuDh1y0S1LtKvJfJGU8AKvViBWpKcGUkW-40jV8cpf1TP2n_ylX2VqL3UqvBGCe6KAd9G_LjMLzmjsKEnpSOcFVELcpnoOfa0wZdwp0SsvDcZTLBWJkoR-V-As7v-mvnSBisIF0g8ZYSGZAzY7JNtAgm0S8tQd1RLyzwE1Su7crfTn0zXhGvhEhbxobSIPvxy2IXARZGEH3Rd4QJxARyjfzzAUYMH7812P2HPuHSwRtXtlvNvZwF3O7rQpmII=w513-h258-no" /><br />
+<img alt="Bean validaion failed" src="https://lh3.googleusercontent.com/pUTL1EQtTUYOMD9Hyu4UjAKWMogymyC_9sLcGez97htYKPiMgiYlyq0i43yw2XIu8Mq6EZs54FbO8ZBnbmGxIAJY7O90JbHrI58tK6Ob-iG693Us2-R7pXvBchI5PFXpy8RChnWIft7x87YOt9cASPT8FC239j0TOgQ64WTswd6NyuiTDvM5YSnj4CnuyXZaJwnul4UrYNKLmycS1iIF-pXYXYU5WUyV3DeqiIQ5dx85ZKKlrx01lxP0GLA59YGKdb3bpoOeNvMvhcEXeE9g1T_5w1Xpnl2NhuNOL84Ob9DvA8t1mnP6gLN6psz9x2x7shQtdU5z1iiawGvswxLBbk9YkuyWvmasuYgA_gcOFADZCpmFGcetlYf_uqhYnotq1Megw_vuPxebmFDgCQlhXKp5i1eS7ox7aY6ZC5Z2vIlyWi7stbkowWQ6zA8ojDRw4ZYFSl8MuWfORDTr8kSLiYNuoPXjO7RVr3lU_Hg79uSFEMytpU1mrx4OkbdJyOSmXFUKEvfxevVh4PcjsPjKlNHmRI3Ne8WmKFyZ1KPKE4UKhnpZzNsd0bxMPecCdd23mohQQJWwhaLRhCw1-5lyV6mGqv8bFvrmGlGJtUQ=w516-h389-no" /><br />
 </p>
 
 <span id="refer">References</span>

@@ -1326,13 +1326,13 @@ http://localhost:port/example/ex1/index.jsp를 방문한다.
 </p>
 
 <pre class="prettyprint no-border">
-&lt;%@ include file="../inc/subMenu.jsp" %&gt;
+&lt;%@ include file="sub.jsp" %&gt;
 </pre>
 
 <p>
-index.jsp는 subMenu.jsp를 인클루드한다.
-페이지의 부분을 별도의 파일로 분리하고 include 지시어을 사용하여 통합하면 유지 관리가 더 쉬워진다.
-subMenu.jsp 코드에서 파일, 이미지 , 스타일시트 등의 링크 경로는 인클루드하는 index.jsp를 기준으로 상대적 경로로 작성해야 한다.
+index.jsp는 sub.jsp를 인클루드한다.
+이렇게 페이지의 부분을 별도 파일로 분리하고 include 지시어를 사용해 통합하면 유지 관리가 쉬워진다.
+sub.jsp 코드에서 파일, 이미지 , 스타일시트 등의 링크 경로는 인클루드하는 index.jsp를 기준으로 상대적 경로로 작성해야 한다.
 index.jsp를 기준으로 JSP 파일이 합쳐지기 때문이다.
 하지만, 스타일 시트에서 경로는 index.jsp가 아닌 스타일 시트 파일에 상대적이어야 한다.
 </p>

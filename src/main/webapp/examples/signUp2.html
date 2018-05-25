@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>자바스크립트 테스트</title>
-<script type="text/javascript">
+<title>JavaScript Test</title>
+<script>
 function check() {
 	var form = document.getElementById("signUpForm");
 	var id = form.id.value;
 	id = trim(id);
 	if (id.length == 0) {
-		alert("유효하지 않은 ID입니다.");
+		alert("Invalid ID.");
 		return false;
 	}
 	var pass = form.passwd.value;
 	pass = trim(pass);
 	if (pass.length == 0) {
-		alert("유효하지 않은 패스워드입니다.");
+		alert("Invalid Password.");
 		return false;
 	}
 	var name = form.name.value;
 	name = trim(name);
 	if (name.length == 0) {
-		alert("유효하지 않은 이름입니다.");
+		alert("Invalid Name.");
 		return false;
 	}
 	var email = form.email.value;
 	var chk = emailCheck(email);
 	if (chk == false) {
-		alert("유효하지 않은 이메일입니다.");
+		alert("Invalid email.");
 		return false;
 	}
 	var mobile = form.mobile.value;
 	chk = mobileCheck(mobile);
 	if (chk == false) {
-		alert("유효하지 않은 모바일번호입니다.");
+		alert("Invalid mobile number.");
 		return false;
 	}
 	
@@ -56,15 +56,15 @@ function mobileCheck(mobile) {
 </script>
 </head>
 <body>
-<h1>회원가입</h1>
+<h1>Sign Up</h1>
 <form id="signUpForm" name="signUpForm" action="signUp.php" method="post" onsubmit="return check();">
 ID : <input type="text" name="id" value="heist" /><br />
-패스워드 : <input type="password" name="passwd" value="1440" /><br />
-이름: <input type="text" name="name" value="홍길동" /><br />
-이메일 : <input type="text" name="email" /><br />
-모바일 : <input type="text" name="mobile" /><br />
-<input type="submit" value="가입" />
-<input type="reset" value="리셋" />
+Password : <input type="password" name="passwd" value="1440" /><br />
+Name: <input type="text" name="name" value="John Doe" /><br />
+Email : <input type="text" name="email" /><br />
+Mobile : <input type="text" name="mobile" /><br />
+<input type="submit" value="Submit" />
+<input type="reset" value="Reset" />
 </form>
 </body>
 </html>

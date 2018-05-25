@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>자바스크립트 테스트</title>
-<script type="text/javascript">
+<title>JavaScript Test</title>
+<script>
 function check() {
 	var form = document.getElementById("testForm");
 	form.condition[4].disabled = true;
@@ -13,13 +13,13 @@ function check() {
 </head>
 <body>
 <form id="testForm" method="get" onsubmit="return check()">
-	이름 <input type="text" name="name" /><br />
+	Name <input type="text" name="name" /><br />
 	B<input type="radio" name="condition" value="best" />
 	G<input type="radio" name="condition" value="good" />
 	N<input type="radio" name="condition" value="normal" />
 	B<input type="radio" name="condition" value="bad" />
 	W<input type="radio" name="condition" value="worst" />
-	<input type="submit" value="전송" />
+	<input type="submit" value="Submit" />
 </form>
 </body>
 </html>

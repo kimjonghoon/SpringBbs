@@ -314,13 +314,13 @@ public class NamecardUi {
 				menu = readCommandLine();	
 			
 				if (menu.equals("1")) {
-					System.out.print("Please enter a name&gt;&gt;");
+					System.out.println("Please enter a name&gt;&gt;");
 					String name = readCommandLine();
-					System.out.print("Please enter a mobile&gt;&gt;");
+					System.out.println("Please enter a mobile&gt;&gt;");
 					String mobile = readCommandLine();
-					System.out.print("Please enter a email&gt;&gt;");
+					System.out.println("Please enter a email&gt;&gt;");
 					String email = readCommandLine();
-					System.out.print("Please enter a company&gt;&gt;");
+					System.out.println("Please enter a company&gt;&gt;");
 					String company = readCommandLine();
 					Namecard card = new Namecard(name, mobile, email, company);
 					dao.insert(card);
@@ -330,44 +330,44 @@ public class NamecardUi {
 						System.out.println(all.get(i));
 					}
 				} else if (menu.equals("3")) {
-					System.out.print("Please enter the name to delete&gt;&gt;");
+					System.out.println("Please enter the name to delete&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					if (matched.size() &gt; 0) {
 						for (int i = 0; i &lt; matched.size(); i++) {
 							System.out.println(matched.get(i));
 						}
-						System.out.print("Please enter the NO to delete&gt;&gt;");
+						System.out.println("Please enter the NO to delete&gt;&gt;");
 						int id = Integer.parseInt(readCommandLine());
 						dao.delete(id);
 					}
 				} else if (menu.equals("4")) {
-					System.out.print("Enter the name of the namecard to edit&gt;&gt;");
+					System.out.println("Enter the name of the namecard to edit&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					if (matched.size() &gt; 0) {
 						for (int i = 0; i &lt; matched.size(); i++) {
 							System.out.println(matched.get(i));
 						}
-						System.out.print("Please enter the number of namecard to edit&gt;&gt;");
+						System.out.println("Please enter the number of namecard to edit&gt;&gt;");
 						int id = Integer.parseInt(readCommandLine());
 						Namecard card = dao.selectOne(id);
-						System.out.print("To edit a name, enter the name to change&gt;&gt;");
+						System.out.println("To edit a name, enter the name to change&gt;&gt;");
 						name = readCommandLine();
 						if (!name.equals("")) {
 							card.setName(name);
 						}
-						System.out.print("To edit a mobile, enter the mobile to change&gt;&gt;");
+						System.out.println("To edit a mobile, enter the mobile to change&gt;&gt;");
 						String mobile = readCommandLine();
 						if (!mobile.equals("")) {
 							card.setMobile(mobile);
 						}	
-						System.out.print("To edit an email, enter the email to change&gt;&gt;");
+						System.out.println("To edit an email, enter the email to change&gt;&gt;");
 						String email = readCommandLine();
 						if (!email.equals("")) {
 							card.setEmail(email);
 						}
-						System.out.print("To edit a company, enter the company to change&gt;&gt;");
+						System.out.println("To edit a company, enter the company to change&gt;&gt;");
 						String company = readCommandLine();
 						if (!company.equals("")) {
 							card.setCompany(company);
@@ -375,7 +375,7 @@ public class NamecardUi {
 						dao.update(card);
 					}
 				} else if (menu.equals("5")) {
-					System.out.print("Please enter a name to search&gt;&gt;");
+					System.out.println("Please enter a name to search&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					for(int i = 0; i &lt; matched.size(); i++) {

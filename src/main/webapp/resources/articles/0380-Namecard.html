@@ -321,13 +321,13 @@ public class NamecardUi {
 				menu = readCommandLine();	
 			
 				if (menu.equals("1")) {
-					System.out.print("이름을 입력하세요&gt;&gt;");
+					System.out.println("이름을 입력하세요&gt;&gt;");
 					String name = readCommandLine();
-					System.out.print("휴대폰을 입력하세요&gt;&gt;");
+					System.out.println("휴대폰을 입력하세요&gt;&gt;");
 					String mobile = readCommandLine();
-					System.out.print("이메일을 입력하세요&gt;&gt;");
+					System.out.println("이메일을 입력하세요&gt;&gt;");
 					String email = readCommandLine();
-					System.out.print("소속을 입력하세요&gt;&gt;");
+					System.out.println("소속을 입력하세요&gt;&gt;");
 					String company = readCommandLine();
 					Namecard card = new Namecard(name,mobile,email,company);
 					dao.insert(card);
@@ -337,44 +337,44 @@ public class NamecardUi {
 						System.out.println(all.get(i));
 					}
 				} else if (menu.equals("3")) {
-					System.out.print("삭제할 이름을 입력하세요&gt;&gt;");
+					System.out.println("삭제할 이름을 입력하세요&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					if (matched.size() &gt; 0) {
 						for (int i = 0; i &lt; matched.size(); i++) {
 							System.out.println(matched.get(i));
 						}
-						System.out.print("삭제할 번호를 선택하세요&gt;&gt;");
+						System.out.println("삭제할 번호를 선택하세요&gt;&gt;");
 						int id = Integer.parseInt(readCommandLine());
 						dao.delete(id);
 					}
 				} else if (menu.equals("4")) {
-					System.out.print("수정할 명함의 이름을 입력하세요&gt;&gt;");
+					System.out.println("수정할 명함의 이름을 입력하세요&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					if (matched.size() &gt; 0) {
 						for (int i = 0; i &lt; matched.size(); i++) {
 							System.out.println(matched.get(i));
 						}
-						System.out.print("수정할 명함번호를 입력하세요&gt;&gt;");
+						System.out.println("수정할 명함번호를 입력하세요&gt;&gt;");
 						int id = Integer.parseInt(readCommandLine());
 						Namecard card = dao.selectOne(id);
-						System.out.print("이름을 수정하려면 입력하세요&gt;&gt;");
+						System.out.println("이름을 수정하려면 입력하세요&gt;&gt;");
 						name = readCommandLine();
 						if (!name.equals("")) {
 							card.setName(name);
 						}
-						System.out.print("휴대폰을 수정하려면 입력하세요&gt;&gt;");
+						System.out.println("휴대폰을 수정하려면 입력하세요&gt;&gt;");
 						String mobile = readCommandLine();
 						if (!mobile.equals("")) {
 							card.setMobile(mobile);
 						}	
-						System.out.print("이메일을 수정하려면 입력하세요&gt;&gt;");
+						System.out.println("이메일을 수정하려면 입력하세요&gt;&gt;");
 						String email = readCommandLine();
 						if (!email.equals("")) {
 							card.setEmail(email);
 						}
-						System.out.print("소속을 수정하려면 입력하세요&gt;&gt;");
+						System.out.println("소속을 수정하려면 입력하세요&gt;&gt;");
 						String company = readCommandLine();
 						if (!company.equals("")) {
 							card.setCompany(company);
@@ -382,7 +382,7 @@ public class NamecardUi {
 						dao.update(card);
 					}
 				} else if (menu.equals("5")) {
-					System.out.print("검색할 이름을 입력하세요&gt;&gt;");
+					System.out.println("검색할 이름을 입력하세요&gt;&gt;");
 					String name = readCommandLine();
 					ArrayList&lt;Namecard&gt; matched = dao.selectByKeyword(name);
 					for(int i = 0; i &lt; matched.size(); i++) {

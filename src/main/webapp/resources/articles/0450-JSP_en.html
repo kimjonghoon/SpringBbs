@@ -1267,13 +1267,13 @@ Open the index.jsp file and confirm the following:
 </p>
 
 <pre class="prettyprint no-border">
-&lt;%@ include file="../inc/subMenu.jsp" %&gt;
+&lt;%@ include file="sub.jsp" %&gt;
 </pre>
 
 <p>
-Index.jsp includes subMenu.jsp.
+The index.jsp includes sub.jsp.
 By separating the parts of the page into separate files and integrating them using the include directive, maintenance becomes easier.
-In the subMenu.jsp code, the path for files, images, style sheets, and so on should be relative to index.jsp.
+In the sub.jsp code, the path for files, images, style sheets, and so on should be relative to index.jsp.
 This is because JSP files are combined based on index.jsp.
 However, the paths in style sheet code, should be relative to the style sheet file not index.jsp.
 </p>

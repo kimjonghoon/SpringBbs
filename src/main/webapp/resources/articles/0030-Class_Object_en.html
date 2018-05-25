@@ -3,53 +3,37 @@
 <h1>Object and Class</h1>
 
 <h2 class="floatstop">Object</h2>
-
-<p>
 Objects are key to understanding OOP.<br />
 There are many examples of real world objects, such as: 
 your cup, your computer, you.<br />
 Real world objects have 3 characteristics.<br />
-</p>
 
 <h3>1. property</h3>
-
-<p>
 Each object has properties.<br />
 You have properties, e.g., name, mobile, waist circumference.<br />
-</p>
 
 <h3>2. behavior</h3>
-
-<p>
 You have behaviors, e.g., run, walk.<br /> 
-</p>
 
 <h3>3. one</h3>
-
-<p>
 Every object are only one.<br />
 You are only one.<br />
-</p>
 
 <h3>Software objects</h3>
 
-<p>
 Software objects are similar to real world objects.<br /><br />
-<em>Software objects are a combination of data and functions.</em><br /><br />
+
+<em>Software objects are a combination of data and functions.</em>
+
+<br /><br />
 A property of the real world object is mapped to the data,<br />
 A behavior of the real world object is mapped to the function.<br />
-</p>
 
 <h2>Class</h2>
-
-<p>
 A class is the Casting mold from which individual objects are created.<br />
 To create an object in a Java program, you must first create a class.<br />
-</p>
 
 <h3>How to make a class</h3>
-
-<p>
 Let's think that we have to develop a program for student attendance management.<br />
 We are able to extract the properties and behaviors of a student, as follows.<br />
 <br />
@@ -57,7 +41,6 @@ We are able to extract the properties and behaviors of a student, as follows.<br
 behavior: absent</em><br />
 <br />
 Now we can create a student class.<br />
-</p>
 
 <h6 class="src">Student.java</h6>
 <pre class="prettyprint">
@@ -81,6 +64,7 @@ File name is recommended to be the same as the class name.<br />
 <dd>
 An object stores its state in fields.<br />
 The state is a wider concept than OOP's property.<br />
+
 <table class="table-in-article">
 <tr>
 	<th class="table-in-article-th" style="width: 50%;">String</th>
@@ -91,6 +75,7 @@ The state is a wider concept than OOP's property.<br />
 	<td class="table-in-article-td">field name	</td>
 </tr>
 </table>
+
 A String class belongs to Java APIs.<br />
 A String class is used to express a series of characters.<br />
 </dd>
@@ -108,21 +93,20 @@ A String class is used to express a series of characters.<br />
 	<td class="table-in-article-td">field name</td>
 </tr>
 </table>
+
 A int is a data type for integer.
 </dd>
 
 <dt>void absent() {..}</dt>
 <dd>
-if absent() does not return a value, you should type void before absent().<br />
-if absent() return a value, you should type the data type returned befere absent().<br />
+if absent() does not return a value, you have to type void before absent().<br />
+if absent() return a value, you have to type the data type befere absent().<br />
 In Java, absent() is called a method not a function.<br />
 </dd>
 </dl>
 
-<p>
 Let's make Student executable alone.<br />
 Open Student.java and add main method, as below:<br />
-</p>
 
 <h6 class="src">Student.java</h6>
 <pre class="prettyprint">
@@ -165,20 +149,18 @@ C:\Users\kim&gt;java Studnet
 C:\&gt;
 </pre>
 
-<p>
 Typing "java Student" drive a new JVM start and the main method of Student class start.<br />
 Whenever a JVM is started, the classloader is responsible for loading Java classes that make up the program, such as:<br />
 Student, String, System, etc.<br />
 A classloader already know the location of classes corresponding to Java APIs, e.g., String, System, etc.<br />
-Maybe you should notify the classloader the location of the Student class.<br />
-If you want to run in a directory where is no Student class, you should notify the location of Student class to the classloader using java -cp option.<br />
-</p>
+Maybe you have to notify the classloader the location of the Student class.<br />
+If you want to run in a directory where is no Student class, you have to notify the location of Student class to the classloader using java -cp option.<br />
 
 <dl class="note">
 <dt>public static void main (String[] args) {..}</dt>
 <dd> 
 The main method is the starting point of a Java pure application.<br />
-You should make the main method in the starting class.<br />
+You have to make the main method in the starting class.<br />
 </dd>
 <dt>Student tom = null;</dt>
 <dd>
@@ -223,10 +205,8 @@ This statement call the absent() method of the student which variable tom refer 
 
 <h2>System.out.println()</h2>
 
-<p>
 In the basic example of Java, in order to display the results, so that the frequent use of this method.<br />
 Below shows all of the uses for this method.<br />
-</p>
 
 <h6 class="src">StandardOutput.java</h6>
 <pre class="prettyprint">
@@ -264,8 +244,5 @@ java.io.PrintStream@de6ced
 standard output method
 </pre>
 
-<p>
-The only difference between System.out.print() and System.out.println() is that System.out.print() does not change the line after the output.
-</p>
-
+The only difference between System.out.print() and System.out.println() is that System.out.print() does not change the line after the output.<br />
 </article>
