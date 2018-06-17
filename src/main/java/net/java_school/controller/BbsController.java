@@ -89,6 +89,7 @@ public class BbsController extends Paginator {
         map.put("rowCount", rowCount.toString());
         //MySQL and MariaDB end
 		 */
+                
 		List<Article> list = boardService.getArticleList(map);
 
 		Integer listItemNo = numbers.getListItemNo();

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
 <Configuration>
     <Appenders>
         <File name="A1" fileName="A1.log" append="true">
