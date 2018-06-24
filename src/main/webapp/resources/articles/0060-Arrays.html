@@ -119,14 +119,13 @@ System.out.println(a[1].length);//7<br />
 
 <h3>main 메서드에 String[] 배열를 인자로 전달하는 방법</h3>
 
-<h6 class="src">Test.java</h6>
 <pre class="prettyprint">
-public class Test {
-	public static void main(String[] args) {
-		System.out.print(args[0] + "년 ");
-		System.out.print(args[1] + "월 ");
-		System.out.print(args[2] + "일");
-	}
+public class ArrayTest {
+    public static void main(String[] args) {
+        System.out.print(args[0] + "년 ");
+        System.out.print(args[1] + "월 ");
+        System.out.println(args[2] + "일");
+    }
 }
 </pre>
 
@@ -134,9 +133,9 @@ public class Test {
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
 <pre class="screen">
-C:\javaApp&gt;javac Test.java
+C:\javaApp&gt;javac ArrayTest.java
 
-C:\javaApp&gt;java Test 2013 12 31
-2013년 12월 31일
+C:\javaApp&gt;java ArrayTest 2018 12 31
+2018년 12월 31일
 </pre>
 </article>
