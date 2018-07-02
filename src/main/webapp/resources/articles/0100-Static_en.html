@@ -9,8 +9,8 @@ Static variables and methods can be used without creating an object like this:<b
 </p>
 
 <ul>
-	<li>ClassName.staticVariable</li>
-	<li>ClassName.staticMethod()</li>
+    <li>ClassName.staticVariable</li>
+    <li>ClassName.staticMethod()</li>
 </ul>
 
 <p>
@@ -129,7 +129,7 @@ public class DinnerTable {
 
 <p>
 A DinnerTable object is created in the heap memory to initialize a static variable, instance of the DinnerTable, and a reference to the generated object is assigned to the instance static variable.<br />
-This reference value can only be obtained through the public getInstance () method.<br />
+This reference value can only be obtained through the public getInstance() method.<br />
 Set the access modifier of the single constructor to private to prevent the constructor from being called from outside.<br />
 This implementation will keep the DinnerTable instance as one until the end of the program.<br />
 </p>
@@ -147,9 +147,8 @@ The initialization order is static variables, instance variables, and constructo
 Static variables and static blocks are at the same level.<br />
 So the previous one in the code is initialized first.<br />
 <br />
-For instance blocks, the compiler adds the implementation block of the instance block to the last line of every constructor.<br />
-<br />
-Predict the results of the next problem.<br />
+For instance blocks, the compiler adds the implementation of the instance block to every constructor.<br />
+Thus, the instance block is executed before the constructor.<br />
 </p>
 
 <h6 class="src">A.java</h6>
@@ -159,7 +158,7 @@ package net.java_school.classvar;
 public class A {
 
     public A() {
-        System.out.println("A() has executed.");
+        System.out.println("A() has executed.");//4,9,14
     }
         
 }
@@ -170,29 +169,29 @@ public class A {
 package net.java_school.classvar;
 
 public class B {
-    private A a = new A();
+    private A a = new A();//3,8,13
     
     {
-        System.out.println("B instance block has executed.");
+        System.out.println("B instance block has executed.");//5,10,15
     }
     
     static {
-        System.out.println("B static block has executed.");
+        System.out.println("B static block has executed.");//1
     }
     
-    private static B b = new B();
+    private static B b = new B();//2
 
     private B() {
-        System.out.println("B() has executed.");
+        System.out.println("B() has executed.");//6,11
     }
     
     public B(int a) {
-        System.out.println("B(int) has executed.");
+        System.out.println("B(int) has executed.");//16
     }
 
     public static void main(String[] args) {
-        new B();
-        new B(1);
+        new B();//7
+        new B(1);//12
     }
         
 }
@@ -215,7 +214,7 @@ B(int) has executed.
 
 <span id="refer">References</span>
 <ul id="references">
-	<li><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html">http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html</a></li>
-	<li><a href="http://www.guru99.com/java-stack-heap.html">http://www.guru99.com/java-stack-heap.html</a></li>
+    <li><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html">http://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html</a></li>
+    <li><a href="http://www.guru99.com/java-stack-heap.html">http://www.guru99.com/java-stack-heap.html</a></li>
 </ul>
 </article>
