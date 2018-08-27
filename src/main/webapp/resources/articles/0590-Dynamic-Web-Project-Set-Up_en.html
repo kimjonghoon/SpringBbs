@@ -101,12 +101,12 @@ Then, open the web.xml and delete all within the web-app element as follows.
 Create a test.html file on the Document Base.<br />
 With the WebContent selected as shown below, right-click and select New, then HTML File.<br />
 <img src="https://lh5.googleusercontent.com/-5QI9P39l5IQ/Tuti2gJ7hcI/AAAAAAAAA3o/Ic0IBV-nWUw/s590/test_html.png" alt="웹 애플리케이션이 톰캣에 등록한 후에 테스트하기 위해서 웹 애플리케이션의 루트 디렉토리에 test.html 이라는 파일을 만드는 화면이다." /><br />
-Visit http://localhost:port/JSPProject/test.html.<br />
+Visit http://localhost:8080/JSPProject/test.html.<br />
 Where port is the port number used by Tomcat, you can find the port number in the CATALINA_HOME/conf/server.xml file.
 </p>
 
 <pre class="prettyprint">
-&lt;Connector port=<strong>"8989"</strong> protocol="HTTP/1.1" 
+&lt;Connector port=<strong>"8080"</strong> protocol="HTTP/1.1" 
 	connectionTimeout="20000" 
 	<strong>URIEncoding="UTF-8"</strong>
 	redirectPort="8443" /&gt;

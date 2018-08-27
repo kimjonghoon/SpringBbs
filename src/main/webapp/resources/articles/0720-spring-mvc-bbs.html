@@ -2923,14 +2923,14 @@ WEB-INF의 바로 위인 src/main/webapp가 DocumentBase이다.<br />
 
 <p>
 톰캣을 재실행한 다음<br />
-http://localhost:port/bbs/list?boarCd=free&amp;page=1을 방문하여 테스트한다.<br />
+http://localhost:8080/bbs/list?boarCd=free&amp;page=1을 방문하여 테스트한다.<br />
 JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일 것이다.<br />
 데이터가 있다면 한글 검색을 테스트한다.<br />
 한글 검색이 되지 않는다면 CATALINA_HOME/conf/server.xml 파일을 열고 다음 강조된 부분이 있는지 확인한다.<br />
 </p>
 
 <h6 class="src">server.xml</h6>
-<pre class="prettyprint">&lt;Connector port="8989" protocol="HTTP/1.1"
+<pre class="prettyprint">&lt;Connector port="8080" protocol="HTTP/1.1"
   connectionTimeout="20000"
   <strong>URIEncoding="UTF-8"</strong>
   redirectPort="8443" /&gt;

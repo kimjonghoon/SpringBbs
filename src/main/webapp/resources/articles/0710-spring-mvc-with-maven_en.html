@@ -54,7 +54,7 @@ Since src/main/webapp right above WEB-INF is the documentbase, create the Tomcat
 
 <p>
 Copy the spring-bbs.xml file to the CATALINA_HOME/conf/Catalina/localhost folder.<br />
-After restart Tomcat, visit http://localhost:port/spring-bbs to see the web application is working.
+After restart Tomcat, visit http://localhost:8080/spring-bbs to see the web application is working.
 </p>
 
 <h2>Spring MVC Test</h2> 
@@ -489,7 +489,7 @@ The name attribute of the playerController element must be removed.<br />
 <pre>&lt;bean id="playerController" <span style="color: red;text-decoration: line-through">name="/player/test"</span></pre>
 
 <p>
-Restart Tomcat and visit http://localhost:port/spring-bbs/player/test?id=1.
+Restart Tomcat and visit http://localhost:8080/spring-bbs/player/test?id=1.
 </p>
 
 <h3>InternalResourceViewResolver</h3>
@@ -532,7 +532,7 @@ return modelAndView;
 <p>
 With the InternalResourceViewResolver setting, player/test will be interpreted as /WEB-INF/views/player/test.jsp.<br />
 Since the Java source has changed, rebuild it.<br />
-Restart Tomcat and visit http://localhost:port/spring-bbs/player/test?id=1.
+Restart Tomcat and visit http://localhost:8080/spring-bbs/player/test?id=1.
 </p>
 
 <h3>RequestMappingHandlerMapping</h3>

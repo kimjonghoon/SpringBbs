@@ -93,7 +93,7 @@ JSP is a useful technique when you need to show your users the dynamically gener
 </p>
 
 <p>
-Create a hello.jsp file in the top-level directory of your ROOT application (C:/www/myapp) and visit http://localhost:port/hello.jsp. 
+Create a hello.jsp file in the top-level directory of your ROOT application (C:/www/myapp) and visit http://localhost:8080/hello.jsp. 
 </p>
 
 <h6 class="src">/hello.jsp</h6>
@@ -636,7 +636,7 @@ An implicit object is an object used in a JSP and can be used immediately withou
 <p>
 It is a reference to the instance of javax.servlet.jsp.JspWriter abstract class type.
 It used to write data to the response stream.
-Create helloworld.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/helloWorld.jsp.
+Create helloworld.jsp in the root directory of your ROOT application as shown below and visit http://localhost:8080/helloWorld.jsp.
 </p>
 
 <h6 class="src">/helloWorld.jsp</h6>
@@ -665,7 +665,7 @@ The full path of each servlet is:
 <p>
 This is a reference to the instance of javax.servlet.http.HttpServletRequest interface type.
 This reference allows you to access request parameters, information sent by the user in the header, and information about the user.
-Create request.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/request.jsp?user=alison
+Create request.jsp in the root directory of your ROOT application as shown below and visit http://localhost:8080/request.jsp?user=alison
 </p>
 
 <h6 class="src">/request.jsp</h6>
@@ -698,7 +698,7 @@ For example, it provides access to resources such as ServletRequest, ServletResp
 <p>
 This is a reference to the instance of javax.servlet.http.HttpSession type.
 It is used to read and store session data.
-Create session.jsp in the root directory of your ROOT application as shown below and visit http://localhost:port/session.jsp several times.
+Create session.jsp in the root directory of your ROOT application as shown below and visit http://localhost:8080/session.jsp several times.
 </p>
 
 <h6 class="src">/session.jsp</h6>
@@ -1013,7 +1013,7 @@ if(statusCode != 500){
 </pre>
 
 <p>
-Visit http://localhost:port/alison.jsp.
+Visit http://localhost:8080/alison.jsp.
 Because you did not create the alison.jsp file in the ROOT application's document base, a 404 error will occur and the error.jsp file will respond.
 In IE, if the content of the error page is less than a certain byte, the error page does not work.<sup>3</sup>
 </p>
@@ -1262,7 +1262,7 @@ name cookie deleted.&lt;br /&gt;
 
 <p>
 Download <a href="/examples/example.zip">example.zip</a> and unzip it to the root directory of your ROOT application.
-Visit http://localhost:port/example/ex1/index.jsp.
+Visit http://localhost:8080/example/ex1/index.jsp.
 Open the index.jsp file and confirm the following:
 </p>
 
@@ -1282,7 +1282,7 @@ However, the paths in style sheet code, should be relative to the style sheet fi
 
 <p>
 The location of this example is /example/ex2/.
-Visit http://localhost:port/example/ex2/index.jsp.
+Visit http://localhost:8080/example/ex2/index.jsp.
 There is work to do to test the login.
 The login_proc.jsp page is the page that processes the login.
 The login_proc.jsp uses net.java_school.user.User.java JavaBeans.
@@ -1319,7 +1319,7 @@ public class User {
 
 <p>
 If you have finished creating and compiling User.java,
-Go back to http://localhost:port/example/ex2/index.jsp and test your login.
+Go back to http://localhost:8080/example/ex2/index.jsp and test your login.
 Open the file /example/ex2/index.jsp and confirm the followings.
 </p>
 

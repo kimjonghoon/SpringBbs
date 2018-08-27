@@ -68,11 +68,11 @@ public class ControllerServlet extends HttpServlet {
 
 <p>
 톰캣를 재시작한다.
-http://localhost:port/list.do,
-http://localhost:port/board/list.do,
-http://localhost:port/board/view.do,
-http://localhost:port/write.do,
-http://localhost:port/modify.do를 차례로 방문해 보자.
+http://localhost:8080/list.do,
+http://localhost:8080/board/list.do,
+http://localhost:8080/board/view.do,
+http://localhost:8080/write.do,
+http://localhost:8080/modify.do를 차례로 방문해 보자.
 방문하면 요청 문자열이 출력된다.
 이제까지와 달리 요청 문자열이 서버의 어떤 컴포넌트를 의미하지 않는다.
 컨트롤러는 요청 문자열에 따라 모델과 뷰를 결정하여 사용자의 요청에 응답한다.
@@ -353,7 +353,7 @@ if (nextPage != 0) {
 </pre>
 
 <p>
-http://localhost:port/board/list.do를 방문하여 테스트해 보자.
+http://localhost:8080/board/list.do를 방문하여 테스트해 보자.
 새 모습의 list.jsp는 데이터베이스 작업을 하거나 목록의 쪽수를 매기는 데 필요한 숫자를 생산하는 일에서 벗어나, 모델이 생산한 결과물을 받아서 보여주는, 단순한 작업만 한다.
 이것이 뷰의 임무다.
 하지만 list.jsp의 다음 부분의 코드는 마음에 들지 않는다.

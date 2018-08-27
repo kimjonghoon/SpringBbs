@@ -83,7 +83,7 @@ void service(ServletRequest req, ServletResponse res) throws ServletException, I
 It is called by the servlet container when the servlet should no longer be serviced.
 This method is not what the programmer calls in code.
 To call destroy(), you must use the "Tomcat manager" to unload the application or shut down Tomcat.
-Tomcat manager is a web application that can be accessed at http://localhost:port/manager. 
+Tomcat manager is a web application that can be accessed at http://localhost:8080/manager. 
 It is the web application that manages web applications.
 To view the Tomcat Manager screen, you must log in using the administrator and administrator password you set when installing Tomcat.
 If you do not remember your administrator and Administrator password, open CATALINA_HOME/conf/tomcat-users.xml and you'll see it.  
@@ -396,11 +396,11 @@ In other words, the data stored in the ServletContext is freely accessible from 
 	<dd class="api-summary-dd">getSession(boolean created):HttpSession</dd>
 	<dd class="api-summary-dd-method-desc">Returns current session. If the session is not created, if the created is true, the session is created and returned. If the created is false, the null is returned.</dd>
 	<dd class="api-summary-dd">getContextPath():String</dd>
-	<dd class="api-summary-dd-method-desc">Returns the part of the request URI that points to the context. If you request http://localhost:port/contextPath/board/list.jsp?page=1, it will return "/contextPath".</dd>
+	<dd class="api-summary-dd-method-desc">Returns the part of the request URI that points to the context. If you request http://localhost:8080/contextPath/board/list.jsp?page=1, it will return "/contextPath".</dd>
 	<dd class="api-summary-dd">getRequestURI():String</dd>
-	<dd class="api-summary-dd-method-desc">If you request http://localhost:port/ContextPath/board/list.jsp?page=1, it will return "/ContextPath/board/list.jsp".</dd>
+	<dd class="api-summary-dd-method-desc">If you request http://localhost:8080/ContextPath/board/list.jsp?page=1, it will return "/ContextPath/board/list.jsp".</dd>
 	<dd class="api-summary-dd">getQueryString():String</dd>
-	<dd class="api-summary-dd-method-desc">If you request http://localhost:port/ContextPath/board/list.jsp?page=1, it will return "page=1".</dd>
+	<dd class="api-summary-dd-method-desc">If you request http://localhost:8080/ContextPath/board/list.jsp?page=1, it will return "page=1".</dd>
 </dl>
 
 
@@ -583,7 +583,7 @@ If the path you are adding as a cp option value contains a space, you must enclo
 </dl>
 
 <p>
-Restart Tomcat and visit http://localhost:port<em>/simple</em>.
+Restart Tomcat and visit http://localhost:8080<em>/simple</em>.
 </p>
 
 <h3>SimpleServlet.java source description</h3>
@@ -973,7 +973,7 @@ Add the following to web.xml:
 </pre>
 
 <p>
-After restarting Tomcat, go to http://localhost:port/example/SignUp.html.
+After restarting Tomcat, go to http://localhost:8080/example/SignUp.html.
 TODO: Add a code to the servlet to check for values other than ID and sports.
 </p>
 
@@ -1068,7 +1068,7 @@ Add the following to web.xml:
 </pre>
 
 <p>
-After restarting Tomcat, go to http://localhost:port<span class="emphasis">/example/SignUp.action</span> and verify that /example/SignUp.html responds.
+After restarting Tomcat, go to http://localhost:8080<span class="emphasis">/example/SignUp.action</span> and verify that /example/SignUp.html responds.
 TODO: In ControllerServlet.java, change isRedirect to true and recompile and test.
 </p>
 
@@ -1077,7 +1077,7 @@ We have added ControllerServlet servlet declarations and mappings in web.xml so 
 When a request string which ends in .action comes, Tomcat interprets the mapping information in web.xml and invokes the +servlet(servletRequest req, ServletResponse resp) method of the ControllerServlet servlet.
 The +service(ServletRequest req, ServletResponse resp) method simply calls the #service(HttpServletRequest req, HttpServletResponse resp) method.
 The #service (HttpServletRequest req, HttpServletResponse resp) method checks the HTTP METHOD of the request and calls the appropriate method.
-This is the GET method because you requested http://localhost:port/example/SignUp.action in the address bar of your web browser.
+This is the GET method because you requested http://localhost:8080/example/SignUp.action in the address bar of your web browser.
 So, doGet() method is called.
 The controllerServlet's doGet() method simply calls doPost().
 The following table summarizes the HttpServletRequest methods used in the implementation of doPost().
@@ -1089,7 +1089,7 @@ The following table summarizes the HttpServletRequest methods used in the implem
 </tr>
 <tr>	
 	<td>
-When requesting http://localhost:port/example/SignUp.action in a web browser, it returns "/example/SignUp.action".	
+When requesting http://localhost:8080/example/SignUp.action in a web browser, it returns "/example/SignUp.action".	
 	</td>
 </tr>
 <tr>
@@ -1252,7 +1252,7 @@ Add the following to web.xml:
 
 <p>
 Copy the JDBC driver file to CATALINA_HOME/lib.
-After restarting Tomcat, visit http://localhost:port<span class="emphasis">/empList</span>.
+After restarting Tomcat, visit http://localhost:8080<span class="emphasis">/empList</span>.
 </p>
 
 <pre class="browser">
@@ -1422,7 +1422,7 @@ Add the following to web.xml:
 
 <p>
 The value of the initialization parameter of ServletConfig set above is obtained by using getInitParameter(String name) method of ServletConfig.
-After restarting Tomcat, visit http://localhost:port<span class="emphasis">/initParam</span>.
+After restarting Tomcat, visit http://localhost:8080<span class="emphasis">/initParam</span>.
 </p>
 
 <h2>Using ServletContext Initialization Parameters</h2>
@@ -1472,7 +1472,7 @@ out.println(url);
 </pre>
 
 <p>
-After restarting Tomcat, visit http://localhost:port/simple.
+After restarting Tomcat, visit http://localhost:8080/simple.
 TODO: Modify InitParamServlet.java so that the url is set with the ServletContext initialization parameter.
 </p>
 
@@ -1672,7 +1672,7 @@ public class GetEmpServlet extends HttpServlet {
 
 <p>
 Compile the custom connection pool source and GetEmpServlet.java.
-Restart Tomcat and visit http://localhost:port/empList.
+Restart Tomcat and visit http://localhost:8080/empList.
 (The declarations and mappings for the GetEmpServlet servlet have already been set up in previous exercises)
 </p>
 
@@ -1725,8 +1725,8 @@ Add the following to web.xml:
 </pre>
 
 <p>
-Restart Tomcat and visit http://localhost:port/simple.
-Visit http://localhost:port/simple with another web browser.
+Restart Tomcat and visit http://localhost:8080/simple.
+Visit http://localhost:8080/simple with another web browser.
 Check the log messages in the Tomcat log file.
 </p>
 
@@ -1952,7 +1952,7 @@ The following code should be placed between the context-param element and the li
 
 <p>
 Open the RegisterServlet.java source and comment out the req.setCharacterEncoding("UTF-8"); and recompile RegisterServlet.java.
-Go to http://localhost:port/example/SignUp.html and input the non-English characters into the ID and click submit button.
+Go to http://localhost:8080/example/SignUp.html and input the non-English characters into the ID and click submit button.
 If req.setCharacterEncoding("UTF-8"); is executed, the ID will be output correctly. 
 </p>
 
@@ -2185,7 +2185,7 @@ Add the following to web.xml:
 
 <p>
 Before running the example, create an upload subdirectory in the top-level directory of your ROOT web application.
-Restart Tomcat and visit http://localhost:port/example/upload.html.
+Restart Tomcat and visit http://localhost:8080/example/upload.html.
 After uploading duplicate files, check the file name in upload folder.
 If you upload a duplicate file, you can see that the file name except the extension is appended with a number at the end.
 If the test fails, check the list below.
@@ -2322,7 +2322,7 @@ Add the following to web.xml:
 </pre>
 
 <p>
-Restart Tomcat and visit http://localhost:port/example/commons-fileupload.html.
+Restart Tomcat and visit http://localhost:8080/example/commons-fileupload.html.
 After uploading duplicate files, check the file name in upload folder.
 If you upload a duplicate file, you will notice that unlike cos.jar, it overwrites the existing file.
 An example of showing uploaded files is covered in the JSP chapter.
@@ -2542,7 +2542,7 @@ MIME of .html or .htm is text/html, .txt is text/plain .gif is image/gif.
 	<li>
 The string following the ? after the URL is called a query string.
 The query string is passed to the server-side resource corresponding to the URL.
-If there is more than one information in the query string, use &amp; from the second. (eg, http://localhost:port/list.jsp?board=free&amp;page=1)
+If there is more than one information in the query string, use &amp; from the second. (eg, http://localhost:8080/list.jsp?board=free&amp;page=1)
 	</li>
 	<li>
 The Enumeration interface has two methods to access the data in order: hasMoreElements() and nextElement().

@@ -419,7 +419,7 @@ Test in the following order.
 
 <ol>
 	<li>Since web.xml has changed, rerun Tomcat.</li>
-	<li>Visit http://localhost:port/board/list.jsp</li>
+	<li>Visit http://localhost:8080/board/list.jsp</li>
 	<li>Click the New link to go to the add new post page.</li>
 	<li>Check if new articles are registered.</li>
 </ol>
@@ -703,7 +703,7 @@ Test in the following order.
 
 <ol>
 	<li>Rerun Tomcat.</li>
-	<li>Visit http://localhost:port/board/list.jsp</li>
+	<li>Visit http://localhost:8080/board/list.jsp</li>
 	<li>Click title in the list to visit the View Post page.</li>
 	<li>On the View Post page, click Edit Post to go to the edit post page.</li>
 	<li>On the edit Post page, change the title and content, and then click the Submit button.</li>
@@ -796,7 +796,7 @@ Test in the following order.
 
 <ol>
 	<li>Rerun Tomcat.</li>
-	<li>Visit http://localhost:port/board/list.jsp</li>
+	<li>Visit http://localhost:8080/board/list.jsp</li>
 	<li>Click title in the list to visit the View Post page.</li>
 	<li>On the View Post page, click the Delete button.</li>
 	<li>When you return to the list page, make sure that the post has been removed.</li>
@@ -877,8 +877,8 @@ rs = pstmt.executeQuery();
 </pre>
 
 <p>
-If you request http://localhost:port/board/list.jsp?curPage=1, you can see the records of group 1,
-If you request http://localhost:port/board/list.jsp?curPage=2, you can see the records of group 2.
+If you request http://localhost:8080/board/list.jsp?curPage=1, you can see the records of group 1,
+If you request http://localhost:8080/board/list.jsp?curPage=2, you can see the records of group 2.
 However, it is inconvenient to change the curPage parameter in the address bar of a web browser and move the page.
 A typical bulletin board we know of provides a link to move the page as shown below.
 </p>
@@ -1802,7 +1802,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 The reason for the keyword = java.net.URLEncoder.encode (keyword, "UTF-8") code is that the encoding of the Java string and the URL address character, which are arguments to the sendRedirect () method of HttpServletResponse, are different.
 The URLEncoder encode () method allows you to get the byte value for non-English characters.
 This code needs to modify the server settings to work the way we want.
-Open the CATALINA_HOME/conf/server.xml file and make sure that the Connector element has the URIEncoding attribute set to UTF-8, as shown below, with the Connector element having the port attribute value of 8080 (we had to change it to 8989).
+Open the CATALINA_HOME/conf/server.xml file and make sure that the Connector element has the URIEncoding attribute set to UTF-8, as shown below, with the Connector element having the port attribute value of 8080.
 If there is no URIEncoding attribute, add it as follows.
 </p>
 

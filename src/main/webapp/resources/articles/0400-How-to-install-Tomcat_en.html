@@ -25,7 +25,7 @@ You can change them by opening and editing the tomcat-users.xml in CATALINA_HOME
 </p>
 
 <p>
-Visit http://localhost:port.(Where port is the port number used by Tomcat)
+Visit http://localhost:8080.
 If you see a cat, installation is a success.
 The screen showing the cat is the homepage of Tomcat's ROOT application.
 The location of the ROOT application is CATALINA_HOME/webapps/ ROOT.
@@ -52,7 +52,7 @@ In this case, you need to change port 8080 to a different number in the CATALINA
 </pre>
 <h6 class="src">Updated</h6>
 <pre class="prettyprint">
-&lt;Connector port="<strong>8989</strong>" protocol="HTTP/1.1"
+&lt;Connector port="<strong>9090</strong>" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443" /&gt;	
 </pre>

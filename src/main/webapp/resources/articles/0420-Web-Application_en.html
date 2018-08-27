@@ -155,7 +155,7 @@ You can configure your web application by adding sub elements of the web-app ele
 The servlet element sets the servlet definition and the initial parameters of the servlet.
 If the value of the load-on-startup element is 0 or positive, Tomcat creates the servlet object at the start of the web application and calls the init () method to make the service available.
 The servlet-mapping element is used for servlet-to-URL mapping.
-As above, if you visit http://localhost:port/contextPath/<strong>Test</strong>, 
+As above, if you visit http://localhost:8080/contextPath/<strong>Test</strong>, 
 the net.java_school.TestServlet servlet will respond.
 The session-timeout element controls the lifetime of the HttpSession object.
 If session-timeout is set to 30, the servlet container will destroy the HttpSession object if it has no action for 30 minutes.

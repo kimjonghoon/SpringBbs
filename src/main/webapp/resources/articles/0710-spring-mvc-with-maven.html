@@ -56,7 +56,7 @@ C:\www\spring-bbs가 메이븐 프로젝트의 루트 디렉터리다.
 
 <p>
 CATALINA_HOME/conf/Catalina/localhost 폴더에 위에서 작성한 spring-bbs.xml 파일을 복사한다.
-톰캣을 재실행한 후, http://localhost:port/spring-bbs를 방문하여 웹 애플리케이션이 동작하는지 확인한다.
+톰캣을 재실행한 후, http://localhost:8080/spring-bbs를 방문하여 웹 애플리케이션이 동작하는지 확인한다.
 </p>
 
 <h2>Spring MVC 테스트</h2> 
@@ -521,7 +521,7 @@ spring-bbs-servlet.xml 파일을 열고 아래 코드를 참조하여 수정한�
 </pre>
 
 <p>
-톰캣을 재실행하고 http://localhost:port/spring-bbs/player/test?id=1를 방문한다.
+톰캣을 재실행하고 http://localhost:8080/spring-bbs/player/test?id=1를 방문한다.
 </p>
 
 <h3>InternalResourceViewResolver</h3>
@@ -566,7 +566,7 @@ return modelAndView;
 InternalResourceViewResolver 설정대로 player/test는
 /WEB-INF/views/player/test.jsp로 해석될 것이다.
 자바 소스가 변경되었으므로 빌드를 한다.
-톰캣을 재실행하고 http://localhost:port/spring-bbs/player/test?id=1를 방문한다.
+톰캣을 재실행하고 http://localhost:8080/spring-bbs/player/test?id=1를 방문한다.
 </p>
 
 <h3>RequestMappingHandlerMapping</h3>

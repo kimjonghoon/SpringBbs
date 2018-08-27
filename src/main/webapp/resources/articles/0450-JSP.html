@@ -93,7 +93,7 @@ JSP는 복잡한 디자인을 가진, 동적으로 만들어지는 HTML을 사�
 </p>
 
 <p>
-ROOT 애플리케이션의 최상위 디렉터리에 다음 hello.jsp 파일을 만들고 http://localhost:port/hello.jsp를 방문한다.
+ROOT 애플리케이션의 최상위 디렉터리에 다음 hello.jsp 파일을 만들고 http://localhost:8080/hello.jsp를 방문한다.
 </p>
 
 <h6 class="src">/hello.jsp</h6>
@@ -690,7 +690,7 @@ page 속성은 포워딩할 대상 자원의 상대 주소다.
 <p>
 javax.servlet.jsp.JspWriter 추상 클래스 타입 인스턴스의 레퍼런스이다.
 응답 스트림에 데이터를 쓰는 데 사용한다.
-아래와 같이 helloworld.jsp를 ROOT 애플리케이션의 최상위 디렉터리에 작성한 후 http://localhost:port/helloWorld.jsp를 방문한다.
+아래와 같이 helloworld.jsp를 ROOT 애플리케이션의 최상위 디렉터리에 작성한 후 http://localhost:8080/helloWorld.jsp를 방문한다.
 </p>
 
 <h6 class="src">/helloWorld.jsp</h6>
@@ -719,7 +719,7 @@ hello.jsp로 만들어진 서블릿과 helloworld.jsp로 만들어진 서블릿�
 <p>
 javax.servlet.http.HttpServletRequest 인터페이스 타입 인스턴스의 레퍼런스이다.
 요청 파라미터와 헤더에 있는 사용자가 보낸 정보, 그리고 사용자에 관한 정보에 접근할 수 있다.
-아래와 같이 request.jsp를 작성하고 http://localhost:port/request.jsp?user=gildong를 방문한다.
+아래와 같이 request.jsp를 작성하고 http://localhost:8080/request.jsp?user=gildong를 방문한다.
 </p>
 
 <h6 class="src">/request.jsp</h6>
@@ -755,7 +755,7 @@ JSP에서 이용 가능한 모든 자원에 대한 접근 방법을 제공한다
 <p>
 session 내재 객체는 서블릿의 javax.servlet.http.HttpSession 타입 인스턴스의 레퍼런스이다.
 세션 데이타를 읽고 저장하는 데 사용된다.
-아래와 같이 session.jsp를 ROOT 애플리케이션의 루트 디렉터리에 작성한 후 http://localhost:port/session.jsp를 여러 번 방문한다.
+아래와 같이 session.jsp를 ROOT 애플리케이션의 루트 디렉터리에 작성한 후 http://localhost:8080/session.jsp를 여러 번 방문한다.
 </p>
 
 <h6 class="src">/session.jsp</h6>
@@ -1070,7 +1070,7 @@ if(statusCode != 500){
 </pre>
 
 <p>
-http://localhost:port/honggildong.jsp를 방문한다.
+http://localhost:8080/honggildong.jsp를 방문한다.
 honggildong.jsp란 자원이 ROOT 애플리케이션의 도큐먼트베이스에 없으므로 404 에러가 발생하여 error.jsp 파일이 응답하게 된다.
 인터넷 익스플로러에선 에러 페이지가 일정 바이트 이하면 에러페이지로 작동하지 않는다.<sup>3</sup>
 </p>
@@ -1321,7 +1321,7 @@ name 쿠키를 삭제했습니다.&lt;br /&gt;
 
 <p>
 <a href="/examples/example.zip">example.zip</a>을 다운로드한 후 ROOT 애플리케이션의 최상위 디렉토리에 압축을 푼다.
-http://localhost:port/example/ex1/index.jsp를 방문한다.
+http://localhost:8080/example/ex1/index.jsp를 방문한다.
 /example/ex1/index.jsp 파일을 열고 다음을 확인한다.
 </p>
 
@@ -1341,7 +1341,7 @@ index.jsp를 기준으로 JSP 파일이 합쳐지기 때문이다.
 
 <p>
 이번 예제의 위치는 /example/ex2/이다.
-http://localhost:port/example/ex2/index.jsp를 방문한다.
+http://localhost:8080/example/ex2/index.jsp를 방문한다.
 로그인을 테스트하기 위해선 해야 할 일이 있다.
 login_proc.jsp 페이지가 로그인을 처리하는 페이지이다.
 login_proc.jsp는 net.java_school.user.User.java 자바 빈즈를 이용한다.
@@ -1378,7 +1378,7 @@ public class User {
 
 <p>
 User.java를 작성하고 컴파일을 마쳤다면,
-http://localhost:port/example/ex2/index.jsp를 다시 방문하여 로그인을 테스트 한다.
+http://localhost:8080/example/ex2/index.jsp를 다시 방문하여 로그인을 테스트 한다.
 /example/ex2/index.jsp 파일을 열고 다음을 확인한다.
 </p>
 

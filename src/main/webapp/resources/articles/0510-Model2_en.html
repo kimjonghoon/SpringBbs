@@ -66,11 +66,11 @@ Add the following to web.xml:
 
 <p>
 Restart Tomcat.
-Visit http://localhost:port/list.do,
-http://localhost:port/board/list.do,
-http://localhost:port/board/view.do,
-http://localhost:port/board/write_form.do,
-http://localhost:port/board/modify_form.do.
+Visit http://localhost:8080/list.do,
+http://localhost:8080/board/list.do,
+http://localhost:8080/board/view.do,
+http://localhost:8080/board/write_form.do,
+http://localhost:8080/board/modify_form.do.
 When you visit, the request string will be output.
 Unlike before, the request string does not imply a specific component of the server.
 The controller will respond to the user's request by determining the model and view according to the request string. 
@@ -345,7 +345,7 @@ if (nextPage != 0) {
 </pre>
 
 <p>
-Go to http://localhost:port/board/list.do and test.
+Go to http://localhost:8080/board/list.do and test.
 The list.jsp no longer produces the numbers needed for paging, or does not work with the database.
 Instead, the list.jsp only receive and display the results produced by the model.
 But I still do not like the code in the next part of list.jsp.

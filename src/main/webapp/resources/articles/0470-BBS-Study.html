@@ -862,8 +862,8 @@ rs = pstmt.executeQuery();
 </pre>
 
 <p>
-이제 주소창에서 http://localhost:port/board/list.jsp?curPage=1을 요청하면 그룹 1의 레코드를 볼 수 있고,
-http://localhost:port/board/list.jsp?curPage=2를 요청하면 그룹 2의 레코드를 볼 수 있게 되었다.
+이제 주소창에서 http://localhost:8080/board/list.jsp?curPage=1을 요청하면 그룹 1의 레코드를 볼 수 있고,
+http://localhost:8080/board/list.jsp?curPage=2를 요청하면 그룹 2의 레코드를 볼 수 있게 되었다.
 하지만, 웹 브라우저의 주소창에서 curPage 파라미터를 고쳐가며 페이지를 이동하는, 그런 게시판은 없다.
 게시판은 아래와 같은 페이지를 이동할 수 있는 링크를 제공한다.
 </p>
@@ -2343,8 +2343,7 @@ URLEncoder의 encode() 메서드는 한글과 같은 문자에 대한 바이트 
 This method uses the supplied encoding scheme to obtain the bytes for unsafe characters. 
 -->
 이 코드가 우리가 원하는 방식으로 동작하려면 서버 설정을 건드려야 한다.<br />
-CATALINA_HOME/conf/server.xml 파일을 열고 Connector 엘리먼트 중 port 속성값이 8080인(우리는 8989로 바꿔야 했다) <br />
-Connector 엘리먼트에 URIEncoding 속성을 다음과 같이 UTF-8인지를 확인한다.<br />
+CATALINA_HOME/conf/server.xml 파일을 열고 Connector 엘리먼트 중 port 속성값이 8080인 Connector 엘리먼트에 URIEncoding 속성을 다음과 같이 UTF-8인지를 확인한다.<br />
 URIEncoding 속성이 없다면 아래처럼 추가한다.
 </p>
 
@@ -2411,7 +2410,7 @@ String nickname = request.getParameter("nickname");
 </pre>
 
 <p>
-http://localhost:port/sender.jsp를 방문하고 서밋 버튼을 클릭한다.<br />
+http://localhost:8080/sender.jsp를 방문하고 서밋 버튼을 클릭한다.<br />
 이동한 taker.jsp에서 한글이 깨지지 않고 모두 출력되는지 확인한다.<br />
 list.jsp에서 검색폼의 method 속성을 method="post" 에서 method="get"으로 변경한 후 한글 검색이 되는지 확인한다.<br />
 </p>

@@ -153,7 +153,7 @@ for(int i = 0;i &lt; size;i++) {
 
 <p>
 톰캣을 재실행한다.<br />
-http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문하여 테스트한다.<br />
 </p>
 
 <h3>두번째 테스트</h3>
@@ -175,7 +175,7 @@ javac -d C:/www/namecard/WEB-INF/classes *.java
 </pre>
 
 <p>
-http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문하여 테스트한다.<br />
 </p>
 
 <h3 id="3rd-Test">세번째 테스트</h3>
@@ -200,7 +200,7 @@ Default output folder 는 WEB-INF/classes 를 선택해야 한다.<br />
 <img src="https://lh3.googleusercontent.com/VcF6aMGyO4Z-Aqc-JgDO8vODfaZ63g8bufIonqmO1fBblWUFAZXf3AZqtwowQ5tzC3d0R_X8kfByNWFYYSwBFZTYWHyN34dncehx-clRf7C1cIZoRO7IyDhwyJuPYfrCOnfl5bDDkv2pSgCKWxUx0B0vn6Ly1Ti0BuwFy8D-U6TEERJiTAx5qY5OIUZ0UdxC1_Fb7oV16GG0iSkjMLlJnocG40YlqX8QnLqOMzFFHUaFlsQoC09gPR-h3kdKGdr2R5Y-xh8oo9Hmuxt8UDfw4FCguVH0gnzh6ezkh7273GGWllcjDWHFhsOQzSVT4aw6eaVT7IMJHgx-blKsYqNzi-6qycye6dp7tX1lCk0cVsQ0QUArLA6As_OdQI9OzSl6yobpwriziq8GpmfxQsUXKVEA7agLj1XB-BoRV1bNytwshy_uvJnm2kc4dESgHWXdzx6zcHUmNeGTZHYNPBq_IFeQXtZ2tgB8WsRFG4qGmzCZFA3lWsvZxLUtxCujYnXb378XBGXUqk8yK1uVh_vELe758FxGASC0xbXBtdaoJVR8u2MJQLQLS1gQLQAl1RcO0-59f7B1_RXXbhIU0pZtxPDce0kN5fIR-EI-kz_gpSRC0decpXALTgH2=w675-h534-no" alt="명함관리 웹 APP 이클립스 소스 폴더와 Output 폴더 설정" /><br />
 
 이제 이클립스에서 소스를 수정하면 따로 컴파일하지 않아도 바이트 코드가 WEB-INF/classes에 생긴다.<br />
-http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문하여 테스트한다.<br />
 테스트가 성공했다면 명함을 등록하는 JSP파일을 C:/www/namecard 에 만든다.<br />
 먼저 이클립스의 JSP 템플릿의 캐릭터셋을 EUC-KR 에서 UTF-8로 변경한다.<br />
 이클립스에서 Windows - Preferences - Web - JSP Files 선택하고 인코딩 박스에서 UTF-8를 선택하고 Apply 클릭한다.<br />
@@ -268,7 +268,7 @@ dao.insert(namecard);
 </pre>
 
 <p>
-http://localhost:8989/namecard/list.jsp를 방문한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문한다.<br />
 명함목록에서 등록버튼을 클릭하여 새로운 명함 등록을 추가하는 테스트를 한다.<br />
 다음은 삭제기능을 구현한다.<br />
 먼저 list.jsp 에서 아래를 참조해서 테이블의 열를 추가한다.<br />
@@ -326,7 +326,7 @@ dao.delete(no);
 </pre>
 
 <p>
-http://localhost:8989/namecard/list.jsp를 방문한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문한다.<br />
 명함을 삭제하는 테스트를 수행한다.<br />
 다음으로 수정기능 구현한다.<br />
 NamecardDao.java 에 수정을 담당하는 메서드는 아래와 같다.<br />
@@ -449,7 +449,7 @@ dao.update(card);
 </pre>
 
 <p>
-http://localhost:8989/namecard/list.jsp를 방문하여 수정을 테스트한다.<br /><br />
+http://localhost:8080/namecard/list.jsp를 방문하여 수정을 테스트한다.<br /><br />
 다음으로 list.jsp 에 검색기능을 추가한다.<br />
 list.jsp 열고 &lt;/body&gt; 전에 다음 폼을 추가한다.<br />
 </p>
@@ -546,7 +546,7 @@ if (keyword.equals("")) {
 
 <p>
 모두 작성했다면 
-http://localhost:8989/namecard/list.jsp를 방문하여 테스트한다.<br />
+http://localhost:8080/namecard/list.jsp를 방문하여 테스트한다.<br />
 </p>
 
 <span id="comments">주석</span>
