@@ -4,14 +4,8 @@
 
 <p>
 구글 클라우드에서 애플리케이션 초기화 시간이 길어지면 500 에러가 발생한다.
-</p>
-
-<p>
 스프링의 컴포넌트 스캔과 오토와이어드는 초기화 시간을 늘리는 주요 원인이다.
-</p>
-
-<p>
-구글 문서에서 권고하는 대로 컴포넌트 스캔과 오토 와이어드 대신 빈을 일일이 정의하는 것으로 수정해 보자.
+구글 공식 문서의 권고대로 컴포넌트 스캔과 오토 와이어드 대신 빈을 일일이 정의하는 것으로 스프링 설정 파일을 다음과 같이 수정한다.
 </p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
@@ -91,8 +85,10 @@ public class GuestbookController {
 <h3>Guestbook 최종 소스</h3>
 
 <p>
-<a href="/examples/java-school-guestbook.zip">예제 다운로드</a>
+<a href="/examples/guestbook.zip">최종 방명록 예제 소스</a><br />
+<a href="/examples/Improved-Guestbook.zip">개선된 방명록 예제 소스</a>
 </p>
+
 
 <span id="refer">참고</span>
 <ul id="references">

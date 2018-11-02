@@ -187,8 +187,8 @@
             AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
             </if>
     </select>
-
  -->
+
     <!-- MySQL and MariaDB end -->
 
 

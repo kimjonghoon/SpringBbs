@@ -87,7 +87,6 @@
         LIMIT ${offset}, ${rowCount}
     </select>
  -->
-
     <!-- MySQL and MariaDB end -->
 
 

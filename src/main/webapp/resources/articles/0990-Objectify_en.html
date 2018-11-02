@@ -5,35 +5,25 @@
 <p>
 Objectify is a Java API created for the datastore.<br />
 The datastore is the official repository of Google's cloud.<br />
-Let's understand the data store as a hash map of a hash map.
+If you think of datastore as a hash map of a hash map, you can easily understand it.
 </p>
-
 
 <h2>Add Objectify dependencies to pom.xml</h2>
 
 <p>
-Add the following property to pom.xml.
-</p>
-
-<pre class="prettyprint">
-&lt;objectify.version&gt;5.1.21&lt;/objectify.version&gt;
-&lt;guava.version&gt;23.0&lt;/guava.version&gt;
-</pre>
-
-<p>
-Add Objectify dependencies to pom.xml
+Add the following to the dependencies in pom.xml.
 </p>
 
 <pre class="prettyprint">
 &lt;dependency&gt;
     &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
     &lt;artifactId&gt;guava&lt;/artifactId&gt;
-    &lt;version&gt;${guava.version}&lt;/version&gt;
+    &lt;version&gt;23.0&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;com.googlecode.objectify&lt;/groupId&gt;
     &lt;artifactId&gt;objectify&lt;/artifactId&gt;
-    &lt;version&gt;${objectify.version}&lt;/version&gt;
+    &lt;version&gt;5.1.21&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
@@ -41,11 +31,10 @@ Add Objectify dependencies to pom.xml
 The guestbook project is using Objectify, so the above configuration already exists.
 </p>
 
-
 <h2>Add Delete function</h2>
 
 <p>
-Let's look at the Objectify code.
+Let's look at the Objectify code snippets implemented in guestbook.jsp.
 </p>
 
 <h6 class="src">Fetch List</h6>
@@ -65,7 +54,7 @@ ObjectifyService.ofy().save().entity(greeting).now();
 </pre>
 
 <p>
-Here's the code to use to delete the entity.
+Here is a objectify code snippet that we will add.
 </p>
 
 <h6 class="src">Delete Entity</h6>
@@ -82,20 +71,20 @@ Key.create(theBook, Greeting.class, id);
 </pre>
 
 <p>
-Using this code, you can get the unique key for each Greeting object in guestbook.jsp.<br />
+Using this code, you can get the unique key for each Greeting object in guestbook.jsp.
 To do this, first add a method in Greeting.java that returns its own key as follows:
 </p>
 
 <pre class="prettyprint">
-public Key getKey() {
+public Key&lt;Greeting&gt; getKey() {
 	return Key.create(theBook, Greeting.class, id);
 }
 </pre>
 
 <p>
-Here the type of Key is com.googlecode.objectify.Key.<br />
-Key has toWebSafeString (), a method that returns a String that can be restored to itself.<br />
-Therefore, Greeting's key string can be obtained as follows.
+The type of Key is com.googlecode.objectify.Key.
+Key has toWebSafeString(), a method that returns a String that can be restored to itself.
+Add the following highlighting in the guestbook.jsp.
 </p>
 
 <pre class="prettyprint">
@@ -110,7 +99,8 @@ for (Greeting greeting : greetings) {
 
 <p>
 Using the keyString stored in pageContext, you can create a link that passes the keyString to the JavaScript function.<br />
-(Javascript and the required form tags will be covered soon) 
+(Javascript and the required form tags will be covered soon)
+Add the following highlighting in the guestbook.jsp. 
 </p>
 
 <pre class="prettyprint">
@@ -120,10 +110,11 @@ Using the keyString stored in pageContext, you can create a link that passes the
 </pre>
 
 <p>
-If you implement the above, the user can delete the article, not the author.
+If you implement the above, the user can delete posts, not the author.
 Even non-logged-in users can delete posts.
 Spring security tags allow you to selectively render views based on permissions.
-To compare a login user with an author, you need to store the author ID in the pageContext. (See highlighted below)
+To compare a login user with an author, you need to store the author ID in the pageContext.
+Modify guestbook.jsp as follows.
 </p>
 
 <pre class="prettyprint">
@@ -137,7 +128,7 @@ for (Greeting greeting : greetings) {
         author = "An anonymous person";
     } else {
         author = greeting.author_email;
-        author_id = greeting.author_id;
+        <strong>author_id</strong> = greeting.author_id;
         if (user != null &amp;&amp; user.getUserId().equals(author_id)) {
             author += " (You)";
         }
@@ -150,15 +141,15 @@ for (Greeting greeting : greetings) {
 
 <p>
 You are all ready to compare the login user with the author.<br />
-Implement a link to pass the keyString to the JavaScript function as shown below.
+Add the following highlighting in the guestbook.jsp.
 </p>
 
 <pre class="prettyprint">
 &lt;p&gt;&lt;b&gt;${fn:escapeXml(greeting_user)}&lt;/b&gt; wrote:&lt;/p&gt;
 &lt;blockquote&gt;${fn:escapeXml(greeting_content)}&lt;/blockquote&gt;
-<strong>&lt;security:authorize access="isAuthenticated() and (#author_id == principal.userId or hasRole('ROLE_ADMIN'))"&gt;
+<strong>&lt;security:authorize access="isAuthenticated() and (#author_id == principal.userId or hasRole('ROLE_ADMIN'))"&gt;</strong>
 	&lt;blockquote&gt;&lt;a href="javascript:del('${keyString }')"&gt;Del&lt;/a&gt;&lt;/blockquote&gt;
-&lt;/security:authorize&gt;</strong>
+<strong>&lt;/security:authorize&gt;</strong>
 </pre>
 
 <p>
@@ -170,15 +161,8 @@ To use the Spring Security tag, add the Spring Security tag library directive to
 </pre>
 
 <p>
-The following Spring Security tag shows the delete link to the author or administrator of the login user.
+Add the following JavaScript function to guestbook.jsp.
 </p>
-
-<pre class="prettyprint">
-&lt;security:authorize access="isAuthenticated() and (#author_id == principal.userId or hasRole('ROLE_ADMIN'))"&gt;
-</pre>
-
-
-<h3>Adding a JavaScript function</h3>
 
 <pre class="prettyprint">
 &lt;script type="text/javascript"&gt;
@@ -193,7 +177,9 @@ function del(key) {
 &lt;/script&gt;
 </pre>
 
-<h3>Add a form tag</h3>
+<p>
+Add the following form to guestbook.jsp.
+</p>
 
 <pre class="prettyprint">
 &lt;form id="delForm" action="/guestbook/del" method="post" style="display: none;"&gt;
@@ -203,25 +189,24 @@ function del(key) {
 &lt;/form&gt;
 </pre>
 
-<h3>Add a handler for the "/guestbook/del" request to the controller</h3>
-
 <p>
 Add a handler to the GuestbookController that handles the "/guestbook/del" request as shown below.
 </p>
 
 <pre class="prettyprint">
-@RequestMapping(value="/guestbook/del", method=RequestMethod.POST)
+@PostMapping("/guestbook/del")
 public String del(String guestbookName, String keyString) {
-	Key&lt;Greeting&gt; key = Key.create(keyString);//고유 키 복원
-	ofy().delete().key(key).now();
+	Key&lt;Greeting&gt; key = Key.create(keyString);
+	ObjectifyService.ofy().delete().key(key).now();
 	return "redirect:/guestbook/?guestbookName=" + guestbookName;
-}
+}	
 </pre>
 
 <p>
-No user verification is done on the server side.
-On the server side, use Spring Security's method security to implement a check to see if the login user is the author.
+This code is not performing user verification.
+Method security in Spring Security allows you to verify that the login user is the author on the server side.
 Spring official documentation recommends implementing method security in the service layer.
+Create a service layer as shown below.
 </p>
 
 <h6 class="src">GuestbookService.java</h6>
@@ -262,8 +247,7 @@ public class GuestbookServiceImpl implements GuestbookService{
 </pre>
 
 <p>
-1. import static com.googlecode.objectify.ObjectifyService.ofy; has been added.
-The Ojectify code is used as follows.
+1. You need an <em>import static com.googlecode.objectify.ObjectifyService.ofy;</em> to use Objectify codes as below:
 </p>
 
 <pre class="prettyprint">
@@ -283,18 +267,24 @@ public String getAuthor_id() {
 }
 </pre>
 
-<h3>Modify Controller</h3>
+<p>
+Modify the controller to use the service layer.
+</p>
 
 <h6 class="src">GuestbookController.java</h6>
 <pre class="prettyprint">
-//..omit..
+//omit
+import net.java_school.spring.security.GaeUserAuthentication;
+import net.java_school.user.GaeUser;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+//omit
 <strong>
 @Autowired
 private GuestbookService guestbookService;
 </strong>
-//..omit..
+//omit
 
-@RequestMapping(value="/guestbook/sign", method=RequestMethod.POST)
+@PostMapping("/guestbook/sign")
 public String sign(String guestbookName, String content, GaeUserAuthentication gaeUserAuthentication) {
 	Greeting greeting = null;
 
@@ -310,7 +300,7 @@ public String sign(String guestbookName, String content, GaeUserAuthentication g
 	return "redirect:/guestbook/?guestbookName=" + guestbookName;
 }
 
-@RequestMapping(value="/guestbook/del", method=RequestMethod.POST)
+@PostMapping("/guestbook/del")
 public String del(String guestbookName, String keyString) {
 	Key&lt;Greeting&gt; key = Key.create(keyString);
 	Greeting greeting = ofy().load().key(key).now();

@@ -5,35 +5,25 @@
 <p>
 Objectify는 구글이 데이터스토어를 위해 만든 자바 API이다.
 데이터스토어는 구글 클라우드의 공식 저장소다.
-일단 해시 맵의 해시 맵 정도로 이해하고 넘어가자.
+데이터스토어를 해시 맵의 해시 맵 정도로 생각하면 이해하기 쉽다.
 </p>
 
-
-<h2>Objectify 추가</h2>
-
-<p>
-pom.xml의 properties 엘리먼트에 다음을 추가한다.
-</p>
-
-<pre class="prettyprint">
-&lt;objectify.version&gt;5.1.21&lt;/objectify.version&gt;
-&lt;guava.version&gt;23.0&lt;/guava.version&gt;
-</pre>
+<h2>Objectify 의존성 추가</h2>
 
 <p>
-dependencies 엘리먼트에 다음을 추가한다.
+다음을 pom.xml의 dependencies에 추가한다.
 </p>
 
 <pre class="prettyprint">
 &lt;dependency&gt;
     &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
     &lt;artifactId&gt;guava&lt;/artifactId&gt;
-    &lt;version&gt;${guava.version}&lt;/version&gt;
+    &lt;version&gt;23.0&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;com.googlecode.objectify&lt;/groupId&gt;
     &lt;artifactId&gt;objectify&lt;/artifactId&gt;
-    &lt;version&gt;${objectify.version}&lt;/version&gt;
+    &lt;version&gt;5.1.21&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
@@ -41,11 +31,10 @@ dependencies 엘리먼트에 다음을 추가한다.
 guestbook 프로젝트는 Objectify를 사용하고 있고 위 설정은 이미 되어 있다.
 </p>
 
-
 <h2>삭제 기능 추가</h2>
 
 <p>
-삭제 기능 추가를 구현하기에 앞서, 이미 구현된 Objectify 코드를 살펴보자.
+삭제 기능 추가를 구현하기에 앞서, 이미 guestbook.jsp에 구현된 Objectify 코드를 살펴보자.
 </p>
 
 <h6 class="src">목록 가져오기</h6>
@@ -70,7 +59,7 @@ ObjectifyService.ofy().save().entity(greeting).now();
 </p>
 
 <p>
-다음은 엔티티 삭제를 위해 사용해야 할 코드다. 
+다음은 엔티티 삭제를 위해 추가할 오브젝티파이 코드 조각이다. 
 </p>
 
 <h6 class="src">엔티티 삭제</h6>
@@ -92,18 +81,20 @@ Key.create(theBook, Greeting.class, id);
 그러기 위해 먼저 Greeting.java에 자신의 고유 키를 반환하는 메서드를 다음과 같이 추가한다.
 </p>
 
+<h6 class="src">Greeting.java</h6>
 <pre class="prettyprint">
-public Key getKey() {
+public Key&lt;Greeting&gt; getKey() {
 	return Key.create(theBook, Greeting.class, id);
 }
 </pre>
 
 <p>
-여기에서 Key의 타입은 com.googlecode.objectify.Key다.
+여기서 Key의 타입은 com.googlecode.objectify.Key다.
 Key는 자기 자신으로 복원할 수 있는 String을 반환하는 메서드인 toWebSafeString()을 가진다.
-따라서 Greeting의 키 문자열은 아래와 같이 구할 수 있다.
+guestbook.jsp 파일에서 다음 강조한 부분을 추가한다.
 </p>
 
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 // Look at all of our greetings
 for (Greeting greeting : greetings) {
@@ -116,9 +107,11 @@ for (Greeting greeting : greetings) {
 
 <p>
 pageContext에 저장한 keyString을 이용해서 자바스크립트 함수에 keyString을 전달하는 링크를 생성할 수 있다.
-(자바스크립트와 필요한 폼 태그는 곧 다룬다.) 
+(자바스크립트와 필요한 폼 태그는 곧 다룬다.)
+다음 강조한 부분을 guestbook.jsp에 추가한다. 
 </p>
 
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 &lt;p&gt;&lt;b&gt;${fn:escapeXml(greeting_user)}&lt;/b&gt; wrote:&lt;/p&gt;
 &lt;blockquote&gt;${fn:escapeXml(greeting_content)}&lt;/blockquote&gt;
@@ -128,10 +121,13 @@ pageContext에 저장한 keyString을 이용해서 자바스크립트 함수에 
 <p>
 하지만, 이렇게 구현하면 작성자가 아닌 사용자가 글을 삭제할 수 있다.
 심지어 로그인하지 않은 사용자도 글을 삭제할 수 있다.
-프로그램에 스프링 시큐리티가 작동하고 있다는 것을 상기하자. 스프링 시큐리티 태그를 사용하면 권한에 따라 뷰를 선택적으로 랜더링할 수 있다.
-일단, 로그인 사용자와 작성자를 비교하려면 작성자 아이디를 pageContext에 저장해야 한다. (아래 강조한 부분 참조)
+프로그램에 스프링 시큐리티가 작동하고 있다는 것을 상기하자. 
+스프링 시큐리티 태그를 사용하면 권한에 따라 뷰를 선택적으로 랜더링할 수 있다.
+일단, 로그인 사용자와 작성자를 비교하려면 작성자 아이디를 pageContext에 저장해야 한다.
+guestbook.jsp 파일을 수정한다.
 </p>
 
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 // Look at all of our greetings
 for (Greeting greeting : greetings) {
@@ -143,7 +139,7 @@ for (Greeting greeting : greetings) {
         author = "An anonymous person";
     } else {
         author = greeting.author_email;
-        author_id = greeting.author_id;
+        <strong>author_id</strong> = greeting.author_id;
         if (user != null &amp;&amp; user.getUserId().equals(author_id)) {
             author += " (You)";
         }
@@ -156,9 +152,10 @@ for (Greeting greeting : greetings) {
 
 <p>
 로그인 사용자와 작성자를 비교하기 위한 모든 준비가 끝났다.
-자바스크립트 함수에 keyString을 전달하는 링크를 아래와 같이 구현한다.
+자바스크립트 함수에 keyString을 전달하는 링크를 아래와 같이 수정한다.
 </p>
 
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 &lt;p&gt;&lt;b&gt;${fn:escapeXml(greeting_user)}&lt;/b&gt; wrote:&lt;/p&gt;
 &lt;blockquote&gt;${fn:escapeXml(greeting_content)}&lt;/blockquote&gt;
@@ -176,16 +173,10 @@ for (Greeting greeting : greetings) {
 </pre>
 
 <p>
-위에서 쓰인, 다음 스프링 시큐리티 태그는 로그인 사용자 중 글 작성자나 관리자에게 삭제 링크를 보여준다.
+guestbook.jsp에 다음 자바스크립트 함수 추가한다.
 </p>
 
-<pre class="prettyprint">
-&lt;security:authorize access="isAuthenticated() and (#author_id == principal.userId or hasRole('ROLE_ADMIN'))"&gt;
-</pre>
-
-
-<h3>자바스크립트 함수 추가</h3>
-
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 &lt;script type="text/javascript"&gt;
 function del(key) {
@@ -199,8 +190,11 @@ function del(key) {
 &lt;/script&gt;
 </pre>
 
-<h3>폼 태그 추가</h3>
+<p>
+guestbook.jsp에 다음 폼을 추가한다.
+</p>
 
+<h6 class="src">guestbook.jsp</h6>
 <pre class="prettyprint">
 &lt;form id="delForm" action="/guestbook/del" method="post" style="display: none;"&gt;
 	&lt;input type="hidden" name="keyString" /&gt;
@@ -209,28 +203,25 @@ function del(key) {
 &lt;/form&gt;
 </pre>
 
-<h3>컨트롤러에 "/guestbook/del" 요청 핸들러 추가</h3>
-
 <p>
 GuestbookController에 "/guestbook/del" 요청을 처리하는 핸들러를 아래와 같이 추가한다.
 </p>
 
 <pre class="prettyprint">
-@RequestMapping(value="/guestbook/del", method=RequestMethod.POST)
+@PostMapping("/guestbook/del")
 public String del(String guestbookName, String keyString) {
-	Key&lt;Greeting&gt; key = Key.create(keyString);//고유 키 복원
-	ofy().delete().key(key).now();
+	Key&lt;Greeting&gt; key = Key.create(keyString);
+	ObjectifyService.ofy().delete().key(key).now();
 	return "redirect:/guestbook/?guestbookName=" + guestbookName;
-}
+}	
 </pre>
 
 <p>
 하지만, 이렇게 구현하면 서버 측에서의 사용자 검증을 생략하게 된다.
-서버 측에서는 스프링 시큐리티의 메소드 보안을 사용해 로그인 사용자가 작성자인지 검사하도록 구현하자.
-메소드 보안은 서비스 계층에 적용하는 것이 좋으니, 다음과 같이 서비스 계층을 추가한다.
+스프링 시큐리티의 메소드 보안을 사용하면 서버 측에서는 로그인 사용자가 작성자인지 확인할 수 있다.
+메소드 보안은 서비스 계층에 적용하는 것이 좋다.
+다음과 같이 서비스 계층을 추가한다.
 </p>
-
-<h3>서비스 계층 추가</h3>
 
 <h6 class="src">GuestbookService.java</h6>
 <pre class="prettyprint">
@@ -291,8 +282,6 @@ public String getAuthor_id() {
 }
 </pre>
 
-<h3>컨트롤러 수정</h3>
-
 <p>
 컨트롤러가 서비스 계층을 사용하도록 수정한다.
 </p>
@@ -300,13 +289,17 @@ public String getAuthor_id() {
 <h6 class="src">GuestbookController.java</h6>
 <pre class="prettyprint">
 //omit
+import net.java_school.spring.security.GaeUserAuthentication;
+import net.java_school.user.GaeUser;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+//omit
 <strong>
 @Autowired
 private GuestbookService guestbookService;
 </strong>
 //omit
 
-@RequestMapping(value="/guestbook/sign", method=RequestMethod.POST)
+@PostMapping("/guestbook/sign")
 public String sign(String guestbookName, String content, GaeUserAuthentication gaeUserAuthentication) {
 	Greeting greeting = null;
 
@@ -322,7 +315,7 @@ public String sign(String guestbookName, String content, GaeUserAuthentication g
 	return "redirect:/guestbook/?guestbookName=" + guestbookName;
 }
 
-@RequestMapping(value="/guestbook/del", method=RequestMethod.POST)
+@PostMapping("/guestbook/del")
 public String del(String guestbookName, String keyString) {
 	Key&lt;Greeting&gt; key = Key.create(keyString);
 	Greeting greeting = ofy().load().key(key).now();
@@ -353,7 +346,6 @@ mvn appengine:run
 익명 사용자가 작성한 글이 삭제된 것을 확인한다.
 <img src="https://lh3.googleusercontent.com/uIo5pSF4T3-zg8Tndd881s21vj4bUtxQzlQWv8TstMovPWnFHpwP0Kt4XePrssZuL43K2dFBB3uSqsOINBYc6B2CW-hzy7e-Yui_63HpEVW7QH-BX_pJr0HEWaVi2XtD48EjG_hwGWPSANSf5kYPHp0b7LRtVKv4fNFrmDXZz8B1pe27UskkResudM3sjfNSB_zC3zfTDMEWnTnQ_R4SbKmZFzXLpQcxh3J2RoX3LFYNWzIJn6IfYtIBKfiP3yXblbquUkKT_kzkooM4HDl8CS5GBxGdrBPKrzCMg4diqAAqfIYbAF2Wsp-Dm1_cwM8jORaK-guqlyHnrWGXIFm6yyimT3nS01fIlYtWGf4UW8He761T231BqW5RDSigeIxoW7UdVe8Hl7axKciXMLg_wmxUxFmw9dh_m-TCdifS0W7uRkZ4GjGelan4LLRsziQ8V6Ud5jg8Ho9YZsBLFpD87_oCcUCYpuUT0zFNYT_88FprwnKXKARW02YNg9oGD5OgWPffOx4Gt8MdYc8zMgTjS1sFaQLF2m7pcK_seOwo41XRBuRRPtPACckckNFlgL4Mf_QNAWiv9hkXFuGzmpX1Bvq1L484xiifOsowqjUR0ba3QERyzpxlMoQt=w510-h380-no" alt="delete Anomynous user's greeting" style="display: block;" />
 </p>
-
 
 <span id="refer">참고</span>
 <ul id="references">

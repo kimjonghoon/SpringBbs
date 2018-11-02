@@ -3,9 +3,9 @@
 <h1>Spring Optimization in Google Cloud</h1>
 
 <p>
-500 errors occur when application initialization time is long in Google cloud.<br />
-Spring component scans and autowired are the main causes of increased initialization time.<br />
-Let's modify the configuration file by defining beans one by one instead of component scanning and Otouwide as recommended in the official document.
+500 errors occur when application initialization time is long in Google cloud.
+Spring component scans and autowired are the main causes of increased initialization time.
+Modify the Spring configuration file by defining beans instead of component scans and autowired as recommended by Google official documentation.
 </p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
@@ -82,7 +82,8 @@ public class GuestbookController {
 </pre>
 
 <p>
-<a href="/examples/java-school-guestbook.zip">Download Final source</a>
+<a href="/examples/guestbook.zip">Download Final source</a><br />
+<a href="/examples/Improved-Guestbook.zip">Download improved guestbook source</a><br />
 </p>
 
 <span id="refer">References</span>

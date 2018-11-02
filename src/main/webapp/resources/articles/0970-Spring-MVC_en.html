@@ -7,9 +7,20 @@ Change the guestbook directory structure as shown below.<br />
 <img alt="before_after" src="https://lh3.googleusercontent.com/_U2-CnVyiw-HAakNmEHMHBAc9_2bJqZsHmsvUCGfmB2N2ilnVes_Q1kykNI-GHzQh4sTl_xPNmFZ37E2RdZ6GnBCoe9vdWain3BCf-SdiVMraqZzjRhfvvIzk4ndVEhMGIZ-fRpvmICbMViQrl1_NvpWNPr2PB6YD2HVxdj2USNaTqrdVsTTiuRuuvO4IhOaiqm8pf9-_bwJcfF6LBIDUGpgGyxAnyBjZkJP-k8XWVOXTa8a_riYp5LdTV-FjFHu_F9UBd-t_Dl6OnHPQ0ogPa6wX_i96ztdiTIjZoavzew4VvWEysMadaUxp5DaiLDet47xSjda_LcsFDF0ZsFwq_-JbhYEyL10jJMy6xnNvTZuBLduQFMTAUXcdTgTqFSdX68wppQ_5iv8v_doNozs0j7unyashJy-JRiAicGPC6PYxMsoozNYNlmHx-QEZ2mYR33-YMmipAgeHf6WxMpNgec-SPVg7E9sOnJCW7-XEfP0343Z4ZC23nCoDn3yerEbfceeMog8JQ_Hetet0J2Nx0yQu8TxvwupeJQTvG-d6TFYcPXyCEK4zvHNAEMOPkB2KcT3djWKryNyJAMBj6CcMWStpA-NqAjUlilsdgQ0_Q=w468-h291-no" style="width: 100%;" />
 </p>
 
+<pre>
+webapp/resources/
+</pre>
+
 <p>
 I made /webapp/resources as a directory for the static resources of the web application.<br />
 Static resources in a web application are images, stylesheets, JavaScript, and HTML files.<br />
+</p>
+
+<pre>
+webapp/WEB-INF/views/
+</pre>
+
+<p>
 I made /webapp/WEB-INF/views as a directory for jsp files.<br />
 So I moved the guestbook.jsp file from /webapp to /webapp/WEB-INF/views/guestbook. 
 </p>
@@ -29,7 +40,7 @@ For Spring MVC, you need to do the following:
 <pre class="prettyprint">
 &lt;properties&gt;
 	&lt;!--  omit --&gt;
-	<strong>&lt;spring.version&gt;5.0.6.RELEASE&lt;/spring.version&gt;</strong>
+	<strong>&lt;spring.version&gt;5.1.2.RELEASE&lt;/spring.version&gt;</strong>
 &lt;/properties&gt;
 
 &lt;!--  omit --&gt;
@@ -62,7 +73,8 @@ For Spring MVC, you need to do the following:
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1"&gt;
-    <strong>&lt;filter&gt;
+    <strong>
+    &lt;filter&gt;
         &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
         &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
         &lt;init-param&gt;
@@ -79,17 +91,9 @@ For Spring MVC, you need to do the following:
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;</strong>
     &lt;!-- [START Objectify] --&gt;
-    &lt;filter&gt;
-        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
-        &lt;filter-class&gt;com.googlecode.objectify.ObjectifyFilter&lt;/filter-class&gt;
-    &lt;/filter&gt;
-    &lt;filter-mapping&gt;
-        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
-        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-    &lt;/filter-mapping&gt;
-    &lt;listener&gt;
-        &lt;listener-class&gt;com.example.guestbook.OfyHelper&lt;/listener-class&gt;
-    &lt;/listener&gt;
+	
+    &lt;!--  omit --&gt;
+    
     &lt;!-- [END Objectify] --&gt;
     <strong>&lt;servlet&gt;
         &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
@@ -160,9 +164,8 @@ If the controller returns "guestbook/guestbook", the view resolver set above wil
 </ol>
 
 <p>
-Create a controller dedicated to the guestbook in the com.example.guestbook package. 
+Create a controller dedicated to the guestbook. 
 </p>
-
 
 <h6 class="src">GuestbookController.java</h6>
 <pre class="prettyprint">
@@ -170,8 +173,8 @@ package net.java_school.guestbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -185,14 +188,14 @@ import javax.servlet.http.HttpServletResponse;
 public class GuestbookController {
 
 	<b><span>//</span>1."/guestbook" reqeust handler</b>
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook</strong>", method=RequestMethod.GET)
+	<strong>@GetMapping</strong>("<strong>/guestbook</strong>")
 	public String guestbook(String guestbookName, Model model) {
 		model.addAttribute("guestbookName", guestbookName);
 		return "guestbook/guestbook";
 	}
 	
 	<b><span>//</span>2."/guestbook/sign" request handler</b>
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook/sign</strong>", method=RequestMethod.POST)
+	<strong>@PostMapping</strong>("<strong>/guestbook/sign</strong>")
 	public String sign(HttpServletRequest req, HttpServletResponse resp) {
 		Greeting greeting;
 		UserService userService = UserServiceFactory.getUserService();
@@ -214,10 +217,14 @@ public class GuestbookController {
 
 <ol>
 	<li>The guestbook() method is responsible for the "/guestbook" request of the GET method.</li>
-	<li>The sign() method is responsible for the "/guestbook/sign" request of the POST method.<br />
-The implementation of the sign () method is the same as that of the SignGuestbookServlet.java servlet.
+	<li>The sign() method is responsible for the "/guestbook/sign" request of the POST method. The implementation of the sign() method is the same as that of the SignGuestbookServlet.java servlet.
 	</li>
 </ol>
+
+<p>
+<b>In order for the controller to work properly, you should delete the servlets classes(GuestbookServlet.java, SignGuestbookServlet.java).
+You should also delete the Java classes for testing in the src/test/java/ directory.</b>
+</p>
 
 <h3>Modify guestbook.jsp</h3>
 
@@ -226,7 +233,7 @@ Now that the style sheet file location has changed, modify the stylesheet path i
 </p>
 
 <pre class="prettyprint">
-&lt;link type="text/css" rel="stylesheet" href="<strong>/resources/stylesheet/main.css</strong>"/&gt;  
+&lt;link type="text/css" rel="stylesheet" href="<strong>/resources</strong>/stylesheets/main.css"/&gt;  
 </pre>
 
 <p>
@@ -235,6 +242,9 @@ Modify the form action attribute in guestbook.jsp to match the request handler i
 
 <pre class="prettyprint">
 &lt;form action="<strong>/guestbook/sign</strong>" method="post"&gt;
+</pre>
+
+<pre class="prettyprint">
 &lt;form action="<strong>/guestbook</strong>" method="get"&gt;
 </pre>
 
@@ -242,6 +252,20 @@ Modify the form action attribute in guestbook.jsp to match the request handler i
 Since the location of guestbook.jsp has changed, the methods createLogoutURL() and createLoginURL() in guestbook.jsp will return /WEB-INF/views/guestbook/guestbook.jsp and eventually occur a 404 error.<br />
 Modify the arguments of the two methods from request.getRequestURI() to <b>"/guestbook/?GuestbookName=" + guestbookName</b>.
 </p>
+
+<pre class="prettyprint">
+&lt;p&gt;Hello, ${fn:escapeXml(user.nickname)}! (You can
+    &lt;a href="&lt;%= userService.createLogoutURL(<strong>"/guestbook/?guestbookName=" + guestbookName)</strong> %&gt;"&gt;sign out&lt;/a&gt;.)&lt;/p&gt;
+&lt;%
+    } else {
+%&gt;
+&lt;p&gt;Hello!
+    &lt;a href="&lt;%= userService.createLoginURL(<strong>"/guestbook/?guestbookName=" + guestbookName)</strong> %&gt;"&gt;Sign in&lt;/a&gt;
+    to include your name with greetings you post.&lt;/p&gt;
+&lt;%
+    }
+%&gt;
+</pre>
 
 <p>
 To run an app in the Java 8 environment, you need the following configuration in appengine-web.xml:
@@ -259,7 +283,7 @@ mvn appengine:run
 </pre>
 
 <p>
-Visit http://localhost:8080/guestbook.
+Visit http://localhost:8080/guestbook. (It is not http://localhost:8080!)
 </p>
 
 <h3>Remote Test</h3>

@@ -7,17 +7,26 @@ guestbook 디렉터리 구조를 Spring MVC에 맞게 아래와 같이 바꾼다
 <img alt="before_after" src="https://lh3.googleusercontent.com/_U2-CnVyiw-HAakNmEHMHBAc9_2bJqZsHmsvUCGfmB2N2ilnVes_Q1kykNI-GHzQh4sTl_xPNmFZ37E2RdZ6GnBCoe9vdWain3BCf-SdiVMraqZzjRhfvvIzk4ndVEhMGIZ-fRpvmICbMViQrl1_NvpWNPr2PB6YD2HVxdj2USNaTqrdVsTTiuRuuvO4IhOaiqm8pf9-_bwJcfF6LBIDUGpgGyxAnyBjZkJP-k8XWVOXTa8a_riYp5LdTV-FjFHu_F9UBd-t_Dl6OnHPQ0ogPa6wX_i96ztdiTIjZoavzew4VvWEysMadaUxp5DaiLDet47xSjda_LcsFDF0ZsFwq_-JbhYEyL10jJMy6xnNvTZuBLduQFMTAUXcdTgTqFSdX68wppQ_5iv8v_doNozs0j7unyashJy-JRiAicGPC6PYxMsoozNYNlmHx-QEZ2mYR33-YMmipAgeHf6WxMpNgec-SPVg7E9sOnJCW7-XEfP0343Z4ZC23nCoDn3yerEbfceeMog8JQ_Hetet0J2Nx0yQu8TxvwupeJQTvG-d6TFYcPXyCEK4zvHNAEMOPkB2KcT3djWKryNyJAMBj6CcMWStpA-NqAjUlilsdgQ0_Q=w468-h291-no" style="width: 100%;" />
 </p>
 
+<pre>
+webapp/resources/
+</pre>
+
 <p>
-webapp/resources/는 웹 애플리케이션의 정적 요소를 위해 만들었다.<br />
-웹 애플리케이션에서 정적인 요소란 이미지, 스타일 시트, 자바스크립트, HTML 파일을 말한다.<br />
-webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.<br />
-그래서 guestbook.jsp 파일은 webapp/guestbook.jsp에서 webapp/WEB-INF/views/guestbook/guestbook.jsp로 옮겼다.<br />
-스프링 프로젝트에선 src/main/webapp에는 favicon.ico 파일 외 어떤 파일도 두지 않는 게 좋다.<br />
-favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지를 말한다. 
+webapp/resources/는 웹 애플리케이션의 정적 요소를 위해 만들었다.
+웹 애플리케이션에서 정적인 요소란 이미지, 스타일 시트, 자바스크립트, HTML 파일을 말한다.
+</p>
+
+<pre>
+webapp/WEB-INF/views/
+</pre>
+
+<p>
+webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.
+그래서 guestbook.jsp 파일을 webapp/에서 webapp/WEB-INF/views/로 옮겼다.
 </p>
 
 <p>
-웹 애플리케이션에 스프링 MVC를 적용하기 위해선 다음 과정이 필요하다.
+스프링 MVC를 적용하기 위해선 다음 과정이 필요하다.
 </p>
 
 <ul>
@@ -31,7 +40,7 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 <pre class="prettyprint">
 &lt;properties&gt;
 	&lt;!--  omit --&gt;
-	<strong>&lt;spring.version&gt;5.0.6.RELEASE&lt;/spring.version&gt;</strong>
+	<strong>&lt;spring.version&gt;5.1.2.RELEASE&lt;/spring.version&gt;</strong>
 &lt;/properties&gt;
 
 &lt;!--  omit --&gt;
@@ -64,7 +73,8 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1"&gt;
-    <strong>&lt;filter&gt;
+    <strong>
+    &lt;filter&gt;
         &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
         &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
         &lt;init-param&gt;
@@ -79,21 +89,15 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
     &lt;filter-mapping&gt;
         &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-    &lt;/filter-mapping&gt;</strong>
-    &lt;!-- [START Objectify] --&gt;
-    &lt;filter&gt;
-        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
-        &lt;filter-class&gt;com.googlecode.objectify.ObjectifyFilter&lt;/filter-class&gt;
-    &lt;/filter&gt;
-    &lt;filter-mapping&gt;
-        &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
-        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;
-    &lt;listener&gt;
-        &lt;listener-class&gt;com.example.guestbook.OfyHelper&lt;/listener-class&gt;
-    &lt;/listener&gt;
+    </strong>
+    &lt;!-- [START Objectify] --&gt;
+	
+    &lt;!--  omit --&gt;
+    
     &lt;!-- [END Objectify] --&gt;
-    <strong>&lt;servlet&gt;
+    <strong>
+    &lt;servlet&gt;
         &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
         &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
         &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
@@ -105,15 +109,14 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 &lt;/web-app&gt;
 </pre>
 
-<p>
-요청 문자열을 UTF-8으로 인코딩하는 필터를 추가했다.<br />
-디스패처 서블릿을 guestbook이란 이름으로 추가했고 '/'로 매핑했다.<br />
-이 밖에 welcome-file-list와 방명록 예제를 위한 서블릿을 제거했다.<br />
-제거된 서블릿 구현 내용은 스프링 컨트롤러 메서드에서 구현해야 한다. 
-</p>
+<ul>
+	<li>다국어 사이트를 위해 요청 문자열을 UTF-8로 인코딩하는 필터를 추가</li>
+	<li>디스패처 서블릿을 guestbook이란 이름으로 추가했고 '/'로 매핑</li>
+	<li>welcome-file-list 제거</li>
+</ul>
 
 <p>
-디스패처 서블릿 이름이 guestbook 이므로, 스프링 설정 파일을 guestbook-servlet.xml란 이름으로 web.xml 파일이 있는 위치에 생성한다.
+디스패처 서블릿 이름이 <b>guestbook</b> 이므로 스프링 설정 파일을 <b>guestbook</b>-servlet.xml란 이름으로 web.xml 파일이 있는 위치에 생성한다.
 </p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
@@ -151,17 +154,12 @@ favicon.ico는 웹 브라우저 주소창 왼쪽에 보이는 작은 이미지�
 	<li>webapp/resources 나 그 하위 디렉터리에 있는 정적 콘텐츠 (스타일 시트, 이미지, 자바스크립트 등등)에 대한 요청을 처리하기 위한 설정이다.</li>
 	<li>애너테이션 기반으로 스프링을 구동하기 위한 설정이다.</li>
 	<li>지정한 패키지에서 컴포넌트를 스캔해서 빈 컨테이너에 등록하게 하는 설정이다.</li>
-	<li>뷰 리졸버는 컨트롤러에서 온 문자열을 해석하여 뷰를 결정한다.
-		컨트롤러가 "guestbook/guestbook"를 리턴한다면, 
-		위에서 설정한 뷰 리졸버는 prifix와 suffix를 사용해서 뷰를
-		<strong>/WEB-INF/views/</strong>guestbook/guestbook<strong>.jsp</strong>라고 해석할 것이다.
-	</li>
+	<li>뷰 리졸버는 컨트롤러에서 온 문자열을 해석하여 뷰를 결정한다. 컨트롤러가 "guestbook/guestbook"를 리턴한다면, 위에서 설정한 뷰 리졸버는 prifix와 suffix를 사용해서 뷰를 <strong>/WEB-INF/views/</strong>guestbook/guestbook<strong>.jsp</strong>라고 해석한다.</li>
 </ol>
 
 <p>
-com.example.guestbook 패키지에 방명록(Guestbook)을 전담하는 컨트롤러를 생성한다. 
+방명록(Guestbook)을 전담하는 컨트롤러를 생성한다.
 </p>
-
 
 <h6 class="src">GuestbookController.java</h6>
 <pre class="prettyprint">
@@ -169,8 +167,8 @@ package net.java_school.guestbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -183,13 +181,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class GuestbookController {
 
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook</strong>", method=RequestMethod.GET)<b><span>//</span>1."/guestbook" 요청 핸들러</b>
+	<strong>@GetMapping</strong>("<strong>/guestbook</strong>")<b><span>//</span>1."/guestbook" 요청 핸들러</b>
 	public String guestbook(String guestbookName, Model model) {
 		model.addAttribute("guestbookName", guestbookName);
 		return "guestbook/guestbook";
 	}
     
-	<strong>@RequestMapping</strong>(value="<strong>/guestbook/sign</strong>", method=RequestMethod.POST)<b><span>//</span>2."/guestbook/sign" 요청 핸들러</b>
+	<strong>@PostMapping</strong>("<strong>/guestbook/sign</strong>")<b><span>//</span>2."/guestbook/sign" 요청 핸들러</b>
 	public String sign(HttpServletRequest req, HttpServletResponse resp) {
 		Greeting greeting;
 		UserService userService = UserServiceFactory.getUserService();
@@ -214,6 +212,10 @@ public class GuestbookController {
 	<li>sign() 메서드는 POST 방식의 "/guestbook/sign" 요청을 담당한다. sign() 메서드 내용은 SignGuestbookServlet.java 서블릿 코드 그대로다.</li>
 </ol>
 
+<p>
+<b>컨트롤러가 제대로 동작하기 위해서 서블릿인 GuestbookServlet.java와 SignGuestbookServlet.java와 src/test/java/ 디렉터리에 있는 테스트를 위한 자바 클래스를 모두 삭제한다.</b> 
+</p>
+
 <h3>guestbook.jsp 수정</h3>
 
 <p>
@@ -221,7 +223,7 @@ public class GuestbookController {
 </p>
 
 <pre class="prettyprint">
-&lt;link type="text/css" rel="stylesheet" href="<strong>/resources/stylesheet/main.css</strong>"/&gt;  
+&lt;link type="text/css" rel="stylesheet" href="<strong>/resources</strong>/stylesheets/main.css"/&gt;  
 </pre>
 
 <p>
@@ -230,14 +232,32 @@ guestbook.jsp에서 폼 action 속성을 GuestbookController의 요청 핸들러
 
 <pre class="prettyprint">
 &lt;form action="<strong>/guestbook/sign</strong>" method="post"&gt;
+</pre>
+
+<pre class="prettyprint">
 &lt;form action="<strong>/guestbook</strong>" method="get"&gt;
 </pre>
 
 <p>
-guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutURL() 메서드와 createLoginURL() 메서드의 인자를 그대로 두면 
-두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환하고 결국 404 에러를 발생시킨다.<br /> 
+guestbook.jsp의 위치를 변경했으므로, 
+guestbook.jsp에서 createLogoutURL()와 createLoginURL() 인자를 그대로 두면 두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환한다.
+결국 404 에러를 발생한다.
 두 메서드의 인자를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
 </p>
+
+<pre class="prettyprint">
+&lt;p&gt;Hello, ${fn:escapeXml(user.nickname)}! (You can
+    &lt;a href="&lt;%= userService.createLogoutURL(<strong>"/guestbook/?guestbookName=" + guestbookName)</strong> %&gt;"&gt;sign out&lt;/a&gt;.)&lt;/p&gt;
+&lt;%
+    } else {
+%&gt;
+&lt;p&gt;Hello!
+    &lt;a href="&lt;%= userService.createLoginURL(<strong>"/guestbook/?guestbookName=" + guestbookName)</strong> %&gt;"&gt;Sign in&lt;/a&gt;
+    to include your name with greetings you post.&lt;/p&gt;
+&lt;%
+    }
+%&gt;
+</pre>
 
 <p>
 자바 8 환경에서 앱을 실행하려면, appengine-web.xml에 다음 설정이 있어야 한다.
@@ -249,17 +269,13 @@ guestbook.jsp의 위치를 변경했으므로, guestbook.jsp에서 createLogoutU
 
 <h3>로컬 테스트</h3>
 
-<p>
-명령 프롬프트에서 다음을 실행하여 로컬 테스트를 진행한다.
-</p>
-
 <pre class="screen">
 mvn clean
 mvn appengine:run
 </pre>
 
 <p>
-http://localhost:8080/guestbook을 방문한다.
+http://localhost:8080/guestbook을 방문한다. (http://localhost:8080이 아니다!)
 </p>
 
 <h3>서버 테스트</h3>
@@ -271,7 +287,6 @@ mvn appengine:deploy
 <p>
 http://<em>your-app-id</em>.appspot.com/guestbook을 방문한다.
 </p>
-
 
 <span id="refer">참고</span>
 <ul id="references">

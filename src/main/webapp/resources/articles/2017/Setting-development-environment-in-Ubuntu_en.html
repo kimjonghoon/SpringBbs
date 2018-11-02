@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2018.8.25</div>
+<div class="last-modified">Last Modified 2018.10.11</div>
 
 <h1>Set up the project on Ubuntu</h1>
 
@@ -52,7 +52,7 @@ Go to the directory where the downloaded file is located and execute the followi
 
 <pre class="shell-prompt">
 unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip
-sudo apt-get install alien libaio1 unixodbc
+sudo apt install alien libaio1 unixodbc
 cd Disk1
 sudo alien --scripts -d oracle-xe-11.2.0-1.0.x86_64.rpm
 </pre>
@@ -112,34 +112,36 @@ Copy the following Paste it into the file.
 fs.file-max=6815744  
 net.ipv4.ip_local_port_range=9000 65000  
 kernel.sem=250 32000 100 128 
-kernel.shmmax=<b>2066743296</b>
+kernel.shmmax=536870912
 </pre>
 
 <p>
-The value of kernel.shmmax allocates 1/2 of the RAM memory installed on the system.
+Check the swap memory.
 </p>
 
 <pre class="shell-prompt">
 free -m
 </pre>
 
-<p>
-if the result is as below
-</p>
-
 <pre class="shell-prompt">
              total       used       free     shared    buffers     cached
-Mem:          <b>3942</b>       3809        133        947         50       1571
+Mem:          3942       3809        133        947         50       1571
 -/+ buffers/cache:       2186       1756
-Swap:         4083        378       3705
+Swap:         <b>4083</b>        378       3705
 </pre>
 
 <p>
-3942 * 1024 * 1024 * 0.5 = 2066743296
+Unlike the above, if Swap does not exceed 2000, do the following.
 </p>
 
+<pre class="shell-prompt">
+sudo ln -s /usr/bin/awk /bin/awk
+sudo mkdir /var/lock/subsys
+sudo touch /var/lock/subsys/listener
+</pre>
+
 <p>
-Verify the change.
+Verify the kernel parameters.
 </p>
 
 <pre class="shell-prompt">
@@ -155,21 +157,12 @@ sudo service procps restart
 </pre>
 
 <p>
-Verify.
+Verify.<br />
+(In my case it came out differently from the set value, but I was able to complete the installation)
 </p>
 
 <pre class="shell-prompt">
 sudo sysctl -q fs.file-max
-</pre>
-
-<p>
-Make some more required changes:
-</p>
-
-<pre class="shell-prompt">
-sudo ln -s /usr/bin/awk /bin/awk
-sudo mkdir /var/lock/subsys
-sudo touch /var/lock/subsys/listener
 </pre>
 
 <p>
@@ -225,7 +218,7 @@ Set up the environmental variables.
 </p>
 
 <pre class="shell-prompt">
-gedit ~/.bashrc
+nano ~/.bashrc
 </pre>
 
 <p>
@@ -322,9 +315,9 @@ source ~/.bashrc
 -->
 
 <pre class="shell-prompt">
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install default-jdk
+sudo apt update
+sudo apt upgrade
+sudo apt install default-jdk
 </pre>
 
 <p>
@@ -406,8 +399,7 @@ Move to directory where GetEmp.java is located and run the following commands:
 
 <pre class="shell-prompt">
 javac GetEmp.java
-java -classpath \
-.:/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar GetEmp
+java -cp .:/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar GetEmp
 </pre>
 
 <h2>Maven Install</h2>
@@ -417,7 +409,6 @@ Do not install it with the sudo apt command.<br />
 Download the latest binary file from <a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a>.<br />
 Unzip it and Move the generated directory to /opt.
 </p>
-
 
 <pre class="shell-prompt">
 cd ~/Downloads/
@@ -430,7 +421,7 @@ Open .bashrc file.
 </p>
 
 <pre class="shell-prompt">
-gedit ~/.bashrc &amp;
+nano ~/.bashrc &amp;
 </pre>
 
 <p>
@@ -502,10 +493,9 @@ Name[en]=eclipse.desktop
 </pre>
 
 <p>
-Search for eclipse and run it.
+Search for eclipse and run it.<br />
 Fix Eclipse to the launcher.
 </p>
-
 
 <h2>Git Install</h2>
 
@@ -522,11 +512,41 @@ git --version
 </pre>
 
 <p>
+Set user information.
+</p>
+
+<pre class="shell-prompt">
+git config --global user.name "<em>John Doe</em>"
+git config --global user.email <em>johndoe@gmail.org</em>
+</pre>
+
+<p>
+Verify.
+</p>
+
+<pre class="shell-prompt">
+git config --global --list
+</pre>
+
+<h2>Spring Board Example Test</h2>
+
+<p>
 To install the SpringBbs project, run the following command:
 </p>
 
 <pre class="shell-prompt">
 git clone https://github.com/kimjonghoon/SpringBbs
+</pre>
+
+<p>
+Go to the directory where the ojdbc6.jar file is located and use the following command to save the Oracle JDBC driver to your local repository.
+</p>
+
+<pre class="shell-prompt">
+cd /u01/app/oracle/product/11.2.0/xe/jdbc/lib
+
+mvn install:install-file -Dfile=ojdbc6.jar \
+-DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
 </pre>
 
 <p>
@@ -540,7 +560,7 @@ Select Maven - Update Project Configuration to synchronize pom.xml with Eclipse.
 <h3>Create tables</h3>
 
 <p>
-Connect to the system account and execute the following SQL statement.
+Connect to the system account(sqlplus sys as sysdba) and execute the following SQL statement.
 </p>
 
 <pre class="prettyprint">
@@ -551,29 +571,29 @@ ALTER USER java TEMPORARY TABLESPACE TEMP;
 CONNECT java/school
 
 create table member (
-    email varchar2(60) PRIMARY KEY,
-    passwd varchar2(200) NOT NULL,
-    name varchar2(20) NOT NULL,
-    mobile varchar2(20)
+  email varchar2(60) PRIMARY KEY,
+  passwd varchar2(200) NOT NULL,
+  name varchar2(20) NOT NULL,
+  mobile varchar2(20)
 );
 
 create table board (
-    boardcd varchar2(20),
-    boardnm varchar2(40) NOT NULL,
-    boardnm_ko varchar2(40),
-    constraint PK_BOARD PRIMARY KEY(boardcd)
+  boardcd varchar2(20),
+  boardnm varchar2(40) NOT NULL,
+  boardnm_ko varchar2(40),
+  constraint PK_BOARD PRIMARY KEY(boardcd)
 );
 
 create table article (
-    articleno number,
-    boardcd varchar2(20),
-    title varchar2(200) NOT NULL,
-    content clob NOT NULL,
-    email varchar2(60),
-    hit number,    
-    regdate date,
-    constraint PK_ARTICLE PRIMARY KEY(articleno),
-    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
+  articleno number,
+  boardcd varchar2(20),
+  title varchar2(200) NOT NULL,
+  content clob NOT NULL,
+  email varchar2(60),
+  hit number,    
+  regdate date,
+  constraint PK_ARTICLE PRIMARY KEY(articleno),
+  constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
 );
 
 create sequence SEQ_ARTICLE
@@ -581,26 +601,26 @@ increment by 1
 start with 1;
 
 create table comments (
-    commentno number,
-    articleno number,    
-    email varchar2(60),    
-    memo varchar2(4000) NOT NULL,
-    regdate date, 
-    constraint PK_COMMENTS PRIMARY KEY(commentno)
+  commentno number,
+  articleno number,    
+  email varchar2(60),    
+  memo varchar2(4000) NOT NULL,
+  regdate date, 
+  constraint PK_COMMENTS PRIMARY KEY(commentno)
 );
 
 create sequence SEQ_COMMENTS
-    increment by 1
-    start with 1;
+increment by 1
+start with 1;
 
 create table attachfile (
-    attachfileno number,
-    filename varchar2(50) NOT NULL,
-    filetype varchar2(30),
-    filesize number,
-    articleno number,
-    email varchar2(60),
-    constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
+  attachfileno number,
+  filename varchar2(50) NOT NULL,
+  filetype varchar2(30),
+  filesize number,
+  articleno number,
+  email varchar2(60),
+  constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
 );
 
 create sequence SEQ_ATTACHFILE
@@ -617,29 +637,23 @@ CREATE UNIQUE INDEX ix_authorities ON authorities(email, authority);
 
 -- for test records  
 insert into board values ('smalltalk', 'Small talk', '자유게시판');
-insert into board values ('qna', 'Q and A', '묻고 답하기');
-
-INSERT INTO member VALUES ('johndoe@gmail.org','1111','John Doe','123-1111-1111');
-INSERT INTO member VALUES ('janedoe@gmail.org','1111','Jane Doe','123-2222-2222');
-
-INSERT INTO authorities VALUES ('johndoe@gmail.org','ROLE_USER');
-INSERT INTO authorities VALUES ('johndoe@gmail.org','ROLE_ADMIN');
-INSERT INTO authorities VALUES ('janedoe@gmail.org','ROLE_USER');
 
 commit;
 
 create table views (
-	no number,
-	articleNo number,
-	ip varchar(60),
-	yearMonthDayHour char(10),
-	constraint PK_VIEWS PRIMARY KEY(no),
-	constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
+  no number,
+  articleNo number,
+  ip varchar(60),
+  yearMonthDayHour char(10),
+  constraint PK_VIEWS PRIMARY KEY(no),
+  constraint UNIQUE_VIEWS UNIQUE(articleNo, ip, yearMonthDayHour)
 );
 
 create sequence SEQ_VIEWS
-	increment by 1
-	start with 1;
+increment by 1
+start with 1;
+
+exit;	
 </pre>
 
 <h2>MySQL Install</h2>
@@ -651,12 +665,19 @@ sudo apt install mysql-server mysql-client
 <h3>Create tables</h3>
 
 <p>
-Execute the following SQL statement.
+Connect to root account.<br />
+The password for the root account is "", so just hit enter.
 </p>
 
 <pre class="prettyprint">
 mysql --user=root --password mysql
+</pre>
 
+<p>
+Execute the following commands:
+</p>
+
+<pre class="prettyprint">
 create user 'java'@'%' identified by 'school';
 grant all privileges on *.* to 'java'@'%';
 
@@ -730,9 +751,9 @@ create table views (
 	yearMonthDayHour char(10),
 	unique key (articleNo, ip, yearMonthDayHour)
 );
-</pre>
 
-<h2>SpringBbs Test</h2>
+exit;
+</pre>
 
 <h3>1. Test on Tomcat</h3>
 
@@ -741,35 +762,19 @@ Install Tomcat.
 </p>
 
 <pre class="shell-prompt">
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install tomcat8
+sudo apt update
+sudo apt upgrade
+sudo apt install tomcat8
 </pre>
 
 <p>
-Check CATALINA_HOME and CATALINA_BASE at http://localhost:8080.<br />
-Check the /conf/Catalina/localhost subdirectory in both directories.<br />
-Create a ROOT.xml file in /conf/Catalina/localhost. <br />
-If /home/johndoe/SpringBbs is the root directory, write it like this:
+Visit http://localhost:8080.<br />
+Check the CATALINA_HOME and CATALINA_BASE directors at http://localhost:8080.<br />
+Confirm the /conf/Catalina/localhost directory.<br />
+(This directory is in either CATALINA_HOME or CATALINA_BASE)
 </p>
 
-<pre class="prettyprint">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Context
-    docBase="/home/johndoe/SpringBbs<strong>/src/main/webapp</strong>"
-    reloadable="true"&gt;
-&lt;/Context&gt;
-</pre>
-
-<p>
-Go to the SpringBbs root directory and run the following command:
-</p>
-
-<pre class="shell-prompt">
-mvn clean compile war:inplace
-</pre>
-
-<h3>Edit upload directory</h3>
+<h4>Edit upload directory</h4>
 
 <p>
 Open the WebContants.java file in the net.java_school.commons package and modify the upload directory to match your system.
@@ -781,6 +786,29 @@ Go to the upload directory and run the following command.
 
 <pre class="shell-prompt">
 chmod 777 .
+</pre>
+
+<p>
+Go to the SpringBbs root directory and run the following command:
+</p>
+
+<pre class="shell-prompt">
+mvn clean compile war:inplace
+</pre>
+
+<h4>Change Root Application</h4>
+
+<p>
+Create a ROOT.xml file in /conf/Catalina/localhost. <br />
+If /home/johndoe/SpringBbs is the root directory, write it like this:
+</p>
+
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+    docBase="/home/johndoe/SpringBbs<strong>/src/main/webapp</strong>"
+    reloadable="true"&gt;
+&lt;/Context&gt;
 </pre>
 
 <p>
@@ -810,7 +838,7 @@ systemctl stop tomcat8
 </pre>
 
 <p>
-In the pom.xml file, uncomment the build element under &lt;!-- $ mvn jetty:run --&gt;,
+In the pom.xml file, uncomment the build element under &lt;!-- $ mvn jetty:run --&gt;<br />
 Comment out the build element under &lt;!-- $ mvn compile war:inplace and run tomcat --&gt;.
 </p>
 
@@ -826,10 +854,44 @@ mvn jetty:run
 Go to http://localhost:8080 and test it.
 </p>
 
+<h2>Install Google Cloud SDk</h2>
+
+<p>
+Original <a href="https://cloud.google.com/sdk/docs/downloads-apt-get">https://cloud.google.com/sdk/docs/downloads-apt-get</a>
+</p>
+
+<pre class="shell-prompt">
+export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+</pre>
+
+<pre class="shell-prompt">
+echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee \
+-a /etc/apt/sources.list.d/google-cloud-sdk.list
+</pre>
+
+<pre class="shell-prompt">
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+</pre>
+
+<pre class="shell-prompt">
+sudo apt update &amp;&amp; sudo apt install google-cloud-sdk
+</pre>
+
+<pre class="shell-prompt">
+sudo apt install google-cloud-sdk-app-engine-java
+</pre>
+
+<pre class="shell-prompt">
+gcloud init
+</pre>
+
 <span id="refer">References</span>
 <ul id="references">
 	<li><a href="http://crunchbang.org/forums/viewtopic.php?id=23267">http://crunchbang.org/forums/viewtopic.php?id=23267</a></li>
 	<li><a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a></li>
+	<li><a href="https://cloud.google.com/sdk/docs/downloads-apt-get">https://cloud.google.com/sdk/docs/downloads-apt-get</a></li>
+	<li><a href="https://cloud.google.com/compute/docs/regions-zones/">https://cloud.google.com/compute/docs/regions-zones/</a></li>
+	<li><a href="https://rogerdudler.github.io/git-guide/index.html">https://rogerdudler.github.io/git-guide/index.html</a></li>
 </ul>
 
 <span id="related-articles">Related articles</span>

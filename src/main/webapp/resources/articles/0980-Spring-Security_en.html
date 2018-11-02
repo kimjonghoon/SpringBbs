@@ -26,7 +26,7 @@ Therefore, storing user information in the datastore and prohibiting bad user ac
 <pre class="prettyprint">
 &lt;properties&gt;
 	&lt;!-- omit --&gt;
-	<strong>&lt;spring.security.version&gt;5.0.5.RELEASE&lt;/spring.security.version&gt;</strong>
+	<strong>&lt;spring.security.version&gt;5.1.1.RELEASE&lt;/spring.security.version&gt;</strong>
 &lt;/properties&gt;
 </pre>
 
@@ -50,6 +50,9 @@ Therefore, storing user information in the datastore and prohibiting bad user ac
 &lt;!-- [END Spring Security] --&gt;      
 </pre>
 
+<p>
+The following are the files needed for Google account and Spring security interworking.
+</p>
 
 <h6 class="src">AppRole.java</h6>
 <pre class="prettyprint">
@@ -354,11 +357,16 @@ public class GoogleAccountsAuthenticationProvider implements AuthenticationProvi
 }
 </pre>
 
+<p>
+Spring configuration for spring security should be written as a separate file.
+</p>
+
 <h6 class="src">security.xml</h6>
 <pre class="prettyprint">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans:beans xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -402,6 +410,10 @@ If the passwords are the same, create a Principal and add it to the authenticati
 	</li>
 </ol>
 
+<p>
+You can split the Spring configuration into separate files.
+</p>
+
 <h6 class="src">applicationContext.xml</h6>
 <pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
@@ -422,6 +434,9 @@ If the passwords are the same, create a Principal and add it to the authenticati
 &lt;/beans&gt;
 </pre>
 
+<p>
+Modify guestbook-servlet.xml as follows.
+</p>
 
 <h6 class="src">guestbook-servlet.xml</h6>
 <pre class="prettyprint">
@@ -464,12 +479,12 @@ If the passwords are the same, create a Principal and add it to the authenticati
 </pre>
 
 <ol>
-	<li>
-I have created security.xml separately from the Spring security configuration.<br />
-However, this setting should be in a Spring configuration file ending with -servlet.xml.
-</li>
+	<li>I have created security.xml separately from the Spring security configuration. However, this setting should be in a Spring configuration file ending with -servlet.xml.</li>
 </ol>
 
+<p>
+Modify web.xml as follows.
+</p>
 
 <h6 class="src">web.xml</h6>
 <pre class="prettyprint">
@@ -491,10 +506,6 @@ However, this setting should be in a Spring configuration file ending with -serv
     <strong>&lt;listener&gt;
         &lt;listener-class&gt;org.springframework.security.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
     &lt;/listener&gt;</strong>
-    <strong>&lt;filter&gt;
-        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
-        &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
-    &lt;/filter&gt;</strong>
     &lt;filter&gt;
         &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
         &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
@@ -511,11 +522,14 @@ However, this setting should be in a Spring configuration file ending with -serv
         &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;
-    <strong>&lt;filter-mapping&gt;
+    <strong>&lt;filter&gt;
+        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
         &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;</strong>
-    &lt;!-- [START Objectify] --&gt;
     &lt;filter&gt;
         &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
         &lt;filter-class&gt;com.googlecode.objectify.ObjectifyFilter&lt;/filter-class&gt;
@@ -524,10 +538,6 @@ However, this setting should be in a Spring configuration file ending with -serv
         &lt;filter-name&gt;ObjectifyFilter&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;
-    &lt;listener&gt;
-        &lt;listener-class&gt;com.google.guestbook.OfyHelper&lt;/listener-class&gt;
-    &lt;/listener&gt;
-	&lt;!-- [END Objectify] --&gt;
 	&lt;servlet&gt;
         &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
         &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
@@ -537,15 +547,6 @@ However, this setting should be in a Spring configuration file ending with -serv
         &lt;servlet-name&gt;guestbook&lt;/servlet-name&gt;
         &lt;url-pattern&gt;/&lt;/url-pattern&gt;
     &lt;/servlet-mapping&gt;
-    &lt;jsp-config&gt;
-        &lt;jsp-property-group&gt;
-            &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;
-            &lt;page-encoding&gt;UTF-8&lt;/page-encoding&gt;
-        &lt;/jsp-property-group&gt;
-    &lt;/jsp-config&gt;
-    &lt;session-config&gt;
-        &lt;session-timeout&gt;-1&lt;/session-timeout&gt;
-    &lt;/session-config&gt;
 &lt;/web-app&gt;
 </pre>
 
@@ -597,17 +598,17 @@ Add the following to appengine-web.xml.
 <pre class="prettyprint">
 package net.java_school.guestbook;
 
-import java.io.IOException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
+
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -615,35 +616,35 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class GuestbookController {
 	<strong>
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@GetMapping("/")
 	public String home() {
 		return "index";
 	}
 	
-	@RequestMapping(value="/admin", method=RequestMethod.GET)
+	@GetMapping("/admin")
 	public String adminHome() {
 		return "admin/index";
 	}
 	
-	@RequestMapping(value="/403", method=RequestMethod.GET)
+	@GetMapping("/403")
 	public String error403() {
 		return "403";
 	}
 	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	@GetMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		request.getSession().invalidate();
 		String url = UserServiceFactory.getUserService().createLogoutURL("/guestbook");
 		response.sendRedirect(url);
 	}
 	</strong>
-	@RequestMapping(value="/guestbook", method=RequestMethod.GET)
+	@GetMapping("/guestbook")
 	public String guestbook(String guestbookName, Model model) {
 		model.addAttribute("guestbookName", guestbookName);
 		return "guestbook/guestbook";
 	}
 
-	@RequestMapping(value="/guestbook/sign", method=RequestMethod.POST)
+	@PostMapping("/guestbook/sign")
 	public String sign(HttpServletRequest req, HttpServletResponse resp) {
 		Greeting greeting;
 		UserService userService = UserServiceFactory.getUserService();
@@ -686,7 +687,6 @@ public class GuestbookController {
     	&lt;li&gt;&lt;a href="/admin"&gt;Admin&lt;/a&gt;&lt;/li&gt;
 	&lt;/security:authorize&gt;
 &lt;/ul&gt;
-
 &lt;/article&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -742,22 +742,22 @@ mvn appengine:run
 </pre>
 
 <p>
-Visit the homepage and click the Guestbook link.<br />
+Visit the http://localhost:8080 and click the Guestbook link.<br />
 <img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
 Click Sign in.<br />
 <img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
 On the login page, check Sign in as Administrator and login.<br />
 <img src="https://lh3.googleusercontent.com/njUdDdcv3eSIj9LTF1ApHIJ6XgpJLSKKIttSNDJQHDCDLkdDWtzG9nGcFGKwKfl_f8d-rrXSo6KRliovQ7a4haZSjjZKTgpqqftWlXtppbDYJOwFErv4GqgWf3iWE5-eXZovYMBiL5FtRV4sre9JiBNIOk80DZ5RSchiXqICdNOjAeI09lO_IonI6CMNWXgAc21w4LJ2n6k-xlktrfdAK4p73gzesBmTCjpA8-bibwgubs95ym0S1CznUS5MuV2X2sE2rsw9Va6bZWfgdlr8jEYs4vgddmW8m2jMXMcD8qxxLRGhh3KaPl7ofZQsSNtOPkpxi3ybXAjUMX4I4nvWIBJ2orwetlr2ZpKBRZmFNC5Z6XSaEfIeXL0WJT0LNKbEDQz3bku0rmTcz1zI9b9xYhzDFP-wk-ig9qkDXXjFPmwXr5NB2fGNC0cuH-NjX11KZ2hfcltGhuBO9DW5gryVjXcda1Em-2iboPpRuwJNmlmJrvCKVW1dIswuQA8I8MLCfIp8Mb0io-vWYMj-Id90fr_K5r17Q0C-SUabGMJIydxSmsAUgXPLOwUW07bO_4xFIIcqqVzcCO2absJGYgpkSgGv6qnwH4wKBuK5L4Ytu1xG7M5aQ07eBx83=w419-h319-no" alt="Sign in by Admin" /><br />
 <img src="https://lh3.googleusercontent.com/ENkdX6uqkza7qAlio0ucvUDNo_cpFud2WEMNTD_p4FPaw8p0_QijcdRsl1ESbO14Q9AHOgHXFeAHY3IjikzXEHf0IrgHGUYbQ_wc4yhmwSDPQFsICIBisQE0ziMbMwiZqRvc7Wi2JVkD1ZJwJFLMTE8PH6UQoPl8S34JOH5Sphv1sbl0VkA9zK7zg49cCyomegROTbY08ffW78VkXMwR4JGkpUHG0M71-Z5180sv-TSy5N-9W71WAmJq9gve23fPUguDYtltxa7hUKZTVbxF9Gi8uT0Tk-kJ0Z3Aiave4oRGRgyQ_wT37QkZLcp_r84wlIrroyxVu-oEHVdqyM9P_qqWVbUKlWlkc4HKANS5Vtl6XtlygpmgF7A9MNrXVYfjcxUmo74Nk9kLKWH0OH-JsuNrW674DipTy7wNJIxn73FHjeoaHd3l-YoALFo5U1dpMYuurOlwBFUIqXJaqjFInswmN8i2L79dQdt0hG6xpuw4o51uJux_HvCPdXN_0Qufg1kgJmYf6kU08ThTYYJM4joWFvxKGVzWaoLzNRP40NqyG3omdOCn2tMsBRvnNrdmA3y7-dFIni5cS2ASciaUJERfmNk88hT_cmHCa1FcbgWAXENnVJA6FeyR=w451-h301-no" alt="Guestbook" /><br />
-Log in as an administrator and visit the homepage again.<br />
+Log in as an administrator and visit the http://localhost:8080 again.<br />
 Click the Admin link.<br />
 <img src="https://lh3.googleusercontent.com/QvcX_nWvNvGBIDIRVj4LIEPrb5VOx6l90F4c6YcJIxehG_nkkJnHdJKVitkOE4yYKcuSssVFACePlj3ABd343_LciVwp4PhEeuD_6AyrDcrhDg5z9KEoPJQcXdfNe776Fhi3shBvoIKNyKmNT-PnTiDAYKIdRHvtjfUEokRNf7jtfhQ8LOd3Gb2TtZe3leuLxLTIBHk88LyZq-Uk3LYb7OzH6SAAWLtqbHIdyiKg844K4sj_ehH83W7UH5SsLLhVmo8UCGAvFoXkwKXgi-tGKG9W7MvFNKJ9K7u1SPLGjmehk2jxTuqdSue_HOwWymzrY51ndClyzwCVhGhToNFAGmWAlWPCCtqJV0ozoQiRUdigInvopmwKhcvF25W3UeiOA0x-ic9zvffs4Wo_p18EugoqAbz_m8Shev_Ai1H3Rx80O0xHaoogugWuz3BwlJXvvltrHFfve9LFSlhO2NMmEEXZcG-VkerEDJyHd71tPymQRwz8GuK9VlhUgISUVQBrVvOge2DLEDzHUDO7M-qHcotGVsti1AEFI_8nef-31ov8-NlorqY41tBlv7JK6JbrFnm2ERwZzeUgSRvlPXuSvSzeQ6mqOQB9PwDvmtdRwv-Wy9ZYFF6CE7Qw=w452-h220-no" alt="Access Homepage and Admin" /><br />
 <img src="https://lh3.googleusercontent.com/l-ABwrnNjsRxU4bBSBlfih0Sb2jcERvVHr4atqWzf8AQy9VNVc7I-r5Okxrw4P7P25vCX7LlDefGgKkiTz7Vge5EOW5MNQ38LQDyG1EMTA7E8q7RQWlv_4oPCLVcS_RsQ46T5QLWNnOKKtDia86TKgJ91w1w3s7WzVQGA8nIQYLeJdg_0iZysBYTjEdXTN2HCJUCusIOqQ6VsOnLBO7_9F-YnBRddEbfL52slWliGCIYMTpyTjI3vWQsEMKPSd5oANamYpvXdbstkuj4iw20tCZtohu0E5Re-zl1MVpRcwy2pyIm5yh4wq1e-WIaM_rBycsiSS6SEr7xWjY3yzZEbozGfRWmznBXZwYHbpySL6u3sk_n3F5V7oW4UJuDsqPM0NoILxboHBlFT7vebrJ5svSgBmiC4A0xVW59rC7o7M7dFzify8uCDMhdGPaBIOmhgS2dC-5klfcYIKF_iDcdhejT6BFe6wi4SbZl8CG_Qvd9coCoafh5DeTP9AuyEbUAPJaZLc7isiiBX46haQo62uXvMaBwsFQRbVmJvKODKng7-4aP6fqpboXPuSdzLqYyh4o46PHOoQqB1g3GRsT121J-n0FGvqf3oYeHCwc8L9ydCukS51aP5UW8=w450-h233-no" alt="Admin Page" /><br />
-Go back to the Guestbook page and sign out and click Sign in.<br />
+Go back to the http://localhost:8080/guestbook and sign out and click Sign in.<br />
 <img src="https://lh3.googleusercontent.com/L_MXmuxPZYuIWkItOtd4iXsUOQVVerYfQBjZ7UJmEejhxSOoVugn31-4DJH9fjN-p-cCxnn9RjRHcO1GlejD3K4i5UTzgo34GDotrFHt04gCuv57ulzTej7Yxlu6vN8o9ktTDIlmqUUHp8S4pxJ20UqvIuvAO_yN_f1ROS9OdnKunTe_vEImjVt5x4VDGADSdeGh2xDlDnNGMoc7zVh_brbJgn2lU3IMBQC-601Z9tgQo07rEPnU1GYasfrK6QZGXs8XkUNTrXyq3FCoj0CFd9ZdDgDxYYjOLfnUTBnJnJ-Y85yD5Ir9Cm06dEP-3KTBmlkU4hUawZzPNHy_nOUAQWiBEEWFjVGy6HqDdDcc1tpYVxTTfDn34K_eAwKUDNWE1EC7srFO5kRvPGleafhLaSpbz0tlBNSSEdkhFh8GrL5S-dXkLk_epSZ-rzsvTNsj0gFEvfREa5-xOITHXCujAKg0JGTMCtv0OPWEZWoA8NjG7cw76D_DQd_d9N0-Pk8REKWoIZThyG89WVrGKF9NRV93l0mPdnYzVNW7olkOpyK29uIIG-qC3XIhbIpzcrU7-rSHNTDblAKmVbigzuKUmmq0jb-EevdE4zevpVEfvb4SVh8bLlVbQsPZ=w452-h302-no" alt="Guestbook Sign in" /><br />
 Log in as a normal user.<br />
 <img src="https://lh3.googleusercontent.com/JFIPDnglJq8KtPG5Pv4KMWthG4fUPhGgv2NAYaACQQMxyDzgxKe87titAJKBoTvY-GtcHodBFEZ3C_1u3G6VPuUPqrw65pnxAdxQysd5IP3YCf9FHPBWIOBFHgM6xqb6E87Nm1qQvacYg5kmZg3DUIcydZOwad4JcgFAbNaUmYnnhPG2P95BxyYXqEpAwPXw4BFvJNc0TU36-O3kw2g1mA3ahx9FxbV3AfGdFW-RaTkEKa6NeLlzCehZg7iOWrRw5BXEbTsXkWven_HYHd0PtLrB_Wa1_1qQ7t29OoXL1ox-2HzlkPZNLhqtUmcuVM4JV1OBRQ9efsgne896L2I2i2MdBZffAzWLFLCglvzabSsYhFJ1E-8y8ZFAkylraWxq7MF_cy7jpdHUsaxCLEo6Zgp_uSYc4aO2O88eWrlJIr7pJhlCDy4st8q7XLCeD2LStxEkePbkqKOUBSYpb_wrbsN11N15FpXE67rezkz6J2Dno-5e54JQspx_o3ujA4DZU25iHpgZIwSv3G9lAo0mRz_wWW6zPx7sTZRduMF4fDlA1jEDwUpy1avu89m5xhTT8PESM1hngBxHQIN3GCPRDeQFdqKg6TMuOKMYjsN-_6IV-M5dxPqlIHVZ=w451-h275-no" alt="Sign in by normal user" /><br />
-Visit the homepage. Confirm that the Admin link disappears.<br />
+Visit the http://localhost:8080. Confirm that the Admin link disappears.<br />
 <img src="https://lh3.googleusercontent.com/-qxy74PQkz0H1rUJGw2am3tYZQDcwA_YEO8xwibFgkYqNy5zf79gvdYiASuhBhTEysIPyyDeg-MZP9MCOKr-GG7H9IyD8L_PsAw6NjOVsuRJPVqIoy2rJ3ocm5tarpU6_2rcYg72mjhI_uWU68gdlP6IHGCE_CPpZHiMQtDkN-RGQ_UTDgTfTTnahNmlBVy7DT_8hp8HQrbwMBZffMohF-EqNBVxIaU0Q4nOsbfavVsbgaLEBExtTCSKrZfgmw62PjjAVJMPI4DehW2O4tO6A92DjVQBdKA5mu6zyIHYG2NfFxo_hXQprUcVNpJx5GMxrZNBVyaL54OB8JZ7cZkHw4aXw9KXpJ_dSHn8Ort5N_8oWMg3zLXAfWev3XjZ5X26bgFJfsHX-IpjU16Vl0CDkR215WaLQTZKdDaVbOA8M9VyVWoepwj7oJ1VSOS6tST3gxKgiKltFP_UV9pYd4bS4K39rjqKFs30iNrIxcgMD1NUOCCV8dBU9LYbFxZez5BYdJXs8St3cEFnb0qJwjIQat-wpv5jMiY1EYXJaUiWSFV7ljBqdcBqagnW1y7saw7FQSMaza8zijuIzCruvEFGXWk7PPV2ef8A0KM2WQcWOjC6DOAJ9bhDFiv4=w450-h234-no" alt="Access Homepage" /><br />
 Try to access the admin page by typing http://localhost:8080/admin in the address bar of your web browser.<br />
 <img src="https://lh3.googleusercontent.com/zVAFmaEpBdA9W3xGV3o1avo-4wYBk2TdS9Ys1wIvYiIWK-Nxvgkrt05T9sFLlQcW6LA_0C3N9NB7GmfSZUvt2Vvix_5tWDORjEAkHawvnGBXlX0LINcBGL7QhiRi4X9xtKn8H5CH8d232k9vb6OF9hFCOjnmqmsP9GJ8w96nqhHhL6kEfA1HK0QoFCky6CzEdnfCmKno-G7voB7N38ITn-e3Cus7o0diqlQw9dlNLDgEqA2eGK7GEeiTqwDKQ9Jz52VWMGeZA0cLvHD1eyIiF50POVQ0j86Y7ixo79fHWS7HQOPYaXIMYy6aoWX-eiz5c5Wqa7ra9hdvM0BIswDNywqHC77umx1ltulzAiQMhbV2DgHNKuru1t3SNMe7Hrx0VN0W6UUmAc0inp5AmSBUu4ZAdw6kiLJyYWWay6LoR_pU8JXkRTywspRdGJV5GfPAb6HWszxTbIT0cv40kmc_23DCq_tlK7_qXRCX4RNXJkspBjoMSm0ZU74EXcn0anrXsMGVRkVnGChLnhDmoKESq-fjinjqIP2yEcKh6S_7kTLz-u2l7nALV7NzhO3U192tXZquOuCWgOvbrMjV3hKVelPMC6k6lKhcE1bqXSkuZdQzwEMCoWhkvnrn=w450-h216-no" alt="Access Denied" /><br />

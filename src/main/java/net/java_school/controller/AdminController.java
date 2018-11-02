@@ -15,8 +15,9 @@ import net.java_school.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,8 +29,9 @@ public class AdminController extends Paginator {
     @Autowired
     private BoardService boardService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String index(Integer page, String search, Model model) {
+    	
         if (page == null) {
             page = 1;
         }
@@ -50,7 +52,7 @@ public class AdminController extends Paginator {
         map.put("startRecord", startRecord.toString());
         map.put("endRecord", endRecord.toString());
         //Oracle end
-        
+
         
 /*       
         //MySQL and MariaDB start
@@ -80,7 +82,7 @@ public class AdminController extends Paginator {
         return "admin/index";
     }
 
-    @RequestMapping(value = "/editAccount", method = RequestMethod.GET)
+    @GetMapping("/editAccount")
     public String editAccountForm(String email, Model model) {
         User user = userService.getUser(email);
         //List<String> authorities = userService.getAuthoritiesOfUser(email);
@@ -90,7 +92,7 @@ public class AdminController extends Paginator {
         return "admin/editAccount";
     }
 
-    @RequestMapping(value = "/editAccount", method = RequestMethod.POST)
+    @PostMapping("/editAccount")
     public String editAccount(User user, String page, String search) throws Exception {
         userService.editAccountByAdmin(user);
 
@@ -100,7 +102,7 @@ public class AdminController extends Paginator {
         return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
     }
 
-    @RequestMapping(value = "/changePasswd", method = RequestMethod.POST)
+    @PostMapping("/changePasswd")
     public String changePasswd(User user, String page, String search) throws Exception {
         userService.changePasswdByAdmin(user);
 
@@ -110,7 +112,7 @@ public class AdminController extends Paginator {
         return "redirect:/admin/editAccount?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
     }
 
-    @RequestMapping(value = "/delUser", method = RequestMethod.POST)
+    @PostMapping("/delUser")
     public String delUser(User user, String page, String search) throws Exception {
         userService.delUser(user);
 
@@ -120,7 +122,7 @@ public class AdminController extends Paginator {
         return "redirect:/admin?email=" + user.getEmail() + "&page=" + page + "&search=" + search;
     }
 
-    @RequestMapping(value = "/board", method = RequestMethod.GET)
+    @GetMapping("/board")
     public String boardList(Model model) {
         List<Board> boards = boardService.getBoards();
         model.addAttribute("boards", boards);
@@ -128,21 +130,21 @@ public class AdminController extends Paginator {
         return "admin/board";
     }
 
-    @RequestMapping(value = "/createBoard", method = RequestMethod.POST)
+    @PostMapping("/createBoard")
     public String createBoard(Board board) {
         boardService.createBoard(board);
 
         return "redirect:/admin/board";
     }
 
-    @RequestMapping(value = "/editBoard", method = RequestMethod.POST)
+    @PostMapping("/editBoard")
     public String editBoard(Board board) {
         boardService.editBoard(board);
 
         return "redirect:/admin/board";
     }
 
-    @RequestMapping(value = "/delAuthority", method = RequestMethod.GET)
+    @GetMapping("/delAuthority")
     public String delAuthority(String authority, String email, String page, String search) throws Exception {
 
         userService.delAuthorityOfUser(email, authority);
@@ -152,7 +154,7 @@ public class AdminController extends Paginator {
         return "redirect:/admin/editAccount?email=" + email + "&page=" + page + "&search=" + search;
     }
 
-    @RequestMapping(value = "/addAuthority", method = RequestMethod.POST)
+    @PostMapping("/addAuthority")
     public String addAuthority(String authority, String email, String page, String search) throws Exception {
 
         userService.addAuthority(email, authority);

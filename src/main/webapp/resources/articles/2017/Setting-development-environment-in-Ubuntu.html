@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2018.8.25</div>
+<div class="last-modified">Last Modified 2018.10.11</div>
 
 <h1>우분투 개발환경 세팅</h1>
 
@@ -27,7 +27,7 @@ sudo ls -l /dev/disk/by-id/*usb*
 
 <p>
 만일 sdb, sdb1, sdb2가 함께 보이면, 뒤에 숫자가 없는 sdb가 USB 디바이스를 가리킨다.<br />
-우분투 ISO 파일을 다운로드한 폴더로 이동한다.<br />
+우분투 ISO 파일을 내려받은 폴더로 이동한다.<br />
 아래 명령을 수행한다. filename.iso 대신 내려받은 우분투 ISO 파일명을, of=다음엔 USB 디바이스를 입력한다.<br />
 </p>
  
@@ -38,7 +38,7 @@ sudo dd if=<strong>filename.iso</strong> of=<strong>/dev/sdb</strong> bs=4M; syn
 <h3>한글 입력</h3>
 
 <p>
-설치 화면에서 국가는 한국을, 키보드 배치에서 한국어 - 한국어를 선택하여 설치하면 이전 버전과 달리 어떠한 설정없이 한/영키로 한영 전환이 된다.<br />
+설치 화면에서 국가는 한국을, 키보드 배치에서 한국어 - 한국어를 선택하여 설치하면 이전 버전과 달리 어떠한 설정 없이 한/영 키로 한영 전환이 된다.<br />
 자바 코드에는 세미콜론을 자주 사용하는데, 세미콜론을 입력할 때마다 불편하다. 다음 과정을 따른다.<br />
 <img src="https://lh3.googleusercontent.com/-g4j89eicYvU/V1ulKrUN6uI/AAAAAAAAC4Y/t6P8FzA6TsgS67HyFWSodai8Dc1wSi-bwCCo/s717/2.png" alt="2" /><br />
 입력기 설정 창의 에드온 탭에서 Quickphrase...를 선택한다.<br />
@@ -49,10 +49,10 @@ sudo dd if=<strong>filename.iso</strong> of=<strong>/dev/sdb</strong> bs=4M; syn
 <img src="https://lh3.googleusercontent.com/-vkZ2Ao3UNoM/V1ulLIQoWfI/AAAAAAAAC5M/RkcLYb2YFuo7tnqtJoZr5KQ1FUVPW_afgCCo/s561/5.png" alt="5" /><br />
 </p>
 
-<h3>한/영키가 작동하지 않는 시스템</h3>
+<h3>한/영 키가 작동하지 않는 시스템</h3>
 
 <p>
-한/영키가 작동하지 않은 시스템인 경우만 다음 과정을 따라한다.<br />
+한/영 키가 작동하지 않은 시스템인 경우만 다음 과정을 따른다.<br />
 시스템 설정에서 언어 지원을 선택한다.<br />
 <img src="https://lh3.googleusercontent.com/KBV-CZjX6XY93roh9Z5oEm7t-qnizp6RkEvyWp69mtFI3dAewDUGY5lOe1XRsRmAGi279cCTxbhs9G-AXejp3KEBvdSGBZNDNSvD9fBywHJlxea0BQpqdRI38-1bkQ3ZsxwoWMgaXpSJnqgjIXzF6C7D8YIag5hHnloc96fcjjaRPyiT2iDSSynIkKDeuqkJKY_4M9IOJcZk3h6mQUclroqEHA7xlgODP9r8k3u8huABpgPqpiQIet0ov0wYn8dQg2LD5veFNi6e7W_ALwmFTEX5TKfIV-7xnI4ETwnO3J-1158lW3rYOueDSMRVc4hI1F1wo6rXa0Y0G9nUdqlCeKAhuIJbbX9fTcuHokOepde5ZqayCCVASUylYbpfOQL0TzCW2QNa4cnorSZJJKUkqzszpbpDK80zUVAX0TItNZ0Vh7M6WiItADs_wcbJLS82GHYb72BJKqA1BUxv4MLwR0ncpRTAZElLd0ArjNeMO2hzQGSqLvhffesKFOLNjhTIKSN9a6-JD29Tl0mYyyqkEh23uuSKclVZrrDVqm6CekozlxOXpX_MrybtO2eILalaWXjTJHr_ZYxWaE9OCptx34b_0Jibz21I4uTMHaADaA=w849-h639-no" alt="System Setting - Language Support" /><br />
 '언어 지원' 창에서 키보드 입력기가 fcitx인지 확인한다.<br />
@@ -65,12 +65,12 @@ sudo dd if=<strong>filename.iso</strong> of=<strong>/dev/sdb</strong> bs=4M; syn
 자판 입력을 선택한다.<br />
 우선 모두 사용 안 함으로 설정한다.<br />
 구성 키를 오른쪽 Alt로 설정한다.<br />
-다음 입력 소스로 전환을 선택한 상태에서 한/영키를 쳐서 Multi_Key가 선택되도록 한다.<br />
+다음 입력 소스로 전환을 선택한 상태에서 한/영 키를 쳐서 Multi_Key가 선택되도록 한다.<br />
 <img src="https://lh3.googleusercontent.com/KMvdA3Mu60QZCX8rWkn5vRoT-wdDLJsi0EULXEanfNwE6ZEZ6qNYh3GmETgfrAlMpREJPUS8-64iWcrMTMZ9eqR9P53RLTahRXUVJWRax98hWteF5eg_dPzU0K184rQGtXAv72zQkh7qDL4OOri0Lb0PucWPM7QFVJKo8OE2UbSQIzADeI5XaukPQT1djmLLnUcm-_8V_gPXlz0arN007IMHhP5JU0MgVwBD2KARxj_D8TG_NilfdSlQStaw0o0TIZAgVF-KseucB2MevtmvXmo0LSEmGy6PdNBm2yvouKYAJhbKatUJU4qb_hq-InkmAuKRMQfD6aR6t2qKzAaHlsv-ebN4iDNiO5N8kiQXdbbjI2BstowwfHXTAuL6MsZnkyeJt9HFmvO1TLTf9Ev1ZJV5dFDaxYLRkHkPgQ8B02BsM0TTzQdRwcvMNbJPGellQGDyZzqL_4qLvBlJ9uM3WinhN3NVuB-9AJP0EUjScnMMJSGxCd_VNedEurKtHkSsj4qI83gU_ZPLnUnCVaQm9jhhgTKCGKplJiRR-ibSZO2jdb0OjcsDJXTDs59kXtNfNumsRQAPEJF3xzIbtTK_9KI6t2nouopwARwxWn0fyQ=w847-h489-no" alt="4" /><br />
 </p>
 
 <p>
-우분투 화면 오른쪽 상단의 키보드 모양의 아이콘을 클릭한 후 설정을 선택한다.<br />
+우분투 화면 오른쪽 위 키보드 모양 아이콘을 클릭한 후 설정을 선택한다.<br />
 전역 설정 탭을 선택해서 나타난 화면을 다음과 같이 설정한다.<br />
 <img src="https://lh3.googleusercontent.com/4RIKiDjiN8cTND4-IvUZHUhJsySs66V0OUzGdeTxSpzZbc_i-JV6aeInaRb4lQUXwe6I3Uy1oIKw7g9hJT7LGsPN4x6Nf1DMLYQ8zTVJivjb1fyIuaRVgSnFVAuWGjL3h9TO99-OfIa69kd7MNuFPb40VyfTNpKHhhadUODIqwtR0yCJuBW6XBVqMJ2OQSBcGwxxns7Wb_hE-J_RMLK7of1uSiFAsMhPDICGSVqrkiCmrqssX2VPzfpuoLFqjvK0Z901hkDRINvgmKV9AflkBKWE14sw0bzzpyKZZG8O-UhvLTMod1ZDSBL533l2cIs6O4VtWS_G4TfDlbGD6-7W6uJjmtCcGT-sw3gpGXiduY6bJIsgc5IaycAwR5Fs8HDoRA7hQHxesUw0hr-WSObiqn33FbHyP06tgudvOBiBT8iNBEyHkGteiL7ATfgMJfQU1AGabJGpXNfYOvg_WgrQ0YjKnrZicLyQybWpmcYkokJFCZZ-FV-givlqXb2oqQgHcqp1W1oY-KeEOK1bRvT3BLLW5D1dCMBpCVIy_ysodzTZvuX9X6zTjTpKxY1QuZvGlZuS4sDcd8aDEakw1ss5kAmC-SBGrWcm9UI1M7w_6w=w713-h505-no" alt="1" /><br />
 시스템 설정에서 텍스트 입력창을 선택한다.<br />
@@ -83,11 +83,11 @@ sudo dd if=<strong>filename.iso</strong> of=<strong>/dev/sdb</strong> bs=4M; syn
 <h2>Oracle 11g XE 설치</h2>
 
 <p>
-아래 글은 <a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a>을 참조했다.
+원본: <a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a>
 </p>
 
 <p>
-오라클 공식 사이트에서 리눅스용 오라클 11g XE를 내려받는다.<br /> 
+오라클 공식 사이트에서 리눅스용 오라클 11g XE를 내려받는다.<br />
 <a href="http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html">http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html</a><br />
 Accept License Agreement 라디오 박스에 체크하고 Oracle Database Express Edition 11g Release 2 for Linux x64를 선택한다.<br />
 로그인 화면으로 이동하는데, 오라클 공식 웹사이트의 회원이 아니면 회원 가입을 해야 한다.<br />
@@ -97,7 +97,7 @@ Accept License Agreement 라디오 박스에 체크하고 Oracle Database Expres
 
 <pre class="shell-prompt">
 unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip
-sudo apt-get install alien libaio1 unixodbc
+sudo apt install alien libaio1 unixodbc
 cd Disk1
 sudo alien --scripts -d oracle-xe-11.2.0-1.0.x86_64.rpm
 </pre>
@@ -157,33 +157,36 @@ sudo nano /etc/sysctl.d/60-oracle.conf
 fs.file-max=6815744  
 net.ipv4.ip_local_port_range=9000 65000  
 kernel.sem=250 32000 100 128 
-kernel.shmmax=2066743296
+kernel.shmmax=536870912
 </pre>
 
 <p>
-마지막 줄 kernel.shmmax 값은 시스템에 설치된 램 메모리의 1/2을 할당한다.<br />
-계산 방법은 아래와 같다.<br />
+스왑이 2G 이상인지 확인한다.
 </p>
 
 <pre class="shell-prompt">
 free -m
 </pre>
 
-<p>
-결과가 다음과 같으면
-</p>
-
 <pre class="shell-prompt">
              total       used       free     shared    buffers     cached
 Mem:          3942       3809        133        947         50       1571
 -/+ buffers/cache:       2186       1756
-Swap:         4083        378       3705
+Swap:         <b>4083</b>        378       3705
 </pre>
 
 <p>
-3942 * 1024 * 1024 * 0.5 = 2066743296<br />
-<br />
-검증한다.<br />
+위와 달리, Swap이 2000을 넘지 않는다면 다음을 실행한다.
+</p>
+
+<pre class="shell-prompt">
+sudo ln -s /usr/bin/awk /bin/awk
+sudo mkdir /var/lock/subsys
+sudo touch /var/lock/subsys/listener
+</pre>
+
+<p>
+커널 파라미터를 검증한다.
 </p>
 
 <pre class="shell-prompt">
@@ -199,21 +202,12 @@ sudo service procps start
 </pre>
 
 <p>
-검증한다.
+다음 명령으로 검증한다.<br />
+(필자의 경우 설정한 값과 다르게 나왔으나 설치를 완료할 수 있었다)
 </p>
 
 <pre class="shell-prompt">
 sudo sysctl -q fs.file-max
-</pre>
-
-<p>
-다음을 실행한다.
-</p>
-
-<pre class="shell-prompt">
-sudo ln -s /usr/bin/awk /bin/awk
-sudo mkdir /var/lock/subsys
-sudo touch /var/lock/subsys/listener
 </pre>
 
 <p>
@@ -227,10 +221,10 @@ sudo /etc/init.d/oracle-xe configure
 
 <p>
 설정 중 Oracle Application Express 포트 번호는 8080을 피한다.<br />
-(아래에서는 8989로 설정했다.)<br />
-리슨너 포트는 디폴트 값인 1521를 그대로 사용한다. (디폴트 값을 선택하려면 그냥 엔터 키를 친다)<br />
+(아래는 8989로 설정했다)<br />
+리슨너 포트는 디폴트 값인 1521을 그대로 사용한다. (디폴트 값을 선택하려면 그냥 엔터 키를 친다.)<br />
 관리자 계정인 SYS와 SYSTEM의 비밀번호를 정한다.<br />
-마지막으로 부팅시 오라클을 자동으로 시작하도록 설정한다.(엔터)
+마지막으로 부팅 시 오라클을 자동으로 시작하도록 설정한다. (엔터)
 </p>
 
 <pre class="shell-prompt">
@@ -270,11 +264,11 @@ Installation completed successfully.
 </p>
 
 <pre class="shell-prompt">
-gedit ~/.bashrc
+nano ~/.bashrc
 </pre>
 
 <p>
-아래를 복사하여 .bashrc 가장 아래에 붙여넣는다.
+아래를 .bashrc 가장 아래에 붙여넣는다.
 </p>
 
 <pre class="prettyprint">
@@ -295,13 +289,16 @@ source ~/.bashrc
 </pre>
 
 <p>
-오라클을 시작한다.<br />
-(부팅시 오라클 시작을 예스로 설정했으므로 재부팅 후 이 명령은 필요 없다)
+오라클을 시작한다.
 </p>
 
 <pre class="shell-prompt">
 sudo service oracle-xe start
 </pre>
+
+<p>
+부팅시 오라클 시작을 예스로 설정했으므로 재부팅 후 이 명령은 필요 없다.
+</p>
 
 <h3>SCOTT 계정 만들기</h3>
 
@@ -328,7 +325,7 @@ SQL&gt;<strong>@/u01/app/oracle/product/11.2.0/xe/rdbms/admin/utlsampl.sql</stro
 <!-- 
 <p>
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>에서 리눅스용 JDK를 내려받는다.<br />
-다운로드 폴더로 이동하고, 다음 명령으로 /opt/java에 JDK를 설치한다.
+내려받은 폴더로 이동하고, 다음 명령으로 /opt/java에 JDK를 설치한다.
 </p>
 
 <pre class="shell-prompt">
@@ -364,9 +361,9 @@ source ~/.bashrc
 -->
 
 <pre class="shell-prompt">
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install default-jdk
+sudo apt update
+sudo apt upgrade
+sudo apt install default-jdk
 </pre>
 
 <p>
@@ -443,14 +440,12 @@ public class GetEmp {
 </pre>
 
 <p>
-GetEmp.java 파일이 있는 디렉터리에서 다음을 수행한다.<br />
-(유닉스에서 환경변수 구분자는 : 이다.)
+GetEmp.java 파일이 있는 디렉터리에서 다음을 수행한다.
 </p>
 
 <pre class="shell-prompt">
 javac GetEmp.java
-java -classpath \
-.:/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar GetEmp
+java -cp .:/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar GetEmp
 </pre>
 
 <h2>메이븐 설치</h2>
@@ -460,7 +455,6 @@ sudo apt 명령어로 설치하지 말자.<br />
 <a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a>에서 최신 바이너리 파일을 내려받는다.<br />
 내려받은 디렉터리로 이동하여 압축을 풀고 생성된 디렉터리를 /opt/maven으로 옮긴다.
 </p>
-
 
 <pre class="shell-prompt">
 cd ~/다운로드/
@@ -473,7 +467,7 @@ sudo mv apache-maven-3.5.4/ /opt/maven
 </p>
 
 <pre class="shell-prompt">
-gedit ~/.bashrc &amp; 
+nano ~/.bashrc &amp; 
 </pre>
 
 <p>
@@ -494,7 +488,7 @@ source ~/.bashrc
 </pre>
 
 <p>
-다음 명령으로 메이븐 버전을 확인한다.
+메이븐 버전을 확인한다.
 </p>
 
 <pre class="shell-prompt">
@@ -507,7 +501,7 @@ mvn -v
 apt install 명령으로 이클립스를 설치하지 말자.<br />
 <a href="https://www.eclipse.org/downloads/packages/">https://www.eclipse.org/downloads/packages/</a>의 오른쪽 <strong>More Downloads</strong> 메뉴에서 
 자신의 시스템에 맞는 버전을 선택한다.
-시스템 자원이 넉넉하다면 가장 최신 버전을 선태할 수 있으나 메모리 4G 이하의 시스템에선 여러 버전을 테스트하고 선택하자.
+시스템 자원이 넉넉하다면 가장 최신 버전을 선택할 수 있으나 메모리 4G 이하의 시스템에선 여러 버전을 테스트하고 선택하자.
 Eclipse IDE for Java EE Developers를 내려받는다.
 내려받은 파일이 있는 디렉터리로 이동하여 압축을 푼다.
 </p>
@@ -559,12 +553,31 @@ sudo apt install git
 </pre>
 
 <p>
-git 버전 확인을 확인한다.
+git 버전을 확인한다.
 </p>
 
 <pre class="shell-prompt">
 git --version
 </pre>
+
+<p>
+사용자 정보를 설정한다.
+</p>
+
+<pre class="shell-prompt">
+git config --global user.name "<em>Gildong Hong</em>"
+git config --global user.email <em>hong@gmail.org</em>
+</pre>
+
+<p>
+설정을 확인한다.
+</p>
+
+<pre class="shell-prompt">
+git config --global --list
+</pre>
+
+<h2>스프링 게시판 예제 테스트</h2>
 
 <p>
 SpringBbs 프로젝트를 설치하려면 다음을 수행한다.
@@ -575,7 +588,17 @@ git clone https://github.com/kimjonghoon/SpringBbs
 </pre>
 
 <p>
-이클립스를 열고 SpringBbs를 임포트한다.<br /> 
+ojdbc6.jar 파일이 있는 디렉터리로 이동한 후 다음 명령으로 오라클 JDBC 드라이버를 로컬 레포지토리에 저장한다.
+</p>
+
+<pre class="shell-prompt">
+cd /u01/app/oracle/product/11.2.0/xe/jdbc/lib
+mvn install:install-file -Dfile=ojdbc6.jar \
+-DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.2.0 -Dpackaging=jar
+</pre>
+
+<p>
+이클립스를 열고 SpringBbs를 임포트한다.<br />
 <img alt="컨텍스트 메뉴에서 Import" src="https://lh3.googleusercontent.com/-VjWpQCEiqes/VYYV3b2GPFI/AAAAAAAACh0/-KoRbgI8nn0/s590/maven-project-import.png"><br />
 <img alt="이클립스에서 메이븐 프로젝트 Import" src="https://lh3.googleusercontent.com/-uDuAOI41Aj4/VYYV3Pmo4qI/AAAAAAAAChw/m4HA61kOVbE/s610/eclipse-with-maven.png"><br />
 pom.xml과 이클립스를 동기화한다.<br />
@@ -586,7 +609,7 @@ Maven - Update Project Configuration을 차례로 선택한다.
 <h3>오라클 테이블 생성</h3>
 
 <p>
-system 계정으로 접속해 다음 SQL문을 실행한다.
+관리자 계정으로 접속해(sqlplus sys as sysdba) 다음 SQL 문을 실행한다.
 </p>
 
 <pre class="prettyprint">
@@ -597,29 +620,29 @@ ALTER USER java TEMPORARY TABLESPACE TEMP;
 CONNECT java/school
 
 create table member (
-    email varchar2(60) PRIMARY KEY,
-    passwd varchar2(200) NOT NULL,
-    name varchar2(20) NOT NULL,
-    mobile varchar2(20)
+  email varchar2(60) PRIMARY KEY,
+  passwd varchar2(200) NOT NULL,
+  name varchar2(20) NOT NULL,
+  mobile varchar2(20)
 );
 
 create table board (
-    boardcd varchar2(20),
-    boardnm varchar2(40) NOT NULL,
-    boardnm_ko varchar2(40),
-    constraint PK_BOARD PRIMARY KEY(boardcd)
+  boardcd varchar2(20),
+  boardnm varchar2(40) NOT NULL,
+  boardnm_ko varchar2(40),
+  constraint PK_BOARD PRIMARY KEY(boardcd)
 );
 
 create table article (
-    articleno number,
-    boardcd varchar2(20),
-    title varchar2(200) NOT NULL,
-    content clob NOT NULL,
-    email varchar2(60),
-    hit number,
-    regdate date,
-    constraint PK_ARTICLE PRIMARY KEY(articleno),
-    constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
+  articleno number,
+  boardcd varchar2(20),
+  title varchar2(200) NOT NULL,
+  content clob NOT NULL,
+  email varchar2(60),
+  hit number,
+  regdate date,
+  constraint PK_ARTICLE PRIMARY KEY(articleno),
+  constraint FK_ARTICLE FOREIGN KEY(boardcd) REFERENCES board(boardcd)
 );
 
 create sequence SEQ_ARTICLE
@@ -627,26 +650,26 @@ increment by 1
 start with 1;
 
 create table comments (
-    commentno number,
-    articleno number,
-    email varchar2(60),
-    memo varchar2(4000) NOT NULL,
-    regdate date, 
-    constraint PK_COMMENTS PRIMARY KEY(commentno)
+  commentno number,
+  articleno number,
+  email varchar2(60),
+  memo varchar2(4000) NOT NULL,
+  regdate date, 
+  constraint PK_COMMENTS PRIMARY KEY(commentno)
 );
 
 create sequence SEQ_COMMENTS
-    increment by 1
-    start with 1;
+increment by 1
+start with 1;
 
 create table attachfile (
-    attachfileno number,
-    filename varchar2(50) NOT NULL,
-    filetype varchar2(30),
-    filesize number,
-    articleno number,
-    email varchar2(60),
-    constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
+  attachfileno number,
+  filename varchar2(50) NOT NULL,
+  filetype varchar2(30),
+  filesize number,
+  articleno number,
+  email varchar2(60),
+  constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
 );
 
 create sequence SEQ_ATTACHFILE
@@ -678,6 +701,8 @@ create table views (
 create sequence SEQ_VIEWS
 increment by 1
 start with 1;
+
+exit;
 </pre>
 
 <h2>MySQL 설치</h2>
@@ -689,12 +714,19 @@ sudo apt install mysql-server mysql-client
 <h3>MySQL 테이블 생성</h3>
 
 <p>
-다음 SQL문을 실행한다.<br />
+루트 계정으로 접속한다.<br />
+루트 계정의 비밀번호는 ""이니 그냥 엔터를 치면 된다.
 </p>
 
 <pre class="prettyprint">
 mysql --user=root --password mysql
+</pre>
 
+<p>
+다음 명령을 실행한다.
+</p>
+
+<pre class="prettyprint">
 create user 'java'@'%' identified by 'school';
 grant all privileges on *.* to 'java'@'%';
 
@@ -768,49 +800,30 @@ create table views (
   yearMonthDayHour char(10),
   unique key (articleNo, ip, yearMonthDayHour)
 );
+
+exit;
 </pre>
-
-
-<h2>스프링 게시판 프로젝트 테스트</h2>
 
 <h3>1. 톰캣에서 테스트</h3>
 
 <p>
-다음 명령으로 톰캣을 설치한다.
+톰캣을 설치한다.
 </p>
 
 <pre class="shell-prompt">
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install tomcat8
-</pre>
-
-
-<p>
-톰캣이 동작하는지 http://localhost:8080을 방문한다.<br />
-루트 애플리케이션 화면에서 CATALINA_HOME과 CATALINA_BASE를 확인한다.<br />
-두 디렉터리 모두 이동하여 /conf/Catalina/localhost 하위 디렉터리가 있는지 확인한다.<br />
-/conf/Catalina/localhost에 ROOT.xml 파일을 다음 내용으로 생성한다.<br />
-/home/kim/SpringBbs가 루트 디렉터리라면 다음과 같이 작성한다.
-</p>
-
-<pre class="prettyprint">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Context
-    docBase="/home/kim/SpringBbs<strong>/src/main/webapp</strong>"
-    reloadable="true"&gt;
-&lt;/Context&gt;
+sudo apt update
+sudo apt upgrade
+sudo apt install tomcat8
 </pre>
 
 <p>
-SpringBbs 루트 디렉터리로 이동하여 다음과 같이 빌드한다.
+http://localhost:8080을 방문한다.<br />
+http://localhost:8080에서 CATALINA_HOME과 CATALINA_BASE 디렉터리를 확인한다.<br />
+/conf/Catalina/localhost 디렉터리를 확인한다.<br />
+(이 디렉터리는 CATALINA_HOME과 CATALINA_BASE 둘 중 하나에 있다)
 </p>
 
-<pre class="shell-prompt">
-mvn clean compile war:inplace
-</pre>
-
-<h3>디렉터리 수정</h3>
+<h4>디렉터리 수정</h4>
 
 <p>
 net.java_school.commons 패키지의 WebContants.java 파일을 열고 업로드 디렉터리를 자신의 시스템에 맞게 수정한다.
@@ -822,6 +835,29 @@ net.java_school.commons 패키지의 WebContants.java 파일을 열고 업로드
 
 <pre class="shell-prompt">
 chmod 777 .
+</pre>
+
+<p>
+SpringBbs 루트 디렉터리로 이동하여 다음과 같이 빌드한다.
+</p>
+
+<pre class="shell-prompt">
+mvn clean compile war:inplace
+</pre>
+
+<h4>루트 애블리케이션 변경하기</h4>
+
+<p>
+/conf/Catalina/localhost에 ROOT.xml 파일을 생성한다.<br />
+/home/kim/SpringBbs가 루트 디렉터리라면 다음과 같이 작성한다.
+</p>
+
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+    docBase="/home/kim/SpringBbs<strong>/src/main/webapp</strong>"
+    reloadable="true"&gt;
+&lt;/Context&gt;
 </pre>
 
 <p>
@@ -851,7 +887,7 @@ systemctl stop tomcat8
 </pre>
 
 <p>
-pom.xml 파일에서 &lt;!-- $ mvn jetty:run --&gt; 아래 build 엘리먼트를 감싸는 주석을 제거하고,
+pom.xml 파일에서 &lt;!-- $ mvn jetty:run --&gt; 아래 build 엘리먼트를 감싸는 주석을 제거한다.<br />
 &lt;!-- $ mvn compile war:inplace and run tomcat --&gt; 아래 build 엘리먼트를 주석처리한다.
 </p>
 
@@ -867,10 +903,44 @@ mvn jetty:run
 http://localhost:8080을 방문해 테스트한다.
 </p>
 
+<h2>Google Cloud SDk 설치</h2>
+
+<p>
+원본 <a href="https://cloud.google.com/sdk/docs/downloads-apt-get">https://cloud.google.com/sdk/docs/downloads-apt-get</a>
+</p>
+
+<pre class="shell-prompt">
+export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+</pre>
+
+<pre class="shell-prompt">
+echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee \
+-a /etc/apt/sources.list.d/google-cloud-sdk.list
+</pre>
+
+<pre class="shell-prompt">
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+</pre>
+
+<pre class="shell-prompt">
+sudo apt update &amp;&amp; sudo apt install google-cloud-sdk
+</pre>
+
+<pre class="shell-prompt">
+sudo apt install google-cloud-sdk-app-engine-java
+</pre>
+
+<pre class="shell-prompt">
+gcloud init
+</pre>
+
 <span id="refer">참고</span>
 <ul id="references">
 	<li><a href="http://crunchbang.org/forums/viewtopic.php?id=23267">http://crunchbang.org/forums/viewtopic.php?id=23267</a></li>
 	<li><a href="http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html">http://meandmyubuntulinux.blogspot.kr/2012/05/installing-oracle-11g-r2-express.html</a></li>
+	<li><a href="https://cloud.google.com/sdk/docs/downloads-apt-get">https://cloud.google.com/sdk/docs/downloads-apt-get</a></li>
+	<li><a href="https://cloud.google.com/compute/docs/regions-zones/">https://cloud.google.com/compute/docs/regions-zones/</a></li>
+	<li><a href="https://rogerdudler.github.io/git-guide/index.ko.html">https://rogerdudler.github.io/git-guide/index.ko.html</a></li>
 </ul>
 
 <span id="related-articles">관련 글</span>
@@ -895,7 +965,6 @@ http://localhost:8080을 방문해 테스트한다.
     <li><a href="/blog/2017/jetty-maven-plugin">Jetty Maven Plugin</a></li>
     <li><a href="/blog/2017/REST-example">REST 예제</a></li>
     <li><a href="/blog/2017/basic-board">게시판 기본 기능</a></li>
-    <li><a href="/blog">블로그 목록</a></li>
 </ul>
 
 </article>
