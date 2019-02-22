@@ -1479,7 +1479,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
 먼저 요청의 캐릭터 셋을 UTF-8로 설정한다.
 boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서 댓글을 인서트한다.
 댓글을 인서트한 후 상세보기를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+검색어 searchWord를 URLEncoder의 encode 메소드로 UTF-8로 인코딩해야 한다.
 */
 response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
 %&gt;
@@ -1505,7 +1505,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); r
 commentNo, boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서
 댓글을 업데이트한다.
 댓글을 업데이트 처리한 후 상세보기를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+검색어 searchWord를 URLEncoder의 encode 메소드로 UTF-8로 인코딩해야 한다.
 */
 response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
 %&gt;
@@ -1531,7 +1531,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다"
 요청에서 참조해야 하는 파라미터는
 commentNo, boardCd, articleNo, curPage, searchWord 이다.
 댓글을 삭제 후 상세보기를 돌아가기 위해선
-searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩한다.
+searchWord를 URLEncoder의 encode 메소드로 UTF-8로 인코딩한다.
 */
 response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
 %&gt;
@@ -1558,7 +1558,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다"
 요청에서 참조해야 하는 파라미터는
 attachFileNo,articleNo,boardCd,curPage,searchWord 이다.
 첨부 파일를 삭제 후 상세보기를 돌아가기 위해선
-searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩한다.
+searchWord를 URLEncoder의 encode 메소드로 UTF-8로 인코딩한다.
 */
 response.sendRedirect("view.jsp?articleNo=5&amp;boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
 %&gt;
@@ -1584,7 +1584,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); r
 articleNo, boardCd, curPage, searchWord 파라미터를 받고
 articleNo로 게시글을 삭제한다.
 게시글 삭제 후 목록를 돌아가기 위해선
-검색어 searchWord를 URLEncoder의 encode 메서드로 UTF-8로 인코딩해야 한다.
+검색어 searchWord를 URLEncoder의 encode 메소드로 UTF-8로 인코딩해야 한다.
 */
 response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1&amp;searchWord=무궁화꽃");
 %&gt;
@@ -1723,7 +1723,7 @@ articleNo, boardCd, curPage, searchWord, title, content, attachFile 파라미터
 게시글을 수정한다.
 form의 enctype 속성이 "multipart/form-data"인 경우 request.getParameter()로 파라미터의 값을 얻을 수 없다.
 쉽게 프로그래밍하기 위해 아파치 commons-fileupload 또는 cos와 같은 외부 라이브러리를 이용한다.
-게시글을 수정한 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode 메서드를 이용해 UTF-8로 인코딩한다.
+게시글을 수정한 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode 메소드를 이용해 UTF-8로 인코딩한다.
 */
 response.sendRedirect("view.jsp?articleNo=5&amp;curPage=1&amp;boardCd=free&amp;searchWord=무궁화꽃");
 %&gt;

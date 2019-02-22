@@ -5,7 +5,7 @@
 <p>
 PreparedStatement는  지금까지 사용한 Statement인터페이스보다 편리하고 효과적이다.<br />
 PreparedStatement인터페이스는 Statement인터페이스를 상속한다.<br />
-때문에 지금까지 예제에서 나왔던 메서드 몇몇은 이번 예제에서도 그대로 쓰인다.<br />
+때문에 지금까지 예제에서 나왔던 메소드 몇몇은 이번 예제에서도 그대로 쓰인다.<br />
 </p>
 
 <p>
@@ -18,7 +18,7 @@ SQL문에  <span class="emphasis">?</span>을 넣을 수 있고, <span class="em
 </p>
 
 <p>
-UsingPrepareStatement.java의 메인 메서드에 아래 SQL 문을 JDBC로 실행하는 코드를 작성한다.<br />
+UsingPrepareStatement.java의 메인 메소드에 아래 SQL 문을 JDBC로 실행하는 코드를 작성한다.<br />
 </p>
 
 
@@ -96,17 +96,17 @@ public class UsingPreparedStatement {
 Statement을 사용할 때와 다른 부분은 아래와 같다.<br />
 <em>pstmt = con.prepareStatement(sql);</em><br />
 Statement을 사용할 때와 달리 PreparedStatement을 얻기 위해 사용하는 
-prepareStatement 메서드의 인자값으로 SQL문을 전달한다.<br />
+prepareStatement 메소드의 아규먼트로 SQL문을 전달한다.<br />
 <em>pstmt.executeUpdate();</em><br />
-Statement와 달리 executeUpdate() 메서드에 SQL문을 인자로 전달하지 않는다.<br />
+Statement와 달리 executeUpdate() 메소드에 SQL문을 아규먼트로 전달하지 않는다.<br />
 </p>
 
 <p>
-SQL문에 ? 이 있다면 PrepareStatement의 setXXX 메서드를 이용해서 설정해야 한다.<br />
+SQL문에 ? 이 있다면 PrepareStatement의 setXXX 메소드를 이용해서 설정해야 한다.<br />
 (PreparedStatement을 쓴다고 SQL 문에 반드시 물음표(?)를 포함해야 하는 건 아니다.)<br />
 XXX 부분은 해당 컬럼의 데이터 형에 매핑되는 자바 데이터 형으로 결정한다.<br />
-setXXX 메서드의 첫번째 파라미터는 ?가 위치하고 있는 순서다.<br />
-setXXX 메서드의 두번째 파라미터는 ?를 대체할 값이다.<br />
+setXXX 메소드의 첫번째 파라미터는 ?가 위치하고 있는 순서다.<br />
+setXXX 메소드의 두번째 파라미터는 ?를 대체할 값이다.<br />
 </p>
 
 <p>

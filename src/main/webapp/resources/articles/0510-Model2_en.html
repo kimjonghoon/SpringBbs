@@ -13,7 +13,7 @@ The process of Model 2 is summarized as follows.
 	<li>All requests are received by the controller.</li>
 	<li>The controller delegates tasks to the model. The model is JavaBean, which is responsible for business logic. When the controller delegates tasks, it passes the request object to the model.</li>
 	<li>The model completes the task and passes the results to the controller. The model does this by storing the results in the request object.</li>
-	<li>The controller passes the output to the JSP, which ultimately serves the client's request. The controller uses the forward () method to perform this task.</li>
+	<li>The controller passes the output to the JSP, which ultimately serves the client's request. The controller uses the forward() method to perform this task.</li>
 </ol>
 
 <p>
@@ -90,7 +90,7 @@ the page number corresponding to [&lt;],
 the page number corresponding to [&gt;], 
 the first page number, 
 the last page number.
-We will call the execute () method of the action class to generate the data mentioned above.(This is also the naming convention used in Struts 2)
+We will call the execute() method of the action class to generate the data mentioned above.(This is also the naming convention used in Struts 2)
 </p>
 
 <h6 class="src">ListAction.java</h6>
@@ -107,7 +107,7 @@ public class ListAction {
 </pre>
 
 <p>
-Complete the execute () method as follows:
+Complete the execute() method as follows:
 </p>
 
 <h6 class="src">ListAction.java</h6>

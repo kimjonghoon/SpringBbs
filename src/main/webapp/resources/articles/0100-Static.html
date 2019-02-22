@@ -3,20 +3,20 @@
 <h1>static</h1>
 
 <p>
-static 키워드는 클래스 차원의 변수와 메서드를 만들 때 사용한다.
+static 키워드는 클래스 차원의 변수와 메소드를 만들 때 사용한다.
 정적(static)이란 클래스가 로딩될 때 결정된 메모리 공간이 변하지 않음을 의미한다.
-static 변수와 메서드는 객체를 생성하지 않고도 아래와 같이 사용할 수 있다.
+static 변수와 메소드는 객체를 생성하지 않고도 아래와 같이 사용할 수 있다.
 </p>
 
 <ul>
     <li>클래스명.static변수</li>
-    <li>클래스명.static메서드()</li>
+    <li>클래스명.static메소드()</li>
 </ul>
 
 <p>
-메인 메서드가 static 메서드이다.
+메인 메소드가 static 메소드이다.
 프로그램을 실행하면 클래스 로더가 관련 클래스를 클래스 패스에서 찾아서 메모리에 로딩한다.
-그다음 JVM이 java 다음에 나오는 시작 클래스에서 메인 메서드를 실행한다.
+그다음 JVM이 java 다음에 나오는 시작 클래스에서 메인 메소드를 실행한다.
 </p>
 
 <p>
@@ -31,14 +31,14 @@ new가 실행될 때마다 힙 메모리에 객체의 인스턴스 변수를 위
 </p>
 
 <p>
-클래스가 메모리에 로딩될 때 static 변수와 static 메서드를 위한 공간이 할당된다.
+클래스가 메모리에 로딩될 때 static 변수와 static 메소드를 위한 공간이 할당된다.
 한번 메모리에 공간이 할당되면 인스턴스 변수와 달리 객체가 생성될 때마다 메모리 공간이 할당되지 않는다.
-static 메서드 안에서는 인스턴스 변수를 쓸 수 없다. 
+static 메소드 안에서는 인스턴스 변수를 쓸 수 없다.
 만들지도 않는 객체의 속성을 참조할 수 없기 때문이다.
 </p>
 
 <p>
-학생 클래스에 메인 메서드를 추가하고 다음과 같이 구현하면 컴파일 에러를 만나게 된다.
+학생 클래스에 메인 메소드를 추가하고 다음과 같이 구현하면 컴파일 에러를 만나게 된다.
 </p>
 
 <pre class="prettyprint">
@@ -48,7 +48,7 @@ public static void main(String[] args) {
 </pre>
 
 <p>
-그 반대의 경우인 인스턴스 메서드 내에서 static 변수에 접근하거나 static 메서드를 호출할 수 있다.
+그 반대의 경우인 인스턴스 메소드 내에서 static 변수에 접근하거나 static 메소드를 호출할 수 있다.
 </p>
 
 <p>
@@ -66,7 +66,7 @@ public class Student {
 
     public void absent() {
         this.absent++;
-        <strong>Student.penaltyBin</strong> += 3000; //인스턴스 메서드에서 static 변수를 쓸 수 있다.
+        <strong>Student.penaltyBin</strong> += 3000; //인스턴스 메소드에서 static 변수를 쓸 수 있다.
     }
     //..중간 생략..
 }    
@@ -138,8 +138,8 @@ public class CookTable {
 
 <p>
 클래스 정보가 클래스 로더에 의해 로딩될 때 static 변수는 초기화된다.
-CookTable의 static 변수 instance가 초기화 되기 위해 CookTable 객체가 힙에 생성되고 참조값은 instance에 할당된다.
-이 값은 공개된 getInstance() 메서드를 통해 얻을 수 있다.
+CookTable의 static 변수 instance가 초기화 되기 위해 CookTable 객체가 힙에 생성되고 레퍼런스가 instance에 할당된다.
+이 값은 공개된 getInstance() 메소드를 통해 얻을 수 있다.
 하나뿐인 생성자의 접근자를 private로 지정하여 외부에서 생성자를 호출 못하게 한다.
 이렇게 구현하면 프로그램 종료시까지 CookTable 인스턴스는 하나로 유지된다.
 </p>
@@ -153,7 +153,7 @@ CookTable의 static 변수 instance가 초기화 되기 위해 CookTable 객체�
 
 <p>
 변수는 메모리 공간이 할당될 때 초기화된다.
-인스턴스 변수든 정적 변수든 메모리에 로딩될 때 초기값이 없다면, 불린형은 false, 숫자형은 0에 준하는 값으로, 레퍼런스 형은 null로 초기화된다.
+인스턴스 변수든 정적 변수든 메모리에 로딩될 때 초기값이 없다면, 불린은 false, 숫자 타입에는 0으로, 레퍼런스 타입은 null로 초기화된다.
 초기화는 static 변수 -&gt; 인스턴스 변수 -&gt; 생성자 순으로 진행된다.
 </p>
 

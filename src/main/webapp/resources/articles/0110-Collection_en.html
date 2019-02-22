@@ -106,7 +106,7 @@ C:\java\Collection\bin&gt;java net.java_school.collection.SetExample
 If you look in the Java documentation for the collection class covered in the example, 
 you can see the &lt;E&gt;, &lt;T&gt;, &lt;K,V&gt; in the class declaration.<br />
 These interfaces, abstract classes, and classes are called generic.<br />
-Generics have been added since JDK 1.5.<br />
+Generics have been added since Java 5.<br />
 E means Element, T means Type, K means Key, and V means Value.<br />
 This symbol can be used to declare unspecified data types.<br />
 Unspecified data types are determined when an object is created from a generic.<br />
@@ -343,7 +343,7 @@ public class VectorExample {
 		}
 		
 		for (int i = 0; i &lt; 10; i++) {
-			System.out.println(v.elementAt(i));//String타입의  참조값 반환
+			System.out.println(v.elementAt(i));//String 레퍼런스 반환
 		}
 	}
   
@@ -697,7 +697,7 @@ It is AutoBoxing to insert a coin into a box, and AutoUnboxing to take a coin ou
 	<li>The collection class is either a Set interface implementation, a List interface implementation, or a Map interface implementation.</li>
 
 	<li>
-You can see how the toString () of the HashSet overrides the result.<br />
+You can see how the toString() of the HashSet overrides the result.<br />
 Set has no method to return an index and return a value because the stored value is not in order.<br />
 To retrieve the saved value, you must use a method that returns an Enumeration or Iterator interface and use the returned Enumeration or Iterator implementation.<br />
 	</li>
@@ -718,9 +718,9 @@ If you think it is ambiguous, you can pass the full path of the file system to t
 	</li>
 	
 	<li>
-Every class that implements the Set or List interface must have an iterator () method.<br />
+Every class that implements the Set or List interface must have an iterator() method.<br />
 This is because the Set and List interfaces inherit the Collection interface.<br />
-The iterator () method returns the Iterator interface type.<br />
+The iterator() method returns the Iterator interface type.<br />
 Of course, because the Iterator is an interface, the actual return is an object created from the implementation class that implements Iterator.<br />
 But we do not have to worry about what the implementation class is.<br />
 It is sufficient that the implementation class implements the Iterator interface.<br />

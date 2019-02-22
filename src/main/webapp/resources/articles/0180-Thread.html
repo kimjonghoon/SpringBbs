@@ -64,7 +64,7 @@ doA() 와 doB()는 같은 스레드에서 실행된다.
 
 <p>
 doA()와 doB()가 각각 다른 스레드에서 실행하게 구현하자.
-Thread를 상속하는 방법을 택했는데 객체 생성 후 start() 메서드를 호출하면 다른 스레드가 생성되고 
+Thread를 상속하는 방법을 택했는데 객체 생성 후 start() 메소드를 호출하면 다른 스레드가 생성되고
 doA()는 새로 생긴 스레드에서 실행되게 된다.
 </p>
 
@@ -117,8 +117,8 @@ public class MultiThread1 extends Thread {
 <h4>Runnable 인터페이스를 구현하여 만드는 멀티 스레드 프로그램</h4>
 
 <p>
-강조된 부분은 메인 메서드에서 자신 자신의 객체를 생성하고 Runnable 인터페이스 타입의 
-레퍼런스를 인자 값으로 받는 Thread 생성자에 호출하여 자기 자신의 레퍼런스를 전달하고 있다. 
+강조된 부분은 메인 메소드에서 자신 자신의 객체를 생성하고 Runnable 인터페이스 타입의
+레퍼런스를 아규먼트로 받는 Thread 생성자에 호출하여 자기 자신의 레퍼런스를 전달하고 있다.
 </p>
 
 <h6 class="src">MultiThread2.java</h6>
@@ -177,7 +177,7 @@ public class MultiThread2 implements Runnable {
 <p>
 임계 영역이란 공유된 자원을 접근하는 코드 부분을 말한다.
 임계 영역을 제대로 다루지 않을 경우 발생하는 문제점을 예제를 통해 살펴보려 한다.
-은행 예제에서 NormalAccount의 withdraw() 메서드를 아래와 같이 변경한다.
+은행 예제에서 NormalAccount의 withdraw() 메소드를 아래와 같이 변경한다.
 변경하는 이유는 일반 계좌의 잔고가 마이너스가 되는 확률을 높이기 위해서다.
 </p>
 
@@ -277,8 +277,8 @@ C:\java\Bank\bin&gt;java net.java_school.bank.ThreadTest
 
 <img src="https://lh3.googleusercontent.com/FKrn9umsNRAPT_AgDMW8abgdH16vcVJiMSERRVNFMCr1GCizONmgvmbHrZqcCrPW1KtfHETpANqK-yx0ciFSQGOgrdUgz_5WTQc8-0jo2dFs7pFdj8BUHd2KBgb9SA2fQPMS8eYg8wjLW7AAjx_lqjYqBpZKFIODA2M79pBJpv3CgycoqyOLj5olraWtqhXcLUCSaStnOkQGPOIMMXtgtG_kgI1PgCsovu6zwxVv7pMvmri82XRy9shX3lNgRP8_j8XnwCvQ1DmnthUcy8l2b-q4TyZUf82lemUeJAHDLDInHKsKixDBVW5CjP1InucOaMORlje17YIQnN8uMfWVOovantkUkxuQXiBvc3L3QCj1blv55DSwtZt7gQtEUL3bjrN-cp2_6l-cqcPswy8BPl3VcDDrUHo5jgFwpfbewG9YRimv3AtE-kuCC7JhztHGSL7fN21mlRfe7fdexbm20m0yOe6D3QqAdQmYSAi5lEHZddxOVbGl6GSYe0MXjxAYLL4xC0Tc_Cds68vgM8Rm4lEoUM2MyIu8lhmt-NCt1QROHwAWX6obMjf7YG1B0ak62B3WOIjiHPjSDUHaTFV7uo0qzwWC3jbTan8TwXp0XXDfF1jLmOMrXlf-=w609-h496-no" alt="이 그림은 첫 번째 스레드가 잔고를 수정하기 전에 두번째 스레드가 출금액과 잔고를 비교하는 로직을 통과하여 문제를 발생한다는 예를 보여주고 있다." /><br />
  
-문제점을 해결하기 위해서 withdraw() 메서드에 synchronized 키워드를 적용한다.<br />
-메서드에 synchronized를 적용하면 메서드에 진입한 스레드가 메서드 밖으로 나갈 때까지 다른 스레드가 진입하지 못한다.
+문제점을 해결하기 위해서 withdraw() 메소드에 synchronized 키워드를 적용한다.<br />
+메소드에 synchronized를 적용하면 메소드에 진입한 스레드가 메소드 밖으로 나갈 때까지 다른 스레드가 진입하지 못한다.
 </p>
 
 <pre class="prettyprint">
@@ -290,16 +290,16 @@ public <strong>synchronized</strong> void withdraw(long amount)  {
 
 <p>
 여러 번 테스트해 보고 더 이상 일반 계좌의 잔고가 마이너스가 되는 경우가 생기지 않음을 확인한다.
-아래 그림과 같이 첫 번째 진입한 스레드가 메서드 밖으로 나갈 때까지 두 번째 스레드는 메서드에 진입하지 못한다.<br />
+아래 그림과 같이 첫 번째 진입한 스레드가 메소드 밖으로 나갈 때까지 두 번째 스레드는 메소드에 진입하지 못한다.<br />
 
 <img src="https://lh3.googleusercontent.com/S33D7a3983p7VrQM8qq6HVD5Taa4H8nbqhlVMFIQ_kT8Q4sr9dPI3oMLa6BpV7-347atC475XEb4pH2cNc8XdNM_5DQRiQQNSVwzFkBm6iMIzxKyS15H87N1Ulp_E4guzd-xW2AO48NeZE625rM2Wmq0lykAY29BiU9Y0De0A-S4fRH4j9SJMDnteN_-zx7TqcKFTQsWbUIuc30qKUc8ltVqQMyUc5-b6tH-V-Yu6yfIGbDF4gbOg8Wbr8Hz5-MCO6X-RvhI0UANhiX5QXzkcqmgw9LbHEM7DRLOx9Kc9q7wPoMQYg9Md3NGzef2MgBjL6RMSTQBzHigBjjCVYZHcfVngzEX93A2-rhtVFXFGAYYNKPxcZZfJVYMW3NOLQ8wpiwftMbFdh8larzmO2nODWSr72VN-Vu4bPo8l5cko2heVEkz69vSGdUlowwmcbYKcedduYyem9aLN0ojSAZi66ZufF3Ky8RdlruFIH4YY0Rx2LyNUwakOVV0zs_FUqUNp6GaTOeZd3PL6d0t8wJbTHfs9LRQvPdaSlBC5tLVLEJOfZYB10g8eYQTbQPO_BDWA1Lni_ChoWz6z3UHyiJtZvUWAw9Dj_jasYamQaGn0n9soONSTYAUIIdr=w609-h496-no" alt="그림은 첫 번째 스레드가 임계영역에 들어왔고 두번째 스레드가 임계영역 바로 앞까지 진행된다." /><br />
 <img src="https://lh3.googleusercontent.com/c1K8qUbvlH6UCqD_XicNA85VQsMAZppl6FgztDFSk_edl3K4NVCCnYKD9Pti5w1BwPJiZW773fHowFvShvB4qIe5Q97KDZdkOw70d1hv3zCpnaywBGskhiErMeU1h60qWgcNHMtUVsF05Bp9DZAzHucqRVS5Vk1qcCxzcd42gaQjwTH2HUvlY9HLbOmcKTd8e47eGWEkG8jP6MuNF-A5wroYx7BOFj9Skg2RAf6KjoQf-Zqz6ovLtLm9Peai86ptW1wS6v4zQxxYgWFZRi1SI8iCHR_W-f1CEYE2CH4CwdShxs1qzjijCNLri5ddW_pIgk4hADcfo9s1pZHHA1UvE3jij4X29tUW4qyVcubPUanOqF9iTDg56UfPwKXdINbPTWkoMGw0LbBMek2Z_IZZ96DZfbtRk2jMYP4qzP0NFoDccq_kC9-VefxDtO55vSH_wqZUaXbDwxQDFCWH9XnSQfbTfwz-nKktuvVHgGA2gGxexbuudONBFcrYPPWjezJY_0pUOMFvtokDInfxP8ZUeevpB6Fi3cLZ7ELWoF1HoDW-J9Ypf2Bpi-qBBU-r5NFdTDlYfrbtWp0TgS384cRb0fCJFSxSZgY1QB9DSJKM1WDf8DzfcQAXPSNi=w609-h496-no" alt="그림은 첫 번째 스레드가 임계영역에서 거의 통과하고 있는데 두번째 스레드는 아직 임계영역에 진입하지 못함을 보여준다." /><br />
 <img src="https://lh3.googleusercontent.com/YQwXEi3CsalSCKTly_gVQk8QS_7gaj4EMTGJm8uRFfawbGnFN9XtjeMvDsxRQZKa5Mx3wsJ4eGuL2X0lPnebluvM5gU-89wVExAycAiI5g9HnDdeX7Ap-jLb331856Orpliju0ArWQX403K0avs6zGorf08k8v2YMm_o9V3X8XZblYNHw-uWi3YH2OTX91YyeckF3GfjUVcZRwLMuaVdOqWqIvJDL_mkkAHIkKXem9e6pT7_6yNY3Zy1reC2LdG335aa9KLtq9FmOoWy1xoeTn50j2VpEYabDYbjKBBcgOWAOp2oQUjfq44YU5_0_zYpZipFpG1FY3DUKZRZrL8quS-289ApzKApHtc3IpovNzHdJABMkNqci5BEm5seSG-d78AVsvUnAISYaeXnAZTilMYswKjddXQ5rH1jBTz_66ypLAKEE9cHfXIJo37ylfzXtTUmBxF7-NHPNcpY-iGMWkTcuHjVQ-8PRLmVTbip3KPVhluCWbMSlWQv6Xe-mKoYZjRvnTJtxOJAhNHVRU-Z5yti8_xtpFLUg7syeca5JkmKzUbgs6M4jYxrwldNHYe_s9H5H-SKq1rnU1aX71MByZmDDAfOI6jVc38vQX6YEI0mPD_bVbm_IFnv=w609-h496-no" alt="그림은 첫 번째 스레드가 임계영역을 막 통과하기 전이고 두번째 스레드는 아직 임계영역에 진입하지 못함을 보여준다." /><br />
 
-첫 번째 스레드가 메서드 밖으로 나가면 대기하고 있던 스레드가 메서드에 진입하게 된다.<br />
+첫 번째 스레드가 메소드 밖으로 나가면 대기하고 있던 스레드가 메소드에 진입하게 된다.<br />
 <img src="https://lh3.googleusercontent.com/CiSenAxhTLBS82O3tWVDe9DH5Q2ufVFhSdi--lW86JTrvrqJuQpTmx5_jqMn-j7e9rAaX1hsUuRBIk31sGQXPsv_vxkH2h40KOrcdZEYUjyo9amgYNBihDJDKyu2Ki97NE4rVqeP-NcXvXDsmR_oOVWKUnAQqrgd-KPNqNWXU9Kzcfby7wCnzhdkSX5a7I_HyHZoWpaGWxyno-mU66dOzdOYG-4uqBn6YlhbEcKJrv8meV72qdy29QgMLGVI4RVYQ5wqP7y6kI_joSsnrolwq_RYMF1eNkGn9SsBnFAGvte2O6iC3weEp0kIjfXu2EmLDP9yKmUpEV8NSGOXlSLAWfYCHV1WjRKtHyx8_SyOoD02N-gdEGayzH4J5MQj4RcGgNf9jXFZv7JqYyL-ZXsgufwZyIM7gpzUryyZEMQpERoPpVJEjCSxLvB2qrJElr0T9qBYjiMmrEwlAFuC1iweNkmhN6IyDCnaezdeIBD7S-PLcGF8uxwNc5EZy7xSp9Z_HDXxVCX_fv6PqzUv9p7ApJAidKMKsELkVLj2W6wsHaVWA-XU6OAWkFMhxPxIIq4mTOa25DzoFIK7gYMukUUzWULZMk5Py4FhFyaKcEJnkVavipMHQUyeKkNJ=w609-h496-no" alt="그림은 첫 번째 스레드가 임계영역을 통과했고 이제야 두번째 스레드가 임계영역에 진입한다." /><br />
 
-withdraw() 메서드를 아래와 같이 되돌려 놓는다.
+withdraw() 메소드를 아래와 같이 되돌려 놓는다.
 </p>
 
 <pre class="prettyprint">
@@ -322,7 +322,7 @@ public synchronized void withdraw(long amount)  {
 </pre>
 
 <p>
-deposit() 메서드에도 synchronized 키워드를 적용한다.
+deposit() 메소드에도 synchronized 키워드를 적용한다.
 </p>
 
 <pre class="prettyprint">
@@ -333,6 +333,6 @@ public <strong>synchronized</strong> void deposit(long amount) {
 
 <p>
 컬렉션에서 Vector는 '스레드 안전' 한데 ArrayList는 그렇지 않다고 했다.
-Vector의 모든 메서드는 synchronize가 적용되어 있다.
+Vector의 모든 메소드는 synchronize가 적용되어 있다.
 </p>
 </article>

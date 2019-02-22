@@ -79,7 +79,7 @@ public class LogTest1 {
 첫 번째로 설명할 프레임워크는 Log4j 2이다.<br />
 Log4j 2를 사용하기 위해서는 아래 경로에서 Log4j 2 바이너리 파일을 내려받는다.<br />
 <a href="http://logging.apache.org/log4j/2.x/download.html">http://logging.apache.org/log4j/2.x/download.html</a><br />
-파일 압축을 풀면 생기는 디렉터리에서 log4j-api-2.8.jar 와 log4j-core-2.8.jar을 복사하고 클래스로더가 찾을 수 있는 경로에 붙여넣는다.<br />
+파일 압축을 풀면 생기는 디렉터리에서 log4j-api-2.x.x.jar 와 log4j-core-2.x.x.jar을 복사하고 클래스로더가 찾을 수 있는 경로에 붙여넣는다.<br />
 그다음 아래 프로퍼티 파일을 역시 클래스로더가 찾을 수 있는 경로에 생성한다.
 </p>
 
@@ -115,7 +115,7 @@ Log4j 2를 사용하기 위해서는 아래 경로에서 Log4j 2 바이너리 �
 			<li>Package Explorer 뷰에서 프로젝트를 선택하고 마우스 오른쪽 버튼을 클릭한다.</li>
 			<li>Build Path - Configure Build Path...를 선택한다.</li>
 			<li>Libraires 탭에서 Add External JARs...를 선택한다.</li>
-			<li>log4j-api-2.8.jar 와 log4j-core-2.8.jar를 추가하고 OK 버튼을 클릭한다.</li> 
+			<li>log4j-api-2.x.x.jar 와 log4j-core-2.x.x.jar를 추가하고 OK 버튼을 클릭한다.</li> 
 		</ol>
 	<li>아래 LogTest2.java 파일을 생성한다.</li>
 </ol>
@@ -306,7 +306,7 @@ org.slf4j.simpleLogger.defaultLogLevel=DEBUG
 
 <p>
 slf4j-api-1.7.25.jar 와 slf4j-simple-1.7.25.jar 파일을 자바은행 클래스 패스에 추가한다.<br />
-Account, NormalAccount, MinusAccount 클래스의 입금과 출금 메서드에 로깅을 적용한다.<br />
+Account, NormalAccount, MinusAccount 클래스의 입금과 출금 메소드에 로깅을 적용한다.<br />
 </p>
 
 <h6 class="src">Account.java</h6>

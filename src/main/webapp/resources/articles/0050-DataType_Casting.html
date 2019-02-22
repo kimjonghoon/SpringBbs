@@ -1,272 +1,359 @@
 <article>
 
-<h1>자료형(Data Type)과 형변환(Type Casting)</h1>
+<h1>데이터 타입(Data Type)과 타입 캐스팅(Type Casting)</h1>
 
-<h2 class="floatstop">리터럴과 변수</h2>
+<h2>리터럴과 변수</h2>
 
 <pre class="prettyprint no-border">
-int year = 2016;
+int year = 2019;
 </pre>
 
-위에서 2016처럼 쓰이는 프로그램 요소를 리터럴(Literal)이라 한다.
-리터럴은 소스 코드에서 고정된 값을 표현한다.
-year처럼 쓰이는 프로그램 요소를 변수라 한다.
-변수란 값을 저장하기 위해 이름 붙인 메모리 기억공간으로 기억공간의 크기는 자료형으로 결정된다.<br />
+<p>
+2019처럼 쓰이는 프로그램 요소를 리터럴(Literal)이라 한다.
+리터럴로부터 특정 데이터 타입의 값이 생성된다.
+모든 프로그램 언어는 저마다 다양한 타입의 리터럴을 제공한다.
+대부분, 리터럴과 같은 타입으로 값이 생성된다.
+</p>
 
-<h2>자바의 자료형(Data Type)</h2>
-자바의 자료형은 크게 두 종류로 나뉜다.<br />
+<p>
+year처럼 쓰이는 프로그램 요소를 변수라 한다.
+변수란 값을 저장하기 위해 이름 붙인 메모리 공간으로 크기는 데이터 타입으로 결정된다.
+</p>
+
+<h2>데이터 타입</h2>
+
+<p>
+자바 데이터 타입은 두 종류로 나뉜다.
+</p>
 
 <ul>
-	<li>기본형 (<em>Primitive Data Types</em>)</li>
-	<li>참조형 (<em>Reference Data Types</em>)</li>
+	<li>기본 데이터 타입(<em>Primitive Data Types</em>)</li>
+	<li>참조 데이터 타입(<em>Reference Data Types</em>)</li>
 </ul>
 
-기본형은 일반적인 데이터를 위한 자료형이다.
-참조형은 객체지향 프로그래밍 언어에서 추가된 자료형으로 참조형 테이터를 위한 자료형이다.
+<p>
+기본 데이터 타입은 일반적인 데이터를 위한 타입이다.
+참조 데이터 타입은 객체지향 프로그래밍 언어에서 추가된 데이터 타입으로 참조 데이터를 위한 타입이다.
+참조 데이터는 객체에 접근하기 위해 사용된다.
+</p>
 
-<h3>기본형</h3>
-<table class="table-in-article">
-<tr>
-	<th class="table-in-article-th">자료형</th>
-	<th class="table-in-article-th">설명</th>
-	<th class="table-in-article-th">예</th>
-</tr>
-<tr>
-	<th class="table-in-article-th">boolean</th>
-	<td class="table-in-article-td">true 또는 false</td>
-	<td class="table-in-article-td">boolean present = true;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">char</th>
-	<td class="table-in-article-td">
-		2 바이트 유니코드 문자.<br />
-		언제나 ' '(홑따옴표)를 사용하여 표현.
-	</td>
-	<td class="table-in-article-td">
-		char grade = 'A';<br />
-		char ch = '\uFFFF';<br />
-		(UTF-16 문자셋에서 16진수 FFFF에 해당하는 문자)<br />
-		char ech = '\n'; //new line<br />
-		char ech = '\b'; //백스페이스<br />
-		char ech = '\t'; //탭<br />
-		char ech = '\\'; //역슬래시<br />
-		char ech = '\"'; //큰 따옴표<br />
-		char ech = '\''; //작은 따옴표
-	</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">byte</th>
-	<td class="table-in-article-td">1 바이트 정수형 데이터</td>
-	<td class="table-in-article-td">byte weight = 71;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">short</th>
-	<td class="table-in-article-td">2 바이트 정수형 데이터</td>
-	<td class="table-in-article-td">short bill = 30000;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">int</th>
-	<td class="table-in-article-td">4 바이트 정수형 데이터</td>
-	<td class="table-in-article-td">int balance = 56219618;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">long</th>
-	<td class="table-in-article-td">8 바이트 정수형 데이터</td>
-	<td class="table-in-article-td">long balance = 56219000L;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">float</th>
-	<td class="table-in-article-td">4 바이트 실수형 데이터</td>
-	<td class="table-in-article-td">float rate = 6.195f;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">double</th>
-	<td class="table-in-article-td">8 바이트 실수형 데이터</td>
-	<td class="table-in-article-td">double rate = 6.195;</td>
-</tr>
-</table>
+<h3>기본 데이터 타입</h3>
 
-<h3>값의 자료형</h3>
+<p>
+기본 데이터 타입에는 boolean, char, byte, short, int, long, float, double이 있다.
+</p>
+
+<h3>boolean</h3>
+
+<p>
+boolean 타입에는 true와 false의 두 가지 값만 있다.
+</p>
 
 <pre class="prettyprint no-border">
-int i1 = 3;//정수형 숫자 뒤에 아무것도 붙지 않으면 int 리터럴
-int i2 = 300000000;//컴파일 에러!
+boolean signIn = true;
 </pre>
 
-3000000000은 int 리터럴이다.
-하지만 3000000000(30억)은 int 값이 가질 수 있는 범위를 벗어난다.
-따라서 int형으로 3000000000이란 값은 만들어지지 않고 컴파일 에러가 발생한다.
+<h4>char</h4>
+
+<p>
+char 타입은 2바이트 단일 문자다.
+자바는 작은따옴표를 사용해 char 데이터를 표현한다.
+다음 예는 문자, 유니코드 문자, 제어 문자를 작은따옴표('')를 사용해 표현하고 있다.
+</p>
+
+<pre class="prettyprint">
+char grade = 'A';
+char ch = '\uFFFF';//UTF-16 문자셋에서 16진수 FFFF에 해당
+char ech = '\n';//new line
+char ech = '\b';//백스페이스
+char ech = '\t';//탭
+char ech = '\\';//역슬래시
+char ech = '\"';//큰 따옴표
+char ech = '\'';//작은 따옴표
+</pre>
+
+<h4>byte</h4>
+
+<p>
+byte 타입 1바이트 정수다.
+</p>
 
 <pre class="prettyprint no-border">
-long money = 1000L;//1000L은 long 리터럴 
+byte weight = 71;
 </pre>
+
+<h4>short</h4>
+
+<p>
+short 타입은 2바이트 정수다.
+</p>
 
 <pre class="prettyprint no-border">
-double d1 = 3.14;//소수점을 가진 숫자 뒤에 아무것도 붙지 않으면 double 리터럴
-double d2 = 3.14D;//3.14D는 double 리터럴
-double d3 = 3.14d;//3.14d는 double 리터럴
+short bill = 30000;
 </pre>
+
+<h4>int</h4>
+
+<p>
+int 타입 4바이트 정수다.
+</p>
 
 <pre class="prettyprint no-border">
-float f2 = 3.14f;//3.14f는 float 리터럴
-float f3 = 3.14F;//3.14F는 float 리터럴
+int balance = 56219618;
 </pre>
 
-<h3>int 리터럴이 int형 값이 아닐 수 있다.</h3>
-자바에는 byte와 short를 위한 리터럴이 없다.<br />
-아래와 같은 경우에 int 리터럴이 int 값이 아니다.<br />
+<h4>long</h4>
+
+<p>
+long 타입은 8바이트 정수다.
+리터럴에는 대문자 L를 붙인다.
+</p>
 
 <pre class="prettyprint no-border">
-byte b = 1; //1은 int 리터럴이지만 byte형 값이 된다.
-short s = 2; //2는 int 리터럴이지만 short형 값이 된다.
+long balance = 56219618L;
 </pre>
 
-<h3>참조형</h3>
+<h3>float</h3>
+
+<p>
+float 타입은 4바이트 실수다.
+리터럴에는 소문자 f를 붙인다.
+</p>
+
+<pre class="prettyprint no-border">
+long rate = 6.195f;
+</pre>
+
+<h3>double</h3>
+
+<p>
+double 타입은 8바이트 실수다.
+</p>
+
+<pre class="prettyprint no-border">
+long rate = 6.195;
+</pre>
+
+<h2>값의 데이터 타입이 결정되는 규칙</h2>
+
+<p>
+다음은 '값의 데이터 타입이 어떻게 정해지는가?'에 대한 설명이다.
+</p>
+
+<pre class="prettyprint no-border">
+int i1 = 3;//정수형 숫자 뒤에 아무것도 붙지 않으면 int 리터럴이다.
+long l1 = 4;//4는 int 리터럴이다.
+</pre>
+
+<p>
+int 리터럴이 int 값이 되듯이, 대부분 리터럴 타입과 같은 타입의 값이 만들어진다.
+하지만 int의 경우 int 리터럴이 byte나 short 타입 값이 되기도 한다.
+다음 예를 보자.
+</p>
+
+<pre class="prettyprint no-border">
+byte b = 1; //1은 int 리터럴이지만 byte 값이 된다.
+short s = 2; //2는 int 리터럴이지만 short 값이 된다.
+</pre>
+
+<p>
+자바에는 byte와 short를 타입 값을 표현하기 위한 리터럴이 따로 없기 때문에 이런 규칙이 필요하다.
+</p>
+
+<p>
+모든 리터럴이 값이 되지는 않는다.
+</p>
+
+<pre class="prettyprint no-border">
+int i2 = 3000000000; //컴파일 에러
+</pre>
+
+<p>
+3000000000(30억)은 int 리터럴이지만 int 범위를 벗어난다.
+그 결과 int 값이 만들어지지 않고 컴파일 에러가 발생한다.
+</p>
+
+<p>
+정수 숫자 뒤에 L이 붙으면 long 리터럴이다. 
+</p>
+
+<pre class="prettyprint no-border">
+long l2 = 3000000000L; //3000000000L은 long 리터럴이다.
+</pre>
+
+<p>
+숫자 뒤에 알파벳이 붙지 않는 소수점을 가진 숫자나 숫자 뒤에 D 또는 d가 붙으면 double 리터럴이다.
+</p>
+
+<pre class="prettyprint no-border">
+double d1 = 3.14;  //3.14는 double 리터럴이다.
+double d2 = 3.14D; //3.14D는 double 리터럴이다.
+double d3 = 3.14d; //3.14d는 double 리터럴이다.
+float f1 = 3.14;   //컴파일 에러. double 타입 값을 float 타입 변수에 할당할 수 없다.
+</pre>
+
+<p>
+숫자 뒤에 f가 붙으면 float 리터럴이다.
+</p>
+
+<pre class="prettyprint no-border">
+float f2 = 3.14f; //3.14f는 float 리터럴이다.
+</pre>
+
+<h3>참조 타입(Reference Type)</h3>
+
+<p>
+자바 변수 선언에서 변수 앞에 데이터 타입을 반드시 두어야 한다.
+</p>
 
 <pre class="prettyprint no-border">
 Student kim = new Student();
 </pre>
 
-자바에서 변수를 선언할 때, 변수 앞에 자료형이 먼저 나와야 한다.
-따라서 위의 변수 kim의 자료형은 Student이다.
-기본형에 Student란 자료형이 없으니 Student는 참조형이다.
-new Student()가 실행되면, 생성된 객체의 참조가 kim에 할당된다.
-객체의 참조는 메모리상에서 객체 주소를 의미한다.
-변수 kim과 .(도트)를 사용한다면 kim이 참조하는 객체에 접근할 수 있다.
+<p>
+변수 kim의 데이터 타입은 Student이다.
+Student는 기본 타입에 없으니 참조 타입이다.
+참조 타입에서 타입은 자바 클래스다.
+kim을 'Student 타입 변수'라고 부른다.
+new Student()가 실행되면 객체가 생성되고 생성된 객체의 참조 값이 kim에 할당된다.
+객체 자체가 kim에 할당되지 않는다.
+kim과 점(.)를 사용하면 kim이 참조하는 객체를 사용할 수 있다.
+</p>
 
 <pre class="prettyprint no-border">
 kim.name = "김선달";
 </pre>
 
-만약 kim이 어떤 학생 객체도 가리키지 않도록 하려면  <em>null</em> 값을 할당한다.
+<p>
+앞으로 '객체 참조 값' 이나 '참조 값' 대신 '레퍼런스'(reference)란 용어를 사용한다.
+</p>
+
+<h2>타입 캐스팅(Type Casting)</h2>
+
+<p>
+타입 캐스팅이란 값의 데이터 타입을 원하는 타입으로 변환하는 작업을 말한다.
+변수의 타입을 바꾸는 타입 캐스팅은 없다.
+타입 캐스팅에는 JVM이 판단해서 행하는 '자동 타입 캐스팅'과 프로그래머가 의도적으로 발생시키는 '명시적 타입 캐스팅'이 있다.
+타입 캐스팅을 캐스팅으로 줄여 쓰기도 한다.
+</p>
+
+<h3>자동 타입 캐스팅</h3>
 
 <pre class="prettyprint no-border">
-kim = <em>null</em>;
+long money = 300;
 </pre>
 
-<h2>형변환(Type Casting)</h2>
-
-형변환이란 값의 자료형을 원하는 자료형으로 변환하는 작업을 말한다.<br />
-형변환에는 JVM이 판단해서 행하는 자동 형변환과 프로그래머가 의도적으로 일으키는 명시적 형변환이 있다.<br />
- 
-<h3>자동 형변환(Up-Casting)</h3>
-
-<pre class="prettyprint no-border">
-long money = 300;//300은 int 리터럴
-</pre>
-
-위 코드는 long형 변수 money에 int형 값 300을 할당하려 한다.
-자바는 자료형의 적용에 엄격하다.
-long형 변수 money에 저장되는 값은 long형이여야 한다.
-이 경우 JVM은 할당하기 전에 300을 long형으로 변환한다.
-자동 형변환은, 작은 자료형에서 큰 자료형 방향으로 변환이 일어나므로, Up-Casting이라 한다.<br />
+<p>
+자바는 데이터 타입을 엄격하게 지킨다.
+long 타입 변수 money에는 long 타입 값만 저장할 수 있다.
+코드에서 300은 int 타입 값이다.
+JVM은 변수에 값을 할당하기 전에 300을 long 타입으로 변환한다.
+자동 타입 캐스팅은 작은 데이터 타입에서 큰 데이터 타입 방향으로 변환이 일어나므로, 업 캐스팅(Up-Casting)이라 한다.<br />
 
 <em>byte --&gt; short --&gt; int --&gt; long --&gt; float --&gt; double</em><br />
 
-long --&gt; float 방향에 주목하자.
-비록 float이 4바이트 영역의 메모리를 차지하지만 실수이므로 
-long에서 float으로 자동 형변환된다.
-다음 예를 보자.
+long --&gt; float 순서에 주의한다.
+long은 8바이트, float은 4바이트 메모리를 차지하지만, float이 실수이므로 long에서 float 방향으로 자동 타입 캐스팅이 일어난다.
+</p>
 
 <pre class="prettyprint no-border">
-float x = 10L;//JVM은 long형 값 10을 float형의 값 10으로 형변환한다.
+float x = 10L;//JVM은 10L을 10f로 타입 캐스팅한다.
 </pre>
 
-<h4>사칙연산에서 일어나는 자동 형변환</h4>
-<pre class="prettyprint no-border">
-int x = 3 + <em>3.5</em> + 4; //컴파일 에러!
-</pre>
-
-3.5는 double형 값이고, 3과 4는 int형 값이다.<br />
-int를 포함하여 자료형이 int 이상의 값들이 참여하는 산술 연산에서는 
-값들 중 가장 큰 자료형으로 나머지 값들의 자료형이 변환된다.
-따라서 위 코드에서 3과 4는 연산이 실행되기 전에 double형으로 변환된다.<br />
+<h4>사칙연산에서의 자동 타입 캐스팅</h4>
 
 <pre class="prettyprint no-border">
-int x = 3.0 + 3.5 + 4.0;
+int x = 3 + <em>3.5</em> + 4; //컴파일 에러
 </pre>
 
-3.0 + 3.5 + 4.0의 결과는 dobule형 값이고, 이 결과값은 int형 변수에 할당할 수 없으니 컴파일 에러가 발생한다.
-이해했다면 다음 예에서 z에 할당되는 값을 예상해 보자.
+<p>
+3.5는 double 리터럴이고 3과 4는 int 리터럴이다.
+int 이상 타입의 산술 연산에서, 참여하는 값 중 가장 큰 타입으로 나머지 값의 타입이 캐스팅된다.
+</p>
 
 <pre class="prettyprint no-border">
-int x = 10; int y = 4; int z = x / y;
+int x = <strong>3.0</strong> + 3.5 + <strong>4.0</strong>;
 </pre>
 
-z에는 2가 할당된다.(2.5가 아니다)
-이유는 x와 y가 모두 int형 값이므로 연산 결과 역시 int형이여야 하기 때문이다.<br />
+<p>
+3.0 + 3.5 + 4.0의 결과는 dobule이고 int 타입 변수 x에 할당할 수 없으니 컴파일 에러가 발생한다.
+</p>
 
-<h3>명시적 형변환(Down-Casting)</h3>
+<h3>명시적 타입 캐스팅(Down-Casting)</h3>
 
 <pre class="prettyprint no-border">
-float f = 1.1; //컴파일 에러!
+float f = 1.1; //컴파일 에러
 </pre>
 
-변수에 값을 대입할 때 값의 자료형이 변수의 자료형보다 크면 컴파일 에러가 발생한다.<br />
-위 코드는 float형 변수에 double형 값을 대입하려고 했기 때문에 컴파일 에러가 발생한 것이다.<br />
-다음 코드는 double형 값의 자료형을 float형으로 의도적으로 바꾸는 코드이다.<br />
+<p>
+코드는 float 타입 변수에 double 타입 값을 할당하려고 시도한다.
+큰 타입에서 작은 타입으로의 타입 캐스팅은 자동으로 일어나지 않는다. 
+따라서 변수에 값을 할당할 때, 값의 타입이 변수의 타입보다 크면 컴파일 에러가 발생한다.
+</p>
 
 <pre class="prettyprint no-border">
 float f = (float) 1.1;
 </pre>
 
-다음 예를 보자.<br />
+<p>
+코드는 변수에 할당하려는 값의 타입을 double에서 float로 변환한다.
+괄호를 사용해 데이터 타입을 강제로 바꾸는 것을 명시적 타입 캐스팅이라 한다.
+다음에서 b에 할당되는 값을 예상해 보자.
+</p>
 
 <pre class="prettyprint no-border">
-byte b = (byte) 258; //b엔 2가 할당된다.
+byte b = (byte) 258;
 </pre>
 
-int형 값의 자료형을 byte형으로 바꿀 때 int의 앞 3byte는 떨어져 나간다.<br />
-<br />
-z는 뭐가 될까?
-<pre class="prettyprint no-border">
-int x = 10; int y = 4; double z = x / y;
-</pre>
+<p>
+b에는 2가 할당된다.
+int 타입을 byte 타입으로 명시적 타입 캐스팅하면 int의 앞 3바이트는 떨어져 나간다.
+</p>
 
-z가 2.5가 되려면 연산에 참여하는 x 나 y를 double로 명시적 형변환한다.
-<pre class="prettyprint no-border">
-double z = <b>(double)</b> x / y; 
-</pre>
-
-또는 
-
-<pre class="prettyprint no-border">
-double z = x / <b>(double)</b> y; 
-</pre>
-
-<h3>byte 또는 short형 값이 참여하는 산술연산에서의 자동 형변환</h3>
-byte형이나 short형 값이 참여하는 산술연산은, 연산이 실행되기 전에 모든 값이 int형으로 변환된다.
+<p>
+byte나 short 타입 값이 참여하는 산술연산에선 연산이 진행되기 전 모든 값이 int 타입으로 자동 타입 캐스팅된다.
+</p>
 
 <pre class="prettyprint no-border">
 short s1 = 1;
 short s2 = 2;
-short sum = s1 + s2; //컴파일 에러!
+short sum = s1 + s2; //컴파일 에러
 </pre>
 
-만약 컴파일 에러를 피하려면 다음과 같은 명시적 형변환이 필요하다.
+<p>
+s1과 s2에 저장된 값이 연산에 참여하게 되면 모두 int 타입으로 자동 타입 캐스팅되므로 계산 결과는 int 타입 값이 된다.
+컴파일 에러를 피하려면 아래처럼 명시적 타입 캐스팅이 필요하다.
+</p>
 
 <pre class="prettyprint no-border">
 short sum = <em>(short)</em> (s1 + s2);
 </pre>
 
-<h2>String 클래스 : 자바 프로그램에서 문자열을 사용하려면</h2>
-
-자바에서 문자열을 표현하는 방법은 String 클래스로부터 String 객체를 생성하여 사용하는 것이다.
-String 클래스는 자바 API에 존재한다.
-"안녕하세요"라는 문자열이 필요하다고 하면 아래처럼 코딩해야 한다.
+<p>
+다음 예에서 z에 할당되는 값을 예상해 보자.
+</p>
 
 <pre class="prettyprint no-border">
-char arrayOfHello = {'H','e','l','l'.'o'};
-String greetings = new String(arrayOfHello);
+int x = 10;
+int y = 4;
+int z = x / y;
 </pre>
 
-그런데 자바에서는 다음과 같이 문자열 리터럴을 제공한다.
+<p>
+2.5를 기대했겠지만, z에는 2가 할당된다.
+x와 y가 모두 int 타입이므로 연산 결과 역시 int 타입이다.
+z에 2.5가 할당되도록 하려면, 변수 z의 타입을 double 타입으로 바꾸고
+x나 y 둘 중 하나를 double 타입으로 명시적 타입 캐스팅해야 한다.
+</p>
 
 <pre class="prettyprint no-border">
-String greetings = "안녕하세요";//여기서 "안녕하세요"는 리터럴이다.
+double z = <b>(double)</b> x / y; 
 </pre>
 
-문자열은 자주 사용되므로, 문자열을 마치 기본 자료형처럼 사용할 수 있도록 배려한 것이다.<br />
+<p>
+x를 double 타입으로 캐스팅하면, 
+y는 double 타입으로 자동 캐스팅된다.
+</p>
 
 <span id="refer">참고</span>
 <ul id="references">

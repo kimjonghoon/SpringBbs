@@ -2,25 +2,27 @@
 
 <h1>Arrays</h1>
 
+<p>
 An array is a container object that holds values of a same type.<br />
 <img src="https://lh3.googleusercontent.com/-iLIT7b27vBo/Vvy0K3Fs5eI/AAAAAAAACto/WJw-WrH8EtENW0RZRVweV-vjoMqqXb4DACCo/s913-Ic42/variable-array.png" alt="variable and array" /><br />
-Each item in an array is called an element, 
-and each element is accessed by its numerical index, 
-numbering begins with 0, and square brackets, e.g., arr[4].
-In Java, the array is an object. 
+Each item in the array is called an element.
+Each element has a numeric index, starting with 0.
+To access an element, use an index and square brackets, e.g., arr[4].
+In Java, the array is an object.
 So, you need to create an array object.
+</p>
 
-<h3>Examples of Array</h3>
+<h3>Examples</h3>
 
 <pre class="prettyprint">
 int[] arr = null;//declares an array of integers.
 
-arr = new int[4];
 /*
 4 is the size of array. 
 This value is stored in the length member variable of array and never change.
 All elements are initialized to 0.
 */
+arr = new int[4];
 
 arr[0] = 1;//1st element is assigned to 1.
 arr[1] = 2;//2nd element is assigned to 2.
@@ -28,7 +30,9 @@ arr[2] = 3;//3rd element is assigned to 3.
 arr[3] = 4;//Last element is assigned to 4.
 </pre>
 
-Alternatively, you can use the shortcut syntax to create and initialize an array;
+<p>
+Using array literals can reduce this code to a single line:
+</p>
 
 <pre class="prettyprint">
 int[] arr2 = {1, 2, 3, 4};
@@ -36,18 +40,38 @@ int[] arr2 = {1, 2, 3, 4};
 
 <pre class="prettyprint">
 String[] arr3 = null;//declares an array of Strings.
-arr3 = new String[4];//The length is fixed at 4 and all elements are initialized to null.
-
+arr3 = new String[2];//The length is fixed at 2 and all elements are initialized to null.
 arr3[0] = "Java";//1st element is assigned to "Java" object’s reference.
 arr3[1] = "School";//2nd element is assigned to "School" object’s reference.
 </pre>
 
-you can use the shortcut syntax to create and initialize an array;
+<p>
+Using array literals can reduce this code to a single line:
+</p>
 
 <pre class="prettyprint">
 String[] arr4 = {"Java", "School"};
 </pre>
 
+<h2>To use strings in Java programs</h2>
+
+<p>
+How to express the strings in Java is to create a String object from the String class. 
+If you need the string "Hello", code it like this: 
+</p>
+
+<pre class="prettyprint no-border">
+char[] arrayOfHello = {'H','e','l','l','o'};
+String greetings = new String(arrayOfHello);
+</pre>
+
+<p>
+Java provides String literals.
+</p>
+
+<pre class="prettyprint no-border">
+String hello = "Hello"; //Here, "Hello" is a String Literal.
+</pre>
 
 <h3>How to use String[] parameter in main method</h3>
 
@@ -61,10 +85,12 @@ public class ArrayTest {
 }
 </pre>
 
+<strong class="screen-header"><b>C:\</b> Command Prompt</strong>
 <pre class="screen">
 C:\javaApp>javac ArrayTest.java
 
 C:\javaApp>java ArrayTest 2018 12 31
 2018/12/31
 </pre>
+
 </article>

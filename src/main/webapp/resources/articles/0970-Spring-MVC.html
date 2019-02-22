@@ -40,7 +40,7 @@ webapp/WEB-INF/views/는 jsp 파일을 위해 만들었다.
 <pre class="prettyprint">
 &lt;properties&gt;
 	&lt;!--  omit --&gt;
-	<strong>&lt;spring.version&gt;5.1.2.RELEASE&lt;/spring.version&gt;</strong>
+	<strong>&lt;spring.version&gt;5.1.5.RELEASE&lt;/spring.version&gt;</strong>
 &lt;/properties&gt;
 
 &lt;!--  omit --&gt;
@@ -208,8 +208,8 @@ public class GuestbookController {
 </pre>
 
 <ol>
-	<li>guestbook() 메서드는 GET 방식의 "/guestbook" 요청을 담당한다.</li>
-	<li>sign() 메서드는 POST 방식의 "/guestbook/sign" 요청을 담당한다. sign() 메서드 내용은 SignGuestbookServlet.java 서블릿 코드 그대로다.</li>
+	<li>guestbook() 메소드는 GET 방식의 "/guestbook" 요청을 담당한다.</li>
+	<li>sign() 메소드는 POST 방식의 "/guestbook/sign" 요청을 담당한다. sign() 메소드 내용은 SignGuestbookServlet.java 서블릿 코드 그대로다.</li>
 </ol>
 
 <p>
@@ -240,9 +240,9 @@ guestbook.jsp에서 폼 action 속성을 GuestbookController의 요청 핸들러
 
 <p>
 guestbook.jsp의 위치를 변경했으므로, 
-guestbook.jsp에서 createLogoutURL()와 createLoginURL() 인자를 그대로 두면 두 메서드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환한다.
+guestbook.jsp에서 createLogoutURL()와 createLoginURL() 아규먼트를 그대로 두면 두 메소드는 /WEB-INF/views/guestbook/guestbook.jsp를 반환한다.
 결국 404 에러를 발생한다.
-두 메서드의 인자를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
+두 메소드의 아규먼트를 request.getRequestURI()에서 "/guestbook/?guestbookName=" + guestbookName으로 수정한다.
 </p>
 
 <pre class="prettyprint">

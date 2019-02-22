@@ -1127,7 +1127,7 @@ In conclusion, you can not use a variable named page in JSP scripting.
 <h3>Oracle 11g's rank() function</h3>
 
 <p>
-You can use the rank () function from Oracle 11g.
+You can use the rank() function from Oracle 11g.
 The following is a query statement that sorts the employee data in salary order in the emp table of the scott account.
 </p>
 
@@ -1799,8 +1799,8 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 <h3>keyword = java.net.URLEncoder.encode(keyword,"UTF-8");</h3>
 
 <p> 
-The reason for the keyword = java.net.URLEncoder.encode (keyword, "UTF-8") code is that the encoding of the Java string and the URL address character, which are arguments to the sendRedirect () method of HttpServletResponse, are different.
-The URLEncoder encode () method allows you to get the byte value for non-English characters.
+The reason for the keyword = java.net.URLEncoder.encode (keyword, "UTF-8") code is that the encoding of the Java string and the URL address character, which are arguments to the sendRedirect() method of HttpServletResponse, are different.
+The URLEncoder encode() method allows you to get the byte value for non-English characters.
 This code needs to modify the server settings to work the way we want.
 Open the CATALINA_HOME/conf/server.xml file and make sure that the Connector element has the URIEncoding attribute set to UTF-8, as shown below, with the Connector element having the port attribute value of 8080.
 If there is no URIEncoding attribute, add it as follows.

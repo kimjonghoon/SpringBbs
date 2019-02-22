@@ -65,7 +65,7 @@ Each time a client sends a request to a servlet, the servlet container calls the
 The service() method reads the request information using an object of the ServletRequest type, which is the first argument, and responds to the client using an object of the ServletResponse type, which is the second argument.
 Note that the servlet container executes the service() method on the new thread whenever the client requests it.
 
-The service () method runs simultaneously on a separate thread, so it can respond to a large number of client requests without delay.
+The service() method runs simultaneously on a separate thread, so it can respond to a large number of client requests without delay.
 However, critical section problems can arise with the resources that the servlet uses (eg, files, network connections, static variables, instance variables, etc.).
 
 Therefore, it is best not to create static or instance variables that can cause problems with your servlets.
@@ -141,7 +141,7 @@ Without this code, the servlet will not store ServletConfig objects.
 
 <p>
 The init(ServletConfig config) method saves the ServletConfig object received as an argument in the instance variable config.
-The getServletConfig () method of GenericServlet returns this config.
+The getServletConfig() method of GenericServlet returns this config.
 </p>
 
 <pre class="prettyprint no-border">
@@ -195,7 +195,7 @@ The HttpServlet class inherits the GenericServlet abstract class and is a servle
 The HttpServlet class provides methods for handling HTTP requests.
 The client's request is passed to the servlet as the HttpServletRequest object type, and the servlet responds using the HttpServletResponse object type.
 
-The HttpServlet class implements the GenericServlet's service () abstract method by simply calling the protected void service (HttpServletRequest req, HttpServletResponse resp) method.
+The HttpServlet class implements the GenericServlet's service() abstract method by simply calling the protected void service (HttpServletRequest req, HttpServletResponse resp) method.
 </p>
 
 <pre class="prettyprint">
@@ -984,10 +984,10 @@ RequestDispathcer has two methods, include() and forward().
 The include() method is used to pass control to another resource and to take control again when another resource is completed.
 It is used to add messages produced by other resources to the response.
 
-The forward () method passes control to another resource. 
+The forward() method passes control to another resource. 
 As a result, the resource that receives the control responds to the client.
 
-Let's practice the forward () method example.
+Let's practice the forward() method example.
 Create the ControllerServlet.java file in the /WEB-INF/src/example directory as follows:
 </p>
 

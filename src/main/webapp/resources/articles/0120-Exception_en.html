@@ -206,7 +206,7 @@ For reference, the main method is implemented to print "Normal Termination" if e
 	at net.java_school.exception.Test.main(Test.java:19)</strong></pre>
 
 <p>	
-Modify the method3 () to handle exceptions using try ~ catch.
+Modify the method3() to handle exceptions using try ~ catch.
 </p>
     
 <pre class="prettyprint">
@@ -559,7 +559,7 @@ public class Test {
 </pre>
 
 <p>
-When you run the program, a catch (ArithmeticException e) {..} block is executed and e.getMessage () of this block is printed.
+When you run the program, a catch (ArithmeticException e) {..} block is executed and e.getMessage() of this block is printed.
 The finally block is then executed and the last line of the main is executed.
 </p>
     
@@ -601,20 +601,20 @@ public class Test {
 
 <p>
 Class.forName ("string"); is not a new Java grammar.
-There is a <em>java.lang.Class</em> in the Java API, and this class has a forName () static method.
-The forName () method takes a string as an argument, which is the full name of the Java class (FQCN).
-The forName () method causes the class loader to load the class corresponding to the argument.
+There is a <em>java.lang.Class</em> in the Java API, and this class has a forName() static method.
+The forName() method takes a string as an argument, which is the full name of the Java class (FQCN).
+The forName() method causes the class loader to load the class corresponding to the argument.
 If the class loader does not find the class corresponding to the argument, 
 the JVM creates a ClassNotFoundException exception object and throws it to the Class.forName ("string") line.
-In the example, the class corresponding to "java.lang.Boolean" passed as argument to forName () belongs to the Java API, 
+In the example, the class corresponding to "java.lang.Boolean" passed as argument to forName() belongs to the Java API, 
 so the class loader looks for this class without the cp or classpath option.
 The purpose of this class in this example is not important.
 The important thing is the following.
-There is a <em>throws ClassNotFoundException</em> in the class declaration of the forName () method.
+There is a <em>throws ClassNotFoundException</em> in the class declaration of the forName() method.
 Because ClassNotFoundException is a checked exception that does not inherit RuntimeException, 
-the method that calls forName () must implement code that handles this exception.
+the method that calls forName() must implement code that handles this exception.
 Let's modify the code using the code assist feature in Eclipse.
-If you put your cursor in Class.forName (), Eclipse will give you a solution. 
+If you put your cursor in Class.forName(), Eclipse will give you a solution. 
 If you click on the second method, the code changes as below and the compile error disappears.
 </p>
     
@@ -947,7 +947,7 @@ public class Test {
 </pre>
 
 <p>
-The e.printStackTrace (); method will print to the console as follows:
+The e.printStackTrace(); method will print to the console as follows:
 </p>
     
 <pre class="console"><strong class="console-result">java.lang.ClassNotFoundException: java.lang.Boolean2
@@ -1067,7 +1067,7 @@ Normal Termination
 </strong></pre>
 
 <p>
-You will often see this type of message printed by e.printStackTrace ();
+You will often see this type of message printed by e.printStackTrace();
 Most errors can be solved by guessing the basic Java syntax.
 If you can not solve it, then Googleing is the right answer.
 The ClassNotFoundException object is created when the class loader can not find the class.

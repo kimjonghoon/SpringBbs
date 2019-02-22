@@ -51,8 +51,8 @@ public class SingleThread {
 </pre>
 
 <p>
-DoA () and doB () are executed on the same thread.
-Therefore doB () is executed after doA () ends.
+DoA() and doB() are executed on the same thread.
+Therefore doB() is executed after doA() ends.
 </p>
 
 <h3>Multi-threaded example</h3>
@@ -62,9 +62,9 @@ Let's turn our example into a multi-threaded example.
 
 <h4>Creating a multi-threaded program by inheriting the Thread class.</h4>
 <p>
-We will implement doA () and doB () to execute on different threads, respectively.
+We will implement doA() and doB() to execute on different threads, respectively.
 First, I will demonstrate how to inherit a Thread.
-If you call the start () method after creating the object, another thread will be created and doA () will be executed on the new thread.
+If you call the start() method after creating the object, another thread will be created and doA () will be executed on the new thread.
 </p>
 
 <h6 class="src">MultiThread1.java</h6>
@@ -292,7 +292,7 @@ As shown in the figure below, the second thread will not be able to enter the me
 When the first thread goes out of the method, the waiting thread enters the method.<br />
 <img src="https://lh3.googleusercontent.com/CiSenAxhTLBS82O3tWVDe9DH5Q2ufVFhSdi--lW86JTrvrqJuQpTmx5_jqMn-j7e9rAaX1hsUuRBIk31sGQXPsv_vxkH2h40KOrcdZEYUjyo9amgYNBihDJDKyu2Ki97NE4rVqeP-NcXvXDsmR_oOVWKUnAQqrgd-KPNqNWXU9Kzcfby7wCnzhdkSX5a7I_HyHZoWpaGWxyno-mU66dOzdOYG-4uqBn6YlhbEcKJrv8meV72qdy29QgMLGVI4RVYQ5wqP7y6kI_joSsnrolwq_RYMF1eNkGn9SsBnFAGvte2O6iC3weEp0kIjfXu2EmLDP9yKmUpEV8NSGOXlSLAWfYCHV1WjRKtHyx8_SyOoD02N-gdEGayzH4J5MQj4RcGgNf9jXFZv7JqYyL-ZXsgufwZyIM7gpzUryyZEMQpERoPpVJEjCSxLvB2qrJElr0T9qBYjiMmrEwlAFuC1iweNkmhN6IyDCnaezdeIBD7S-PLcGF8uxwNc5EZy7xSp9Z_HDXxVCX_fv6PqzUv9p7ApJAidKMKsELkVLj2W6wsHaVWA-XU6OAWkFMhxPxIIq4mTOa25DzoFIK7gYMukUUzWULZMk5Py4FhFyaKcEJnkVavipMHQUyeKkNJ=w609-h496-no" alt="This figure shows that the first thread has passed the critical area and the second thread has just entered the critical area." /><br />
 
-Return the withdraw () method as shown below.
+Return the withdraw() method as shown below.
 </p>
 
 <pre class="prettyprint">

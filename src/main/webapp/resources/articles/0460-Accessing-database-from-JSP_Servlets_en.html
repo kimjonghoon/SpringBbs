@@ -203,7 +203,7 @@ try {
 
 <p>
 The second JSP uses the jsp: useBean action to obtain the OracleConnectionManager object reference.
-The second JSP can obtain a connection by calling the getConnection () method of the OracleConnectionManager whenever a connection is needed.
+The second JSP can obtain a connection by calling the getConnection() method of the OracleConnectionManager whenever a connection is needed.
 One thing to keep in mind when using this custom connection pool is that you must use the freeConnection() method of the OracleConnectionManager instead of using the close() method of Connection after using the connection.
 If you use the close() of Connection, this custom connection pool will not work.
 </p>
@@ -213,8 +213,8 @@ If you use the close() of Connection, this custom connection pool will not work.
 <h3>Using custom log file</h3>
 
 <p>
-So far we have used System.out.println () to print a log message.
-If you install Tomcat with the installer on a Windows system, System.out.println () will print a message to the file starting with stdout_ in the CATALINA_HOME/logs directory.
+So far we have used System.out.println() to print a log message.
+If you install Tomcat with the installer on a Windows system, System.out.println() will print a message to the file starting with stdout_ in the CATALINA_HOME/logs directory.
 
 To provide a better environment for development and operation, log messages need to be output to the file that the programmer or operator wants.
 
@@ -330,7 +330,7 @@ The JSP method corresponding to the init() of Servlet can be found at:
 <p>
 Open getEmp3.jsp.
 Use the Save As .. menu to create getEmp4.jsp.
-Modify getEmp4.jsp so that the JSP method corresponding to the init () of the servlet loads the JDBC driver.
+Modify getEmp4.jsp so that the JSP method corresponding to the init() of the servlet loads the JDBC driver.
 </p>
 
 <p>

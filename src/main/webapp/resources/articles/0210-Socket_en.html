@@ -42,7 +42,7 @@ public class Server {
 </pre>
 
 <p>
-Socket socket = serverSocket.accept ();<br />
+Socket socket = serverSocket.accept();<br />
 When the above code is executed, the program stops and waits for an external socket connection request.
 When a socket connection request is received from the outside, an accept() method creates a server-side socket to communicate with the client, connect to the external socket, and return the reference.
 The socket port on the server side where the connection is actually made is arbitrarily set among the remaining port numbers.
@@ -267,7 +267,7 @@ public class Server {
 <p>
 To maintain a socket connection, you must maintain an Echo object.
 To do this, add an ArrayList to hold the Echo object.
-At the end of Echo's close () method, insert code to remove the Echo object reference value from the ArrayList.
+At the end of Echo's close() method, insert code to remove the Echo object reference value from the ArrayList.
 </p>
 
 <h6 class="src">Server.java</h6>
@@ -343,7 +343,7 @@ public class Server {
 <p>
 Write the method to serve external socket connection requests.
 This method will be implemented in the methods of the server.
-This method puts the accept () method of the server socket in an infinite loop.
+This method puts the accept() method of the server socket in an infinite loop.
 The main method calls this method just after creating the Server object.
 </p>
 
@@ -686,7 +686,7 @@ public class Client <strong>extends Thread</strong> {
 
 <p>
 I will implement code in the run() method that outputs a message to the console from the server.
-The run () method requires an input stream whose source is a socket.
+The run() method requires an input stream whose source is a socket.
 </p>
 
 <h6 class="src">Client.java</h6>
@@ -723,7 +723,7 @@ public class Client extends Thread {
 </pre>
 
 <p>
-Now, let's implement the run () method.
+Now, let's implement the run() method.
 </p>
 
 <h6 class="src">Client.java</h6>
@@ -892,7 +892,7 @@ public class Client extends Thread {
 
 <p>
 Implement the server.
-In the echo example, modify only the run () method of the inner class Echo as follows.
+In the echo example, modify only the run() method of the inner class Echo as follows.
 If the client is forcibly terminated, null is sent to the server, so if the string received from the client is null, it should be implemented to remove the corresponding echo object.
 (It's better to rename Echo to Chatter because it's a chat program.)
 </p>
@@ -924,7 +924,7 @@ public void run() {
 
 <p>
 When you force a server shutdown, every user's console will print an infinite loop of null.
-Modify the client's run () method as follows:
+Modify the client's run() method as follows:
 </p>
 <pre class="prettyprint">
 @Override

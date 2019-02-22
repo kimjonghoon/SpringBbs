@@ -5,159 +5,233 @@
 <h2>Literal and Variable</h2>
 
 <pre class="prettyprint no-border">
-int year = 2016;
+int year = 2019;
 </pre>
 
-The programming elements as the <b>2016</b> called Literal.
-A literal is the source code representation of a fixed value.
-<br />
+<p>
+Programming elements like <b>2019</b> called Literal.
+A value of a specific data type is generated from the literal.
+Every programming language has its own set of literals.
+Mostly, values are created with the same type as a literal.
+</p>
+
+<p>
 The programming elements as the <b>year</b> called Variable.
 A variable is a storage location with a name in order to save the value.
 The size of storage capacity varies depending on the Data Type.
+</p>
 
 <h2>Data Type</h2>
 
-Data type in Java is largely divided into two types.
+<p>
+Data type in Java is divided into two types.
+</p>
 
 <ul>
 	<li>Primitive Data Types</li>
 	<li>Reference Data Types</li>
 </ul>
 
+<p>
 Primitive Data Types are a Data Type for normal data.
 Reference Data Types are a Data Type for reference data.
+</p>
 
 <h3>Primitive Data Types</h3>
 
-<table class="table-in-article">
-<tr>
-	<th class="table-in-article-th">Type</th>
-	<th class="table-in-article-th">Description</th>
-	<th class="table-in-article-th">Example</th>
-</tr>
-<tr>
-	<th class="table-in-article-th">boolean</th>
-	<td class="table-in-article-td">true or false</td>
-	<td class="table-in-article-td">boolean present = true;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">char</th>
-	<td class="table-in-article-td">
-		16-bit Unicode character.<br />
-		Always use 'single quotes' for char literals.
-	</td>
-	<td class="table-in-article-td">
-		char grade = 'A';<br />
-		char ch = '\uFFFF';<br />
-		('\uFFFF' is the character correspond to FFFF (Hex) in UTF-16)<br />
-		char ech = '\n';//line feed<br />
-		char ech = '\b';//backspace<br />
-		char ech = '\t';//tab<br />
-		char ech = '\\';//backspace<br />
-		char ech = '\"';//double quote<br />
-		char ech = '\'';//single quote
-	</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">byte</th>
-	<td class="table-in-article-td">8-bit integer</td>
-	<td class="table-in-article-td">byte weight = 71;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">short</th>
-	<td class="table-in-article-td">16-bit integer</td>
-	<td class="table-in-article-td">short bill = 30000;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">int</th>
-	<td class="table-in-article-td">32-bit integer</td>
-	<td class="table-in-article-td">int balance = 56219618;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">long</th>
-	<td class="table-in-article-td">64-bit integer</td>
-	<td class="table-in-article-td">long balance = 56219000L;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">float</th>
-	<td class="table-in-article-td">32-bit floating point
-	<td class="table-in-article-td">float rate = 6.195f;</td>
-</tr>
-<tr>
-	<th class="table-in-article-th">double</th>
-	<td class="table-in-article-td">64-bit floating point</td>
-	<td class="table-in-article-td">double rate = 6.195;</td>
-</tr>
-</table>
+<p>
+Primitive Data Types are boolean, char, byte, short, int, long, float, and double.
+</p>
 
-<h3>Data Type of Values</h3>
+<h4>boolean</h4>
+
+<p>
+The boolean data type has only two possible values: true and false.
+</p>
+
+<pre class="prettyprint no-border">
+boolean signIn = true;
+</pre>
+
+<h4>char</h4>
+
+<p>
+The char data type is a single 16-bit Unicode character.
+Always use 'single quotes' for char literals.
+The following example expresses characters, unicode characters, and control characters using single quotation marks ('').
+</p>
+
+<pre class="prettyprint">
+char grade = 'A';
+char ch = '\uFFFF';
+('\uFFFF' is the character correspond to FFFF (Hex) in UTF-16)
+char ech = '\n';//line feed
+char ech = '\b';//backspace
+char ech = '\t';//tab
+char ech = '\\';//backspace
+char ech = '\"';//double quote
+char ech = '\'';//single quote
+</pre>
+
+<h4>byte</h4>
+
+<p>
+The byte data type is an 8-bit integer.
+</p>
+
+<pre class="prettyprint no-border">
+byte weight = 71;
+</pre>
+
+<h4>short</h4>
+
+<p>
+The short data type is a 16-bit integer.
+</p>
+
+<pre class="prettyprint no-border">
+short bill = 30000;
+</pre>
+
+<h4>int</h4>
+
+<p>
+The int data type is a 32-bit integer.
+</p>
+
+<pre class="prettyprint no-border">
+int balance = 56219618;
+</pre>
+
+<h4>long</h4>
+
+<p>
+The long data type is a 64-bit two's complement integer. 
+Numbers with an L at the end are long type literals.
+</p>
+
+<pre class="prettyprint no-border">
+long balance = 56219618L;
+</pre>
+
+<h3>float</h3>
+
+<p>
+The float data type is a 32-bit floating point.
+Numbers with f at the end are float type literals.
+</p>
+
+<pre class="prettyprint no-border">
+long rate = 6.195f;
+</pre>
+
+<h3>double</h3>
+
+<p>
+The double data type is a 64-bit floating point.
+</p>
+
+<pre class="prettyprint no-border">
+long rate = 6.195;
+</pre>
+		
+<h2>The rule that determines the data type of the value</h2>
+
+<p>
+The following is an explanation of how the data type of the value is determined.
+</p>
 
 <pre class="prettyprint no-border">
 int i1 = 3;//integral number without any additional character is a int literal.
-int i2 = 3000000000;//compile error!
+long l1 = 4;//4 is an int literal.
 </pre>
 
-3000000000 is a int literal and value of the int type should be created. 
-But 3000000000 is out of the int range so that value of 3000000000 cannot be created.
-<br />
-
+<p>
+Mostly, values of the same type as the literal type are created.
+However, an int literal can be a byte or short-form value.
+Consider the following example.
+</p>
 
 <pre class="prettyprint no-border">
-long money = 1000L;//1000L is a long literal. 
+byte b = 1; //1 is an int literal, but it is a byte value.
+short s = 2; //2 is an int literal, but it is a short value.
 </pre>
 
+<p>
+Java requires these rules because there are no special literals for bytes and shorts.
+</p>
+
+<p>
+Not all literals are a value.
+</p>
+
 <pre class="prettyprint no-border">
-double d1 = 3.14;//A floating point number without any additional character is a double literal. 
-double d2 = 3.14D;//3.14D is a double literal.
-double d3 = 3.14d;//3.14d is a double literal.
+int i2 = 3000000000; //compile error
 </pre>
 
+<p>
+3000000000 (3 billion) is an int literal, but out of the int range.
+As a result, an int value is not created and a compilation error occurs.
+</p>
+
+<p>
+An integer number followed by an L is a long literal.
+</p>
+
 <pre class="prettyprint no-border">
-float f2 = 3.14f;//3.14f is a float literal.
-float f3 = 3.14F;//3.14F is a float literal.
+long l2 = 3000000000L; //3000000000L is a long literal.
 </pre>
 
-<h3>int literals may not be int value</h3>
-There is no specific literal for the byte and short in Java.
-As below shown, a int literals may not be int value.
+<p>
+Numbers with decimal point or numbers followed by an D or d are double literal.
+</p>
 
 <pre class="prettyprint no-border">
-byte b = 1; //1 is int literal but value of 1 is created as byte type.
+double d1 = 3.14;  //3.14 is a double literal.
+double d2 = 3.14D; //3.14D is a double literal.
+double d3 = 3.14d; //3.14d is a double literal.
+float f1 = 3.14;   //compile error. A double type value can not be assigned to a float type variable.
 </pre>
 
+<p>
+Numbers followed by f are float literal.
+</p>
+
 <pre class="prettyprint no-border">
-short s = 2; //2 is int literal but value of 2 is created as short type.
+float f2 = 3.14f; //3.14f is a float literal.
 </pre>
 
 <h3>Reference Data Types</h3>
+
+<p>
+In a Java variable declaration, 
+you must put the data type before the variable.
+</p>
 
 <pre class="prettyprint no-border">
 Student john = new Student();
 </pre>
 
-To declare a variable in Java, you have to put the data type of the variable before the variable name. 
+<p>
 Student is the data type of the variable john and Student is not primitive data type.
 therefore, Student is a reference data type.
 When new Student() is executed, the reference to created student object is assigned to the varible john.
 A reference to an object is the address of the object in memory.
 Now, if you use the varibale john and .(dot), you can access to the student object which john is referring to as below;
+</p>
 
 <pre class="prettyprint no-border">
 john.name = "John Adams";
 </pre>
 
-if you want that john is not referring to any object, assign null to john as below;
-
-<pre class="prettyprint no-border">
-john = null;
-</pre>
-
 <h2>Type Casting</h2>
 
+<p>
 Type casting means that converting the data type of value to desired data type.
 Type Casting is divided into two types.
 One is called Up-Casting, it happens automatically by the JVM.
 The Other is called Down-Casting, if you want it happens, put (desired data type) before literals or variables. 
+</p>
  
 <h3>Up-Casting</h3>
 
@@ -165,114 +239,115 @@ The Other is called Down-Casting, if you want it happens, put (desired data type
 long money = 300;//300 is int literal and value of 300 is created as int type.
 </pre>
 
-The above code has been declared a long type variable money and assign 300 to money.
+<p>
 Java is strict on the data type applies. So, variable money shall be assigned a value of long type. 
 In this case, JVM converted 300 of int type to 300 of long type before the assignment.
 Automatic type casting happens to a large datatypes direction from a small data type.<br />
-(byte --&gt; short --&gt; int --&gt; long --&gt; float --&gt; double)<br />
+
+<em>byte --&gt; short --&gt; int --&gt; long --&gt; float --&gt; double)</em><br />
+
 So, it is called Up-Casting.
 Even so float occupies 4 bytes of memory size and long occupies 8 bytes of memory size, but long are automatically cast to float.
+</p>
 
 <pre class="prettyprint no-border">
 float x = 10L;//JVM convert 10 of long type to 10 of float type automatically.
 </pre>
 
-<h4>Automatic Type Casting in arithmetic</h4>
+<h4>Up-Casting in arithmetic</h4>
 
 <pre class="prettyprint no-border">
-int x = 3 + <em>3.5</em> + 4; //compile error!
+int x = 3 + <em>3.5</em> + 4; //compile error
 </pre>
 
+<p>
 Value of 3.5 is created as a double type and value of 3 and 4 are created as int type.
 In the arithmetic which int type and larger type than int participates in, 
 every value will converted to the largest data type of values as below;
+</p>
 
 <pre class="prettyprint no-border">
-int x = 3.0 + 3.5 + 4.0;
+int x = <strong>3.0</strong> + 3.5 + <strong>4.0</strong>;
 </pre>
 
-Compile error happens because you cannot assign long to int.<br />
-<br />
-Let's try to predict the value of z in the next example.<br />
-
-<pre class="prettyprint no-border">
-int x = 10; int y = 4; int z = x / y;
-</pre>
-
-z assigned 2 (not 2.5).
-The reason is because both x and y are int that result also be a int.<br />
-
-Try again.
-<pre class="prettyprint no-border">
-int x = 10; int y = 4; double z = x / y;
-</pre>
+<p>
+The result of 3.0 + 3.5 + 4.0 is dobule and can not be assigned to an int type variable x, resulting in a compile error.
+</p>
 
 <h3>Down-Casting</h3>
 
 <pre class="prettyprint no-border">
-float f = 1.1;// compile error!
+float f = 1.1; //compile error
 </pre>
 
+<p>
 The above code occurs a compile error because you cannot assign double to float.
-The following code converts value of double type to value of float type.
+Type casting from large type to small type does not happen automatically.
+</p>
 
 <pre class="prettyprint no-border">
 float f = (float) 1.1;
 </pre>
 
-Consider the following example.
+<p>
+The above code converts value of double type to value of float type.
+Forcing data types to be changed using parentheses is called down casting.
+Let's assume the value assigned to b in the following.
+</p>
 
 <pre class="prettyprint no-border">
-byte b = (byte) 258; //b assigned 2
+byte b = (byte) 258;
 </pre>
 
-When int converts to byte, front 3 bytes of 4 bytes is lost.<br />
-<br />
-Let's consider the previous example.<br />
-if you want that z is 2.5, you need to do the down-casting as below;
+<p>
+2 is assigned to b.
+When int converts to byte, front 3 bytes of 4 bytes is lost.
+</p>
 
-<pre class="prettyprint no-border">
-double z = (double) x / y; or double z = x / (double) y;
-</pre>
-
-<h3>Arithmetic which byte or short participates in</h3>
-
-In arithmetic that values of byte or short participate in, all values converted to int type before the arithmetic progress.
-
+<p>
+For arithmetic operations involving byte or short values, all values are cast to int type before the operation proceeds.
+</p>
 
 <pre class="prettyprint no-border">
 short s1 = 1;
 short s2 = 2;
-short sum = s1 + s2; //compile error!
+short sum = s1 + s2; //compile error
 </pre>
 
+<p>
+When s1 and s2 participate in an operation, they are all cast as an int type, so the result is an int type value.
 If you want to avoid compilation errors. cast as shown below; 
+</p>
 
 <pre class="prettyprint no-border">
 short sum = <em>(short)</em> (s1 + s2);
 </pre>
 
-or
+<p>
+다음 예에서 z에 할당되는 값을 예상해 보자.
+</p>
 
 <pre class="prettyprint no-border">
-<em>int</em> sum = s1 + s2;
+int x = 10;
+int y = 4;
+int z = x / y;
 </pre>
 
-<h2>To use strings in Java programs</h2>
-
-How to express the strings in Java is to create a String object from the String class. 
-The String class is a class that exists in the Java API. 
+<p>
+We expect 2.5, but z is assigned 2.
+Since x and y are both int types, the operation result is also of type int.
+If you want z to be assigned a value of 2.5, 
+you must change the type of the variable z to double and cast either x or y to a double.
+</p>
 
 <pre class="prettyprint no-border">
-char[] arrayOfHello = {'H','e','l','l','o'};
-String greetings = new String(arrayOfHello);
+double z = <b>(double)</b> x / y; 
 </pre>
 
-However, since strings are often used, Java allows the following.
-
-<pre class="prettyprint no-border">
-String greetings = "Hello"; //Here, "Hello" is a Java Literal.
-</pre>
+<p>
+If you cast x to a double type, 
+y is automatically cast to the double.
+</p>
 
 <span id="refer">References</span>
 <ul id="references">

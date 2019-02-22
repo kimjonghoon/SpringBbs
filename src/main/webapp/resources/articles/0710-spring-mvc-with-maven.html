@@ -81,7 +81,7 @@ pom.xml 파일을 다음과 같이 수정한다.
   &lt;name&gt;spring-bbs Maven Webapp&lt;/name&gt;
   &lt;url&gt;http://maven.apache.org&lt;/url&gt;
   &lt;properties&gt;
-    &lt;spring.version&gt;5.0.6.RELEASE&lt;/spring.version&gt;
+    &lt;spring.version&gt;5.1.5.RELEASE&lt;/spring.version&gt;
     &lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
   &lt;/properties&gt;
   &lt;dependencies&gt;
@@ -135,19 +135,19 @@ pom.xml 파일을 다음과 같이 수정한다.
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
         &lt;artifactId&gt;log4j-api&lt;/artifactId&gt;
-        &lt;version&gt;2.10.0&lt;/version&gt;
+        &lt;version&gt;2.11.1&lt;/version&gt;
     &lt;/dependency&gt;
     &lt;!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core --&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
         &lt;artifactId&gt;log4j-core&lt;/artifactId&gt;
-        &lt;version&gt;2.10.0&lt;/version&gt;
+        &lt;version&gt;2.11.1&lt;/version&gt;
     &lt;/dependency&gt;
     &lt;!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jcl --&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
         &lt;artifactId&gt;log4j-jcl&lt;/artifactId&gt;
-        &lt;version&gt;2.10.0&lt;/version&gt;
+        &lt;version&gt;2.11.1&lt;/version&gt;
     &lt;/dependency&gt;
     &lt;!-- https://mvnrepository.com/artifact/commons-io/commons-io --&gt;
     &lt;dependency&gt;
@@ -676,9 +676,9 @@ public class PlayerController {
 <dl class="note">
 <dt>PlayerController.java에 쓰인 어노테이션</dt>
 <dd>
-클래스 선언부의 @Controller는 클래스가 컨트롤러 컴포넌트임을 표시한다.<br />
-클래스 선언부의 @RequestMapping("/player")는 컨트롤러가 "/player"를 포함하는 모든 요청을 담당함을 표시한다.<br />
-메소드 선언부의 @RequestMapping(value="/test", method={RequestMethod.GET, RequestMethod.POST}):는
+클래스 선언의 @Controller는 클래스가 컨트롤러 컴포넌트임을 표시한다.<br />
+클래스 선언의 @RequestMapping("/player")는 컨트롤러가 "/player"를 포함하는 모든 요청을 담당함을 표시한다.<br />
+메소드 선언의 @RequestMapping(value="/test", method={RequestMethod.GET, RequestMethod.POST}):는
 메소드가 GET 방식이나 POST 방식의 "/player/test" 요청에 호출됨을 표시한다.<br />
 @Autowired를 종속변수에 적용하면 setter 없이도 종속객체가 주입된다. 종속변수 접근자가 private여도 상관없다.
 </dd>

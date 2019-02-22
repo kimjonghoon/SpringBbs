@@ -3,7 +3,7 @@
 <h1>컬렉션</h1>
 
 <p>
-Collection이란 같은 타입의 참조값을 여러개 저장하기 위한 자바 라이브러리이다.<br />
+Collection이란 같은 타입의 레퍼런스를 여러개 저장하기 위한 자바 라이브러리이다.<br />
 "배열과 비슷한데 훨씬 더 편리하다." 라는 정도로 접근하자.<br />
 다음 그림은 Collection관련 주요 인터페이스의 계층관계를 보여 준다.<br />
 <img src="https://lh3.googleusercontent.com/1xf6dBmdwHXah004MKTr1k6AS6eRTvruSNj9zujos0wT0cNaM8KdOOHBZlQOhLCJHQVfPbMBqLRcC42FatRL4avzpOfTt1V29lT0ZJU2z9EpEyQD-Y3phZClGBvNyEBXa2-90lhIC2sp32I19-QxgtmqckcUgls4ni-tgI1_5JwRn-W8Z6XxtClIk0Y1TceyHo8Sxwmqk9DrakhfgxuAVokiBhEF9dipvoqqJXwlMGX8ub1Vy4hgle1Pl25aj4RQVjQA3L-TRxzeJ3ofu-DUSzsY6uuCrpxEVLwhky5OZ1QFatOQ5njoT-2mtMYdgmIR_FtDLhTIW-rHkpLaky63TySfdr9YuBQORWw3PS2OwC4urm7m6hSJk_PfAG9GUxwrFi3aF2CWHdzhr7Pz0GDryWicF_IfWwZuksQ1lp_7hFuRQbyzaOid7Oqlsqn3SxVUXcKrEHRb6smgbrDPAOO9V-vYAmYJbDhV1OppHhRhbEdisCDfsK_iaQ-hSwgtP5sMo84tdN5IeJ1E99PS5tdu736Xz-aEVkUY4OO_20AgkehqmK2Pf07qPISMsLiKGb3MDqdnRWgZMSpkxL9BoA16OqSU0Nw5NCGf190FSS1JQk7FzOosN12tA9U8=w380-h242-no" alt="Collection Framework" /><br />
@@ -63,7 +63,7 @@ Collection이란 같은 타입의 참조값을 여러개 저장하기 위한 자
 
 <p>
 예제는 Set 인터페이스의 사용법을 보여 주고 있다.<br />
-HashSet을 생성하고 Set인터페이스의 add메서드를 사용하여 이름을 추가한다.<br />
+HashSet을 생성하고 Set인터페이스의 add 메소드를 사용하여 이름을 추가한다.<br />
 양효선은 중복 추가를 시도하고 있는데 Set은 중복을 허용하지 않으므로 추가되지 않는다.<br />
 System.out.println(set);로 확인할 수 있다.<a href="#comments"><sup>2</sup></a><br />
 System.out.println(set);다음에 기존의 HashSet을 TreeSet으로 처리한다.<br />
@@ -132,9 +132,9 @@ C:\java\Collection\bin&gt;java net.java_school.collection.SetExample
 </pre>
 
 <p>
-예제에서 다룬 컬렉션 클래스를 자바 문서에서 찾아보면 클래스 선언부에 &lt;E&gt;, &lt;T&gt;, &lt;K, V&gt;를 볼 수 있다.<br />
+예제에서 다룬 컬렉션 클래스를 자바 문서에서 찾아보면 클래스 선언에 &lt;E&gt;, &lt;T&gt;, &lt;K, V&gt;를 볼 수 있다.<br />
 이런 인터페이스, 추상클래스, 클래스를 제네릭(Generic)이라 한다.<br />
-제네릭은 JDK 1.5부터 추가되었다.<br />
+제네릭은 자바 5에 도입되었다.<br />
 &lt;E&gt;는 Element,  &lt;T&gt;는 Type, &lt;K, V&gt; 는 Key, Value 의미한다.<br />
 이 기호를 이용하여 정해지지 않은 데이터 타입을 선언할 수 있다.<br />
 정해지지 않는 데이터 타입은 제네릭으로부터 객체가 생성될 때 결정된다.<br />
@@ -191,11 +191,11 @@ public class ArrayListExample {
 		a.add("장길산");
 		a.add("홍길동");
 		
-		String hong = <strong>(String)</strong> a.get(1);//형변환 필요
+		String hong = <strong>(String)</strong> a.get(1);//캐스팅 필요하다.
 		System.out.println(hong);
 		
 		//모든 요소를 출력하려면
-		for (<strong>Object</strong> name : a) {//JDK 1.5부터 추가된 '확장 for문'
+		for (<strong>Object</strong> name : a) {//자바 5에 도입된 '확장 for 문'
 			System.out.print(name +"\t");
 		}
 	}
@@ -205,7 +205,7 @@ public class ArrayListExample {
 
 <p>
 다음은 제네릭 ArrayList&lt;E&gt;를 사용한 코드이다.<br />
-제네릭을 사용하면 특정 데이터 타입의 참조값만 저장하게 되므로 값을 가져올 때 형변환이 필요없다는 사실에 주목해야 한다.<a href="#comments"><sup>3</sup></a>
+제네릭을 사용하면 특정 타입 레퍼런스만 저장하게 되므로 값을 가져올 때 타입 캐스팅이 필요없다는 사실에 주목해야 한다.<a href="#comments"><sup>3</sup></a>
 </p>
 
 <h6 class="src">ArrayListExample.java - 제네릭을 사용</h6>
@@ -222,7 +222,7 @@ public class ArrayListExample {
 		a.add("장길산");
 		a.add("홍길동");
 		
-		String hong = <strong>a.get(1);</strong>//형변환이 필요없다.
+		String hong = <strong>a.get(1);</strong>//캐스팅이 필요없다.
 		System.out.println(hong);
 		
 		//'확장for문'에서 name의 데이터타입을 String둘 수 있다.
@@ -362,7 +362,7 @@ public class MapExample {
 		map.put("5", "전경수");
 		
 		System.out.println(map);
-		System.out.println(<strong>(String)</strong> map.get("4"));//형변환 필요
+		System.out.println(<strong>(String)</strong> map.get("4"));//캐스팅 필요
 		
 		Map sortedMap = new TreeMap(map);
 		System.out.println(sortedMap);
@@ -393,7 +393,7 @@ public class MapExample {
 		map.put("5", "전경수");
 		
 		System.out.println(map);
-		System.out.println(map.get("4"));//형변환 필요없다!
+		System.out.println(map.get("4"));//캐스팅 필요없다!
 		
 		Map<strong>&lt;String,String&gt;</strong> sortedMap = new TreeMap<strong>&lt;String,String&gt;</strong>(map);
 		System.out.println(sortedMap);
@@ -474,7 +474,7 @@ public class VectorExample {
 		}
 		    
 		for (int i = 0; i &lt; 10; i++) {
-			System.out.println(v.<strong>elementAt</strong>(i));//Object타입의 참조값을 반환
+			System.out.println(v.<strong>elementAt</strong>(i));//Object 타입 레퍼런스 반환
 		}
 	}
   
@@ -501,7 +501,7 @@ public class VectorExample {
 		}
 		
 		for (int i = 0; i &lt; 10; i++) {
-			System.out.println(v.elementAt(i));//String타입의  참조값 반환
+			System.out.println(v.elementAt(i));//String 타입 레퍼런스 반환
 		}
 	}
   
@@ -606,8 +606,8 @@ name=\uC7A5\uAE38\uC0B0
 <h3>Enumeration 인터페이스</h3>
 
 <p>
-열거형 형태로 저장된 객체를 처음부터 끝까지 차례로 조회하는데 유용한 인터페이스이다.<br />
-메서드는 다음 2개가 전부이다.
+열거 형태로 저장된 객체를 처음부터 끝까지 차례로 조회하는데 유용한 인터페이스이다.<br />
+메소드는 다음 2개가 전부이다.
 </p>
 
 <pre class="prettyprint">
@@ -656,9 +656,9 @@ public class VectorExample {
 <h3>Iterator 인터페이스</h3>
 
 <p>
-Collection인터페이스의 iterator()메서드는 Iterator를 반환한다.<a href="#comments"><sup>6</sup></a><br />
+Collection인터페이스의 iterator() 메소드는 Iterator를 반환한다.<a href="#comments"><sup>6</sup></a><br />
 Iterator는 Enumeration인터페이스와 비슷하나 Enumeration보다 나중에 만들어졌다.<br />  
-Enumeration보다 메서드명이 간단하며 Enumeration과는 달리 값을 삭제하는 메서드가 추가되어 있다.
+Enumeration보다 메소드명이 간단하며 Enumeration과는 달리 값을 삭제하는 메소드가 추가되어 있다.
 </p>
 
 <pre class="prettyprint">
@@ -670,15 +670,15 @@ remove()
 <h2>래퍼(Wrapper) 클래스</h2>
 
 <p>
-컬렉션은 참조값만을 담을 수 있고 기본 자료형 값은 담을 수 없다.<br />
-기본 자료형의 값을 컬렉션에 담으려면 래퍼 클래스를 이용해야 한다.<br />
-모든 기본 자료형에 대해서 그에 대응하는 래퍼 클래스가 존재한다.<br />
-기본 자료형의 값을 멤버 변수의 값으로 저장하고 이 값 주위로 값을 가공하는 메서드들이 감싸고 있다 해서 래퍼(Wrap:감싸다)클래스라고 불린다. 
+컬렉션은 레퍼런스만 담을 수 있고 기본 타입 값은 담을 수 없다.<br />
+기본 타입 값을 컬렉션에 담으려면 래퍼 클래스를 이용해야 한다.<br />
+모든 기본 타입에 대응하는 래퍼 클래스가 존재한다.<br />
+기본 타입 값을 멤버 변수에 저장하고 값 주위로 값을 가공하는 메소드들이 감싸고 있다고 해서 래퍼(Wrap:감싸다)클래스라고 불린다.
 </p>
 
 <table class="table-in-article">
 <tr>
-	<th class="table-in-article-th">기본 자료형</th>
+	<th class="table-in-article-th">기본 타입</th>
 	<th class="table-in-article-th">래퍼 클래스</th>
 </tr>
 <tr>
@@ -752,13 +752,13 @@ public class IntegerExample {
 		* 아래 코드는 컴파일러에 의해 
 		* Integer b = new Integer(200000000);로 바뀐다. 
 		* 이를 오토박싱이라고 한다.
-		* 형변환이 아니다. 기본 자료형이 참조형으로 바뀌는 그런 형변환은 없다.		  
+		* 타입 캐스팅이 아니다. 기본 타입이 레퍼런스 타입으로 바뀌는 캐스팅은 없다.
 		*/
 		Integer b = 2000000000;
 		
 		/* 
 		 * == 은 항상 값이 같은가를 묻는다. 
-		 * 참조값이 올 때는 같은 객체인지를 판단한다.
+		 * 레퍼런스가 올 때는 같은 객체인지를 판단한다.
 		*/
 		if (a == b) {
 			System.out.println("a == b true");
@@ -767,8 +767,8 @@ public class IntegerExample {
 		}
 		
 		/* 
-		 * a와 b가 같은 int값을 가지고 있는지 판단하기 위해선 Integer의 equals()메서드를 사용한다.
-		 * Integer의 equals메서드는 관리하는 int값이 같은지를 판단하도록 Object의 equals메서드를 오버라이딩했다.
+		 * a와 b가 같은 int값을 가지고 있는지 판단하기 위해선 Integer의 equals() 메소드를 사용한다.
+		 * Integer의 equals 메소드는 관리하는 int값이 같은지를 판단하도록 Object의 equals 메소드를 오버라이딩했다.
 		 <em>if (obj instanceof Integer) {
 		    return value == ((Integer)obj).intValue();
 		 }
@@ -783,7 +783,7 @@ public class IntegerExample {
 		
 		/*
 		 * a와 b가 가진 값을 다양하게 판단하기 위해선
-		 * Integer의 compareTo()메서드를 이용한다. 
+		 * Integer의 compareTo() 메소드를 이용한다.
 		 */
 		int check = a.<strong>compareTo(b);</strong>
 		System.out.println(check);
@@ -797,7 +797,7 @@ public class IntegerExample {
 		
 		/*
 		 * 오토박싱의 또다른 예제
-		 * equals메서드의 인자값은 new Integer(c)의 참조값으로
+		 * equals 메소드의 아규먼트는 new Integer(c)의 레퍼런스로
 		 * 컴파일 단계에서 변경된다.
 		 */
 		int c = 2000000000;
@@ -810,7 +810,7 @@ public class IntegerExample {
 		
 		/*
 		 * 오토언박싱
-		 * a가 참조하는 Integer객체안에 있는 
+		 * a가 참조하는 Integer 객체안에 있는
 		 * int값의 복사본이 객체 밖으로 나와 d에 대입
 		 * 이 역시 컴파일 단계에서 
 		 * int d = a.intValue();로 변경된다. 
@@ -820,10 +820,10 @@ public class IntegerExample {
 		
 		
 		/*
-		* obj에는 1를 안에 내포하는 Integer객체의 참조값이 대입
+		* obj에는 1를 안에 내포하는 Integer 레퍼런스가 할당
 		* 컴파일 단계에서 Object obj = new Integer(1);로 변경
-		* Object타입의 레퍼런스로 Integer 고유의 메서드를 호출할 수 없다.
-		* 호출하려면 형변환이 필요하다.
+		* Object타입의 레퍼런스로 Integer 고유의 메소드를 호출할 수 없다.
+		* 호출하려면 타입 캐스팅이 필요하다.
 		*/
 		Object obj = 1;
 		System.out.println(obj);
@@ -868,15 +868,14 @@ a.equals(c) true
 	<li>컬렉션 클래스는 Set 인터페이스를 구현했거나 List 인터페이스를 구현했거나 Map 인터페이스를 구현한 것으로 나뉜다.</li>
 	
 	<li>HashSet의 toString()이 어떻게 오버라이딩하고 있는지 결과를 보면 확인할 수 있다.<br />
-	Set은 저장한 값이 순서가 없으므로 인덱스를 주고 값을 반환하는 메서드가 없다.<br />
-	저장한 값을 하나씩 가져올 수는 있는데 뒤에 학습할 Enumeration 또는 Iterator 인터페이스의 구현체를 반환하는 메서드를 이용해야 한다.
+	Set은 저장한 값이 순서가 없으므로 인덱스를 주고 값을 반환하는 메소드가 없다.<br />
+	저장한 값을 하나씩 가져올 수는 있는데 뒤에 학습할 Enumeration 또는 Iterator 인터페이스의 구현체를 반환하는 메소드를 이용해야 한다.
 	</li>
 	
 	<li>
-	JDK1.5 이전에 컬렉션 클래스에서 값을 추가하는 메서드는 모두 매개변수 타입이 Object이다.<br />
-	모든 참조값을 저장할 수 있다고 하여 마치 자바의 강점처럼 설명되었다.<br />
-	하지만 다양한 타입의 참조값을 컬렉션에 저장하는 경우가 많지 않을 뿐 아니라, 저장하더라도 참조값을 가져올 때 해야 하는 형 변환이 귀찮은 작업이라는 사실을 경험으로 깨닫게 되면서  
-	JDK1.5에 제네릭이 추가되었다.
+	자바 5 이전 컬렉션 클래스에서 값을 추가하는 메소드는 모두 파라미터 타입이 Object이다.<br />
+	모든 레퍼런스를 저장할 수 있다고 하여 마치 자바의 강점처럼 설명되었다.<br />
+	하지만 다양한 타입 레퍼런스를 컬렉션에 저장하는 경우가 많지 않을 뿐 아니라, 저장하더라도 값을 가져올 때 필요한 타입 캐스팅이 귀찮은 작업이라는 사실을 경험으로 깨닫게 되었다.
 	</li>
 
 	<li>
@@ -897,9 +896,9 @@ a.equals(c) true
 	</li>
 	
 	<li>
-	Set 이나 List 인터페이스를 구현한 모든 클래스에는 iterator() 메서드를 가진다.<br />
+	Set 이나 List 인터페이스를 구현한 모든 클래스에는 iterator() 메소드를 가진다.<br />
 	Set과 List 인터페이스는 모두 Collection 인터페이스를 상속하기 때문이다.<br />
-	iterator() 메서드의 반환 타입은 Iterator이다.<br />
+	iterator() 메소드의 반환 타입은 Iterator이다.<br />
 	물론 Iterator가 인터페이스이기 때문에, 실제로는 Iterator를 구현한 클래스로부터 생성된 객체가 반환된다.<br />
 	하지만 반환 타입이 구체적으로 어떤 클래스인지 관심을 가질 필요가 없다.<br />
 	반환 타입이 Iterator 인터페이스를 구현하고 있다는 것으로 정보는 충분하기 때문이다.

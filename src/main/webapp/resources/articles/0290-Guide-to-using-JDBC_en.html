@@ -23,15 +23,15 @@ Class.forName("oracle.jdbc.driver.OracleDriver");
 <p>
 The string in parentheses indicates the start class of the Oracle JDBC driver.
 If you extracted the ojdbc6.jar file, you can see the OracleDriver.class in the oracle.jdbc.driver package.
-The forName () method is a static method of Class.
+The forName() method is a static method of Class.
 Class is not a class that belongs to JDBC.
 Class is a class for getting information about a class.
-The forName () method allows the class loader to load the class corresponding to the string input as an argument into memory space.
-In fact, there is a return value for the forName () method, but it is not needed in JDBC programming.
+The forName() method allows the class loader to load the class corresponding to the string input as an argument into memory space.
+In fact, there is a return value for the forName() method, but it is not needed in JDBC programming.
 When this method is executed, if the class loader references the class path and does not find the corresponding class, it will get a ClassNotFoundException.
 In conclusion, the above code is responsible for loading the oracle.jdbc.driver.OracleDriver class into memory.
 The loaded OracleDriver class registers itself with java.sql.DriverManager.
-After that, when you call getConnection () of DriverManager and put the promised value as argument value, the connection implementation created by Oracle will be returned.   
+After that, when you call getConnection() of DriverManager and put the promised value as argument value, the connection implementation created by Oracle will be returned.   
 </p>
 
 <h2>2. Getting a Connection</h2>
@@ -44,7 +44,7 @@ conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "scott
 The JDBC API is mostly an interface.
 The DriverManager is the only class in our example.
 The role of the DriverManager class, as the name implies, manages the driver that database vendors have implemented Sun's JDBC API.
-The DriverManager's getConnection () method returns a Connection object implemented by a specific database vendor according to the value entered as an argument.
+The DriverManager's getConnection() method returns a Connection object implemented by a specific database vendor according to the value entered as an argument.
 Obtaining a Connection object means that it is connected to the database.
 </p>
 
@@ -61,7 +61,7 @@ rs = stmt.executeQuery(query);
 Since the Java program is connected to the database, you now need the code to pass the SQL statement to the DBMS.
 To pass an SQL statement to a database, you must use either a Statement implementation or a PreparedStatement implementation.
 A Statement implementation or a PreparedStatement implementation is created through the Connection implementation.
-If the SQL statement is a select statement, use the executeQuery () method of the Statement object.
+If the SQL statement is a select statement, use the executeQuery() method of the Statement object.
 If the SQL statement is an insert, update, or delete statement, use the executeUpdate method.
 </p>
 
@@ -80,8 +80,8 @@ If the SQL statement is a select statement, you need an object to store the retu
 It is the ResultSet that acts as a container for the records.
 Consider a collection that is only used by JDBC to store table-like data.
 The returned ResultSet object has a cursor whose first position is before the first record.
-Therefore, the next () method must be executed to point to the first record.
-When the next () method is executed, it moves the cursor down one level and returns true if there is a record at the cursor point.
+Therefore, the next() method must be executed to point to the first record.
+When the next() method is executed, it moves the cursor down one level and returns true if there is a record at the cursor point.
 </p>
 
 <h2>5. Returning Resources</h2>

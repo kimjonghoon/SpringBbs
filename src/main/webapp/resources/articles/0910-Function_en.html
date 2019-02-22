@@ -215,7 +215,7 @@ alert(x);
 </pre>
 
 <p>
-In the above code, comment out the var x declared in the function fn () to see how the result will change.
+In the above code, comment out the var x declared in the function fn() to see how the result will change.
 </p>
 
 <pre class="prettyprint script-result-display">
@@ -377,7 +377,7 @@ function fn() {
 		balance += money;
 		alert(balance);
 	}
-	<strong>alert("The fn () function is executed.");</strong>
+	<strong>alert("The fn() function is executed.");</strong>
 	<strong>return deposit;</strong>
 }
 var retFn = fn();//If the function fn does not return, retFn is undefined.
@@ -387,7 +387,7 @@ retFn(200);
 <p>
 The fact that this code runs without problems makes the Java programmer uncomfortable.<br />
 In Java, local variables defined in a method disappear when the method terminates.<br />
-Likewise, when the fn() function is terminated, the local variables defined within the function should be removed, but the variable balance is still valid even though the fn () function returns a return value.<br />
+Likewise, when the fn() function is terminated, the local variables defined within the function should be removed, but the variable balance is still valid even though the fn() function returns a return value.<br />
 balance is still valid because retFn has a closure.<br />
 A closure is a special object made up of two.<br />
 The first is the function and the second is the environment in which the function was created.<br />
@@ -420,10 +420,10 @@ ac2(500);
 A closure is created when a function's internal functions are referenced outside the function.<br />
 The fact that an inner function can be called through a reference beyond its scope means that the function can still be called in the future, so JavaScript must keep the function.<br />
 If a variable is a local variable of a parent function, the inner function inherits the scope of the parent and can reference the variable.<br />
-If you call deposit () twice with the same reference variable, you can see that the value of the balance variable is accumulated.<br />
+If you call deposit() twice with the same reference variable, you can see that the value of the balance variable is accumulated.<br />
 ac1 (50); ac1 450;<br />
 ac2 (200); ac2 (500);<br />
-Also, in calls to the deposit () function that use different reference variables (ac1 and ac2), the balance variables increase independently of each other.
+Also, in calls to the deposit() function that use different reference variables (ac1 and ac2), the balance variables increase independently of each other.
 </p>
 
 <h4>Shared variable between closures</h4>
@@ -465,7 +465,7 @@ alert(ac2.getAccountNo() + ': ' + ac2.getBalance());
 
 <p>
 The four internal functions refer to the same local variables and share the same scope of variables.<br />
-If the deposit () function increments the balance by 1000, the value of the increased balance will be the new starting value when withdraw () is called again.<br />
+If the deposit() function increments the balance by 1000, the value of the increased balance will be the new starting value when withdraw () is called again.<br />
 When account() is called again like <b>var ac2 = account('222');</b>, a new instance of the closure with the same closed environment is created.
 </p>
 

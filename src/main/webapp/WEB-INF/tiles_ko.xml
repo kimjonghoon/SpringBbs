@@ -1313,4 +1313,59 @@
         <put-attribute name="description" value="오브젝트파이를 이용하여 댓글을 데이터스토어에 저장하기" />
         <put-attribute name="article" value="2018/gae-comment" cascade="true" />
     </definition>
+	<!-- 2019 -->
+	<definition name="blog/2019/nested-classes" extends="app.blog">
+		<put-attribute name="title" value="내포된 클래스" />
+		<put-attribute name="keywords" value="내포된 클래스,Nested Classes" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/nested-classes" cascade="true" />
+	</definition>
+	<definition name="blog/2019/static-import" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/static-import" cascade="true" />
+	</definition>
+	<definition name="blog/2019/try-with-resources" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/try-with-resources" cascade="true" />
+	</definition>
+	<definition name="blog/2019/enum" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/enum" cascade="true" />
+	</definition>
+	<definition name="blog/2019/generics" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/generics" cascade="true" />
+	</definition>
+	<definition name="blog/2019/reflection" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/reflection" cascade="true" />
+	</definition>
+	<definition name="blog/2019/functional-programming" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/functional-programming" cascade="true" />
+	</definition>
+	<definition name="blog/2019/default-method" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/default-method" cascade="true" />
+	</definition>
+	<definition name="blog/2019/stream" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/stream" cascade="true" />
+	</definition>    
 </tiles-definitions>

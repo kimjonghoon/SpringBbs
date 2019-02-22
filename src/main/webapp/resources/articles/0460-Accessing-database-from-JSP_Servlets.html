@@ -202,8 +202,8 @@ try {
 
 <p>
 두 번째 JSP는 jsp:useBean 액션을 사용하여 OracleConnectionManager 객체 레퍼런스를 획득한다.<br />
-두 번째 JSP는 커넥션이 필요할 때마다 OracleConnectionManager의 getConnection() 메서드를 호출하면 커넥션을 획득할 수 있다.<br />
-이 사용자 정의 커넥션 풀을 사용할 때는, 커넥션을 사용한 후 close() 메서드를 사용하지 말고 OracleConnectionManager의 freeConnection() 메서드를 사용해서 커넥션을 풀에 복귀시켜야 한다는 점에 주의한다.<br />
+두 번째 JSP는 커넥션이 필요할 때마다 OracleConnectionManager의 getConnection() 메소드를 호출하면 커넥션을 획득할 수 있다.<br />
+이 사용자 정의 커넥션 풀을 사용할 때는, 커넥션을 사용한 후 close() 메소드를 사용하지 말고 OracleConnectionManager의 freeConnection() 메소드를 사용해서 커넥션을 풀에 복귀시켜야 한다는 점에 주의한다.<br />
 만일 close()를 사용하면 사용자 정의 커넥션 풀은 동작하기 않게 된다.
 </p>
 
@@ -321,20 +321,20 @@ Thu Jun 12 14:30:52 KST 2014 : Message : ORA-00923: FROM keyword not found where
 <h2>네 번째 JSP 예제</h2>
 
 <p>
-GetEmpServlet 서블릿에서는 init() 메서드에서 JDBC 드라이버를 로딩했다.
-"서블릿" 절에서 봤듯이 init() 메서드는 서블릿이 인스턴스가 된 후 서블릿 컨테이너에 의해 단 한번 자동으로 호출된다.
-JSP에도 서블릿의 init()에 해당하는 메서드가 있다.
+GetEmpServlet 서블릿에서는 init() 메소드에서 JDBC 드라이버를 로딩했다.
+"서블릿" 절에서 봤듯이 init() 메소드는 서블릿이 인스턴스가 된 후 서블릿 컨테이너에 의해 단 한번 자동으로 호출된다.
+JSP에도 서블릿의 init()에 해당하는 메소드가 있다.
 
-그런 메서드가 JDBC 드라이버를 로딩한다면 JSP 성능은 향상된다.
+그런 메소드가 JDBC 드라이버를 로딩한다면 JSP 성능은 향상된다.
 
-서블릿의 init()에 해당하는 JSP 메서드는 다음 주소에서 찾을 수 있다.
+서블릿의 init()에 해당하는 JSP 메소드는 다음 주소에서 찾을 수 있다.
 <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspPage.html#jspInit()">http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspPage.html#jspInit()</a>
 </p>
 
 <p>
 getEmp3.jsp를 연다.
 Save As.. 메뉴를 사용하여 getEmp4.jsp를 만든다.
-서블릿의 init()에 해당하는 JSP 메서드가 JDBC 드라이버를 로딩하도록 getEmp4.jsp를 수정한다.
+서블릿의 init()에 해당하는 JSP 메소드가 JDBC 드라이버를 로딩하도록 getEmp4.jsp를 수정한다.
 </p>
 
 <p>

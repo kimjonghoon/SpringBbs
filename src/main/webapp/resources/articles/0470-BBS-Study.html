@@ -2071,7 +2071,7 @@ if (keyword == null) keyword = "";
 
 <p>
 request.setCharacterEncoding("UTF-8"); 코드는 한글 검색을 위해 필요하다.<br />
-이 코드는 getParameter() 메서드가 실행되기 전에 실행되야 한다.<br />
+이 코드는 getParameter() 메소드가 실행되기 전에 실행되야 한다.<br />
 검색 기능이 추가되면 검색 조건에 따라서 총 레코드 수가 변화하기 때문에 list.jsp의 총 레코드 수 구하는 부분을 수정한다.
 </p>
 
@@ -2337,8 +2337,8 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp)
 <h3>keyword = java.net.URLEncoder.encode(keyword,"UTF-8");</h3>
 
 <p> 
-keyword = java.net.URLEncoder.encode(keyword,"UTF-8");코드가 필요한 이유는 HttpServletResponse 의 sendRedirect() 메서드의 인자가 자바 문자열인데 자바 문자열과 URL 주소 문자의 인코딩이 서로 다르기 때문이다.<br />
-URLEncoder의 encode() 메서드는 한글과 같은 문자에 대한 바이트 값을 얻을 수 있게 한다.<br />
+keyword = java.net.URLEncoder.encode(keyword,"UTF-8");코드가 필요한 이유는 HttpServletResponse 의 sendRedirect() 메소드의 아규먼트가 자바 문자열인데 자바 문자열과 URL 주소 문자의 인코딩이 서로 다르기 때문이다.<br />
+URLEncoder의 encode() 메소드는 한글과 같은 문자에 대한 바이트 값을 얻을 수 있게 한다.<br />
 <!-- Translates a string into application/x-www-form-urlencoded format using a specific encoding scheme. 
 This method uses the supplied encoding scheme to obtain the bytes for unsafe characters. 
 -->

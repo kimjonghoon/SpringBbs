@@ -91,13 +91,13 @@ indent 필드는 목록(list.jsp)에서 목록 아이템을 들여쓰기할 때 
 </p>
 
 <p>
-getHtmlContent() 메서드는 content 컬럼에 저장되어 있는 개행문자를 &lt;br /&gt;로 바꾸는 메서드이다.
-이 메서드는 상세보기(view.jsp)에서 사용된다.
+getHtmlContent() 메소드는 content 컬럼에 저장되어 있는 개행문자를 &lt;br /&gt;로 바꾸는 메소드이다.
+이 메소드는 상세보기(view.jsp)에서 사용된다.
 </p>
 
 <p>
 <em>public static final String LINE_SEPARATOR = System.getProperty("line.separator");</em><br />
-LINE_SEPARATOR 상수는 getHtmlContent() 메서드에서 사용한다. 
+LINE_SEPARATOR 상수는 getHtmlContent() 메소드에서 사용한다.
 여기서 자바 프로그램에서 상수를 관리하는 팁을 소개한다.
 </p>
 
@@ -112,8 +112,8 @@ public class WebContants {
 </pre>
 
 <p>
-이렇게 수정하면 Article에서 LINE_SEPARATOR 선언부를 제거해야 하고
-Article의 getHtmlContent() 메서드는 다음과 같이 수정해야 한다.
+이렇게 수정하면 Article에서 LINE_SEPARATOR 선언을 제거해야 하고
+Article의 getHtmlContent() 메소드는 다음과 같이 수정해야 한다.
 </p>
 
 <pre class="prettyprint">
@@ -340,7 +340,7 @@ public class BoardDao {
 </pre>
 
 <p>
-다음 메서드는 목록의 페이지 매기기에 필요한 숫자를 만들어낸다.
+다음 메소드는 목록의 페이지 매기기에 필요한 숫자를 만들어낸다.
 </p>
 
 <pre class="prettyprint">
@@ -509,7 +509,7 @@ if (nextPage != 0) {
 이 빈즈의 이름에는 Service란 이름이 붙는다.
 게시판 JSP의 프런트 역할을 하는 BoardService 빈즈를 생성한다.
 BoardService를 만들면 게시판 JSP는 BoardService만을 바라보게 된다.
-위 list.jsp에 선언된 getNumbersForPaging() 메서드는 BoardService로 옮길 수 있다.
+위 list.jsp에 선언된 getNumbersForPaging() 메소드는 BoardService로 옮길 수 있다.
 </p>
 
 <h6 class="src">BoardService.java</h6>
@@ -702,7 +702,7 @@ String keyword = request.getParameter("keyword");
 </pre>
 
 <p>
-BoardDao 클래스에 다음 메서드를 추가한다.
+BoardDao 클래스에 다음 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardDao.java</h6>
@@ -735,7 +735,7 @@ public void insert(Article article) {
 </pre>
 
 <p>
-BoardService에 다음 메서드를 추가한다.
+BoardService에 다음 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardService.java 수정</h6>
@@ -772,7 +772,7 @@ response.sendRedirect("list.jsp");
 
 <p>
 다음으로 상세보기 구현한다.
-BoardDao에 selectOne() 메서드를 추가한다.
+BoardDao에 selectOne() 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardDao.java</h6>
@@ -815,7 +815,7 @@ public Article selectOne(int no) {
 </pre>
 
 <p>
-BoardService에 다음 메서드를 추가한다.
+BoardService에 다음 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardService.java</h6>
@@ -876,7 +876,7 @@ function goDelete(no,curPage,keyword) {
 
 <p>
 다음으로 글 수정을 구현한다.
-BoardDao 클래스에 update() 메서드를 추가한다.
+BoardDao 클래스에 update() 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardDao.java</h6>
@@ -998,7 +998,7 @@ response.sendRedirect("view.jsp?no=" + no + "&amp;curPage=" + curPage + "&amp;ke
 
 <p>
 다음으로 글 삭제를 구현한다.
-BoardDao 클래스에 delete() 메서드를 추가한다.
+BoardDao 클래스에 delete() 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardDao.java</h6>
@@ -1050,7 +1050,7 @@ public void delete(int no) {
 </pre>
 
 <p>
-BoardService에 다음 메서드를 추가한다.
+BoardService에 다음 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardService.java</h6>
@@ -1084,7 +1084,7 @@ response.sendRedirect("list.jsp?curPage=" + curPage + "&amp;keyword=" +  keyword
 <p>
 답변글이 있으면 삭제되지 않는다.
 다음으로 답변쓰기를 구현한다.
-BoardDao에 다음 메서드를 추가한다.
+BoardDao에 다음 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardDao.java</h6>
@@ -1121,7 +1121,7 @@ public void reply(Article article) {
 </pre>
 
 <p>
-BoardService에 reply() 메서드를 추가한다.
+BoardService에 reply() 메소드를 추가한다.
 </p>
 
 <h6 class="src">BoardService.java</h6>

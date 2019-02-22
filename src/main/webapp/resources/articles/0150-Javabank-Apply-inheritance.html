@@ -6,12 +6,12 @@
 출금액이 잔액보다 커도 출금이 되는, 잔액이 음수가 가능한 계좌가 필요하다면,
 상속을 적용하여 기존 계좌를 부모 클래스로 잔액이 음수여도 되는 계좌를 자식 클래스로 둘 수 있다.
 잔액이 음수여도 되는 계좌를 마이너스 계좌라고 부른다면,
-마이너스 계좌는 부모 클래스인 계좌 클래스의 출금 메서드, withdraw()만 오버라이딩하면 된다.
-은행 클래스의 계좌를 생성하는 메서드, addAccount(String accountNo, String name, long balance)는 
+마이너스 계좌는 부모 클래스인 계좌 클래스의 출금 메소드, withdraw()만 오버라이딩하면 된다.
+은행 클래스의 계좌를 생성하는 메소드, addAccount(String accountNo, String name, long balance)는
 생성할 계좌가 일반 계좌인지 마이너스 계좌인지를 판단해야 한다. 
-그러기 위해서는 매개변수를 추가해야 한다.
+그러기 위해서는 파라미터를 추가해야 한다.
 addAccount(String accountNo, String name, long balance, <strong>String kind</strong>)처럼 
-kind란 매개변수를 추가하고 이 매개변수가 '일반' 또는 '마이너스'란 문자를 받도록 구현해 보자.
+kind란 파라미터를 추가하고 이 파라미터가 '일반' 또는 '마이너스'란 문자를 받도록 구현해 보자.
 </p>
 
 <h6 class="src">Account.java</h6>
@@ -142,7 +142,7 @@ public class Account {
 </pre>
 
 <p>
-금액에 3 자리마다 ,(콤마)가 있도록 입출금 명세 클래스의 toString() 메서드를 다음과 같이 수정한다.
+금액에 3 자리마다 ,(콤마)가 있도록 입출금 명세 클래스의 toString() 메소드를 다음과 같이 수정한다.
 </p>
 
 <h6 class="src">Transaction.java</h6>

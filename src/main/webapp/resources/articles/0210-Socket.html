@@ -78,7 +78,7 @@ public class Server {
 클라이언트 측에서 소켓을 연결하기 위해서는 서버 IP뿐 아니라 서버 소켓<sup>ServerSocket</sup>의 포트 번호가 필요하다.
 컴퓨터 하나라면 IP는 localhost다.
 두 대 이상이면 아래 소스에서 localhost 부분을 서버가 동작하는 IP 주소로 대체한다.
-서버 소켓이 3000번 포트를 이용하고 있으므로 두 번째 인자로 3000을 입력한다.
+서버 소켓이 3000번 포트를 이용하고 있으므로 두 번째 아규먼트로 3000을 입력한다.
 </p>
 
 <h6 class="src">Client.java</h6>
@@ -263,7 +263,7 @@ public class Server {
 <p>
 소켓 접속을 유지하기 위해서는 Echo 객체를 유지해야 한다.
 Echo 객체를 담을 ArrayList를 추가한다.
-Echo의 close() 메서드 마지막에 Echo 객체 참조 값을 ArrayList에서 제거하는 코드를 추가한다.
+Echo의 close() 메소드 마지막에 Echo 레퍼런스를 ArrayList에서 제거하는 코드를 추가한다.
 </p>
 
 <h6 class="src">Server.java</h6>
@@ -334,8 +334,8 @@ public class Server {
 
 <p>
 외부 소켓 연결 요청에 서비스하는 코드를 작성한다.
-메서드 내용은 무한 루프 안에 서버 소켓의 accept() 메서드를 둔다.
-메인 메서드에서 서버 객체 생성 후 이 메서드를 호출하도록 구현한다.
+메소드 내용은 무한 루프 안에 서버 소켓의 accept() 메소드를 둔다.
+메인 메소드에서 서버 객체 생성 후 이 메소드를 호출하도록 구현한다.
 </p>
 
 <h6 class="src">Server.java</h6>
@@ -634,7 +634,7 @@ public class Client {
 명령 프롬프트를 열고 Client를 실행한다.
 서버와 클라이언트를 서로 다른 컴퓨터로 테스트한다면, Sever를 실행하는 서버 컴퓨터는 3000번 포트를 개방해야 한다.
 시스템이 윈도라면 Windows 방화벽에서 포트를 개방하는 조치가 필요하다.
-클라이언트에서는 Client의 메인 메서드에서 "localhost"를 서버의 정확한 IP로 수정한다.
+클라이언트에서는 Client의 메인 메소드에서 "localhost"를 서버의 정확한 IP로 수정한다.
 </p>
 
 <h2>채팅</h2>
@@ -673,7 +673,7 @@ public class Client <strong>extends Thread</strong> {
 </pre>
 
 <p>
-run() 메서드는 서버로부터 오는 메시지를 콘솔에 출력하는 코드를 둔다.
+run() 메소드는 서버로부터 오는 메시지를 콘솔에 출력하는 코드를 둔다.
 소켓을 근원지로 하는 입력 스트림을 필요하다.
 </p>
 
@@ -711,7 +711,7 @@ public class Client extends Thread {
 </pre>
 
 <p>
-run() 메서드를 구현하자.
+run() 메소드를 구현하자.
 </p>
 
 <h6 class="src">Client.java</h6>
@@ -812,7 +812,7 @@ public class Client extends Thread {
 
 <p>
 사용자가 키보드애 입력하는 내용을 서버로 전송하는 코드를 구현한다.
-이 코드를 새로운 메서드 chatStart()에 구현한다.
+이 코드를 새로운 메소드 chatStart()에 구현한다.
 </p>
 
 <h6 class="src">Client.java</h6>
@@ -880,7 +880,7 @@ public class Client extends Thread {
 </pre>
 
 <p>
-에코 예제에서 Server 내부 클래스 Echo의 run() 메서드만 아래와 같이 수정한다.
+에코 예제에서 Server 내부 클래스 Echo의 run() 메소드만 아래와 같이 수정한다.
 클라이언트가 강제 종료할 경우 null이 서버로 전송되므로, 서버로 전달된 문자열이 null이면 해당 Echo 객체의 자원을 반납하도록 한다.
 채팅 프로그램이므로 클래스 이름을 Echo에서 Chatter로 변경한다.
 </p>
@@ -912,7 +912,7 @@ public void run() {
 
 <p>
 서버를 강제 종료하면 모든 사용자는 무한 루프로 null이 찍히는 걸 보게 된다.
-클라이언트의 run() 메서드를 다음과 같이 수정한다.
+클라이언트의 run() 메소드를 다음과 같이 수정한다.
 </p>
 
 <h6 class="src">Client.java</h6>

@@ -6,7 +6,7 @@
 Attempting to connect to a database in a Java program (getting a Connection object) is a time-consuming task.
 If you create a certain amount of connection in advance and store it in the repository, you can save time if the program provides a connection from the repository if there is a request.
 This programming technique is called connection pooling.
-When using JDBC, you have to return the connection to the repository instead of returning the resource using the Connection's close () method.
+When using JDBC, you have to return the connection to the repository instead of returning the resource using the Connection's close() method.
 </p>
 
 <h3>Summary of Connection Pooling Classes</h3>
@@ -796,7 +796,7 @@ There are three kinds of implementations of DataSource.
 <p>
 DBCP implements the javax.sql.DataSource interface.
 The connections we have used so far are different from those for connection pooling.
-The close () method of the connection object for connection pooling returns itself to the pool.
+The close() method of the connection object for connection pooling returns itself to the pool.
 </p>
 
 <p>

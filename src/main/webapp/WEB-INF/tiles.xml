@@ -1340,4 +1340,59 @@
         <put-attribute name="description" value="Storing Comment entity to Datastore using Objectify" />
         <put-attribute name="article" value="2018/gae-comment_en" cascade="true" />
     </definition>
+	<!-- 2019 -->
+	<definition name="blog/2019/nested-classes" extends="app.blog">
+		<put-attribute name="title" value="Nested Classes" />
+		<put-attribute name="keywords" value="Nested Classes" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/nested-classes_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/static-import" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/static-import_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/try-with-resources" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/try-with-resources_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/enum" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/enum_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/generics" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/generics_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/reflection" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/reflection_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/functional-programming" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/functional-programming_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/default-method" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/default-method_en" cascade="true" />
+	</definition>
+	<definition name="blog/2019/stream" extends="app.blog">
+		<put-attribute name="title" value="Generics" />
+		<put-attribute name="keywords" value="Generics" />
+		<put-attribute name="description" value="Generics" />
+		<put-attribute name="article" value="2019/stream_en" cascade="true" />
+	</definition>    
 </tiles-definitions>

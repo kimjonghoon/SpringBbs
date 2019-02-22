@@ -43,12 +43,12 @@ All code will be implemented in the main method.
 <h3>1. Loading a JDBC Driver</h3>
 
 <p>
-Use the Class.forName () method to load the startup class of the Oracle JDBC driver into memory.
+Use the Class.forName() method to load the startup class of the Oracle JDBC driver into memory.
 Copy and paste this snippet from GetEmp.java.<br />
 
 <img src="./images/load-oracle-jdbc-driver-01.gif" alt="Loading a JDBC Driver" /><br />
 
-Since the forName () method of Class class is a method that should handle ClassNotFoundException, the above compilation error is seen.
+Since the forName() method of Class class is a method that should handle ClassNotFoundException, the above compilation error is seen.
 With the help of Eclipse's code assist (for help, place it in the code where the compilation error occurs with your mouse)
 Select the second solution as shown to insert a try ~ catch statement.<br />
 
@@ -80,7 +80,7 @@ Select the second solution of the code assist as shown above and handle the exce
 
 Since the following methods must handle SQLException exceptions, put these methods in a try block.
 The variable declaration of the connection type con must be outside the try block.
-When returning a resource using the con.close () code snippet in a finally block, the finally block must also be an area where the con variable can be interpreted.<br />
+When returning a resource using the con.close() code snippet in a finally block, the finally block must also be an area where the con variable can be interpreted.<br />
 <img src="./images/get-connection-07.gif" alt="con variable declaration must be outside the try block" /><br />
 </p>
 
@@ -156,12 +156,12 @@ try {
 
 <p>
 Create a finally block and insert the code that returns the resource in the finally block.
-Since the resources must be returned in the reverse order of creation, the stmt.close () code must first appear.<br />
+Since the resources must be returned in the reverse order of creation, the stmt.close() code must first appear.<br />
 <img src="./images/stmt-close-11.gif" alt="SQLException compile error" /><br />
 
-Since the close () method of Statement is a method that can cause SQLException object, the above compile error occurs.
+Since the close() method of Statement is a method that can cause SQLException object, the above compile error occurs.
 Use Eclipse 's code assist to insert a try - catch block.
-Because Connection's close () method is also a method that can cause an SQLException object, we also use code assists to place the con.close () code in a try ~ catch block.<br />
+Because Connection's close() method is also a method that can cause an SQLException object, we also use code assists to place the con.close () code in a try ~ catch block.<br />
 
 <img src="./images/close-12.gif" alt="Returning Resources Completed." /><br />
 Returning resources is most important in JDBC code. Do not forget to return resources.
@@ -213,7 +213,7 @@ This is because the table and sequence with the same name already exist in the s
 <dl class="note">
 <dt>executeUpdate()</dt>
 <dd>
-Statement's executeUpdate () method is used to execute DDL statements such as create table .. or DML statements (INSERT, UPDATE, DELETE).
+Statement's executeUpdate() method is used to execute DDL statements such as create table .. or DML statements (INSERT, UPDATE, DELETE).
 </dd>
 </dl>
 </article>

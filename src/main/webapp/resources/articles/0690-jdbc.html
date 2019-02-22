@@ -17,7 +17,7 @@
 
 <p>
 ShinhanBankDao 클래스가 NamedParameterJdbcDaoSupport 클래스를 상속하도록 선언한다.
-생성자와 getConnection(), close(rs,pstmt,con) 메서드는 제거한다.
+생성자와 getConnection(), close(rs,pstmt,con) 메소드는 제거한다.
 </p>
 
 <h6 class="src">ShinhanBankDao.java</h6>
@@ -36,14 +36,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 public class ShinhanBankDao <strong>extends NamedParameterJdbcDaoSupport</strong> implements BankDao {
 
 	//필드 URL, USER, PASSWORD 삭제
-	//생성자와 getConnection(), close(rs,pstmt,con) 메서드 삭제
+	//생성자와 getConnection(), close(rs,pstmt,con) 메소드 삭제
 	
 	//..중간 생략..
 
 }
 </pre>
 
-<h6 class="src">기존 insertAccount() 메서드</h6>
+<h6 class="src">기존 insertAccount() 메소드</h6>
 <pre class="code">
 @Override
 public void insertAccount(String accountNo, String name, String kind) {
@@ -69,7 +69,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<h6 class="src">수정 후 insertAccount() 메서드</h6>
+<h6 class="src">수정 후 insertAccount() 메소드</h6>
 <pre class="prettyprint">
 private static final String INSERT_ACCOUNT = 
 		"INSERT INTO " +
@@ -87,7 +87,7 @@ public void insertAccount(String accountNo, String name, String kind) {
 }
 </pre>
 
-<h6 class="src">기존 selectOneAccount() 메서드</h6>
+<h6 class="src">기존 selectOneAccount() 메소드</h6>
 <pre class="code">
 @Override
 public Account selectOneAccount(String accountNo) {
@@ -126,7 +126,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectOneAccount() 메서드</h6>
+<h6 class="src">수정 후 selectOneAccount() 메소드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ONE_ACCOUNT = 
 		"SELECT accountno,owner,balance,kind " +
@@ -156,7 +156,7 @@ public Account selectOneAccount(String accountNo) {
 }
 </pre>
 
-<h6 class="src">기존 selectAccountsByName() 메서드</h6>
+<h6 class="src">기존 selectAccountsByName() 메소드</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAccountsByName(String name) {
@@ -196,7 +196,7 @@ public List&lt;Account&gt; selectAccountsByName(String name) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAccountsByName() 메서드</h6>
+<h6 class="src">수정 후 selectAccountsByName() 메소드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ACCOUNTS_BY_NAME = 
 		"SELECT accountno,owner,balance,kind " +
@@ -232,7 +232,7 @@ protected class AccountRowMapper implements RowMapper&lt;Account&gt; {
 }
 </pre>
 
-<h6 class="src">기존 selectAllAccounts() 메서드</h6>
+<h6 class="src">기존 selectAllAccounts() 메소드</h6>
 <pre class="code">
 @Override
 public List&lt;Account&gt; selectAllAccounts() {
@@ -271,7 +271,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAllAccounts() 메서드</h6>
+<h6 class="src">수정 후 selectAllAccounts() 메소드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_ACCOUNTS = 
 		"SELECT accountNo,owner,balance,kind " +
@@ -285,7 +285,7 @@ public List&lt;Account&gt; selectAllAccounts() {
 }
 </pre>
 
-<h6 class="src">기존 deposit() 메서드</h6>
+<h6 class="src">기존 deposit() 메소드</h6>
 <pre class="code">
 @Override
 public void deposit(String accountNo, long amount) {
@@ -311,7 +311,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">수정 후 deposit() 메서드</h6>
+<h6 class="src">수정 후 deposit() 메소드</h6>
 <pre class="prettyprint">
 private static final String DEPOSIT = 
 		"UPDATE bankaccount " +
@@ -328,7 +328,7 @@ public void deposit(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">기존 withdraw() 메서드</h6>
+<h6 class="src">기존 withdraw() 메소드</h6>
 <pre class="code">
 @Override
 public void withdraw(String accountNo, long amount) {
@@ -353,7 +353,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">수정 후 withdraw() 메서드</h6>
+<h6 class="src">수정 후 withdraw() 메소드</h6>
 <pre class="prettyprint">
 private static final String WITHDRAW = 
 		"UPDATE bankaccount " +
@@ -370,7 +370,7 @@ public void withdraw(String accountNo, long amount) {
 }
 </pre>
 
-<h6 class="src">기존 selectAllTransactions() 메서드</h6>
+<h6 class="src">기존 selectAllTransactions() 메소드</h6>
 <pre class="code">
 @Override
 public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
@@ -414,7 +414,7 @@ public List&lt;Transaction&gt; selectAllTransactions(String accountNo) {
 }
 </pre>
 
-<h6 class="src">수정 후 selectAllTransactions() 메서드</h6>
+<h6 class="src">수정 후 selectAllTransactions() 메소드</h6>
 <pre class="prettyprint">
 private static final String SELECT_ALL_TRANSACTIONS = 
 		"SELECT transactionDate,kind,amount,balance " +
@@ -500,7 +500,7 @@ applicationContext.xml에 강조된 부분을 추가한다.
 <h3>테스트</h3>
 
 <p>
-테스트하기 전에 BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+테스트하기 전에 BankUi.java의 메인 메소드를 아래를 참조해 수정한다.
 </p>
 
 <pre class="prettyprint">
@@ -577,7 +577,7 @@ public class BankConfig {
 <p>
 테스트하기 전에,
 applicationContext.xml 설정을 모두 주석 처리한다.
-BankUi.java의 메인 메서드를 아래를 참조해 수정한다.
+BankUi.java의 메인 메소드를 아래를 참조해 수정한다.
 </p>
 
 <pre class="prettyprint">

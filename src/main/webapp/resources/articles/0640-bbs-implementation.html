@@ -1126,7 +1126,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not Login"); return;
 로그인 체크를 통과하면 
 먼저 요청의 캐릭터 셋을 UTF-8으로 설정한다.
 boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서 댓글을 인서트 한다.
-댓글을 인서트 한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+댓글을 인서트 한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);
@@ -1172,7 +1172,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); r
 요청의 캐릭터 셋을 UTF-8으로 설정한다.
 commentNo, boardCd, articleNo, curPage, searchWord, memo 파라미터를 받아서
 댓글을 업데이트한다.
-댓글을 업데이트한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+댓글을 업데이트한 후 상세보기로 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);
@@ -1226,7 +1226,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다.
 요청의 캐릭터 셋을 UTF-8으로 설정해야 한다.
 요청에서 참조해야 하는 파라미터는
 commentNo, boardCd, articleNo, curPage, searchWord 이다.
-댓글을 삭제 후 상세보기를 돌아가기 위해선 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+댓글을 삭제 후 상세보기를 돌아가기 위해선 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);
@@ -1272,7 +1272,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "작성자가 아닙니다.
 요청의 캐릭터 셋을 UTF-8으로 설정해야 한다.
 요청에서 참조해야 하는 파라미터는
 attachFileNo, articleNo, boardCd, curPage, searchWord이다.
-첨부 파일을 삭제 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+첨부 파일을 삭제 후 상세보기를 돌아가기 위해 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);
@@ -1447,7 +1447,7 @@ articleNo, boardCd, curPage, searchWord, title, content, attachFile 파라미터
 게시글을 수정한다.
 form이 enctype="multipart/form-data"인 경우 request.getParameter()로 파라미터의 값을 얻을 수 없다.
 쉽게 프로그래밍하기 위해 외부 라이브러리를 이용한다. (아파치 commons.fileupload 또는 cos)
-게시글을 수정한 후 상세보기를 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+게시글을 수정한 후 상세보기를 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);
@@ -1524,7 +1524,7 @@ response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authentication Failed"); r
 요청의 캐릭터 셋을 UTF-8으로 설정한다.
 articleNo, boardCd, curPage, searchWord 파라미터를 받고
 articleNo로 게시글을 삭제한다.
-게시글 삭제 후 목록을 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메서드로 UTF-8으로 인코딩한다.
+게시글 삭제 후 목록을 돌아가기 위해 검색어 searchWord를 URLEncoder의 encode() 메소드로 UTF-8으로 인코딩한다.
 */
 <strong>
 User user = (User) session.getAttribute(WebContants.USER_KEY);

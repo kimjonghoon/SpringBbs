@@ -13,7 +13,7 @@
 	<li>스프링 시큐리티 설정 파일 작성 및 ..-servlet.xml에 있는 기존 설정을 특성별로 떼어 새로운 파일에 작성</li>
 	<li>..-servlet.xml 파일에 시큐리티 설정 추가</li>
 	<li>web.xml 시큐리티 설정 추가</li>
-	<li>기존 기존 로그인/로그아웃 메서드 제거</li>
+	<li>기존 기존 로그인/로그아웃 메소드 제거</li>
 	<li>로그인 페이지 수정과 로그아웃 링크 수정</li>
 	<li>권한이 없는 사용자에게 보여줄 페이지 생성</li>
 	<li>스프링 시큐리티를 적용하는 코드 구현</li>
@@ -27,8 +27,8 @@ pom.xml에 다음과 같이 스프링 시큐리티의 의존성을 추가한다.
 
 <pre class="prettyprint">
 &lt;properties&gt;
-	&lt;spring.version&gt;5.0.6.RELEASE&lt;/spring.version&gt;
-	&lt;spring.security.version&gt;<strong>5.0.5.RELEASE</strong>&lt;/spring.security.version&gt;
+	&lt;spring.version&gt;5.1.5.RELEASE&lt;/spring.version&gt;
+	&lt;spring.security.version&gt;<strong>5.1.3.RELEASE</strong>&lt;/spring.security.version&gt;
 	&lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
 &lt;/properties&gt;
 </pre>
@@ -339,7 +339,7 @@ spring-bbs-servlet.xml 파일을 열고 아래 강조한 부분을 참고하여 
 &lt;/web-app&gt;
 </pre>
 
-<h3>6. 기존 기존 로그인/로그아웃 메서드 제거</h3>
+<h3>6. 기존 기존 로그인/로그아웃 메소드 제거</h3>
 
 <p>
 UsersController.java에서 로그인과 로그아웃 메소드를 제거한다.

@@ -259,7 +259,7 @@ package javabank;
 } 
 </pre>
 
-<h3>The default access modifier which used in the class declaration part of BankAccount</h3>
+<h3>The package private access modifier which used in the class declaration part of BankAccount</h3>
 
 <pre class="prettyprint">
 package javabank;
@@ -278,7 +278,7 @@ class Account {
 	<td class="table-in-article-td">It can be referenced in any package classes.</td>
 </tr>
 <tr>
-	<td class="table-in-article-td">default</td>
+	<td class="table-in-article-td">package private</td>
 	<td class="table-in-article-td">It can be referenced in same package classes.</td>
 </tr>
 </table>
@@ -294,7 +294,7 @@ public class BankSystem {
 
 	//You can declare a parameter of type javabank.BankAccount.
 	public void deposit(<strong>javabank.BankAccount</strong> account, long amount) {
-		account.deposit(amount);//At this point, the access modifier used in the deposit () method declaration is applied.
+		account.deposit(amount);//At this point, the access modifier used in the deposit() method declaration is applied.
 	}
 
 }
@@ -328,9 +328,9 @@ public class BankSystem {
 </pre>
 
 <p>
-Suppose you set a default access modifier in the class declaration of Bank, Customer, and BankAccount.<br />
+Suppose you set a package private access modifier in the class declaration of Bank, Customer, and BankAccount.<br />
 
-<img src="https://lh3.googleusercontent.com/oJLK2Q9DcK_eTLOSGMXUnYUHYKbomwYicpeVfoqmtNkaf2UmGD5ThO1wrJxdLXofryHdpus0da9tQixu6aEeUyQ14cuU9TclwhkCCRqyYrHmAwSol3ptPZLf5oyHJEYCZDFl5ZEtOpM0i5ctZGXlDCVO8SQglr89udzzaJaqTF_Lj4CrKODgLVceqjx2jo3jNTBQL8Q-6DCjdpZ5qLpqCWPYY3OxOaN_LsJlhflVGg15BU1Z8eQPsu3yhs1IAdRtVgb51oK4YioCDe7Uoc6-Qp0ABwAdzQP0XK3E8WDLHhG7VyueiL_cu0hWM2tFGteQHS3TtXzpC0Ro9bD1g8m_-k7j_3O4E01jRQ_5Wu0p3KMjut5h3ipHQvSYaAeIXswEy75ZmuaH5tm9o78zRHmjPyqGktlsPcIQgrK9tk-CvLOqEVdzJ0faKFw6PITE89jV6P0ErhPClaRFsdkwlDy1gC0sPchdEi7PZWzC64J-RcSFAoL6KhdPOwN8VZQg_p4LgdWgUneHYV5CTzjzEsmO6SuBjb5qPATsK079hQSBngrxqBj-y1Nc61X65hHjb4h9lNjN3d72-oIrBP6r9pbD-Av1A2lNVTyvAIKwzIJIsZXO2gn5ZEAZMFdt=w1615-h886-no" alt="Default 접근자 그림" style="width: 590px;display: block;" /><br />
+<img src="https://lh3.googleusercontent.com/oJLK2Q9DcK_eTLOSGMXUnYUHYKbomwYicpeVfoqmtNkaf2UmGD5ThO1wrJxdLXofryHdpus0da9tQixu6aEeUyQ14cuU9TclwhkCCRqyYrHmAwSol3ptPZLf5oyHJEYCZDFl5ZEtOpM0i5ctZGXlDCVO8SQglr89udzzaJaqTF_Lj4CrKODgLVceqjx2jo3jNTBQL8Q-6DCjdpZ5qLpqCWPYY3OxOaN_LsJlhflVGg15BU1Z8eQPsu3yhs1IAdRtVgb51oK4YioCDe7Uoc6-Qp0ABwAdzQP0XK3E8WDLHhG7VyueiL_cu0hWM2tFGteQHS3TtXzpC0Ro9bD1g8m_-k7j_3O4E01jRQ_5Wu0p3KMjut5h3ipHQvSYaAeIXswEy75ZmuaH5tm9o78zRHmjPyqGktlsPcIQgrK9tk-CvLOqEVdzJ0faKFw6PITE89jV6P0ErhPClaRFsdkwlDy1gC0sPchdEi7PZWzC64J-RcSFAoL6KhdPOwN8VZQg_p4LgdWgUneHYV5CTzjzEsmO6SuBjb5qPATsK079hQSBngrxqBj-y1Nc61X65hHjb4h9lNjN3d72-oIrBP6r9pbD-Av1A2lNVTyvAIKwzIJIsZXO2gn5ZEAZMFdt=w1615-h886-no" alt="package private diagram" style="width: 590px;display: block;" /><br />
 
 In this case, the BankSystem class can not refer to Bank, Customer, or Account.<br />
 If you try to reference the Bank, Customer, and BankAccount classes in BankSystem, you get a compile error.<br />
@@ -350,7 +350,7 @@ If you try to reference the Bank, Customer, and BankAccount classes in BankSyste
 	</td>
 </tr>
 <tr>
-	<td class="table-in-article-td">default</td>
+	<td class="table-in-article-td">package private</td>
 	<td class="table-in-article-td">The field or method is only accessible from the same package.</td>
 </tr>
 <tr>
@@ -365,10 +365,10 @@ It's easy to understand if you think everything is not a method in a class body.
 A member is a variable that stores the property of an object or a method corresponding to an action of an object.<br />
 If public is applied to a field or method, it can be accessed from any package.<br />
 If the field or method is private, it can not be accessed from the outside.<br />
-The default access modifier is only accessible from the same package.<br />
-The protected access modifier is more accessible than the default access modifier.<br />
+The package private access modifier is only accessible from the same package.<br />
+The protected access modifier is more accessible than the package private access modifier.<br />
 For the protected access modifier, it's a good idea to review the description below after studying inheritance.<br />
-It can be accessed from the same package as the default accessor.<br />
+It can be accessed from the same package as the package private accessor.<br />
 In addition, protected members of the parent class can be accessed from child classes that differ in package from parent.<br />
 It should be noted that it is a protected member, not a protected field or method.<br />
 In the figure below, # means protected.<br />

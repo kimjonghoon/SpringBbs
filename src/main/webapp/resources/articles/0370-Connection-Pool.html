@@ -7,7 +7,7 @@
 만약, 일정량의 Connection을 미리 생성시켜 저장소에 저장했다가
 프로그램에서 요청이 있으면 저장소에서 Connection 꺼내 제공한다면 시간을 절약할 수 있다.<br /> 
 이러한 프로그래밍 기법을 Connection Pooling이라 한다.<br />
-작업이 완료되었을 때 기존처럼 Connection의 close() 메서드를 사용하여 자원을 반납하지 말고 저장소에 다시 복귀시켜야 한다.<br />
+작업이 완료되었을 때 기존처럼 Connection의 close() 메소드를 사용하여 자원을 반납하지 말고 저장소에 다시 복귀시켜야 한다.<br />
 </p>
 
 <h3>1. 전체 클래스 요약</h3>
@@ -542,8 +542,8 @@ http://commons.apache.org/proper/commons-dbcp/<br />
 우리가 참고할 소스는 DBCP 공식 사이트의 BasicDataSourceExample.java이다.<br />
 commons-dbcp, commons-pool, commons-logging 라이브러리를 빌드 패스에 추가한다.<br />
 예제에 사용한  버전은 다음과 같다.<br />
-DBCP 2는 JDK 7 환경에서만 실행된다.<br />
-JDK 6 에서는 DBCP 1.4를, 6 이하의 JDK 에서는 DBCP 1.3를 사용해야 한다.<br />
+DBCP 2는 자바 7 환경에서만 실행된다.<br />
+자바 6 에서는 DBCP 1.4를, 자바 6 이하는 DBCP 1.3를 사용해야 한다.<br />
 </p>
 
 <ul>
@@ -797,7 +797,7 @@ public class GetEmp {
 <p>
 커넥션을 conn.close();로 자원반납하고 있다.<br />
 이와 같이 자원을 반납하면 풀을 사용하는 의미가 반감되지 않나?<br />
-이 의문을 해결하기 위해서는 JDK 1.4부터 생긴 DataSource 인터페이스에 대해 알아보아야 한다.<br />
+이 의문을 해결하기 위해서는 자바 4에 도입된 DataSource 인터페이스에 대해 알아보아야 한다.<br />
 데이터소스는 커넥션 공장이다.<br />
 데이터소스는 3 종류의 구현체가 있다.<br />
 </p>
@@ -815,7 +815,7 @@ DBCP는 javax.sql.DataSource 인터페이스를 구현한다.<br />
 <br />
 이미 사용했던 커넥션 풀과 비슷하게 예제를 만들어 보자.<br />
 먼저 ConnectionManager 추상 클래스를 작성한다.<br />
-이 추상 클래스는 설정 파일을 읽어서 속성을 설정하는 역할과 커넥션을 얻는 메서드로 구성된다.<br />
+이 추상 클래스는 설정 파일을 읽어서 속성을 설정하는 역할과 커넥션을 얻는 메소드로 구성된다.<br />
 </p>
 
 <h6 class="src">ConnectionManager.java</h6>

@@ -85,10 +85,8 @@ class 키워드 다음에 클래스 이름이 온다.
 <dt>String name;</dt>
 <dd>
 
-<p>
 자바 객체는 자신의 상태를 필드에 저장한다.
 상태는 OOP의 속성이라는 개념보다 넓은 개념이다.
-</p>
 
 <table class="table-in-article">
 <tr>
@@ -96,13 +94,14 @@ class 키워드 다음에 클래스 이름이 온다.
 	<th class="table-in-article-th">name</th>
 </tr>
 <tr>
-	<td class="table-in-article-td">필드의 데이터 형</td>
+	<td class="table-in-article-td">필드의 데이터 타입</td>
 	<td class="table-in-article-td">필드 이름</td>
 </tr>
 </table>
 
 String 클래스는 자바 API에 속한다.
 String 클래스는 문자열을 표현할 때 사용된다.
+
 </dd>
 
 <dt>int totalAbsenceDays;</dt>
@@ -114,24 +113,26 @@ String 클래스는 문자열을 표현할 때 사용된다.
 	<th class="table-in-article-th">totalAbsenceDays</th>
 </tr>
 <tr>
-	<td class="table-in-article-td">필드의 데이터 형</td>
+	<td class="table-in-article-td">필드의 데이터 타입</td>
 	<td class="table-in-article-td">필드 이름</td>
 </tr>
 </table>
-int는 정수를 위한 데이터 형이다.
+
+int는 정수를 위한 데이터 타입이다.
+
 </dd>
 
 <dt>void absent() {..}</dt>
 <dd>
 absent()가 반환하는 값이 없다면 absent() 앞에 void를 붙여야 한다.
-absent()가 반환하는 값이 있다면 absent() 앞에 반환하는 값의 데이터 형을 붙여야 한다.
-자바에선, absent()를 함수가 아닌 메서드라 부른다.
+absent()가 반환하는 값이 있다면 absent() 앞에 반환하는 값의 데이터 타입을 붙여야 한다.
+자바에선, absent()를 함수가 아닌 메소드라 부른다.
 </dd>
 </dl>
 
 <p>
 위 Student 클래스를 단독으로 실행할 수 있도록 만들자.
-Student.java 파일을 열고, 아래와 같이 메인 메서드를 추가한다.
+Student.java 파일을 열고, 아래와 같이 메인 메소드를 추가한다.
 </p>
 
 <h6 class="src">Student.java</h6>
@@ -177,7 +178,7 @@ C:\&gt;
 </pre>
 
 <p>
-java Student를 명령 프롬프트에서 실행하면 새로운 JVM이 실행되고 Student 클래스의 메인 메서드가 실행된다.
+java Student를 명령 프롬프트에서 실행하면 새로운 JVM이 실행되고 Student 클래스의 메인 메소드가 실행된다.
 JVM이 실행될 때, 클래스 로더는 프로그램을 구성하는 자바 클래스 파일(Student, String, System)을 메모리에 적재한다.
 클래스 로더는 자바 API와 관련된 클래스(String, System)의 위치는 이미 알고 있다.
 Student 클래스의 경우 우리가 클래스로더에게 그 위치를 알려주어야 할 때가 있다.
@@ -187,17 +188,16 @@ Student 클래스가 없는 디렉터리에서 Student 클래스를 실행하려
 <dl class="note">
 <dt>public static void main (String[] args) {..}</dt>
 <dd>
-메인 메서드는 자바 프로그램의 시작점이다.
-시작하는 클래스에 메인 메서드를 만들어야 한다.
+메인 메소드는 자바 프로그램의 시작점이다.
+시작하는 클래스에 메인 메소드를 만들어야 한다.
 </dd>
 <dt>Student tom = null;</dt>
 <dd>
-이 문장은 학생 객체를 참조하게 될 참조형 변수를 선언하고 null로 초기화한다.
-참조형 변수는 객체를 접근할 때 사용하는 참조값을 저장한다.
-참조형 변수는 객체 그 자체를 저장하지 않는다.
-만약 참조형 변수가 어떤 객체도 가리키지 않도록 하려면 null를 할당하면 된다.
+이 문장은 학생 객체를 참조하게 될 레퍼런스 변수를 선언하고 null로 초기화한다.
+레퍼런스 변수는 객체를 접근할 때 사용하는 참조 값을 저장한다.
+레퍼런스 변수는 객체 그 자체를 저장하지 않는다.
+만약 레퍼런스 변수가 어떤 객체도 가리키지 않도록 하려면 null를 할당한다.
 null도 값이기에, Student tom;과 Student tom = null;은 완전히 다르다.
-
 <table class="table-in-article">
 <tr>
 	<th class="table-in-article-th" style="width: 50%;">Student tom;</th>
@@ -209,7 +209,7 @@ null도 값이기에, Student tom;과 Student tom = null;은 완전히 다르다
 	(이를 초기화되지 않았다라고 한다.)
 	</td>
 	<td class="table-in-article-td">
-	null은 참조형 변수의 초기화에 사용된다.
+	null은 레퍼런스 변수의 초기화에 사용된다.
 	null은 변수가 어떤 객체도 참조하지 않음을 나타내는 값이다.
 	</td>
 </tr>	
@@ -217,13 +217,13 @@ null도 값이기에, Student tom;과 Student tom = null;은 완전히 다르다
 </dd>
 <dt>tom = new Student();</dt>
 <dd>
-이 문장은 Student형 참조형 변수 tom에 생성한 학생 객체의 참조값을 할당한다.
-new Student();는 학생 객체를 힙 메모리 공간에 생성하고, 생성된 학생 객체를 조작하기 위해 필요한 참조값을 반환한다.
+이 문장은 Student 타입 변수 tom에 생성한 학생 객체의 참조 값을 할당한다.
+new Student();는 학생 객체를 힙 메모리 공간에 생성하고, 생성된 학생 객체를 조작하기 위해 필요한 참조 값을 반환한다.
 </dd>
 <dt>tom.name = "Thomas Edison";</dt>
 <dd>
 이 문장은 변수 tom을 이용해서 학생 객체의 이름을 셋팅한다.
-참조형 변수를 사용해서 객체에 접근하려면 변수명 다음에 .(도트)를 쓰고 객체의 필드나 메서드를 표기한다.
+레퍼런스 변수를 사용해서 객체에 접근하려면 변수명 다음에 .(도트)를 쓰고 객체의 필드나 메소드를 표기한다.
 </dd>
 <dt>tom.absent();</dt>
 <dd>
@@ -233,8 +233,10 @@ new Student();는 학생 객체를 힙 메모리 공간에 생성하고, 생성�
 
 <h2>System.out.println()</h2>
 
-자바 기초 예제에서는 결과를 보기 위해서 이 메서드를 자주 사용하게 된다.
-다음은 이 메서드의 모든 쓰임새를 보여주고 있다.
+<p>
+자바 기초 예제에서는 결과를 보기 위해서 이 메소드를 자주 사용하게 된다.
+다음은 이 메소드의 모든 쓰임새를 보여주고 있다.
+</p>
 
 <h6 class="src">StandardOutput.java</h6>
 <pre class="prettyprint">
@@ -243,14 +245,14 @@ class StandardOutput {
         System.out.println(true);// 불린값을 출력하고 개행
         System.out.println('A');// char 'A'를 출력하고 개행
         char[] x = {'A','B','C'};
-        System.out.println(x);//char 형 배열을 출력하고 개행
-        System.out.println(99.9);//double 형 자료를 출력하고 개행
+        System.out.println(x);//char 타입 배열을 출력하고 개행
+        System.out.println(99.9);//double 타입 자료를 출력하고 개행
         System.out.println();//단순히 줄을 바꾼다(개행한다.)
-        System.out.println(99.9F);//float 형 자료를 출력하고 개행
-        System.out.println(100);//int 형 자료를 출력하고 개행
-        System.out.println(40000000L);//long 형 자료를 출력하고 개행
-        System.out.println(System.out);//객체의 데이터형@해시코드를 출력하고 개행
-        System.out.println("표준출력메서드");//문자열을 출력하고 개행
+        System.out.println(99.9F);//float 타입 자료를 출력하고 개행
+        System.out.println(100);//int 타입 자료를 출력하고 개행
+        System.out.println(40000000L);//long 타입 자료를 출력하고 개행
+        System.out.println(System.out);//객체의 데이터 타입@해시코드를 출력하고 개행
+        System.out.println("표준출력메소드");//문자열을 출력하고 개행
     }
 }
 </pre>
@@ -269,7 +271,7 @@ ABC
 100
 40000000
 java.io.PrintStream@de6ced
-표준출력메서드
+표준출력메소드
 </pre>
 
 <p>

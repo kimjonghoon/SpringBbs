@@ -93,7 +93,7 @@ pstmt = con.prepareStatement(sql);
 </pre>
 
 <p>
-Unlike obtaining a Statement, you must pass an SQL statement with a Java string as an argument to the prepareStatement () method to get a PreparedStatement object.
+Unlike obtaining a Statement, you must pass an SQL statement with a Java string as an argument to the prepareStatement() method to get a PreparedStatement object.
 </p>
 
 <pre>
@@ -111,10 +111,10 @@ pstmt.setInt(2, 1);
 </pre>
 
 <p>
-If the SQL statement contains a question mark, you must set the value of the question mark using the PrepareStatement's setXXX () method before the statement is executed.
-The XXX part of the setXXX () method must be determined by the Java data type that maps to the data type of the column.
-The first parameter to the setXXX () method is the order in which question marks appear.
-The second parameter of the setXXX () method is the value to replace the question mark.
+If the SQL statement contains a question mark, you must set the value of the question mark using the PrepareStatement's setXXX() method before the statement is executed.
+The XXX part of the setXXX() method must be determined by the Java data type that maps to the data type of the column.
+The first parameter to the setXXX() method is the order in which question marks appear.
+The second parameter of the setXXX() method is the value to replace the question mark.
 </p>
 
 </article>

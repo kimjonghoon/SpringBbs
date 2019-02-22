@@ -194,10 +194,10 @@ public class Manager <strong>extends</strong> Employee {
 To inherit a superclass from a subclass, use the extends keyword in the class declaration of the subclass.<br />
 Now the manager class will be able to write the member of the employee class as if it were a member.<br />
 However, from now on, the inherited member and the original member of the class should be considered separately, because the inherited member still applies the access modifiers.<br />
-The reason for using getName (), getPosition (), and getTelephone () in the toString () method of the manager class is that the employee class name, position, and telephone are private.<br />
+The reason for using getName(), getPosition(), and getTelephone() in the toString() method of the manager class is that the employee class name, position, and telephone are private.<br />
 To access the parent member variables name, position, and telephone directly, you need to change the access modifiers of these member variables.<br />
 Since the employee class and the manager class are in the same package, 
-applying the name, position, and telephone access modifiers in the employee class as default, protected, or public allows access to the members of the parent directly.<br />
+applying the name, position, and telephone access modifiers in the employee class as package private, protected, or public allows access to the members of the parent directly.<br />
 If the employee class and the manager class are not the same package, you must apply the name, position, and telephone accessors in the employee class as protected or public.<br />
 An object of a subclass type can access the protected member of a superclass even if the package of the subclass and superclass is different.<br />
 The access modifier protected protects the inheritance relationship between classes in other packages.<br />
@@ -209,8 +209,8 @@ Run the Test class to see the results.<br />
 <dd>
 You can use the method inherited from the parent, but if you want to "redefine" it is called method overriding.<br />
 When redefining methods of a parent class in a child class, the return type, method name, and parameter list must be the same.<br />
-The toString () of the employee class overrides toString () of the Object class, and the toString () of the manager class overrides the toString () of the employee class.<br />
-Wait, does the toString () in the employee class override the toString () in the Obejct class?
+The toString() of the employee class overrides toString() of the Object class, and the toString () of the manager class overrides the toString () of the employee class.<br />
+Wait, does the toString() in the employee class override the toString() in the Obejct class?
 Check the employee class code again.<br />
 Is there an extends keyword in the class declaration?
 None.<br /> 
@@ -227,10 +227,10 @@ In the above code, @Override tells the compiler that the method overrides the su
 <h2>Constructor</h2>
 
 <p>
-In the main method of Test class, Manager blake = new Manager (); is the code to create Manager object.<br />
+In the main method of Test class, Manager blake = new Manager(); is the code to create Manager object.<br />
 Now it is time to talk more about this part of the code.<br />
-The Manager () that comes after new is the code that calls the Manager () constructor.<br />
-Manager () must be declared in the class body just like methods.<br />
+The Manager() that comes after new is the code that calls the Manager () constructor.<br />
+Manager() must be declared in the class body just like methods.<br />
 After new, you can call one of the constructors declared in the class.<br />
 In the above example, I did not create a constructor for the employee class and the manager class.<br />
 However, the constructor is called in the main method of the Test class.<br />
@@ -318,7 +318,7 @@ Manager blake = new Manager("BLAKE", "MANAGER", "9", "Project Management");
 
 <p>
 In System.out.println(blake); the println method calls the toString() method of the object pointed to by blake.<br />
-Therefore, the results of System.out.println(blake.toString ()); and System.out.println(blake); are the same.<br />
+Therefore, the results of System.out.println(blake.toString()); and System.out.println(blake); are the same.<br />
 It is up to you to decide which code you like better.<br />
 </p>
 
@@ -326,7 +326,7 @@ It is up to you to decide which code you like better.<br />
 The above constructor code is changed by the compiler as shown below.<br />
 </p>
 
-<h6 class="src">Code that the compiler added in Employee's Contructor</h6>
+<h6 class="src">Code that the compiler added in Employee's Constructor</h6>
 <pre class="prettyprint">
 public Employee() {
 	<strong>super();</strong>
@@ -340,7 +340,7 @@ public Employee(String name, String position, String telephone) {
 }
 </pre>
 
-<h6 class="src">Code that the compiler added in Manager's Contructor</h6>
+<h6 class="src">Code that the compiler added in Manager's Constructor</h6>
 <pre class="prettyprint">
 public Manager() {
 	<strong>super();</strong>
@@ -372,9 +372,9 @@ i = new Drum();
 </p>
 
 <p style="clear: both;">
-I.play () plays a guitar or drum.<br />
-I.play () has polymorphism.<br />
-Whether the guitar is played or the drum is played is determined at the time i.play () is executed (Runtime).<br />
+I.play() plays a guitar or drum.<br />
+I.play() has polymorphism.<br />
+Whether the guitar is played or the drum is played is determined at the time i.play() is executed (Runtime).<br />
 It is not determined at compile time.<br />
 When a reference type variable of a superclass type refers to an object of a subclass type, 
 it can not be used to access all members of the object.<br />
@@ -400,7 +400,7 @@ System.out.println(king);
 <p>
 In the last line System.out.println(king); king is an Object type variable.<br />
 The println() method internally calls the toString() method of the object pointed to by king.<br />
-Then, since the object actually created in the heap memory is the manager object, the toString () method that the manager class overrides is called.<br />
+Then, since the object actually created in the heap memory is the manager object, the toString() method that the manager class overrides is called.<br />
 The picture below is drawn for your understanding.<br />
 Regardless of the reference type, (2) and (3) are covered and can not be seen.<br />
 Therefore, (1) is called.<br />  
@@ -482,7 +482,7 @@ public abstract class AbstractEmployee {
 
 <p>
 Change the employee class to inherit the AbstractEmployee abstract class.<br />
-The employee class must implement the abstract method doWork () method of the AbstractEmployee class.<br />
+The employee class must implement the abstract method doWork() method of the AbstractEmployee class.<br />
 </p>
 
 <h6 class="src">Employee.java</h6>
@@ -643,7 +643,7 @@ public class Transportor {
 </pre>
 
 <p>
-The transporter and the driver class has common features that drive () and transport ().<br />
+The transporter and the driver class has common features that drive() and transport().<br />
 This common function can be created as an interface.<br />
 The interface name is called Drivable.<br />
 </p>

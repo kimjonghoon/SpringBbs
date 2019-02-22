@@ -5,7 +5,7 @@
 <p>
 분석 작업의 결과물인 클래스 다이어그램을 토대로 각각의 클래스를 작성한다.
 먼저 입출금 명세 클래스를 작성한다.
-클래스 다이어그램에서 toString() 메서드가 추가되었다.
+클래스 다이어그램에서 toString() 메소드가 추가되었다.
 </p>
 
 <h6 class="src">Transaction.java</h6>
@@ -100,11 +100,11 @@ DATE_FORMAT는 입출금 날자 포맷을, TIME_FORMAT는 입출금 시간 포�
 
 <p>
 생성자 2개를 추가했다.
-하나는 디폴트 생성자이고 다른 하나는 계좌번호와 소유자명을 인자로 받는다.
-쉽게 출력하기 위해 toString() 메서드를 추가했다.
+하나는 디폴트 생성자이고 다른 하나는 계좌번호와 소유자명을 아규먼트로 받는다.
+쉽게 출력하기 위해 toString() 메소드를 추가했다.
 코드를 구현하는 중에 클래스 다이어그램과 비교하여 변경사항이 있으면 클래스 다이어그램에 추가한다.
 </p>
-
+aoroqustn
 <h6 class="src">Account.java</h6>
 <pre class="prettyprint">
 package net.java_school.bank;
@@ -230,9 +230,9 @@ public class Account {
 마지막으로 은행 클래스를 작성한다.
 <em>private Account[] accounts = new Account[10];</em> 코드로 accounts 배열 변수에 크기 10의 배열 객체를 할당한다.
 총 계좌수를 저장할 변수 <em>totalAccount</em>는 배열 변수 accounts에 값을 순서대로 넣기 위해서 사용된다.
-<em>findAccountByName()</em>는 소유자 이름으로 계좌를 찾는 메서드이다.
+<em>findAccountByName()</em>는 소유자 이름으로 계좌를 찾는 메소드이다.
 소유자 이름이 같은 계좌가 있을 수 있으므로 반환 타입은 Account[]이다.
-<em>findAccountByName()</em> 메서드는 조건에 맞는 계좌를 찾고, 찾은 계좌 수를 크기로 하는 새로운 배열을 만들고, 찾은 계좌를 
+<em>findAccountByName()</em> 메소드는 조건에 맞는 계좌를 찾고, 찾은 계좌 수를 크기로 하는 새로운 배열을 만들고, 찾은 계좌를
 모두 새로 만든 배열에 넣은 후 배열을 반환하도록 구현했다.
 </p>
  

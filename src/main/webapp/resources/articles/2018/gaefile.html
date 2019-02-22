@@ -51,7 +51,7 @@ List&lt;AttachFile&gt; attachFiles = ofy()
 	.list();
 </pre>
 	</li>
-	<li>다음은 AttachFile 엔티티와 파일을 삭제하는 핸들러 메서드 코드다.
+	<li>다음은 AttachFile 엔티티와 파일을 삭제하는 핸들러 메소드 코드다.
 <pre class="prettyprint">
 @DeleteMapping("/{group}/{id}")
 public ResponseEntity&lt;String&gt; del(@PathVariable String group, @PathVariable Long id) {

@@ -1,0 +1,144 @@
+<article>
+<div class="last-modified">Last Modified 2019.2.1</div>
+
+<h1>스트림</h1>
+
+<p>
+스트림은 자바 8에 도입되었다.
+스트림에서는 라이브러리 내부에서 모든 데이터가 처리된다.
+--이를 내부 반복이라 한다--
+자바 7까지 컬렉션은 반복적인 코드를 피하지 못했고, 멀티코어를 활용하지 못했다.
+스트림은 이 두 문제를 해결했다.
+스트림은 선언형으로 컬렉션 데이터를 처리하며, 스레드 없이 멀티코어를 사용해 데이터를 병렬로 처리할 수 있다.
+</p>
+
+<p>
+데이터 파일로 사용할 <a href="/examples/movies.txt">movies.txt</a>를 내려받고 src 디렉터리에 복사한다. 
+</p>
+
+<p>
+MovieTest.java를 생성한다.
+</p>
+
+<pre class="prettyprint">package net.java_school.examples;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+<strong>import static java.util.stream.Collectors.toList;</strong>
+
+public class MovieTest {
+
+	static List&lt;Movie&gt; filterMovies(List&lt;Movie&gt; movies, Predicate&lt;Movie&gt; p) {
+		List&lt;Movie&gt; result = new ArrayList&lt;&gt;();
+		for (Movie movie : movies) {
+			if (p.test(movie)) {
+				result.add(movie);
+			}
+		}
+
+		return result;
+	}
+
+	public static void main(String[] args) throws Exception {
+		String fileName = "./src/movies.txt";
+		String str = null;
+		List&lt;Movie&gt; movies = new ArrayList&lt;&gt;();
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			while ((str = br.readLine()) != null) {
+				String[] arr = str.split(",");
+				Movie movie = new Movie(arr[0],Integer.parseInt(arr[1]),Double.parseDouble(arr[2]));
+				movies.add(movie);
+			}
+		}
+		<strong>
+		List&lt;Movie&gt; threeHighRatingMovieNames =
+				movies.stream()
+				.filter(m -> m.getUserRatings() &gt;= 8.0)
+				.limit(3)
+				.collect(toList());
+		</strong>
+		for (Movie movie : threeHighRatingMovieNames) {
+			System.out.println(movie);
+		}
+
+	}
+
+}
+</pre>
+
+<pre class="console"><strong class="console-result">Butch Cassidy And The Sundance Kid,1969,8.1
+Blade Runner 2049,2017,8.1
+Twelve Monkeys,1995,8.0</strong></pre>
+
+<p>
+정렬하지 않았으므로 movies.txt에서 위부터 세 개가 출력된다.
+정렬한 후  위에서 세 개를 추출하려면, 아래 강조한 부분을 코드에 추가한다.
+import static java.util.Comparator.comparing; 임포트 문 추가가 필요하다.
+</p>
+
+<pre class="prettyprint">List&lt;Movie&gt; threeHighRatingMovieNames =
+		movies.stream()
+		.filter(m -> m.getUserRatings() >= 8.0)
+		<strong>.sorted(comparing(Movie::getUserRatings))</strong>
+		.limit(3)
+		.collect(toList());
+</pre>
+
+<pre class="console"><strong class="console-result">Twelve Monkeys,1995,8.0
+The Terminator,1984,8.0
+Jaws,1975,8.0</strong></pre>
+
+<p>
+결과는 사용자 평점을 오름차순으로 정렬하고 있다.
+사용자 평점을 내림차순으로 정렬하려면, 정렬 구문에 reversed() 디폴트 메소드를 아래처럼 추가한다.
+</p>
+
+<p>
+.sorted(comparing(Movie::getUserRatings)<strong>.reversed()</strong>)
+</p>
+
+<pre class="console"><strong class="console-result">The Shawshank Redemption,1994,9.3
+The Dark Knight,2008,9.0
+The Silence Of The Lambs,1991,8.6</strong></pre>
+
+<p>
+특정 데이터를 선택하는 작업을 할 수 있다.
+영화 제목만을 추출하려면 아래처럼 map() 디폴트 메소드를 추가한다.
+</p>
+
+<pre class="prettyprint">List&lt;<strong>String</strong>&gt; threeHighRatingMovieNames =
+		movies.stream()
+		.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+		.sorted(comparing(Movie::getUserRatings).reversed())
+		<strong>.map(Movie::getTitle)</strong>
+		.limit(3)
+		.collect(toList());
+
+for (<strong>String title</strong> : threeHighRatingMovieNames) {
+	System.out.println(<strong>title</strong>);
+}
+</pre>
+
+<pre class="console"><strong class="console-result">The Shawshank Redemption
+The Dark Knight
+The Silence Of The Lambs</strong></pre>
+
+<p>
+병렬처리를 하려면 movies.stream()을 movies.parallelStream()으로 수정한다.
+</p>
+
+
+<pre class="prettyprint">List&lt;String&gt; threeHighRatingMovieNames =
+		movies<strong>.parallelStream()</strong>
+		.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+		.sorted(comparing(Movie::getUserRatings).reversed())
+		.map(Movie::getTitle)
+		.limit(3)
+		.collect(toList());
+</pre>
+
+</article>

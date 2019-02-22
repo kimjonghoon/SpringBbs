@@ -270,7 +270,7 @@ public interface UserService {
 
 <p>
 net.java_school.mybatis 패키지에 UserMapper.java를 작성한다.
-(모델 2 게시판의 UserDao와 일관성을 위해 메서드 이름은 될 수 있으면 그대로 유지했다)
+(모델 2 게시판의 UserDao와 일관성을 위해 메소드 이름은 될 수 있으면 그대로 유지했다)
 </p>
 
 <h6 class="src">UserMapper.java</h6>
@@ -303,8 +303,8 @@ public interface UserMapper {
 </pre>
 
 <p>
-비밀번호 변경을 위한 메서드 명은 UserDao에서의 update가 아닌 updatePasswd로 변경했다.
-UserMapper.xml에 UserMapper.java의 메서드 이름으로 id를 설정해야 하는데, update라고 그대로 쓰면 내 정보 수정의 update와 이름이 같아져서 id가 중복되기 때문이다.
+비밀번호 변경을 위한 메소드 명은 UserDao에서의 update가 아닌 updatePasswd로 변경했다.
+UserMapper.xml에 UserMapper.java의 메소드 이름으로 id를 설정해야 하는데, update라고 그대로 쓰면 내 정보 수정의 update와 이름이 같아져서 id가 중복되기 때문이다.
 (UserMapper.xml은 곧 다루는데, 마이바티스 설정 파일로 매퍼라 부른다)
 </p>
 
@@ -392,7 +392,7 @@ src/main/resources에 net.java_school.mybatis 패키지를 만들고, 이 패키
 
 <p>
 Configuration.xml와 같은 위치에 UserMapper.xml 파일을 만든다.
-UserMapper.java의 메서드 이름과 id 값이 일치해야 한다.
+UserMapper.java의 메소드 이름과 id 값이 일치해야 한다.
 </p>
 
 <h6 class="src">UserMapper.xml</h6>
@@ -632,11 +632,11 @@ public class UsersController {
 </pre>
 
 <p>
-메서드 선언 위의 @RequestMapping(value="signUp", method=RequestMethod.GET)는 메서드가 GET 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
+메소드 선언 위의 @RequestMapping(value="signUp", method=RequestMethod.GET)는 메소드가 GET 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
 ("/users/signUp"에서 "/users" 부분은 UsersController 클래스 이름 위의 @RequestMapping("users") 어노테이션 때문이다.)
-메서드 선언 위의 @RequestMapping(value="/signUp", method=RequestMethod.POST)는 메서드가 POST 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
-이처럼 요청 문자열이 같더라도 HTTP 메서드로 구분하여 요청을 각각 처리할 수 있다.
-POST 방식의 /users/signUp 요청 시 호출되는 메서드는 회원 가입을 처리한 후에는 return "redirect:/users/welcome";로 리다이렉트한다.
+메소드 선언 위의 @RequestMapping(value="/signUp", method=RequestMethod.POST)는 메소드가 POST 방식의 "/users/signUp" 요청을 처리한다는 것을 표시한다.
+이처럼 요청 문자열이 같더라도 HTTP 메소드로 구분하여 요청을 각각 처리할 수 있다.
+POST 방식의 /users/signUp 요청 시 호출되는 메소드는 회원 가입을 처리한 후에는 return "redirect:/users/welcome";로 리다이렉트한다.
 여기서 포워드를 쓴다면 사용자가 F5버튼 등으로 재로딩할때 회원 가입이 똑같은 정보로 다시 시도될 수 있다.
 리다이렉트는 그런 일이 발생하지 않는다.
 이점이 포워딩과 리다이렉트를 선택할 때 중요한 선택 기준이다.
@@ -815,10 +815,10 @@ web.xml에서 DispatcherServlet 이름을 spring-bbs라고 정했으므로 sprng
 <p>
 이 설정은 자동으로 빈을 스캔하여 빈 컨테이너에 등록한다.
 스캔 되는 빈은 스프링 설정 파일에서 bean 엘리먼트를 사용하여 따로 등록하지 않아도 된다.
-빈이 자동 스캔되려면 base-package 패키지에 속하면서, 동시에 클래스 선언부 위에 컴포넌트임을 표시하는 어노테이션이 있어야 한다.
-이때, 클래스 선언부 위에 @Controller, @Repository 어노테이션이 있는 클래스는 어노테이션의 이름대로 취급된다.
+빈이 자동 스캔되려면 base-package 패키지에 속하면서, 동시에 클래스 선언 위에 컴포넌트임을 표시하는 어노테이션이 있어야 한다.
+이때, 클래스 선언 위에 @Controller, @Repository 어노테이션이 있는 클래스는 어노테이션의 이름대로 취급된다.
 @Repository는 DAO 클래스에 사용한다.
-클래스 선언부 위에 @Component와 @Service 어노테이션은 클래스가 단지 자동 스캔 대상이라는 사실만을 표시하며, 그 외 특별하게 취급되는 사항은 없다.
+클래스 선언 위에 @Component와 @Service 어노테이션은 클래스가 단지 자동 스캔 대상이라는 사실만을 표시하며, 그 외 특별하게 취급되는 사항은 없다.
 </p>
 
 <pre class="prettyprint">
@@ -869,7 +869,7 @@ dataSource 정의는 스프링 JDBC를 사용하든지 마이바티스를 사용
 <p>
 파일 업로드를 위한 설정이다.
 파일을 업로드할 때 HttpServletRequest의 래퍼가 컨트롤러에 전달된다.
-컨트롤러에서 업로드된 파일을 처리하는 메서드는 래퍼를 MultiPartHttpServletRequest 인터페이스로 캐스팅해야 서버로 전달된 멀티파트 파일을 다룰 수 있게 된다.
+컨트롤러에서 업로드된 파일을 처리하는 메소드는 래퍼를 MultiPartHttpServletRequest 인터페이스로 캐스팅해야 서버로 전달된 멀티파트 파일을 다룰 수 있게 된다.
 </p>
 
 <p>
@@ -1105,7 +1105,7 @@ Configuration.xml의 설정대로, BoardMapper.xml 파일을 UserMapper.xml와 �
 
 <p>
 <em>&lt;insert id="insert" ..&gt;</em>부분이 새 글을 추가할 때 쓰인다.<br />
-모델 2 게시판의 BoardDao.insert() 메서드는<br />
+모델 2 게시판의 BoardDao.insert() 메소드는<br />
 <em>INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)<br />
 VALUES (<strong>SEQ_ARTICLE.nextval</strong>, ?, ?, ?, ?, 0, sysdate);</em><br />
 문이 성공한 후 첨부 파일이 있으면<br />
@@ -1133,16 +1133,16 @@ VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, <strong>SEQ_ARTICLE.currval</strong>, ?
 
 <p>
 이외에도 MyBatis와 연동하면서 바뀐 내용은 다음과 같다.<br />
-모델 2의 게시글 수정 메서드는<br />
+모델 2의 게시글 수정 메소드는<br />
 <em>UPDATE article SET title = ?, content = ? WHERE articleno = ?</em><br />
 을 실행한 후에 첨부 파일이 있다면<br />
 <em>INSERT INTO attachfile<br />
 (attachfileno, filename, filetype, filesize, articleno, email)<br />
-VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, ?, ?)</em>을 연이어 실행하는 구조였으나 Spring MVC 프로젝트에서는 update()와 insertAttachFile() 메서드의 조합으로 이를 대신했다.
+VALUES (SEQ_ATTACHFILE.nextval, ?, ?, ?, ?, ?)</em>을 연이어 실행하는 구조였으나 Spring MVC 프로젝트에서는 update()와 insertAttachFile() 메소드의 조합으로 이를 대신했다.
 </p>
 
 <p>
-모델 2의 게시글 삭제 메서드는<br />
+모델 2의 게시글 삭제 메소드는<br />
 DELETE FROM comments WHERE articleno = ?<br />
 DELETE FROM attachfile WHERE articleno = ?<br />
 DELETE FROM article WHERE articleno = ?을 하나의 트랜잭션으로 실행하는 것이었다.<br />
@@ -2076,8 +2076,8 @@ public class BbsController <strong>extends Paginator</strong> {
 <ul>
   <li>@Controller는 클래스가 컨트롤러 컴포넌트임을 표시한다.</li>
   <li>클래스 레벨의 @RequestMapping("/bbs")는 컨트롤러가 "/bbs"를 포함하는 모든 요청을 담당한다는 것을 표시한다.</li>
-  <li>메서드 레벨의 @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})는<br />
-  메서드가 GET이나 POST 방식의 "/bbs/list" 요청에 매핑됨을 표시한다.</li>
+  <li>메소드 레벨의 @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})는<br />
+  메소드가 GET이나 POST 방식의 "/bbs/list" 요청에 매핑됨을 표시한다.</li>
   <li>멤버 변수에 @Autowired를 적용하면 변수의 접근자가 private이고 공개된 setter가 없어도 종속객체가 주입된다.</li>
 </ul>
 
@@ -2085,7 +2085,7 @@ public class BbsController <strong>extends Paginator</strong> {
 
 <p>
 목록 요청 URL은 /bbs/list이다.
-컨트롤러에서 이 요청을 메서드에 매핑하려면 메서드 레벨로 @RequestMapping을 사용한다.
+컨트롤러에서 이 요청을 메소드에 매핑하려면 메소드 레벨로 @RequestMapping을 사용한다.
 </p>
 
 <pre class="prettyprint">
@@ -2093,7 +2093,7 @@ public class BbsController <strong>extends Paginator</strong> {
 </pre>
 
 <p>
-클래스 레벨로 @RequestMapping("bbs")를 적용했기에, 위 메서드는 HTTP 프로토콜의 METHOD가 GET이나 POST 방식의 /bbs/list 요청에 매핑된다.
+클래스 레벨로 @RequestMapping("bbs")를 적용했기에, 위 메소드는 HTTP 프로토콜의 METHOD가 GET이나 POST 방식의 /bbs/list 요청에 매핑된다.
 목록이라면 GET 방식이 맞을 것이다. GET 방식의 요청만을 매핑하려면 다음과 같이 고친다.
 </p>
 
@@ -2103,18 +2103,18 @@ public String list(String boardCd, Integer page, String searchWord,...) {..}
 </pre>
 
 <p>
-메서드 아규먼트 리스트 boardCd, page, searchWord에는 요청에 실려 오는 파라미터의 값이 할당된다.<br />
+메소드 아규먼트 리스트 boardCd, page, searchWord에는 요청에 실려 오는 파라미터의 값이 할당된다.<br />
 만약 파라미터 이름이 curPage이고 이 파라미터의 값을 할당받아야 하는 아규먼트 이름이 page라면 다음과 같이 해결한다.<br />
 </p>
 
 <pre>@RequestParam("curPage") String page</pre>
 
 <p>
-컨트롤러 메서드의 아규먼트를 파라미터의 이름과 같게 하면 쉽게 파라미터값을 받을 수 있다.<br />
+컨트롤러 메소드의 아규먼트를 파라미터의 이름과 같게 하면 쉽게 파라미터값을 받을 수 있다.<br />
 파라미터 중에서 boardCd와 page는 필수적으로 전달되도록 구현해야 한다.<br />
 searchWord는 사용자가 검색할 때만 전달된다.<br />
 전달되는 파라미터값을 전부 받았음에도 아규먼트 리스트에서 HttpServletRequest가 있는 이유는 요청 URL을 구하기 위해서다.<br />
-메서드 구현부에서 로그인 체크를 통과하지 못하면 로그인 페이지로 리다이렉트하면서 현재 요청 URL을 전달해야 하기 때문이다.<br />
+메소드 구현부에서 로그인 체크를 통과하지 못하면 로그인 페이지로 리다이렉트하면서 현재 요청 URL을 전달해야 하기 때문이다.<br />
 HttpSession 타입의 아규먼트는 세션에 접근하기 위해서다.<br />
 </p>
 
@@ -2171,7 +2171,7 @@ Integer lastPage = numbers.getLastPage();
 <h3>글쓰기 폼 요청</h3>
 
 <p>
-writeForm() 메서드는 GET 방식의 /bbs/write 요청에 매핑된다.
+writeForm() 메소드는 GET 방식의 /bbs/write 요청에 매핑된다.
 </p>
 
 <pre class="prettyprint">
@@ -2180,16 +2180,16 @@ public String writeForm(String boardCd,HttpServletRequest req,HttpSession sessio
 </pre>
 
 <p>
-메서드 아규먼트로는 파라미터값을 받는 boardCd와 목록 메서드와 같은 이유로 req와 session이 있다.<br />
+메소드 아규먼트로는 파라미터값을 받는 boardCd와 목록 메소드와 같은 이유로 req와 session이 있다.<br />
 boardCd는 게시판 이름을 만드는 데 필요하다.<br />
 page와 searchWord는 포워딩 되므로 아규먼트로 받을 특별한 이유가 없다.<br />
-게시판은 로그인 사용자만 이용할 수 있으므로 메서드는 먼저 로그인 체크로 시작하고, 로그인 체크가 통과하면 게시판 이름을 생성하고 write.jsp로 포워딩한다.
+게시판은 로그인 사용자만 이용할 수 있으므로 메소드는 먼저 로그인 체크로 시작하고, 로그인 체크가 통과하면 게시판 이름을 생성하고 write.jsp로 포워딩한다.
 </p>
 
 <h3>글쓰기 처리 요청</h3>
 
 <p>
-write() 메서드는 POST 방식의 /bbs/write 요청에 매핑된다.<br />
+write() 메소드는 POST 방식의 /bbs/write 요청에 매핑된다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2202,7 +2202,7 @@ MultipartHttpServletRequest 타입의 mpRequest 아규먼트는 시스템에 전
 </p>
 
 <p>
-메서드는. 먼저 로그인 여부를 판단한다.<br />
+메소드는. 먼저 로그인 여부를 판단한다.<br />
 로그인되어 있지 않다면 AuthenticationException 예외를 발생시킨다.<br />
 spring-bbs-servlet.xml에 설정된 예외 리졸브에 의해서 뷰는 /WEB-INF/views/error.jsp가 선택된다.<br />
 </p>
@@ -2217,7 +2217,7 @@ if (user == null) {
 
 <p>
 로그인 체크를 통과하면 새 글을 테이블에 삽입한다.<br />
-BoardMapper.xml 파일에서 설명했듯이, boardService.addArticle(article);가 실행되면 인자 article이 가리키는 Article 객체의 setArticleNo()가 호출되어 게시글 고유번호가 세팅된다.
+BoardMapper.xml 파일에서 설명했듯이, boardService.addArticle(article);가 실행되면 아규먼트인 article이 가리키는 Article 객체의 setArticleNo()가 호출되어 게시글 고유번호가 세팅된다.
 </p>
 
 <pre class="prettyprint">
@@ -2236,7 +2236,7 @@ article.setEmail(user.getEmail());
 
 <p>
 테이블에 새 글 정보를 삽입한 후, 서버에 전달된 파일을 우리가 원하는 업로드 디렉터리로 옮긴다.<br />
-글쓰기 폼 페이지에서는 첨부 파일을 하나만 올릴 수 있지만 메서드는 여러 파일을 올릴 수 있도록 구현했다.<br />
+글쓰기 폼 페이지에서는 첨부 파일을 하나만 올릴 수 있지만 메소드는 여러 파일을 올릴 수 있도록 구현했다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2254,7 +2254,7 @@ while (it.hasNext()) {
 </pre>
 
 <p>
-컨트롤러 메서더의 매개변수 중 MultipartHttpServletRequest 타입은 시스템에 전달된 파일에 접근할 수 있다.
+컨트롤러 메소드의 파라미터 중 MultipartHttpServletRequest 타입은 시스템에 전달된 파일에 접근할 수 있다.
 위 코드는 전달된 파일을 다루는 방법을 보여준다.
 </p>
 
@@ -2315,8 +2315,8 @@ for (int i = 0; i &lt; size; i++) {
 </pre>
 
 <p>
-글쓰기를 서버스의 addArticle(article)과 addAttachFile(attachFile) 2개의 메서드를 사용하여 구현하고 있다.
-(모델 2에서는 서비스의 addArticle(article, attachFile); 메서드 하나로 구현했었다.)
+글쓰기를 서버스의 addArticle(article)과 addAttachFile(attachFile) 2개의 메소드를 사용하여 구현하고 있다.
+(모델 2에서는 서비스의 addArticle(article, attachFile); 메소드 하나로 구현했었다.)
 </p>
 
 <p>
@@ -2333,9 +2333,9 @@ return redirect:/bbs/list?page=1&amp;boardCd=" + article.getBoardCd();
 <h3>상세보기 요청</h3>
 
 <p>
-상세보기 요청(/bbs/view)에 매핑되는 메서드는 view()이다.<br />
-메서드에 전달되는 파라미터는 articleNo, boardCd, page, searchWord이다.<br />
-메서드의 아규먼트로 이들 파라미터의 값을 전달받을 변수를 선언했다.<br />
+상세보기 요청(/bbs/view)에 매핑되는 메소드는 view()이다.<br />
+메소드에 전달되는 파라미터는 articleNo, boardCd, page, searchWord이다.<br />
+메소드의 아규먼트로 이들 파라미터의 값을 전달받을 변수를 선언했다.<br />
 포워드로 이동하지만 view.jsp에 필요한 데이터를 생산하기 위해 전달되는 파라미터 모두 필요하기 때문이다.<br /> 
 그럼에도 HttpServletRequest 타입의 아규먼트 변수가 있는 것은 로그인 체크를 통과 못 했을 때 
 요청 URL 정보를 로그인 페이지에 전달하기 위해서다.<br />
@@ -2354,7 +2354,7 @@ public String view(Integer articleNo,
 </pre>
 
 <p>
-메서드는 먼저 로그인 체크를 한다.<br />
+메소드는 먼저 로그인 체크를 한다.<br />
 로그인 체크를 통과하면 조회 수를 증가시킨 후에 상세보기 화면에 필요한 데이터를 생산한다.<br />
 조회 수 증가는 사용자가 F5로 재로딩하면 계속 증가하는데, 
 나중에 IP와 시간을 고려해서 증가하도록 후에 수정해야 할 것이다.<br />
@@ -2400,13 +2400,13 @@ model.addAttribute("commentList", commentList);
 
 <p>
 상세보기 화면에도 목록이 있다.
-이 부분을 위한 코드는 목록 메서드와 같다.<br />
+이 부분을 위한 코드는 목록 메소드와 같다.<br />
 </p>
 
 <h3>댓글 쓰기 처리 요청</h3>
 
 <p>
-addComment() 메서드는 POST방식의 /bbs/addComment 요청에 매핑되는 메서드다.
+addComment() 메소드는 POST방식의 /bbs/addComment 요청에 매핑되는 메소드다.
 </p>
 
 <pre class="prettyprint">
@@ -2468,7 +2468,7 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
 <h3>댓글 수정 요청</h3>
 
 <p>
-updateComment() 메서드는 POST 방식의 댓글 수정 요청 /bbs/updateComment에 매핑된다.
+updateComment() 메소드는 POST 방식의 댓글 수정 요청 /bbs/updateComment에 매핑된다.
 </p>
 
 <pre class="prettyprint">
@@ -2527,7 +2527,7 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
 <h3>댓글 삭제 요청</h3>
 
 <p>
-deleteComment() 메서드는 POST방식의 /bbs/deleteComment 요청에 매핑되는 메서드다.<br />
+deleteComment() 메소드는 POST방식의 /bbs/deleteComment 요청에 매핑되는 메소드다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2581,7 +2581,7 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
 <h3>글 수정 폼 요청</h3>
 
 <p>
-modifyForm() 메서드는 GET 방식의 게시글 수정 폼 요청 /bbs/modify에 매핑되는 메서드다.<br />
+modifyForm() 메소드는 GET 방식의 게시글 수정 폼 요청 /bbs/modify에 매핑되는 메소드다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2630,7 +2630,7 @@ return "bbs/modify";
 <h3>글 수정 처리 요청</h3>
 
 <p>
-modify() 메서드는 POST 방식의 글 수정 처리 요청 /bbs/modify에 매핑되는 메서드다.<br />
+modify() 메소드는 POST 방식의 글 수정 처리 요청 /bbs/modify에 매핑되는 메소드다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2731,7 +2731,7 @@ return "redirect:/bbs/view?articleNo=" + articleNo
 <h3>첨부 파일 다운로드 요청</h3>
 
 <p>
-download() 메서드는 POST 방식의 파일 다운로드 요청 /bbs/download에 매핑되는 메서드다.<br />
+download() 메소드는 POST 방식의 파일 다운로드 요청 /bbs/download에 매핑되는 메소드다.<br />
 사실 다운로드는 게시판이 아닌 다른 모듈에서도 이용될 수 있으므로 파일 다운로드만을 위한 컨트롤러를 
 만들어 처리할 수 있다.<br />
 </p>
@@ -2767,7 +2767,7 @@ return "inc/download";
 <h3>첨부 파일 삭제 처리 요청</h3>
 
 <p>
-deleteAttachFile() 메서드는 POST 방식의 첨부 파일 삭제 요청 /bbs/deleteAttachFile에 매핑되는 메서드다.<br />
+deleteAttachFile() 메소드는 POST 방식의 첨부 파일 삭제 요청 /bbs/deleteAttachFile에 매핑되는 메소드다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2813,7 +2813,7 @@ return "redirect:/bbs/view?articleNo=" + articleNo +
 <h3>게시글 삭제 처리 요청</h3>
 
 <p>
-del() 메서드는 POST 방식의 게시글 삭제 처리 요청 /bbs/del에 매핑되는 메서드다.<br />
+del() 메소드는 POST 방식의 게시글 삭제 처리 요청 /bbs/del에 매핑되는 메소드다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -2952,7 +2952,7 @@ JSP 프로젝트나 모델 2에서 테스트했던 데이터가 있다면 보일
 
 <p>
 스프링 시큐리티를 적용하기 전에 현재 인증 처리를 어떻게 구현했는지 다시 정리해 볼 필요가 있다.<br />
-다음은 게시판 컨트롤러의 메서드에 적용된 인증 코드이다.<br />
+다음은 게시판 컨트롤러의 메소드에 적용된 인증 코드이다.<br />
 </p>
 
 <h3>목록보기, 상세보기, 글쓰기 폼</h3>
@@ -3004,7 +3004,7 @@ if (user == null || !user.getEmail().equals(attachFile.getEmail())) {
 
 <p>
 다음은 회원 컨트롤러에 적용된 사용자 인증 로직이다.<br />
-회원 컨트롤러의 대부분의 메서드는 인증 로직을 포함한다.<br />
+회원 컨트롤러의 대부분의 메소드는 인증 로직을 포함한다.<br />
 </p>
 
 <h3>로그인</h3>

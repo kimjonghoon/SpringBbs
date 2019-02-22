@@ -109,7 +109,7 @@ Execute the following command in the workspace.
 
 <strong class="screen-header"><b>C:\</b> Command Prompt</strong>
 <pre class="screen">
-C:\Lab&gt;<b>mvn archetype:generate -Dappengine-version=1.9.67 -Dfilter=com.google.appengine.archetype:</b>
+C:\Lab&gt;<b>mvn archetype:generate -Dappengine-version=1.9.70 -Dfilter=com.google.appengine.archetype:</b>
 
 Choose archetype:
 1: remote -&gt; com.google.appengine.archetypes:appengine-flexible-archetype
@@ -142,7 +142,7 @@ Define value for property 'artifactId': : <b>guestbook</b>
 Define value for property 'version':  1.0-SNAPSHOT: : <b>↵</b>
 Define value for property 'package':  net.java_school.guestbook: : <b>↵</b>
 [INFO] Using property: CloudSDK_Tooling = true
-[INFO] Using property: appengine-version = 1.9.67
+[INFO] Using property: appengine-version = 1.9.70
 [INFO] Using property: application-id = your-app-id
 [INFO] Using property: java8 = true
 [INFO] Using property: service = default
@@ -152,7 +152,7 @@ artifactId: guestbook
 version: 1.0-SNAPSHOT
 package: net.java_school.guestbook
 CloudSDK_Tooling: true
-appengine-version: 1.9.67
+appengine-version: 1.9.70
 application-id: your-app-id
 java8: true
 service: default
@@ -173,7 +173,7 @@ service: default
 [INFO] Parameter: package, Value: net.java_school.guestbook
 [INFO] Parameter: artifactId, Value: guestbook
 [INFO] Parameter: java8, Value: true
-[INFO] Parameter: appengine-version, Value: 1.9.67
+[INFO] Parameter: appengine-version, Value: 1.9.70
 [INFO] project created from Archetype in dir: C:\Lab\guestbook
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
@@ -194,10 +194,6 @@ Go to the guestbook folder and run the following command.
 <pre class="screen">C:\Lab&gt;<b>cd guestbook</b>
 C:\Lab\guestbook&gt;<b>mvn clean package</b>
 </pre>
-
-<p style="font-weight: bold;font-style: italic;color: red;">
-If you get errors here, delete all subdirectories of src/test/java/ and run 'mvn clean package' again.
-</p>
 
 <h3>Local test</h3>
 

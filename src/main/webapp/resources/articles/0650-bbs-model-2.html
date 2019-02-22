@@ -13,7 +13,7 @@ EL과 JSTL은 뷰에 관한 기술이다.
 EL<sup>Expression Language</sup>은 JSP에서 사용할 수 있는 데이터에 쉽게 접근하기 위해 만들어진 표현식이다.<br />
 EL은 JSP 스펙에 포함되어 있다.<br />
 EL을 사용하면 자바빈즈의 속성값에 보다 쉽게 접근할 수 있다.<br />
-${user.email }은 User 객체의 getEmail() 메서드 호출과 같다.<br />
+${user.email }은 User 객체의 getEmail() 메소드 호출과 같다.<br />
 User 객체가 어느 스코프에 있는지 정확히 몰라도 괜찮다.<br />
 ${user.email }에서의 User 객체는, 
 pageScope - requestScope - sessionScope - applicationScope 순으로 검색된다.
@@ -1659,7 +1659,7 @@ if (throwable != null) {
 
 <p>
 MVC 뼈대를 이루는 클래스부터 작성한다.<br />
-아래 ActionForward 클래스는 액션 클래스의 execute() 메서드가 반환하는 타입이다.<br />
+아래 ActionForward 클래스는 액션 클래스의 execute() 메소드가 반환하는 타입이다.<br />
 ActionForward 객체에는 리다이렉트 여부와 이동하게 될 주소 정보만 저장된다.<br />
 리다이렉트 여부가 false면 설정된 주소로 포워딩된다.<br />
 포워딩이나 리다이렉트되는 주소는 액션 클래스에서 만들고 ActionForward에 담겨 컨트롤러에 반환된다.

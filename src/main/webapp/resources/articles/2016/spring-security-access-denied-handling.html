@@ -32,7 +32,7 @@ ROLE_USER 권한만 가진 사용자가 http://localhost:8080/admin를 요청할
 <p>
 &lt;access-denied-handler error-page="/403" /&gt;만으로 권한이 없는 사용자를 /WEB-INF/views/403.jsp 페이지로 보내지 않는다.<br />
 컨트롤러에서 매핑하지 않으면, 결국 http://localhost:8080/403을 요청하게 되고, web.xml에서 설정한 404 에러 페이지를 보게 된다.<br />
-WEB-INF/views/403.jsp 파일을 만들고 HomeController에 다음 메서드를 추가한다.<br />
+WEB-INF/views/403.jsp 파일을 만들고 HomeController에 다음 메소드를 추가한다.<br />
 
 스프링 시큐리티 태그를 사용할 수 있으므로 header.jsp 파일을 인클루드하고 있다.<br />
 </p>
@@ -186,7 +186,7 @@ web.xml 설정으로 보이는 에러 페이지는 스프링 시큐리티 태그
 이유는 스프링 필터 체인에서 뷰 레벨 보안이 적용하기 위한 필터가 작동하기 전에 에러 페이지로 이동하기 때문이다.
 </p>
 
-<h2>메서드 보안</h2>
+<h2>메소드 보안</h2>
 
 <p>
 스프링 MVC에서 익셉션과 에러 페이지를 매핑하는 방법 중 SimpleMappingExceptionResolver를 사용하는 것이 가장 간단하다.
@@ -249,7 +249,7 @@ public void bye(User user) {
 <span id="related-articles">관련 글</span>
 <ul id="related-articles-ul">
     <li><a href="/spring/spring-security-config">스프링 시큐리티 웹 요청 보안</a></li>
-    <li><a href="/spring/method-security">스프링 시큐리티 메서드 보안</a></li>
+    <li><a href="/spring/method-security">스프링 시큐리티 메소드 보안</a></li>
     <li><a href="/spring/security-at-view-layer">스프링 시큐리티 뷰 레벨 보안</a></li>
     <li><a href="/blog">블로그 목록</a></li>
 </ul>

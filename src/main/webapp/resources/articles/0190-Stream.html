@@ -3,10 +3,10 @@
 <h1>스트림</h1>
 
 <p>
-자바에서 입출력은 스트림을 통해서 이루어진다.
+자바에서 입출력 관련 API를 스트림이라 부른다.
 자바 프로그램을 기준으로 스트림의 방향이 자바 프로그램 안으로 향하면 입력 스트림, 스트림의 방향이 자바 프로그램 밖으로 향하면 출력 스트림이다.
 스트림 객체를 생성할 때 중요한 정보는 입력 스트림의 경우 근원지<sup>Source</sup>고, 출력 스트림의 경우 목적지<sup>Destination</sup>다.
-스트림 생성자의 인자 값으로 이들 정보가 필요하다.
+스트림 생성자의 아규먼트로 이들 정보가 필요하다.
 근원지나 목적지의 형태는 다양하다.
 예를 들면 대표적으로 파일이 있겠고, 콘솔 화면, 소켓도 될 수 있다.
 스트림 클래스는 상당히 많은데 다음의 분류 기준을 이해하고 있으면 전체를 파악하는 데 도움이 된다.
@@ -28,11 +28,11 @@ InputStream과 OutputStream은 추상 클래스로 모든 바이트 스트림 �
 
 <table class="table-in-article">
 <tr>
-	<td class="table-in-article-td" colspan="2"><strong>InputStream 메서드</strong></td>
+	<td class="table-in-article-td" colspan="2"><strong>InputStream 메소드</strong></td>
 </tr>
 <tr>
 	<td class="table-in-article-td" style="width: 17em;">int read()</td>
-	<td class="table-in-article-td">추상 메서드, 입력 스트림으로부터 한 바이트씩 읽어서 0~255 사이의 값을 반환한다.
+	<td class="table-in-article-td">추상 메소드, 입력 스트림으로부터 한 바이트씩 읽어서 0~255 사이의 값을 반환한다.
 	입력 스트림의 끝에 도달하여 더 읽을 수 없을 때는 -1을 반환한다.</td>
 </tr>
 <tr>
@@ -57,7 +57,7 @@ InputStream과 OutputStream은 추상 클래스로 모든 바이트 스트림 �
 
 <table class="table-in-article">
 <tr>
-	<td class="table-in-article-td" colspan="2"><strong>OutputStream 메서드</strong></td>
+	<td class="table-in-article-td" colspan="2"><strong>OutputStream 메소드</strong></td>
 </tr>
 <tr>
 	<td class="table-in-article-td" style="width: 17em;">void write(int b)</td>
@@ -200,7 +200,7 @@ FileInputStream/FileOutputStream 은 바이트 단위로 파일에 입출력하�
 
 <p>
 new FileOutputStream("C:/javaApp/test.txt", false);에서 false는 기존 내용의 끝에 추가하지 않는 설정이다.
-예제에서 쓰이는 FileInputStream과 FileOutputStream의 메서드는 InputStream과 OutputStream 메서드 
+예제에서 쓰이는 FileInputStream과 FileOutputStream의 메소드는 InputStream과 OutputStream 메소드
 설명 부분을 참고한다.
 </p>
 
@@ -211,7 +211,7 @@ new FileOutputStream("C:/javaApp/test.txt", false);에서 false는 기존 내용
 
 <p>
 Reader와 Writer는 문자 입출력 클래스의 최상위 클래스이다.
-모두 추상 클래스인데 메서드에서 입출력 데이터의 단위가 문자이다.
+모두 추상 클래스인데 메소드에서 입출력 데이터의 단위가 문자이다.
 </p>
 
 <table class="table-in-article">
@@ -375,13 +375,13 @@ public class InputTest {
 
 <p>
 키보드(표준 입력 기구)를 근원지(source)로 하는 InputStreamReader 을 생성하고 있다.
-그다음 입출력의 성능을 위해 버퍼 기능을 가진 BufferedReader 객체의 생성자에 InputStreamReader 의 참조 값을 
-생성자 매개변수의 인자 값으로 전달하고 있다.
+그다음 입출력의 성능을 위해 버퍼 기능을 가진 BufferedReader 객체의 생성자에 InputStreamReader의 레퍼런스를
+생성자의 아규먼트로 전달하고 있다.
 String input = br.readLine();에서 사용자의 입력을 기다린다.
-BufferedReader의 readLine() 메서드는 사용자가 엔터키를 칠 때까지의 문자열을 반환한다.
+BufferedReader의 readLine() 메소드는 사용자가 엔터키를 칠 때까지의 문자열을 반환한다.
 이때 엔터키는 문자열에 포함되지 않는다.
 문자열이 반환되어 input 변수에 할당되고
-마지막 줄에서 표준 출력 메서드에 의해 입력값을 확인된다.
+마지막 줄에서 표준 출력 메소드에 의해 입력값을 확인된다.
 BufferedReader를 자바 문서에서 찾아 확인한다.
 </p>
 
@@ -417,7 +417,7 @@ public class OutputTest {
 
 <p>
 FileWriter 클래스는 문자 데이터를 파일에 출력할 때 사용한다.
-FileWriter 클래스의 생성자의 첫 번째 인자는 목적지이고, 두 번째 인자는 파일에 있는 기존 내용을 그대로 둘지를 
+FileWriter 클래스의 생성자의 첫 번째 아규먼트는 목적지이고, 두 번째 아규먼트는 파일에 있는 기존 내용을 그대로 둘지를
 결정하는 플래그이다. 여기처럼 true면 기존 내용을 그대로 둔다.
 입력 스트림에서와 달리 출력 스트림일 경우 제대로 출력 스트림을 닫아주어야 한다.
 소스에서 강조된 fw.close() 가 출력 스트림을 닫아주는 코드이다.
@@ -606,15 +606,15 @@ Address 클래스는 반드시 다음과 같이 Serializable 인터페이스를 
 <pre class="prettyprint no-border">public class Address implements Serializable</pre>
 
 <p>
-Serializable 인터페이스는 구현할 메서드가 없다.
+Serializable 인터페이스는 구현할 메소드가 없다.
 Serializable 인터페이스는 클래스로부터 생성된 객체가 직렬화 대상임을 버추얼 머신에게 알리는 역할만 한다.
 이와 같은 인터페이스를 선언적 인터페이스라 한다.
 </p>
 
 <p>
-자바의 기본 자료형 데이터는 직렬화가 필요 없으며,
+자바의 기본 타입 데이터는 직렬화가 필요 없으며,
 또 많이 사용하는 String 과 Collection 관련 클래스는 직렬화가 가능하다.
-다시 말해, 이와 같은 클래스는 클래스 선언 부에 implements Serializable 문장이 있는 채로 컴파일되어 있다.
+다시 말해, 이와 같은 클래스는 클래스 선언에 implements Serializable 문장이 있는 채로 컴파일되어 있다.
 우리가 만드는 클래스가 직렬화가 필요하다면 Serializable 인터페이스를 구현한다고 선언을 해야 한다.
 </p>
 
@@ -845,10 +845,10 @@ public class Transaction <strong>implements Serializable</strong> {
 프로그램이 시작할 때 bank.ser 파일에 저장된 은행 객체 정보를 역직렬화해서 은행 객체를 힙 메모리에 불러온다.
 프로그램을 처음 실행하는 상황이고 그래서 bank.ser 파일이 없다면 FileNotFoundException이 발생한다.
 FileNotFoundException이 발생하는 경우에는 은행 클래스의 생성자를 호출하여 은행 객체를 생성하고 
-bank 변수에 참조 값을 할당한다.
+bank 변수에 레퍼런스를 할당한다.
 프로그램을 종료할 때 은행 객체 정보를 bank.ser 파일에 저장한다.
  
-다음 메서드를 BankUi 클래스에 추가한다.
+다음 메소드를 BankUi 클래스에 추가한다.
 </p>
 
 <pre class="prettyprint">
@@ -907,7 +907,7 @@ File 클래스로 할 수 있는 알은 다음과 같다.
 File 객체를 생성하는 코드는 아래와 같다.
 File dir = new File(path);
 여기서 path에 해당하는 파일이나 디렉터리는 시스템의 전체 경로가 되어야 한다.
-다음은 File 클래스의 중요 메서드이다.
+다음은 File 클래스의 중요 메소드이다.
 </p>
 
 <dl class="api-summary">
@@ -917,7 +917,7 @@ File dir = new File(path);
 	<dd class="api-summary-dd">isFile() : boolean</dd>
 	<dd class="api-summary-dd-method-desc">dir.isFile(); //dir이 파일이면 true 반환</dd>
 	<dd class="api-summary-dd">list() : String[]</dd>
-	<dd class="api-summary-dd-method-desc">dir.list(); //dir이 디렉터리일 때 디렉터리에 있는 파일명을 String[] 타입 값으로 반환</dd>
+	<dd class="api-summary-dd-method-desc">dir.list(); //dir이 디렉터리일 때 디렉터리에 있는 파일명을 String[] 타입으로 반환</dd>
 	<dd class="api-summary-dd">listFiles() : File[]</dd>
 	<dd class="api-summary-dd-method-desc">dir.listFiles(); //디렉터리에 있는 파일의 파일 객체 배열 반환</dd>
 	<dd class="api-summary-dd">mkdir() : boolean</dd>
@@ -945,7 +945,7 @@ File dir = new File(path);
 </pre>
 
 <p>
-Account.java 파일을 열고 toString() 메서드를 다음처럼 수정하다.
+Account.java 파일을 열고 toString() 메소드를 다음처럼 수정하다.
 </p>
 
 <pre class="prettyprint">
@@ -975,7 +975,7 @@ public String toString() {
 </pre>
 
 <p>
-Transaction.java 파일을 열고 toString() 메서드를 다음처럼 수정한다.
+Transaction.java 파일을 열고 toString() 메소드를 다음처럼 수정한다.
 </p>
 
 <pre class="prettyprint">

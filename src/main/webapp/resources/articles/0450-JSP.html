@@ -83,7 +83,7 @@ JSP는 서블릿 기반 기술이다.
 톰캣과 같은 서블릿 컨테이너는 JSP를 재료로 서블릿<sup>1</sup>을 만들고, 이 서블릿이 클라이언트의 요청에 응답한다.
 
 서블릿은 동적으로 HTML 페이지를 만들어주는 기술이지만 자바 코드와 HTML 코드를 함께 작성하는 데에 어려움이 있다.
-서블릿은 HTML 디자인을 자바 문자열로 만들어서 출력스트림의 메서드에 인자로 전달해야만 한다.
+서블릿은 HTML 디자인을 자바 문자열로 만들어서 출력스트림의 메소드에 아규먼트로 전달해야만 한다.
 이것은 HTML 디자인이 자바 코드에 삽입된다는 의미이다.
 
 JSP에선 이와 반대다.
@@ -151,10 +151,10 @@ try {
 
 <p>
 hello.jsp가 ROOT애플리케이션의 최상위 디렉토리에 있기에, 만들어진 서블릿의 전체 경로는 CATALINA_HOME\work\Catalina\localhost\_\org\apache\jsp\hello_jsp.java이다.
-톰캣은 이 서블릿을 컴파일하고, 서블릿 바이트코드로부터 객체를 생성하고, 생성한 서블릿 객체의 서비스 메서드를 호출한다.
+톰캣은 이 서블릿을 컴파일하고, 서블릿 바이트코드로부터 객체를 생성하고, 생성한 서블릿 객체의 서비스 메소드를 호출한다.
 /hello.jsp 요청이 다시 오면, 톰캣은 hello.jsp 파일이 변경되었는지를 체크한다.
 hello.jsp가 변경되지 않았다면, 톰캣은 서블릿 객체가 이미 로딩되어 있는지 확인한다.
-만일 객체가 메모리에 있다면, 톰캣은 서블릿 객체의 서비스 메서드를 호출한다.
+만일 객체가 메모리에 있다면, 톰캣은 서블릿 객체의 서비스 메소드를 호출한다.
 로딩되지 않았다면 톰캣은 서블릿 객체를 생성한다.
 hello.jsp가 변경되었다면, 톰캣은 hello.jsp로부터 서블릿 자바 소스를 만든다.
 </p>
@@ -205,7 +205,7 @@ hello.jsp가 변경되었다면, 톰캣은 hello.jsp로부터 서블릿 자바 �
 <tr>
 	<td>info="text"</td>
 	<td>JSP페이지에 관한 정보를 나타냅니다.
-	Servlet.getServletInfo() 메서드를 이용해 접근가능.
+	Servlet.getServletInfo() 메소드를 이용해 접근가능.
 	</td>
 </tr>
 -->
@@ -308,7 +308,7 @@ prefix는 JSP안에서 사용한 태그 라이브러리를 구별하는데 쓰�
 <h3 id="Declarations">선언(Declarations)</h3>
 
 <p>
-선언은  JSP 페이지내에서 서블릿 클래스의 변수와 메서드를 선언하기 위해선 사용된다.
+선언은  JSP 페이지내에서 서블릿 클래스의 변수와 메소드를 선언하기 위해선 사용된다.
 다음 선언은 서블릿 클래스의 인스턴스 변수가 된다.
 </p>
 
@@ -317,7 +317,7 @@ prefix는 JSP안에서 사용한 태그 라이브러리를 구별하는데 쓰�
 </pre>
 
 <p>
-다음 선언은 서블릿 클래스의 인스턴스 메서드가 된다.
+다음 선언은 서블릿 클래스의 인스턴스 메소드가 된다.
 </p>
 
 <pre class="prettyprint no-border">
@@ -345,7 +345,7 @@ Hello, &lt;%=getName()%&gt;
 
 <p>
 스크립틀릿 안에서는 자바 문장을 자유럽게 기술할 수 있다.
-&lt;%...%&gt;안의 자바 코드는 서블릿으로 변환될때 _jspSevice() 메서드에 포함된다.
+&lt;%...%&gt;안의 자바 코드는 서블릿으로 변환될때 _jspSevice() 메소드에 포함된다.
 </p>
 
 <h2 id="Actions">4. 액션(Actions)</h2>
@@ -386,7 +386,7 @@ Hello, &lt;%=getName()%&gt;
 </tr>
 <!-- <tr>
 	<td class="table-in-article-td">beanName</td>
-	<td class="table-in-article-td">java.beans.Beans 클래스의 instantiate() 메서드의 아규먼트로 사용할 빈의 이름을 지정</td>
+	<td class="table-in-article-td">java.beans.Beans 클래스의 instantiate() 메소드의 아규먼트로 사용할 빈의 이름을 지정</td>
 </tr> -->
 <tr>
 	<td class="table-in-article-td">type</td>
@@ -453,8 +453,8 @@ Hello, &lt;%=getName()%&gt;
 	<td class="table-in-article-td">property</td>
 	<td class="table-in-article-td">
 값을 변경하고자 하는 빈 속성
-property="*"라면, HTTP 요청과 함께 전달된 파라미터의 이름과 매칭되는 모든 setter 메서드를 호출하여 빈의 속성값을 수정한다.
-하지만 파라미터 값이 ""라면 이에 상응하는 빈의 속성은 수정되지 않는다.
+property="*"라면, HTTP 요청과 함께 전달된 파라미터의 이름과 매칭되는 모든 setter 메소드를 호출하여 빈의 속성값을 수정한다.
+하지만 파라미터값이 ""라면 이에 상응하는 빈의 속성은 수정되지 않는다.
 	</td>
 </tr>
 <tr>
@@ -682,7 +682,7 @@ page 속성은 포워딩할 대상 자원의 상대 주소다.
 <h2 id="Implicit_Objects">5. 내재 객체(Implicit Objects)</h2>
 
 <p>
-내재 객체는 JSP에서 사용되는 객체로 참조값을 얻기위한 작업없이 즉시 사용할 수 있다.
+내재 객체는 JSP에서 사용되는 객체로 레퍼런스를 얻기위한 작업없이 즉시 사용할 수 있다.
 </p>
 
 <h3 id="out">5.1 out</h3>
@@ -799,9 +799,9 @@ ServletConfig 타입의 인스턴스는 서블릿 초기화 파라미터 정보�
 <h3 id="page">5.8 page</h3>
 
 <p>
-page 내재 객체는 페이지 구현 클래스 인스턴스를 참조하는 Object 타입의 레퍼런스이다.
-JSP 스크립팅에서 page라는 이름의 변수를 선언하지 못하는 이유이다.
-쓰임새는 많지 않다.
+page는 페이지 인스턴스를 참조한다.
+이 내재 겍체 때문에 스크립틀릿에서 page라는 이름의 변수를 선언할 수 없다.
+거의 쓰이지 않는다.
 </p>
 
 <h3 id="exception">5.9 exception</h3>
@@ -826,7 +826,7 @@ include 액션의 경우, include의 JSP는 제각각 독립적인 서블릿이 
 
 <p>
 서블릿 스펙에 의해 웹 애플리케이션마다 단 하나의 서블릿컨텍스트 객체가 생성된다.
-서블릿 컨텍스트는 웹 애플리케이션의 서버 측 컴포넌트와 서블릿 컨테이너와의 통신을 담당하는 메서드를 가지고 있다.
+서블릿 컨텍스트는 웹 애플리케이션의 서버 측 컴포넌트와 서블릿 컨테이너와의 통신을 담당하는 메소드를 가지고 있다.
 서블릿 컨텍스트는 JSP와 서블릿과 같은 서버 측 컴포넌트의 공동 저장소 기능도 가지고 있다.
 서블릿 컨텍스트에 저장된 자원은 웹 애플리케이션이 언로드될 때까지 존재한다.
 </p>
@@ -951,7 +951,7 @@ exception 내재 객체는 page 지시어에서 isErrorPage 속성이 true인 JS
 <h3 id="error-handling-2">7.2 현재 서블릿/JSP 스펙에서 JSP 에러 핸들링</h3>
 
 <p>
-web.xml 파일에 HTTP 상태코드<sup>3</sup>와 발생한 익셉션 유형별로 각각의 에러 페이지를 지정해 줄 수 있다.
+web.xml 파일에 HTTP 상태코드<sup>3</sup>와 발생한 익셉션 타입 별로 각각의 에러 페이지를 지정해 줄 수 있다.
 이 스펙은 서블릿 2.3에서 추가되었다. 
 </p>
 
@@ -1083,7 +1083,7 @@ honggildong.jsp란 자원이 ROOT 애플리케이션의 도큐먼트베이스에
 
 <p>
 쿠키는 웹 브라우저에 저장되어 요청을 보낼때 함께 전송되는 간단한 데이터를 말한다.
-쿠키의 유효기간을 setMaxAge() 메서드를 사용하여 구체적인 시간을 명시한다면, 응답 데이터를 받은 웹 브라우저는 응답 데이터에서 쿠키를 꺼내 쿠키저장소에 보관한다.
+쿠키의 유효기간을 setMaxAge() 메소드를 사용하여 구체적인 시간을 명시한다면, 응답 데이터를 받은 웹 브라우저는 응답 데이터에서 쿠키를 꺼내 쿠키저장소에 보관한다.
 setMaxAge()를 사용하지 않은 쿠키 데이터는 웹 브라우저가 종료되면 사라진다.
 </p>
 
@@ -1396,7 +1396,7 @@ String id = request.getParameter("<strong>id</strong>");
 </pre>
 
 <p>
-login_proc.jsp에서 id 파라미터의 값은 내재 객체 request의 getParameter() 메서드를 사용해서 구할 수 있다.
+login_proc.jsp에서 id 파라미터의 값은 내재 객체 request의 getParameter() 메소드를 사용해서 구할 수 있다.
 login_proc.jsp는 User 객체를 생성한 다음, 전달받은 id, passwd 파라미터를 사용해서 User 객체의 멤버 변수를 셋팅한다.
 이 User 객체를 세션에 저장하여 로그인을 완료한다.
 예제를 간단하게 하기 위해 데이터베이스 조회와 관련된 코드를 생략했다.
@@ -1448,7 +1448,7 @@ login_proc.jsp 파일은 아래처럼 간단해진다.
 <p>
 jsp:useBean 액션은 세션에서 키값이 "user"인 객체를 찾는다. 
 만약 그런 객체가 없으면 net.java_school.user.User 클래스로부터 User 객체를 생성하고, 객체를 jsp:userBean 액션의 id 속성값을 키값으로 해서 세션에 저장한다.
-jsp:setProperty 액션은 HTTP 요청안의 파라미터 값을 가지고 JSP 빈즈의 setter 메서드를 호출하면서 멤버 변수를 셋팅한다.
+jsp:setProperty 액션은 HTTP 요청안의 파라미터값을 가지고 JSP 빈즈의 setter 메소드를 호출하면서 멤버 변수를 셋팅한다.
 </p>
 
 <pre class="prettyprint no-border">
@@ -1456,8 +1456,8 @@ jsp:setProperty 액션은 HTTP 요청안의 파라미터 값을 가지고 JSP �
 </pre>
 
 <p>
-위 액션 태그는 User 빈의 setId() 메서드와 setPasswd() 메서드를 호출한다.
-setter 메서드 이름과 매칭되는 HTTP 요청 파라미터의 값이 setter 메서드의 인자값으로 전달된다.
+위 액션 태그는 User 빈의 setId() 메소드와 setPasswd() 메소드를 호출한다.
+setter 메소드 이름과 매칭되는 HTTP 요청 파라미터값이 setter 메소드의 아규먼트로 전달된다.
 </p>
 
 <table class="table-in-article">
@@ -1480,7 +1480,7 @@ setter 메서드 이름과 매칭되는 HTTP 요청 파라미터의 값이 sette
 </table>
 
 <p>
-"setId()"메서드 이름에서 Id의 "I"는 대문자이다.
+"setId()"메소드 이름에서 Id의 "I"는 대문자이다.
 (우리는 이미 자바 명명 규칙을 자바 장에서 공부했다)
 jsp:setProperty 액션을 사용할 때 JSP 빈즈가 자바 명명 규칙을 따르지 않는다면 액션은 작동하지 않는다.
 즉, 액션을 사용할 때 자바 명명 규칙은 권장 사항이 아니라 문법이다.
