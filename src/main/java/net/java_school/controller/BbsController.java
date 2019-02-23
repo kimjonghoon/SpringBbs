@@ -73,22 +73,22 @@ public class BbsController extends Paginator {
 		map.put("boardCd", boardCd);
 		map.put("searchWord", searchWord);
 
-/*
+
 		//Oracle start
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		//Oracle end
-*/
-		        
+
+/*		        
         //MySQL and MariaDB start
         Integer offset = (page - 1) * numPerPage;
         Integer rowCount = numPerPage;
         map.put("offset", offset.toString());
         map.put("rowCount", rowCount.toString());
         //MySQL and MariaDB end
-
+*/
                 
 		List<Article> list = boardService.getArticleList(map);
 
@@ -188,22 +188,23 @@ public class BbsController extends Paginator {
 		map.put("searchWord", searchWord);
 
 
-/*
+
 		//Oracle start
 		Integer startRecord = (page - 1) * numPerPage + 1;
 		Integer endRecord = page * numPerPage;
 		map.put("start", startRecord.toString());
 		map.put("end", endRecord.toString());
 		//Oracle end
-*/
-		       
+
+/*		       
         //MySQL and MariaDB start
         Integer offset = (page - 1) * numPerPage;
         Integer rowCount = numPerPage;
         map.put("offset", offset.toString());
         map.put("rowCount", rowCount.toString());
         //MySQL and MariaDB end
-
+*/
+		
 		List<Article> list = boardService.getArticleList(map);
 
 		int listItemNo = numbers.getListItemNo();
