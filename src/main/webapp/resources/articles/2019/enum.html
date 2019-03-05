@@ -1,7 +1,7 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
-<h1>enum 타입</h1>
+<h1>enum</h1>
 
 <p>
 enum 타입은 자바 5에 도입되었다.
@@ -20,6 +20,21 @@ enum 클래스 바디는 메소드와 필드를 포함할 수 있다.<br />
 컴파일러는 enum을 생성할 때 자동으로 values() 정적 메소드를 추가한다.<br />
 values() 정적 메소드는 enum의 모든 값을 순서대로 저장한 배열을 반환한다.
 </p>
+
+<pre class="prettyprint">package net.java_school.examples;
+
+public enum Day {
+
+	SUNDAY,
+	MONDAY,
+	TUESDAY,
+	WEDNESDAY,
+	THURSDAY,
+	FRIDAY,
+	SATURDAY
+
+}
+</pre>
 
 <pre class="prettyprint">package net.java_school.examples;
 
@@ -97,11 +112,14 @@ SATURDAY</strong></pre>
 
 public enum Day {
 
-	SUNDAY("일"),//"일"이란 값이 생성자에 전달
-	MONDAY("월"), TUESDAY("화"),
-	WEDNESDAY("수"), THURSDAY("목"), FRIDAY("금"),
-	SATURDAY("토");//마지막에 ; 추가
-
+	SUNDAY("Sun"), //"Sun"이란 값을 생성자에 전달
+	MONDAY("Mon"), 
+	TUESDAY("Tue"),
+	WEDNESDAY("Wed"), 
+	THURSDAY("Thu"), 
+	FRIDAY("Fri"),
+	SATURDAY("Sat"); //마지막에 ; 추가
+	
 	private final String value;
 
 	//생성자 추가
@@ -129,15 +147,50 @@ for (Day day : Day.values()) {
 }
 </pre>
 
-<pre class="console"><strong class="console-result">MONDAY
-월
-일
-월
-화
-수
-목
-금
-토</strong></pre>
+<pre class="console"><strong class="console-result">Sun
+Mon
+Tue
+Wed
+Thu
+Fri
+Sat</strong></pre>
+
+<p>
+최종 소스는 다음 zip 파일에 있다.<br />
+<strong><a href="/examples/enum.zip">enum.zip</a></strong>
+</p>
+
+<h3>실행 방법</h3>
+
+<pre class="shell-prompt">~/enum$ <strong>cd src/net/java_school/examples/</strong>
+~/enum/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/enum/src/net/java_school/examples$ <strong>cd -</strong>
+~/enum$ <strong>java -cp ./bin net.java_school.examples.EnumTest</strong>
+1.
+Mondays are bad.
+Midweek days are so-so.
+Fridays are better.
+Weekends are best.
+Weekends are best.
+
+2.
+SUNDAY
+MONDAY
+TUESDAY
+WEDNESDAY
+THURSDAY
+FRIDAY
+SATURDAY
+
+3.
+Sun
+Mon
+Tue
+Wed
+Thu
+Fri
+Sat
+</pre>
 
 <span id="refer">참고</span>
 <ul id="references">

@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
 <h1>디폴트 메소드</h1>
 
@@ -138,5 +138,21 @@ public class C3Class implements A3Interface,B3Interface {
 </pre>
 
 <pre class="console"><strong class="console-result">B3 Interface says hello</strong></pre>
+
+<p>
+최종 소스는 다음 zip 파일에 있다.<br />
+<strong><a href="/examples/multipleInheritance.zip">multipleInheritance.zip</a></strong>
+</p>
+
+<h3>실행 방법</h3>
+
+<pre class="shell-prompt">~/multipleInheritance$ <strong>cd src/net/java_school/examples/</strong>
+~/multipleInheritance/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/multipleInheritance/src/net/java_school/examples$ <strong>cd -</strong>
+~/multipleInheritance$ <strong>java -cp ./bin net.java_school.examples.Test</strong>
+B1 Class says hello
+B2 Interface says hello
+B3 Interface says hello
+</pre>
 
 </article>

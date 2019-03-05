@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
 <h1>Functional Programming in Java</h1>
 
@@ -348,5 +348,21 @@ Tschick,2016,7.0</strong></pre>
 Because of type inference, 
 <em>(Movie m) -&gt; m.getReleaseDate() &gt; 2015</em> can be abbreviated to <em>m -&gt; m.getReleaseDate() &gt; 2015</em>.
 </p>
+
+<p>
+The Eclipse project with source code for the examples is in the following zip file.<br />
+<strong><a href="/examples/functionalProgramming.zip">functionalProgramming.zip</a></strong>
+</p>
+
+<h3>How to run</h3>
+
+<pre class="shell-prompt">~/functionalProgramming$ <strong>cd src/net/java_school/examples/</strong>
+~/functionalProgramming/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/functionalProgramming/src/net/java_school/examples$ <strong>cd -</strong>
+~/functionalProgramming$ <strong>java -cp ./bin net.java_school.examples.MovieTest</strong>
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3
+Tschick,2016,7.0
+</pre>
 
 </article>

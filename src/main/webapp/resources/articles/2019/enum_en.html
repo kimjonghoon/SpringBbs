@@ -1,7 +1,7 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
-<h1>Enum Type</h1>
+<h1>enum</h1>
 
 <p>
 Java enums were added in Java 5.
@@ -12,6 +12,21 @@ An enum type is a special data type that enables for a variable to be a set of p
 The enum declaration defines a class (called an enum type).
 The compiler automatically adds some special methods when it creates an enum. For example, they have a static values method that returns an array containing all of the values of the enum in the order they are declared.
 </p>
+
+<pre class="prettyprint">package net.java_school.examples;
+
+public enum Day {
+
+	SUNDAY,
+	MONDAY,
+	TUESDAY,
+	WEDNESDAY,
+	THURSDAY,
+	FRIDAY,
+	SATURDAY
+
+}
+</pre>
 
 <pre class="prettyprint">package net.java_school.examples;
 
@@ -126,6 +141,43 @@ Wed
 Thu
 Fri
 Sat</strong></pre>
+
+<p>
+The Eclipse project with source code for the examples is in the following zip file.<br />
+<strong><a href="/examples/enum.zip">enum.zip</a></strong>
+</p>
+
+<h3>How to run</h3>
+
+<pre class="shell-prompt">~/enum$ <strong>cd src/net/java_school/examples/</strong>
+~/enum/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/enum/src/net/java_school/examples$ <strong>cd -</strong>
+~/enum$ <strong>java -cp ./bin net.java_school.examples.EnumTest</strong>
+1.
+Mondays are bad.
+Midweek days are so-so.
+Fridays are better.
+Weekends are best.
+Weekends are best.
+
+2.
+SUNDAY
+MONDAY
+TUESDAY
+WEDNESDAY
+THURSDAY
+FRIDAY
+SATURDAY
+
+3.
+Sun
+Mon
+Tue
+Wed
+Thu
+Fri
+Sat
+</pre>
 
 <span id="refer">References</span>
 <ul id="references">

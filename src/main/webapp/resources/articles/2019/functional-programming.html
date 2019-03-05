@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
 <h1>자바의 함수형 프로그래밍 지원</h1>
 
@@ -347,5 +347,21 @@ Tschick,2016,7.0</strong></pre>
 <p>
 타입 추론 기능때문에 (Movie m) -&gt; m.getReleaseDate() > 2015 을 m -&gt; m.getReleaseDate() &gt; 2015 으로 줄여 쓸 수 있다.
 </p>
+
+<p>
+최종 소스는 다음 zip 파일에 있다.<br />
+<strong><a href="/examples/functionalProgramming.zip">functionalProgramming.zip</a></strong>
+</p>
+
+<h3>실행 방법</h3>
+
+<pre class="shell-prompt">~/functionalProgramming$ <strong>cd src/net/java_school/examples/</strong>
+~/functionalProgramming/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/functionalProgramming/src/net/java_school/examples$ <strong>cd -</strong>
+~/functionalProgramming$ <strong>java -cp ./bin net.java_school.examples.MovieTest</strong>
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3
+Tschick,2016,7.0
+</pre>
 
 </article>

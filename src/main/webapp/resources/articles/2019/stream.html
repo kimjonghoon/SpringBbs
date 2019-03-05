@@ -1,5 +1,5 @@
 <article>
-<div class="last-modified">Last Modified 2019.2.1</div>
+<div class="last-modified">Last Modified 2019.3.4</div>
 
 <h1>스트림</h1>
 
@@ -17,8 +17,49 @@
 </p>
 
 <p>
-MovieTest.java를 생성한다.
+영화 클래스인 Movie.java와 테스트를 위한 MovieTest.java를 아래와 같이 생성한다.
 </p>
+
+<pre class="prettyprint">
+package net.java_school.examples;
+
+public class Movie {
+	private final String title;
+	private final int releaseDate;
+	private final double userRatings;
+
+	public Movie(String title, int releaseDate, double userRatings) {
+		this.title = title;
+		this.releaseDate = releaseDate;
+		this.userRatings = userRatings;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public int getReleaseDate() {
+		return releaseDate;
+	}
+
+	public double getUserRatings() {
+		return userRatings;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getTitle());
+		sb.append(",");
+		sb.append(this.getReleaseDate());
+		sb.append(",");
+		sb.append(this.getUserRatings());
+
+		return sb.toString();
+	}
+
+}
+</pre>
 
 <pre class="prettyprint">package net.java_school.examples;
 
@@ -26,22 +67,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 <strong>import static java.util.stream.Collectors.toList;</strong>
 
 public class MovieTest {
-
-	static List&lt;Movie&gt; filterMovies(List&lt;Movie&gt; movies, Predicate&lt;Movie&gt; p) {
-		List&lt;Movie&gt; result = new ArrayList&lt;&gt;();
-		for (Movie movie : movies) {
-			if (p.test(movie)) {
-				result.add(movie);
-			}
-		}
-
-		return result;
-	}
 
 	public static void main(String[] args) throws Exception {
 		String fileName = "./src/movies.txt";
@@ -50,7 +79,7 @@ public class MovieTest {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 			while ((str = br.readLine()) != null) {
 				String[] arr = str.split(",");
-				Movie movie = new Movie(arr[0],Integer.parseInt(arr[1]),Double.parseDouble(arr[2]));
+				Movie movie = new Movie(arr[0], Integer.parseInt(arr[1]), Double.parseDouble(arr[2]));
 				movies.add(movie);
 			}
 		}
@@ -61,10 +90,13 @@ public class MovieTest {
 				.limit(3)
 				.collect(toList());
 		</strong>
+		/*
 		for (Movie movie : threeHighRatingMovieNames) {
 			System.out.println(movie);
 		}
-
+		*/
+		//자바 8 이후 모든 컬렉션에서 forEach 메소드를 사용할 수 있다.
+		<strong>threeHighRatingMovieNames.forEach(m -&gt; System.out.println(m));</strong>
 	}
 
 }
@@ -81,11 +113,11 @@ import static java.util.Comparator.comparing; 임포트 문 추가가 필요하�
 </p>
 
 <pre class="prettyprint">List&lt;Movie&gt; threeHighRatingMovieNames =
-		movies.stream()
-		.filter(m -> m.getUserRatings() >= 8.0)
-		<strong>.sorted(comparing(Movie::getUserRatings))</strong>
-		.limit(3)
-		.collect(toList());
+	movies.stream()
+	.filter(m -> m.getUserRatings() >= 8.0)
+	<strong>.sorted(comparing(Movie::getUserRatings))</strong>
+	.limit(3)
+	.collect(toList());
 </pre>
 
 <pre class="console"><strong class="console-result">Twelve Monkeys,1995,8.0
@@ -111,16 +143,12 @@ The Silence Of The Lambs,1991,8.6</strong></pre>
 </p>
 
 <pre class="prettyprint">List&lt;<strong>String</strong>&gt; threeHighRatingMovieNames =
-		movies.stream()
-		.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
-		.sorted(comparing(Movie::getUserRatings).reversed())
-		<strong>.map(Movie::getTitle)</strong>
-		.limit(3)
-		.collect(toList());
-
-for (<strong>String title</strong> : threeHighRatingMovieNames) {
-	System.out.println(<strong>title</strong>);
-}
+	movies.stream()
+	.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	<strong>.map(Movie::getTitle)</strong>
+	.limit(3)
+	.collect(toList());
 </pre>
 
 <pre class="console"><strong class="console-result">The Shawshank Redemption
@@ -131,14 +159,76 @@ The Silence Of The Lambs</strong></pre>
 병렬처리를 하려면 movies.stream()을 movies.parallelStream()으로 수정한다.
 </p>
 
-
 <pre class="prettyprint">List&lt;String&gt; threeHighRatingMovieNames =
-		movies<strong>.parallelStream()</strong>
-		.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
-		.sorted(comparing(Movie::getUserRatings).reversed())
-		.map(Movie::getTitle)
-		.limit(3)
-		.collect(toList());
+	movies<strong>.parallelStream()</strong>
+	.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	.map(Movie::getTitle)
+	.limit(3)
+	.collect(toList());
+</pre>
+
+<pre class="console"><strong class="console-result">The Shawshank Redemption
+The Dark Knight
+The Silence Of The Lambs</strong></pre>
+
+<p>
+filter() 메소드에 복잡한 람다식을 입력하기 쉽지 않다.
+평점이 8.0 미만의 영화 중에 2015년 이후에 출시된 영화 중 평점 탑 3을 구하려면, 먼저 조건에 맞는 Predicate를 선언한 후 stream 문을 작성하는 게 편하다.
+</p>
+
+<pre class="prettyprint">Predicate&lt;Movie&gt; popularMovies = m -&gt; m.getUserRatings() &gt;= 8.0;
+Predicate&lt;Movie&gt; complexCondition = popularMovies.negate().and(m -&gt; m.getReleaseDate() &gt; 2015);
+
+List&lt;Movie&gt; result =
+	movies.parallelStream()
+	.filter(complexCondition)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	.limit(3)
+	.collect(toList());
+
+result.forEach(m -&gt; System.out.println(m));
+</pre>
+
+<pre class="console"><strong class="console-result">Tschick,2016,7.0
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3</strong></pre>
+
+<p>
+map() 메소드와 함께 연산할 수 있다.
+다음 예제의 연산 결과는 Double로 반환되지 않고 OptionalDouble 타입으로 반환되는데, Optional은 null의 폐해를 줄이기 위해 자바 8에 도입되었다.
+</p>
+
+<pre class="prettyprint">OptionalDouble averageRating =
+	movies.parallelStream()
+	.mapToDouble(m -&gt; m.getUserRatings())
+	.average();
+
+System.out.println("Average Rating: " + averageRating.getAsDouble());
+</pre>
+
+<pre class="console"><strong class="console-result">Average Rating: 7.456896551724138</strong></pre>
+
+<p>
+최종 소스는 다음 zip 파일에 있다.<br />
+<strong><a href="/examples/stream.zip">stream.zip</a></strong>
+</p>
+
+<h3>실행 방법</h3>
+
+<pre class="shell-prompt">~/stream$ <strong>cd src/net/java_school/examples</strong>
+~/stream/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/stream/src/net/java_school/examples$ <strong>cd -</strong>
+~/stream$ <strong>java -cp ./bin net.java_school.examples.MovieTest</strong>
+The Shawshank Redemption
+The Dark Knight
+The Silence Of The Lambs
+
+Tschick,2016,7.0
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3
+
+Average Rating: 7.456896551724138
 </pre>
 
 </article>
