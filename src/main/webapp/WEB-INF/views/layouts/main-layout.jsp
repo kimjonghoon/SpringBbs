@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <tiles:importAttribute name="styles" />
 <tiles:importAttribute name="javascripts" />
@@ -30,7 +29,7 @@
 			<tiles:insertAttribute name="header" />
 		</div>
 
-		<div id="main-menu">
+		<div id="main-menu" lang="en">
 			<tiles:insertAttribute name="main-menu" />
 		</div>
 
@@ -40,7 +39,7 @@
 			</div>
 		</div>
 
-		<div id="sidebar">
+		<div id="sidebar" lang="en">
 			<tiles:insertAttribute name="sidebar" />
 		</div>
 

@@ -18,7 +18,7 @@
             <input type="button" value="<spring:message code="user.logout" />" id="logout" />
             <input type="button" value="<spring:message code="user.modify.account" />" onclick="location.href = '/users/editAccount'" />
         </c:otherwise>
-    </c:choose>
+	</c:choose>    
 </div>
 
 <%

@@ -1,0 +1,237 @@
+<article>
+<div class="last-modified">Last Modified 2019.3.4</div>
+
+<h1>Stream</h1>
+
+<p>
+The stream was introduced in Java 8.
+In a stream, all data is processed inside the library.
+--This is called inner iteration--
+Java 7 did not avoid repetitive code in the collection, and did not use multicore.
+The stream solved these two problems.
+The streams can process collection data in declarative form, 
+and can process data in parallel without threads.
+</p>
+
+<h3>Example</h3>
+
+<p>
+Download <a href="/examples/movies.txt">movies.txt</a> and copy it to the src directory.
+</p>
+
+<p>
+Create Movie.java and MovieTest.java as follows.
+</p>
+
+<pre class="prettyprint">
+package net.java_school.examples;
+
+public class Movie {
+	private final String title;
+	private final int releaseDate;
+	private final double userRatings;
+
+	public Movie(String title, int releaseDate, double userRatings) {
+		this.title = title;
+		this.releaseDate = releaseDate;
+		this.userRatings = userRatings;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public int getReleaseDate() {
+		return releaseDate;
+	}
+
+	public double getUserRatings() {
+		return userRatings;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getTitle());
+		sb.append(",");
+		sb.append(this.getReleaseDate());
+		sb.append(",");
+		sb.append(this.getUserRatings());
+
+		return sb.toString();
+	}
+
+}
+</pre>
+
+<pre class="prettyprint">
+package net.java_school.examples;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+<strong>import static java.util.stream.Collectors.toList;</strong>
+
+public class MovieTest {
+
+	public static void main(String[] args) throws Exception {
+		String fileName = "./src/movies.txt";
+		String str = null;
+		List&lt;Movie&gt; movies = new ArrayList&lt;&gt;();
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			while ((str = br.readLine()) != null) {
+				String[] arr = str.split(",");
+				Movie movie = new Movie(arr[0], Integer.parseInt(arr[1]), Double.parseDouble(arr[2]));
+				movies.add(movie);
+			}
+		}
+		<strong>
+		List&lt;Movie&gt; threeHighRatingMovieNames =
+				movies.stream()
+				.filter(m -> m.getUserRatings() &gt;= 8.0)
+				.limit(3)
+				.collect(toList());
+		</strong>
+		/*
+		for (Movie movie : threeHighRatingMovieNames) {
+			System.out.println(movie);
+		}
+		*/
+		//new forEach method available to any collection class.
+		<strong>threeHighRatingMovieNames.forEach(m -&gt; System.out.println(m));</strong>
+	}
+
+}
+</pre>
+
+<pre class="console"><strong class="console-result">Butch Cassidy And The Sundance Kid,1969,8.1
+Blade Runner 2049,2017,8.1
+Twelve Monkeys,1995,8.0</strong></pre>
+
+<p>
+Since you have not sorted, you will get three from the top in movies.txt.
+To get the top three after sorting, add the following highlight to your code:
+<em>import static java.util.Comparator.comparing;</em> needs to be added.
+</p>
+
+<pre class="prettyprint">List&lt;Movie&gt; threeHighRatingMovieNames =
+	movies.stream()
+	.filter(m -> m.getUserRatings() >= 8.0)
+	<strong>.sorted(comparing(Movie::getUserRatings))</strong>
+	.limit(3)
+	.collect(toList());
+</pre>
+
+<pre class="console"><strong class="console-result">Twelve Monkeys,1995,8.0
+The Terminator,1984,8.0
+Jaws,1975,8.0</strong></pre>
+
+<p>
+The results are sorted by user ratings in ascending order.
+To sort user ratings in descending order, 
+add the reversed() default method to the sort statement as shown below.
+</p>
+
+<p>
+.sorted(comparing(Movie::getUserRatings)<strong>.reversed()</strong>)
+</p>
+
+<pre class="console"><strong class="console-result">The Shawshank Redemption,1994,9.3
+The Dark Knight,2008,9.0
+The Silence Of The Lambs,1991,8.6</strong></pre>
+
+<p>
+It is possible to select specific data.
+To extract only the movie title, add the map() default method as shown below.
+</p>
+
+<pre class="prettyprint">List&lt;<strong>String</strong>&gt; threeHighRatingMovieNames =
+	movies.stream()
+	.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	<strong>.map(Movie::getTitle)</strong>
+	.limit(3)
+	.collect(toList());
+</pre>
+
+<pre class="console"><strong class="console-result">The Shawshank Redemption
+The Dark Knight
+The Silence Of The Lambs</strong></pre>
+
+<p>
+For parallel processing, modify <em>movies.stream()</em> to <em>movies.parallelStream()</em>.
+</p>
+
+<pre class="prettyprint">List&lt;String&gt; threeHighRatingMovieNames =
+	movies<strong>.parallelStream()</strong>
+	.filter(m -&gt; m.getUserRatings() &gt;= 8.0)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	.map(Movie::getTitle)
+	.limit(3)
+	.collect(toList());
+</pre>
+
+<p>
+It is not easy to enter complex lambda expressions into the filter() method.
+If you want to get the top 3 of the movies that are released after 2015 among movies with a rating of less than 8.0, 
+it is convenient to first declare the predicate that matches the condition and then write the stream statement.
+</p>
+
+<pre class="prettyprint">Predicate&lt;Movie&gt; popularMovies = m -&gt; m.getUserRatings() &gt;= 8.0;
+Predicate&lt;Movie&gt; complexCondition = popularMovies.negate().and(m -&gt; m.getReleaseDate() &gt; 2015);
+
+List&lt;Movie&gt; result =
+	movies.parallelStream()
+	.filter(complexCondition)
+	.sorted(comparing(Movie::getUserRatings).reversed())
+	.limit(3)
+	.collect(toList());
+
+result.forEach(m -&gt; System.out.println(m));
+</pre>
+
+<pre class="console"><strong class="console-result">Tschick,2016,7.0
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3</strong></pre>
+
+<p>
+You can operate with the map() method.
+The result type of the following example is OptionalDouble not Double. 
+Optional was introduced in Java 8 in order to reduce the harmful effects of null.
+</p>
+
+<pre class="prettyprint">OptionalDouble averageRating =
+	movies.parallelStream()
+	.mapToDouble(m -&gt; m.getUserRatings())
+	.average();
+
+System.out.println("Average Rating: " + averageRating.getAsDouble());
+</pre>
+
+<pre class="console"><strong class="console-result">Average Rating: 7.456896551724138</strong></pre>
+
+<p>
+The Eclipse project with source code for the examples is in the following zip file.<br />
+<strong><a href="/examples/stream.zip">stream.zip</a></strong>
+</p>
+
+<h3>How to run</h3>
+
+<pre class="shell-prompt">~/stream$ <strong>cd src/net/java_school/examples</strong>
+~/stream/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/stream/src/net/java_school/examples$ <strong>cd -</strong>
+~/stream$ <strong>java -cp ./bin net.java_school.examples.MovieTest</strong>
+The Shawshank Redemption
+The Dark Knight
+The Silence Of The Lambs
+
+Tschick,2016,7.0
+Small Town Crime,2017,6.6
+The Commuter,2018,6.3
+
+Average Rating: 7.456896551724138
+</pre>
+
+</article>

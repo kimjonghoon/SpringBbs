@@ -1,6 +1,6 @@
 <article>
 	
-<h1>로깅(Logging)</h1>
+<h1>로깅</h1>
 
 <p>
 로그(Log)란 프로그램 개발이나 운영 시 발생하는 문제점을 추적하거나 운영 상태를 모니터링하기 위한 텍스트다.<br />
@@ -72,7 +72,8 @@ public class LogTest1 {
 }
 </pre>
 
-<h2>Log4j 2</h2>
+<h2 id="log4j-2">Log4j 2</h2>
+
 <p>
 로그를 전담하는 프레임워크가 있다.<br />
 프레임워크란 공통적인 작업을 자동화하고, 개발자로 하여금 빨리 애플리케이션을 개발하도록 하기 위한 노력의 산물을 말한다.<br /> 
@@ -195,13 +196,13 @@ INFO로 셋팅하면, INFO, INFO, WARN, ERROR, FATAL은 기록된다.
 	<li>TRACE :  DEBUG보다 세분화 된 정보 이벤트</li>
 </ol>
 
-<h2>Commons Logging와 Log4j 2 연동</h2>
+<h3>Commons Logging와 Log4j 2 연동</h3>
+
 <p>
 아파치 그룹의 commons-logging은 개발자들에게 공통 로깅 API를 제공하기 위해 만들어진 프레임워크로 애플리케이션이 특정 로깅 프레임워크에 종속되지 않게 한다.<br />
 현재 많은 서드 파티 로깅 프레임워크들이 commons-logging 기반으로 구현되어 있다.<br />
 </p>
 
-<h3>commons-logging 사용법</h3>
 <p>
 아래 주소에서 바이너리 배포본을 내려받는다.<br />
 <a href="http://apache.mirror.cdnetworks.com/commons/logging/binaries/">http://apache.mirror.cdnetworks.com/commons/logging/binaries/</a><br /> 
@@ -261,8 +262,6 @@ public class LogTest3 {
 commons-logging-1.2.jar와 log4j-jcl-2.8.jar를 빌드 패스에 추가한다.
 log4j-jcl-2.8.jar는 압축을 푼 Log4j 2 디렉터리에서 찾을 수 있다.
 </p>
-
-
 
 <h2>slf4j</h2>
 

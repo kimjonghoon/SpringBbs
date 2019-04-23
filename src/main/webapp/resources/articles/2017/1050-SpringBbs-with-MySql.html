@@ -1,0 +1,652 @@
+<article>
+<div class="last-modified">Last Modified 2017.7.6</div>
+
+<h1>MySQL를 사용하는 스프링 게시판 프로그램</h1>
+
+<p>
+지금까지 작업한 오라클용 스프링 MVC 게시판을 MySql을 사용하도록 수정해 보자.
+</p>
+
+<h3>MySql 설치</h3>
+
+<pre class="shell-prompt">
+sudo apt install mysql-server mysql-client 
+</pre>
+
+<h3>한글을 위한 설정 (최신 버전은 생략 가능)</h3>
+
+<p>
+root 계정으로 mysql 데이터베이스에 접속
+</p>
+
+<pre class="shell-prompt">
+mysql --user=root --password mysql
+</pre>
+
+<p>
+접속 상태에서 상태에서 status 실행
+</p>
+ 
+<pre class="shell-prompt">
+mysql&gt; <strong>status</strong>
+--------------
+mysql  Ver 14.14 Distrib 5.6.24, for debian-linux-gnu (x86_64) using  EditLine wrapper
+
+Connection id:		3
+Current database:	mysql
+Current user:		root@localhost
+SSL:			Not in use
+Current pager:		stdout
+Using outfile:		''
+Using delimiter:	;
+Server version:		5.6.24-0ubuntu2 (Ubuntu)
+Protocol version:	10
+Connection:		Localhost via UNIX socket
+<strong>Server characterset:	latin1
+Db     characterset:	latin1</strong>
+Client characterset:	utf8
+Conn.  characterset:	utf8
+UNIX socket:		/var/run/mysqld/mysqld.sock
+Uptime:			20 min 12 sec
+</pre>
+
+<p>
+exit로 빠져 나온 후, mysqld.cnf 파일을 연다.
+</p>
+
+<pre class="shell-prompt">
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+</pre>
+
+<p>
+[mysqld]에 다음 추가
+</p>
+
+<pre class="prettyprint">
+default-storage-engine = innodb
+innodb_file_per_table
+collation-server = utf8_general_ci
+init-connect = 'SET NAMES utf8'
+character-set-server = utf8
+</pre>
+
+<p>
+MySQL 재시작
+</p>
+
+<pre class="shell-prompt">
+sudo service mysql restart
+</pre>
+
+<p>
+root 계정으로 접속한 다음 status를 다시 실행하여 캐릭터셋이 수정되었는지 확인
+</p>
+
+<pre class="shell-prompt">
+mysql> <strong>status</strong>
+--------------
+mysql  Ver 14.14 Distrib 5.6.24, for debian-linux-gnu (x86_64) using  EditLine wrapper
+
+Connection id:		2
+Current database:	mysql
+Current user:		root@localhost
+SSL:			Not in use
+Current pager:		stdout
+Using outfile:		''
+Using delimiter:	;
+Server version:		5.6.24-0ubuntu2 (Ubuntu)
+Protocol version:	10
+Connection:		Localhost via UNIX socket
+<strong>Server characterset:	utf8
+Db     characterset:	utf8</strong>
+Client characterset:	utf8
+Conn.  characterset:	utf8
+UNIX socket:		/var/run/mysqld/mysqld.sock
+Uptime:			12 sec
+</pre>
+
+<h3>데이터베이스 작업</h3>
+
+<script src="https://gist.github.com/kimjonghoon/95af96412582a8f8c0cb.js"></script>
+
+<h3>소스</h3>
+
+<p>
+아래는 오라클용 스프링 MVC 게시판과 다른 부분이다.
+</p>
+
+<p>
+오라클용 스프링 MVC 게시판과 같은 artifactId를 사용하는 건 바람직하지 않으니 바꾼다.
+</p>
+
+<h6 class="src">pom.xml</h6>
+<pre class="prettyprint">
+&lt;artifactId&gt;<strong>spring-bbs-mysql</strong>&lt;/artifactId&gt;
+
+&lt;build&gt;
+&lt;finalName&gt;<strong>spring-bbs-mysql</strong>&lt;/finalName&gt;
+</pre>
+
+<p>
+MySql은 대소문자를 구별한다.
+MySql에서 테이블 이름을 member로 생성했다면 select * from MEMBER;은 오라클과 달리 에러를 발생시킨다.
+securty.xml을 열고 인증 쿼리를 아래를 참조해 수정한다.
+</p>
+
+<h6 class="src">security.xml</h6>
+<pre class="prettyprint">
+&lt;jdbc-user-service
+	data-source-ref="dataSource"
+	users-by-username-query="select email as username,passwd as password,1 as enabled
+	from member where email = ?"
+	authorities-by-username-query="select email as username,authority
+	from authorities where email = ?" /&gt;
+</pre>
+
+<p>
+데이터소스 설정을 MySql용으로 아래와 같이 수정한다.
+</p>
+
+<h6 class="src">applicationContext.xml</h6>
+<pre class="prettyprint">
+&lt;bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"&gt;
+	&lt;property name="driverClassName" value="<strong>com.mysql.jdbc.Driver</strong>"/&gt;
+	&lt;property name="url" value="<strong>jdbc:mysql://localhost:3306/javaskool?useUnicode=yes&amp;amp;characterEncoding=UTF-8"</strong> /&gt;
+	&lt;property name="username" value="java"/&gt;
+	&lt;property name="password" value="school"/&gt;
+	&lt;property name="maxActive" value="100"/&gt;
+	&lt;property name="maxWait" value="1000"/&gt;
+	&lt;property name="poolPreparedStatements" value="true"/&gt;
+	&lt;property name="defaultAutoCommit" value="true"/&gt;
+	&lt;property name="validationQuery" value="<strong>SELECT 1</strong>" /&gt;
+&lt;/bean&gt;
+</pre>
+
+<p>
+기존 BoardMapper.xml을 MySql용으로 아래와 같이 수정한다.
+</p>
+
+<h6 class="src">BoardMapper.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+
+&lt;!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
+
+&lt;mapper namespace="net.java_school.mybatis.BoardMapper"&gt;
+
+	&lt;select id="selectListOfArticles" parameterType="hashmap" resultType="Article"&gt;
+		SELECT 
+			a.articleno, a.title, a.regdate, a.hit, m.name, 
+			count(distinct(f.attachfileno)) attachfileNum, 
+			count(distinct(c.commentno)) commentNum
+		FROM 
+			article as a left join attachfile as f on a.articleno = f.articleno
+				left join comments as c on a.articleno = c.articleno
+				left join member as m on a.email = m.email
+		WHERE
+			a.boardcd = #{boardCd}
+			&lt;if test="searchWord != null and searchWord != ''"&gt;
+			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+			&lt;/if&gt;
+		GROUP BY a.articleno, title, a.regdate, hit, m.name
+		ORDER BY articleno DESC
+		LIMIT #{offset}, #{rowCount}
+	&lt;/select&gt;
+
+	&lt;select id="selectCountOfArticles" parameterType="hashmap" resultType="int"&gt;
+		SELECT count(*) FROM article 
+		WHERE 
+			boardcd = #{boardCd}
+			&lt;if test="searchWord != null and searchWord != ''"&gt;
+			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+			&lt;/if&gt;
+	&lt;/select&gt;
+
+	&lt;insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleNo"&gt;
+		INSERT INTO article (boardcd, title, content, email, hit, regdate)
+		VALUES
+		(#{boardCd}, #{title}, #{content}, #{email}, 0, now())
+	&lt;/insert&gt;
+	
+	&lt;insert id="insertAttachFile" parameterType="AttachFile"&gt;
+		INSERT INTO attachfile (filename, filetype, filesize, articleno, email)
+		VALUES
+		(#{filename}, #{filetype}, #{filesize}, #{articleNo}, #{email})
+	&lt;/insert&gt;
+
+	&lt;update id="update" parameterType="Article"&gt;
+		UPDATE article 
+		SET title = #{title}, content = #{content} 
+		WHERE articleno = #{articleNo}
+	&lt;/update&gt;
+
+	&lt;delete id="delete" parameterType="int"&gt;
+		DELETE FROM article WHERE articleno = #{articleNo}
+	&lt;/delete&gt;
+
+	&lt;update id="updateHitPlusOne" parameterType="int"&gt;
+		UPDATE article SET hit = hit + 1 WHERE articleno = #{articleNo}
+	&lt;/update&gt;
+
+	&lt;select id="selectOne" parameterType="int" resultType="Article"&gt;
+		SELECT 
+			articleno,
+			title,
+			content,
+			a.email,
+			ifNull(name, 'Anonymous') name,
+			hit,
+			regdate
+		FROM article as a left join member as m on a.email = m.email
+		WHERE 
+			articleno = #{articleNo}
+	&lt;/select&gt;
+
+	&lt;select id="selectNextOne" parameterType="hashmap" resultType="Article"&gt;
+		SELECT articleno, title 
+		FROM article 
+		WHERE 
+			boardCd = #{boardCd} 
+			AND articleno &amp;gt; #{articleNo}
+		&lt;if test="searchWord != null and searchWord != ''"&gt;
+			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+		&lt;/if&gt; 
+		ORDER BY articleno
+		LIMIT 1
+	&lt;/select&gt;
+	
+	&lt;select id="selectPrevOne" parameterType="hashmap" resultType="Article"&gt;
+		SELECT articleno, title 
+		FROM article 
+		WHERE 
+			boardCd = #{boardCd} 
+			AND articleno &amp;lt; #{articleNo}
+		&lt;if test="searchWord != null and searchWord != ''"&gt;
+			AND (title LIKE '%${searchWord}%' OR content LIKE '%${searchWord}%')
+		&lt;/if&gt; 
+		ORDER BY articleno DESC
+		LIMIT 1
+	&lt;/select&gt;
+
+	&lt;select id="selectListOfAttachFiles" parameterType="int" resultType="AttachFile"&gt;
+		SELECT 
+			attachfileno,
+			filename,
+			filetype,
+			filesize,
+			articleno,
+			email 
+		FROM attachfile 
+		WHERE articleno = #{articleNo} 
+		ORDER BY attachfileno
+	&lt;/select&gt;
+
+	&lt;delete id="deleteFile" parameterType="int"&gt;
+		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
+	&lt;/delete&gt;
+
+	&lt;select id="selectOneBoard" parameterType="string" resultType="string"&gt;
+		SELECT * FROM board WHERE boardcd = #{boardCd}
+	&lt;/select&gt;
+
+	&lt;insert id="insertComment" parameterType="Comment"&gt;
+		INSERT INTO comments (articleno, email, memo, regdate)
+		VALUES (#{articleNo}, #{email}, #{memo}, now())
+	&lt;/insert&gt;
+
+	&lt;update id="updateComment" parameterType="Comment"&gt;
+		UPDATE comments SET memo = #{memo} WHERE commentno = #{commentNo}
+	&lt;/update&gt;
+	
+	&lt;delete id="deleteComment" parameterType="int"&gt;
+		DELETE FROM comments WHERE commentno = #{commentNo}
+	&lt;/delete&gt;
+
+	&lt;select id="selectListOfComments" parameterType="int" resultType="Comment"&gt;
+		SELECT 
+			commentno, 
+			articleno, 
+			c.email, 
+			ifNull(name, 'Anonymous') name,
+			memo, 
+			regdate
+		FROM comments as c left join member as m on c.email = m.email
+		WHERE 
+			articleno = #{articleNo}
+		ORDER BY commentno DESC
+	&lt;/select&gt;
+
+	&lt;select id="selectOneAttachFile" parameterType="int" resultType="AttachFile"&gt;
+		SELECT
+			attachfileno,
+			filename,
+			filetype,
+			filesize,
+			articleno,
+			email
+		FROM
+			attachfile
+		WHERE
+			attachfileno = #{attachfileno}
+	&lt;/select&gt;
+
+	&lt;select id="selectOneComment" parameterType="int" resultType="Comment"&gt;
+		SELECT 
+			commentno,
+			articleno,
+			email,
+			memo,
+			regdate 
+		FROM comments 
+		WHERE
+			commentno = #{commentNo}
+	&lt;/select&gt;
+
+ &lt;/mapper&gt;
+</pre>
+
+<p>
+UserMapper.xml은 오라클용과 내용이 같다.
+</p>
+
+<p>
+페이징 처리에 사용되는 다음 VO 클래스는 오라클용과 함께 사용해도 된다.
+</p>
+
+<h6 class="src">NumbersForPaging.java</h6>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public class NumbersForPaging {
+	private int totalPage;
+	private int firstPage;
+	private int lastPage;
+	private int prevBlock;
+	private int nextBlock;
+	private int listItemNo;
+	
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int getFirstPage() {
+		return firstPage;
+	}
+	public void setFirstPage(int firstPage) {
+		this.firstPage = firstPage;
+	}
+	public int getLastPage() {
+		return lastPage;
+	}
+	public void setLastPage(int lastPage) {
+		this.lastPage = lastPage;
+	}
+	public int getPrevBlock() {
+		return prevBlock;
+	}
+	public void setPrevBlock(int prevBlock) {
+		this.prevBlock = prevBlock;
+	}
+	public int getNextBlock() {
+		return nextBlock;
+	}
+	public void setNextBlock(int nextBlock) {
+		this.nextBlock = nextBlock;
+	}
+	public int getListItemNo() {
+		return listItemNo;
+	}
+	public void setListItemNo(int listItemNo) {
+		this.listItemNo = listItemNo;
+	}
+	
+}
+</pre>
+
+<p>
+페이징 처리를 위한 숫자를 생산하는 다음 클래스는 오라클용과 함께 사용해도 된다.
+</p>
+
+<h6 class="src">Paginator.java</h6>
+<pre class="prettyprint">
+package net.java_school.commons;
+
+public class Paginator {
+
+	public NumbersForPaging getNumbersForPaging(int totalRecord, int page, int numPerPage, int pagePerBlock) {
+		int totalPage = totalRecord / numPerPage;
+		if (totalRecord % numPerPage != 0) totalPage++;
+		int totalBlock = totalPage / pagePerBlock;
+		if (totalPage % pagePerBlock != 0) totalBlock++;
+		int block = page / pagePerBlock;
+		if (page % pagePerBlock != 0) block++;
+		int firstPage = (block - 1) * pagePerBlock + 1;
+		int lastPage = block * pagePerBlock;
+		int prevPage = 0;
+		if (block &gt; 1) {
+			prevPage = firstPage - 1;
+		}
+		int nextPage = 0;
+		if (block &lt; totalBlock) {
+			nextPage = lastPage + 1;
+		}
+		if (block &gt;= totalBlock) {
+			lastPage = totalPage;
+		}
+		int listItemNo = totalRecord - (page - 1) * numPerPage;
+		
+		NumbersForPaging numbers = new NumbersForPaging();
+		
+		numbers.setTotalPage(totalPage);
+		numbers.setFirstPage(firstPage);
+		numbers.setLastPage(lastPage);
+		numbers.setPrevBlock(prevPage);
+		numbers.setNextBlock(nextPage);
+		numbers.setListItemNo(listItemNo);
+		
+		return numbers;
+	}
+
+}
+</pre>
+
+<p>
+페이지를 위한 숫자를 생산해야 하는 컨트롤러는 Paginator 클래스를 상속하게 한다.
+</p>
+
+<h6 class="src">BbsController.java</h6>
+<pre class="prettyprint">
+@Controller
+@RequestMapping("/bbs")
+public class BbsController <strong>extends Paginator</strong>
+</pre>
+
+<p>
+목록과 상세보기에서 레코드를 그룹화할 때 필요한 숫자가 오라클과 MySql이 다르다.
+아래 코드를 참조해 레코드을 그룹화하는 부분의 코드를 MySql에 맞게 수정한다. 
+</p>
+
+<h6 class="src">BbsController.java</h6>
+<pre class="prettyprint">
+//목록
+@RequestMapping(value="/{boardCd}", method=RequestMethod.GET)
+public String list(@PathVariable String boardCd, Integer page, String searchWord, Locale locale, Model model) {
+	if (page == null) page = 1;
+	
+	int numPerPage = 10;
+	int pagePerBlock = 10;
+
+	int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
+
+	NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+
+	//mysql
+	Integer offset = (page - 1) * numPerPage;
+	HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+	map.put("boardCd", boardCd);
+	map.put("searchWord", searchWord);
+	map.put("offset", offset.toString());
+	Integer rowCount = numPerPage;
+	map.put("rowCount", rowCount.toString());
+	List&lt;Article&gt; list = boardService.getArticleList(map);
+
+	Integer listItemNo = numbers.getListItemNo();
+	Integer prevPage = numbers.getPrevBlock();
+	Integer nextPage = numbers.getNextBlock();
+	Integer firstPage = numbers.getFirstPage();
+	Integer lastPage = numbers.getLastPage();
+
+	model.addAttribute("list", list);
+	model.addAttribute("listItemNo", listItemNo);
+	model.addAttribute("prevPage", prevPage);
+	model.addAttribute("nextPage", nextPage);
+	model.addAttribute("firstPage", firstPage);
+	model.addAttribute("lastPage", lastPage);
+	
+	String lang = locale.getLanguage();
+	List&lt;Board&gt; boards = boardService.getBoards();
+	String boardName = this.getBoardName(boardCd, lang);
+	model.addAttribute("boards", boards);
+	model.addAttribute("boardName", boardName);
+	
+	//boardCd는 파라미터로 전달되지 않으므로
+	model.addAttribute("boardCd", boardCd);
+	
+	return "bbs/list";
+
+}
+
+//상세보기
+@RequestMapping(value="/{boardCd}/{articleNo}", method=RequestMethod.GET)
+public String view(@PathVariable String boardCd, @PathVariable Integer articleNo,   
+		Integer page, String searchWord, Locale locale, Model model) {
+	if(page == null) page = 1;
+	String lang = locale.getLanguage();
+	boardService.increaseHit(articleNo);
+
+	Article article = boardService.getArticle(articleNo);//상세보기에서 볼 게시글
+	List&lt;AttachFile&gt; attachFileList = boardService.getAttachFileList(articleNo);
+	Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
+	Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
+	List&lt;Comment&gt; commentList = boardService.getCommentList(articleNo);
+	String boardName = this.getBoardName(boardCd, lang);
+
+	//상세보기에서 볼 게시글 관련 정보
+	String title = article.getTitle();//제목
+	String content = article.getContent();//내용
+	content = content.replaceAll(WebContants.LINE_SEPARATOR, "&lt;br /&gt;");
+	int hit = article.getHit();//조회수
+	String name = article.getName();//작성자 이름
+	String email = article.getEmail();//작성자 ID
+	Date regdate = article.getRegdate();//작성일
+
+	model.addAttribute("title", title);
+	model.addAttribute("content", content);
+	model.addAttribute("hit", hit);
+	model.addAttribute("name", name);
+	model.addAttribute("email", email);
+	model.addAttribute("regdate", regdate);
+	model.addAttribute("attachFileList", attachFileList);
+	model.addAttribute("nextArticle", nextArticle);
+	model.addAttribute("prevArticle", prevArticle);
+	model.addAttribute("commentList", commentList);
+
+	//목록관련
+	int numPerPage = 10;//페이지당 레코드 수
+	int pagePerBlock = 10;//블록당 페이지 링크수
+
+	int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
+	
+	NumbersForPaging numbers = this.getNumbersForPaging(totalRecord, page, numPerPage, pagePerBlock);
+	
+	//mysql
+	Integer offset = (page - 1) * numPerPage;
+	HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+	map.put("boardCd", boardCd);
+	map.put("searchWord", searchWord);
+	map.put("offset", offset.toString());
+	Integer rowCount = numPerPage;
+	map.put("rowCount", rowCount.toString());
+	List&lt;Article&gt; list = boardService.getArticleList(map);
+
+	int listItemNo = numbers.getListItemNo();
+	int prevPage = numbers.getPrevBlock();
+	int nextPage = numbers.getNextBlock();
+	int firstPage = numbers.getFirstPage();
+	int lastPage = numbers.getLastPage();
+
+	model.addAttribute("list", list);
+	model.addAttribute("listItemNo", listItemNo);
+	model.addAttribute("prevPage", prevPage);
+	model.addAttribute("firstPage", firstPage);
+	model.addAttribute("lastPage", lastPage);
+	model.addAttribute("nextPage", nextPage);
+	model.addAttribute("boardName", boardName);
+
+	List&lt;Board&gt; boards = boardService.getBoards();
+	model.addAttribute("boards", boards);
+	
+	//articleNo와 boardCd는 파라미터로 전달되지 않기에
+	model.addAttribute("articleNo", articleNo);
+	model.addAttribute("boardCd", boardCd);
+	
+	return "bbs/view";
+}
+</pre>
+
+<p>
+수정을 마쳤다면 컴파일한다.
+</p>
+
+<pre class="shell-prompt">
+mvn clean compile war:inplace
+</pre>
+
+
+<h3>톰캣 컨텍스트 파일</h3>
+
+<p>
+ROOT 애플리케이션으로 테스트해야 한다.
+다음과 같이 ROOT.xml을 수정한다.
+</p>
+
+<pre class="shell-prompt">
+cd /etc/tomcat7/Catalina/localhost
+sudo nano ROOT.xml
+</pre>
+
+<h6 class="src">ROOT.xml</h6>
+<pre class="prettyprint">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context
+    docBase="/home/kim/Lab/SpringBbs/src/main/webapp"
+    reloadable="true"&gt;
+&lt;/Context&gt;
+</pre>
+
+
+<h3>테스트</h3>
+
+<p>
+톰캣을 재실행한다.
+</p>
+
+<pre class="shell-prompt">
+sudo service tomcat8 restart
+</pre>
+
+
+<p>
+http://localhost:8080 방문한다.
+</p>
+
+<span id="refer">참고</span>
+<ul id="references">
+	<li><a href="https://fosskb.wordpress.com/2015/04/18/installing-openstack-kilo-on-ubuntu-15-04-single-machine-setup/">https://fosskb.wordpress.com/2015/04/18/installing-openstack-kilo-on-ubuntu-15-04-single-machine-setup/</a></li>
+</ul>
+
+</article>

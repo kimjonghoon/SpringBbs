@@ -81,7 +81,7 @@ a.add(7);a.add(8);a.add(9);a.add(10);
 &lt;c:set var="firstPage" value="&lt;%=firstPage %&gt;" /&gt;
 &lt;c:set var="lastPage" value="&lt;%=lastPage %&gt;" /&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;title&gt;JSTL core examples&lt;/title&gt;
@@ -155,16 +155,16 @@ Use EL and JSTL to modify the code, and change all .jsp to .do, except for the j
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
-&lt;h1 style="float: left;width: 150px;"&gt;&lt;a href="../"&gt;&lt;img src="../images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 style="float: left;width: 150px;"&gt;&lt;a href="/"&gt;&lt;img src="/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
 &lt;div id="memberMenu" style="float: right;position: relative;top: 7px;"&gt;
 <strong>&lt;c:choose&gt;
     &lt;c:when test="${empty user}"&gt;</strong>
-        &lt;input type="button" value="Login" onclick="location.href='../users/login<strong>.do</strong>'" /&gt;
-        &lt;input type="button" value="SignUp" onclick="location.href='../users/signUp<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="Login" onclick="location.href='/users/login<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="SignUp" onclick="location.href='/users/signUp<strong>.do</strong>'" /&gt;
     <strong>&lt;/c:when&gt;
     &lt;c:otherwise&gt;</strong>
-        &lt;input type="button" value="Logout" onclick="location.href='../users/logout<strong>.do</strong>'" /&gt;
-        &lt;input type="button" value="Modify Account" onclick="location.href='../users/editAccount<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="Logout" onclick="location.href='/users/logout<strong>.do</strong>'" /&gt;
+        &lt;input type="button" value="Modify Account" onclick="location.href='/users/editAccount<strong>.do</strong>'" /&gt;
     <strong>&lt;/c:otherwise&gt;
 &lt;/c:choose&gt;</strong>
 &lt;/div&gt;
@@ -200,14 +200,14 @@ The logic in logincheck.jsp will be implemented in the action class.
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Board list" /&gt;
 &lt;meta name="Description" content="Board list" /&gt;
 &lt;title&gt;Small talk&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function goList(page) {
     var form = document.getElementById("listForm");
     form.page.value = page;
@@ -238,7 +238,6 @@ function goWrite() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;!-- List heading --&gt;
 &lt;table class="bbs-table"&gt;
@@ -267,12 +266,10 @@ function goWrite() {
 <strong>&lt;/c:forEach&gt;</strong>
 &lt;!-- List items end --&gt;
 &lt;/table&gt;
-    
 &lt;div id="paging"&gt;
     <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
         &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[Prev]&lt;/a&gt;
     <strong>&lt;/c:if&gt;</strong>
-    
     <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
         <strong>&lt;c:choose&gt;
             &lt;c:when test="${param.page == i }"&gt;</strong>
@@ -283,16 +280,13 @@ function goWrite() {
             <strong>&lt;/c:otherwise&gt;
         &lt;/c:choose&gt;
     &lt;/c:forEach&gt;</strong>
-
     <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
         &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[Next]&lt;/a&gt;
     <strong>&lt;/c:if&gt;</strong>
 &lt;/div&gt;
-
 &lt;div id="list-menu"&gt;
     &lt;input type="button" value="New" onclick="goWrite()" /&gt;
 &lt;/div&gt;
-
 &lt;form action="list<strong>.do</strong>" method="get"&gt;
     &lt;input type="hidden" name="page" value="1" /&gt;
     &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
@@ -362,14 +356,14 @@ The action class should create the following data and pass it to list.jsp.
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Board detailed view" /&gt;
 &lt;meta name="Description" content="Board detailed view" /&gt;
 &lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function modifyCommentToggle(articleNo) {
     var p_id = "comment" + articleNo;
     var form_id = "modifyCommentForm" + articleNo;
@@ -447,7 +441,7 @@ function deleteComment(commentNo) {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
+&lt;!-- content begin --&gt;
 &lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
@@ -487,7 +481,18 @@ function deleteComment(commentNo) {
     <strong>&lt;/c:forEach&gt;</strong>
     &lt;/p&gt;
 &lt;/div&gt;
-
+&lt;form id="addCommentForm" action="addComment<strong>.do</strong>" method="post"&gt;
+    &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>"/&gt;
+    &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
+    &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
+    &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;       
+    &lt;div id="addComment"&gt;
+        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div style="text-align: right;"&gt;
+        &lt;input type="submit" value="Add comment" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
 <strong>&lt;c:forEach var="comment" items="${commentList }" varStatus="status"&gt;</strong>
 &lt;div class="comments"&gt;
     &lt;span class="writer"&gt;<strong>${comment.name }</strong>&lt;/span&gt;
@@ -500,39 +505,21 @@ function deleteComment(commentNo) {
     <strong>&lt;/c:if&gt;</strong>
     &lt;p id="comment<strong>${comment.commentNo }</strong>"&gt;<strong>${comment.memo }</strong>&lt;/p&gt;
     &lt;form id="modifyCommentForm<strong>${comment.commentNo }</strong>" class="comment-form" action="updateComment<strong>.do</strong>" method="post" style="display: none;"&gt;
-    &lt;p&gt;
         &lt;input type="hidden" name="commentNo" value="<strong>${comment.commentNo }</strong>" /&gt;
         &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
         &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>" /&gt;
         &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
         &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;
-    &lt;/p&gt;
-    &lt;div class="fr"&gt;
-            &lt;a href="javascript:document.forms.modifyCommentForm<strong>${comment.commentNo }</strong>.submit()"&gt;Submit&lt;/a&gt;
-            | &lt;a href="javascript:modifyCommentToggle('<strong>${comment.commentNo }</strong>')"&gt;Cancel&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>${comment.memo }</strong>&lt;/textarea&gt;
-    &lt;/div&gt;
+	    &lt;div class="fr"&gt;
+	            &lt;a href="javascript:document.forms.modifyCommentForm<strong>${comment.commentNo }</strong>.submit()"&gt;Submit&lt;/a&gt;
+	            | &lt;a href="javascript:modifyCommentToggle('<strong>${comment.commentNo }</strong>')"&gt;Cancel&lt;/a&gt;
+	    &lt;/div&gt;
+	    &lt;div&gt;
+	        &lt;textarea class="comment-textarea" name="memo" rows="7" cols="50"&gt;<strong>${comment.memo }</strong>&lt;/textarea&gt;
+	    &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 <strong>&lt;/c:forEach&gt;</strong>
-
-&lt;form id="addCommentForm" action="addComment<strong>.do</strong>" method="post"&gt;
-    &lt;p style="margin: 0; padding: 0;"&gt;
-        &lt;input type="hidden" name="articleNo" value="<strong>${param.articleNo }</strong>"/&gt;
-        &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
-        &lt;input type="hidden" name="page" value="<strong>${param.page }</strong>" /&gt;
-        &lt;input type="hidden" name="searchWord" value="<strong>${param.searchWord }</strong>" /&gt;       
-    &lt;/p&gt;
-    &lt;div id="addComment"&gt;
-        &lt;textarea name="memo" rows="7" cols="50"&gt;&lt;/textarea&gt;
-    &lt;/div&gt;
-    &lt;div style="text-align: right;"&gt;
-        &lt;input type="submit" value="Add comment" /&gt;
-    &lt;/div&gt;
-&lt;/form&gt;
-
 &lt;div id="next-prev"&gt;
     <strong>&lt;c:if test="${nextArticle != null }"&gt;</strong>
     &lt;p&gt;Next Article : &lt;a href="javascript:goView('<strong>${nextArticle.articleNo }</strong>')"&gt;<strong>${nextArticle.title }</strong>&lt;/a&gt;&lt;/p&gt;
@@ -541,7 +528,7 @@ function deleteComment(commentNo) {
     &lt;p&gt;Prev Article : &lt;a href="javascript:goView('<strong>${prevArticle.articleNo }</strong>')"&gt;<strong>${prevArticle.title }</strong>&lt;/a&gt;&lt;/p&gt;
     <strong>&lt;/c:if&gt;</strong>
 &lt;/div&gt;
-&lt;div class="view-menu" style="margin-bottom: 47px;"&gt;
+&lt;div class="view-menu"&gt;
     <strong>&lt;c:if test="${user.email == email }"&gt;</strong>
     &lt;div class="fl"&gt;
         &lt;input type="button" value="Modify" onclick="goModify()" /&gt;
@@ -593,12 +580,10 @@ function deleteComment(commentNo) {
 &lt;/tr&gt;
 <strong>&lt;/c:forEach&gt;</strong>
 &lt;/table&gt;
-    
 &lt;div id="paging"&gt;
     <strong>&lt;c:if test="${prevPage &gt; 0 }"&gt;</strong>
         &lt;a href="javascript:goList('<strong>${prevPage }</strong>')"&gt;[Prev]&lt;/a&gt;
     <strong>&lt;/c:if&gt;</strong>
-    
     <strong>&lt;c:forEach var="i" begin="${firstPage }" end="${lastPage }"&gt;</strong>
         <strong>&lt;c:choose&gt;</strong>
             <strong>&lt;c:when test="${param.page == i }"&gt;</strong>
@@ -609,16 +594,13 @@ function deleteComment(commentNo) {
             <strong>&lt;/c:otherwise&gt;
         &lt;/c:choose&gt;</strong>  
     <strong>&lt;/c:forEach&gt;</strong>
-    
     <strong>&lt;c:if test="${nextPage &gt; 0 }"&gt;</strong>
         &lt;a href="javascript:goList('<strong>${nextPage }</strong>')"&gt;[Next]&lt;/a&gt;
     <strong>&lt;/c:if&gt;</strong>
 &lt;/div&gt;
-
 &lt;div id="list-menu"&gt;
     &lt;input type="button" value="New" onclick="goWrite()" /&gt;
 &lt;/div&gt;
-
 &lt;form action="list<strong>.do</strong>" method="get"&gt;
     &lt;input type="hidden" name="page" value="1" /&gt;
     &lt;input type="hidden" name="boardCd" value="<strong>${param.boardCd }</strong>" /&gt;
@@ -627,7 +609,7 @@ function deleteComment(commentNo) {
         &lt;input type="submit" value="Search" /&gt;
     &lt;/div&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -729,14 +711,14 @@ Modify the contents and file name of the write_form.jsp of model 1 as follows.
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong> 
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="New article form" /&gt;
 &lt;meta name="Description" content="New article form" /&gt;
 &lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function goList() {
     var form = document.getElementById("listForm");
     form.submit();
@@ -761,7 +743,7 @@ function goView() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-        
+&lt;!-- content begin --&gt;
 &lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;h3&gt;New article&lt;/h3&gt;
 &lt;form id="writeForm" action="write<strong>.do</strong>" method="post" enctype="multipart/form-data"&gt;
@@ -789,7 +771,7 @@ function goView() {
     <strong>&lt;/c:if&gt;</strong>
 &lt;/div&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;
     &lt;/div&gt;
     
@@ -838,14 +820,14 @@ Modify the contents and filename of modify_form.jsp in Model 1 as shown below.
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Modify form page" /&gt;
 &lt;meta name="Description" content="Modify form page" /&gt;
 &lt;title&gt;<strong>${boardNm }</strong>&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     //var form = document.getElementById("modifyForm");
     //TODO validaion logic
@@ -871,7 +853,7 @@ function goView() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
+&lt;!-- content begin --&gt;
 &lt;div id="content-categories"&gt;<strong>${boardNm }</strong>&lt;/div&gt;
 &lt;h3&gt;Modify&lt;/h3&gt;
 &lt;form id="modifyForm" action="modify<strong>.do</strong>" method="post" enctype="multipart/form-data" onsubmit="return check();"&gt;
@@ -899,7 +881,7 @@ function goView() {
     &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -971,14 +953,14 @@ Replace all .jsp files except for the jsp used in the include directive with .do
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Login" /&gt;
 &lt;meta name="Description" content="Login" /&gt;
 &lt;title&gt;Login&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     //var form = document.getElementById("loginForm");
     //TODO validation logic
@@ -1000,13 +982,12 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
+&lt;!-- content begin --&gt;
 &lt;div id="content-categories"&gt;Membership&lt;/div&gt;
 &lt;h2&gt;Login&lt;/h2&gt;
 <strong>&lt;c:if test="${not empty param.msg }"&gt;
 &lt;p style="color: red;"&gt;Login Failed!&lt;/p&gt;
 &lt;/c:if&gt;</strong>      
-
 &lt;form id="loginForm" action="<strong>login.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;p style="margin: 0; padding: 0;"&gt;
 &lt;input type="hidden" name="url" value="<strong>${param.url }</strong>" /&gt;
@@ -1026,7 +1007,7 @@ function check() {
     &lt;input type="button" value="Sign Up" onclick="location.href='signUp<strong>.do</strong>'" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -1053,14 +1034,14 @@ function check() {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Sign Up" /&gt;
 &lt;meta name="Description" content="Sign Up" /&gt;
 &lt;title&gt;Sign Up&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     //var form = document.getElementById("signUpForm");
     //TODO validation logic
@@ -1082,10 +1063,8 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-
-&lt;h1&gt;Sign Up&lt;/h1&gt;
+&lt;!-- content begin --&gt;        
+&lt;h3&gt;Sign Up&lt;/h3&gt;
 &lt;form id="signUpForm" action="signUp<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -1118,7 +1097,7 @@ function check() {
     &lt;input type="submit" value="Submit" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -1145,7 +1124,7 @@ function check() {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Welcome" /&gt;
@@ -1167,12 +1146,13 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Welcome&lt;/h1&gt;
+&lt;!-- content begin --&gt;        
+&lt;h3&gt;Welcome&lt;/h3&gt;
+&lt;p&gt;
 The email you entered at registration will be used as an ID.&lt;br /&gt;
 &lt;input type="button" value="Login" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
-
+&lt;/p&gt;
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -1199,14 +1179,14 @@ The email you entered at registration will be used as an ID.&lt;br /&gt;
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Modify account" /&gt;
 &lt;meta name="Description" content="Modify account" /&gt;
 &lt;title&gt;Modify account&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     //var form = document.getElementById("editAccountForm");
     //TODO validation logic
@@ -1228,9 +1208,8 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-        
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Modify account&lt;/h1&gt;
+&lt;!-- content begin --&gt;        
+&lt;h3&gt;Modify account&lt;/h3&gt;
 &lt;p&gt;
 You can edit your account information except your password. &lt;a href="changePasswd<strong>.do</strong>"&gt;Change password&lt;/a&gt;
 &lt;/p&gt;
@@ -1253,7 +1232,7 @@ You can edit your account information except your password. &lt;a href="changePa
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
+&lt;!-- content end --&gt;
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -1281,14 +1260,14 @@ You can edit your account information except your password. &lt;a href="changePa
     pageEncoding="UTF-8"%&gt;
 <strong>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Change password" /&gt;
 &lt;meta name="Description" content="Change password" /&gt;
 &lt;title&gt;Change password&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css"  /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     var form = document.getElementById("changePasswordForm");
     if (form.newPasswd.value == form.confirm.value) {
@@ -1314,11 +1293,12 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Change password&lt;/h1&gt;
+&lt;!-- content begin --&gt;        
+&lt;h3&gt;Change password&lt;/h3&gt;
+&lt;p&gt;
 <strong>${user.name }</strong>&lt;br /&gt;
 <strong>${user.mobile }</strong>&lt;br /&gt;
+&lt;/p&gt;
 &lt;form id="changePasswordForm" action="changePasswd<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -1338,7 +1318,6 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
 
@@ -1365,7 +1344,7 @@ function check() {
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Password change confirm" /&gt;
@@ -1386,14 +1365,15 @@ function check() {
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
-        &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Password Changed.&lt;/h1&gt;
+&lt;div id="content"&gt;
+&lt;!-- content begin --&gt;        
+&lt;h3&gt;Password Changed.&lt;/h3&gt;
+&lt;p&gt;
 You can login with the changed password.&lt;br /&gt;
 &lt;input type="button" value="Login" onclick="javascript:location.href='login<strong>.do</strong>'" /&gt;
-
-        &lt;/div&gt;&lt;!-- content end --&gt;
+&lt;/p&gt;
+&lt;!-- content end --&gt;
+        &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
     &lt;div id="sidebar"&gt;
@@ -1419,14 +1399,14 @@ You can login with the changed password.&lt;br /&gt;
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Bye" /&gt;
 &lt;meta name="Description" content="Bye" /&gt;
 &lt;title&gt;Bye&lt;/title&gt;
 &lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 function check() {
     //var form = document.getElementById("byeForm");
     //TODO validation logic
@@ -1448,9 +1428,9 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
+&lt;!-- content begin --&gt;
 &lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h2&gt;Bye&lt;/h2&gt;
+&lt;h3&gt;Bye&lt;/h3&gt;
 &lt;form id="byeForm" action="bye<strong>.do</strong>" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -1466,8 +1446,8 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
-        &lt;/div&gt;&lt;!-- content end --&gt;
+&lt;!-- content end --&gt;
+        &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
 
     &lt;div id="sidebar"&gt;
@@ -1500,17 +1480,14 @@ Modify all .jsp files except for the jsp used in the include directive to .do.
 &lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
-&lt;%
-String contextPath = request.getContextPath();
-%&gt;
 &lt;!DOCTYPE html&gt;
-&lt;html lang="ko"&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8" /&gt;
 &lt;meta name="Keywords" content="Error" /&gt;
 &lt;meta name="Description" content="Error" /&gt;
 &lt;title&gt;Error&lt;/title&gt;
-&lt;link rel="stylesheet" href="&lt;%=contextPath %&gt;/css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;%
@@ -1532,43 +1509,18 @@ if (requestUri == null) {
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="&lt;%=contextPath %&gt;"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
-        &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
-&lt;%
-User loginUser = (User) session.getAttribute("user");
-if (loginUser == null) {
-%&gt;
-    &lt;input type="button" value="Login" onclick="location.href='&lt;%=contextPath %&gt;/users/login<strong>.do</strong>'" /&gt;
-    &lt;input type="button" value="Sign Up" onclick="location.href='&lt;%=contextPath %&gt;/users/signUp<strong>.do</strong>'" /&gt;
-&lt;%
-} else {
-%&gt;   
-    &lt;input type="button" value="Logout" onclick="location.href='&lt;%=contextPath %&gt;/users/logout<strong>.do</strong>'" /&gt;
-    &lt;input type="button" value="Modify Account" onclick="location.href='&lt;%=contextPath %&gt;/users/editAccount<strong>.do</strong>'" /&gt;
-&lt;%
-}
-%&gt;
-        &lt;/div&gt;
+        &lt;%@ include file="./inc/header.jsp" %&gt;
     &lt;/div&gt;
 
     &lt;div id="main-menu"&gt;
-        &lt;ul id="nav"&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="&lt;%=contextPath %&gt;/bbs/list<strong>.do</strong>?boardCd=free&amp;page=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
+        &lt;%@ include file="./inc/main-menu.jsp" %&gt;
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
+&lt;!--  content begin --&gt;
 &lt;div id="content-categories"&gt;Error&lt;/div&gt;
-&lt;h2&gt;Error Page&lt;/h2&gt;
+&lt;h3&gt;Error Page&lt;/h3&gt;
 &lt;%
 if(statusCode != 500){
     out.write("&lt;h3&gt;Error Details&lt;/h3&gt;");
@@ -1584,8 +1536,8 @@ if (throwable != null) {
     out.write("&lt;/ul&gt;");
 }
 %&gt;
-
-        &lt;/div&gt;&lt;!-- content end --&gt;
+&lt;!-- content end --&gt;
+        &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
     &lt;div id="sidebar"&gt;
@@ -1593,11 +1545,7 @@ if (throwable != null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="&lt;%=contextPath %&gt;/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;%@ include file="./inc/extra.jsp" %&gt; 
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -1901,10 +1849,8 @@ public class LoginAction implements Action {
 
         ActionForward forward = new ActionForward();
          
-        String contextPath = req.getContextPath();
-        
         if (user == null) {
-            forward.setView(contextPath + "/users/login.do?url=" + url +"&amp;msg=Login-Failed");
+            forward.setView("/users/login.do?url=" + url +"&amp;msg=Login-Failed");
             forward.setRedirect(true);
         } else {
             HttpSession session = req.getSession();
@@ -1913,7 +1859,7 @@ public class LoginAction implements Action {
                 forward.setView(url);
                 forward.setRedirect(true);
             } else {
-                forward.setView(contextPath + "/bbs/list.do?boardCd=free&amp;page=1");
+                forward.setView("/bbs/list.do?boardCd=free&amp;page=1");
                 forward.setRedirect(true);
             }
         }
@@ -1956,7 +1902,7 @@ public class LogoutAction implements Action {
         session.removeAttribute(WebContants.USER_KEY);
 
         String contextPath = req.getContextPath();
-        forward.setView(contextPath);//go to homepage
+        forward.setView("/");//go to homepage
         forward.setRedirect(true);
 
         return forward;
@@ -2043,9 +1989,8 @@ public class EditAccountFormAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
             forward.setRedirect(true);
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
 
             return forward;
         }
@@ -2120,7 +2065,9 @@ public class EditAccountAction implements Action {
 }
 </pre>
 
-<p>The ChangePasswdFormAction action class works on the /users/changePasswd.do request.</p>
+<p>
+The ChangePasswdFormAction action class works on the /users/changePasswd.do request.
+</p>
 
 <h6 class="src">ChangePasswdFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
@@ -2153,8 +2100,7 @@ public class ChangePasswdFormAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
             forward.setRedirect(true);
             
             return forward;
@@ -2167,7 +2113,9 @@ public class ChangePasswdFormAction implements Action {
 }
 </pre>
 
-<p>The ChangePasswdAction action class works on the /users/changePasswd.do POST request.</p>
+<p>
+The ChangePasswdAction action class works on the /users/changePasswd.do POST request.
+</p>
 
 <h6 class="src">ChangePasswdAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
@@ -2251,8 +2199,7 @@ public class ByeFormAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
             forward.setRedirect(true);
  
             return forward;
@@ -2266,7 +2213,9 @@ public class ByeFormAction implements Action {
 }
 </pre>
 
-<p>The ByeAction action class works on the /users/bye.do POST request.</p>
+<p>
+The ByeAction action class works on the /users/bye.do POST request.
+</p>
 
 <h6 class="src">ByeAction.java</h6>
 <pre class="prettyprint">package net.java_school.user.action;
@@ -2316,7 +2265,9 @@ public class ByeAction implements Action {
 
 </pre>
 
-<p>The ListAction action class works on the /bbs/list.do GET request.</p>
+<p>
+The ListAction action class works on the /bbs/list.do GET request.
+</p>
 
 <h6 class="src">ListAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2383,8 +2334,7 @@ public class ListAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
             forward.setRedirect(true);
             
             return forward;
@@ -2499,8 +2449,7 @@ public class ViewAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
             forward.setRedirect(true);
                         
             return forward;
@@ -2602,8 +2551,7 @@ public class WriteFormAction implements Action {
             String query = req.getQueryString();
             if (query != null) url += "?" + query;
             url = URLEncoder.encode(url, "UTF-8");
-            String contextPath = req.getContextPath();
-            forward.setView(contextPath + "/users/login.do?url=" + url);
+            forward.setView("/users/login.do?url=" + url);
             forward.setRedirect(true);
             
             return forward;
@@ -2623,7 +2571,9 @@ public class WriteFormAction implements Action {
 }
 </pre>
 
-<p>The WriteAction action class works on the /bbs/write.do POST request.</p>
+<p>
+The WriteAction action class works on the /bbs/write.do POST request.
+</p>
 
 <h6 class="src">WriteAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2710,7 +2660,9 @@ public class WriteAction implements Action {
 }
 </pre>
 
-<p>The ModifyFormAction action class works on the /bbs/modify.do GET request.</p>
+<p>
+The ModifyFormAction action class works on the /bbs/modify.do GET request.
+</p>
 
 <h6 class="src">ModifyFormAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2765,7 +2717,9 @@ public class ModifyFormAction implements Action {
 }
 </pre>
 
-<p>The ModifyAction action class works on the /bbs/modify.do POST request.</p>
+<p>
+The ModifyAction action class works on the /bbs/modify.do POST request.
+</p>
 
 <h6 class="src">ModifyAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2860,7 +2814,9 @@ public class ModifyAction implements Action {
 }
 </pre>
 
-<p>The DeleteAction action class works on the /bbs/del.do POST	request.</p>
+<p>
+The DeleteAction action class works on the /bbs/del.do POST	request.
+</p>
 
 <h6 class="src">DeleteAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2916,7 +2872,9 @@ public class DeleteAction implements Action {
 }
 </pre>
 
-<p>The AddCommentAction action class works on the /bbs/addComment.do POST request.</p>
+<p>
+The AddCommentAction action class works on the /bbs/addComment.do POST request.
+</p>
 
 <h6 class="src">AddCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -2974,7 +2932,9 @@ public class AddCommentAction implements Action {
 }
 </pre>
 
-<p>The UpdateCommentAction action class works on the	/bbs/updateComment.do POST request.</p>
+<p>
+The UpdateCommentAction action class works on the	/bbs/updateComment.do POST request.
+</p>
 
 <h6 class="src">UpdateCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -3039,7 +2999,9 @@ public class UpdateCommentAction implements Action {
 }
 </pre>
 
-<p>The DeleteCommentAction action class works on the /bbs/deleteComment.do POST request.</p>
+<p>
+The DeleteCommentAction action class works on the /bbs/deleteComment.do POST request.
+</p>
 
 <h6 class="src">DeleteCommentAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -3094,7 +3056,9 @@ public class DeleteCommentAction implements Action {
 }
 </pre>
 
-<p>The DeleteAttachFileAction action class works on the	/bbs/deleteAttachFile.do POST request.</p>
+<p>
+The DeleteAttachFileAction action class works on the	/bbs/deleteAttachFile.do POST request.
+</p>
 
 <h6 class="src">DeleteAttachFileAction.java</h6>
 <pre class="prettyprint">package net.java_school.board.action;
@@ -3163,13 +3127,15 @@ public class DeleteAttachFileAction implements Action {
 </ul>
 
 <p>
-	The view is responsible for the JSP in the project.<br /> A model is
-	an action class in a project and is responsible for business logic.<br />
-	Business logic is the logic that processes the data needed for the
-	business.<br /> You can think of the business logic as the logic that
-	produces the data to be seen in the view.<br /> The business logic
-	must be detached from the view and implemented in the model.<br /> If
-	your view has business logic, it's not good code.
+The view is responsible for the JSP in the project.<br />
+A model is an action class in a project and is responsible for business logic.<br />
+Business logic is the logic that processes the data needed for the business.<br />
+You can think of the business logic as the logic that produces the data to be seen in the view.<br />
+The business logic must be detached from the view and implemented in the model.<br />
+If your view has business logic, it's not good code.
 </p>
 
+<p>
+Model 2 Board Final Source: <a href="https://github.com/kimjonghoon/model2">https://github.com/kimjonghoon/model2</a>
+</p>
 </article>

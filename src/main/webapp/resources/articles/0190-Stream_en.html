@@ -1,9 +1,9 @@
 <article>
 
-<h1>Stream</h1>
+<h1>Java I/O</h1>
 
 <p>
-In Java, input and output are done through streams.
+The Java API designer considered input and output as streams.
 If the stream comes into the Java program, it is an input stream.
 If the stream goes out of the Java program, it is an output stream.
 
@@ -795,8 +795,7 @@ public void saveBank() throws Exception {
 
 <h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
-<strong>
-private Bank bank;
+<strong>private Bank bank;
 
 public BankUi() throws Exception {
     loadBank();
@@ -931,8 +930,7 @@ Open BankUi.java and modify the code referring to the following.
 </p>
 
 <pre class="prettyprint">
-<strong>
-static final String ACCOUNT_FILE = "accounts.txt";
+<strong>static final String ACCOUNT_FILE = "accounts.txt";
 static final String DATA_DIR = "./data/";
 </strong>
 private Bank bank = <strong>new ShinhanBank();

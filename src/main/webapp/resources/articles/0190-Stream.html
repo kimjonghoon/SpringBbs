@@ -1,10 +1,11 @@
 <article>
 
-<h1>스트림</h1>
+<h1>자바 I/O</h1>
 
 <p>
-자바에서 입출력 관련 API를 스트림이라 부른다.
-자바 프로그램을 기준으로 스트림의 방향이 자바 프로그램 안으로 향하면 입력 스트림, 스트림의 방향이 자바 프로그램 밖으로 향하면 출력 스트림이다.
+자바 API 설계자는 입력과 출력(I/O)을 스트림으로 생각했다.
+--스트림은 실개천 정도로 해석할 수 있다-- 
+자바 프로그램을 기준으로, 스트림의 방향이 자바 프로그램 안으로 향하면 입력 스트림, 프로그램 밖으로 향하면 출력 스트림이다.
 스트림 객체를 생성할 때 중요한 정보는 입력 스트림의 경우 근원지<sup>Source</sup>고, 출력 스트림의 경우 목적지<sup>Destination</sup>다.
 스트림 생성자의 아규먼트로 이들 정보가 필요하다.
 근원지나 목적지의 형태는 다양하다.
@@ -875,8 +876,7 @@ public void saveBank() throws Exception {
 
 <h6 class="src">BankUi.java</h6>
 <pre class="prettyprint">
-<strong>
-private Bank bank;
+<strong>private Bank bank;
 
 public BankUi() throws Exception {
     loadBank();
@@ -1001,8 +1001,7 @@ public String toString() {
 </p>
 
 <pre class="prettyprint">
-<strong>
-static final String ACCOUNT_FILE = "accounts.txt";
+<strong>static final String ACCOUNT_FILE = "accounts.txt";
 static final String DATA_DIR = "./data/";
 </strong>
 private Bank bank = <strong>new ShinhanBank();

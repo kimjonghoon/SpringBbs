@@ -23,7 +23,7 @@
 		
 		<form-login login-page="/users/login"
 			authentication-failure-url="/users/login?error=1"
-			default-target-url="/bbs/free?page=1" />
+			default-target-url="/bbs/chat?page=1" />
 
 		<logout logout-success-url="/" invalidate-session="true" />
 

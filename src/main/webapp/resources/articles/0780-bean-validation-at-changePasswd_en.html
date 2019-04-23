@@ -1,6 +1,6 @@
 <article>
 
-<h2>Change Password</h2>
+<h2>Bean Validation - Change Password</h2>
 
 <p>
 To use Bean validation for a password, you need a Password class.
@@ -71,8 +71,7 @@ public String changePasswd(@Valid Password password,
 
 <h6 class="src">changePasswd.jsp</h6>
 <pre class="prettyprint">
-<strong>
-&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
+<strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
 &lt;sf:form id="changePasswordForm" action="changePasswd" method="post"
         modelAttribute="password" onsubmit="return check();"&gt;</strong>

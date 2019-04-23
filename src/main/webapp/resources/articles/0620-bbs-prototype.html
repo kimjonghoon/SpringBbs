@@ -1,12 +1,88 @@
 <article>
 
-<h1>프로토타입(prototype)</h1>
+<h1>프로토타입</h1>
 
 <p>
-프로토타입이란 개발 초기에 만드는 일종의 모형이다.<br />
-웹 애플리케이션의 프로토타입은 화면에 해당하는 JSP를 위주로 작성한다.<br />
+프로토타입(Prototype)이란 개발 초기에 만드는 일종의 모형이다.<br />
+웹 애플리케이션의 프로토타입은 화면에 해당하는 뷰(JSP 또는 html)를 중심으로 작성한다.<br />
 프로그램 로직은 테스트에 필요하거나 개발 종료까지 변경되지 않는 명확한 부분만 작성한다.<br />
 </p>
+
+<p>
+구현하려는 프로젝트는 모델 1 게시판이다.<br />
+모델 1은 클라이언트가 직접 JSP를 요청한다.<br />
+다음은 모델 1 게시판 프로젝트에 필요한 JSP 파일 목록이다.
+</p>
+
+<p>
+<strong>도큐먼트 베이스</strong>
+</p>
+
+<ul>
+	<li>/index.jsp : 홈페이지</li>
+	<li>/error.jsp : 에러 페이지</li>
+</ul>
+
+<p>
+<strong>/inc</strong>
+</p>
+
+<ul>
+	<li>header.jsp : 로고와 회원메뉴 버튼(로그인, 회원 가입 또는 로그아웃, 내 정보 수정)을 담는다.</li>
+	<li>main-menu.jsp : 메인 메뉴</li>
+	<li>extra.jsp : 화면 오른쪽에 위치하며 외부 링크를 담는다.</li>
+	<li>footer.jsp : 카피라이트, 주소, 연락처 표시</li>
+	<li>loginCheck.jsp : 로그인이 필요한 페이지에서 인클루드하는 파일로, 로그인하지 않은 사용자는 로그인 페이지로 이동시킨다.</li>
+</ul>
+
+<p>
+<strong>/users</strong>
+</p>
+
+<ul>
+	<li>user-sub.jsp : 회원 관련 메뉴</li>
+	<li>login.jsp : 로그인 폼</li>
+	<li>login_proc.jsp : 로그인 처리</li>
+	<li>logout_proc.jsp : 로그아웃 처리</li>
+	<li>signUp.jsp : 회원 가입 폼</li>
+	<li>signUp_proc.jsp : 회원 가입 처리</li>
+	<li>welcome.jsp : 회원 가입 환영</li>
+	<li>editAccount.jsp : 내 정보 수정 폼</li>
+	<li>editAccount_proc.jsp : 내 정보 수정 처리</li>
+	<li>changePasswd.jsp : 비밀번호 변경 폼</li>
+	<li>changePasswd_proc.jsp : 비밀번호 변경 처리</li>
+	<li>changePasswd_confirm.jsp : 비밀번호 변경 확인</li>
+	<li>bye.jsp : 탈퇴 폼</li>
+	<li>bye_proc.jsp : 탈퇴 처리</li>
+	<li>bye_confirm.jsp : 탈퇴 확인</li>
+</ul>
+
+<p>
+<strong>/bbs</strong>
+</p>
+
+<ul>
+	<li>bbs-sub.jsp : 게시판 메뉴</li>
+	<li>list.jsp : 게시판 목록</li>
+	<li>write.jsp : 글쓰기 폼</li>
+	<li>write_proc.jsp : 글쓰기 처리</li>
+	<li>view.jsp : 상세보기</li>
+	<li>addComment_proc.jsp : 댓글 쓰기 처리</li>
+	<li>updateComment_proc.jsp : 댓글 수정 처리</li>
+	<li>deleteComment_proc.jsp : 댓글 삭제 처리</li>
+	<li>deleteAttachFile_proc.jsp : 첨부 파일 삭제 처리</li>
+	<li>del_proc.jsp : 게시글 삭제 처리</li>
+	<li>modify.jsp : 게시글 수정 폼</li>
+	<li>modify_proc.jsp : 게시글 수정 처리</li>
+</ul>
+
+<p>
+<strong>/java</strong>
+</p>
+
+<ul>
+	<li>index.jsp : 서브페이지 예제</li>
+</ul>
 
 <h2>메인 페이지, 서브 페이지</h2>
 
@@ -114,8 +190,8 @@ User 클래스에 아이디가 없다.<br />
 </p>
 
 <h6 class="src">/index.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;<strong>
+<pre class="prettyprint"><strong>&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ko"&gt;
@@ -124,26 +200,26 @@ User 클래스에 아이디가 없다.<br />
 &lt;meta name="Keywords" content="<strong>메인 페이지</strong>" /&gt;
 &lt;meta name="Description" content="<strong>메인 페이지</strong>" /&gt;
 &lt;title&gt;<strong>메인 페이지</strong>&lt;/title&gt;
-&lt;link rel="stylesheet" href="css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href=<strong>"/css/screen.css"</strong> type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 <strong>style="float: left; width: 150px;"</strong>&gt;&lt;a href=<strong>"./</strong>"&gt;&lt;img src="images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;h1 <strong>style="float: left; width: 150px;"</strong>&gt;&lt;a href=<strong>"/"</strong>&gt;&lt;img src=<strong>"/images/ci.gif"</strong> alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
         <strong>&lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="로그인" onclick="location.href='./users/login.jsp'" /&gt;
-            &lt;input type="button" value="회원 가입" onclick="location.href='./users/signUp.jsp'" /&gt;
+            &lt;input type="button" value="로그인" onclick="location.href='/users/login.jsp'" /&gt;
+            &lt;input type="button" value="회원 가입" onclick="location.href='/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="로그아웃" onclick="location.href='./users/logout_proc.jsp'" /&gt;
-            &lt;input type="button" value="내 정보 수정" onclick="location.href='./users/editAccount.jsp'" /&gt;
+            &lt;input type="button" value="로그아웃" onclick="location.href='/users/logout_proc.jsp'" /&gt;
+            &lt;input type="button" value="내 정보 수정" onclick="location.href='/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -151,32 +227,22 @@ if (loginUser == null) {
     &lt;/div&gt;
 
     &lt;div id="main-menu"&gt;
-        &lt;ul id="nav"&gt;&lt;!-- 이전 메뉴와 다르다. --&gt;<strong>
-            &lt;li&gt;&lt;a href="java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;</strong>&lt;!-- 자유 게시판 첫 페이지 --&gt;
+        &lt;ul id="nav"&gt;
+            &lt;li&gt;&lt;a href="<strong>/java</strong>"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jdbc</strong>"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jsp</strong>"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/css-layout</strong>"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jsp-pjt</strong>"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/spring</strong>"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/javascript</strong>"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/bbs/list.jsp?boardCd=free&amp;curPage=1</strong>"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;Main&lt;/div&gt;
-            
-&lt;h1&gt;수정&lt;/h1&gt;
-&lt;h2&gt;JSP Project 전반적인 내용 수정 2014.9.26&lt;/h2&gt;
-프로토타입을 만든 후에 진행하는 것으로 내용 수정&lt;br /&gt;
-프로토타입에 로그인 구현&lt;br /&gt;
 
-&lt;h2&gt;CSS Layout 수정 2014.9.26&lt;/h2&gt;
-카테고리 정리&lt;br /&gt;
-스타일 시트 파일 체계적으로 갱신&lt;br /&gt;
 &lt;!--  본문 끝 --&gt;
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
@@ -186,11 +252,11 @@ if (loginUser == null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>/images/youtube.png</strong>" alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>/images/twitter.png</strong>" alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>/images/facebook.png</strong>" alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>/images/gmail.png</strong>" alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>/images/java-school.png</strong>" alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -218,9 +284,9 @@ if (loginUser == null) {
 </p>
     
 <h6 class="src">/java/index.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+<pre class="prettyprint"><strong>&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
-&lt;%@ page import="net.java_school.user.User" %&gt;    
+&lt;%@ page import="net.java_school.user.User" %&gt;</strong>    
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ko"&gt;
 &lt;head&gt;
@@ -228,26 +294,26 @@ if (loginUser == null) {
 &lt;meta name="Keywords" content="자바 홈" /&gt;
 &lt;meta name="Description" content="자바 홈" /&gt;
 &lt;title&gt;자바 홈&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href="<strong>/css/screen.css</strong>" type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 style="float: left; width: 150px;" &gt;&lt;a href="<strong>../</strong>"&gt;&lt;img src="<strong>../</strong>images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;h1 style="float: left; width: 150px;" &gt;&lt;a href="<strong>/</strong>"&gt;&lt;img src="<strong>/images/ci.gif</strong>" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
         &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="로그인" onclick="location.href='<strong>../users/login.jsp</strong>'" /&gt;
-            &lt;input type="button" value="회원 가입" onclick="location.href='<strong>../users/signUp.jsp</strong>'" /&gt;
+            &lt;input type="button" value="로그인" onclick="location.href='<strong>/users/login.jsp</strong>'" /&gt;
+            &lt;input type="button" value="회원 가입" onclick="location.href='<strong>/users/signUp.jsp</strong>'" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="로그아웃" onclick="location.href='<strong>../users/logout_proc.jsp'</strong>" /&gt;
-            &lt;input type="button" value="내 정보 수정" onclick="location.href='<strong>../users/editAccount.jsp</strong>'" /&gt;
+            &lt;input type="button" value="로그아웃" onclick="location.href='<strong>/users/logout_proc.jsp'</strong>" /&gt;
+            &lt;input type="button" value="내 정보 수정" onclick="location.href='<strong>/users/editAccount.jsp</strong>'" /&gt;
 &lt;%
 }
 %&gt;
@@ -256,66 +322,21 @@ if (loginUser == null) {
 
     &lt;div id="main-menu"&gt;
         &lt;ul id="nav"&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/java</strong>"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jdbc</strong>"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jsp</strong>"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/css-layout</strong>"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/jsp-pjt</strong>"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/spring</strong>"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/javascript</strong>"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="<strong>/bbs/list.jsp?boardCd=free&amp;curPage=1</strong>"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;Java&lt;/div&gt;
-            
-&lt;h1&gt;JDK 설치&lt;/h1&gt;
-&lt;p&gt;
-www.oracle.com을 방문하여 JDK를 내려받는다.&lt;br /&gt;
-설치는 다음 버튼을 클릭하는 것으로 완료할 수 있다.&lt;br /&gt;  
-설치 후 PATH 환경 변수에 JDK의 bin 디렉터리를 추가한다.&lt;br /&gt;
-PATH의 기존 설정값 제일 뒤에 윈도 환경 변수의 구분자 ;를 추가하고 JDK의 bin까지의 경로를 붙여넣는다.&lt;br /&gt;
-이때 기존값은 지우지 않도록 주의한다.&lt;br /&gt; 
-&lt;/p&gt;
-
-&lt;h2&gt;PATH&lt;/h2&gt;
-&lt;p&gt;
-PATH는 운영체제가 실행 프로그램을 찾을 때 참조하는 환경 변수이다.&lt;br /&gt;
-명령 프롬프트에서 &lt;strong&gt;echo %PATH%&lt;/strong&gt;를 실행하면 PATH의 설정값을 확인할 수 있다.&lt;br /&gt;
-PATH에 JDK의 bin디렉터리를 추가하는 이유는 어느 디렉터리에서나 JDK의 bin에 있는 
-실행 프로그램(javac.exe,java.exe,jar.exe 등)을 실행할 수 있도록 하기 위해서이다.&lt;br /&gt;
-&lt;/p&gt;
-
-&lt;h2&gt;테스트&lt;/h2&gt;
-&lt;p&gt;
-아래 내용을 메모장에 작성하고 파일명을 Test.java로 저장한다.&lt;br /&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;
-public class Test {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}
-&lt;/pre&gt;
-
-&lt;ol&gt;
-    &lt;li&gt;명령 프롬프트에서 Test.java 파일이 있는 디렉터리로 이동한다.&lt;/li&gt;
-    &lt;li&gt;javac Test.java로 컴파일한다. Test.class가 현재 디렉터리에 만들어진다.&lt;/li&gt;
-    &lt;li&gt;java Test로 실행한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;
-C:\&gt;javac Test.java
-
-C:\&gt;java Test
-Hello World!
-&lt;/pre&gt;
 
 &lt;!-- 본문 끝 --&gt;
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
@@ -326,11 +347,11 @@ Hello World!
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>../</strong>images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>../</strong>images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>../</strong>images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>../</strong>images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>../</strong>images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>/images/youtube.png</strong>" alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>/images/twitter.png</strong>" alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>/images/facebook.png</strong>" alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>/images/gmail.png</strong>" alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>/images/java-school.png</strong>" alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -365,19 +386,19 @@ inc 서브 디렉터리에 다음 JSP 파일을 생성한다.<br />
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
-&lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="../"&gt;&lt;img src="../images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="/"&gt;&lt;img src="/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
 &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="로그인" onclick="location.href='../users/login.jsp'" /&gt;
-    &lt;input type="button" value="회원 가입" onclick="location.href='../users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="로그인" onclick="location.href='/users/login.jsp'" /&gt;
+    &lt;input type="button" value="회원 가입" onclick="location.href='/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="로그아웃" onclick="location.href='../users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="내 정보 수정" onclick="location.href='../users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="로그아웃" onclick="location.href='/users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="내 정보 수정" onclick="location.href='/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -388,25 +409,25 @@ if (loginUser == null) {
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;ul id="nav"&gt;
-    &lt;li&gt;&lt;a href="../java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </pre>
 
 <h6 class="src">/inc/extra.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
-&lt;a href="http://www.youtube.com"&gt;&lt;img src="../images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.twitter.com"&gt;&lt;img src="../images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.facebook.com"&gt;&lt;img src="../images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.gmail.com"&gt;&lt;img src="../images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.java-school.net"&gt;&lt;img src="../images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+&lt;a href="http://www.youtube.com"&gt;&lt;img src="/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.twitter.com"&gt;&lt;img src="/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.facebook.com"&gt;&lt;img src="/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.gmail.com"&gt;&lt;img src="/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.java-school.net"&gt;&lt;img src="/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
 </pre>
 
 <h6 class="src">/inc/footer.jsp</h6>
@@ -462,16 +483,8 @@ if (loginUser == null) {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
-&lt;div id="content-categories"&gt;Java&lt;/div&gt;
-            
-
-&lt;!--..중간 생략..--&gt;
-
-
 &lt;!-- 본문 끝 --&gt;
-
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
     &lt;/div&gt;&lt;!--  container 끝 --&gt;
     
@@ -492,14 +505,6 @@ if (loginUser == null) {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-
-<p>
-홈페이지까지 인클루드 지시어를 이용하여 분리하려는 생각은 좋은 생각이 아니다.<br />
-대부분 홈페이지는 서브 페이지와 디자인이 다르며 또한 하나만 존재하기 때문이다.<br />
-게다가 지금 만든 파일은 상대 경로 문제로 홈페이지에서 인클루드 할 수 없다.<br />
-<br />
-웹 브라우저로 홈페이지와 서브 페이지 /java/index.jsp를 방문하여 테스트한다.<br />
-</p>
 
 <h2>로그인 폼, 로그인 처리, 로그아웃 처리 페이지 생성</h2>
 
@@ -571,7 +576,6 @@ if (url == null) url = "";
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
 &lt;h2&gt;로그인&lt;/h2&gt;
@@ -697,9 +701,6 @@ web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.<br /
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
-&lt;%
-<strong>String contextPath = request.getContextPath();</strong>
-%&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ko"&gt;
 &lt;head&gt;
@@ -707,7 +708,7 @@ web.xml 파일을 열고 &lt;/web-app&gt; 직전에 다음을 추가한다.<br /
 &lt;meta name="Keywords" content="Error" /&gt;
 &lt;meta name="Description" content="Error" /&gt;
 &lt;title&gt;Error&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>&lt;%=contextPath %&gt;</strong>/css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;%
@@ -729,19 +730,19 @@ if (requestUri == null) {
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="<strong>/</strong>"&gt;&lt;img src="/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
         &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="로그인" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/login.jsp'" /&gt;
-    &lt;input type="button" value="회원 가입" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="로그인" onclick="location.href='/users/login.jsp'" /&gt;
+    &lt;input type="button" value="회원 가입" onclick="location.href='/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="로그아웃" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="내 정보 수정" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="로그아웃" onclick="location.href='/users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="내 정보 수정" onclick="location.href='/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -750,20 +751,19 @@ if (loginUser == null) {
 
     &lt;div id="main-menu"&gt;
         &lt;ul id="nav"&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;Error&lt;/div&gt;
 &lt;h2&gt;Error Page&lt;/h2&gt;
@@ -791,11 +791,11 @@ if (throwable != null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src="/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src="/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src="/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src="/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src="/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -809,8 +809,6 @@ if (throwable != null) {
 </pre>
 
 <p>
-error.jsp 소스에서 컨텍스트 패스를 구해 모든 경로를 재지정해 주어야 하는데, 
-이렇게 하지 않으면 상대 경로 문제를 겪게 된다.<br />
 다시 로그인을 시도한다. 아직 만들지 않는 페이지를 요청하게 된다. 에러 페이지가 작동하는지 확인한다.
 </p>
 
@@ -866,9 +864,8 @@ if (user == null) {
     String url = uri;
     if (query != null) url += "?" + query;
     //로그인 페이지로 리다이렉트
-    String contextPath= request.getContextPath();
     url = URLEncoder.encode(url, "UTF-8");
-    response.sendRedirect(contextPath + "/users/login.jsp?url=" + url);
+    response.sendRedirect("/users/login.jsp?url=" + url);
     return;
 }
 %&gt;
@@ -892,7 +889,7 @@ CSS 포지셔닝에서의 만든 list.html 파일을 연 상태에서 Save As...
 &lt;meta name="Keywords" content="게시판 목록" /&gt;
 &lt;meta name="Description" content="게시판 목록" /&gt;
 &lt;title&gt;자유 게시판&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;<strong>
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;<strong>
 &lt;script type="text/javascript"&gt;
 function goList(curPage) {
     var form = document.getElementById("listForm");
@@ -929,7 +926,6 @@ function goWrite() {
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;자유 게시판&lt;/div&gt;
-            
 &lt;table class="bbs-table"&gt;
 &lt;!--  게시판 목록 머리말 --&gt;
 &lt;tr&gt;
@@ -943,7 +939,7 @@ function goWrite() {
     &lt;td style="text-align: center;"&gt;11&lt;/td&gt;
     &lt;td&gt;
         &lt;a href="<strong>javascript:goView('1')"</strong>&gt;제목&lt;/a&gt;
-        &lt;img src="<strong>../</strong>images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
+        &lt;img src="/images/attach.png" alt="첨부 파일" style="vertical-align: middle;" /&gt;
         &lt;span class="bbs-strong"&gt;[5]&lt;/span&gt;
     &lt;/td&gt;
     &lt;td style="text-align: center;"&gt;2011.11.15&lt;/td&gt;
@@ -1010,7 +1006,7 @@ function goWrite() {
         &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
-    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+    &lt;form id="writeForm" action="write.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
@@ -1027,10 +1023,10 @@ function goWrite() {
 
 <p>
 다음은 게시판 글쓰기 폼 페이지를 작성한다.<br />
-CSS 포지셔닝에서 만든 write_form.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 write_form.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.<br />
+CSS 포지셔닝에서 만든 write.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 write.jsp라는 이름의 새 파일을 /bbs 디렉터리에 만든 후 아래와 같이 수정한다.<br />
 </p>
     
-<h6 class="src">/bbs/write_form.jsp</h6>
+<h6 class="src">/bbs/write.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -1177,7 +1173,7 @@ CSS 포지셔닝에서 만든 view.html 파일을 연 상태에서 Save As... �
 &lt;meta name="Keywords" content="게시판 상세보기" /&gt;
 &lt;meta name="Description" content="게시판 상세보기" /&gt;
 &lt;title&gt;자유 게시판&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
     var p_id = "comment" + articleNo;
@@ -1422,13 +1418,13 @@ function deleteComment(commentNo) {
       &lt;input type="hidden" name="curPage" value="1" /&gt;
       &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
-    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+    &lt;form id="writeForm" action="write.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="12" /&gt;
       &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
     &lt;/form&gt;
-    &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
+    &lt;form id="modifyForm" action="modify.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
@@ -1594,10 +1590,10 @@ response.sendRedirect("list.jsp?boardCd=free&amp;curPage=1&amp;searchWord=무궁
 
 <p>
 글 소유자가 자신의 글을 수정하기 위한 페이지를 만든다.<br />
-CSS 포지셔닝에서 만든 write_form.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 modify_form.jsp라는 이름의 새 파일을 /bbs 폴더에 만든 후 아래와 같이 수정한다.<br /> 
+CSS 포지셔닝에서 만든 write.html 파일을 연 상태에서 Save As... 메뉴를 이용하여 modify.jsp라는 이름의 새 파일을 /bbs 폴더에 만든 후 아래와 같이 수정한다.<br /> 
 </p>
 
-<h6 class="src">/bbs/modify_form.jsp</h6>
+<h6 class="src">/bbs/modify.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 <strong>&lt;%
@@ -1754,7 +1750,7 @@ CSS 포지셔닝에서 만든 singUp.html 파일을 연 상태에서 Save As... 
 &lt;meta name="Keywords" content="회원 가입" /&gt;
 &lt;meta name="Description" content="회원 가입" /&gt;
 &lt;title&gt;회원 가입&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 <strong>&lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("signUpForm");
@@ -1780,7 +1776,7 @@ function check() {
 
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
-&lt;h1&gt;회원 가입&lt;/h1&gt;
+&lt;h2&gt;회원 가입&lt;/h2&gt;
 &lt;form id="signUpForm" action="signUp_proc.jsp" method="post" <strong>onsubmit="return check()"</strong>&gt;
 &lt;table&gt;
 &lt;tr&gt;
@@ -1894,7 +1890,7 @@ signUp.jsp 파일을 연 상태에서 Sava As.. 메뉴를 이용하여 welcome.j
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
 <strong>
-&lt;h1&gt;환영합니다.&lt;/h1&gt;
+&lt;h2&gt;환영합니다.&lt;/h2&gt;
 회원 가입시 입력한 Email이 아이디로 사용됩니다.&lt;br /&gt;
 &lt;input type="button" value="로그인" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
 &lt;!--  본문 끝 --&gt;
@@ -1960,11 +1956,9 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;내 정보 수정&lt;/h1&gt;
+&lt;h2&gt;내 정보 수정&lt;/h2&gt;
 &lt;p&gt;
 비밀번호외의 자신의 계정 정보를 수정할 수 있습니다.&lt;br /&gt;
 비밀번호는 &lt;a href="changePasswd.jsp"&gt;비밀번호 변경&lt;/a&gt;메뉴를 이용하세요.&lt;br /&gt;
@@ -2079,11 +2073,9 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;비밀번호 변경&lt;/h1&gt;
+&lt;h2&gt;비밀번호 변경&lt;/h2&gt;
 &lt;%=user.getName() %&gt;&lt;br /&gt;
 이동전화 &lt;%=user.getMobile() %&gt;&lt;br /&gt;
 &lt;form id="changePasswordForm" action="<strong>changePasswd_proc.jsp</strong>" method="post" onsubmit="return check()"&gt;
@@ -2182,11 +2174,9 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 changeP
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;비밀번호가 변경되었습니다.&lt;/h1&gt;
+&lt;h2&gt;비밀번호가 변경되었습니다.&lt;/h2&gt;
 변경된 비밀번호로 다시 로그인하실 수 있습니다.&lt;br /&gt;<strong>
 &lt;input type="button" value="로그인" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
 &lt;!--  본문 끝 --&gt;
@@ -2350,11 +2340,9 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;!-- 본문 시작 --&gt;
 &lt;div id="content-categories"&gt;회원&lt;/div&gt;
-
-&lt;h1&gt;회원 탈퇴 확인&lt;/h1&gt;
+&lt;h2&gt;회원 탈퇴 확인&lt;/h2&gt;
 회원님의 모든 정보가 삭제되었습니다.&lt;br /&gt;
 &lt;!--  본문 끝 --&gt;
         &lt;/div&gt;&lt;!-- content 끝 --&gt;
@@ -2379,9 +2367,9 @@ welcome.jsp 파일을 연 상태에서 Save As... 메뉴를 이용하여 bye_con
 </pre>
 
 <p>
-게시판 화면에 해당하는 페이지는 list.jsp, view.jsp, write_form.jsp, modify_form.jsp이다.<br />
-이 중에 modify_form.jsp를 제외하고 모두 loginCheck.jsp 파일을 인클루드하는데, 
-modify_form.jsp만 빠진 이유는 로그인뿐 아니라 글 소유자인지 검사하는 로직이 필요하기 때문이다.<br />
+게시판 화면에 해당하는 페이지는 list.jsp, view.jsp, write.jsp, modify.jsp이다.<br />
+이 중에 modify.jsp를 제외하고 모두 loginCheck.jsp 파일을 인클루드하는데, 
+modify.jsp만 빠진 이유는 로그인뿐 아니라 글 소유자인지 검사하는 로직이 필요하기 때문이다.<br />
 (이 로직은 구현 단계로 넘긴다)<br />
 <br />
 회원 페이지 중 editAccount.jsp, changePasswd.jsp, bye.jsp는 loginCheck.jsp 파일을 인클루드한다.<br />
@@ -2404,8 +2392,7 @@ modify_form.jsp만 빠진 이유는 로그인뿐 아니라 글 소유자인지 �
 </ol>
 
 <p>
-이로써 프로토타입을 완성했다.<br />
-이 프로토타입은 과정 마지막까지 쓰인다.
+이로써 프로토타입을 완성했다.
 </p>
     
 </article>

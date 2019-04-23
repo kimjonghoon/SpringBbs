@@ -1,10 +1,12 @@
 <article>
 
-<h1>Operators, switch, if, loops</h1>
+<h1>Operators, if, switch, loops</h1>
 
 <h2>Operators</h2>
 
+<p>
 An Operators is a symbol that the compiler to perform manipulations such as assign a value to a variable or change a value of a variable or compare two values.
+</p>
 
 <h3>Arithmetic Operators</h3>
 
@@ -187,10 +189,11 @@ An Operators is a symbol that the compiler to perform manipulations such as assi
 </tr>
 </table>
 
-
 <h3>+ operator when operand is a string</h3>
 
-when operand is a string, + operator peforms string concatenation.
+<p>
+when operand is a string, + operator performs string concatenation.
+</p>
 
 <table>
 <tr>
@@ -202,7 +205,6 @@ when operand is a string, + operator peforms string concatenation.
 	<td>"1988: Hi"</td>
 </tr>
 </table>
-
 
 <h2>if, switch, loops</h2>
 
@@ -247,7 +249,6 @@ if (age &gt;= 65) {
 Free
 </pre>
 
-
 <h3>switch</h3>
 
 <pre class="prettyprint">
@@ -286,6 +287,7 @@ System.out.println(sum);
 </pre>
 
 <h3>while</h3>
+
 <pre class="prettyprint">
 int sum = 0;
 int i = 1;
@@ -379,7 +381,9 @@ public class OperatorsTest {
 }
 </pre>
 
+<p>
 Add the below to the source.
+</p>
 
 <pre class="prettyprint">
 System.out.println("a &gt; b " + (a &gt; b));
@@ -390,7 +394,6 @@ System.out.println("a == b " + (a == b));
 System.out.println("a != b " + (a != b));
 </pre>
 
-
 <pre class="screen">
 a &gt; b false
 b &gt;= a true
@@ -400,7 +403,9 @@ a == b false
 a != b true
 </pre>
 
+<p>
 Add the below to the source.
+</p>
 
 <pre class="prettyprint">
 int yr = 2000;
@@ -420,17 +425,21 @@ Exception in thread "main" java.lang.NullPointerException
 	at Test.main(Test.java:46)
 </pre>
 
+<p>
 <em>&amp; msg.length() &gt; 0</em> occurs an exception.<br />
 Unlike &amp;&amp;, &amp; checks a following boolean expression, 
 even if the previous boolean expression is false.<br /> 
 Comments lines that occur exception.
+</p>
 
 <pre class="prettyprint">
 //msg = yr &gt;= 2001 &amp; yr &lt;= 2100 &amp; msg.length() &gt; 0 ? yr+" is 21C" : yr +" is not 21C";
 //System.out.println(msg);
 </pre>
 
+<p>
 Add the below to the source.
+</p>
 
 <pre class="prettyprint">
 class User {

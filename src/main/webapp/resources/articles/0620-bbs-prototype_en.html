@@ -8,6 +8,82 @@ The prototype of the Web application is based on the JSP that corresponds to the
 Do not implement program logic in prototypes except for those that are needed for testing, or that do not change until the end of development.
 </p>
 
+<p>
+I have prepared a Model 1 bulletin board as an example to be implemented in JSPProject.<br />
+In Model 1, the client requests the JSP directly.<br />
+The following is a list of JSP files required for the example.
+</p>
+
+<p>
+<strong>DocumentBase</strong>
+</p>
+
+<ul>
+  <li>index.jsp : Homepage</li>
+  <li>error.jsp : Error page</li>
+</ul>
+
+<p>
+<strong>/inc</strong>
+</p>
+
+<ul>
+	<li>header.jsp : Logo, Membership menu(Login, Sign Up, Logout, Modify account)</li>
+	<li>main-menu.jsp : Main menu</li>
+	<li>extra.jsp : Image Links</li>
+	<li>footer.jsp : Copyright, Contact</li>
+	<li>loginCheck.jsp : Pages that require authentication must include this page.</li>
+</ul>
+
+<p>
+<strong>/users</strong>
+</p>
+
+<ul>
+	<li>user-sub.jsp : Membership menu</li>
+	<li>login.jsp : Login form page</li>
+	<li>login_proc.jsp : Login execution</li>
+	<li>logout_proc.jsp : Logout execution</li>
+	<li>signUp.jsp : Sign Up form page</li>
+	<li>signUp_proc.jsp : Sign Up execution</li>
+	<li>welcome.jsp : Welcome page</li>
+	<li>editAccount.jsp : Account modify forom page</li>
+	<li>editAccount_proc.jsp : Account modify execution</li>
+	<li>changePasswd.jsp : Password change form page</li>
+	<li>changePasswd_proc.jsp : Password change execution</li>
+	<li>changePasswd_confirm.jsp : passsword change confirmation page</li>
+	<li>bye.jsp : Account Removal form page</li>
+	<li>bye_proc.jsp : Account Removal execution</li>
+	<li>bye_confirm.jsp : Account Removal confirmation page</li>
+</ul>
+
+<p>
+<strong>/bbs</strong>
+</p>
+
+<ul>
+	<li>bbs-sub.jsp : Board menu</li>
+	<li>list.jsp : Board List page</li>
+	<li>write.jsp : Board article write form page</li>
+	<li>write_proc.jsp : Board article write execution</li>
+	<li>view.jsp : Board detailed view page</li>
+	<li>addComment_proc.jsp : Comment write execution</li>
+	<li>updateComment_proc.jsp : Comment modify execution</li>
+	<li>deleteComment_proc.jsp : Comment delete execution</li>
+	<li>deleteAttachFile_proc.jsp : Attach file delete execution</li>
+	<li>del_proc.jsp : Board article delete execution</li>
+	<li>modify.jsp : Board article modify form page</li>
+	<li>modify_proc.jsp : Board article modify execution</li>
+</ul>
+
+<p>
+<strong>/java</strong>
+</p>
+
+<ul>
+	<li>index.jsp : Java Home</li>
+</ul>
+
 <h2>Main/Sub page design</h2>
 
 <p>
@@ -111,8 +187,8 @@ Modify the contents of the index.jsp file as follows.
 </p>
 
 <h6 class="src">/index.jsp</h6>
-<pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;<strong>
+<pre class="prettyprint"><strong>&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;</strong>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -121,51 +197,48 @@ Modify the contents of the index.jsp file as follows.
 &lt;meta name="Keywords" content="<strong>Main page</strong>" /&gt;
 &lt;meta name="Description" content="<strong>Main page</strong>" /&gt;
 &lt;title&gt;<strong>Main page</strong>&lt;/title&gt;
-&lt;link rel="stylesheet" href="css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 <strong>style="float: left; width: 150px;"</strong>&gt;&lt;a href=<strong>"./</strong>"&gt;&lt;img src="images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
-        <strong>&lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
+        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href=<strong>"/</strong>"&gt;&lt;img src=<strong>"/images/ci.gif"</strong> alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="Login" onclick="location.href='./users/login.jsp'" /&gt;
-            &lt;input type="button" value="SignUp" onclick="location.href='./users/signUp.jsp'" /&gt;
+            &lt;input type="button" value="Login" onclick="location.href=<strong>'/users/login.jsp'</strong>" /&gt;
+            &lt;input type="button" value="SignUp" onclick="location.href=<strong>'/users/signUp.jsp'</strong>" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="Logout" onclick="location.href='./users/logout_proc.jsp'" /&gt;
-            &lt;input type="button" value="Modify Account" onclick="location.href='./users/editAccount.jsp'" /&gt;
+            &lt;input type="button" value="Logout" onclick="location.href=<strong>'/users/logout_proc.jsp'</strong>" /&gt;
+            &lt;input type="button" value="Modify Account" onclick="location.href=<strong>'/users/editAccount.jsp'</strong>" /&gt;
 &lt;%
 }
 %&gt;
-        &lt;/div&gt;</strong>
+        &lt;/div&gt;
     &lt;/div&gt;
 
     &lt;div id="main-menu"&gt;
-        &lt;ul id="nav"&gt;<strong>
-            &lt;li&gt;&lt;a href="java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="bbs/list.jsp?boardCd=smalltalk&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;</strong>
+        &lt;ul id="nav"&gt;
+            &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=smalltalk&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Main&lt;/div&gt;
-&lt;h1&gt;Main&lt;/h1&gt;
-
+			
         &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
     
@@ -174,11 +247,11 @@ if (loginUser == null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src=<strong>"/images/youtube.png"</strong> alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src=<strong>"/images/twitter.png"</strong> alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src=<strong>"/images/facebook.png"</strong> alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src=<strong>"/images/gmail.png"</strong> alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src=<strong>"/images/java-school.png"</strong> alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -216,26 +289,26 @@ Unlike the homepage, this page is in a subdirectory, so you need to modify the r
 &lt;meta name="Keywords" content="Java Home" /&gt;
 &lt;meta name="Description" content="Java Home" /&gt;
 &lt;title&gt;Java Home&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css"  /&gt;
+&lt;link rel="stylesheet" href=<strong>"/css/screen.css"</strong> type="text/css"  /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 style="float: left; width: 150px;" &gt;&lt;a href="<strong>../</strong>"&gt;&lt;img src="<strong>../</strong>images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;h1 style="float: left; width: 150px;" &gt;&lt;a href=<strong>"/"</strong>&gt;&lt;img src=<strong>"/images/ci.gif"</strong> alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
         &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;   
-            &lt;input type="button" value="Login" onclick="location.href='<strong>../users/login.jsp</strong>'" /&gt;
-            &lt;input type="button" value="SignUp" onclick="location.href='<strong>../users/signUp.jsp</strong>'" /&gt;
+            &lt;input type="button" value="Login" onclick="location.href=<strong>'/users/login.jsp'</strong>" /&gt;
+            &lt;input type="button" value="SignUp" onclick="location.href=<strong>'/users/signUp.jsp'</strong>" /&gt;
 &lt;%
 } else {
 %&gt;
-            &lt;input type="button" value="Logout" onclick="location.href='<strong>../users/logout_proc.jsp'</strong>" /&gt;
-            &lt;input type="button" value="Modify Account" onclick="location.href='<strong>../users/editAccount.jsp</strong>'" /&gt;
+            &lt;input type="button" value="Logout" onclick="location.href=<strong>'/users/logout_proc.jsp'</strong>" /&gt;
+            &lt;input type="button" value="Modify Account" onclick="location.href=<strong>'/users/editAccount.jsp'</strong>" /&gt;
 &lt;%
 }
 %&gt;
@@ -244,23 +317,21 @@ if (loginUser == null) {
 
     &lt;div id="main-menu"&gt;
         &lt;ul id="nav"&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>../</strong>bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
-
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
 
-&lt;div id="content-categories"&gt;Java&lt;/div&gt;
-&lt;h1&gt;JDK Install&lt;/h1&gt;
+			&lt;h1&gt;JDK Install&lt;/h1&gt;
 
         &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
@@ -270,11 +341,11 @@ if (loginUser == null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>../</strong>images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>../</strong>images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>../</strong>images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>../</strong>images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>../</strong>images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src=<strong>"/images/youtube.png"</strong> alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src=<strong>"/images/twitter.png"</strong> alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src=<strong>"/images/facebook.png"</strong> alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src=<strong>"/images/gmail.png"</strong> alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src=<strong>"/images/java-school.png"</strong> alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -308,19 +379,19 @@ Create the following JSP file in the inc subdirectory.
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
-&lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="../"&gt;&lt;img src="../images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="/"&gt;&lt;img src="/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
 &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="Login" onclick="location.href='../users/login.jsp'" /&gt;
-    &lt;input type="button" value="SignUp" onclick="location.href='../users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="Login" onclick="location.href='/users/login.jsp'" /&gt;
+    &lt;input type="button" value="SignUp" onclick="location.href='/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="Logout" onclick="location.href='../users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="Modify Account" onclick="location.href='../users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="Logout" onclick="location.href='/users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="Modify Account" onclick="location.href='/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -331,25 +402,25 @@ if (loginUser == null) {
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;ul id="nav"&gt;
-    &lt;li&gt;&lt;a href="../java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="../bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </pre>
 
 <h6 class="src">/inc/extra.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
-&lt;a href="http://www.youtube.com"&gt;&lt;img src="../images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.twitter.com"&gt;&lt;img src="../images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.facebook.com"&gt;&lt;img src="../images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.gmail.com"&gt;&lt;img src="../images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-&lt;a href="http://www.java-school.net"&gt;&lt;img src="../images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+&lt;a href="http://www.youtube.com"&gt;&lt;img src="/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.twitter.com"&gt;&lt;img src="/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.facebook.com"&gt;&lt;img src="/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.gmail.com"&gt;&lt;img src="/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
+&lt;a href="http://www.java-school.net"&gt;&lt;img src="/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
 </pre>
 
 <h6 class="src">/inc/footer.jsp</h6>
@@ -405,8 +476,6 @@ Therefore, the contentType of a common JSP file should be:
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Java&lt;/div&gt;
 
         &lt;/div&gt;
     &lt;/div&gt;&lt;!--  container end --&gt;
@@ -502,8 +571,6 @@ if (url == null) url = "";
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
 &lt;h2&gt;Login&lt;/h2&gt;
 &lt;form id="loginForm" action="login_proc.jsp" method="post"&gt;
 <strong>&lt;input type="hidden" name="url" value="&lt;%=url %&gt;" /&gt;</strong>
@@ -522,7 +589,6 @@ if (url == null) url = "";
     &lt;input type="button" value="SignUp" onclick="location.href='signUp.jsp'" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -621,9 +687,6 @@ With the home page open, use the Save As ... menu to create a new file called er
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;
 &lt;%@ page import="net.java_school.user.User" %&gt;
-&lt;%
-<strong>String contextPath = request.getContextPath();</strong>
-%&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
@@ -631,7 +694,7 @@ With the home page open, use the Save As ... menu to create a new file called er
 &lt;meta name="Keywords" content="Error" /&gt;
 &lt;meta name="Description" content="Error" /&gt;
 &lt;title&gt;Error&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>&lt;%=contextPath %&gt;</strong>/css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;%
@@ -653,19 +716,19 @@ if (requestUri == null) {
 &lt;div id="wrap"&gt;
 
     &lt;div id="header"&gt;
-        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
+        &lt;h1 style="float: left; width: 150px;"&gt;&lt;a href="/"&gt;&lt;img src="/images/ci.gif" alt="java-school" /&gt;&lt;/a&gt;&lt;/h1&gt;
         &lt;div id="memberMenu" style="float: right; position: relative; top: 7px;"&gt;
 &lt;%
 User loginUser = (User) session.getAttribute("user");
 if (loginUser == null) {
 %&gt;
-    &lt;input type="button" value="Login" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/login.jsp'" /&gt;
-    &lt;input type="button" value="SignUp" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/signUp.jsp'" /&gt;
+    &lt;input type="button" value="Login" onclick="location.href='/users/login.jsp'" /&gt;
+    &lt;input type="button" value="SignUp" onclick="location.href='/users/signUp.jsp'" /&gt;
 &lt;%
 } else {
 %&gt;   
-    &lt;input type="button" value="Logout" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/logout_proc.jsp'" /&gt;
-    &lt;input type="button" value="Modify Account" onclick="location.href='<strong>&lt;%=contextPath %&gt;</strong>/users/editAccount.jsp'" /&gt;
+    &lt;input type="button" value="Logout" onclick="location.href='/users/logout_proc.jsp'" /&gt;
+    &lt;input type="button" value="Modify Account" onclick="location.href='/users/editAccount.jsp'" /&gt;
 &lt;%
 }
 %&gt;
@@ -674,14 +737,14 @@ if (loginUser == null) {
 
     &lt;div id="main-menu"&gt;
         &lt;ul id="nav"&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/java/"&gt;Java&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jdbc/"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jsp/"&gt;JSP&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/css-layout/"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/jsp-project/"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/spring/"&gt;Spring&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/javascript/"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="<strong>&lt;%=contextPath %&gt;</strong>/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/java"&gt;Java&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jdbc"&gt;JDBC&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp"&gt;JSP&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/css-layout"&gt;CSS Layout&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/jsp-pjt"&gt;JSP Project&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/spring"&gt;Spring&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/javascript"&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/bbs/list.jsp?boardCd=free&amp;curPage=1"&gt;BBS&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
 
@@ -715,11 +778,11 @@ if (throwable != null) {
     &lt;/div&gt;
     
     &lt;div id="extra"&gt;
-        &lt;a href="http://www.youtube.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.twitter.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.facebook.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.gmail.com"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
-        &lt;a href="http://www.java-school.net"&gt;&lt;img src="<strong>&lt;%=contextPath %&gt;</strong>/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.youtube.com"&gt;&lt;img src="/images/youtube.png" alt="youtube.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.twitter.com"&gt;&lt;img src="/images/twitter.png" alt="twitter.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.facebook.com"&gt;&lt;img src="/images/facebook.png" alt="facebook.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.gmail.com"&gt;&lt;img src="/images/gmail.png" alt="gmail.com" /&gt;&lt;/a&gt;
+        &lt;a href="http://www.java-school.net"&gt;&lt;img src="/images/java-school.png" alt="java-school.net" /&gt;&lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div id="footer"&gt;
@@ -733,8 +796,6 @@ if (throwable != null) {
 </pre>
 
 <p>
-In the error.jsp source, you need to specify the path using the context path,
-If you do not do this, you will have a relative path problem.<br />
 Try to login again.<br />
 You have requested a page that has not yet been created, so an error page should be displayed.
 </p>
@@ -802,7 +863,7 @@ Open the list.html file and use the Save As ... menu to create a file named list
 &lt;meta name="Keywords" content="Board list" /&gt;
 &lt;meta name="Description" content="Board list" /&gt;
 &lt;title&gt;Small talk&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;<strong>
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;<strong>
 &lt;script type="text/javascript"&gt;
 function goList(curPage) {
     var form = document.getElementById("listForm");
@@ -836,8 +897,6 @@ function goWrite() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;table class="bbs-table"&gt;
 &lt;!--  List heading --&gt;
@@ -884,7 +943,6 @@ function goWrite() {
         &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -907,7 +965,7 @@ function goWrite() {
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
     &lt;form id="viewForm" action="view.jsp" method="get"&gt;
@@ -915,14 +973,14 @@ function goWrite() {
         &lt;input type="hidden" name="articleNo" /&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
-    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+    &lt;form id="writeForm" action="write.jsp" method="get"&gt;
     &lt;p&gt;
         &lt;input type="hidden" name="boardCd" value="free" /&gt;
         &lt;input type="hidden" name="curPage" value="1" /&gt;
-        &lt;input type="hidden" name="searchWord" value="무궁화꽃" /&gt;
+        &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/p&gt;
     &lt;/form&gt;
 &lt;/div&gt;
@@ -934,10 +992,10 @@ function goWrite() {
 <h3>New article form page</h3>
 
 <p>
-Open the write_form.html file and use the Save As ... menu to create a file named write_form.jsp in the bbs directory and modify it as follows:
+Open the write.html file and use the Save As ... menu to create a file named write.jsp in the bbs directory and modify it as follows:
 </p>
     
-<h6 class="src">/bbs/write_form.jsp</h6>
+<h6 class="src">/bbs/write.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%&gt;<strong>
 &lt;%@ include file="../inc/loginCheck.jsp" %&gt;</strong>
@@ -974,7 +1032,6 @@ function goView() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-        
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;h3&gt;New&lt;/h3&gt;
 &lt;form id="writeForm" action="write_proc.jsp" method="post" enctype="multipart/form-data"&gt;
@@ -1000,7 +1057,6 @@ function goView() {
     &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;</strong>
 &lt;/div&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;
     &lt;/div&gt;
     
@@ -1078,7 +1134,7 @@ Open the view.html file and use the Save As ... menu to create the view.jsp file
 &lt;meta name="Keywords" content="Board detailed view" /&gt;
 &lt;meta name="Description" content="Board detailed view" /&gt;
 &lt;title&gt;Small talk&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 &lt;script type="text/javascript"&gt;
 function modifyCommentToggle(articleNo) {
     var p_id = "comment" + articleNo;
@@ -1164,7 +1220,6 @@ function deleteComment(commentNo) {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;div class="view-menu" style="margin-top: 15px;margin-bottom: 5px;"&gt;
     &lt;div class="fl"&gt;
@@ -1290,7 +1345,6 @@ function deleteComment(commentNo) {
         &lt;input type="submit" value="Search" /&gt;
     &lt;/div&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1320,13 +1374,13 @@ function deleteComment(commentNo) {
       &lt;input type="hidden" name="curPage" value="1" /&gt;
       &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
-    &lt;form id="writeForm" action="write_form.jsp" method="get"&gt;
+    &lt;form id="writeForm" action="write.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="12" /&gt;
       &lt;input type="hidden" name="searchWord" value="happy" /&gt;
     &lt;/form&gt;
-    &lt;form id="modifyForm" action="modify_form.jsp" method="get"&gt;
+    &lt;form id="modifyForm" action="modify.jsp" method="get"&gt;
       &lt;input type="hidden" name="articleNo" value="5" /&gt;
       &lt;input type="hidden" name="boardCd" value="free" /&gt;
       &lt;input type="hidden" name="curPage" value="1" /&gt;
@@ -1441,9 +1495,9 @@ response.sendRedirect("list.jsp?boardCd=smalltalk&amp;curPage=1&amp;searchWord=h
 %&gt;
 </pre>
 
-<h3>Create write_form.jsp</h3>
+<h3>Create modify.jsp</h3>
 
-<h6 class="src">/bbs/modify_form.jsp</h6>
+<h6 class="src">/bbs/modify.jsp</h6>
 <pre class="prettyprint">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %&gt;
 <strong>&lt;%
@@ -1488,7 +1542,6 @@ function goView() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
 &lt;div id="content-categories"&gt;Small talk&lt;/div&gt;
 &lt;h3&gt;Modify article&lt;/h3&gt;
 &lt;form id="writeForm" action="<strong>modify_proc.jsp</strong>" method="post" enctype="multipart/form-data"&gt;
@@ -1516,7 +1569,6 @@ function goView() {
     &lt;input type="button" value="Detailed view" onclick="goView()" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1581,7 +1633,7 @@ Open the singUp.html file and use the Save As ... menu to create the signUp.jsp 
 &lt;meta name="Keywords" content="SignUp" /&gt;
 &lt;meta name="Description" content="SignUp" /&gt;
 &lt;title&gt;SignUp&lt;/title&gt;
-&lt;link rel="stylesheet" href="<strong>../</strong>css/screen.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="/css/screen.css" type="text/css" /&gt;
 <strong>&lt;script type="text/javascript"&gt;
 function check() {
     //var form = document.getElementById("signUpForm");
@@ -1604,8 +1656,6 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
 &lt;div id="content-categories"&gt;Membership&lt;/div&gt;
 &lt;h1&gt;SignUp&lt;/h1&gt;
 &lt;form id="signUpForm" action="signUp_proc.jsp" method="post" <strong>onsubmit="return check()"</strong>&gt;
@@ -1640,7 +1690,6 @@ function check() {
     &lt;input type="submit" value="Submit" /&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1710,12 +1759,9 @@ Open the signUp.jsp file and use the Sava As .. menu to create the welcome.jsp f
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-        
-&lt;div id="content-categories"&gt;Memeber&lt;/div&gt;
-<strong>&lt;h1&gt;Welcome&lt;/h1&gt;
+<strong>&lt;h2&gt;Welcome&lt;/h2&gt;
 Email is used as an ID.&lt;br /&gt;
 &lt;input type="button" value="Login" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1773,11 +1819,7 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-
-&lt;h1&gt;Modify Account&lt;/h1&gt;
+&lt;h2&gt;Modify Account&lt;/h2&gt;
 &lt;p&gt;
 You can modify all information of your account except password. &lt;a href="changePasswd.jsp"&gt;Change Password&lt;/a&gt;
 &lt;/p&gt;
@@ -1800,7 +1842,6 @@ You can modify all information of your account except password. &lt;a href="chan
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1881,11 +1922,7 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-
-&lt;h1&gt;Change Password&lt;/h1&gt;
+&lt;h2&gt;Change Password&lt;/h2&gt;
 &lt;%=user.getName() %&gt;&lt;br /&gt;
 Mobile &lt;%=user.getMobile() %&gt;&lt;br /&gt;
 &lt;form id="changePasswordForm" action="<strong>changePasswd_proc.jsp</strong>" method="post" onsubmit="return check()"&gt;
@@ -1907,7 +1944,6 @@ Mobile &lt;%=user.getMobile() %&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -1978,13 +2014,9 @@ Open the welcome.jsp file and use the Save As ... menu to create the changePassw
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Your password has been changed.&lt;/h1&gt;
+&lt;h2&gt;Your password has been changed.&lt;/h2&gt;
 You can login again with the changed password.&lt;br /&gt;<strong>
 &lt;input type="button" value="Login" onclick="javascript:location.href='login.jsp'" /&gt;</strong>
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -2046,9 +2078,6 @@ function check() {
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
 &lt;h2&gt;Bye&lt;/h2&gt;
 &lt;form id="byeForm" action="bye_proc.jsp" method="post" onsubmit="return check()"&gt;
 &lt;table&gt;
@@ -2065,7 +2094,6 @@ function check() {
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/form&gt;
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
 
@@ -2137,11 +2165,8 @@ Open the welcome.jsp file and use the Save As ... menu to create the bye_confirm
 
     &lt;div id="container"&gt;
         &lt;div id="content"&gt;
-
-&lt;div id="content-categories"&gt;Membership&lt;/div&gt;
-&lt;h1&gt;Goodbye&lt;/h1&gt;
+&lt;h2&gt;Goodbye&lt;/h2&gt;
 Your Information is all deleted.
-
         &lt;/div&gt;&lt;!-- content end --&gt;
     &lt;/div&gt;&lt;!-- container end --&gt;
     
@@ -2164,9 +2189,9 @@ Your Information is all deleted.
 </pre>
 
 <p>
-In the bulletin board program, the pages corresponding to the screen are list.jsp, view.jsp, write_form.jsp, and modify_form.jsp.<br />
-Of these, except for modify_form.jsp and all include a loginCheck.jsp file.<br />
-modify_form.jsp requires the logic to check the owner of the post.<br />
+In the bulletin board program, the pages corresponding to the screen are list.jsp, view.jsp, write.jsp, and modify.jsp.<br />
+Of these, except for modify.jsp and all include a loginCheck.jsp file.<br />
+modify.jsp requires the logic to check the owner of the post.<br />
 EditAccount.jsp, changePasswd.jsp, and bye.jsp among the member programs include the loginCheck.jsp file.<br />
 JSP pages that do not show a screen have _proc appended to the filename.
 </p>

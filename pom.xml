@@ -9,9 +9,9 @@
     <name>spring-bbs Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <spring.version>5.1.5.RELEASE</spring.version>
-        <spring.security.version>5.1.4.RELEASE</spring.security.version>
-        <jdk.version>1.8</jdk.version>
+        <spring.version>5.1.6.RELEASE</spring.version>
+        <spring.security.version>5.1.5.RELEASE</spring.security.version>
+        <jdk.version>11</jdk.version>
     </properties>
     <dependencies>
         <dependency>
@@ -136,23 +136,26 @@
             <version>3.0.8</version>
         </dependency>
         <!-- Servlet JSP JSTL -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.0</version>
+		    <scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>jsp-api</artifactId>
+		    <version>2.2</version>
+		    <scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
+		<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
     </dependencies>
 
     <!-- $ mvn jetty:run -->
@@ -164,7 +167,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.2</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
@@ -179,7 +182,7 @@
             </plugins>
         </pluginManagement>
     </build>
- -->
+-->
     <!-- $ mvn compile war:inplace and run tomcat -->
 
     <build>
@@ -188,7 +191,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
@@ -198,7 +201,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>2.4.1</version>
+                    <version>3.1.0</version>
                     <configuration>
                         <filesets>
                             <fileset>

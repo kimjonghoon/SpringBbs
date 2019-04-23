@@ -1,0 +1,92 @@
+<article>
+<div class="last-modified">Last Modified 2019.3.4</div>
+
+<h1>try with resources</h1>
+
+<p>
+The try with resources statement was introduced in Java 7.
+The parentheses follow the try keyword, and the resources are created in parentheses.
+Resources that can be created in parentheses must implement java.lang.AutoCloseable.
+The try with resources statement ensures that the resource is closed.
+</p>
+
+<p>
+Download <a href="/examples/movies.txt">movies.txt</a> and copy it to the src directory.
+</p>
+
+<pre class="prettyprint">package net.java_school.examples;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class TryWithResourcesTest {
+
+	static String readFirstLineFromFile(String path) throws IOException {
+	    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+	        return br.readLine();
+	    }
+	}
+
+	public static void main(String[] args) throws IOException {
+		String firstLine = null;
+		firstLine = readFirstLineFromFile("./src/movies.txt");
+		System.out.println(firstLine);
+	}
+
+}
+</pre>
+
+<pre class="console"><strong class="console-result">Butch Cassidy And The Sundance Kid,1969,8.1</strong></pre>
+
+<p>
+The example uses the BufferedReader instance to read the first line from the file.
+The BufferedReader is a resource that must be closed at the end of the program.
+The example declares a BufferedReader in the try with resources statement.
+Since Java 7, BufferedReader implements the AutoCloseable interface.
+If you declare a resource that implements AutoCloseable in the try with resources statement, the resource will be closed regardless of whether the try statement is executed normally or abnormally terminated.
+</p>
+
+<p>
+Before Java 7, to ensure the termination of a resource, whether it is performing normally or abnormally, we used a finally block as follows.
+</p>
+
+<pre class="prettyprint">static String readFirstLineFromFileWithFinallyBlock(String path) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader(path));
+    try {
+        return br.readLine();
+    } finally {
+    	if (br != null) br.close();
+    }
+}
+</pre>
+
+<p>
+In the finally block, however, the BufferedReader's close() method can raise an IOException.
+</p>
+
+<p>
+You can declare more than one resource in a try with resources statement.
+The try with resources statement can have catch and finally blocks, which catch and finally block work after the declared resource is closed.
+</p>
+
+<p>
+The Eclipse project with source code for the examples is in the following zip file.<br />
+<strong><a href="/examples/try-with-resources.zip">try-with-resources.zip</a></strong>
+</p>
+
+<h3>How to run</h3>
+
+<pre class="shell-prompt">~/try-with-resources$ <strong>cd src/net/java_school/examples/</strong>
+~/try-with-resources/src/net/java_school/examples$ <strong>javac -d ../../../../bin *.java</strong>
+~/try-with-resources/src/net/java_school/examples$ <strong>cd -</strong>
+~/try-with-resources$ <strong>java -cp ./bin net.java_school.examples.Test</strong>
+Butch Cassidy And The Sundance Kid,1969,8.1
+</pre>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html</a></li>
+</ul>
+
+</article>

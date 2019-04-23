@@ -22,5 +22,5 @@
             <li><a href="/users/changePasswd"><spring:message code="user.change.password" /></a></li>
             <li><a href="/users/bye"><spring:message code="user.bye" /></a></li>
         </c:otherwise>
-    </c:choose>
+	</c:choose>
 </ul>

@@ -1,12 +1,12 @@
 <article>
 	
-<h1>SQL 연습 - DML</h1>
+<h1>Insert Update Delete</h1>
 
-<h2>INSERT 문</h2>
+<h2>Insert</h2>
 
 <h3>사용형식</h3>
 
-<pre class="prettyprint">
+<pre>
 INSERT INTO 테이블명 [(컬럼1, 컬럼2, ...)] VALUES (값1, 값2, ...);
 </pre>
 
@@ -24,7 +24,7 @@ VALUES (1562,'홍길동','SALESMAN',7698,SYSDATE,2000,1000,30);
 새로운 사원 데이터를 인서트하고 있다.<br />
 테이블명 다음에 나오는 컬럼 리스트가 구조에 맞게 순서대로 모두 선택되야 하는 경우는 생략 가능하다.<br />
 NUMBER 형의 컬럼 값에는 ''를 생략할 수 있다.<br />
-SYSDATE 는 오라클에서 시스템이 저장하는 현재 날짜 데이터를 구할 때 사용한다.<br />  
+SYSDATE 는 오라클에서 시스템이 저장하는 현재 날짜 데이터를 구할 때 사용한다.<br />
 </p>
 
 <pre class="prettyprint">
@@ -50,7 +50,7 @@ VALUES (1697,'장길산','MANAGER',7839,SYSDATE,3000,30);
 위 인서트 문은 컬럼에 NULL을 입력하는 방법을 보여준다.  
 </p>
 
-<h2>UPDATE 문</h2>
+<h2>Update</h2>
 
 <h3>사용형식</h3>
 
@@ -95,7 +95,7 @@ WHERE ENAME='홍길동';
 COMMIT;
 </pre>
 
-<h2>DELETE 문</h2>
+<h2>Delete</h2>
 
 <h3>사용형식</h3>
 

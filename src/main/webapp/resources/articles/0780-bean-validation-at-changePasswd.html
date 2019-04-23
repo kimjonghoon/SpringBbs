@@ -1,6 +1,6 @@
 <article>
 
-<h1>비밀번호 변경에서 빈 검증</h1>
+<h1>빈 검증 - 비밀번호 변경</h1>
 
 <p>
 비밀번호 검증에 '빈 검증'을 사용하려면 비밀번호를 위한 클래스를 만들어야 한다.
@@ -84,8 +84,7 @@ public String changePasswd(@Valid Password password,
 
 <h6 class="src">changePasswd.jsp</h6>
 <pre class="prettyprint">
-<strong>
-&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
+<strong>&lt;%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %&gt;
 
 &lt;sf:form id="changePasswordForm" action="changePasswd" method="post"
         modelAttribute="password" onsubmit="return check();"&gt;</strong>

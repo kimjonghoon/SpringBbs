@@ -1,11 +1,10 @@
 <article>
 
-<h1>Connection Pool</h1>
+<h1>커넥션 풀</h1>
 
 <p>
 자바 프로그램에서 데이터베이스에 연결(Connection 객체를 얻는 작업)은 시간이 많이 걸린다.<br />
-만약, 일정량의 Connection을 미리 생성시켜 저장소에 저장했다가
-프로그램에서 요청이 있으면 저장소에서 Connection 꺼내 제공한다면 시간을 절약할 수 있다.<br /> 
+일정량의 Connection을 미리 생성시켜 저장소에 저장했다가 프로그램에서 요청이 있으면 저장소에서 Connection 꺼내 제공한다면 시간을 절약할 수 있다.<br /> 
 이러한 프로그래밍 기법을 Connection Pooling이라 한다.<br />
 작업이 완료되었을 때 기존처럼 Connection의 close() 메소드를 사용하여 자원을 반납하지 말고 저장소에 다시 복귀시켜야 한다.<br />
 </p>
@@ -37,6 +36,7 @@ oracle.properties 에서 "oracle" 이란 문자열은 오라클용 커넥션풀 
 </p>
 
 <h3>2. Connection Pooling 관련 소스</h3>
+
 <h6 class="src">Log.java</h6>
 <pre class="prettyprint">
 package net.java_school.util;

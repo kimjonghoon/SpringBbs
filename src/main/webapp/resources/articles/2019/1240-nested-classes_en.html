@@ -1,0 +1,88 @@
+<article>
+<div class="last-modified">Last Modified 2019.2.1</div>
+
+<h1>Nested Classes</h1>
+
+<p>
+The Java programming language allows you to define a class within another class.<br />
+Such a class is called a nested class and is illustrated here:
+</p>
+
+<pre class="prettyprint">class OuterClass {
+
+	class NestedClass {
+		//...
+	}
+
+}
+</pre>
+
+<p>
+A nested class is a member of its enclosing class.<br />
+Non-static nested classes (inner classes) have access to other members of the enclosing class, even if they are declared private.<br />
+Static nested classes do not have access to other members of the enclosing class.<br />
+As a member of the OuterClass, a nested class can be declared private, public, protected, or package private.<br />
+(Recall that outer classes can only be declared public or package private.)
+</p>
+
+<p>
+Nested classes are divided into two categories: static and non-static.<br />
+Nested classes that are declared static are called static nested classes.<br />
+Non-static nested classes are called inner classes. 
+</p>
+
+<pre class="prettyprint">class OuterClass {
+
+	static class StaticNestedClass {
+		//...
+	}
+
+	class InnerClass {
+		//...
+	}
+
+}
+</pre>
+
+<p>
+As with class methods and variables, a static nested class is associated with its outer class.<br />
+And like static class methods, a static nested class cannot refer directly to instance variables or methods defined in its enclosing class: it can use them only through an object reference.
+</p>
+
+<h3>Why Use Nested Classes?</h3>
+
+<ul>
+	<li>If a class is useful to only one other class, then it is logical to embed it in that class and keep the two together.</li>
+	<li>It increases encapsulation:By hiding class B within class A, A's members can be declared private and B can access them.
+In addition, B itself can be hidden from the outside world.</li>
+	<li>It can lead to more readable and maintainable code: Nesting small classes within top-level classes places the code closer to where it is used.</li> 
+</ul>
+
+<p>
+The following code snippet in the ArrayList&lt;E&gt; is a good example.
+</p>
+
+<pre class="prettyprint">public Iterator&lt;E&gt; iterator() {
+	return new Itr();
+}
+
+private class Itr implements Iterator&lt;E&gt; {
+	//...
+}
+</pre>
+
+<h3>Anonymous Classes</h3>
+
+<p>
+The life cycle of a method and its local variables is the same.<br />
+The life cycle of the inner class is longer than the method.<br />
+For the above reasons,<br /> 
+Anonymous Classes defined in the methods is restricted to access only the final local variable.
+</p>
+
+<span id="refer">References</span>
+<ul id="references">
+	<li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html">https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html</a></li>
+</ul>
+
+</article>
