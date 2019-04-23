@@ -189,6 +189,19 @@ SpringBbs
 
 (You can download ojdbc6.jar from http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html)
 
+3.Modify the **fileName** in log4j.xml
+
+> &lt;File name="A1" fileName="**/home/kim/logs/A1.log**" append="false"&gt;
+
+On Linux, the following additional work is required.
+* Change ownership to the directory where log files are to be created.
+
+> sudo chown tomcat.tomcat logs/
+
+* You may also need the following:
+
+> sudo chmod 644 A1.log
+
 ## How to run
 
 ### 1. (Current Settings)
