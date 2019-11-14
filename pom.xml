@@ -10,8 +10,8 @@
 	<url>http://maven.apache.org</url>
 	
 	<properties>
-		<spring.version>5.1.6.RELEASE</spring.version>
-		<spring.security.version>5.1.5.RELEASE</spring.security.version>
+		<spring.version>5.2.1.RELEASE</spring.version>
+		<spring.security.version>5.2.1.RELEASE</spring.security.version>
 		<jdk.version>11</jdk.version>
 	</properties>
 	
@@ -56,13 +56,13 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.16.Final</version>
+			<version>6.1.0.Final</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.47</version>
+			<version>5.1.48</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -73,13 +73,13 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>2.0.1</version>
+			<version>2.0.3</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.5.1</version>
+			<version>3.5.3</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
 		<dependency>
@@ -119,17 +119,11 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.9.8</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.8</version>
+			<version>2.10.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras -->
 		<dependency>
@@ -161,7 +155,7 @@
 	</dependencies>
 
     <!-- $ mvn jetty:run -->
-<!-- 
+
 	<build>
 		<finalName>spring-bbs</finalName>
 		<pluginManagement>
@@ -179,14 +173,14 @@
 				<plugin>
 					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
-					<version>9.4.14.v20181114</version>
+					<version>9.4.22.v20191022</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
--->
-    <!-- $ mvn compile war:inplace and run tomcat -->
 
+    <!-- $ mvn compile war:inplace and run tomcat -->
+<!-- 
 	<build>
 		<finalName>spring-bbs</finalName>
 		<pluginManagement>
@@ -218,5 +212,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+ -->
 </project>
