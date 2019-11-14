@@ -155,7 +155,7 @@
 	</dependencies>
 
     <!-- $ mvn jetty:run -->
-
+<!--
 	<build>
 		<finalName>spring-bbs</finalName>
 		<pluginManagement>
@@ -178,9 +178,9 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+-->
     <!-- $ mvn compile war:inplace and run tomcat -->
-<!-- 
+
 	<build>
 		<finalName>spring-bbs</finalName>
 		<pluginManagement>
@@ -212,5 +212,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
- -->
+
 </project>
